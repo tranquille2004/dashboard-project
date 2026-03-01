@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
   ArrowLeft, Save, Globe, Settings, Image, Menu, Users, 
-  Clock, Phone, Mail, MapPin, Facebook, Instagram, Plus, Trash2, Eye
+  Clock, Phone, Mail, MapPin, Facebook, Instagram, Plus, Trash2, Eye, UserPlus, Shield
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
