@@ -599,6 +599,95 @@ const SiteEditor = () => {
                   )}
                 </div>
               )}
+
+              {/* Admins Tab */}
+              {activeTab === 'admins' && (
+                <div className="space-y-6">
+                  <div className="flex items-center justify-between border-b pb-4">
+                    <div>
+                      <h2 className="text-xl font-semibold">Beheerders</h2>
+                      <p className="text-gray-500 text-sm">Geef klanten toegang om zelf hun site te beheren</p>
+                    </div>
+                    <button
+                      onClick={() => setShowAddAdminModal(true)}
+                      className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                      data-testid="add-admin-btn"
+                    >
+                      <UserPlus className="w-5 h-5" />
+                      <span>Beheerder Toevoegen</span>
+                    </button>
+                  </div>
+                  
+                  {siteAdmins.length === 0 ? (
+                    <div className="text-center py-12 text-gray-500">
+                      <Shield className="w-12 h-12 mx-auto mb-4 opacity-50" />
+                      <p>Nog geen beheerders</p>
+                      <p className="text-sm">Voeg een beheerder toe zodat je klant zelf wijzigingen kan maken</p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      {siteAdmins.map(admin => (
+                        <div key={admin.admin_id} className="border rounded-lg p-6">
+                          <div className="flex items-start justify-between mb-4">
+                            <div>
+                              <h3 className="font-semibold text-lg">{admin.name}</h3>
+                              <p className="text-gray-500">{admin.email}</p>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                              <label className="flex items-center space-x-2 cursor-pointer">
+                                <input
+                                  type="checkbox"
+                                  checked={admin.is_active}
+                                  onChange={(e) => toggleAdminActive(admin.admin_id, e.target.checked)}
+                                  className="w-4 h-4"
+                                />
+                                <span className={admin.is_active ? 'text-green-600' : 'text-gray-400'}>
+                                  {admin.is_active ? 'Actief' : 'Inactief'}
+                                </span>
+                              </label>
+                              <button
+                                onClick={() => deleteSiteAdmin(admin.admin_id)}
+                                className="p-2 text-red-500 hover:bg-red-50 rounded"
+                                title="Verwijderen"
+                              >
+                                <Trash2 className="w-4 h-4" />
+                              </button>
+                            </div>
+                          </div>
+                          
+                          <div className="bg-gray-50 rounded-lg p-4">
+                            <h4 className="font-medium text-sm text-gray-700 mb-3">Rechten</h4>
+                            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                              {[
+                                { key: 'menu_items', label: 'Menu items' },
+                                { key: 'menu_prices', label: 'Prijzen' },
+                                { key: 'opening_hours', label: 'Openingstijden' },
+                                { key: 'closure_notice', label: 'Sluitingsbericht' },
+                                { key: 'gallery', label: 'Foto\'s' },
+                                { key: 'contact_info', label: 'Contact info' },
+                                { key: 'group_menus', label: 'Groepsmenu\'s' },
+                              ].map(perm => (
+                                <label key={perm.key} className="flex items-center space-x-2 cursor-pointer">
+                                  <input
+                                    type="checkbox"
+                                    checked={admin.permissions?.[perm.key] || false}
+                                    onChange={(e) => updateAdminPermissions(admin.admin_id, {
+                                      ...admin.permissions,
+                                      [perm.key]: e.target.checked
+                                    })}
+                                    className="w-4 h-4 rounded"
+                                  />
+                                  <span className="text-sm">{perm.label}</span>
+                                </label>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
