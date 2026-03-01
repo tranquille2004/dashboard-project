@@ -816,6 +816,7 @@ app.include_router(api_router)
 app.include_router(auth_router)
 app.include_router(admin_router)
 app.include_router(public_router)
+app.include_router(site_admin_router)
 
 app.add_middleware(
     CORSMiddleware,
