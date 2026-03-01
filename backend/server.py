@@ -445,6 +445,306 @@ async def delete_gallery_image(site_id: str, image_id: str, user: User = Depends
     await db.gallery_images.delete_one({"image_id": image_id, "site_id": site_id})
     return {"message": "Image deleted"}
 
+# Site Admins Management (for super admin)
+@admin_router.get("/sites/{site_id}/admins")
+async def get_site_admins(site_id: str, user: User = Depends(get_current_user)):
+    """Get all admins for a site"""
+    admins = await db.site_admins.find({"site_id": site_id}, {"_id": 0, "password_hash": 0}).to_list(50)
+    return admins
+
+@admin_router.post("/sites/{site_id}/admins")
+async def create_site_admin(site_id: str, request: Request, user: User = Depends(get_current_user)):
+    """Create a new site admin (restaurant owner)"""
+    import hashlib
+    body = await request.json()
+    
+    # Check if email already exists for this site
+    existing = await db.site_admins.find_one({"site_id": site_id, "email": body["email"]})
+    if existing:
+        raise HTTPException(status_code=400, detail="Admin with this email already exists")
+    
+    # Hash password
+    password_hash = hashlib.sha256(body["password"].encode()).hexdigest()
+    
+    admin = SiteAdmin(
+        site_id=site_id,
+        email=body["email"],
+        name=body["name"],
+        password_hash=password_hash,
+        permissions=body.get("permissions", {
+            "menu_items": True,
+            "menu_prices": True,
+            "opening_hours": True,
+            "closure_notice": True,
+            "gallery": True,
+            "contact_info": False,
+            "group_menus": True
+        })
+    )
+    admin_dict = admin.model_dump()
+    admin_dict["created_at"] = admin_dict["created_at"].isoformat()
+    await db.site_admins.insert_one(admin_dict)
+    
+    # Remove password_hash from response
+    del admin_dict["password_hash"]
+    return admin_dict
+
+@admin_router.put("/sites/{site_id}/admins/{admin_id}")
+async def update_site_admin(site_id: str, admin_id: str, request: Request, user: User = Depends(get_current_user)):
+    """Update a site admin's permissions"""
+    body = await request.json()
+    
+    # Don't allow changing password through this endpoint
+    if "password_hash" in body:
+        del body["password_hash"]
+    if "password" in body:
+        del body["password"]
+    
+    await db.site_admins.update_one(
+        {"admin_id": admin_id, "site_id": site_id},
+        {"$set": body}
+    )
+    admin = await db.site_admins.find_one({"admin_id": admin_id}, {"_id": 0, "password_hash": 0})
+    return admin
+
+@admin_router.delete("/sites/{site_id}/admins/{admin_id}")
+async def delete_site_admin(site_id: str, admin_id: str, user: User = Depends(get_current_user)):
+    """Delete a site admin"""
+    await db.site_admins.delete_one({"admin_id": admin_id, "site_id": site_id})
+    return {"message": "Admin deleted"}
+
+# ============== SITE ADMIN AUTH & ROUTES ==============
+
+site_admin_router = APIRouter(prefix="/api/site-admin")
+
+async def get_current_site_admin(request: Request) -> dict:
+    """Get current site admin from session token"""
+    session_token = request.cookies.get("site_admin_token")
+    
+    if not session_token:
+        auth_header = request.headers.get("Authorization")
+        if auth_header and auth_header.startswith("Bearer "):
+            session_token = auth_header.split(" ")[1]
+    
+    if not session_token:
+        raise HTTPException(status_code=401, detail="Not authenticated")
+    
+    session = await db.site_admin_sessions.find_one({"session_token": session_token}, {"_id": 0})
+    if not session:
+        raise HTTPException(status_code=401, detail="Invalid session")
+    
+    expires_at = session["expires_at"]
+    if isinstance(expires_at, str):
+        expires_at = datetime.fromisoformat(expires_at)
+    if expires_at.tzinfo is None:
+        expires_at = expires_at.replace(tzinfo=timezone.utc)
+    if expires_at < datetime.now(timezone.utc):
+        raise HTTPException(status_code=401, detail="Session expired")
+    
+    admin = await db.site_admins.find_one({"admin_id": session["admin_id"]}, {"_id": 0, "password_hash": 0})
+    if not admin:
+        raise HTTPException(status_code=401, detail="Admin not found")
+    
+    return admin
+
+@site_admin_router.post("/login")
+async def site_admin_login(request: Request, response: Response):
+    """Login for site admins (restaurant owners)"""
+    import hashlib
+    body = await request.json()
+    email = body.get("email")
+    password = body.get("password")
+    
+    if not email or not password:
+        raise HTTPException(status_code=400, detail="Email and password required")
+    
+    password_hash = hashlib.sha256(password.encode()).hexdigest()
+    
+    admin = await db.site_admins.find_one(
+        {"email": email, "password_hash": password_hash, "is_active": True},
+        {"_id": 0}
+    )
+    
+    if not admin:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    
+    # Create session
+    session_token = str(uuid.uuid4())
+    expires_at = datetime.now(timezone.utc) + timedelta(days=7)
+    
+    await db.site_admin_sessions.insert_one({
+        "session_token": session_token,
+        "admin_id": admin["admin_id"],
+        "site_id": admin["site_id"],
+        "expires_at": expires_at.isoformat(),
+        "created_at": datetime.now(timezone.utc).isoformat()
+    })
+    
+    # Update last login
+    await db.site_admins.update_one(
+        {"admin_id": admin["admin_id"]},
+        {"$set": {"last_login": datetime.now(timezone.utc).isoformat()}}
+    )
+    
+    # Set cookie
+    response.set_cookie(
+        key="site_admin_token",
+        value=session_token,
+        httponly=True,
+        secure=True,
+        samesite="none",
+        path="/",
+        max_age=7 * 24 * 60 * 60
+    )
+    
+    # Get site info
+    site = await db.sites.find_one({"site_id": admin["site_id"]}, {"_id": 0})
+    
+    return {
+        "admin": {k: v for k, v in admin.items() if k != "password_hash"},
+        "site": site
+    }
+
+@site_admin_router.get("/me")
+async def get_site_admin_me(admin: dict = Depends(get_current_site_admin)):
+    """Get current site admin info"""
+    site = await db.sites.find_one({"site_id": admin["site_id"]}, {"_id": 0})
+    return {"admin": admin, "site": site}
+
+@site_admin_router.post("/logout")
+async def site_admin_logout(request: Request, response: Response):
+    """Logout site admin"""
+    session_token = request.cookies.get("site_admin_token")
+    if session_token:
+        await db.site_admin_sessions.delete_one({"session_token": session_token})
+    response.delete_cookie(key="site_admin_token", path="/")
+    return {"message": "Logged out"}
+
+# Site admin data access (respects permissions)
+@site_admin_router.get("/config")
+async def get_own_site_config(admin: dict = Depends(get_current_site_admin)):
+    """Get own site configuration"""
+    config = await db.site_configs.find_one({"site_id": admin["site_id"]}, {"_id": 0})
+    return config
+
+@site_admin_router.put("/config")
+async def update_own_site_config(request: Request, admin: dict = Depends(get_current_site_admin)):
+    """Update own site configuration (respects permissions)"""
+    body = await request.json()
+    permissions = admin.get("permissions", {})
+    
+    # Filter updates based on permissions
+    allowed_updates = {}
+    
+    if permissions.get("opening_hours") and "opening_hours" in body:
+        allowed_updates["opening_hours"] = body["opening_hours"]
+    if permissions.get("closure_notice") and "closure_notice" in body:
+        allowed_updates["closure_notice"] = body["closure_notice"]
+    if permissions.get("contact_info"):
+        for field in ["phone", "email", "address"]:
+            if field in body:
+                allowed_updates[field] = body[field]
+    
+    if not allowed_updates:
+        raise HTTPException(status_code=403, detail="No permission to update these fields")
+    
+    allowed_updates["updated_at"] = datetime.now(timezone.utc).isoformat()
+    await db.site_configs.update_one({"site_id": admin["site_id"]}, {"$set": allowed_updates})
+    
+    config = await db.site_configs.find_one({"site_id": admin["site_id"]}, {"_id": 0})
+    return config
+
+@site_admin_router.get("/menu")
+async def get_own_menu(admin: dict = Depends(get_current_site_admin)):
+    """Get own menu items"""
+    items = await db.menu_items.find({"site_id": admin["site_id"]}, {"_id": 0}).sort("sort_order", 1).to_list(500)
+    return items
+
+@site_admin_router.post("/menu")
+async def create_own_menu_item(request: Request, admin: dict = Depends(get_current_site_admin)):
+    """Create menu item (if permitted)"""
+    if not admin.get("permissions", {}).get("menu_items"):
+        raise HTTPException(status_code=403, detail="No permission to add menu items")
+    
+    body = await request.json()
+    body["site_id"] = admin["site_id"]
+    item = MenuItem(**body)
+    item_dict = item.model_dump()
+    item_dict["created_at"] = item_dict["created_at"].isoformat()
+    await db.menu_items.insert_one(item_dict)
+    return item_dict
+
+@site_admin_router.put("/menu/{item_id}")
+async def update_own_menu_item(item_id: str, request: Request, admin: dict = Depends(get_current_site_admin)):
+    """Update own menu item (respects permissions)"""
+    permissions = admin.get("permissions", {})
+    body = await request.json()
+    
+    # Check item belongs to this site
+    item = await db.menu_items.find_one({"item_id": item_id, "site_id": admin["site_id"]})
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+    
+    # Filter updates based on permissions
+    allowed_updates = {}
+    
+    if permissions.get("menu_items"):
+        for field in ["name_nl", "name_fr", "name_en", "description_nl", "description_fr", "description_en", "category", "is_available", "sort_order"]:
+            if field in body:
+                allowed_updates[field] = body[field]
+    
+    if permissions.get("menu_prices") and "price" in body:
+        allowed_updates["price"] = body["price"]
+    
+    if not allowed_updates:
+        raise HTTPException(status_code=403, detail="No permission to update these fields")
+    
+    await db.menu_items.update_one({"item_id": item_id}, {"$set": allowed_updates})
+    updated = await db.menu_items.find_one({"item_id": item_id}, {"_id": 0})
+    return updated
+
+@site_admin_router.delete("/menu/{item_id}")
+async def delete_own_menu_item(item_id: str, admin: dict = Depends(get_current_site_admin)):
+    """Delete own menu item (if permitted)"""
+    if not admin.get("permissions", {}).get("menu_items"):
+        raise HTTPException(status_code=403, detail="No permission to delete menu items")
+    
+    result = await db.menu_items.delete_one({"item_id": item_id, "site_id": admin["site_id"]})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Item not found")
+    return {"message": "Item deleted"}
+
+@site_admin_router.get("/gallery")
+async def get_own_gallery(admin: dict = Depends(get_current_site_admin)):
+    """Get own gallery images"""
+    images = await db.gallery_images.find({"site_id": admin["site_id"]}, {"_id": 0}).sort("sort_order", 1).to_list(200)
+    return images
+
+@site_admin_router.post("/gallery")
+async def add_own_gallery_image(request: Request, admin: dict = Depends(get_current_site_admin)):
+    """Add gallery image (if permitted)"""
+    if not admin.get("permissions", {}).get("gallery"):
+        raise HTTPException(status_code=403, detail="No permission to add images")
+    
+    body = await request.json()
+    body["site_id"] = admin["site_id"]
+    image = GalleryImage(**body)
+    image_dict = image.model_dump()
+    image_dict["created_at"] = image_dict["created_at"].isoformat()
+    await db.gallery_images.insert_one(image_dict)
+    return image_dict
+
+@site_admin_router.delete("/gallery/{image_id}")
+async def delete_own_gallery_image(image_id: str, admin: dict = Depends(get_current_site_admin)):
+    """Delete own gallery image (if permitted)"""
+    if not admin.get("permissions", {}).get("gallery"):
+        raise HTTPException(status_code=403, detail="No permission to delete images")
+    
+    result = await db.gallery_images.delete_one({"image_id": image_id, "site_id": admin["site_id"]})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Image not found")
+    return {"message": "Image deleted"}
+
 # ============== PUBLIC ROUTES ==============
 
 @public_router.get("/site-by-domain")
