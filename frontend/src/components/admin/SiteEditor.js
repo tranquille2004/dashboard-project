@@ -149,6 +149,54 @@ const SiteEditor = () => {
     }
   };
 
+  const addSiteAdmin = async () => {
+    try {
+      const response = await axios.post(`${API}/admin/sites/${siteId}/admins`, newAdmin, { withCredentials: true });
+      setSiteAdmins([...siteAdmins, response.data]);
+      setShowAddAdminModal(false);
+      setNewAdmin({ name: '', email: '', password: '', permissions: {
+        menu_items: true,
+        menu_prices: true,
+        opening_hours: true,
+        closure_notice: true,
+        gallery: true,
+        contact_info: false,
+        group_menus: true
+      }});
+      alert('Beheerder toegevoegd!');
+    } catch (error) {
+      alert(error.response?.data?.detail || 'Fout bij toevoegen');
+    }
+  };
+
+  const updateAdminPermissions = async (adminId, permissions) => {
+    try {
+      await axios.put(`${API}/admin/sites/${siteId}/admins/${adminId}`, { permissions }, { withCredentials: true });
+      setSiteAdmins(siteAdmins.map(a => a.admin_id === adminId ? { ...a, permissions } : a));
+    } catch (error) {
+      console.error('Error updating permissions:', error);
+    }
+  };
+
+  const deleteSiteAdmin = async (adminId) => {
+    if (!window.confirm('Weet je zeker dat je deze beheerder wilt verwijderen?')) return;
+    try {
+      await axios.delete(`${API}/admin/sites/${siteId}/admins/${adminId}`, { withCredentials: true });
+      setSiteAdmins(siteAdmins.filter(a => a.admin_id !== adminId));
+    } catch (error) {
+      console.error('Error deleting admin:', error);
+    }
+  };
+
+  const toggleAdminActive = async (adminId, isActive) => {
+    try {
+      await axios.put(`${API}/admin/sites/${siteId}/admins/${adminId}`, { is_active: isActive }, { withCredentials: true });
+      setSiteAdmins(siteAdmins.map(a => a.admin_id === adminId ? { ...a, is_active: isActive } : a));
+    } catch (error) {
+      console.error('Error toggling admin:', error);
+    }
+  };
+
   if (authLoading || loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
