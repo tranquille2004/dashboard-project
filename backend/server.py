@@ -127,6 +127,33 @@ class GalleryImage(BaseModel):
     sort_order: int = 0
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+class SiteAdmin(BaseModel):
+    """Site-level admin (restaurant owner)"""
+    model_config = ConfigDict(extra="ignore")
+    admin_id: str = Field(default_factory=lambda: f"sadmin_{uuid.uuid4().hex[:12]}")
+    site_id: str
+    email: str
+    name: str
+    password_hash: str = ""  # For email/password login
+    is_active: bool = True
+    # Permissions - what this admin can edit
+    permissions: Dict[str, bool] = Field(default_factory=lambda: {
+        "menu_items": True,
+        "menu_prices": True,
+        "opening_hours": True,
+        "closure_notice": True,
+        "gallery": True,
+        "contact_info": False,  # Usually don't want clients changing address/phone
+        "group_menus": True
+    })
+    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    last_login: Optional[datetime] = None
+
+class SiteAdminCreate(BaseModel):
+    email: str
+    name: str
+    password: str
+
 # ============== AUTH HELPERS ==============
 
 async def get_current_user(request: Request) -> User:
