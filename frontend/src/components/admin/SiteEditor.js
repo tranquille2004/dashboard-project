@@ -20,8 +20,19 @@ const SiteEditor = () => {
   const [menuItems, setMenuItems] = useState([]);
   const [groupMenus, setGroupMenus] = useState([]);
   const [gallery, setGallery] = useState([]);
+  const [siteAdmins, setSiteAdmins] = useState([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [showAddAdminModal, setShowAddAdminModal] = useState(false);
+  const [newAdmin, setNewAdmin] = useState({ name: '', email: '', password: '', permissions: {
+    menu_items: true,
+    menu_prices: true,
+    opening_hours: true,
+    closure_notice: true,
+    gallery: true,
+    contact_info: false,
+    group_menus: true
+  }});
 
   useEffect(() => {
     if (!authLoading && !user) {
