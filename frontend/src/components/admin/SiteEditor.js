@@ -48,18 +48,20 @@ const SiteEditor = () => {
 
   const loadSiteData = async () => {
     try {
-      const [siteRes, configRes, menuRes, groupRes, galleryRes] = await Promise.all([
+      const [siteRes, configRes, menuRes, groupRes, galleryRes, adminsRes] = await Promise.all([
         axios.get(`${API}/admin/sites/${siteId}`, { withCredentials: true }),
         axios.get(`${API}/admin/sites/${siteId}/config`, { withCredentials: true }),
         axios.get(`${API}/admin/sites/${siteId}/menu`, { withCredentials: true }),
         axios.get(`${API}/admin/sites/${siteId}/group-menus`, { withCredentials: true }),
-        axios.get(`${API}/admin/sites/${siteId}/gallery`, { withCredentials: true })
+        axios.get(`${API}/admin/sites/${siteId}/gallery`, { withCredentials: true }),
+        axios.get(`${API}/admin/sites/${siteId}/admins`, { withCredentials: true })
       ]);
       setSite(siteRes.data);
       setConfig(configRes.data);
       setMenuItems(menuRes.data);
       setGroupMenus(groupRes.data);
       setGallery(galleryRes.data);
+      setSiteAdmins(adminsRes.data);
     } catch (error) {
       console.error('Error loading site:', error);
     } finally {
