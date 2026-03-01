@@ -212,6 +212,7 @@ const SiteEditor = () => {
     { id: 'contact', label: 'Contact & Uren', icon: Clock },
     { id: 'menu', label: 'Menu', icon: Menu },
     { id: 'gallery', label: 'Foto\'s', icon: Image },
+    { id: 'admins', label: 'Beheerders', icon: Shield },
   ];
 
   return (
