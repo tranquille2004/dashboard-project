@@ -692,6 +692,94 @@ const SiteEditor = () => {
           </div>
         </div>
       </div>
+
+      {/* Add Admin Modal */}
+      {showAddAdminModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg">
+            <h3 className="text-xl font-semibold mb-4">Nieuwe Beheerder</h3>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Naam</label>
+                <input
+                  type="text"
+                  value={newAdmin.name}
+                  onChange={(e) => setNewAdmin({ ...newAdmin, name: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Naam van de klant"
+                  data-testid="new-admin-name"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                <input
+                  type="email"
+                  value={newAdmin.email}
+                  onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="klant@email.be"
+                  data-testid="new-admin-email"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Wachtwoord</label>
+                <input
+                  type="password"
+                  value={newAdmin.password}
+                  onChange={(e) => setNewAdmin({ ...newAdmin, password: e.target.value })}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  placeholder="Kies een wachtwoord"
+                  data-testid="new-admin-password"
+                />
+              </div>
+              
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="font-medium text-sm text-gray-700 mb-3">Rechten</h4>
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { key: 'menu_items', label: 'Menu items aanpassen' },
+                    { key: 'menu_prices', label: 'Prijzen wijzigen' },
+                    { key: 'opening_hours', label: 'Openingstijden' },
+                    { key: 'closure_notice', label: 'Sluitingsbericht' },
+                    { key: 'gallery', label: 'Foto\'s beheren' },
+                    { key: 'contact_info', label: 'Contact info' },
+                    { key: 'group_menus', label: 'Groepsmenu\'s' },
+                  ].map(perm => (
+                    <label key={perm.key} className="flex items-center space-x-2 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={newAdmin.permissions[perm.key] || false}
+                        onChange={(e) => setNewAdmin({
+                          ...newAdmin,
+                          permissions: { ...newAdmin.permissions, [perm.key]: e.target.checked }
+                        })}
+                        className="w-4 h-4 rounded"
+                      />
+                      <span className="text-sm">{perm.label}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="flex justify-end space-x-3 mt-6">
+              <button
+                onClick={() => setShowAddAdminModal(false)}
+                className="px-4 py-2 text-gray-600 hover:text-gray-900"
+              >
+                Annuleren
+              </button>
+              <button
+                onClick={addSiteAdmin}
+                disabled={!newAdmin.name || !newAdmin.email || !newAdmin.password}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                data-testid="create-admin-btn"
+              >
+                Toevoegen
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
