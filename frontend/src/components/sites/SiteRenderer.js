@@ -605,12 +605,44 @@ const SiteAdminPanel = ({ site, config, admin, primaryColor, onLogout }) => {
   const [gallery, setGallery] = useState([]);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState(null);
+  const [lang, setLang] = useState(() => localStorage.getItem('dashboard_lang') || 'fr');
+
+  // Translations
+  const translations = {
+    fr: {
+      management: 'Gestion', welcome: 'Bienvenue', logout: 'Déconnexion',
+      overview: 'Aperçu', openingHours: 'Heures d\'ouverture', menu: 'Menu', photos: 'Photos',
+      closureNotice: 'Avis de fermeture', closurePlaceholder: 'Ex: Nous sommes fermés du 24 au 26 décembre...',
+      save: 'Enregistrer', saving: 'Enregistrement...', addItem: 'Ajouter un plat',
+      deleteConfirm: 'Supprimer ce plat?', addPhoto: 'Ajouter une photo', photoUrl: 'URL de l\'image:',
+      saved: 'Enregistré!', itemAdded: 'Ajouté!', deleted: 'Supprimé!', error: 'Erreur',
+      antipasti: 'Antipasti', primi: 'Primi', secondi: 'Secondi', desserts: 'Desserts', drinks: 'Boissons'
+    },
+    nl: {
+      management: 'Beheer', welcome: 'Welkom', logout: 'Uitloggen',
+      overview: 'Overzicht', openingHours: 'Openingstijden', menu: 'Menu', photos: 'Foto\'s',
+      closureNotice: 'Sluitingsbericht', closurePlaceholder: 'Bijv: Wij zijn gesloten van 24-26 december...',
+      save: 'Opslaan', saving: 'Opslaan...', addItem: 'Item Toevoegen',
+      deleteConfirm: 'Item verwijderen?', addPhoto: 'Foto Toevoegen', photoUrl: 'URL van de afbeelding:',
+      saved: 'Opgeslagen!', itemAdded: 'Toegevoegd!', deleted: 'Verwijderd!', error: 'Fout',
+      antipasti: 'Antipasti', primi: 'Primi', secondi: 'Secondi', desserts: 'Desserts', drinks: 'Dranken'
+    },
+    en: {
+      management: 'Management', welcome: 'Welcome', logout: 'Log out',
+      overview: 'Overview', openingHours: 'Opening Hours', menu: 'Menu', photos: 'Photos',
+      closureNotice: 'Closure Notice', closurePlaceholder: 'E.g.: We are closed from December 24-26...',
+      save: 'Save', saving: 'Saving...', addItem: 'Add Item',
+      deleteConfirm: 'Delete this item?', addPhoto: 'Add Photo', photoUrl: 'Image URL:',
+      saved: 'Saved!', itemAdded: 'Added!', deleted: 'Deleted!', error: 'Error',
+      antipasti: 'Antipasti', primi: 'Primi', secondi: 'Secondi', desserts: 'Desserts', drinks: 'Drinks'
+    }
+  };
+  const t = (key) => translations[lang]?.[key] || key;
 
   const permissions = admin?.permissions || {};
 
-  useEffect(() => {
-    loadData();
-  }, []);
+  useEffect(() => { localStorage.setItem('dashboard_lang', lang); }, [lang]);
+  useEffect(() => { loadData(); }, []);
 
   const loadData = async () => {
     try {
@@ -634,9 +666,9 @@ const SiteAdminPanel = ({ site, config, admin, primaryColor, onLogout }) => {
     setSaving(true);
     try {
       await axios.put(`${API}/site-admin/config`, siteConfig, { withCredentials: true });
-      showMessage('Opgeslagen!');
+      showMessage(t('saved'));
     } catch (error) {
-      showMessage(error.response?.data?.detail || 'Fout bij opslaan', 'error');
+      showMessage(error.response?.data?.detail || t('error'), 'error');
     } finally {
       setSaving(false);
     }
@@ -645,15 +677,12 @@ const SiteAdminPanel = ({ site, config, admin, primaryColor, onLogout }) => {
   const addMenuItem = async () => {
     try {
       const response = await axios.post(`${API}/site-admin/menu`, {
-        category: 'main',
-        name_nl: 'Nieuw Item',
-        price: 0,
-        sort_order: menuItems.length
+        category: 'main', name_nl: 'Nouveau plat', price: 0, sort_order: menuItems.length
       }, { withCredentials: true });
       setMenuItems([...menuItems, response.data]);
-      showMessage('Item toegevoegd!');
+      showMessage(t('itemAdded'));
     } catch (error) {
-      showMessage(error.response?.data?.detail || 'Fout', 'error');
+      showMessage(error.response?.data?.detail || t('error'), 'error');
     }
   };
 
@@ -662,30 +691,30 @@ const SiteAdminPanel = ({ site, config, admin, primaryColor, onLogout }) => {
       await axios.put(`${API}/site-admin/menu/${itemId}`, updates, { withCredentials: true });
       setMenuItems(menuItems.map(item => item.item_id === itemId ? { ...item, ...updates } : item));
     } catch (error) {
-      showMessage(error.response?.data?.detail || 'Fout', 'error');
+      showMessage(error.response?.data?.detail || t('error'), 'error');
     }
   };
 
   const deleteMenuItem = async (itemId) => {
-    if (!window.confirm('Item verwijderen?')) return;
+    if (!window.confirm(t('deleteConfirm'))) return;
     try {
       await axios.delete(`${API}/site-admin/menu/${itemId}`, { withCredentials: true });
       setMenuItems(menuItems.filter(item => item.item_id !== itemId));
-      showMessage('Verwijderd!');
+      showMessage(t('deleted'));
     } catch (error) {
-      showMessage(error.response?.data?.detail || 'Fout', 'error');
+      showMessage(error.response?.data?.detail || t('error'), 'error');
     }
   };
 
   const addGalleryImage = async () => {
-    const url = prompt('URL van de afbeelding:');
+    const url = prompt(t('photoUrl'));
     if (!url) return;
     try {
       const response = await axios.post(`${API}/site-admin/gallery`, { url, sort_order: gallery.length }, { withCredentials: true });
       setGallery([...gallery, response.data]);
-      showMessage('Foto toegevoegd!');
+      showMessage(t('itemAdded'));
     } catch (error) {
-      showMessage(error.response?.data?.detail || 'Fout', 'error');
+      showMessage(error.response?.data?.detail || t('error'), 'error');
     }
   };
 
@@ -693,219 +722,128 @@ const SiteAdminPanel = ({ site, config, admin, primaryColor, onLogout }) => {
     try {
       await axios.delete(`${API}/site-admin/gallery/${imageId}`, { withCredentials: true });
       setGallery(gallery.filter(img => img.image_id !== imageId));
-      showMessage('Verwijderd!');
+      showMessage(t('deleted'));
     } catch (error) {
-      showMessage(error.response?.data?.detail || 'Fout', 'error');
+      showMessage(error.response?.data?.detail || t('error'), 'error');
     }
   };
 
   return (
     <div className="pt-20 min-h-screen bg-gray-100">
-      {/* Message Toast */}
       {message && (
-        <div className={`fixed top-24 right-4 z-50 px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 ${
-          message.type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
-        }`}>
+        <div className={`fixed top-24 right-4 z-50 px-4 py-2 rounded-lg shadow-lg flex items-center space-x-2 ${message.type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'}`}>
           {message.type === 'error' ? <AlertCircle className="w-4 h-4" /> : <Check className="w-4 h-4" />}
           <span>{message.text}</span>
         </div>
       )}
 
       <div className="max-w-6xl mx-auto px-4 py-8">
-        {/* Header */}
         <div className="bg-white rounded-lg shadow p-6 mb-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold" style={{ color: primaryColor }}>{site?.name} - Beheer</h1>
-              <p className="text-gray-500">Welkom, {admin.name}</p>
+              <h1 className="text-2xl font-bold" style={{ color: primaryColor }}>{site?.name} - {t('management')}</h1>
+              <p className="text-gray-500">{t('welcome')}, {admin.name}</p>
             </div>
-            <button
-              onClick={onLogout}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
-            >
-              <LogOut className="w-5 h-5" />
-              <span>Uitloggen</span>
-            </button>
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+                {['fr', 'nl', 'en'].map(l => (
+                  <button key={l} onClick={() => setLang(l)}
+                    className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${lang === l ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
+                    {l.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              <button onClick={onLogout} className="flex items-center space-x-2 text-gray-600 hover:text-gray-900">
+                <LogOut className="w-5 h-5" /><span>{t('logout')}</span>
+              </button>
+            </div>
           </div>
         </div>
 
         <div className="flex gap-6">
-          {/* Sidebar */}
           <div className="w-56 flex-shrink-0">
             <nav className="bg-white rounded-lg shadow p-4 space-y-1">
-              <button
-                onClick={() => setActiveTab('overview')}
-                className={`w-full text-left px-4 py-2 rounded-lg ${activeTab === 'overview' ? 'bg-gray-100 font-medium' : ''}`}
-              >
-                Overzicht
-              </button>
-              {permissions.opening_hours && (
-                <button
-                  onClick={() => setActiveTab('hours')}
-                  className={`w-full text-left px-4 py-2 rounded-lg ${activeTab === 'hours' ? 'bg-gray-100 font-medium' : ''}`}
-                >
-                  Openingstijden
-                </button>
-              )}
-              {permissions.menu_items && (
-                <button
-                  onClick={() => setActiveTab('menu')}
-                  className={`w-full text-left px-4 py-2 rounded-lg ${activeTab === 'menu' ? 'bg-gray-100 font-medium' : ''}`}
-                >
-                  Menu
-                </button>
-              )}
-              {permissions.gallery && (
-                <button
-                  onClick={() => setActiveTab('gallery')}
-                  className={`w-full text-left px-4 py-2 rounded-lg ${activeTab === 'gallery' ? 'bg-gray-100 font-medium' : ''}`}
-                >
-                  Foto's
-                </button>
-              )}
+              <button onClick={() => setActiveTab('overview')} className={`w-full text-left px-4 py-2 rounded-lg ${activeTab === 'overview' ? 'bg-gray-100 font-medium' : ''}`}>{t('overview')}</button>
+              {permissions.opening_hours && <button onClick={() => setActiveTab('hours')} className={`w-full text-left px-4 py-2 rounded-lg ${activeTab === 'hours' ? 'bg-gray-100 font-medium' : ''}`}>{t('openingHours')}</button>}
+              {permissions.menu_items && <button onClick={() => setActiveTab('menu')} className={`w-full text-left px-4 py-2 rounded-lg ${activeTab === 'menu' ? 'bg-gray-100 font-medium' : ''}`}>{t('menu')}</button>}
+              {permissions.gallery && <button onClick={() => setActiveTab('gallery')} className={`w-full text-left px-4 py-2 rounded-lg ${activeTab === 'gallery' ? 'bg-gray-100 font-medium' : ''}`}>{t('photos')}</button>}
             </nav>
           </div>
 
-          {/* Content */}
           <div className="flex-1 bg-white rounded-lg shadow p-6">
-            {/* Overview */}
             {activeTab === 'overview' && (
               <div className="space-y-6">
-                <h2 className="text-xl font-semibold border-b pb-4">Overzicht</h2>
-                
+                <h2 className="text-xl font-semibold border-b pb-4">{t('overview')}</h2>
                 {permissions.closure_notice && (
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Sluitingsbericht</label>
-                    <textarea
-                      value={siteConfig?.closure_notice || ''}
-                      onChange={(e) => setSiteConfig({ ...siteConfig, closure_notice: e.target.value })}
-                      className="w-full border border-gray-300 rounded-lg px-4 py-2 h-24"
-                      placeholder="Bijv: Wij zijn gesloten van 24-26 december..."
-                    />
-                    <button
-                      onClick={saveConfig}
-                      disabled={saving}
-                      className="mt-2 flex items-center space-x-2 px-4 py-2 text-white rounded-lg disabled:opacity-50"
-                      style={{ backgroundColor: primaryColor }}
-                    >
-                      <Save className="w-4 h-4" />
-                      <span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">{t('closureNotice')}</label>
+                    <textarea value={siteConfig?.closure_notice || ''} onChange={(e) => setSiteConfig({ ...siteConfig, closure_notice: e.target.value })}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 h-24" placeholder={t('closurePlaceholder')} />
+                    <button onClick={saveConfig} disabled={saving} className="mt-2 flex items-center space-x-2 px-4 py-2 text-white rounded-lg disabled:opacity-50" style={{ backgroundColor: primaryColor }}>
+                      <Save className="w-4 h-4" /><span>{saving ? t('saving') : t('save')}</span>
                     </button>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Hours */}
             {activeTab === 'hours' && permissions.opening_hours && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b pb-4">
-                  <h2 className="text-xl font-semibold">Openingstijden</h2>
-                  <button
-                    onClick={saveConfig}
-                    disabled={saving}
-                    className="flex items-center space-x-2 px-4 py-2 text-white rounded-lg disabled:opacity-50"
-                    style={{ backgroundColor: primaryColor }}
-                  >
-                    <Save className="w-4 h-4" />
-                    <span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+                  <h2 className="text-xl font-semibold">{t('openingHours')}</h2>
+                  <button onClick={saveConfig} disabled={saving} className="flex items-center space-x-2 px-4 py-2 text-white rounded-lg disabled:opacity-50" style={{ backgroundColor: primaryColor }}>
+                    <Save className="w-4 h-4" /><span>{saving ? t('saving') : t('save')}</span>
                   </button>
                 </div>
-                <textarea
-                  value={JSON.stringify(siteConfig?.opening_hours || {}, null, 2)}
-                  onChange={(e) => {
-                    try {
-                      setSiteConfig({ ...siteConfig, opening_hours: JSON.parse(e.target.value) });
-                    } catch (err) {}
-                  }}
-                  className="w-full border border-gray-300 rounded-lg px-4 py-2 h-48 font-mono text-sm"
-                />
+                <textarea value={JSON.stringify(siteConfig?.opening_hours || {}, null, 2)}
+                  onChange={(e) => { try { setSiteConfig({ ...siteConfig, opening_hours: JSON.parse(e.target.value) }); } catch (err) {} }}
+                  className="w-full border border-gray-300 rounded-lg px-4 py-2 h-48 font-mono text-sm" />
               </div>
             )}
 
-            {/* Menu */}
             {activeTab === 'menu' && permissions.menu_items && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b pb-4">
-                  <h2 className="text-xl font-semibold">Menu</h2>
-                  <button
-                    onClick={addMenuItem}
-                    className="flex items-center space-x-2 px-4 py-2 text-white rounded-lg"
-                    style={{ backgroundColor: primaryColor }}
-                  >
-                    <Plus className="w-4 h-4" />
-                    <span>Item Toevoegen</span>
+                  <h2 className="text-xl font-semibold">{t('menu')}</h2>
+                  <button onClick={addMenuItem} className="flex items-center space-x-2 px-4 py-2 text-white rounded-lg" style={{ backgroundColor: primaryColor }}>
+                    <Plus className="w-4 h-4" /><span>{t('addItem')}</span>
                   </button>
                 </div>
-                
                 <div className="space-y-3">
                   {menuItems.map(item => (
                     <div key={item.item_id} className="border rounded-lg p-4 flex items-center gap-4">
-                      <select
-                        value={item.category}
-                        onChange={(e) => updateMenuItem(item.item_id, { category: e.target.value })}
-                        className="border rounded px-2 py-1 text-sm"
-                      >
-                        <option value="antipasti">Antipasti</option>
-                        <option value="primi">Primi</option>
-                        <option value="secondi">Secondi</option>
-                        <option value="desserts">Desserts</option>
-                        <option value="drinks">Dranken</option>
+                      <select value={item.category} onChange={(e) => updateMenuItem(item.item_id, { category: e.target.value })} className="border rounded px-2 py-1 text-sm">
+                        <option value="antipasti">{t('antipasti')}</option>
+                        <option value="primi">{t('primi')}</option>
+                        <option value="secondi">{t('secondi')}</option>
+                        <option value="desserts">{t('desserts')}</option>
+                        <option value="drinks">{t('drinks')}</option>
                       </select>
-                      <input
-                        type="text"
-                        value={item.name_nl}
-                        onChange={(e) => updateMenuItem(item.item_id, { name_nl: e.target.value })}
-                        className="flex-1 border rounded px-2 py-1"
-                      />
+                      <input type="text" value={item.name_nl} onChange={(e) => updateMenuItem(item.item_id, { name_nl: e.target.value })} className="flex-1 border rounded px-2 py-1" />
                       <div className="flex items-center">
                         <span className="text-gray-500 mr-1">€</span>
-                        <input
-                          type="number"
-                          step="0.50"
-                          value={item.price}
-                          onChange={(e) => updateMenuItem(item.item_id, { price: parseFloat(e.target.value) })}
-                          className="w-20 border rounded px-2 py-1"
-                          disabled={!permissions.menu_prices}
-                        />
+                        <input type="number" step="0.50" value={item.price} onChange={(e) => updateMenuItem(item.item_id, { price: parseFloat(e.target.value) })} className="w-20 border rounded px-2 py-1" disabled={!permissions.menu_prices} />
                       </div>
-                      <button
-                        onClick={() => deleteMenuItem(item.item_id)}
-                        className="p-2 text-red-500 hover:bg-red-50 rounded"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      <button onClick={() => deleteMenuItem(item.item_id)} className="p-2 text-red-500 hover:bg-red-50 rounded"><Trash2 className="w-4 h-4" /></button>
                     </div>
                   ))}
                 </div>
               </div>
             )}
 
-            {/* Gallery */}
             {activeTab === 'gallery' && permissions.gallery && (
               <div className="space-y-6">
                 <div className="flex items-center justify-between border-b pb-4">
-                  <h2 className="text-xl font-semibold">Foto's</h2>
-                  <button
-                    onClick={addGalleryImage}
-                    className="flex items-center space-x-2 px-4 py-2 text-white rounded-lg"
-                    style={{ backgroundColor: primaryColor }}
-                  >
-                    <Plus className="w-4 h-4" />
-                    <span>Foto Toevoegen</span>
+                  <h2 className="text-xl font-semibold">{t('photos')}</h2>
+                  <button onClick={addGalleryImage} className="flex items-center space-x-2 px-4 py-2 text-white rounded-lg" style={{ backgroundColor: primaryColor }}>
+                    <Plus className="w-4 h-4" /><span>{t('addPhoto')}</span>
                   </button>
                 </div>
-                
                 <div className="grid grid-cols-4 gap-4">
                   {gallery.map(img => (
                     <div key={img.image_id} className="relative group">
                       <img src={img.url} alt="" className="w-full h-24 object-cover rounded-lg" />
-                      <button
-                        onClick={() => deleteGalleryImage(img.image_id)}
-                        className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded opacity-0 group-hover:opacity-100"
-                      >
-                        <Trash2 className="w-3 h-3" />
-                      </button>
+                      <button onClick={() => deleteGalleryImage(img.image_id)} className="absolute top-1 right-1 p-1 bg-red-500 text-white rounded opacity-0 group-hover:opacity-100"><Trash2 className="w-3 h-3" /></button>
                     </div>
                   ))}
                 </div>
