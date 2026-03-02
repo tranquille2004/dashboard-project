@@ -346,6 +346,20 @@ class MultiTenantAPITester:
         
         # Public endpoints
         self.test_public_sites_list()
+        
+        # Site Admin Authentication Tests
+        print(f"\n🔐 SITE ADMIN AUTHENTICATION TESTS")
+        print("=" * 60)
+        
+        self.test_site_admin_protected_endpoints()
+        self.test_site_admin_login_invalid()
+        
+        # Test valid login and authenticated access
+        login_success, _ = self.test_site_admin_login_valid()
+        if login_success:
+            self.test_site_admin_me()
+        else:
+            print(f"⚠️  Skipping authenticated site admin tests due to login failure")
 
         # Print summary
         print("\n" + "=" * 60)
