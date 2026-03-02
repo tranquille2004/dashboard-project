@@ -45,9 +45,11 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <SiteProvider>
-          <AppRouter />
-        </SiteProvider>
+        <SiteAdminProvider>
+          <SiteProvider>
+            <AppRouter />
+          </SiteProvider>
+        </SiteAdminProvider>
       </AuthProvider>
     </BrowserRouter>
   );
