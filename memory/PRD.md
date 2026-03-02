@@ -69,12 +69,14 @@ User wants to combine multiple restaurant websites into one platform to save hos
 | group_menus | Manage group menus |
 
 ### URLs
-- Platform: `/` (landing page)
-- Super Admin: `/admin` (requires Google login)
-- Site Editor: `/admin/sites/{siteId}` (includes Beheerders tab)
-- Restaurant Login: `/restaurant-login`
-- Site Admin Dashboard: `/mijn-site`
-- Site Preview: `/site/{slug}`
+- **Jouw Admin Login**: `/` → direct naar `/admin` na Google login
+- **Jouw Dashboard**: `/admin` 
+- **Site Editor**: `/admin/sites/{siteId}` (inclusief Beheerders tab)
+- **Site Preview**: `/site/{slug}` (bijv. `/site/bottega`)
+- **Klant Login** (per site): `/site/{slug}/beheer` of `/site/{slug}/login`
+
+Voorbeeld:
+- La Bottega eigenaar gaat naar: `labottegaherent.com/beheer` (of in preview: `/site/bottega/beheer`)
 
 ### Test Accounts
 - Site Admin (La Bottega): bottega@test.be / test123
