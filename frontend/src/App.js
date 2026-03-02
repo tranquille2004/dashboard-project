@@ -23,16 +23,12 @@ function AppRouter() {
   
   return (
     <Routes>
-      {/* Admin Routes */}
+      {/* Admin Routes (jouw dashboard) */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/sites/:siteId" element={<SiteEditor />} />
       
-      {/* Site Admin Routes (for restaurant owners) */}
-      <Route path="/restaurant-login" element={<SiteAdminLogin />} />
-      <Route path="/mijn-site" element={<SiteAdminDashboard />} />
-      
-      {/* Site Preview Routes */}
+      {/* Site Preview Routes (elke website heeft zijn eigen /beheer login) */}
       <Route path="/site/:slug/*" element={<SiteRenderer />} />
       
       {/* Catch-all for domain-based sites */}
