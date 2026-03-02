@@ -932,7 +932,7 @@ const SiteRenderer = () => {
         <Route path="contact" element={<ContactPage site={site} config={config} primaryColor={primaryColor} />} />
         
         {/* Admin routes for this specific site */}
-        <Route path="beheer" element={
+        <Route path="manage" element={
           isAdminForThisSite ? (
             <SiteAdminPanel 
               site={site} 
