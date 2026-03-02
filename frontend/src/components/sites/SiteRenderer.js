@@ -921,6 +921,37 @@ const SiteAdminPanel = ({ site, config, admin, primaryColor, onLogout }) => {
 const SiteRenderer = () => {
   const { slug } = useParams();
   const { data, loading, error } = useSiteData(slug);
+  const [admin, setAdmin] = useState(null);
+  const [adminSite, setAdminSite] = useState(null);
+
+  // Check if admin is logged in for this site
+  useEffect(() => {
+    const checkAdminAuth = async () => {
+      try {
+        const response = await axios.get(`${API}/site-admin/me`, { withCredentials: true });
+        if (response.data?.admin && response.data?.site) {
+          setAdmin(response.data.admin);
+          setAdminSite(response.data.site);
+        }
+      } catch (err) {
+        // Not logged in, that's fine
+      }
+    };
+    checkAdminAuth();
+  }, []);
+
+  const handleLogin = (loginData) => {
+    setAdmin(loginData.admin);
+    setAdminSite(loginData.site);
+  };
+
+  const handleLogout = async () => {
+    try {
+      await axios.post(`${API}/site-admin/logout`, {}, { withCredentials: true });
+    } catch (err) {}
+    setAdmin(null);
+    setAdminSite(null);
+  };
   
   if (loading) {
     return (
@@ -946,6 +977,9 @@ const SiteRenderer = () => {
   const primaryColor = config?.primary_color || '#7D3C32';
   const baseUrl = slug ? `/site/${slug}` : '';
 
+  // Check if logged in admin belongs to this site
+  const isAdminForThisSite = admin && adminSite?.site_id === site?.site_id;
+
   return (
     <div className="min-h-screen" style={{ '--primary-color': primaryColor }}>
       <SiteNavigation site={site} config={config} primaryColor={primaryColor} />
@@ -957,6 +991,45 @@ const SiteRenderer = () => {
         <Route path="afhalen" element={<TakeawayPage site={site} config={config} primaryColor={primaryColor} />} />
         <Route path="galerie" element={<GalleryPage site={site} gallery={gallery} primaryColor={primaryColor} />} />
         <Route path="contact" element={<ContactPage site={site} config={config} primaryColor={primaryColor} />} />
+        
+        {/* Admin routes for this specific site */}
+        <Route path="beheer" element={
+          isAdminForThisSite ? (
+            <SiteAdminPanel 
+              site={site} 
+              config={config} 
+              admin={admin} 
+              primaryColor={primaryColor}
+              onLogout={handleLogout}
+            />
+          ) : (
+            <SiteLoginPage 
+              site={site} 
+              config={config} 
+              primaryColor={primaryColor}
+              onLogin={handleLogin}
+            />
+          )
+        } />
+        <Route path="login" element={
+          isAdminForThisSite ? (
+            <SiteAdminPanel 
+              site={site} 
+              config={config} 
+              admin={admin} 
+              primaryColor={primaryColor}
+              onLogout={handleLogout}
+            />
+          ) : (
+            <SiteLoginPage 
+              site={site} 
+              config={config} 
+              primaryColor={primaryColor}
+              onLogin={handleLogin}
+            />
+          )
+        } />
+        
         <Route path="*" element={<HomePage site={site} config={config} gallery={gallery} primaryColor={primaryColor} />} />
       </Routes>
       
