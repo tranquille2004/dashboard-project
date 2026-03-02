@@ -38,11 +38,9 @@ function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <SiteAdminProvider>
-          <SiteProvider>
-            <AppRouter />
-          </SiteProvider>
-        </SiteAdminProvider>
+        <SiteProvider>
+          <AppRouter />
+        </SiteProvider>
       </AuthProvider>
     </BrowserRouter>
   );
