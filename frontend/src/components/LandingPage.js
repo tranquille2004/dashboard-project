@@ -1,7 +1,9 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
-import { Globe, LogIn } from 'lucide-react';
+import { LogIn } from 'lucide-react';
+
+const FWORKS_LOGO = 'https://customer-assets.emergentagent.com/job_c5f93e02-948a-4de4-99bb-a726a04220a7/artifacts/d9j7q5w4_fworksbuilders4.gif';
 
 const LandingPage = () => {
   const { user, login, loading } = useAuth();
@@ -15,11 +17,13 @@ const LandingPage = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-lg shadow-lg p-8 text-center">
-          <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <Globe className="w-8 h-8 text-blue-600" />
-          </div>
+          <img 
+            src={FWORKS_LOGO} 
+            alt="fworks builders" 
+            className="h-24 w-auto mx-auto mb-6"
+          />
           
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Gestion des Sites Web</h1>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">fworksbuilders websites</h1>
           <p className="text-gray-600 mb-8">Connectez-vous pour gérer vos sites</p>
           
           {loading ? (

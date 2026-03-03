@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
+const FWORKS_LOGO = 'https://customer-assets.emergentagent.com/job_c5f93e02-948a-4de4-99bb-a726a04220a7/artifacts/d9j7q5w4_fworksbuilders4.gif';
 
 // Admin Dashboard Translations
 const translations = {
@@ -148,8 +149,8 @@ const AdminDashboard = () => {
       <header className="bg-white shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <Globe className="w-8 h-8 text-blue-600" />
-            <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
+            <img src={FWORKS_LOGO} alt="fworks builders" className="h-12 w-auto" />
+            <h1 className="text-2xl font-bold text-gray-900">fworksbuilders websites</h1>
           </div>
           <div className="flex items-center space-x-4">
             {/* Language Switcher */}
