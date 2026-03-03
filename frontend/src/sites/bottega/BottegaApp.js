@@ -360,12 +360,12 @@ function Navigation() {
           {/* Desktop Menu - exact like original */}
           <div className="hidden lg:flex items-center space-x-6">
             <Link to={BASE_PATH} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
-            <a href="#about" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</a>
+            <Link to={`${BASE_PATH}#about`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
             <Link to={`${BASE_PATH}/kaart`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
             <Link to={`${BASE_PATH}/galerie`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
             <Link to={`${BASE_PATH}/groepmenus`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
-            <a href="#hours" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</a>
-            <a href="#contact" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</a>
+            <Link to={`${BASE_PATH}#hours`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
+            <Link to={`${BASE_PATH}#contact`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
             <LanguageSwitcher />
           </div>
 
@@ -402,12 +402,12 @@ function Navigation() {
           <div className="lg:hidden pb-4">
             <div className="flex flex-col space-y-3">
               <Link to={BASE_PATH} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
-              <a href="#about" onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</a>
+              <Link to={`${BASE_PATH}#about`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
               <Link to={`${BASE_PATH}/kaart`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
               <Link to={`${BASE_PATH}/galerie`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
               <Link to={`${BASE_PATH}/groepmenus`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
-              <a href="#hours" onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</a>
-              <a href="#contact" onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</a>
+              <Link to={`${BASE_PATH}#hours`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
+              <Link to={`${BASE_PATH}#contact`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
               <div className="flex flex-col space-y-3 pt-4 border-t border-gray-200">
                 <Link to={`${BASE_PATH}/reserveren`} onClick={() => setIsOpen(false)} className="bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#6A3229] transition-colors text-center">
                   {t('reserve')}
@@ -430,6 +430,19 @@ function Navigation() {
 function HomePage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Handle hash scrolling
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.getElementById(location.hash.substring(1));
+      if (element) {
+        setTimeout(() => {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }, 100);
+      }
+    }
+  }, [location]);
 
   return (
     <div className="min-h-screen">
@@ -465,7 +478,7 @@ function HomePage() {
       </section>
 
       {/* About Section */}
-      <section className="py-20 px-4">
+      <section id="about" className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('aboutTitle')}</h2>
@@ -541,7 +554,7 @@ function HomePage() {
       </section>
 
       {/* Opening Hours */}
-      <section className="py-20 px-4">
+      <section id="hours" className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('hoursTitle')}</h2>
@@ -601,7 +614,7 @@ function HomePage() {
       </section>
 
       {/* Contact Section */}
-      <section className="py-20 px-4 bg-gray-50">
+      <section id="contact" className="py-20 px-4 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('contactTitle')}</h2>
