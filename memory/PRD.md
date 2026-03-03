@@ -85,6 +85,26 @@ User wants to combine multiple restaurant websites into one platform to save hos
 - [x] Spaanse taal als standaard
 - [x] Site Admin login aangemaakt: tracemaster@test.be / test123
 
+### Phase 6 - La Cantina Italiana EXACT REPLICA ✅ (3 december 2026)
+- [x] La Cantina helemaal opnieuw gebouwd als exacte replica van originele site
+- [x] Self-contained CantinaApp.js component in /app/frontend/src/sites/cantina/
+- [x] Scoped CSS om conflicten te voorkomen
+- [x] Alle afbeeldingen van GitHub raw URLs
+- [x] Groepmenus exact overgenomen met correcte scheidingslijnen
+
+### Phase 7 - La Bottega Italiana EXACT REPLICA ✅ (3 december 2026)
+- [x] La Bottega helemaal opnieuw gebouwd als exacte replica van originele site
+- [x] Self-contained BottegaApp.js component in /app/frontend/src/sites/bottega/
+- [x] Navigatie met taalwisseling (NL, FR, EN, DE)
+- [x] Homepage met hero, about section, features, menu sectie
+- [x] Galerij pagina met alle 26 foto's en lightbox functionaliteit
+- [x] Groepmenus pagina met 3 menu-opties (€45, €55, €65)
+- [x] Kaart pagina met online menu viewer (Weebly iframe)
+- [x] Reserveren pagina met correct Jotform formulier (222292165889366)
+- [x] Afhalen pagina met correct Jotform formulier (222305012976349)
+- [x] Kerstsluitingsmelding wordt getoond
+- [x] Footer met webmaster info (fworksbuilders)
+
 ### Permission Options
 | Permission | Description |
 |------------|-------------|
@@ -111,20 +131,20 @@ Voorbeeld:
 
 ## Prioritized Backlog
 
-### P0 - High Priority
-- [ ] Complete menu data import from original sites
-- [ ] Group menus data import
-- [ ] Full gallery import with all photos
+### P0 - High Priority (NEXT)
+- [ ] **L'Ascoli website EXACT REPLICA** - Repliceer met originele code van `tranquille2004/Ascoli` repo
+- [ ] **Mercato website EXACT REPLICA** - Repliceer met originele code van `tranquille2004/Mercato` repo
+- [ ] **Tracemaster evalueren** - Vraag gebruiker of deze ook exact gerepliceerd moet worden
 
 ### P1 - Medium Priority  
-- [ ] Multi-language support (NL/FR/EN/IT/DE)
-- [ ] PDF menu download functionality
+- [ ] Site Admin voor La Cantina aanmaken (ontbreekt nog!)
+- [ ] Menu beheer voor Bottega aanpassen (PDF upload i.p.v. itemized editor)
 - [ ] Password reset for site admins
 - [ ] Email notifications when admin is created
 
 ### P2 - Nice to Have
 - [ ] Generic business template (not restaurant)
-- [ ] Billing/subscription management for site admins
+- [ ] Billing/subscription management for site admins (Stripe)
 - [ ] Analytics per site
 - [ ] Activity log per site admin
 

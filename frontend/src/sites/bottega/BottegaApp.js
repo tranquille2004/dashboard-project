@@ -7,6 +7,47 @@ const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const BASE_PATH = '/site/bottega';
 const IMG_BASE = 'https://raw.githubusercontent.com/tranquille2004/Bottega/main/frontend/public/images';
 
+// Image paths mapping to actual files in the repo
+const IMAGES = {
+  logo: `${IMG_BASE}/logo.jpg`,
+  hero: `${IMG_BASE}/gallery1.jpg`,
+  about: `${IMG_BASE}/new-photo21.jpg`,
+  fworksLogo: `${IMG_BASE}/fworksbuilders-logo.png`,
+  gallery: [
+    `${IMG_BASE}/gallery5.jpg`,
+    `${IMG_BASE}/gallery6.jpg`,
+    `${IMG_BASE}/gallery1.jpg`,
+    `${IMG_BASE}/new-photo1.jpg`,
+    `${IMG_BASE}/new-photo2.jpg`,
+    `${IMG_BASE}/new-photo3.jpg`,
+    `${IMG_BASE}/new-photo4.jpg`,
+    `${IMG_BASE}/new-photo5.jpg`,
+    `${IMG_BASE}/new-photo6.jpg`,
+    `${IMG_BASE}/new-photo7.jpg`,
+    `${IMG_BASE}/new-photo8.jpg`,
+    `${IMG_BASE}/new-photo9.jpg`,
+    `${IMG_BASE}/new-photo10.jpg`,
+    `${IMG_BASE}/new-photo11.webp`,
+    `${IMG_BASE}/new-photo12.webp`,
+    `${IMG_BASE}/new-photo13.webp`,
+    `${IMG_BASE}/new-photo14.webp`,
+    `${IMG_BASE}/new-photo15.webp`,
+    `${IMG_BASE}/new-photo16.webp`,
+    `${IMG_BASE}/new-photo17.jpg`,
+    `${IMG_BASE}/new-photo18.jpg`,
+    `${IMG_BASE}/new-photo19.jpg`,
+    `${IMG_BASE}/new-photo20.jpg`,
+    `${IMG_BASE}/new-photo21.jpg`,
+    `${IMG_BASE}/new-photo22.jpg`,
+    `${IMG_BASE}/new-photo23.jpg`,
+  ],
+  features: {
+    quality: `${IMG_BASE}/new-photo21.jpg`,
+    fresh: `${IMG_BASE}/new-photo23.jpg`,
+    ambiance: `${IMG_BASE}/gallery4.jpg`,
+  }
+};
+
 // Bordeaux color from logo
 const BRAND_COLOR = '#7D3C32';
 
@@ -259,18 +300,36 @@ function ScrollToTop() {
 function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="bg-gray-900 text-white py-8 px-4 mt-12">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center text-sm text-gray-400 pb-4">
-          <p>&copy; {new Date().getFullYear()} La Bottega Italiana. {t('allRightsReserved')}.</p>
-          <p className="mt-2">{t('restaurantType')}</p>
+    <footer className="bg-gray-900 text-white py-12 px-4">
+      <div className="max-w-7xl mx-auto text-center">
+        <div className="mb-6">
+          <h3 className="text-2xl font-bold mb-2">La Bottega Italiana</h3>
+          <p className="text-gray-400">{t('restaurantType')}</p>
         </div>
-        <div className="border-t border-gray-700 pt-4 text-center">
-          <p className="text-xs text-gray-500 mb-2">{t('webmasterText')}</p>
-          <div className="flex items-center justify-center space-x-2">
-            <img src={`${IMG_BASE}/fworksbuilders.gif`} alt="fworksbuilders" className="h-6" />
-            <a href="https://wa.me/32456195916" target="_blank" rel="noopener noreferrer" className="text-green-500 hover:text-green-400 text-xs">
-              WhatsApp: +32 456 19 59 16
+        <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8 mb-6 text-sm text-gray-400">
+          <span>Wilselsesteenweg 93, 3020 Herent</span>
+          <span className="hidden md:inline">•</span>
+          <a href="tel:+3216600421" className="hover:text-white transition-colors">+32 16 60 04 21</a>
+          <span className="hidden md:inline">•</span>
+          <a href="mailto:bottega@mail.be" className="hover:text-white transition-colors">bottega@mail.be</a>
+        </div>
+        <div className="mb-4">
+          <a href="https://www.labottegaherent.com" className="text-gray-400 hover:text-white transition-colors">www.labottegaherent.com</a>
+        </div>
+        <div className="border-t border-gray-800 pt-6 pb-4 text-sm text-gray-400">
+          <p>&copy; {new Date().getFullYear()} La Bottega Italiana. {t('allRightsReserved')}.</p>
+        </div>
+
+        {/* Webmaster Section */}
+        <div className="border-t border-gray-800 pt-4">
+          <div className="text-center text-sm text-gray-400 mb-3">
+            <p>{t('webmasterText')}</p>
+          </div>
+          <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+            <img src={IMAGES.fworksLogo} alt="f.works" className="h-5" />
+            <span>Webmaster: fworksbuilders bv. </span>
+            <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
+              +32 494 51 60 64 (WhatsApp)
             </a>
           </div>
         </div>
@@ -289,9 +348,13 @@ function Navigation() {
   return (
     <nav className="fixed w-full bg-white/95 backdrop-blur-sm shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4">
-        <div className="flex justify-between items-center h-16">
-          <Link to={BASE_PATH} className="flex items-center">
-            <img src={`${IMG_BASE}/logo-bottega.png`} alt="La Bottega Italiana" className="h-12" />
+        <div className="flex justify-between items-center h-20">
+          <Link to={BASE_PATH} className="flex items-center space-x-2">
+            <img src={IMAGES.logo} alt="La Bottega Italiana" className="h-10 w-auto" />
+            <div className="hidden sm:block">
+              <h1 className="text-lg font-bold text-gray-900">La Bottega Italiana</h1>
+              <p className="text-xs text-gray-600">Herent</p>
+            </div>
           </Link>
           
           <div className="hidden md:flex items-center space-x-6">
@@ -343,119 +406,280 @@ function HomePage() {
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center">
         <div className="absolute inset-0">
-          <img src={`${IMG_BASE}/hero-bottega.jpg`} alt="La Bottega Italiana" className="w-full h-full object-cover" />
+          <img src={IMAGES.hero} alt="La Bottega Italiana" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/50"></div>
         </div>
         <div className="relative z-10 text-center text-white px-4">
-          <h1 className="text-4xl md:text-6xl font-serif mb-4">{t('heroTitle')}</h1>
-          <p className="text-xl md:text-2xl mb-8 text-gray-200">{t('heroSubtitle')}</p>
+          <h1 className="text-5xl md:text-7xl font-bold mb-6" data-testid="hero-title">{t('heroTitle')}</h1>
+          <p className="text-xl md:text-2xl mb-8 font-light">{t('heroSubtitle')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button onClick={() => navigate(`${BASE_PATH}/reserveren`)} className="bg-[#7D3C32] hover:bg-[#6A3229] text-white px-8 py-3 rounded-lg text-lg transition-colors">
+            <button onClick={() => navigate(`${BASE_PATH}/reserveren`)} className="bg-[#7D3C32] hover:bg-[#6A3229] text-white px-8 py-4 rounded-lg text-lg font-semibold transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="reserve-table-btn">
               {t('reserveTable')}
             </button>
-            <button onClick={() => navigate(`${BASE_PATH}/afhalen`)} className="border-2 border-white text-white hover:bg-white hover:text-[#7D3C32] px-8 py-3 rounded-lg text-lg transition-colors">
+            <button onClick={() => navigate(`${BASE_PATH}/afhalen`)} className="bg-white text-gray-900 hover:bg-gray-100 px-8 py-4 rounded-lg text-lg font-semibold transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="takeaway-btn">
               {t('orderTakeaway')}
             </button>
           </div>
         </div>
         
         {/* Holiday Notice */}
-        <div className="absolute bottom-0 left-0 right-0 bg-[#7D3C32]/90 text-white py-3 px-4 text-center">
-          <p><strong>{t('letOp')}</strong> {t('closureNotice')}</p>
+        <div className="absolute bottom-0 left-0 right-0 bg-[#FFF4E6] border-l-4 border-[#7D3C32] py-6 px-4">
+          <div className="max-w-7xl mx-auto text-center">
+            <p className="text-[#7D3C32] font-medium" data-testid="closure-notice">
+              <span className="font-bold">{t('letOp')}</span> {t('closureNotice')}
+            </p>
+          </div>
         </div>
       </section>
 
       {/* About Section */}
+      <section className="py-20 px-4">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('aboutTitle')}</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">{t('aboutText')}</p>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all">
+              <img src={IMAGES.features.quality} alt="Italiaanse Kwaliteit" className="w-full h-64 object-cover" />
+              <div className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <ChefHat className="w-12 h-12 text-[#7D3C32]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('feature1Title')}</h3>
+                <p className="text-gray-600">{t('feature1Text')}</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all">
+              <img src={IMAGES.features.fresh} alt="Verse Bereiding" className="w-full h-64 object-cover" />
+              <div className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <Utensils className="w-12 h-12 text-[#7D3C32]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('feature2Title')}</h3>
+                <p className="text-gray-600">{t('feature2Text')}</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all">
+              <img src={IMAGES.features.ambiance} alt="Elegante Ambiance" className="w-full h-64 object-cover" />
+              <div className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <Wine className="w-12 h-12 text-[#7D3C32]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">{t('feature3Title')}</h3>
+                <p className="text-gray-600">{t('feature3Text')}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Menu Section */}
       <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('menuTitle')}</h2>
+            <p className="text-lg text-gray-600">{t('menuSubtitle')}</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <Link to={`${BASE_PATH}/kaart`} className="bg-white rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="menu-card-link">
+              <div className="flex justify-center mb-4">
+                <Utensils className="w-16 h-16 text-[#7D3C32]" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('ourMenu')}</h3>
+              <p className="text-gray-600 mb-4">{t('viewMenu')}</p>
+              <span className="text-[#7D3C32] font-semibold">{t('viewMenuLink')}</span>
+            </Link>
+
+            <Link to={`${BASE_PATH}/groepmenus`} className="bg-white rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="group-menu-link">
+              <div className="flex justify-center mb-4">
+                <Wine className="w-16 h-16 text-[#7D3C32]" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">{t('groupMenus')}</h3>
+              <p className="text-gray-600 mb-4">{t('groupMenusText')}</p>
+              <span className="text-[#7D3C32] font-semibold">{t('viewGroupMenus')}</span>
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Opening Hours */}
+      <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h2 className="text-3xl md:text-4xl font-serif text-[#7D3C32] mb-6">{t('aboutTitle')}</h2>
-              <p className="text-gray-600 text-lg leading-relaxed mb-6">{t('aboutText')}</p>
-              <button onClick={() => navigate(`${BASE_PATH}/kaart`)} className="text-[#7D3C32] font-semibold hover:underline">
-                {t('viewMenuLink')}
-              </button>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('hoursTitle')}</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Left Column - Opening Hours */}
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('openingHours')}</h3>
+              <div className="space-y-3" data-testid="opening-hours">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">{t('monTue')}</span>
+                  <span className="text-gray-600">18:00 - 22:00</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">{t('wedFri')}</span>
+                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 22:00</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">{t('sat')}</span>
+                  <span className="text-gray-600">18:00 - 22:00</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">{t('sun')}</span>
+                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 22:00</span>
+                </div>
+              </div>
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <p className="text-sm text-gray-600">{t('takeawayInfo')}</p>
+              </div>
             </div>
-            <div>
-              <img src={`${IMG_BASE}/about-bottega.jpg`} alt="Restaurant" className="rounded-lg shadow-xl" />
+
+            {/* Right Column - Important Info */}
+            <div className="space-y-6">
+              <div className="bg-[#7D3C32] text-white rounded-lg shadow-lg p-8">
+                <div className="flex items-start space-x-4">
+                  <Clock className="w-8 h-8 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">{t('pizzas')}</h3>
+                    <p className="text-white/90">{t('pizzasText')}</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-8">
+                <div className="flex items-start space-x-4">
+                  <MapPin className="w-8 h-8 text-[#7D3C32] flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{t('closedOn')}</h3>
+                    <p className="text-gray-600">{t('closedDays')}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features */}
-      <section className="py-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center p-6">
-              <ChefHat className="w-12 h-12 text-[#7D3C32] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{t('feature1Title')}</h3>
-              <p className="text-gray-600">{t('feature1Text')}</p>
-            </div>
-            <div className="text-center p-6">
-              <Utensils className="w-12 h-12 text-[#7D3C32] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{t('feature2Title')}</h3>
-              <p className="text-gray-600">{t('feature2Text')}</p>
-            </div>
-            <div className="text-center p-6">
-              <Wine className="w-12 h-12 text-[#7D3C32] mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">{t('feature3Title')}</h3>
-              <p className="text-gray-600">{t('feature3Text')}</p>
-            </div>
+      {/* Contact Section */}
+      <section className="py-20 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('contactTitle')}</h2>
+            <p className="text-lg text-gray-600">{t('contactSubtitle')}</p>
           </div>
-        </div>
-      </section>
 
-      {/* Hours & Contact */}
-      <section className="py-16 px-4 bg-gray-900 text-white">
-        <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12">
-            <div>
-              <h3 className="text-2xl font-serif mb-6">{t('hoursTitle')}</h3>
-              <div className="space-y-3">
-                <div className="flex justify-between"><span>{t('monTue')}</span><span>12:00 - 14:00 / 18:00 - 21:30</span></div>
-                <div className="flex justify-between"><span>{t('wedFri')}</span><span>12:00 - 14:00 / 18:00 - 21:30</span></div>
-                <div className="flex justify-between"><span>{t('sat')}</span><span>18:00 - 21:30</span></div>
-                <div className="flex justify-between"><span>{t('sun')}</span><span>12:00 - 14:30 / 18:00 - 21:00</span></div>
+            <div className="space-y-6" data-testid="contact-info">
+              <div className="flex items-start space-x-4">
+                <MapPin className="w-6 h-6 text-[#7D3C32] flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-1">{t('address')}</h3>
+                  <p className="text-gray-600">Wilselsesteenweg 93</p>
+                  <p className="text-gray-600">3020 Herent (Leuven)</p>
+                </div>
               </div>
-              <p className="mt-4 text-sm text-gray-400">{t('closedOn')}: {t('closedDays')}</p>
+
+              <div className="flex items-start space-x-4">
+                <Phone className="w-6 h-6 text-[#7D3C32] flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-1">{t('phone')}</h3>
+                  <a href="tel:+3216600421" className="text-gray-600 hover:text-[#7D3C32] transition-colors">
+                    +32 16 60 04 21
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <Mail className="w-6 h-6 text-[#7D3C32] flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-1">{t('email')}</h3>
+                  <a href="mailto:bottega@mail.be" className="text-gray-600 hover:text-[#7D3C32] transition-colors">
+                    bottega@mail.be
+                  </a>
+                  <p className="text-sm text-gray-500 mt-1">{t('emailNote')}</p>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-gray-200">
+                <p className="text-sm text-gray-500">BTW nummer: BE682764984</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-2xl font-serif mb-6">{t('contactTitle')}</h3>
-              <div className="space-y-4">
-                <div className="flex items-start space-x-3">
-                  <MapPin className="w-5 h-5 text-[#7D3C32] mt-1" />
-                  <span>Wilselsesteenweg 29, 3020 Herent</span>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Phone className="w-5 h-5 text-[#7D3C32]" />
-                  <a href="tel:+3216208586" className="hover:text-[#7D3C32]">+32 16 20 85 86</a>
-                </div>
-                <div className="flex items-center space-x-3">
-                  <Mail className="w-5 h-5 text-[#7D3C32]" />
-                  <span>info@labottega-herent.be</span>
-                </div>
-              </div>
+
+            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg h-96">
+              <iframe
+                title="Google Maps Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.8!2d4.6709!3d50.9247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c161f0e0e0e0e0%3A0x0!2sWilselsesteenweg%2093%2C%203020%20Herent!5e0!3m2!1snl!2sbe!4v1234567890"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+              ></iframe>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="py-16 px-4 bg-[#7D3C32] text-white text-center">
-        <h2 className="text-3xl font-serif mb-4">{t('ctaTitle')}</h2>
-        <p className="mb-8 text-lg text-gray-200">{t('ctaSubtitle')}</p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <button onClick={() => navigate(`${BASE_PATH}/reserveren`)} className="bg-white text-[#7D3C32] px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-            {t('reserveTable')}
-          </button>
-          <button onClick={() => navigate(`${BASE_PATH}/afhalen`)} className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-[#7D3C32] transition-colors">
-            {t('orderTakeaway')}
-          </button>
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-[#7D3C32] text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">{t('ctaTitle')}</h2>
+          <p className="text-xl mb-8">{t('ctaSubtitle')}</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <button onClick={() => navigate(`${BASE_PATH}/reserveren`)} className="bg-white text-[#7D3C32] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-reserve-btn">
+              {t('reserveTable')}
+            </button>
+            <button onClick={() => navigate(`${BASE_PATH}/afhalen`)} className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#7D3C32] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-takeaway-btn">
+              {t('orderTakeaway')}
+            </button>
+          </div>
         </div>
       </section>
 
-      <Footer />
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12 px-4">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold mb-2">La Bottega Italiana</h3>
+            <p className="text-gray-400">{t('restaurantType')}</p>
+          </div>
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8 mb-6 text-sm text-gray-400">
+            <span>Wilselsesteenweg 93, 3020 Herent</span>
+            <span className="hidden md:inline">•</span>
+            <a href="tel:+3216600421" className="hover:text-white transition-colors">+32 16 60 04 21</a>
+            <span className="hidden md:inline">•</span>
+            <a href="mailto:bottega@mail.be" className="hover:text-white transition-colors">bottega@mail.be</a>
+          </div>
+          <div className="mb-4">
+            <a href="https://www.labottegaherent.com" className="text-gray-400 hover:text-white transition-colors">www.labottegaherent.com</a>
+          </div>
+          <div className="border-t border-gray-800 pt-6 pb-4 text-sm text-gray-400">
+            <p>&copy; {new Date().getFullYear()} La Bottega Italiana. {t('allRightsReserved')}.</p>
+          </div>
+
+          {/* Webmaster Section */}
+          <div className="border-t border-gray-800 pt-4">
+            <div className="text-center text-sm text-gray-400 mb-3">
+              <p>{t('webmasterText')}</p>
+            </div>
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+              <img src={IMAGES.fworksLogo} alt="f.works" className="h-5" />
+              <span>Webmaster: fworksbuilders bv. </span>
+              <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
+                +32 494 51 60 64 (WhatsApp)
+              </a>
+            </div>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
@@ -465,37 +689,50 @@ function HomePage() {
 // ===========================================
 function KaartPage() {
   const { t } = useLanguage();
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      <div className="pt-24 pb-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-serif text-[#7D3C32] mb-4">{t('menuTitle')}</h1>
-          <p className="text-gray-600 mb-8">{t('menuSubtitle')}</p>
-          
-          <div className="bg-white rounded-xl shadow-lg p-8 mb-8">
-            <h2 className="text-2xl font-semibold mb-4">{t('ourMenu')}</h2>
-            <a href={`${IMG_BASE}/menu-bottega.pdf`} target="_blank" rel="noopener noreferrer"
-              className="inline-block bg-[#7D3C32] text-white px-6 py-3 rounded-lg hover:bg-[#6A3229] transition-colors">
-              📄 {t('viewMenu')}
-            </a>
-          </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-[#7D3C32] mb-2">{t('pizzas')}</h3>
-              <p className="text-gray-600 text-sm mb-4">{t('pizzasText')}</p>
-              <a href={`${IMG_BASE}/pizza-bottega.pdf`} target="_blank" rel="noopener noreferrer" className="text-[#7D3C32] hover:underline">
-                {t('viewPizzas')}
+  return (
+    <div className="min-h-screen">
+      <Navigation />
+      <div className="pt-20">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('ourMenu')}</h1>
+            <p className="text-lg text-gray-600 mb-8">Onze kaart (ter plaatse en ook afhalen) / Notre carte (sur place et aussi pour emporter)</p>
+
+            {/* Download Button */}
+            <div className="flex justify-center mb-8">
+              <a
+                href="https://labottegaherent.weebly.com/onze-kaart1.html"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
+              >
+                📄 Bekijk Kaart Online
               </a>
             </div>
-            <div className="bg-white rounded-xl shadow-lg p-6">
-              <h3 className="text-xl font-semibold text-[#7D3C32] mb-2">{t('groupMenus')}</h3>
-              <p className="text-gray-600 text-sm mb-4">{t('groupMenusText')}</p>
-              <Link to={`${BASE_PATH}/groepmenus`} className="text-[#7D3C32] hover:underline">
-                {t('viewGroupMenus')}
-              </Link>
-            </div>
+          </div>
+
+          {/* PDF Viewer using Google Docs */}
+          <div className="bg-white rounded-lg shadow-xl overflow-hidden mb-6">
+            <iframe
+              src="https://labottegaherent.weebly.com/onze-kaart1.html"
+              className="w-full"
+              style={{ height: '1200px', border: 'none' }}
+              title="La Bottega Kaart"
+            >
+              <p className="p-8 text-center text-gray-600">
+                De kaart kan niet worden weergegeven.
+                <a href="https://labottegaherent.weebly.com/onze-kaart1.html" target="_blank" rel="noopener noreferrer" className="text-[#7D3C32] underline ml-2">
+                  Klik hier om de kaart te bekijken
+                </a>
+              </p>
+            </iframe>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link to={BASE_PATH} className="text-[#7D3C32] hover:underline font-medium text-lg">
+              {t('backToHome')}
+            </Link>
           </div>
         </div>
       </div>
@@ -509,25 +746,63 @@ function KaartPage() {
 // ===========================================
 function GaleriePage() {
   const { t } = useLanguage();
-  const galleryImages = [
-    'gallery1.jpg', 'gallery2.jpg', 'gallery3.jpg', 'gallery4.jpg',
-    'gallery5.jpg', 'gallery6.jpg', 'gallery7.jpg', 'gallery8.jpg'
-  ];
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const openLightbox = (index) => {
+    setSelectedImage(IMAGES.gallery[index]);
+    setCurrentIndex(index);
+  };
+
+  const closeLightbox = () => setSelectedImage(null);
+
+  const nextImage = () => {
+    const newIndex = (currentIndex + 1) % IMAGES.gallery.length;
+    setSelectedImage(IMAGES.gallery[newIndex]);
+    setCurrentIndex(newIndex);
+  };
+
+  const prevImage = () => {
+    const newIndex = (currentIndex - 1 + IMAGES.gallery.length) % IMAGES.gallery.length;
+    setSelectedImage(IMAGES.gallery[newIndex]);
+    setCurrentIndex(newIndex);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Navigation />
-      <div className="pt-24 pb-16 px-4">
-        <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl font-serif text-[#7D3C32] mb-4 text-center">{t('galleryPageTitle')}</h1>
-          <p className="text-gray-600 mb-12 text-center">{t('galleryPageSubtitle')}</p>
-          
+      <div className="pt-20">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('galleryPageTitle')}</h1>
+            <p className="text-lg text-gray-600">{t('galleryPageSubtitle')}</p>
+          </div>
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {galleryImages.map((img, idx) => (
-              <div key={idx} className="aspect-square overflow-hidden rounded-lg shadow-md">
-                <img src={`${IMG_BASE}/gallery/${img}`} alt={`Gallery ${idx + 1}`} className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" />
-              </div>
+            {IMAGES.gallery.map((image, index) => (
+              <img
+                key={index}
+                src={image}
+                alt={`Photo ${index + 1}`}
+                className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105 cursor-pointer"
+                onClick={() => openLightbox(index)}
+              />
             ))}
+          </div>
+
+          {/* Lightbox Modal */}
+          {selectedImage && (
+            <div className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4" onClick={closeLightbox}>
+              <button onClick={closeLightbox} className="absolute top-4 right-4 text-white text-4xl hover:text-gray-300 z-60">×</button>
+              <button onClick={(e) => { e.stopPropagation(); prevImage(); }} className="absolute left-4 text-white text-5xl hover:text-gray-300 z-60">‹</button>
+              <img src={selectedImage} alt="Enlarged" className="max-w-full max-h-full object-contain" onClick={(e) => e.stopPropagation()} />
+              <button onClick={(e) => { e.stopPropagation(); nextImage(); }} className="absolute right-4 text-white text-5xl hover:text-gray-300 z-60">›</button>
+              <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm">{currentIndex + 1} / {IMAGES.gallery.length}</div>
+            </div>
+          )}
+
+          <div className="mt-12 text-center">
+            <Link to={BASE_PATH} className="text-[#7D3C32] hover:underline font-medium text-lg">{t('backToHome')}</Link>
           </div>
         </div>
       </div>
@@ -543,28 +818,157 @@ function GroepmenusPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <Navigation />
-      <div className="pt-24 pb-16 px-4">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl font-serif text-[#7D3C32] mb-4">{t('groupMenusPageTitle')}</h1>
-          <p className="text-gray-600 mb-8">{t('groupMenusPageSubtitle')}</p>
-          <p className="text-sm text-gray-500 mb-8">{t('minimumPersons')}</p>
+  const menus = [
+    {
+      id: 1,
+      price: "€45,-",
+      items: [
+        { name: "Rundercarpaccio met raketsalade en parmezaanse kaas / Carpaccio de boeuf, roquette et parmesan / Beefcarpaccio with arugula salad and parmesan cheese" },
+        { name: "Gemarineerde zalm / Saumon mariné / Marinated salmon" },
+        { name: "Parmigiana: Gegratineerde aubergines met gerookte mozzarella" },
+        { name: "Antipasto 'della Bottega': Italiaanse charcuterie, kaas" },
+      ],
+      main: [
+        { name: "Ravioli al Tartufo: Ravioli met truffel" },
+        { name: "Gebraden zalm met grof zout, purée van spinazie, spumante saus" },
+        { name: "Involtino di vitello: Kalfsrollade gevuld met hesp en kaas, portsaus, rozijnen, pijnboompitten en pasta" },
+      ],
+      wine: false,
+    },
+    {
+      id: 2,
+      price: "€55,-",
+      items: [
+        { name: "Triologie van zeecarpaccio: zwaardvis, tonijn, zalm" },
+        { name: "Parmaham met burratina" },
+        { name: "Sapori 'La Bottega': Rundercarpaccio, vitello tonnato, Parmaham" },
+        { name: "Scampi met truffel en groene asperges" },
+      ],
+      main: [
+        { name: "Tagliata: Runderlapje op een bedje van rucola en parmezaanse kaas" },
+        { name: "Millefeuille van kabeljauw met gerookte zalm, groene kool en purée met kreeftensaus" },
+        { name: "Trio van verse pasta 'Bottega': ravioli met truffel, tortelloni met ricotta, tagliatelle met paddenstoelen en parmaham" },
+      ],
+      wine: true,
+    },
+    {
+      id: 3,
+      price: "€65,-",
+      items: [
+        { name: "Vitello Tonnato: Kalfslapje, crème van tonijn, ansjovis, mayonnaise en kappertjes" },
+        { name: "Gerookte zalm / Saumon fumé / Smoked salmon" },
+        { name: "Ravioli met kreeft / Ravioli de homard / Lobster ravioli" },
+        { name: "Salade van ganzenlever, sperziebonen, venkel en zoet-zure vinaigrette" },
+      ],
+      main: [
+        { name: "Runderfilet Rossini: Ganzenlever met rodewijnsaus, aardappelen en seizoensgroenten" },
+        { name: "Ravioli met ganzenlever, porto saus, kalfszwezerik" },
+        { name: "Gegrilde vissoorten met salade" },
+      ],
+      wine: true,
+    },
+  ];
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
-            <a href={`${IMG_BASE}/groepmenus-bottega.pdf`} target="_blank" rel="noopener noreferrer"
-              className="bg-[#7D3C32] text-white px-6 py-3 rounded-lg hover:bg-[#6A3229] transition-colors">
-              {t('downloadPDF')}
-            </a>
-            <button onClick={() => navigate(`${BASE_PATH}/reserveren`)}
-              className="border border-[#7D3C32] text-[#7D3C32] px-6 py-3 rounded-lg hover:bg-[#7D3C32] hover:text-white transition-colors">
-              {t('reserveForGroups')}
-            </button>
+  const menuColors = [
+    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' },
+    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' },
+    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' }
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
+      <Navigation />
+      <div className="pt-20">
+        <div className="max-w-7xl mx-auto px-4 py-12">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-[#D4A574] mb-4">{t('groupMenusPageTitle')}</h1>
+            <p className="text-lg text-gray-300 mb-2">{t('groupMenusPageSubtitle')}</p>
+            <div className="w-20 h-1 bg-[#D4A574] mx-auto my-6"></div>
+            <div className="flex flex-col items-center gap-4 mt-8">
+              <button
+                onClick={() => navigate(`${BASE_PATH}/reserveren`)}
+                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
+              >
+                Reserveer voor groepen
+              </button>
+            </div>
           </div>
 
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <img src={`${IMG_BASE}/groepmenus-preview.jpg`} alt="Group Menus" className="w-full rounded-lg" />
+          {/* Menus - Three cards side by side */}
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
+            {menus.map((menu, menuIdx) => (
+              <div key={menu.id} className={`${menuColors[menuIdx].bg} rounded-lg shadow-2xl overflow-hidden border-2 ${menuColors[menuIdx].border} text-white`}>
+                {/* Menu Header */}
+                <div className="p-6 border-b border-white/20 text-center">
+                  <h2 className={`text-2xl font-bold ${menuColors[menuIdx].text} mb-2`}>Menu {menu.id}</h2>
+                  <div className="text-4xl font-bold">{menu.price}</div>
+                </div>
+
+                {/* Menu Content */}
+                <div className="p-6">
+                  {/* Aperitivo */}
+                  <div className="mb-6">
+                    <h3 className={`text-lg font-semibold ${menuColors[menuIdx].text} mb-4 text-center`}>{t('aperitivo')}</h3>
+                    <div className="space-y-3">
+                      {menu.items.map((item, idx) => (
+                        <div key={idx}>
+                          <p className="text-sm leading-relaxed text-center text-white/90">{item.name}</p>
+                          {idx < menu.items.length - 1 && (
+                            <div className="text-center my-2 text-xs text-white/70">{t('orChoice')}</div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="text-center my-6 text-white/40 font-bold text-lg">--O--</div>
+
+                  {/* Main Course */}
+                  <div className="mb-6">
+                    <div className="space-y-3">
+                      {menu.main.map((item, idx) => (
+                        <div key={idx}>
+                          <p className="text-sm leading-relaxed text-center text-white/90">{item.name}</p>
+                          {idx < menu.main.length - 1 && (
+                            <div className="text-center my-2 text-xs text-white/70">{t('orChoice')}</div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Divider */}
+                  <div className="text-center my-6 text-white/40 font-bold text-lg">--O--</div>
+
+                  {/* Dessert */}
+                  <div className="mb-6">
+                    <p className="text-sm text-center text-white/90">{t('surprise')}</p>
+                  </div>
+
+                  {/* Wine Inclusion */}
+                  {menu.wine && (
+                    <div className="bg-white/10 p-4 rounded-lg text-center mt-6 border border-white/20">
+                      <p className={`${menuColors[menuIdx].text} font-bold text-sm`}>{t('wineIncluded')}</p>
+                      <p className="text-white/70 text-xs mt-1">½ bouteille de vin par personne • ½ bottle per person of housewine</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Minimum Persons Note */}
+          <div className="text-center p-6">
+            <p className="font-bold text-lg text-gray-300">{t('minimumPersons')}</p>
+          </div>
+
+          {/* Back to Home */}
+          <div className="mt-8 text-center">
+            <Link to={BASE_PATH} className="text-[#D4A574] hover:text-[#C49564] font-medium text-lg transition-colors">
+              ← {t('backToHome')}
+            </Link>
           </div>
         </div>
       </div>
@@ -586,12 +990,19 @@ function ReserverenPage() {
           <Link to={BASE_PATH} className="text-[#7D3C32] hover:underline mb-6 inline-block">{t('backToHome')}</Link>
           <h1 className="text-4xl font-serif text-[#7D3C32] mb-4 text-center">{t('reservePageTitle')}</h1>
           <p className="text-gray-600 mb-8 text-center">{t('reservePageSubtitle')}</p>
+
+          <div className="bg-[#FFF4E6] border-l-4 border-[#7D3C32] p-6 mb-8 rounded">
+            <p className="text-[#7D3C32] font-medium">
+              <span className="font-bold">{t('letOp')}</span> {t('closureNotice')}
+            </p>
+          </div>
           
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <iframe 
-              src="https://form.jotform.com/250027498498369"
-              style={{ width: '100%', height: '800px', border: 'none' }}
+              src="https://form.jotform.com/222292165889366"
+              style={{ width: '100%', minHeight: '800px', border: 'none' }}
               title="Reservation Form"
+              scrolling="yes"
             />
           </div>
         </div>
@@ -614,9 +1025,18 @@ function AfhalenPage() {
           <Link to={BASE_PATH} className="text-[#7D3C32] hover:underline mb-6 inline-block">{t('backToHome')}</Link>
           <h1 className="text-4xl font-serif text-[#7D3C32] mb-4 text-center">{t('takeawayPageTitle')}</h1>
           <p className="text-gray-600 mb-4 text-center">{t('takeawayPageSubtitle')}</p>
+
+          <div className="bg-[#FFF4E6] border-l-4 border-[#7D3C32] p-6 mb-8 rounded">
+            <p className="text-[#7D3C32] font-medium mb-2">
+              <span className="font-bold">{t('letOp')}</span> {t('closureNotice')}
+            </p>
+            <p className="text-[#7D3C32] font-medium">
+              <span className="font-bold">Pizza's</span> alleen beschikbaar in de avonden!
+            </p>
+          </div>
           
           <div className="text-center mb-8">
-            <a href={`${IMG_BASE}/menu-bottega.pdf`} target="_blank" rel="noopener noreferrer"
+            <a href="https://labottegaherent.weebly.com/onze-kaart1.html" target="_blank" rel="noopener noreferrer"
               className="text-[#7D3C32] font-semibold hover:underline text-lg">
               {t('clickForMenu')}
             </a>
@@ -624,9 +1044,10 @@ function AfhalenPage() {
           
           <div className="bg-white rounded-xl shadow-lg overflow-hidden">
             <iframe 
-              src="https://form.jotform.com/250027600498351"
-              style={{ width: '100%', height: '800px', border: 'none' }}
+              src="https://form.jotform.com/222305012976349"
+              style={{ width: '100%', minHeight: '800px', border: 'none' }}
               title="Takeaway Form"
+              scrolling="yes"
             />
           </div>
         </div>
