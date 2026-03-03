@@ -9,6 +9,70 @@ import {
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
+// Admin Dashboard Translations
+const translations = {
+  fr: {
+    title: 'Plateforme Web',
+    logout: 'Déconnexion',
+    totalSites: 'Total Sites Web',
+    restaurants: 'Restaurants',
+    otherBusiness: 'Autres Entreprises',
+    mySites: 'Mes Sites Web',
+    newSite: 'Nouveau Site',
+    noSites: 'Pas encore de sites',
+    clickToStart: 'Cliquez sur "Nouveau Site" pour commencer',
+    manage: 'Gérer',
+    name: 'Nom',
+    slug: 'Slug (URL)',
+    type: 'Type',
+    restaurant: 'Restaurant',
+    business: 'Autre Entreprise',
+    cancel: 'Annuler',
+    create: 'Créer',
+    confirmDelete: 'Êtes-vous sûr de vouloir supprimer ce site?'
+  },
+  nl: {
+    title: 'Website Platform',
+    logout: 'Uitloggen',
+    totalSites: 'Totaal Websites',
+    restaurants: 'Restaurants',
+    otherBusiness: 'Andere Bedrijven',
+    mySites: 'Mijn Websites',
+    newSite: 'Nieuwe Website',
+    noSites: 'Nog geen websites',
+    clickToStart: 'Klik op "Nieuwe Website" om te beginnen',
+    manage: 'Beheren',
+    name: 'Naam',
+    slug: 'Slug (URL)',
+    type: 'Type',
+    restaurant: 'Restaurant',
+    business: 'Ander Bedrijf',
+    cancel: 'Annuleren',
+    create: 'Aanmaken',
+    confirmDelete: 'Weet je zeker dat je deze site wilt verwijderen?'
+  },
+  en: {
+    title: 'Website Platform',
+    logout: 'Log out',
+    totalSites: 'Total Websites',
+    restaurants: 'Restaurants',
+    otherBusiness: 'Other Businesses',
+    mySites: 'My Websites',
+    newSite: 'New Website',
+    noSites: 'No websites yet',
+    clickToStart: 'Click "New Website" to get started',
+    manage: 'Manage',
+    name: 'Name',
+    slug: 'Slug (URL)',
+    type: 'Type',
+    restaurant: 'Restaurant',
+    business: 'Other Business',
+    cancel: 'Cancel',
+    create: 'Create',
+    confirmDelete: 'Are you sure you want to delete this site?'
+  }
+};
+
 const AdminDashboard = () => {
   const { user, logout, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -16,6 +80,13 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const [showNewSiteModal, setShowNewSiteModal] = useState(false);
   const [newSite, setNewSite] = useState({ name: '', slug: '', site_type: 'restaurant' });
+  const [lang, setLang] = useState(() => localStorage.getItem('admin_lang') || 'fr');
+
+  const t = (key) => translations[lang]?.[key] || key;
+
+  useEffect(() => {
+    localStorage.setItem('admin_lang', lang);
+  }, [lang]);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -52,7 +123,7 @@ const AdminDashboard = () => {
   };
 
   const deleteSite = async (siteId) => {
-    if (!window.confirm('Weet je zeker dat je deze site wilt verwijderen?')) return;
+    if (!window.confirm(t('confirmDelete'))) return;
     try {
       await axios.delete(`${API}/admin/sites/${siteId}`, { withCredentials: true });
       loadSites();
@@ -78,9 +149,18 @@ const AdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-4">
             <Globe className="w-8 h-8 text-blue-600" />
-            <h1 className="text-2xl font-bold text-gray-900">Website Platform</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t('title')}</h1>
           </div>
           <div className="flex items-center space-x-4">
+            {/* Language Switcher */}
+            <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+              {['fr', 'nl', 'en'].map(l => (
+                <button key={l} onClick={() => setLang(l)}
+                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${lang === l ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
+                  {l.toUpperCase()}
+                </button>
+              ))}
+            </div>
             <div className="flex items-center space-x-2">
               {user.picture && (
                 <img src={user.picture} alt={user.name} className="w-8 h-8 rounded-full" />
@@ -93,7 +173,7 @@ const AdminDashboard = () => {
               data-testid="logout-btn"
             >
               <LogOut className="w-5 h-5" />
-              <span>Uitloggen</span>
+              <span>{t('logout')}</span>
             </button>
           </div>
         </div>
@@ -105,7 +185,7 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Totaal Websites</p>
+                <p className="text-gray-500 text-sm">{t('totalSites')}</p>
                 <p className="text-3xl font-bold text-gray-900">{sites.length}</p>
               </div>
               <Globe className="w-12 h-12 text-blue-500 opacity-50" />
@@ -114,7 +194,7 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Restaurants</p>
+                <p className="text-gray-500 text-sm">{t('restaurants')}</p>
                 <p className="text-3xl font-bold text-gray-900">
                   {sites.filter(s => s.site_type === 'restaurant').length}
                 </p>
@@ -125,7 +205,7 @@ const AdminDashboard = () => {
           <div className="bg-white rounded-lg shadow p-6">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-500 text-sm">Andere Bedrijven</p>
+                <p className="text-gray-500 text-sm">{t('otherBusiness')}</p>
                 <p className="text-3xl font-bold text-gray-900">
                   {sites.filter(s => s.site_type !== 'restaurant').length}
                 </p>
@@ -138,22 +218,22 @@ const AdminDashboard = () => {
         {/* Sites List */}
         <div className="bg-white rounded-lg shadow">
           <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-gray-900">Mijn Websites</h2>
+            <h2 className="text-xl font-semibold text-gray-900">{t('mySites')}</h2>
             <button
               onClick={() => setShowNewSiteModal(true)}
               className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               data-testid="add-site-btn"
             >
               <Plus className="w-5 h-5" />
-              <span>Nieuwe Website</span>
+              <span>{t('newSite')}</span>
             </button>
           </div>
           
           {sites.length === 0 ? (
             <div className="p-12 text-center">
               <Globe className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">Nog geen websites</p>
-              <p className="text-gray-400">Klik op "Nieuwe Website" om te beginnen</p>
+              <p className="text-gray-500 text-lg">{t('noSites')}</p>
+              <p className="text-gray-400">{t('clickToStart')}</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-200">
@@ -204,7 +284,7 @@ const AdminDashboard = () => {
                         to={`/admin/sites/${site.site_id}`}
                         className="flex items-center space-x-1 text-blue-600 hover:text-blue-800"
                       >
-                        <span>Beheren</span>
+                        <span>{t('manage')}</span>
                         <ChevronRight className="w-4 h-4" />
                       </Link>
                     </div>
@@ -220,40 +300,40 @@ const AdminDashboard = () => {
       {showNewSiteModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-md">
-            <h3 className="text-xl font-semibold mb-4">Nieuwe Website</h3>
+            <h3 className="text-xl font-semibold mb-4">{t('newSite')}</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Naam</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('name')}</label>
                 <input
                   type="text"
                   value={newSite.name}
                   onChange={(e) => setNewSite({ ...newSite, name: e.target.value })}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Bijv: La Cantina Italiana"
+                  placeholder="La Cantina Italiana"
                   data-testid="new-site-name"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Slug (URL)</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('slug')}</label>
                 <input
                   type="text"
                   value={newSite.slug}
                   onChange={(e) => setNewSite({ ...newSite, slug: e.target.value.toLowerCase().replace(/\s+/g, '-') })}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="Bijv: cantina"
+                  placeholder="cantina"
                   data-testid="new-site-slug"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Type</label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">{t('type')}</label>
                 <select
                   value={newSite.site_type}
                   onChange={(e) => setNewSite({ ...newSite, site_type: e.target.value })}
                   className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   data-testid="new-site-type"
                 >
-                  <option value="restaurant">Restaurant</option>
-                  <option value="business">Ander Bedrijf</option>
+                  <option value="restaurant">{t('restaurant')}</option>
+                  <option value="business">{t('business')}</option>
                 </select>
               </div>
             </div>
@@ -262,7 +342,7 @@ const AdminDashboard = () => {
                 onClick={() => setShowNewSiteModal(false)}
                 className="px-4 py-2 text-gray-600 hover:text-gray-900"
               >
-                Annuleren
+                {t('cancel')}
               </button>
               <button
                 onClick={createSite}
@@ -270,7 +350,7 @@ const AdminDashboard = () => {
                 className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
                 data-testid="create-site-btn"
               >
-                Aanmaken
+                {t('create')}
               </button>
             </div>
           </div>

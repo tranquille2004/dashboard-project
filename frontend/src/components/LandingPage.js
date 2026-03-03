@@ -19,8 +19,8 @@ const LandingPage = () => {
             <Globe className="w-8 h-8 text-blue-600" />
           </div>
           
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Website Beheer</h1>
-          <p className="text-gray-600 mb-8">Log in om je websites te beheren</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">Gestion des Sites Web</h1>
+          <p className="text-gray-600 mb-8">Connectez-vous pour gérer vos sites</p>
           
           {loading ? (
             <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin mx-auto"></div>
@@ -31,7 +31,7 @@ const LandingPage = () => {
               data-testid="login-btn"
             >
               <LogIn className="w-5 h-5" />
-              <span>Inloggen met Google</span>
+              <span>Se connecter avec Google</span>
             </button>
           )}
         </div>
