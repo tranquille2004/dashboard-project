@@ -445,7 +445,7 @@ function HomePage() {
   }, [location]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navigation />
       
       {/* Hero Section */}
@@ -736,7 +736,7 @@ function KaartPage() {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-4 py-12">
@@ -813,7 +813,7 @@ function GaleriePage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-4 py-12">
