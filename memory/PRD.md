@@ -61,10 +61,18 @@ User wants to combine multiple restaurant websites into one platform to save hos
 - [x] L'Ascoli website toegevoegd (/site/ascoli)
 - [x] 36 menu items geïmporteerd (voorgerechten, soepen, pasta, vis, vlees)
 - [x] 4 groepmenus geïmporteerd (Torino, Puglia, Amalfi, Ascoli)
-- [x] 12 galerij foto's toegevoegd
+- [x] 145 galerij foto's toegevoegd (uit GitHub repo)
 - [x] Site configuratie met adres, telefoon, openingstijden
 - [x] Site Admin login aangemaakt voor L'Ascoli
 - [x] Site Admin login aangemaakt voor La Cantina
+
+### Phase 4 - Ristorante Mercato Integration ✅ (3 december 2026)
+- [x] Mercato website toegevoegd (/site/mercato)
+- [x] 3 groepmenus geïmporteerd (Menu 1 €45, Menu 2 €55, Menu 3 €65)
+- [x] PDF menu link geconfigureerd (Mercato gebruikt PDF menu)
+- [x] 10 galerij foto's toegevoegd
+- [x] Site configuratie met adres, telefoon, openingstijden
+- [x] Site Admin login aangemaakt: mercato@test.be / test123
 
 ### Permission Options
 | Permission | Description |
