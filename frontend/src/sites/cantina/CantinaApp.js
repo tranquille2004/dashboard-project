@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import '@/App.css';
-import { BrowserRouter, Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
+import './cantina.css';
+import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -12,6 +12,8 @@ import { Clock, MapPin, Phone, Mail, Download, ChevronRight, Facebook } from 'lu
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+const IMG_BASE = 'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images';
+const BASE_PATH = '/site/cantina';
 
 // Scroll to top component
 function ScrollToTop() {
@@ -119,18 +121,18 @@ function Navigation({ language, setLanguage, t }) {
   return (
     <nav className="main-nav">
       <div className="nav-container">
-        <Link to="/" className="logo">
-          <img src="/images/logo-cantina.jpg" alt="La Cantina Italiana" />
+        <Link to={BASE_PATH} className="logo">
+          <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/logo-cantina.jpg" alt="La Cantina Italiana" />
         </Link>
 
         <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          <Link to="/" className="nav-link" onClick={closeMenu}>{t.nav.home}</Link>
-          <Link to="/about" className="nav-link" onClick={closeMenu}>{t.nav.about}</Link>
-          <Link to="/kaart" className="nav-link kaart-link" onClick={closeMenu}>{t.nav.menu}</Link>
-          <Link to="/groepmenus" className="nav-link" onClick={closeMenu}>{t.nav.groupMenus}</Link>
-          <Link to="/reserveren" className="nav-link" onClick={closeMenu}>{t.nav.reservation}</Link>
-          <Link to="/fotos" className="nav-link" onClick={closeMenu}>{t.nav.gallery}</Link>
-          <Link to="/info" className="nav-link" onClick={closeMenu}>{t.nav.contact}</Link>
+          <Link to={BASE_PATH} className="nav-link" onClick={closeMenu}>{t.nav.home}</Link>
+          <Link to={`${BASE_PATH}/about`} className="nav-link" onClick={closeMenu}>{t.nav.about}</Link>
+          <Link to={`${BASE_PATH}/kaart`} className="nav-link kaart-link" onClick={closeMenu}>{t.nav.menu}</Link>
+          <Link to={`${BASE_PATH}/groepmenus`} className="nav-link" onClick={closeMenu}>{t.nav.groupMenus}</Link>
+          <Link to={`${BASE_PATH}/reserveren`} className="nav-link" onClick={closeMenu}>{t.nav.reservation}</Link>
+          <Link to={`${BASE_PATH}/fotos`} className="nav-link" onClick={closeMenu}>{t.nav.gallery}</Link>
+          <Link to={`${BASE_PATH}/info`} className="nav-link" onClick={closeMenu}>{t.nav.contact}</Link>
         </div>
         
         <div className="nav-right">
@@ -153,13 +155,13 @@ function HomePage({ t }) {
     <div className="page home-page">
       {/* Hero Section */}
       <section className="hero-section">
-        <img src="/images/hero-background.jpg" alt="La Cantina Italiana" className="hero-background-image" />
+        <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/hero-background.jpg" alt="La Cantina Italiana" className="hero-background-image" />
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <h1 className="hero-title">{t.hero.title}</h1>
           <p className="hero-subtitle">{t.hero.subtitle}</p>
           <div className="hero-buttons">
-            <Button onClick={() => navigate('/reserveren')} className="btn-primary">
+            <Button onClick={() => navigate(`${BASE_PATH}/reserveren`)} className="btn-primary">
               {t.hero.cta}
             </Button>
           </div>
@@ -175,12 +177,12 @@ function HomePage({ t }) {
           <div className="text-content">
             <h2>{t.about.title}</h2>
             <p>{t.about.preview}</p>
-            <Button onClick={() => navigate('/about')} className="btn-secondary">
+            <Button onClick={() => navigate(`${BASE_PATH}/about`)} className="btn-secondary">
               {t.about.readMore}
             </Button>
           </div>
           <div className="image-content">
-            <img src="/images/gallery/cantina6_1_orig.jpg" alt="Restaurant" />
+            <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/cantina6_1_orig.jpg" alt="Restaurant" />
           </div>
         </div>
       </section>
@@ -189,17 +191,17 @@ function HomePage({ t }) {
       <section className="features-section">
         <div className="features-grid">
           <div className="feature-card">
-            <img src="/images/truffels-quality.jpg" alt="Quality" />
+            <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/truffels-quality.jpg" alt="Quality" />
             <h3>{t.features.quality.title}</h3>
             <p>{t.features.quality.text}</p>
           </div>
           <div className="feature-card">
-            <img src="/images/gallery/unnamed-17_orig.webp" alt="Fresh" />
+            <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-17_orig.webp" alt="Fresh" />
             <h3>{t.features.fresh.title}</h3>
             <p>{t.features.fresh.text}</p>
           </div>
           <div className="feature-card">
-            <img src="/images/gallery/cantina5_1_orig.jpg" alt="Ambiance" />
+            <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/cantina5_1_orig.jpg" alt="Ambiance" />
             <h3>{t.features.ambiance.title}</h3>
             <p>{t.features.ambiance.text}</p>
           </div>
@@ -211,7 +213,7 @@ function HomePage({ t }) {
         <h2>{t.cta.title}</h2>
         <p>{t.cta.subtitle}</p>
         <div className="cta-buttons">
-          <Button onClick={() => navigate('/reserveren')} className="btn-primary">
+          <Button onClick={() => navigate(`${BASE_PATH}/reserveren`)} className="btn-primary">
             {t.cta.reserve} <ChevronRight />
           </Button>
         </div>
@@ -235,7 +237,7 @@ function KaartPage({ t }) {
           <h3>{t.menu.downloadTitle}</h3>
           <p>{t.menu.downloadText}</p>
           <a 
-            href="/images/menu-pdf.pdf" 
+            href="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/menu-pdf.pdf" 
             target="_blank" 
             rel="noopener noreferrer"
             className="btn-primary"
@@ -249,12 +251,12 @@ function KaartPage({ t }) {
       <div className="kaart-photos-section">
         <div className="kaart-photos-grid">
           <img 
-            src="/images/kaart-photo-1.webp" 
+            src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/kaart-photo-1.webp" 
             alt="La Cantina Italiana gerecht" 
             className="kaart-photo"
           />
           <img 
-            src="/images/kaart-photo-2.webp" 
+            src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/kaart-photo-2.webp" 
             alt="La Cantina Italiana gerecht" 
             className="kaart-photo"
           />
@@ -276,11 +278,11 @@ function GroepmenusPage({ t }) {
       </div>
 
       <div className="groepmenus-actions">
-        <Button onClick={() => navigate('/reserveren')} className="btn-primary">
+        <Button onClick={() => navigate(`${BASE_PATH}/reserveren`)} className="btn-primary">
           {t.groupMenus.reserveNow}
         </Button>
         <a 
-          href="/images/groepmenus.pdf" 
+          href="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/groepmenus.pdf" 
           target="_blank" 
           rel="noopener noreferrer"
           className="btn-secondary"
@@ -491,11 +493,11 @@ function GroepmenusPage({ t }) {
       </div>
 
       <div className="groepmenus-actions">
-        <Button onClick={() => navigate('/reserveren')} className="btn-primary">
+        <Button onClick={() => navigate(`${BASE_PATH}/reserveren`)} className="btn-primary">
           {t.groupMenus.reserveNow}
         </Button>
         <a 
-          href="/images/groepmenus.pdf" 
+          href="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/groepmenus.pdf" 
           target="_blank" 
           rel="noopener noreferrer"
           className="btn-secondary"
@@ -587,7 +589,7 @@ function ConfirmationPage({ t }) {
         
         <p className="confirmation-note">{t.confirmation.autoConfirm}</p>
         
-        <button onClick={() => navigate('/')} className="confirmation-button">
+        <button onClick={() => navigate(BASE_PATH)} className="confirmation-button">
           {t.confirmation.backToSite}
         </button>
       </div>
@@ -607,7 +609,7 @@ function AboutPage({ t }) {
           <p>{t.about.text1}</p>
           <p>{t.about.text2}</p>
         </div>
-        <img src="/images/gallery/cantina5_1_orig.jpg" alt="Restaurant" />
+        <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/cantina5_1_orig.jpg" alt="Restaurant" />
       </div>
     </div>
   );
@@ -622,41 +624,41 @@ function FotosPage({ t }) {
       </div>
       <div className="photos-grid">
         {[
-          '/images/gallery/cantina6_1_orig.jpg',
-          '/images/gallery/cantina2_1_orig.jpg',
-          '/images/gallery/terras_1_orig.jpg',
-          '/images/gallery/cantina3_1_orig.jpg',
-          '/images/gallery/cantina5_1_orig.jpg',
-          '/images/gallery/miss3_1_orig.jpg',
-          '/images/gallery/cantina4_1_orig.jpg',
-          '/images/gallery/10389018-741265545940692-8511352417181622409-n_1_orig.jpg',
-          '/images/gallery/480608790-1265821735087354-387451127714861448-n_orig.jpg',
-          '/images/gallery/11707610-929200300480548-5266153072232831757-n_orig.webp',
-          '/images/gallery/image-1_orig.webp',
-          '/images/gallery/unnamed-1_orig.webp',
-          '/images/gallery/unnamed-2_orig.webp',
-          '/images/gallery/unnamed-3_orig.webp',
-          '/images/gallery/unnamed-4_orig.webp',
-          '/images/gallery/unnamed-5_orig.webp',
-          '/images/gallery/unnamed-6_orig.webp',
-          '/images/gallery/unnamed-7_orig.webp',
-          '/images/gallery/unnamed-8_orig.webp',
-          '/images/gallery/unnamed-9_orig.webp',
-          '/images/gallery/unnamed-10_orig.webp',
-          '/images/gallery/unnamed-11_orig.webp',
-          '/images/gallery/unnamed-12_orig.webp',
-          '/images/gallery/unnamed-13_orig.webp',
-          '/images/gallery/unnamed-14_orig.webp',
-          '/images/gallery/unnamed-15_orig.webp',
-          '/images/gallery/unnamed-16_orig.webp',
-          '/images/gallery/unnamed-17_orig.webp',
-          '/images/gallery/unnamed-18_orig.webp',
-          '/images/gallery/unnamed-19_orig.webp',
-          '/images/gallery/unnamed-20_orig.webp',
-          '/images/gallery/unnamed-21_orig.webp',
-          '/images/gallery/unnamed-22_orig.webp',
-          '/images/gallery/unnamed-23_orig.webp',
-          '/images/gallery/unnamed-24_orig.webp'
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/cantina6_1_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/cantina2_1_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/terras_1_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/cantina3_1_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/cantina5_1_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/miss3_1_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/cantina4_1_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/10389018-741265545940692-8511352417181622409-n_1_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/480608790-1265821735087354-387451127714861448-n_orig.jpg',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/11707610-929200300480548-5266153072232831757-n_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/image-1_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-1_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-2_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-3_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-4_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-5_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-6_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-7_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-8_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-9_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-10_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-11_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-12_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-13_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-14_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-15_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-16_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-17_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-18_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-19_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-20_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-21_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-22_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-23_orig.webp',
+          'https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/gallery/unnamed-24_orig.webp'
         ].map((photo, idx) => (
           <img key={idx} src={photo} alt={`Gallery ${idx + 1}`} />
         ))}
@@ -792,7 +794,7 @@ function Footer({ t, language }) {
           <a href="https://www.facebook.com/lacantinaitalianatervuren/" target="_blank" rel="noopener noreferrer" className="social-link">
             <Facebook /> Facebook
           </a>
-          <img src="/images/logo-cantina.jpg" alt="Logo" className="footer-logo" />
+          <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/logo-cantina.jpg" alt="Logo" className="footer-logo" />
         </div>
       </div>
       <div className="footer-bottom">
@@ -801,7 +803,7 @@ function Footer({ t, language }) {
           Ziet u een fout op deze site? Of zoekt u een professionele website? Contacteer de webmaster via WhatsApp.
         </p>
         <div className="webmaster-info">
-          <img src="/images/fworksbuilders.png" alt="fworksbuilders" className="webmaster-logo" />
+          <img src="https://raw.githubusercontent.com/tranquille2004/Cantina/main/frontend/public/images/fworksbuilders.png" alt="fworksbuilders" className="webmaster-logo" />
           <span className="webmaster-text">Webmaster: <strong>fworksbuilders</strong> - <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="whatsapp-link">+32 494 51 60 64 (WhatsApp)</a></span>
         </div>
       </div>
@@ -1317,9 +1319,9 @@ function App() {
   const t = translations[language];
 
   return (
-    <BrowserRouter>
+    <>
       <ScrollToTop />
-      <div className="App">
+      <div className="cantina-app">
         <Navigation language={language} setLanguage={setLanguage} t={t} />
         <main>
           <Routes>
@@ -1332,11 +1334,12 @@ function App() {
             <Route path="/confirmation.html" element={<ConfirmationPage t={t} />} />
             <Route path="/fotos" element={<FotosPage t={t} />} />
             <Route path="/info" element={<InfoPage t={t} />} />
+            <Route path="*" element={<HomePage t={t} />} />
           </Routes>
         </main>
         <Footer t={t} language={language} />
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 

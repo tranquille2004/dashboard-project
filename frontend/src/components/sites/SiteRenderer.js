@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, ChevronRight, Menu as MenuIcon, X, Download, Settings, LogOut, Save, Plus, Trash2, Lock, AlertCircle, Check, Globe } from 'lucide-react';
 import { translations, getTranslation } from '@/utils/translations';
 import ProductSiteRenderer from './ProductSiteRenderer';
+import CantinaApp from '@/sites/cantina/CantinaApp';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -920,6 +921,11 @@ const SiteRenderer = () => {
   // If this is a product site, render the ProductSiteRenderer
   if (site?.site_type === 'product') {
     return <ProductSiteRenderer siteData={data} />;
+  }
+
+  // If this is Cantina, use the original CantinaApp
+  if (slug === 'cantina') {
+    return <CantinaApp />;
   }
 
   // Check if logged in admin belongs to this site
