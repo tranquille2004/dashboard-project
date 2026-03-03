@@ -5,6 +5,7 @@ import { Phone, Mail, MapPin, Clock, Facebook, Instagram, ChevronRight, Menu as 
 import { translations, getTranslation } from '@/utils/translations';
 import ProductSiteRenderer from './ProductSiteRenderer';
 import CantinaApp from '@/sites/cantina/CantinaApp';
+import BottegaApp from '@/sites/bottega/BottegaApp';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -926,6 +927,11 @@ const SiteRenderer = () => {
   // If this is Cantina, use the original CantinaApp
   if (slug === 'cantina') {
     return <CantinaApp />;
+  }
+
+  // If this is Bottega, use the original BottegaApp
+  if (slug === 'bottega') {
+    return <BottegaApp />;
   }
 
   // Check if logged in admin belongs to this site
