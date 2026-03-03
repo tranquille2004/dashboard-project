@@ -3,6 +3,7 @@ import { Routes, Route, Link, useLocation, useNavigate, useParams } from 'react-
 import axios from 'axios';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, ChevronRight, Menu as MenuIcon, X, Download, Settings, LogOut, Save, Plus, Trash2, Lock, AlertCircle, Check, Globe } from 'lucide-react';
 import { translations, getTranslation } from '@/utils/translations';
+import ProductSiteRenderer from './ProductSiteRenderer';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -912,9 +913,14 @@ const SiteRenderer = () => {
     );
   }
 
-  const { site, config, menu_items, group_menus, gallery } = data;
+  const { site, config, menu_items, group_menus, gallery, products } = data;
   const primaryColor = config?.primary_color || '#7D3C32';
   const baseUrl = slug ? `/site/${slug}` : '';
+
+  // If this is a product site, render the ProductSiteRenderer
+  if (site?.site_type === 'product') {
+    return <ProductSiteRenderer siteData={data} />;
+  }
 
   // Check if logged in admin belongs to this site
   const isAdminForThisSite = admin && adminSite?.site_id === site?.site_id;

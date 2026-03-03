@@ -786,13 +786,15 @@ async def get_site_by_slug(slug: str):
     menu_items = await db.menu_items.find({"site_id": site["site_id"]}, {"_id": 0}).sort("sort_order", 1).to_list(500)
     group_menus = await db.group_menus.find({"site_id": site["site_id"]}, {"_id": 0}).sort("sort_order", 1).to_list(50)
     gallery = await db.gallery_images.find({"site_id": site["site_id"]}, {"_id": 0}).sort("sort_order", 1).to_list(200)
+    products = await db.products.find({"site_id": site["site_id"]}, {"_id": 0}).sort("sort_order", 1).to_list(100)
     
     return {
         "site": site,
         "config": config,
         "menu_items": menu_items,
         "group_menus": group_menus,
-        "gallery": gallery
+        "gallery": gallery,
+        "products": products
     }
 
 @public_router.get("/sites")
