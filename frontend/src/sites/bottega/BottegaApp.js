@@ -347,7 +347,7 @@ function Navigation() {
   
   return (
     <nav className="fixed w-full bg-white/95 backdrop-blur-sm shadow-md z-50">
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to={BASE_PATH} className="flex items-center space-x-2">
             <img src={IMAGES.logo} alt="La Bottega Italiana" className="h-10 w-auto" />
@@ -357,33 +357,65 @@ function Navigation() {
             </div>
           </Link>
           
-          <div className="hidden md:flex items-center space-x-6">
-            <Link to={BASE_PATH} className="text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
-            <Link to={`${BASE_PATH}/kaart`} className="text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
-            <Link to={`${BASE_PATH}/galerie`} className="text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
-            <Link to={`${BASE_PATH}/groepmenus`} className="text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
-            <Link to={`${BASE_PATH}/reserveren`} className="bg-[#7D3C32] text-white px-4 py-2 rounded-lg hover:bg-[#6A3229] transition-colors">{t('reserve')}</Link>
-            <Link to={`${BASE_PATH}/afhalen`} className="border border-[#7D3C32] text-[#7D3C32] px-4 py-2 rounded-lg hover:bg-[#7D3C32] hover:text-white transition-colors">{t('takeaway')}</Link>
+          {/* Desktop Menu - exact like original */}
+          <div className="hidden lg:flex items-center space-x-6">
+            <Link to={BASE_PATH} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
+            <a href="#about" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</a>
+            <Link to={`${BASE_PATH}/kaart`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
+            <Link to={`${BASE_PATH}/galerie`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
+            <Link to={`${BASE_PATH}/groepmenus`} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
+            <a href="#hours" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</a>
+            <a href="#contact" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</a>
             <LanguageSwitcher />
           </div>
 
-          <button className="md:hidden p-2" onClick={() => setIsOpen(!isOpen)}>
-            <div className="w-6 h-0.5 bg-gray-600 mb-1.5"></div>
-            <div className="w-6 h-0.5 bg-gray-600 mb-1.5"></div>
-            <div className="w-6 h-0.5 bg-gray-600"></div>
-          </button>
+          {/* Desktop Buttons */}
+          <div className="hidden lg:flex items-center space-x-3">
+            <Link to={`${BASE_PATH}/reserveren`} className="bg-[#7D3C32] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#6A3229] transition-colors shadow-lg hover:shadow-xl">
+              {t('reserve')}
+            </Link>
+            <Link to={`${BASE_PATH}/afhalen`} className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-2.5 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors shadow-lg hover:shadow-xl">
+              {t('takeaway')}
+            </Link>
+          </div>
+
+          {/* Mobile: Language Switcher + Hamburger */}
+          <div className="lg:hidden flex items-center space-x-3">
+            <LanguageSwitcher />
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-md text-gray-700 hover:text-[#7D3C32] hover:bg-gray-100 transition-colors"
+            >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                {isOpen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                )}
+              </svg>
+            </button>
+          </div>
         </div>
 
+        {/* Mobile Menu */}
         {isOpen && (
-          <div className="md:hidden py-4 border-t">
+          <div className="lg:hidden pb-4">
             <div className="flex flex-col space-y-3">
-              <Link to={BASE_PATH} onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-[#7D3C32]">{t('home')}</Link>
-              <Link to={`${BASE_PATH}/kaart`} onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-[#7D3C32]">{t('menu')}</Link>
-              <Link to={`${BASE_PATH}/galerie`} onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-[#7D3C32]">{t('gallery')}</Link>
-              <Link to={`${BASE_PATH}/groepmenus`} onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-[#7D3C32]">{t('groupMenus')}</Link>
-              <Link to={`${BASE_PATH}/reserveren`} onClick={() => setIsOpen(false)} className="text-[#7D3C32] font-semibold">{t('reserve')}</Link>
-              <Link to={`${BASE_PATH}/afhalen`} onClick={() => setIsOpen(false)} className="text-[#7D3C32]">{t('takeaway')}</Link>
-              <LanguageSwitcher />
+              <Link to={BASE_PATH} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
+              <a href="#about" onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</a>
+              <Link to={`${BASE_PATH}/kaart`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
+              <Link to={`${BASE_PATH}/galerie`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
+              <Link to={`${BASE_PATH}/groepmenus`} onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
+              <a href="#hours" onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</a>
+              <a href="#contact" onClick={() => setIsOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</a>
+              <div className="flex flex-col space-y-3 pt-4 border-t border-gray-200">
+                <Link to={`${BASE_PATH}/reserveren`} onClick={() => setIsOpen(false)} className="bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#6A3229] transition-colors text-center">
+                  {t('reserve')}
+                </Link>
+                <Link to={`${BASE_PATH}/afhalen`} onClick={() => setIsOpen(false)} className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-3 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors text-center">
+                  {t('takeaway')}
+                </Link>
+              </div>
             </div>
           </div>
         )}
@@ -812,26 +844,25 @@ function GaleriePage() {
 }
 
 // ===========================================
-// GROEPMENUS PAGE
+// GROEPMENUS PAGE - Exact replica of original
 // ===========================================
 function GroepmenusPage() {
   const { t } = useLanguage();
-  const navigate = useNavigate();
 
   const menus = [
     {
       id: 1,
       price: "€45,-",
       items: [
-        { name: "Rundercarpaccio met raketsalade en parmezaanse kaas / Carpaccio de boeuf, roquette et parmesan / Beefcarpaccio with arugula salad and parmesan cheese" },
-        { name: "Gemarineerde zalm / Saumon mariné / Marinated salmon" },
-        { name: "Parmigiana: Gegratineerde aubergines met gerookte mozzarella" },
-        { name: "Antipasto 'della Bottega': Italiaanse charcuterie, kaas" },
+        "Rundercarpaccio met raketsalade en parmezaanse kaas / Carpaccio de boeuf, roquette et parmesan / Beefcarpaccio with arugula salad and parmesan cheese",
+        "Gemarineerde zalm / Saumon mariné / Marinated salmon",
+        "Parmigiana: Gegratineerde aubergines met gerookte mozzarella",
+        "Antipasto 'della Bottega': Italiaanse charcuterie, kaas",
       ],
       main: [
-        { name: "Ravioli al Tartufo: Ravioli met truffel" },
-        { name: "Gebraden zalm met grof zout, purée van spinazie, spumante saus" },
-        { name: "Involtino di vitello: Kalfsrollade gevuld met hesp en kaas, portsaus, rozijnen, pijnboompitten en pasta" },
+        "Ravioli al Tartufo: Ravioli met truffel",
+        "Gebraden zalm met grof zout, purée van spinazie, spumante saus",
+        "Involtino di vitello: Kalfsrollade gevuld met hesp en kaas, portsaus, rozijnen, pijnboompitten en pasta",
       ],
       wine: false,
     },
@@ -839,15 +870,15 @@ function GroepmenusPage() {
       id: 2,
       price: "€55,-",
       items: [
-        { name: "Triologie van zeecarpaccio: zwaardvis, tonijn, zalm" },
-        { name: "Parmaham met burratina" },
-        { name: "Sapori 'La Bottega': Rundercarpaccio, vitello tonnato, Parmaham" },
-        { name: "Scampi met truffel en groene asperges" },
+        "Triologie van zeecarpaccio: zwaardvis, tonijn, zalm",
+        "Parmaham met burratina",
+        "Sapori 'La Bottega': Rundercarpaccio, vitello tonnato, Parmaham",
+        "Scampi met truffel en groene asperges",
       ],
       main: [
-        { name: "Tagliata: Runderlapje op een bedje van rucola en parmezaanse kaas" },
-        { name: "Millefeuille van kabeljauw met gerookte zalm, groene kool en purée met kreeftensaus" },
-        { name: "Trio van verse pasta 'Bottega': ravioli met truffel, tortelloni met ricotta, tagliatelle met paddenstoelen en parmaham" },
+        "Tagliata: Runderlapje op een bedje van rucola en parmezaanse kaas",
+        "Millefeuille van kabeljauw met gerookte zalm, groene kool en purée met kreeftensaus",
+        "Trio van verse pasta 'Bottega': ravioli met truffel, tortelloni met ricotta, tagliatelle met paddenstoelen en parmaham",
       ],
       wine: true,
     },
@@ -855,53 +886,57 @@ function GroepmenusPage() {
       id: 3,
       price: "€65,-",
       items: [
-        { name: "Vitello Tonnato: Kalfslapje, crème van tonijn, ansjovis, mayonnaise en kappertjes" },
-        { name: "Gerookte zalm / Saumon fumé / Smoked salmon" },
-        { name: "Ravioli met kreeft / Ravioli de homard / Lobster ravioli" },
-        { name: "Salade van ganzenlever, sperziebonen, venkel en zoet-zure vinaigrette" },
+        "Vitello Tonnato: Kalfslapje, crème van tonijn, ansjovis, mayonnaise en kappertjes",
+        "Gerookte zalm / Saumon fumé / Smoked salmon",
+        "Ravioli met kreeft / Ravioli de homard / Lobster ravioli",
+        "Salade van ganzenlever, sperziebonen, venkel en zoet-zure vinaigrette",
       ],
       main: [
-        { name: "Runderfilet Rossini: Ganzenlever met rodewijnsaus, aardappelen en seizoensgroenten" },
-        { name: "Ravioli met ganzenlever, porto saus, kalfszwezerik" },
-        { name: "Gegrilde vissoorten met salade" },
+        "Runderfilet Rossini: Ganzenlever met rodewijnsaus, aardappelen en seizoensgroenten",
+        "Ravioli met ganzenlever, porto saus, kalfszwezerik",
+        "Gegrilde vissoorten met salade",
       ],
       wine: true,
     },
   ];
 
-  const menuColors = [
-    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' },
-    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' },
-    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' }
-  ];
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen bg-gray-900">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-4 py-12">
-          {/* Header */}
+          {/* Header - exact like original */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#D4A574] mb-4">{t('groupMenusPageTitle')}</h1>
+            <h1 className="text-4xl md:text-5xl font-bold text-[#7D3C32] mb-4">{t('groupMenusPageTitle')}</h1>
             <p className="text-lg text-gray-300 mb-2">{t('groupMenusPageSubtitle')}</p>
-            <div className="w-20 h-1 bg-[#D4A574] mx-auto my-6"></div>
+            <div className="w-20 h-1 bg-[#7D3C32] mx-auto my-6"></div>
+            
+            {/* Buttons - exact like original */}
             <div className="flex flex-col items-center gap-4 mt-8">
-              <button
-                onClick={() => navigate(`${BASE_PATH}/reserveren`)}
+              <a
+                href="https://www.labottegaherent.com/groepmenus-bottega.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center bg-white text-gray-800 border border-gray-300 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-all shadow-lg hover:shadow-xl"
+              >
+                📄 Download Groepmenus PDF
+              </a>
+              <Link
+                to={`${BASE_PATH}/reserveren`}
                 className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
               >
                 Reserveer voor groepen
-              </button>
+              </Link>
             </div>
           </div>
 
-          {/* Menus - Three cards side by side */}
+          {/* Menus - Three cards side by side with dark styling like original */}
           <div className="grid md:grid-cols-3 gap-6 mb-12">
-            {menus.map((menu, menuIdx) => (
-              <div key={menu.id} className={`${menuColors[menuIdx].bg} rounded-lg shadow-2xl overflow-hidden border-2 ${menuColors[menuIdx].border} text-white`}>
+            {menus.map((menu) => (
+              <div key={menu.id} className="bg-gradient-to-br from-stone-800 to-stone-700 rounded-lg shadow-2xl overflow-hidden border-2 border-stone-600 text-white">
                 {/* Menu Header */}
                 <div className="p-6 border-b border-white/20 text-center">
-                  <h2 className={`text-2xl font-bold ${menuColors[menuIdx].text} mb-2`}>Menu {menu.id}</h2>
+                  <h2 className="text-2xl font-bold text-stone-200 mb-2">Menu {menu.id}</h2>
                   <div className="text-4xl font-bold">{menu.price}</div>
                 </div>
 
@@ -909,13 +944,13 @@ function GroepmenusPage() {
                 <div className="p-6">
                   {/* Aperitivo */}
                   <div className="mb-6">
-                    <h3 className={`text-lg font-semibold ${menuColors[menuIdx].text} mb-4 text-center`}>{t('aperitivo')}</h3>
-                    <div className="space-y-3">
+                    <h3 className="text-lg font-semibold text-stone-200 mb-4 text-center">Aperitivo (spumante)</h3>
+                    <div className="space-y-2">
                       {menu.items.map((item, idx) => (
                         <div key={idx}>
-                          <p className="text-sm leading-relaxed text-center text-white/90">{item.name}</p>
+                          <p className="text-sm leading-relaxed text-center text-white/90">{item}</p>
                           {idx < menu.items.length - 1 && (
-                            <div className="text-center my-2 text-xs text-white/70">{t('orChoice')}</div>
+                            <div className="text-center my-2 text-xs text-white/70">OF / OU / OR</div>
                           )}
                         </div>
                       ))}
@@ -927,12 +962,12 @@ function GroepmenusPage() {
 
                   {/* Main Course */}
                   <div className="mb-6">
-                    <div className="space-y-3">
+                    <div className="space-y-2">
                       {menu.main.map((item, idx) => (
                         <div key={idx}>
-                          <p className="text-sm leading-relaxed text-center text-white/90">{item.name}</p>
+                          <p className="text-sm leading-relaxed text-center text-white/90">{item}</p>
                           {idx < menu.main.length - 1 && (
-                            <div className="text-center my-2 text-xs text-white/70">{t('orChoice')}</div>
+                            <div className="text-center my-2 text-xs text-white/70">OF / OU / OR</div>
                           )}
                         </div>
                       ))}
@@ -944,13 +979,13 @@ function GroepmenusPage() {
 
                   {/* Dessert */}
                   <div className="mb-6">
-                    <p className="text-sm text-center text-white/90">{t('surprise')}</p>
+                    <p className="text-sm text-center text-white/90">Verrassingsdessert</p>
                   </div>
 
                   {/* Wine Inclusion */}
                   {menu.wine && (
                     <div className="bg-white/10 p-4 rounded-lg text-center mt-6 border border-white/20">
-                      <p className={`${menuColors[menuIdx].text} font-bold text-sm`}>{t('wineIncluded')}</p>
+                      <p className="text-stone-200 font-bold text-sm">½ fles huiswijn per persoon</p>
                       <p className="text-white/70 text-xs mt-1">½ bouteille de vin par personne • ½ bottle per person of housewine</p>
                     </div>
                   )}
@@ -966,7 +1001,7 @@ function GroepmenusPage() {
 
           {/* Back to Home */}
           <div className="mt-8 text-center">
-            <Link to={BASE_PATH} className="text-[#D4A574] hover:text-[#C49564] font-medium text-lg transition-colors">
+            <Link to={BASE_PATH} className="text-[#7D3C32] hover:underline font-medium text-lg">
               ← {t('backToHome')}
             </Link>
           </div>
