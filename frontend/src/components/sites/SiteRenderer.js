@@ -6,6 +6,7 @@ import { translations, getTranslation } from '@/utils/translations';
 import ProductSiteRenderer from './ProductSiteRenderer';
 import CantinaApp from '@/sites/cantina/CantinaApp';
 import BottegaApp from '@/sites/bottega/BottegaApp';
+import AscoliApp from '@/sites/ascoli/AscolicApp';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -932,6 +933,11 @@ const SiteRenderer = () => {
   // If this is Bottega, use the original BottegaApp
   if (slug === 'bottega') {
     return <BottegaApp />;
+  }
+
+  // If this is Ascoli, use the original AscoliApp
+  if (slug === 'ascoli') {
+    return <AscoliApp />;
   }
 
   // Check if logged in admin belongs to this site
