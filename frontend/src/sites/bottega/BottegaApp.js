@@ -555,76 +555,48 @@ function HomePage() {
 // ===========================================
 function KaartPage() {
   const { t } = useLanguage();
-  const pdfUrl = "https://www.labottegaherent.com/kaart-bottega.pdf";
 
   return (
     <div className="min-h-screen bg-white">
       <Navigation />
       <div className="pt-20">
-        <div className="max-w-4xl mx-auto px-4 py-12">
+        <div className="max-w-7xl mx-auto px-4 py-12">
           <div className="text-center mb-8">
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('ourMenu')}</h1>
             <p className="text-lg text-gray-600 mb-8">Onze kaart (ter plaatse en ook afhalen) / Notre carte (sur place et aussi pour emporter)</p>
-          </div>
 
-          {/* Menu Card */}
-          <div className="bg-white rounded-xl shadow-2xl overflow-hidden mb-8">
-            <div className="bg-[#7D3C32] text-white p-8 text-center">
-              <Utensils className="w-16 h-16 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold mb-2">Menu La Bottega Italiana</h2>
-              <p className="text-white/80">Pizza's, Pasta's, Vis, Vlees en meer...</p>
-            </div>
-            
-            <div className="p-8 text-center">
-              <p className="text-gray-600 mb-6">
-                Bekijk onze volledige menukaart met alle gerechten en prijzen.
-              </p>
-              
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href={pdfUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
-                >
-                  📄 Bekijk Kaart (PDF)
-                </a>
-                <a
-                  href={pdfUrl}
-                  download
-                  className="inline-flex items-center justify-center bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-8 py-4 rounded-lg font-semibold hover:bg-[#7D3C32] hover:text-white transition-all shadow-lg hover:shadow-xl"
-                >
-                  📥 Download Kaart
-                </a>
-              </div>
+            {/* Download Button */}
+            <div className="flex justify-center mb-8">
+              <a
+                href="https://www.labottegaherent.com/kaart-bottega.pdf"
+                download="La-Bottega-Kaart.pdf"
+                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
+              >
+                📥 Download Kaart PDF
+              </a>
             </div>
           </div>
 
-          {/* Info Cards */}
-          <div className="grid md:grid-cols-2 gap-6 mb-8">
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">🍕 Pizza's</h3>
-              <p className="text-gray-600 text-sm">Alleen beschikbaar in de avonden. Traditioneel bereid in onze houtoven.</p>
-            </div>
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">🥡 Afhalen</h3>
-              <p className="text-gray-600 text-sm">Alle gerechten zijn ook beschikbaar om af te halen tijdens de openingsuren.</p>
-            </div>
-          </div>
-
-          {/* Group Menus Link */}
-          <div className="text-center mb-8">
-            <Link 
-              to={`${BASE_PATH}/groepmenus`}
-              className="text-[#7D3C32] hover:underline font-semibold text-lg"
+          {/* PDF Viewer using Google Docs - Works on all devices */}
+          <div className="bg-white rounded-lg shadow-xl overflow-hidden mb-6">
+            <iframe
+              src="https://docs.google.com/viewer?url=https://www.labottegaherent.com/kaart-bottega.pdf&embedded=true"
+              className="w-full"
+              style={{ height: '1200px', border: 'none' }}
+              title="La Bottega Kaart"
             >
-              Bekijk ook onze groepsmenu's →
-            </Link>
+              <p className="p-8 text-center text-gray-600">
+                PDF kan niet worden weergegeven.
+                <a href="https://www.labottegaherent.com/kaart-bottega.pdf" download className="text-[#7D3C32] underline ml-2">
+                  Klik hier om de kaart te downloaden
+                </a>
+              </p>
+            </iframe>
           </div>
 
           <div className="mt-8 text-center">
             <Link to={BASE_PATH} className="text-[#7D3C32] hover:underline font-medium text-lg">
-              ← {t('backToHome')}
+              {t('backToHome')}
             </Link>
           </div>
         </div>
