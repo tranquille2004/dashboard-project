@@ -1,0 +1,1108 @@
+/* Cantina Italiana Styles - Imported from original */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+.cantina-site {
+  --cantina-green: #757A57;
+  --cantina-dark-green: #5F6345;
+  --cantina-light-green: #8B9169;
+  --cantina-olive: #6B7F4E;
+  --cantina-bg: #0a0a0a;
+  --cantina-bg-light: #1a1a1a;
+  --cantina-text: #e5e5e5;
+  --cantina-text-dim: #999;
+  --cantina-cream: #F5F5DC;
+}
+
+.cantina-site {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--cantina-bg);
+  color: var(--cantina-text);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+.cantina-site h1, 
+.cantina-site h2, 
+.cantina-site h3, 
+.cantina-site h4, 
+.cantina-site h5, 
+.cantina-site h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+/* Navigation */
+.cantina-site .main-nav {
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 1rem 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(117, 122, 87, 0.2);
+}
+
+.cantina-site .nav-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cantina-site .logo img {
+  height: 50px;
+  object-fit: contain;
+}
+
+.cantina-site .nav-links {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+
+.cantina-site .nav-link {
+  color: var(--cantina-text);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: color 0.3s ease;
+  text-transform: uppercase;
+}
+
+.cantina-site .nav-link:hover {
+  color: var(--cantina-green);
+}
+
+.cantina-site .nav-link.kaart-link {
+  color: var(--cantina-green);
+  font-weight: 600;
+}
+
+.cantina-site .nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Language Selector */
+.cantina-site .language-selector {
+  position: relative;
+}
+
+.cantina-site .language-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(117, 122, 87, 0.2);
+  border: 1px solid rgba(117, 122, 87, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 25px;
+  color: var(--cantina-text);
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.3s ease;
+}
+
+.cantina-site .language-button:hover {
+  background: rgba(117, 122, 87, 0.3);
+}
+
+.cantina-site .language-dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: var(--cantina-bg-light);
+  border: 1px solid rgba(117, 122, 87, 0.3);
+  border-radius: 8px;
+  padding: 0.5rem;
+  margin-top: 0.5rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: all 0.3s ease;
+  min-width: 120px;
+  z-index: 1001;
+}
+
+.cantina-site .language-dropdown.open {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.cantina-site .language-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  color: var(--cantina-text);
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  transition: background 0.2s ease;
+}
+
+.cantina-site .language-option:hover,
+.cantina-site .language-option.active {
+  background: rgba(117, 122, 87, 0.2);
+}
+
+/* Hamburger Menu */
+.cantina-site .hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.cantina-site .hamburger span {
+  width: 25px;
+  height: 2px;
+  background: var(--cantina-text);
+  transition: all 0.3s ease;
+}
+
+/* Hero Section */
+.cantina-site .hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  overflow: hidden;
+}
+
+.cantina-site .hero-background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.cantina-site .hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    rgba(10, 10, 10, 0.7) 0%,
+    rgba(10, 10, 10, 0.5) 50%,
+    rgba(10, 10, 10, 0.8) 100%
+  );
+  z-index: 1;
+}
+
+.cantina-site .hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 800px;
+}
+
+.cantina-site .hero-title {
+  font-size: 3.5rem;
+  color: white;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.cantina-site .hero-subtitle {
+  font-size: 1.3rem;
+  color: var(--cantina-cream);
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.cantina-site .hero-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.cantina-site .hero-announcement {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(117, 122, 87, 0.95);
+  padding: 1rem 2rem;
+  text-align: center;
+  z-index: 2;
+}
+
+.cantina-site .hero-announcement p {
+  color: white;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+/* Buttons */
+.cantina-site .btn-primary {
+  background: var(--cantina-green) !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.75rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  border-radius: 30px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+}
+
+.cantina-site .btn-primary:hover {
+  background: var(--cantina-dark-green) !important;
+  transform: translateY(-2px) !important;
+}
+
+.cantina-site .btn-secondary {
+  background: transparent !important;
+  color: var(--cantina-green) !important;
+  border: 2px solid var(--cantina-green) !important;
+  padding: 0.75rem 2rem !important;
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+  border-radius: 30px !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  text-decoration: none !important;
+}
+
+.cantina-site .btn-secondary:hover {
+  background: var(--cantina-green) !important;
+  color: white !important;
+}
+
+/* About Preview */
+.cantina-site .about-preview {
+  padding: 6rem 2rem;
+  background: var(--cantina-bg-light);
+}
+
+.cantina-site .content-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.cantina-site .text-content h2 {
+  font-size: 2.5rem;
+  color: var(--cantina-green);
+  margin-bottom: 1.5rem;
+}
+
+.cantina-site .text-content p {
+  color: var(--cantina-text-dim);
+  margin-bottom: 2rem;
+  line-height: 1.8;
+}
+
+.cantina-site .image-content img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Features Section */
+.cantina-site .features-section {
+  padding: 6rem 2rem;
+  background: var(--cantina-bg);
+}
+
+.cantina-site .features-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.cantina-site .feature-card {
+  background: var(--cantina-bg-light);
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease;
+}
+
+.cantina-site .feature-card:hover {
+  transform: translateY(-10px);
+}
+
+.cantina-site .feature-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.cantina-site .feature-card h3 {
+  padding: 1.5rem 1.5rem 0.5rem;
+  color: var(--cantina-green);
+  font-size: 1.3rem;
+}
+
+.cantina-site .feature-card p {
+  padding: 0 1.5rem 1.5rem;
+  color: var(--cantina-text-dim);
+  font-size: 0.95rem;
+}
+
+/* CTA Section */
+.cantina-site .cta-section {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, var(--cantina-dark-green), var(--cantina-green));
+  text-align: center;
+}
+
+.cantina-site .cta-section h2 {
+  font-size: 2.5rem;
+  color: white;
+  margin-bottom: 1rem;
+}
+
+.cantina-site .cta-section p {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.cantina-site .cta-buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+/* Page Headers */
+.cantina-site .page-header {
+  padding: 8rem 2rem 4rem;
+  text-align: center;
+  background: var(--cantina-bg-light);
+}
+
+.cantina-site .page-header h1 {
+  font-size: 3rem;
+  color: var(--cantina-green);
+  margin-bottom: 1rem;
+}
+
+.cantina-site .page-header p {
+  color: var(--cantina-text-dim);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.cantina-site .title-divider {
+  width: 80px;
+  height: 3px;
+  background: var(--cantina-green);
+  margin: 2rem auto 0;
+}
+
+/* PDF Download Section */
+.cantina-site .pdf-download-section {
+  padding: 4rem 2rem;
+  background: var(--cantina-bg);
+}
+
+.cantina-site .pdf-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--cantina-bg-light);
+  border-radius: 15px;
+  padding: 3rem;
+  text-align: center;
+  border: 1px solid rgba(117, 122, 87, 0.2);
+}
+
+.cantina-site .download-icon {
+  width: 60px;
+  height: 60px;
+  color: var(--cantina-green);
+  margin-bottom: 1.5rem;
+}
+
+.cantina-site .pdf-card h3 {
+  color: var(--cantina-green);
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.cantina-site .pdf-card p {
+  color: var(--cantina-text-dim);
+  margin-bottom: 2rem;
+}
+
+.cantina-site .btn-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Kaart Photos */
+.cantina-site .kaart-photos-section {
+  padding: 4rem 2rem;
+  background: var(--cantina-bg);
+}
+
+.cantina-site .kaart-photos-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+
+.cantina-site .kaart-photo {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Group Menus */
+.cantina-site .groepmenus-page {
+  background: var(--cantina-bg);
+  padding-bottom: 4rem;
+}
+
+.cantina-site .group-top-note,
+.cantina-site .group-bottom-note {
+  text-align: center;
+  color: var(--cantina-text-dim);
+  font-style: italic;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.cantina-site .groepmenus-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 2rem;
+  flex-wrap: wrap;
+}
+
+.cantina-site .groepmenus-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
+.cantina-site .group-menu-card {
+  background: var(--cantina-bg-light);
+  border-radius: 15px;
+  overflow: hidden;
+  border: 1px solid rgba(117, 122, 87, 0.2);
+}
+
+.cantina-site .group-menu-card.featured {
+  border-color: var(--cantina-green);
+  transform: scale(1.02);
+}
+
+.cantina-site .group-menu-card.premium {
+  border-color: gold;
+}
+
+.cantina-site .menu-header {
+  background: linear-gradient(135deg, var(--cantina-dark-green), var(--cantina-green));
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.cantina-site .menu-header h2 {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.cantina-site .menu-price {
+  color: white;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.cantina-site .menu-items {
+  padding: 1.5rem;
+}
+
+.cantina-site .menu-item {
+  margin-bottom: 1rem;
+}
+
+.cantina-site .menu-item h4 {
+  color: var(--cantina-green);
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.cantina-site .item-description {
+  color: var(--cantina-text-dim);
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+.cantina-site .course-label {
+  color: var(--cantina-green);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+}
+
+.cantina-site .menu-divider {
+  text-align: center;
+  color: var(--cantina-text-dim);
+  font-size: 0.8rem;
+  margin: 0.5rem 0;
+}
+
+.cantina-site .course-divider {
+  height: 1px;
+  background: rgba(117, 122, 87, 0.3);
+  margin: 1.5rem 0;
+}
+
+.cantina-site .dessert-label {
+  color: var(--cantina-green);
+  font-style: italic;
+}
+
+.cantina-site .wine-note {
+  color: var(--cantina-text-dim);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+/* Reservation Page */
+.cantina-site .reserve-page {
+  background: var(--cantina-bg);
+  padding-bottom: 4rem;
+}
+
+.cantina-site .reserve-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.cantina-site .jotform-announcement {
+  background: rgba(117, 122, 87, 0.2);
+  border: 1px solid var(--cantina-green);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.cantina-site .jotform-announcement p {
+  color: var(--cantina-text);
+  margin: 0.5rem 0;
+}
+
+.cantina-site .reserve-hours {
+  background: var(--cantina-bg-light);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.cantina-site .reserve-hours h3 {
+  color: var(--cantina-green);
+  margin-bottom: 1rem;
+}
+
+.cantina-site .reserve-hours-grid {
+  display: flex;
+  justify-content: center;
+  gap: 3rem;
+}
+
+.cantina-site .reserve-hours-item {
+  color: var(--cantina-text);
+}
+
+.cantina-site .reserve-hours-note {
+  color: var(--cantina-text-dim);
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.cantina-site .jotform-container {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Confirmation Page */
+.cantina-site .confirmation-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  background: var(--cantina-bg);
+}
+
+.cantina-site .confirmation-container {
+  max-width: 600px;
+  text-align: center;
+}
+
+.cantina-site .confirmation-icon-circle {
+  width: 100px;
+  height: 100px;
+  margin: 0 auto 2rem;
+}
+
+.cantina-site .confirmation-checkmark {
+  width: 100%;
+  height: 100%;
+}
+
+.cantina-site .checkmark-circle {
+  stroke: var(--cantina-green);
+  stroke-width: 2;
+}
+
+.cantina-site .checkmark-check {
+  stroke: var(--cantina-green);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.cantina-site .confirmation-grazie {
+  font-size: 2rem;
+  color: var(--cantina-green);
+  margin-bottom: 1rem;
+}
+
+.cantina-site .confirmation-title {
+  font-size: 1.8rem;
+  color: var(--cantina-text);
+  margin-bottom: 2rem;
+}
+
+.cantina-site .confirmation-box {
+  background: var(--cantina-bg-light);
+  border-radius: 10px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cantina-site .confirmation-item {
+  color: var(--cantina-text);
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.cantina-site .confirmation-note {
+  color: var(--cantina-text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.cantina-site .confirmation-button {
+  background: var(--cantina-green);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1rem;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cantina-site .confirmation-button:hover {
+  background: var(--cantina-dark-green);
+}
+
+/* About Page */
+.cantina-site .about-page {
+  background: var(--cantina-bg);
+  padding-bottom: 4rem;
+}
+
+.cantina-site .about-content {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.cantina-site .about-text p {
+  color: var(--cantina-text-dim);
+  margin-bottom: 1.5rem;
+  line-height: 1.8;
+}
+
+.cantina-site .about-content img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Photos/Gallery Page */
+.cantina-site .fotos-page {
+  background: var(--cantina-bg);
+  padding-bottom: 4rem;
+}
+
+.cantina-site .photos-grid {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.cantina-site .photos-grid img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  object-fit: cover;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cantina-site .photos-grid img:hover {
+  transform: scale(1.02);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+/* Info Page */
+.cantina-site .info-page {
+  background: var(--cantina-bg);
+  padding-bottom: 4rem;
+}
+
+.cantina-site .info-layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+}
+
+.cantina-site .info-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.cantina-site .info-card {
+  background: var(--cantina-bg-light);
+  border-radius: 15px;
+  padding: 2rem;
+  border: 1px solid rgba(117, 122, 87, 0.2);
+}
+
+.cantina-site .info-card-title {
+  color: var(--cantina-green);
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cantina-site .title-icon {
+  width: 24px;
+  height: 24px;
+}
+
+.cantina-site .contact-item {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.cantina-site .contact-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--cantina-green);
+  flex-shrink: 0;
+  margin-top: 0.25rem;
+}
+
+.cantina-site .contact-item h4 {
+  color: var(--cantina-text);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.cantina-site .contact-item p {
+  color: var(--cantina-text-dim);
+  font-size: 0.9rem;
+}
+
+.cantina-site .contact-link {
+  color: var(--cantina-green);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.cantina-site .contact-link:hover {
+  color: var(--cantina-light-green);
+}
+
+.cantina-site .contact-note {
+  font-size: 0.8rem !important;
+  font-style: italic;
+}
+
+.cantina-site .maps-link {
+  color: var(--cantina-green);
+  font-size: 0.85rem;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 0.5rem;
+}
+
+.cantina-site .hours-section {
+  margin-bottom: 1rem;
+}
+
+.cantina-site .hours-section h4 {
+  color: var(--cantina-text);
+  font-size: 0.9rem;
+  margin-bottom: 0.25rem;
+}
+
+.cantina-site .hours-time {
+  color: var(--cantina-green);
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.cantina-site .hours-divider {
+  height: 1px;
+  background: rgba(117, 122, 87, 0.3);
+  margin: 1.5rem 0;
+}
+
+.cantina-site .hours-note {
+  color: var(--cantina-text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.cantina-site .closure-notice {
+  background: rgba(117, 122, 87, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.cantina-site .closure-notice h4 {
+  color: var(--cantina-green);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.cantina-site .closure-notice p {
+  color: var(--cantina-text-dim);
+  font-size: 0.85rem;
+}
+
+.cantina-site .map-container {
+  border-radius: 15px;
+  overflow: hidden;
+  height: 100%;
+  min-height: 400px;
+}
+
+/* Footer */
+.cantina-site .main-footer {
+  background: var(--cantina-bg-light);
+  border-top: 1px solid rgba(117, 122, 87, 0.2);
+  padding: 4rem 2rem 2rem;
+}
+
+.cantina-site .footer-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.cantina-site .footer-section h4 {
+  color: var(--cantina-green);
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.cantina-site .footer-section p {
+  color: var(--cantina-text-dim);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.cantina-site .footer-note {
+  font-size: 0.8rem !important;
+  font-style: italic;
+}
+
+.cantina-site .social-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--cantina-green);
+  text-decoration: none;
+  margin-bottom: 1rem;
+  transition: color 0.3s ease;
+}
+
+.cantina-site .social-link:hover {
+  color: var(--cantina-light-green);
+}
+
+.cantina-site .footer-logo {
+  height: 50px;
+  margin-top: 1rem;
+}
+
+.cantina-site .footer-bottom {
+  max-width: 1200px;
+  margin: 3rem auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(117, 122, 87, 0.2);
+  text-align: center;
+}
+
+.cantina-site .footer-bottom p {
+  color: var(--cantina-text-dim);
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+.cantina-site .webmaster-notice {
+  font-size: 0.8rem !important;
+  color: var(--cantina-text-dim);
+  margin-top: 1rem;
+}
+
+.cantina-site .webmaster-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.cantina-site .webmaster-logo {
+  height: 25px;
+}
+
+.cantina-site .webmaster-text {
+  font-size: 0.8rem;
+  color: var(--cantina-text-dim);
+}
+
+.cantina-site .whatsapp-link {
+  color: #25D366;
+  text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .cantina-site .groepmenus-content {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+  
+  .cantina-site .group-menu-card.featured {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .cantina-site .nav-links {
+    position: fixed;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: var(--cantina-bg);
+    flex-direction: column;
+    padding: 2rem;
+    gap: 1rem;
+    transform: translateY(-100%);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 999;
+  }
+  
+  .cantina-site .nav-links.active {
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  .cantina-site .hamburger {
+    display: flex;
+  }
+  
+  .cantina-site .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .cantina-site .content-grid,
+  .cantina-site .about-content,
+  .cantina-site .info-layout {
+    grid-template-columns: 1fr;
+  }
+  
+  .cantina-site .features-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .cantina-site .footer-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  
+  .cantina-site .kaart-photos-grid {
+    grid-template-columns: 1fr;
+  }
+}
