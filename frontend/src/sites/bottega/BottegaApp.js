@@ -768,7 +768,6 @@ function KaartPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
@@ -838,7 +837,6 @@ function GaleriePage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
@@ -1007,7 +1005,6 @@ function GroepmenusPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
@@ -1042,7 +1039,6 @@ function ReserverenPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
@@ -1087,7 +1083,6 @@ function AfhalenPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
