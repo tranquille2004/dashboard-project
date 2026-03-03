@@ -274,26 +274,32 @@ main {
 }
 
 /* Buttons */
-.btn-primary {
-  background: var(--cantina-green);
-  color: white;
-  padding: 1rem 2.5rem;
-  border: none;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.3s;
-  text-decoration: none;
+.cantina-app .btn-primary,
+.cantina-app button.btn-primary,
+.cantina-app .groepmenus-actions .btn-primary {
+  background: var(--cantina-green) !important;
+  background-color: var(--cantina-green) !important;
+  color: white !important;
+  padding: 1rem 2.5rem !important;
+  border: none !important;
+  border-radius: 6px !important;
+  font-size: 1.1rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  transition: all 0.3s !important;
+  text-decoration: none !important;
 }
 
-.btn-primary:hover {
-  background: var(--cantina-dark-green);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.4);
+.cantina-app .btn-primary:hover,
+.cantina-app button.btn-primary:hover,
+.cantina-app .groepmenus-actions .btn-primary:hover {
+  background: var(--cantina-dark-green) !important;
+  background-color: var(--cantina-dark-green) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(74, 124, 89, 0.4) !important;
 }
 
 .btn-secondary {
@@ -709,28 +715,37 @@ main {
   font-weight: 700;
 }
 
-.menu-items {
+.cantina-app .menu-items {
   padding: 1.5rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cantina-app .menu-item {
+  margin-bottom: 1rem;
+  display: block;
   text-align: center;
 }
 
-.menu-item {
-  margin-bottom: 1rem;
-}
-
-.menu-item h4 {
+.cantina-app .menu-item h4 {
   color: var(--cantina-light-green);
   font-size: 1.05rem;
   margin-bottom: 0.3rem;
   font-weight: 600;
   line-height: 1.3;
+  display: block;
+  text-align: center;
 }
 
-.item-description {
+.cantina-app .item-description {
   color: var(--cantina-text-dim);
   font-size: 0.9rem;
   line-height: 1.4;
   margin: 0;
+  display: block;
+  text-align: center;
 }
 
 .menu-divider {
