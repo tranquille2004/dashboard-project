@@ -57,6 +57,15 @@ User wants to combine multiple restaurant websites into one platform to save hos
 - [x] Super admin can configure permissions per site admin
 - [x] Permission enforcement on backend APIs
 
+### Phase 3 - L'Ascoli Integration ✅ (3 december 2026)
+- [x] L'Ascoli website toegevoegd (/site/ascoli)
+- [x] 36 menu items geïmporteerd (voorgerechten, soepen, pasta, vis, vlees)
+- [x] 4 groepmenus geïmporteerd (Torino, Puglia, Amalfi, Ascoli)
+- [x] 12 galerij foto's toegevoegd
+- [x] Site configuratie met adres, telefoon, openingstijden
+- [x] Site Admin login aangemaakt voor L'Ascoli
+- [x] Site Admin login aangemaakt voor La Cantina
+
 ### Permission Options
 | Permission | Description |
 |------------|-------------|
