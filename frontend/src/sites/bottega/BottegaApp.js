@@ -624,9 +624,10 @@ function KaartPage() {
             {/* Download Button */}
             <div className="flex justify-center mb-8">
               <a 
-                href="/kaart-bottega.pdf" 
+                href="/images/bottega/kaart-bottega.pdf" 
                 download="La-Bottega-Kaart.pdf"
                 className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
+                data-testid="kaart-download-btn"
               >
                 📥 Download Kaart PDF
               </a>
@@ -636,14 +637,14 @@ function KaartPage() {
           {/* PDF Viewer using Google Docs - Works on all devices */}
           <div className="bg-white rounded-lg shadow-xl overflow-hidden mb-6">
             <iframe
-              src={`https://docs.google.com/viewer?url=https://www.labottegaherent.com/kaart-bottega.pdf&embedded=true`}
+              src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + '/images/bottega/kaart-bottega.pdf')}&embedded=true`}
               className="w-full"
               style={{ height: '1200px', border: 'none' }}
               title="La Bottega Kaart"
             >
               <p className="p-8 text-center text-gray-600">
                 PDF kan niet worden weergegeven. 
-                <a href="/kaart-bottega.pdf" download className="text-[#7D3C32] underline ml-2">
+                <a href="/images/bottega/kaart-bottega.pdf" download className="text-[#7D3C32] underline ml-2">
                   Klik hier om de kaart te downloaden
                 </a>
               </p>
@@ -718,33 +719,35 @@ function GroepmenusPage() {
 
   // Define single subtle color for all menu cards
   const menuColors = [
-    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' },
-    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' },
-    { bg: 'bg-gradient-to-br from-stone-800 to-stone-700', text: 'text-stone-200', border: 'border-stone-700' }
+    { bg: 'bg-white', text: 'text-[#7D3C32]', border: 'border-[#7D3C32]', textColor: 'text-gray-700' },
+    { bg: 'bg-white', text: 'text-[#7D3C32]', border: 'border-[#7D3C32]', textColor: 'text-gray-700' },
+    { bg: 'bg-white', text: 'text-[#7D3C32]', border: 'border-[#7D3C32]', textColor: 'text-gray-700' }
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-900 to-black">
+    <div className="min-h-screen bg-[#F5F0E8]">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-4 py-12">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#D4A574] mb-4">{t('groupMenusPageTitle')}</h1>
-            <p className="text-lg text-gray-300 mb-2">{t('groupMenusPageSubtitle')}</p>
-            <div className="w-20 h-1 bg-[#D4A574] mx-auto my-6"></div>
+            <h1 className="text-4xl md:text-5xl font-bold text-[#7D3C32] mb-4">{t('groupMenusPageTitle')}</h1>
+            <p className="text-lg text-gray-600 mb-2">{t('groupMenusPageSubtitle')}</p>
+            <div className="w-20 h-1 bg-[#7D3C32] mx-auto my-6"></div>
             <div className="flex flex-col items-center gap-4 mt-8">
               <a 
-                href="/groepmenus-bottega.pdf" 
+                href="/images/bottega/groepmenus-bottega.pdf" 
+                download="La-Bottega-Groepmenus.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center bg-[#D4A574] text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-[#C49564] transition-all shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
+                data-testid="groepmenus-download-btn"
               >
-                📄 Download Groepmenus PDF
+                📥 Download Groepmenus PDF
               </a>
               <Link 
                 to="/site/bottega/reserveren"
-                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
+                className="inline-flex items-center justify-center bg-[#D4A574] text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-[#C49564] transition-all shadow-lg hover:shadow-xl"
               >
                 Reserveer voor groepen
               </Link>
@@ -754,11 +757,11 @@ function GroepmenusPage() {
           {/* Menus - Three cards side by side */}
           <div className="grid md:grid-cols-3 gap-6 mb-12">
             {menus.map((menu, menuIdx) => (
-              <div key={menu.id} className={`${menuColors[menuIdx].bg} rounded-lg shadow-2xl overflow-hidden border-2 ${menuColors[menuIdx].border} text-white`}>
+              <div key={menu.id} className={`${menuColors[menuIdx].bg} rounded-lg shadow-2xl overflow-hidden border-2 ${menuColors[menuIdx].border}`}>
                 {/* Menu Header */}
-                <div className="p-6 border-b border-white/20 text-center">
+                <div className="p-6 border-b border-gray-200 text-center">
                   <h2 className={`text-2xl font-bold ${menuColors[menuIdx].text} mb-2`}>Menu {menu.id}</h2>
-                  <div className="text-4xl font-bold">{menu.price}</div>
+                  <div className="text-4xl font-bold text-gray-800">{menu.price}</div>
                 </div>
 
                 {/* Menu Content */}
@@ -769,9 +772,9 @@ function GroepmenusPage() {
                     <div className="space-y-3">
                       {menu.items.map((item, idx) => (
                         <div key={idx}>
-                          <p className="text-sm leading-relaxed text-center text-white/90">{item.name}</p>
+                          <p className="text-sm leading-relaxed text-center text-gray-700">{item.name}</p>
                           {idx < menu.items.length - 1 && (
-                            <div className="text-center my-2 text-xs text-white/70">
+                            <div className="text-center my-2 text-xs text-gray-500">
                               OF / OU / OR
                             </div>
                           )}
@@ -781,16 +784,16 @@ function GroepmenusPage() {
                   </div>
 
                   {/* Divider */}
-                  <div className="text-center my-6 text-white/40 font-bold text-lg">--O--</div>
+                  <div className="text-center my-6 text-[#7D3C32] font-bold text-lg">--O--</div>
 
                   {/* Main Course */}
                   <div className="mb-6">
                     <div className="space-y-3">
                       {menu.main.map((item, idx) => (
                         <div key={idx}>
-                          <p className="text-sm leading-relaxed text-center text-white/90">{item.name}</p>
+                          <p className="text-sm leading-relaxed text-center text-gray-700">{item.name}</p>
                           {idx < menu.main.length - 1 && (
-                            <div className="text-center my-2 text-xs text-white/70">
+                            <div className="text-center my-2 text-xs text-gray-500">
                               OF / OU / OR
                             </div>
                           )}
@@ -800,11 +803,11 @@ function GroepmenusPage() {
                   </div>
 
                   {/* Divider */}
-                  <div className="text-center my-6 text-white/40 font-bold text-lg">--O--</div>
+                  <div className="text-center my-6 text-[#7D3C32] font-bold text-lg">--O--</div>
 
                   {/* Dessert */}
                   <div className="mb-6">
-                    <p className="text-sm text-center text-white/90">{t('surprise')}</p>
+                    <p className="text-sm text-center text-gray-700">{t('surprise')}</p>
                   </div>
 
                   {/* Wine Inclusion */}
