@@ -3,6 +3,7 @@
 
 import React from 'react';
 import './App.css';
+import './index.css';
 import { Routes, Route } from 'react-router-dom';
 import { LanguageProvider } from './context/LanguageContext';
 import Navbar from './components/Navbar';

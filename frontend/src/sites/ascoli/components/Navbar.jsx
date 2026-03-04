@@ -66,7 +66,7 @@ const Navbar = ({ basePath = '' }) => {
             </Link>
 
             {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center space-x-6">
+            <div className="hidden lg:flex items-center" style={{ gap: '24px' }}>
               {navItems.map((item) => (
                 <Link
                   key={item.path}

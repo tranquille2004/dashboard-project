@@ -35,29 +35,21 @@ User wants to combine multiple restaurant websites into one platform to save hos
 
 ## What's Been Implemented (March 2026)
 
-### Phase 1 - MVP Complete ✅
-- [x] Multi-tenant backend with site/config/menu/gallery APIs
-- [x] Google OAuth super admin authentication
-- [x] Domain detection and routing
-- [x] Landing page with login
-- [x] Super admin dashboard (site list, create, delete)
-- [x] Site editor (general settings, contact/hours, menu, gallery)
-- [x] Dynamic site renderer for restaurants
-- [x] La Cantina Italiana seeded (Tervuren)
-- [x] La Bottega Italiana seeded (Herent)
-- [x] Site-specific features (Cantina: reservations only, Bottega: reservations + takeaway)
+### Phase 1-6 - Origineel (voorheen)
+Zie eerdere documentatie.
 
-### Phase 2 - Site Admin System ✅
-- [x] Site admin model with configurable permissions
-- [x] Site admin authentication (email/password)
-- [x] Restaurant owner login page (/restaurant-login)
-- [x] Site admin dashboard (/mijn-site)
-- [x] Permission-based UI (only shows allowed tabs)
-- [x] Super admin can create/edit/delete site admins
-- [x] Super admin can configure permissions per site admin
-- [x] Permission enforcement on backend APIs
+### Phase 7 - CORRECTE INTEGRATIE VAN ORIGINELE SITES ✅ (4 maart 2026)
+**BELANGRIJKE WIJZIGING**: In plaats van sites opnieuw te bouwen, zijn de ORIGINELE Emergent-gebouwde websites nu correct geïntegreerd:
 
-### Phase 3 - L'Ascoli Integration ✅ (3 december 2026)
+- [x] **La Cantina Italiana** - Originele code uit `tranquille2004/Cantina` repo geïntegreerd
+- [x] **La Bottega Italiana** - Originele code uit `tranquille2004/Bottega` repo geïntegreerd
+- [x] **L'Ascoli Zaventem** - Originele code uit `tranquille2004/Ascoli` repo geïntegreerd
+- [x] **Ristorante Mercato** - Originele code uit `tranquille2004/Mercato` repo geïntegreerd
+- [x] Alle sites werken nu met hun originele code, niet herbouwd
+- [x] Multi-tenant routing correct geconfigureerd (`/site/cantina`, `/site/bottega`, `/site/ascoli`, `/site/mercato`)
+- [x] Super Admin dashboard (`/admin`) behouden met fworks logo en Google Login
+- [x] Site Admin dashboard (`/site/{naam}/manage`) beschikbaar voor klanten
+- [x] Navigatie fixes toegepast (Ascoli spacing)
 - [x] L'Ascoli website toegevoegd (/site/ascoli)
 - [x] 36 menu items geïmporteerd (voorgerechten, soepen, pasta, vis, vlees)
 - [x] 4 groepmenus geïmporteerd (Torino, Puglia, Amalfi, Ascoli)

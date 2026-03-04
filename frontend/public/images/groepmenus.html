@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <title>La Cantina Italiana - Groepmenus</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #757A57;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .menu-card {
+            border: 2px solid #757A57;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            page-break-inside: avoid;
+        }
+        .menu-header {
+            background: linear-gradient(135deg, #757A57 0%, #8a926a 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .menu-card.premium .menu-header {
+            background: linear-gradient(135deg, #c9a961 0%, #d4b976 100%);
+        }
+        .menu-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+        .menu-price {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .menu-content {
+            padding: 20px;
+        }
+        .menu-item {
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .menu-item h4 {
+            color: #757A57;
+            margin: 0 0 5px 0;
+            font-size: 14px;
+        }
+        .menu-item p {
+            color: #666;
+            margin: 0;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        .divider {
+            text-align: center;
+            color: #757A57;
+            font-weight: bold;
+            margin: 10px 0;
+            font-size: 12px;
+        }
+        .course-divider {
+            height: 2px;
+            background: #757A57;
+            margin: 20px 0;
+        }
+        .aperitivo {
+            text-align: center;
+            background: rgba(117, 122, 87, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-style: italic;
+            color: #757A57;
+            font-weight: bold;
+        }
+        .dessert {
+            font-style: italic;
+            color: #757A57;
+            font-weight: bold;
+            text-align: center;
+        }
+        .wine-note {
+            font-size: 11px;
+            color: #666;
+            font-style: italic;
+            text-align: center;
+            margin-top: 5px;
+        }
+        .contact-info {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #757A57;
+            color: #666;
+        }
+        @media print {
+            body { margin: 0; padding: 10px; }
+            .menu-card { page-break-inside: avoid; }
+        }
+    </style>
+</head>
+<body>
+    <h1>La Cantina Italiana</h1>
+    <p class="subtitle">Groepmenus • Menus de groupe • Group Menus</p>
+    <p style="text-align: center; color: #666; font-size: 12px; margin-bottom: 20px; border: 1px solid #ddd; padding: 10px; background: #f9f9f9;">
+        💡 <strong>Tip:</strong> Gebruik Ctrl+P (Windows) of Cmd+P (Mac) om als PDF op te slaan of te printen
+    </p>
+
+    <!-- Menu 1 -->
+    <div class="menu-card">
+        <div class="menu-header">
+            <h2>Menu 1</h2>
+            <span class="menu-price">€45,-</span>
+        </div>
+        <div class="menu-content">
+            <div class="aperitivo">Aperitivo (spumante)</div>
+            
+            <div class="menu-item">
+                <h4>Rundercarpaccio / Carpaccio de boeuf / Beefcarpaccio</h4>
+                <p>met raketsalade en parmezaanse kaas / roquette et parmesan / with arugula salad and parmesan cheese</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Gemarineerde zalm / Saumon mariné / Marinated salmon</h4>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Parmigiana</h4>
+                <p>Gegratineerde aubergines met gerookte mozzarella / Gratin d'aubergines à la mozzarella fumée / Gratinated eggplant with smoked mozzarella</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Antipasto 'della Cantina'</h4>
+                <p>Italiaanse charcuterie, kaas / charcuterie italienne, fromage / Italian charcuterie, cheese</p>
+            </div>
+            
+            <div class="course-divider"></div>
+            
+            <div class="menu-item">
+                <h4>Ravioli al Tartufo</h4>
+                <p>Ravioli met truffel / ravioli à la truffe / ravioli with truffle</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Gebraden zalm / Saumon rôti / Smoked salmon</h4>
+                <p>met grof zout, purée van spinazie, spumante saus / au gros sel, purée aux épinards, sauce spumante / with coarse salt, spinach puree, spumante sauce</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Involtino di vitello</h4>
+                <p>Kalfsrollade gevuld met hesp en kaas, portsaus, rozijnen, pijnboompitten en pasta / Roulade de veau farcie au jambon cuit et fromage, sauce porto, raisin sec, pignons de pin et pâtes / Veal rolls filled with ham and cheese, port sauce, raisins, pine nuts, served with pasta</p>
+            </div>
+            
+            <div class="course-divider"></div>
+            
+            <div class="dessert">Verrassingsdessert / Dessert surprise / Surprise dessert</div>
+        </div>
+    </div>
+
+    <!-- Menu 2 -->
+    <div class="menu-card">
+        <div class="menu-header">
+            <h2>Menu 2</h2>
+            <span class="menu-price">€55,-</span>
+        </div>
+        <div class="menu-content">
+            <div class="aperitivo">Aperitivo (spumante)</div>
+            
+            <div class="menu-item">
+                <h4>Triologie van zeecarpaccio / Triologie de carpaccio de mer / Triologie of sea carpaccio</h4>
+                <p>zwaardvis, tonijn, zalm / espadon, thon, saumon / swordfish, tuna, salmon</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Parmaham met burratina / Jambon de Parme et burratina / Parma ham with burratina cheese</h4>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Sapori 'Cantina'</h4>
+                <p>rundercarpaccio, vitello tonnato, Parmaham / carpaccio de bœuf, vitello tonnato, jambon de Parme / beefcarpaccio, vitello tonnato, Parmaham</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Scampi</h4>
+                <p>met truffel en groene asperges / à la truffe et à l'asperge verte / with truffles and green asparagus</p>
+            </div>
+            
+            <div class="course-divider"></div>
+            
+            <div class="menu-item">
+                <h4>Kalfsribstuk / Côte de veau / Veal chop</h4>
+                <p>crème van bospaddenstoelen, aardappelen / crème aux champignons des bois, pommes de terre / wild mushroom cream sauce, potatoes</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Zwaardvis / Espadon / Swordfish</h4>
+                <p>op mediterraanse wijze (kappertjes, olijven, kerstomaatjes), groenten en aardappelen / façon méditerranée (câpres, olives, tomates cerises), légumes et pommes de terre / Mediterranean-style (capers, olives, cherry tomatoes), vegetables and potatoes</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Trio van verse pasta 'Cantina'</h4>
+                <p>ravioli met truffel, tortelloni met ricotta, tagliatelle met paddenstoelen en Parmaham / ravioli à la truffe, tortelloni à la ricotta, tagliatelle aux champignons et jambon de Parme / ravioli with truffle, tortelloni with ricotta, tagliatelle with mushrooms and Parmaham</p>
+            </div>
+            
+            <div class="course-divider"></div>
+            
+            <div class="dessert">Verrassingsdessert / Dessert surprise / Surprise dessert</div>
+            <p class="wine-note">1/2 fles huiswijn per persoon / 1/2 bouteille de vin par personne "sélection de la maison" / 1/2 bottle per person of housewine</p>
+        </div>
+    </div>
+
+    <!-- Menu 3 -->
+    <div class="menu-card premium">
+        <div class="menu-header">
+            <h2>Menu 3</h2>
+            <span class="menu-price">€65,-</span>
+        </div>
+        <div class="menu-content">
+            <div class="aperitivo">Aperitivo (spumante)</div>
+            
+            <div class="menu-item">
+                <h4>Vitello Tonnato</h4>
+                <p>Kalfslapje, crème van tonijn, ansjovis, mayonnaise en kappertjes / Braisé de veau, sauce au thon, anchois, mayonnaise et câpres / Braised veal, tuna sauce, anchovies, mayonnaise and capers</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Gerookte zalm / Saumon fumé / Smoked salmon</h4>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Ravioli met kreeft / Ravioli de homard / Lobster ravioli</h4>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Salade van ganzenlever / Foie gras / Foie gras</h4>
+                <p>met geconfijte ajuin en zoet-zure vinaigrette / au confit d'oignons, vinaigrette aigre-douce / with candied onions, sweet and sour vinaigrette</p>
+            </div>
+            
+            <div class="course-divider"></div>
+            
+            <div class="menu-item">
+                <h4>Runderfilet Rossini / Filet de bœuf Rossini / Filet of beef Rossini</h4>
+                <p>ganzenlever met rodewijnsaus, aardappelen en seizoensgroenten / foie gras, sauce au vin rouge, pommes de terre et légumes de saison / foie gras, red wine sauce, potatoes and seasonal vegetables</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Ravioli met ganzenlever / Ravioli au foie gras / Ravioli with foie gras</h4>
+                <p>porto saus, kalfszwezerik / sauce porto, ris de veau / port sauce, sweetbreads</p>
+            </div>
+            
+            <div class="divider">OF / OU / OR</div>
+            
+            <div class="menu-item">
+                <h4>Gegrilde vissoorten / Grillade de poissons / Grilled fishes</h4>
+                <p>met salade / et salade / and salad</p>
+            </div>
+            
+            <div class="course-divider"></div>
+            
+            <div class="dessert">Verrassingsdessert / Dessert surprise / Surprise dessert</div>
+            <p class="wine-note">1/2 fles huiswijn per persoon / 1/2 bouteille de vin par personne "sélection de la maison" / 1/2 bottle per person of housewine</p>
+        </div>
+    </div>
+
+    <div class="contact-info">
+        <p><strong>La Cantina Italiana</strong></p>
+        <p>Duisburgsesteenweg 22, 3080 Tervuren</p>
+        <p>Tel: +32 2 767 02 22</p>
+        <p>Email: lacantinaitaliana@mail.be</p>
+        <p>www.lacantinaitaliana.net</p>
+    </div>
+</body>
+</html>

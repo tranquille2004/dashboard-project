@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { Routes, Route, Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram, ChevronRight, Menu as MenuIcon, X, Download, Settings, LogOut, Save, Plus, Trash2, Lock, AlertCircle, Check, Globe } from 'lucide-react';
 import { translations, getTranslation } from '@/utils/translations';
 import ProductSiteRenderer from './ProductSiteRenderer';
 
-// Lazy load de originele site apps
-const CantinaApp = React.lazy(() => import('@/sites/cantina/App'));
-const BottegaApp = React.lazy(() => import('@/sites/bottega/BottegaApp'));
-const AscoliApp = React.lazy(() => import('@/sites/ascoli/AscoliApp'));
-const MercatoApp = React.lazy(() => import('@/sites/mercato/App'));
+// Import de site apps direct (niet lazy) voor betere stabiliteit
+import CantinaApp from '@/sites/cantina/CantinaApp';
+import BottegaApp from '@/sites/bottega/BottegaApp';
+import AscoliApp from '@/sites/ascoli/AscoliApp';
+import MercatoApp from '@/sites/mercato/MercatoApp';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -941,6 +941,11 @@ const SiteRenderer = () => {
   // If this is Ascoli, use the original AscoliApp
   if (slug === 'ascoli') {
     return <AscoliApp />;
+  }
+
+  // If this is Mercato, use the original MercatoApp
+  if (slug === 'mercato') {
+    return <MercatoApp />;
   }
 
   // Check if logged in admin belongs to this site
