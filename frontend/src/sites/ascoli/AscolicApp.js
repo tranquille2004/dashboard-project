@@ -9,11 +9,11 @@ const BASE_PATH = '/site/ascoli';
 const IMAGES = {
   logo: 'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/ascoli_orig.jpg',
   hero: 'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/45280374-1885058464947804-146153777123033088-o_2_orig.jpg',
-  feature1: 'https://www.ascolizaventem.com/images/img-5788.jpg',
-  feature2: 'https://www.ascolizaventem.com/images/img-5857.jpg',
-  feature3: 'https://www.ascolizaventem.com/images/333497-362660580479961-522768784-o.jpg',
-  tomatoes: 'https://www.ascolizaventem.com/images/img-5889.jpg',
-  menuHero: 'https://www.ascolizaventem.com/images/img-5879.jpg',
+  feature1: 'https://www.ascolizaventem.com/images/img-5801.jpg',
+  feature2: 'https://www.ascolizaventem.com/images/img-5849.jpg',
+  feature3: 'https://www.ascolizaventem.com/images/img-6046_1_orig.jpg',
+  interior: 'https://www.ascolizaventem.com/images/333497-362660580479961-522768784-o.jpg',
+  menuHero: 'https://www.ascolizaventem.com/images/img-5788_orig.jpg',
   dishes: [
     'https://www.ascolizaventem.com/images/img-5788.jpg',
     'https://www.ascolizaventem.com/images/img-5857.jpg',
@@ -171,21 +171,85 @@ function Navigation() {
   );
 }
 
-// Footer
+// Footer - EXACT like original
 function Footer() {
   const { t } = useLanguage();
   return (
-    <footer className="bg-[#1a1a1a] text-white py-12 px-4">
-      <div className="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 mb-8">
-        <div><img src={IMAGES.logo} alt="L'Ascoli" className="h-10 mb-4" /><p className="text-gray-400 text-sm">Italiaans Restaurant</p></div>
-        <div><h4 className="font-semibold mb-4">Contact</h4><p className="text-gray-400 text-sm">Hector Henneaulaan 136<br/>1930 Zaventem<br/>+32 2 725 45 45</p></div>
-        <div><h4 className="font-semibold mb-4">{t('openingHours')}</h4><p className="text-gray-400 text-sm">{t('monFri')}: 12:00-14:00, 18:30-22:30<br/>{t('sat')}: 18:30-22:30<br/>{t('sun')}: {t('closed')}</p></div>
-      </div>
-      <div className="border-t border-gray-800 pt-6 text-center text-sm text-gray-400">
-        <p>© {new Date().getFullYear()} L'Ascoli. {t('allRightsReserved')}.</p>
-        <div className="mt-4 flex items-center justify-center gap-2 text-xs">
-          <img src={IMAGES.fworksLogo} alt="f.works" className="h-5" />
-          <span>Webmaster: fworksbuilders bv.</span>
+    <footer className="bg-[#1a1a1a] text-white pt-16 pb-8">
+      <div className="max-w-7xl mx-auto px-4">
+        <div className="grid md:grid-cols-4 gap-8 mb-12">
+          {/* About */}
+          <div>
+            <h3 className="text-2xl font-serif mb-4 text-[#6b1f1f]">L'Ascoli</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Sinds 2015 biedt Antonio Di Siervi smakelijke Italiaanse gerechten aan in een prachtige 19e-eeuwse boerderij met een Toscaanse tuin.
+            </p>
+          </div>
+          
+          {/* Contact */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4 text-[#a48f7a]">Contact</h4>
+            <div className="space-y-3 text-sm">
+              <div className="flex items-start gap-2">
+                <MapPin className="w-5 h-5 text-[#6b1f1f] flex-shrink-0 mt-0.5" />
+                <span className="text-gray-400">Hector Henneaulaan 136<br/>1930 Zaventem</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Phone className="w-5 h-5 text-[#6b1f1f]" />
+                <a href="tel:+3227254545" className="text-gray-400 hover:text-[#6b1f1f] transition-colors">+32 2 725 45 45</a>
+              </div>
+            </div>
+          </div>
+          
+          {/* Opening Hours */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4 text-[#a48f7a]">{t('openingHours')}</h4>
+            <div className="space-y-2 text-sm text-gray-400">
+              <div className="flex items-start gap-2">
+                <Clock className="w-5 h-5 text-[#6b1f1f] flex-shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-medium text-white">Ma - Vr:</p>
+                  <p>12:00 - 14:00</p>
+                  <p>18:30 - 22:30</p>
+                  <p className="font-medium text-white mt-2">Za:</p>
+                  <p>18:30 - 22:30</p>
+                  <p className="font-medium text-white mt-2">Zo:</p>
+                  <p>Gesloten</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/* Quick Links */}
+          <div>
+            <h4 className="text-lg font-semibold mb-4 text-[#a48f7a]">Snelle Links</h4>
+            <ul className="space-y-2 text-sm">
+              <li><Link to={`${BASE_PATH}/menu`} className="text-gray-400 hover:text-[#6b1f1f] transition-colors">Menu</Link></li>
+              <li><Link to={`${BASE_PATH}/group-menu`} className="text-gray-400 hover:text-[#6b1f1f] transition-colors">Groepmenus</Link></li>
+              <li><Link to={`${BASE_PATH}/reservations`} className="text-gray-400 hover:text-[#6b1f1f] transition-colors">RESERVEREN</Link></li>
+              <li><Link to={`${BASE_PATH}/gallery`} className="text-gray-400 hover:text-[#6b1f1f] transition-colors">Foto Galerij</Link></li>
+            </ul>
+          </div>
+        </div>
+        
+        {/* Bottom Bar */}
+        <div className="border-t border-gray-800 pt-8">
+          <div className="text-center text-sm text-gray-500 mb-6">
+            <p>© {new Date().getFullYear()} L'Ascoli Zaventem. {t('allRightsReserved')}.</p>
+            <p className="mt-2 italic text-xs">Per il piacere di un momento da vivere e ricordare</p>
+          </div>
+          
+          {/* Webmaster Info - EXACT like original */}
+          <div className="text-center text-xs text-gray-500 pt-6 border-t border-gray-800">
+            <p className="mb-3">Ziet u een fout op deze site? Of zoekt u een professionele website? Contacteer de webmaster via WhatsApp.</p>
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <img src={IMAGES.fworksLogo} alt="fworksbuilders" className="h-8 w-auto" />
+              <span className="text-gray-400">Webmaster:</span>
+              <span className="text-gray-300">fworksbuilders</span>
+              <span className="text-gray-400">|</span>
+              <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white transition-colors">+32 494 51 60 64 (WhatsApp)</a>
+            </div>
+          </div>
         </div>
       </div>
     </footer>
@@ -219,25 +283,25 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Three Features with text overlay - EXACT like original */}
-      <section className="grid grid-cols-3">
-        <div className="relative h-48">
-          <img src={IMAGES.feature1} alt="Italiaanse Kwaliteit" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-6">
+      {/* Three Features with text overlay - EXACT like original with hover effects */}
+      <section className="grid grid-cols-1 md:grid-cols-3">
+        <div className="relative h-48 md:h-64 group cursor-pointer overflow-hidden">
+          <img src={IMAGES.feature1} alt="Italiaanse Kwaliteit" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300 flex flex-col justify-end p-6">
             <h3 className="text-white text-xl font-light">{t('feature1Title')}</h3>
             <p className="text-white/70 text-sm">{t('feature1Text')}</p>
           </div>
         </div>
-        <div className="relative h-48">
-          <img src={IMAGES.feature2} alt="Verse Bereiding" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-6">
+        <div className="relative h-48 md:h-64 group cursor-pointer overflow-hidden">
+          <img src={IMAGES.feature2} alt="Verse Bereiding" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300 flex flex-col justify-end p-6">
             <h3 className="text-white text-xl font-light">{t('feature2Title')}</h3>
             <p className="text-white/70 text-sm">{t('feature2Text')}</p>
           </div>
         </div>
-        <div className="relative h-48">
-          <img src={IMAGES.feature3} alt="Elegante Ambiance" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 bg-black/40 flex flex-col justify-end p-6">
+        <div className="relative h-48 md:h-64 group cursor-pointer overflow-hidden">
+          <img src={IMAGES.feature3} alt="Elegante Ambiance" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-all duration-300 flex flex-col justify-end p-6">
             <h3 className="text-white text-xl font-light">{t('feature3Title')}</h3>
             <p className="text-white/70 text-sm">{t('feature3Text')}</p>
           </div>
@@ -258,7 +322,7 @@ function HomePage() {
         </div>
       </section>
 
-      {/* About Section - EXACT like original with dark bg and tomato image */}
+      {/* About Section - EXACT like original with dark bg and interior image */}
       <section className="py-20 px-4 bg-[#1a1a1a]">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div>
@@ -266,15 +330,28 @@ function HomePage() {
             <p className="text-gray-400 leading-relaxed mb-6">{t('aboutText')}</p>
             <Link to={`${BASE_PATH}/about`} className="text-[#722F37] text-sm tracking-widest hover:underline">{t('readMore')} ›</Link>
           </div>
-          <div><img src={IMAGES.tomatoes} alt="Tomatoes" className="rounded-lg" /></div>
+          <div><img src={IMAGES.interior} alt="Restaurant Interior" className="rounded-lg" /></div>
         </div>
       </section>
 
-      {/* Gallery Preview */}
+      {/* Onze Gerechten Section - EXACT like original with hover effects */}
       <section className="py-20 px-4 bg-[#0d0d0d]">
         <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl text-[#a48f7a] font-light mb-4" style={{fontFamily: 'serif'}}>Onze Gerechten</h2>
+            <p className="text-gray-400">Een selectie van onze authentieke Italiaanse creaties</p>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            {IMAGES.dishes.map((img, i) => <img key={i} src={img} alt={`Dish ${i+1}`} className="w-full h-48 object-cover" />)}
+            {IMAGES.dishes.map((img, i) => (
+              <div key={i} className="relative overflow-hidden group cursor-pointer">
+                <img 
+                  src={img} 
+                  alt={`Dish ${i+1}`} 
+                  className="w-full h-48 object-cover transition-all duration-500 group-hover:scale-110 group-hover:brightness-110" 
+                />
+                <div className="absolute inset-0 bg-[#6b1f1f]/0 group-hover:bg-[#6b1f1f]/20 transition-all duration-300"></div>
+              </div>
+            ))}
           </div>
           <div className="text-center mt-8">
             <Link to={`${BASE_PATH}/gallery`} className="text-[#722F37] text-sm tracking-widest hover:underline">BEKIJK VOLLEDIGE GALERIJ ›</Link>
@@ -297,8 +374,15 @@ function MenuPage() {
       ['Bresaola gemarineerd in olijfolie en citroen, met parmezaanschilfers', '€ 24,50'],
       ['Salade van inktvis', '€ 24,50'],
       ['Parmaham met meloen', '€ 23,50'],
+      ['Gegratineerde aubergines op grootmoeders wijze', '€ 21,50'],
       ['Vitello tonnato', '€ 24,50'],
       ['Bordje antipasti', '€ 23,50'],
+      ['Verse gemarineerde zalm', '€ 24,50'],
+    ]},
+    { title: 'Soepen', items: [
+      ['Minestrone, soep van verse groenten uit de tuin', '€ 12,50'],
+      ['Tomatenroomsoep met zachte look en basilicum', '€ 12,50'],
+      ['Heldere soep van eend, tortellini geparfumeerd met verse munt en limoen', '€ 14,50'],
     ]},
     { title: 'Huisgemaakte pasta', items: [
       ['Spaghetti met verse kerstomaten, look en basilicum', '€ 17,50'],
