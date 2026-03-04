@@ -624,7 +624,7 @@ function KaartPage() {
             {/* Download Button */}
             <div className="flex justify-center mb-8">
               <a 
-                href="/images/bottega/kaart-bottega.pdf" 
+                href={`${window.location.origin}/images/bottega/kaart-bottega.pdf`}
                 download="La-Bottega-Kaart.pdf"
                 className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
                 data-testid="kaart-download-btn"
@@ -736,10 +736,8 @@ function GroepmenusPage() {
             <div className="w-20 h-1 bg-[#7D3C32] mx-auto my-6"></div>
             <div className="flex flex-col items-center gap-4 mt-8">
               <a 
-                href="/images/bottega/groepmenus-bottega.pdf" 
+                href={`${window.location.origin}/images/bottega/groepmenus-bottega.pdf`}
                 download="La-Bottega-Groepmenus.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
                 className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
                 data-testid="groepmenus-download-btn"
               >
