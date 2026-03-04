@@ -5,16 +5,16 @@ import { Phone, Mail, MapPin, Clock, ChefHat, Utensils, Wine, Globe } from 'luci
 
 const BASE_PATH = '/site/ascoli';
 
-// Image paths - using live site images
+// Image paths - using exact images from original site
 const IMAGES = {
   logo: 'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/ascoli.jpg',
-  hero: 'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/333497-362660580479961-522768784-o.jpg',
-  interior: 'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/333497-362660580479961-522768784-o.jpg',
+  hero: 'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/45280374-1885058464947804-146153777123033088-o_2_orig.jpg',
+  interior: 'https://www.ascolizaventem.com/images/333497-362660580479961-522768784-o.jpg',
   dishes: [
-    'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/img-5788_orig.jpg',
-    'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/img-5857_orig.jpg',
-    'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/img-5879_orig.jpg',
-    'https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/img-5889_orig.jpg',
+    'https://www.ascolizaventem.com/images/img-5788.jpg',
+    'https://www.ascolizaventem.com/images/img-5857.jpg',
+    'https://www.ascolizaventem.com/images/img-5879.jpg',
+    'https://www.ascolizaventem.com/images/img-5889.jpg',
   ],
   fworksLogo: 'https://raw.githubusercontent.com/tranquille2004/Bottega/main/frontend/public/images/fworksbuilders-logo.png',
 };
@@ -196,45 +196,41 @@ function ScrollToTop() {
 }
 
 // ===========================================
-// NAVIGATION
+// NAVIGATION - Exact like original
 // ===========================================
 function Navigation() {
   const { t } = useLanguage();
   const [isOpen, setIsOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
   
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md' : 'bg-transparent'}`}>
+    <nav className="fixed w-full z-50 bg-white shadow-md">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           <Link to={BASE_PATH} className="flex items-center">
-            <img src={IMAGES.logo} alt="L'Ascoli" className="h-12 w-auto" />
+            <img src={IMAGES.logo} alt="L'Ascoli" className="h-14 w-auto" />
           </Link>
           
-          {/* Desktop Menu */}
-          <div className="hidden lg:flex items-center space-x-8">
-            <Link to={BASE_PATH} className={`text-sm font-medium uppercase tracking-wide transition-colors ${scrolled ? 'text-gray-700 hover:text-[#8B0000]' : 'text-white hover:text-gray-200'}`}>{t('home')}</Link>
-            <Link to={`${BASE_PATH}/about`} className={`text-sm font-medium uppercase tracking-wide transition-colors ${scrolled ? 'text-gray-700 hover:text-[#8B0000]' : 'text-white hover:text-gray-200'}`}>{t('about')}</Link>
-            <Link to={`${BASE_PATH}/menu`} className={`text-sm font-medium uppercase tracking-wide transition-colors ${scrolled ? 'text-gray-700 hover:text-[#8B0000]' : 'text-white hover:text-gray-200'}`}>{t('menu')}</Link>
-            <Link to={`${BASE_PATH}/group-menu`} className={`text-sm font-medium uppercase tracking-wide transition-colors ${scrolled ? 'text-gray-700 hover:text-[#8B0000]' : 'text-white hover:text-gray-200'}`}>{t('groupMenus')}</Link>
-            <Link to={`${BASE_PATH}/reservations`} className={`text-sm font-medium uppercase tracking-wide transition-colors ${scrolled ? 'text-gray-700 hover:text-[#8B0000]' : 'text-white hover:text-gray-200'}`}>{t('reserve')}</Link>
-            <Link to={`${BASE_PATH}/gallery`} className={`text-sm font-medium uppercase tracking-wide transition-colors ${scrolled ? 'text-gray-700 hover:text-[#8B0000]' : 'text-white hover:text-gray-200'}`}>{t('gallery')}</Link>
-            <Link to={`${BASE_PATH}/info`} className={`text-sm font-medium uppercase tracking-wide transition-colors ${scrolled ? 'text-gray-700 hover:text-[#8B0000]' : 'text-white hover:text-gray-200'}`}>{t('info')}</Link>
+          {/* Desktop Menu - exact like original */}
+          <div className="hidden lg:flex items-center space-x-6">
+            <Link to={BASE_PATH} className="text-sm font-medium text-gray-700 hover:text-[#8B0000] transition-colors uppercase tracking-wide">{t('home')}</Link>
+            <Link to={`${BASE_PATH}/about`} className="text-sm font-medium text-gray-700 hover:text-[#8B0000] transition-colors uppercase tracking-wide">{t('about')}</Link>
+            <Link to={`${BASE_PATH}/menu`} className="text-sm font-medium text-gray-700 hover:text-[#8B0000] transition-colors uppercase tracking-wide">{t('menu')}</Link>
+            <Link to={`${BASE_PATH}/group-menu`} className="text-sm font-medium text-gray-700 hover:text-[#8B0000] transition-colors uppercase tracking-wide">{t('groupMenus')}</Link>
+            <Link to={`${BASE_PATH}/reservations`} className="text-sm font-medium text-gray-700 hover:text-[#8B0000] transition-colors uppercase tracking-wide">{t('reserve')}</Link>
+            <Link to={`${BASE_PATH}/gallery`} className="text-sm font-medium text-gray-700 hover:text-[#8B0000] transition-colors uppercase tracking-wide">{t('gallery')}</Link>
+            <Link to={`${BASE_PATH}/info`} className="text-sm font-medium text-gray-700 hover:text-[#8B0000] transition-colors uppercase tracking-wide">{t('info')}</Link>
             <LanguageSwitcher />
           </div>
 
           {/* Mobile Menu Button */}
-          <button className="lg:hidden p-2" onClick={() => setIsOpen(!isOpen)}>
-            <div className={`w-6 h-0.5 mb-1.5 transition-colors ${scrolled ? 'bg-gray-600' : 'bg-white'}`}></div>
-            <div className={`w-6 h-0.5 mb-1.5 transition-colors ${scrolled ? 'bg-gray-600' : 'bg-white'}`}></div>
-            <div className={`w-6 h-0.5 transition-colors ${scrolled ? 'bg-gray-600' : 'bg-white'}`}></div>
-          </button>
+          <div className="lg:hidden flex items-center space-x-3">
+            <LanguageSwitcher />
+            <button className="p-2" onClick={() => setIsOpen(!isOpen)}>
+              <div className="w-6 h-0.5 bg-gray-600 mb-1.5"></div>
+              <div className="w-6 h-0.5 bg-gray-600 mb-1.5"></div>
+              <div className="w-6 h-0.5 bg-gray-600"></div>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Menu */}
@@ -248,7 +244,6 @@ function Navigation() {
               <Link to={`${BASE_PATH}/reservations`} onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-[#8B0000] uppercase text-sm font-medium">{t('reserve')}</Link>
               <Link to={`${BASE_PATH}/gallery`} onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-[#8B0000] uppercase text-sm font-medium">{t('gallery')}</Link>
               <Link to={`${BASE_PATH}/info`} onClick={() => setIsOpen(false)} className="text-gray-700 hover:text-[#8B0000] uppercase text-sm font-medium">{t('info')}</Link>
-              <LanguageSwitcher />
             </div>
           </div>
         )}
@@ -296,7 +291,7 @@ function Footer() {
 }
 
 // ===========================================
-// HOME PAGE
+// HOME PAGE - Exact like original
 // ===========================================
 function HomePage() {
   const { t } = useLanguage();
@@ -304,8 +299,10 @@ function HomePage() {
 
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center">
+      <Navigation />
+      
+      {/* Hero Section - with padding for fixed nav */}
+      <section className="relative h-screen flex items-center justify-center pt-20">
         <div className="absolute inset-0">
           <img src={IMAGES.hero} alt="L'Ascoli" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-black/40"></div>
@@ -322,6 +319,13 @@ function HomePage() {
             </button>
           </div>
         </div>
+      </section>
+
+      {/* Three dishes under hero - exact like original */}
+      <section className="grid grid-cols-3">
+        <img src={IMAGES.dishes[0]} alt="Dish 1" className="w-full h-48 object-cover" />
+        <img src={IMAGES.dishes[1]} alt="Dish 2" className="w-full h-48 object-cover" />
+        <img src={IMAGES.dishes[2]} alt="Dish 3" className="w-full h-48 object-cover" />
       </section>
 
       {/* Features Section */}
