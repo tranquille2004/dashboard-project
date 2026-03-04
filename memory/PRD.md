@@ -105,22 +105,24 @@ User wants to combine multiple restaurant websites into one platform to save hos
 - [x] Kerstsluitingsmelding wordt getoond
 - [x] Footer met webmaster info (fworksbuilders)
 
-### Phase 8 - L'Ascoli Zaventem EXACT REPLICA ✅ (4 december 2026)
-- [x] L'Ascoli helemaal opnieuw gebouwd als exacte replica van originele site (ascolizaventem.com)
-- [x] Self-contained AscolicApp.js component in /app/frontend/src/sites/ascoli/
-- [x] Navigatie met taalwisseling (NL, FR, EN)
-- [x] Homepage met hero sectie (Antonio met citroenbomen), exact dezelfde afbeelding
-- [x] Drie feature kaarten met correcte afbeeldingen en hover effecten
+### Phase 8 - L'Ascoli Zaventem EXACT REPLICA ✅ (4 maart 2026)
+- [x] L'Ascoli volledig herschreven als exacte replica van originele site (ascolizaventem.com)
+- [x] Alle afbeeldingen correct geladen van Weebly servers
+- [x] Logo correct weergegeven (rode L'Ascoli tekst op witte achtergrond)
+- [x] Homepage met hero sectie (Antonio met citroenbomen)
+- [x] Drie feature kaarten met hover effecten
 - [x] "Onze Gerechten" sectie met 4 foto's en hover effecten
-- [x] Menu pagina met SOEPEN sectie (3 items - Minestrone, Tomatenroomsoep, Heldere soep van eend)
-- [x] Alle menu categorieën: Koude voorgerechten, Soepen, Huisgemaakte pasta, Visgerechten, Vleesgerechten
+- [x] About pagina ("Wie zijn wij?") met correcte hero en "Ons Verhaal" content
+- [x] Menu pagina met crème gradient achtergrond en meertalige items (NL/FR/EN)
+- [x] Soepen sectie met 3 items
+- [x] Visgerechten en Vleesgerechten secties met allergeeninformatie
+- [x] Groepmenus pagina met 4 volledige menu's (TORINO €47,50, PUGLIA €52,50, AMALFI €57,50, ASCOLI €67,50)
+- [x] Alle menu gerechten in 3 talen (NL/FR/EN)
+- [x] Reservaties pagina met correct JotForm formulier (ID: 81428826238362)
+- [x] Sluitingsmelding voor kerst/nieuwjaar
+- [x] Info pagina met openingstijden en locatie
 - [x] Footer met correcte webmaster info (fworksbuilders, GEEN "bv.")
-- [x] Donkerrode kleur #722F37 correct gebruikt
-- [x] Donkere navigatiebalk (#1a1a1a)
-- [x] Groepmenus pagina met 4 opties (Torino, Puglia, Amalfi, Ascoli)
-- [x] Reserveren pagina met JotForm formulier
-- [x] Info pagina met openingstijden en sluitingsbericht
-- [x] 9 Playwright tests geschreven en geslaagd
+- [x] Taalwisseling (NL/FR/EN) werkt correct
 
 ### Permission Options
 | Permission | Description |
