@@ -199,6 +199,17 @@ Voorbeeld:
 - [x] **Cantina vertalingen** ✅ (4 maart 2026) - "Praktische Info" vertaling werkt correct in alle 5 talen
 - [x] **Mercato Groepmenus PDF knop** ✅ (4 maart 2026) - Grote gouden knop met juiste PDF pad, PDF gekopieerd van originele repo
 - [x] **Mercato Kaart met embedded PDF** ✅ (4 maart 2026) - Menu PDF direct zichtbaar via Google Docs viewer (zoals La Cantina)
+- [x] **Site Admin Dashboards** ✅ (4 maart 2026) - Restaurant eigenaren kunnen nu inloggen en hun site beheren
+
+### Site Admin Accounts (4 restaurants)
+| Restaurant | Email | Wachtwoord | Rechten |
+|------------|-------|------------|---------|
+| La Cantina Italiana | cantina@test.be | test123 | Openingstijden, Sluitingsbericht, Foto's, Menu |
+| La Bottega Italiana | bottega@test.be | test123 | Openingstijden, Sluitingsbericht, Foto's, Menu |
+| L'Ascoli Zaventem | ascoli@test.be | test123 | Openingstijden, Sluitingsbericht, Foto's, Menu |
+| Ristorante Mercato | mercato@test.be | test123 | Openingstijden, Sluitingsbericht, Foto's, Menu |
+
+*Tracemaster heeft GEEN site admin (eigendom van platform eigenaar)*
 
 ### P1 - Medium Priority (NEXT)
 - [ ] **USER VERIFICATIE** - Vraag gebruiker om alle 5 sites te controleren:

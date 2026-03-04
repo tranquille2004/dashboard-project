@@ -2,11 +2,14 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { SiteProvider } from '@/contexts/SiteContext';
+import { SiteAdminProvider } from '@/contexts/SiteAdminContext';
 import LandingPage from '@/components/LandingPage';
 import AuthCallback from '@/components/AuthCallback';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import SiteEditor from '@/components/admin/SiteEditor';
 import SiteRenderer from '@/components/sites/SiteRenderer';
+import SiteAdminLogin from '@/components/site-admin/SiteAdminLogin';
+import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
 import './App.css';
 
 // Router wrapper to handle auth callback detection
@@ -25,6 +28,10 @@ function AppRouter() {
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/sites/:siteId" element={<SiteEditor />} />
       
+      {/* Site Admin Routes (voor restaurant eigenaren) */}
+      <Route path="/restaurant-login" element={<SiteAdminLogin />} />
+      <Route path="/mijn-site" element={<SiteAdminDashboard />} />
+      
       {/* Site Preview Routes (elke website heeft zijn eigen /beheer login) */}
       <Route path="/site/:slug/*" element={<SiteRenderer />} />
       
@@ -39,7 +46,9 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
         <SiteProvider>
-          <AppRouter />
+          <SiteAdminProvider>
+            <AppRouter />
+          </SiteAdminProvider>
         </SiteProvider>
       </AuthProvider>
     </BrowserRouter>
