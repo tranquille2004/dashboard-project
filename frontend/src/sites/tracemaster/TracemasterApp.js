@@ -60,7 +60,7 @@ const Navigation = () => {
         <div className="flex justify-between items-center h-20">
           <Link to="/site/tracemaster/" className="flex items-center" data-testid="logo-link">
             <img
-              src="https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/logoecuadorpetit.jpg"
+              src="/images/tracemaster/logoecuadorpetit.jpg"
               alt="Tracemaster Logo"
               className="h-12 w-auto"
             />
@@ -141,7 +141,7 @@ const Footer = () => (
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
           <img
-            src="https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/logoecuadorpetit.jpg"
+            src="/images/tracemaster/logoecuadorpetit.jpg"
             alt="Tracemaster Logo"
             className="h-12 w-auto mb-4"
           />
@@ -208,7 +208,7 @@ const Home = () => {
     <div className="min-h-screen" data-testid="home-page">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-900 via-red-900/20 to-gray-900 pt-20">
-        <div className="absolute inset-0 bg-[url('https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/background-images/1214590717.webp')] bg-cover bg-center opacity-20"></div>
+        <div className="absolute inset-0 bg-cover bg-center opacity-20" style={{ backgroundImage: "url('/images/tracemaster/1214590717.webp')" }}></div>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="text-center md:text-left animate-fadeIn">
@@ -390,8 +390,8 @@ const Productos = () => {
   const images = [
     "https://customer-assets.emergentagent.com/job_trace-jotform/artifacts/j4ekq9pu_toepassingen-gps-trackers-auto-vk-300x300-1%20%281%29.JPG",
     "https://customer-assets.emergentagent.com/job_trace-jotform/artifacts/v5f5qps1_tracemaster-1-1.JPG",
-    "https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/100pro-uitleg-600x600.webp",
-    "https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/app-web-1-600x600.webp",
+    "/images/tracemaster/100pro-uitleg-600x600.webp",
+    "/images/tracemaster/app-web-1-600x600.webp",
   ];
 
   return (
@@ -601,13 +601,13 @@ const Productos = () => {
 const Adaptador = () => {
   const [lightboxImage, setLightboxImage] = useState(null);
   
-  const mainImage = "https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/chargeur1_orig.jpg";
+  const mainImage = "/images/tracemaster/chargeur1_orig.jpg";
   
   const thumbnails = [
-    "https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/editor/vooraanzicht-vaste-adapter-300x300.webp?1741711916",
-    "https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/chargeur2_orig.jpg",
-    "https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/chargeur3_orig.jpg",
-    "https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/chargeur4_orig.jpg",
+    "/images/tracemaster/vooraanzicht-vaste-adapter-300x300.webp",
+    "/images/tracemaster/chargeur2_orig.jpg",
+    "/images/tracemaster/chargeur3_orig.jpg",
+    "/images/tracemaster/chargeur4_orig.jpg",
   ];
 
   return (
@@ -780,7 +780,7 @@ Si el rastreador GPS permanece fuera de línea, puede intentar reiniciarlo con e
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <img
-              src="https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/tracemaster-logo-rood-1_1.webp"
+              src="/images/tracemaster/tracemaster-logo-rood-1_1.webp"
               alt="Tracemaster Logo"
               className="h-16 mx-auto mb-6"
             />
@@ -1082,7 +1082,7 @@ const Contacto = () => {
                 </div>
               </div>
               <img
-                src="https://tracemaster-rastreadores.weebly.com/uploads/1/0/1/5/101515486/published/whatsapp-business-logo.jpg?1741714728"
+                src="/images/tracemaster/whatsapp-business-logo.jpg"
                 alt="WhatsApp Business"
                 className="mt-6 h-16 rounded-lg"
               />

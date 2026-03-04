@@ -36,7 +36,7 @@ const About = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/img-5497_1_orig.jpg"
+        image="/images/ascoli/gallery/img-5497_1_orig.jpg"
       />
 
       {/* Story Section */}
@@ -90,12 +90,12 @@ const About = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <img
-              src="https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/20689781-1380875678699421-9174551204022883676-o_1_orig.jpg"
+              src="/images/ascoli/gallery/20689781-1380875678699421-9174551204022883676-o_1_orig.jpg"
               alt="Restaurant"
               className="w-full h-80 object-cover rounded-sm"
             />
             <img
-              src="https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/45280374-1885058464947804-146153777123033088-o_2_orig.jpg"
+              src="/images/ascoli/gallery/45280374-1885058464947804-146153777123033088-o_2_orig.jpg"
               alt="Restaurant"
               className="w-full h-80 object-cover rounded-sm"
             />

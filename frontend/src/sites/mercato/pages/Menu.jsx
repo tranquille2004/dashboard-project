@@ -50,7 +50,7 @@ const Menu = () => {
             }[language]}
           </p>
           <a
-            href="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/ss-mains_mercato_09_24__1_.pdf"
+            href="/images/mercato/gallery/ss-mains_mercato_09_24__1_.pdf"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"

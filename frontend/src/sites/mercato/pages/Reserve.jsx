@@ -89,12 +89,12 @@ const Reserve = () => {
         {/* Image Banner */}
         <div className="grid md:grid-cols-2 gap-6 mt-12">
           <img
-            src="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/img-20160704-110159_orig.jpg"
+            src="/images/mercato/gallery/img-20160704-110159_orig.jpg"
             alt="Restaurant Interior"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20"
           />
           <img
-            src="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/3_1_orig.jpg"
+            src="/images/mercato/gallery/3_1_orig.jpg"
             alt="Dining"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20"
           />

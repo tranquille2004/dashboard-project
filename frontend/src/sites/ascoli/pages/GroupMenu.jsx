@@ -16,7 +16,7 @@ const GroupMenu = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/img-5714_1_orig.jpg"
+        image="/images/ascoli/gallery/img-5714_1_orig.jpg"
       />
 
       <section className="py-16 bg-[#1a1a1a]">

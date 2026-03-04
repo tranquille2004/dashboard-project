@@ -15,7 +15,7 @@ const Menu = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/img-5788_orig.jpg"
+        image="/images/ascoli/gallery/img-5788_orig.jpg"
       />
 
       <section className="py-16 bg-gradient-to-b from-[#f2f1d5] to-[#e8e6c8]">

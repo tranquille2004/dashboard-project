@@ -579,7 +579,7 @@ function AfhalenPage() {
           </div>
 
           <div className="mb-6 text-center">
-            <a href="https://labottegaherent.weebly.com/onze-kaart1.html" target="_blank" rel="noopener noreferrer" className="text-[#7D3C32] hover:underline font-bold text-lg">
+            <a href="/images/bottega/onze-kaart1.html" target="_blank" rel="noopener noreferrer" className="text-[#7D3C32] hover:underline font-bold text-lg">
               KLIK HIER VOOR DE KAART →
             </a>
           </div>

@@ -58,7 +58,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link to={basePath} className="flex items-center">
               <img
-                src="https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/ascoli.jpg"
+                src="/images/ascoli/logo/ascoli.jpg"
                 alt="L'Ascoli"
                 className="h-12 w-auto"
                 style={{

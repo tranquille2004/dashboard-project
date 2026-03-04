@@ -67,6 +67,29 @@ Zie eerdere documentatie.
 - Alle `<Link to="/path">` vervangen door `<Link to={\`${basePath}/path\`}>`
 - Routes veranderd van absolute (`/menu`) naar relatieve (`menu`) paths in App routers
 
+### Phase 9 - ALLE AFBEELDINGEN LOKAAL OPGESLAGEN ✅ (4 maart 2026)
+**KRITIEK**: Alle 174 Weebly afbeeldingen zijn gedownload en lokaal opgeslagen zodat sites blijven werken na verwijdering van Weebly accounts.
+
+**Wat is gedaan:**
+- [x] 174 unieke Weebly URLs geïdentificeerd en gedownload
+- [x] Alle afbeeldingen opgeslagen in `/app/frontend/public/images/`
+  - `/images/ascoli/gallery/` - 156 bestanden (galerij, hero, about foto's)
+  - `/images/ascoli/logo/` - Logo bestanden
+  - `/images/mercato/gallery/` - 10 bestanden
+  - `/images/tracemaster/` - 11 bestanden
+  - `/images/bottega/gallery/` - 9 bestanden
+- [x] Alle Weebly URLs in code vervangen door lokale paden
+- [x] Webpack cache gewist voor schone rebuild
+- [x] Alle 5 sites getest en werkend met lokale afbeeldingen
+
+**Verificatie:**
+```bash
+grep -rn "weebly" /app/frontend/src/ --include="*.js" --include="*.jsx" | wc -l
+# Resultaat: 0 (geen Weebly URLs meer)
+```
+
+**Totale lokale opslag:** 33 MB aan afbeeldingen
+
 ### Phase 4 - Ristorante Mercato Integration ✅ (3 december 2026)
 - [x] Mercato website toegevoegd (/site/mercato)
 - [x] 3 groepmenus geïmporteerd (Menu 1 €45, Menu 2 €55, Menu 3 €65)

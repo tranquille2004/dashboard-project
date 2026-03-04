@@ -97,17 +97,17 @@ const Takeaway = () => {
         {/* Food Images */}
         <div className="grid md:grid-cols-3 gap-6 mt-12">
           <img
-            src="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/475539315-9097135276989113-4629240725372122729-n.jpg"
+            src="/images/mercato/gallery/475539315-9097135276989113-4629240725372122729-n.jpg"
             alt="Italian Food"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/478330133-1140135614790013-1825406155141421292-n.jpg"
+            src="/images/mercato/gallery/478330133-1140135614790013-1825406155141421292-n.jpg"
             alt="Food 2"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/481243795-9244475188921787-9185171556075761483-n.jpg"
+            src="/images/mercato/gallery/481243795-9244475188921787-9185171556075761483-n.jpg"
             alt="Food 3"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />

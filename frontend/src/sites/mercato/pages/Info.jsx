@@ -173,17 +173,17 @@ const Info = () => {
         {/* Images */}
         <div className="grid md:grid-cols-3 gap-6">
           <img
-            src="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/img-20160704-110159.jpg"
+            src="/images/mercato/gallery/img-20160704-110159.jpg"
             alt="Interior 1"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/3_1.jpg"
+            src="/images/mercato/gallery/3_1.jpg"
             alt="Italian Restaurant"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="https://ristorantemercato.weebly.com/uploads/1/0/1/5/101515486/dscn0463.jpg"
+            src="/images/mercato/gallery/dscn0463.jpg"
             alt="Interior 3"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
