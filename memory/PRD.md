@@ -105,6 +105,23 @@ User wants to combine multiple restaurant websites into one platform to save hos
 - [x] Kerstsluitingsmelding wordt getoond
 - [x] Footer met webmaster info (fworksbuilders)
 
+### Phase 8 - L'Ascoli Zaventem EXACT REPLICA ✅ (4 december 2026)
+- [x] L'Ascoli helemaal opnieuw gebouwd als exacte replica van originele site (ascolizaventem.com)
+- [x] Self-contained AscolicApp.js component in /app/frontend/src/sites/ascoli/
+- [x] Navigatie met taalwisseling (NL, FR, EN)
+- [x] Homepage met hero sectie (Antonio met citroenbomen), exact dezelfde afbeelding
+- [x] Drie feature kaarten met correcte afbeeldingen en hover effecten
+- [x] "Onze Gerechten" sectie met 4 foto's en hover effecten
+- [x] Menu pagina met SOEPEN sectie (3 items - Minestrone, Tomatenroomsoep, Heldere soep van eend)
+- [x] Alle menu categorieën: Koude voorgerechten, Soepen, Huisgemaakte pasta, Visgerechten, Vleesgerechten
+- [x] Footer met correcte webmaster info (fworksbuilders, GEEN "bv.")
+- [x] Donkerrode kleur #722F37 correct gebruikt
+- [x] Donkere navigatiebalk (#1a1a1a)
+- [x] Groepmenus pagina met 4 opties (Torino, Puglia, Amalfi, Ascoli)
+- [x] Reserveren pagina met JotForm formulier
+- [x] Info pagina met openingstijden en sluitingsbericht
+- [x] 9 Playwright tests geschreven en geslaagd
+
 ### Permission Options
 | Permission | Description |
 |------------|-------------|
@@ -132,7 +149,7 @@ Voorbeeld:
 ## Prioritized Backlog
 
 ### P0 - High Priority (NEXT)
-- [ ] **L'Ascoli website EXACT REPLICA** - Repliceer met originele code van `tranquille2004/Ascoli` repo
+- [x] **L'Ascoli website EXACT REPLICA** ✅ (4 december 2026) - Pixel-perfect replica voltooid met alle correcties
 - [ ] **Mercato website EXACT REPLICA** - Repliceer met originele code van `tranquille2004/Mercato` repo
 - [ ] **Tracemaster evalueren** - Vraag gebruiker of deze ook exact gerepliceerd moet worden
 
