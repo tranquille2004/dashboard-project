@@ -1,0 +1,523 @@
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
+import { Phone, Mail, MapPin, Clock, ChefHat, Utensils, Wine } from 'lucide-react';
+import { LanguageProvider, useLanguage } from './LanguageContext';
+import LanguageSwitcher from './components/LanguageSwitcher';
+
+// Bordeaux color from logo
+const BRAND_COLOR = '#7D3C32';
+
+function Navigation({ activeSection, scrollToSection }) {
+  const navigate = useNavigate();
+  const { t } = useLanguage();
+
+  const handleNavClick = (path, sectionId) => {
+    if (path) {
+      navigate(path);
+    } else if (sectionId) {
+      scrollToSection(sectionId);
+    }
+  };
+
+  return (
+    <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-md z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-20">
+          <Link to="/" className="flex items-center space-x-3">
+            <img src="/images/logo.jpg" alt="La Bottega Italiana" className="h-12 w-auto" />
+            <div>
+              <h1 className="text-xl font-bold text-gray-900">La Bottega Italiana</h1>
+              <p className="text-xs text-gray-600">Herent</p>
+            </div>
+          </Link>
+          <div className="hidden md:flex space-x-6 items-center">
+            <Link to="/" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
+            <button onClick={() => handleNavClick(null, 'about')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</button>
+            <button onClick={() => handleNavClick(null, 'menu')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</button>
+            <button onClick={() => handleNavClick(null, 'hours')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</button>
+            <button onClick={() => handleNavClick(null, 'contact')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</button>
+            <LanguageSwitcher />
+          </div>
+          <Link to="/reserveren" className="bg-[#7D3C32] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#6A3229] transition-colors shadow-lg hover:shadow-xl">
+            {t('reserve')}
+          </Link>
+        </div>
+      </div>
+    </nav>
+  );
+}
+
+function HomePage() {
+  const [activeSection, setActiveSection] = useState('home');
+  const navigate = useNavigate();
+  const { t } = useLanguage();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['home', 'about', 'menu', 'hours', 'contact'];
+      const scrollPosition = window.scrollY + 100;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const offsetTop = element.offsetTop;
+          const offsetBottom = offsetTop + element.offsetHeight;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetBottom) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-white">
+      <Navigation activeSection={activeSection} scrollToSection={scrollToSection} />
+
+      {/* Hero Section */}
+      <section id="home" className="relative h-screen flex items-center justify-center">
+        <div className="absolute inset-0 z-0">
+          <img src="/images/gallery1.jpg" alt="Restaurant Interior" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-black/50"></div>
+        </div>
+        <div className="relative z-10 text-center text-white px-4">
+          <h1 className="text-5xl md:text-7xl font-bold mb-6" data-testid="hero-title">{t('heroTitle')}</h1>
+          <p className="text-xl md:text-2xl mb-8 font-light">{t('heroSubtitle')}</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/reserveren" className="bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="reserve-table-btn">
+              {t('reserveTable')}
+            </Link>
+            <Link to="/afhalen" className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="takeaway-btn">
+              {t('orderTakeaway')}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Holiday Closure Notice */}
+      <div className="bg-[#FFF4E6] border-l-4 border-[#7D3C32] py-6 px-4">
+        <div className="max-w-7xl mx-auto">
+          <p className="text-center text-[#7D3C32] font-medium" data-testid="closure-notice">
+            <span className="font-bold">Let op:</span> Voor het einde van het jaar zijn wij gesloten op: 24, 25 december en 29, 30, 31 december en 1 januari 2026.
+          </p>
+        </div>
+      </div>
+
+      {/* About Section */}
+      <section id="about" className="py-20 px-4 bg-gray-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Authentieke Italiaanse Ervaring</h2>
+            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+              In het hart van Herent biedt La Bottega Italiana u een unieke culinaire ervaring. 
+              Met onze authentieke Italiaanse keuken en warme ambiance creëren wij onvergetelijke momenten.
+            </p>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-3 gap-8 mb-16">
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all">
+              <img src="/images/gallery2.jpg" alt="Italiaanse Kwaliteit" className="w-full h-64 object-cover" />
+              <div className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <ChefHat className="w-12 h-12 text-[#7D3C32]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Italiaanse Kwaliteit</h3>
+                <p className="text-gray-600">Authentieke Italiaanse ingrediënten</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all">
+              <img src="/images/gallery3.jpg" alt="Verse Bereiding" className="w-full h-64 object-cover" />
+              <div className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <Utensils className="w-12 h-12 text-[#7D3C32]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Verse Bereiding</h3>
+                <p className="text-gray-600">Dagelijks vers bereid</p>
+              </div>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-lg overflow-hidden transform hover:scale-105 transition-all">
+              <img src="/images/gallery4.jpg" alt="Elegante Ambiance" className="w-full h-64 object-cover" />
+              <div className="p-6 text-center">
+                <div className="flex justify-center mb-4">
+                  <Wine className="w-12 h-12 text-[#7D3C32]" />
+                </div>
+                <h3 className="text-xl font-bold text-gray-900 mb-2">Elegante Ambiance</h3>
+                <p className="text-gray-600">Verfijnde eetervaring</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Gallery - Old Photos */}
+          <div className="mb-8">
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Restaurant Sfeer</h3>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              <img src="/images/gallery5.jpg" alt="Restaurant" className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow" />
+              <img src="/images/gallery6.jpg" alt="Interior" className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow" />
+              <img src="/images/gallery1.jpg" alt="Dining" className="w-full h-64 object-cover rounded-lg shadow-md hover:shadow-xl transition-shadow" />
+            </div>
+          </div>
+
+          {/* New Photo Gallery */}
+          <div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">Onze Gerechten</h3>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <img src="/images/new-photo1.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo2.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo3.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo4.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo5.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo6.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo7.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo8.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo9.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo10.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo11.webp" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo12.webp" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo13.webp" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo14.webp" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo15.webp" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo16.webp" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo17.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo18.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo19.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo20.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo21.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo22.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+              <img src="/images/new-photo23.jpg" alt="Gerecht" className="w-full h-48 object-cover rounded-lg shadow-md hover:shadow-xl transition-all hover:scale-105" />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Menu Section */}
+      <section id="menu" className="py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Ons Menu</h2>
+            <p className="text-lg text-gray-600">Ontdek onze authentieke Italiaanse gerechten</p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <a href="https://labottegaherent.weebly.com/onze-kaart1.html" target="_blank" rel="noopener noreferrer" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="menu-card-link">
+              <div className="flex justify-center mb-4">
+                <Utensils className="w-16 h-16 text-[#7D3C32]" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Onze Kaart</h3>
+              <p className="text-gray-600 mb-4">Bekijk onze volledige menukaart</p>
+              <span className="text-[#7D3C32] font-semibold">Bekijk Menu →</span>
+            </a>
+
+            <a href="https://labottegaherent.weebly.com/pizzas.html" target="_blank" rel="noopener noreferrer" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="pizza-menu-link">
+              <div className="flex justify-center mb-4">
+                <ChefHat className="w-16 h-16 text-[#7D3C32]" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Pizza's</h3>
+              <p className="text-gray-600 mb-4">Alleen beschikbaar in de avonden</p>
+              <span className="text-[#7D3C32] font-semibold">Bekijk Pizza's →</span>
+            </a>
+
+            <a href="https://labottegaherent.weebly.com/groepmenus.html" target="_blank" rel="noopener noreferrer" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="group-menu-link">
+              <div className="flex justify-center mb-4">
+                <Wine className="w-16 h-16 text-[#7D3C32]" />
+              </div>
+              <h3 className="text-2xl font-bold text-gray-900 mb-2">Groepsmenu's</h3>
+              <p className="text-gray-600 mb-4">Perfect voor groepen en feesten</p>
+              <span className="text-[#7D3C32] font-semibold">Bekijk Menu's →</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Opening Hours - Compact Layout */}
+      <section id="hours" className="py-20 px-4 bg-gray-50">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Openingstijden</h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Left Column - Opening Hours */}
+            <div className="bg-white rounded-lg shadow-lg p-8">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Openingsuren</h3>
+              <div className="space-y-3" data-testid="opening-hours">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">Ma - Di</span>
+                  <span className="text-gray-600">18:00 - 22:00</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">Wo - Vr</span>
+                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 22:00</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">Za</span>
+                  <span className="text-gray-600">18:00 - 22:00</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-700 font-medium">Zo</span>
+                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 22:00</span>
+                </div>
+              </div>
+              <div className="mt-6 pt-6 border-t border-gray-200">
+                <p className="text-sm text-gray-600">Afhalen kan gedurende de normale openingstijden</p>
+              </div>
+            </div>
+
+            {/* Right Column - Important Info */}
+            <div className="space-y-6">
+              <div className="bg-[#7D3C32] text-white rounded-lg shadow-lg p-8">
+                <div className="flex items-start space-x-4">
+                  <Clock className="w-8 h-8 flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold mb-2">Pizza's</h3>
+                    <p className="text-white/90">Alleen beschikbaar in de avonden</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white rounded-lg shadow-lg p-8">
+                <div className="flex items-start space-x-4">
+                  <MapPin className="w-8 h-8 text-[#7D3C32] flex-shrink-0 mt-1" />
+                  <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">Gesloten op</h3>
+                    <p className="text-gray-600">Maandag-, dinsdag- en zaterdagmiddag</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-20 px-4 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Contact & Locatie</h2>
+            <p className="text-lg text-gray-600">Bezoek ons in Herent of neem contact met ons op</p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-12">
+            <div className="space-y-6" data-testid="contact-info">
+              <div className="flex items-start space-x-4">
+                <MapPin className="w-6 h-6 text-[#7D3C32] flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-1">Adres</h3>
+                  <p className="text-gray-600">Wilselsesteenweg 93</p>
+                  <p className="text-gray-600">3020 Herent (Leuven)</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <Phone className="w-6 h-6 text-[#7D3C32] flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-1">Telefoon</h3>
+                  <a href="tel:+3216600421" className="text-gray-600 hover:text-[#7D3C32] transition-colors">
+                    +32 16 60 04 21
+                  </a>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <Mail className="w-6 h-6 text-[#7D3C32] flex-shrink-0 mt-1" />
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-1">Email</h3>
+                  <a href="mailto:bottega@mail.be" className="text-gray-600 hover:text-[#7D3C32] transition-colors">
+                    bottega@mail.be
+                  </a>
+                  <p className="text-sm text-gray-500 mt-1">(Alleen voor info, reservaties via website)</p>
+                </div>
+              </div>
+
+              <div className="flex items-start space-x-4">
+                <svg className="w-6 h-6 text-[#7D3C32] flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                </svg>
+                <div>
+                  <h3 className="font-bold text-gray-900 mb-1">Website</h3>
+                  <a href="https://www.labottegaherent.com" target="_blank" rel="noopener noreferrer" className="text-gray-600 hover:text-[#7D3C32] transition-colors">
+                    www.labottegaherent.com
+                  </a>
+                </div>
+              </div>
+
+              <div className="pt-6 border-t border-gray-200">
+                <p className="text-sm text-gray-500">BTW nummer: BE682764984</p>
+              </div>
+            </div>
+
+            <div className="bg-gray-100 rounded-lg overflow-hidden shadow-lg h-96">
+              <iframe
+                title="Google Maps Location"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.8!2d4.6709!3d50.9247!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c161f0e0e0e0e0%3A0x0!2sWilselsesteenweg%2093%2C%203020%20Herent!5e0!3m2!1snl!2sbe!4v1234567890"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen=""
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 px-4 bg-[#7D3C32] text-white">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-4xl md:text-5xl font-bold mb-6">Klaar voor een onvergetelijke ervaring?</h2>
+          <p className="text-xl mb-8">Reserveer nu uw tafel of bestel afhaalmaaltijden</p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link to="/reserveren" className="bg-white text-[#7D3C32] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-reserve-btn">
+              Reserveer Tafel
+            </Link>
+            <Link to="/afhalen" className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#7D3C32] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-takeaway-btn">
+              Afhalen Bestellen
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-white py-12 px-4">
+        <div className="max-w-7xl mx-auto text-center">
+          <div className="mb-6">
+            <h3 className="text-2xl font-bold mb-2">La Bottega Italiana</h3>
+            <p className="text-gray-400">Italiaans restaurant & pizzeria</p>
+          </div>
+          <div className="flex flex-col md:flex-row justify-center items-center space-y-2 md:space-y-0 md:space-x-8 mb-6 text-sm text-gray-400">
+            <span>Wilselsesteenweg 93, 3020 Herent</span>
+            <span>•</span>
+            <a href="tel:+3216600421" className="hover:text-white transition-colors">+32 16 60 04 21</a>
+            <span>•</span>
+            <a href="mailto:bottega@mail.be" className="hover:text-white transition-colors">bottega@mail.be</a>
+          </div>
+          <div className="mb-4">
+            <a href="https://www.labottegaherent.com" className="text-gray-400 hover:text-white transition-colors">www.labottegaherent.com</a>
+          </div>
+          <div className="border-t border-gray-800 pt-6 text-sm text-gray-400">
+            <p>&copy; {new Date().getFullYear()} La Bottega Italiana. Alle rechten voorbehouden.</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}
+
+function ReserverenPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      <Navigation />
+      <div className="pt-20">
+        <div className="max-w-5xl mx-auto px-4 py-12">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Reserveren Ter Plaatse</h1>
+            <p className="text-lg text-gray-600">Vul het formulier in om een tafel te reserveren</p>
+          </div>
+          
+          <div className="bg-[#FFF4E6] border-l-4 border-[#7D3C32] p-6 mb-8 rounded">
+            <p className="text-[#7D3C32] font-medium">
+              <span className="font-bold">Let op:</span> Voor het einde van het jaar zijn wij gesloten op: 24, 25 december en 29, 30, 31 december en 1 januari 2026.
+            </p>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-xl p-4 md:p-8">
+            <iframe
+              src="https://form.jotform.com/222292165889366"
+              title="Reserveren Formulier"
+              style={{
+                width: '100%',
+                minHeight: '800px',
+                border: 'none',
+              }}
+              scrolling="yes"
+            />
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link to="/" className="text-[#7D3C32] hover:underline font-medium">
+              ← Terug naar Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AfhalenPage() {
+  return (
+    <div className="min-h-screen bg-white">
+      <Navigation />
+      <div className="pt-20">
+        <div className="max-w-5xl mx-auto px-4 py-12">
+          <div className="text-center mb-8">
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Afhalen Bestellen</h1>
+            <p className="text-lg text-gray-600">Vul het formulier in om afhaalmaaltijden te bestellen</p>
+          </div>
+          
+          <div className="bg-[#FFF4E6] border-l-4 border-[#7D3C32] p-6 mb-8 rounded">
+            <p className="text-[#7D3C32] font-medium mb-2">
+              <span className="font-bold">Let op:</span> Voor het einde van het jaar zijn wij gesloten op: 24, 25 december en 29, 30, 31 december en 1 januari 2026.
+            </p>
+            <p className="text-[#7D3C32] font-medium">
+              <span className="font-bold">Pizza's</span> alleen beschikbaar in de avonden!
+            </p>
+          </div>
+
+          <div className="mb-6 text-center">
+            <a href="https://labottegaherent.weebly.com/onze-kaart1.html" target="_blank" rel="noopener noreferrer" className="text-[#7D3C32] hover:underline font-bold text-lg">
+              KLIK HIER VOOR DE KAART →
+            </a>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-xl p-4 md:p-8">
+            <iframe
+              src="https://form.jotform.com/222305012976349"
+              title="Afhalen Formulier"
+              style={{
+                width: '100%',
+                minHeight: '800px',
+                border: 'none',
+              }}
+              scrolling="yes"
+            />
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link to="/" className="text-[#7D3C32] hover:underline font-medium">
+              ← Terug naar Home
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/reserveren" element={<ReserverenPage />} />
+        <Route path="/afhalen" element={<AfhalenPage />} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;

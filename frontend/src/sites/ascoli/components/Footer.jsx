@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { allTranslations } from '../translations/allTranslations';
 
-const Footer = () => {
+const Footer = ({ basePath = '' }) => {
   const { currentLanguage } = useLanguage();
   const t = allTranslations.footer[currentLanguage] || allTranslations.footer.nl;
   const navT = allTranslations.nav[currentLanguage] || allTranslations.nav.nl;
@@ -65,22 +65,22 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4 text-[#a48f7a]">{t.quickLinks}</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link to="/menu" className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
+                <Link to={`${basePath}/menu`} className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
                   {t.menu}
                 </Link>
               </li>
               <li>
-                <Link to="/group-menu" className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
+                <Link to={`${basePath}/group-menu`} className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
                   {t.groupMenus}
                 </Link>
               </li>
               <li>
-                <Link to="/reservations" className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
+                <Link to={`${basePath}/reservations`} className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
                   {navT.reservations}
                 </Link>
               </li>
               <li>
-                <Link to="/gallery" className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
+                <Link to={`${basePath}/gallery`} className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
                   {t.photoGallery}
                 </Link>
               </li>

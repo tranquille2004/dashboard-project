@@ -4,7 +4,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { allTranslations } from '../translations/allTranslations';
 
-const Navbar = () => {
+const Navbar = ({ basePath = '' }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
@@ -21,13 +21,13 @@ const Navbar = () => {
   }, []);
 
   const navItems = [
-    { name: t.home, path: '/' },
-    { name: t.about, path: '/about' },
-    { name: t.menu, path: '/menu' },
-    { name: t.groupMenu, path: '/group-menu' },
-    { name: t.reservations, path: '/reservations' },
-    { name: t.gallery, path: '/gallery' },
-    { name: t.info, path: '/info' },
+    { name: t.home, path: `${basePath}/` },
+    { name: t.about, path: `${basePath}/about` },
+    { name: t.menu, path: `${basePath}/menu` },
+    { name: t.groupMenu, path: `${basePath}/group-menu` },
+    { name: t.reservations, path: `${basePath}/reservations` },
+    { name: t.gallery, path: `${basePath}/gallery` },
+    { name: t.info, path: `${basePath}/info` },
   ];
 
   const languages = [
@@ -54,7 +54,7 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center">
+            <Link to={`${basePath}/`} className="flex items-center">
               <img
                 src="https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/ascoli.jpg"
                 alt="L'Ascoli"
