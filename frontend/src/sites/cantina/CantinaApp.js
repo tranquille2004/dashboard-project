@@ -229,6 +229,21 @@ function KaartPage({ t }) {
         <div className="title-divider"></div>
       </div>
 
+      {/* Menu Kaart Foto's - Direct Zichtbaar */}
+      <div className="kaart-photos-main">
+        <img 
+          src="/images/cantina/kaart-photo-1.webp" 
+          alt="Menu La Cantina Italiana - Pagina 1" 
+          className="kaart-photo-large"
+        />
+        <img 
+          src="/images/cantina/kaart-photo-2.webp" 
+          alt="Menu La Cantina Italiana - Pagina 2" 
+          className="kaart-photo-large"
+        />
+      </div>
+
+      {/* PDF Download Optie */}
       <div className="pdf-download-section">
         <div className="pdf-card">
           <Download className="download-icon" />
@@ -243,21 +258,6 @@ function KaartPage({ t }) {
             <Download className="btn-icon" />
             {t.menu.downloadButton}
           </a>
-        </div>
-      </div>
-
-      <div className="kaart-photos-section">
-        <div className="kaart-photos-grid">
-          <img 
-            src="/images/cantina/kaart-photo-1.webp" 
-            alt="La Cantina Italiana gerecht" 
-            className="kaart-photo"
-          />
-          <img 
-            src="/images/cantina/kaart-photo-2.webp" 
-            alt="La Cantina Italiana gerecht" 
-            className="kaart-photo"
-          />
         </div>
       </div>
     </div>
@@ -276,7 +276,7 @@ function GroepmenusPage({ t }) {
       </div>
 
       <div className="groepmenus-actions">
-        <Button onClick={() => navigate('/reserveren')} className="btn-primary">
+        <Button onClick={() => navigate('/site/cantina/reserveren')} className="btn-primary">
           {t.groupMenus.reserveNow}
         </Button>
         <a 

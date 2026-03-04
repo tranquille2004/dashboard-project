@@ -468,6 +468,68 @@ main {
   font-size: 1.1rem;
 }
 
+/* PDF Viewer Section */
+.pdf-viewer-section {
+  max-width: 900px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.pdf-viewer {
+  width: 100%;
+  height: 80vh;
+  min-height: 600px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background: #fff;
+}
+
+.pdf-download-fallback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.pdf-download-fallback p {
+  color: var(--cantina-text-dim);
+  margin: 0;
+}
+
+/* Kaart Foto's - Direct Zichtbaar */
+.kaart-photos-main {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  padding: 0 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.kaart-photo-large {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  border: 2px solid rgba(74, 124, 89, 0.3);
+}
+
+@media (max-width: 768px) {
+  .pdf-viewer {
+    height: 60vh;
+    min-height: 400px;
+  }
+  
+  .kaart-photos-main {
+    gap: 1.5rem;
+  }
+}
+
 .btn-icon {
   width: 20px;
   height: 20px;
@@ -652,6 +714,37 @@ main {
 
 
 /* Group Menus Page */
+.groepmenus-pdf-section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+.groepmenus-pdf-section h2 {
+  color: var(--cantina-light-green);
+  font-family: var(--font-serif);
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.groepmenus-pdf-viewer {
+  width: 100%;
+  height: 70vh;
+  min-height: 500px;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  background: #fff;
+}
+
+@media (max-width: 768px) {
+  .groepmenus-pdf-viewer {
+    height: 50vh;
+    min-height: 350px;
+  }
+}
+
 .groepmenus-content {
   max-width: 1200px;
   margin: 0 auto;
@@ -715,15 +808,20 @@ main {
 }
 
 .menu-item {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .menu-item h4 {
   color: var(--cantina-light-green);
-  font-size: 1.05rem;
-  margin-bottom: 0.3rem;
+  font-size: 1.15rem;
+  margin-bottom: 0.4rem;
   font-weight: 600;
   line-height: 1.3;
+  display: block;
+  width: 100%;
 }
 
 .item-description {
@@ -731,6 +829,8 @@ main {
   font-size: 0.9rem;
   line-height: 1.4;
   margin: 0;
+  display: block;
+  width: 100%;
 }
 
 .menu-divider {
