@@ -34,10 +34,8 @@ const Menu = () => {
         </div>
 
         {/* PDF Download Card */}
-        <div className="max-w-2xl mx-auto bg-gradient-to-br from-gray-900 via-gray-800 to-black p-12 rounded-2xl border-2 border-gold/40 shadow-2xl shadow-gold/10 text-center animate-fade-in">
-          <div className="w-24 h-24 mx-auto mb-6 bg-gold/20 rounded-full flex items-center justify-center">
-            <Download size={48} className="text-gold" />
-          </div>
+        <div className="max-w-2xl mx-auto bg-gradient-to-br from-gray-900 to-black p-12 rounded-lg border-2 border-gold/30 shadow-2xl text-center animate-fade-in">
+          <Download size={64} className="text-gold mx-auto mb-6" />
           <h2 className="text-3xl font-bold text-white mb-4">
             {t.download[language]}
           </h2>
@@ -53,13 +51,15 @@ const Menu = () => {
           </p>
           <a
             href="/images/mercato/gallery/ss-mains_mercato_09_24__1_.pdf"
+            download="menukaart-mercato.pdf"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center px-10 py-5 bg-gradient-to-r from-gold to-yellow-500 text-black font-bold text-lg rounded-xl hover:from-yellow-500 hover:to-gold transition-all duration-300 transform hover:scale-105 shadow-xl shadow-gold/30"
+            className="inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            data-testid="menu-download-button"
           >
-            <Download className="mr-3" size={24} />
+            <Download className="mr-2" size={20} />
             {t.download[language]}
-            <ExternalLink className="ml-3" size={24} />
+            <ExternalLink className="ml-2" size={20} />
           </a>
         </div>
 

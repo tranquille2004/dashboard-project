@@ -195,6 +195,8 @@ Voorbeeld:
 - [x] **Navigatie bugs gefixt** ✅ (4 maart 2026) - Alle 5 sites navigeren nu correct binnen hun eigen `/site/{slug}/*` context
 - [x] **L'Ascoli website EXACT REPLICA** ✅ (4 december 2026) - Pixel-perfect replica voltooid met alle correcties
 - [x] **Mercato website EXACT REPLICA** ✅ (4 maart 2026) - Correct geïntegreerd met navigatie fixes
+- [x] **Mercato download knop** ✅ (4 maart 2026) - Styling aangepast naar origineel, download attribuut toegevoegd
+- [x] **Cantina vertalingen** ✅ (4 maart 2026) - "Praktische Info" vertaling werkt correct in alle 5 talen
 
 ### P1 - Medium Priority (NEXT)
 - [ ] **USER VERIFICATIE** - Vraag gebruiker om alle 5 sites te controleren:

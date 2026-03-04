@@ -682,7 +682,7 @@ function InfoPage({ t }) {
   return (
     <div className="page info-page">
       <div className="page-header">
-        <h1>Praktische Info</h1>
+        <h1>{t.info.title}</h1>
         <div className="title-divider"></div>
       </div>
       
@@ -690,12 +690,12 @@ function InfoPage({ t }) {
         {/* Left Column - Contact Info */}
         <div className="info-left">
           <div className="info-card">
-            <h2 className="info-card-title">Contact</h2>
+            <h2 className="info-card-title">{t.info.contact}</h2>
             
             <div className="contact-item">
               <MapPin className="contact-icon" />
               <div>
-                <h4>Adres</h4>
+                <h4>{t.info.address}</h4>
                 <p>Duisburgsesteenweg 22, 3080 Tervuren</p>
                 <a 
                   href="https://www.google.com/maps/search/?api=1&query=La+Cantina+Italiana+Tervuren" 
@@ -703,7 +703,7 @@ function InfoPage({ t }) {
                   rel="noopener noreferrer"
                   className="maps-link"
                 >
-                  Open in Google Maps →
+                  {t.info.openMaps}
                 </a>
               </div>
             </div>
@@ -711,7 +711,7 @@ function InfoPage({ t }) {
             <div className="contact-item">
               <Phone className="contact-icon" />
               <div>
-                <h4>Telefoon / Téléphone</h4>
+                <h4>{t.info.phone}</h4>
                 <a href="tel:+3227670222" className="contact-link">+32 2 767 02 22</a>
               </div>
             </div>
@@ -719,7 +719,7 @@ function InfoPage({ t }) {
             <div className="contact-item">
               <Mail className="contact-icon" />
               <div>
-                <h4>Email</h4>
+                <h4>{t.info.email}</h4>
                 <a href="mailto:lacantinaitaliana@mail.be" className="contact-link">lacantinaitaliana@mail.be</a>
                 <p className="contact-note">(email is alleen voor info, reservaties via deze website)</p>
               </div>
@@ -868,6 +868,21 @@ function CantinaApp() {
         info: 'U kunt onderstaand formulier gebruiken voor een reservering. Uw reservering is bevestigd en u wordt NIET terug gecontacteerd, tenzij wij vol zijn geboekt of indien wij verdere vragen hebben.'
       },
       gallery: { title: 'Foto\'s' },
+      info: {
+        title: 'Praktische Info',
+        contact: 'Contact',
+        address: 'Adres',
+        phone: 'Telefoon',
+        email: 'E-mail',
+        openMaps: 'Open in Google Maps →',
+        hours: 'Openingstijden',
+        monTue: 'Maandag & Dinsdag',
+        wedSun: 'Woensdag - Zondag',
+        closed: 'Gesloten',
+        openLunch: 'Lunch: 12:00 - 14:30',
+        openDinner: 'Diner: 18:30 - 22:00',
+        closedDays: 'Gesloten op dinsdagavond en woensdagavond'
+      },
       groupMenus: {
         title: 'Groepmenus / Menus de groupe / Group Menus',
         subtitle: '',
@@ -967,6 +982,21 @@ function CantinaApp() {
         info: 'Vous pouvez utiliser ce formulier pour faire une réservation. Votre réservation est confirmée et vous ne seriez pas recontacté sauf si nous sommes complet ou si nous avons des questions concernant la demande.'
       },
       gallery: { title: 'Photos' },
+      info: {
+        title: 'Informations Pratiques',
+        contact: 'Contact',
+        address: 'Adresse',
+        phone: 'Téléphone',
+        email: 'E-mail',
+        openMaps: 'Ouvrir dans Google Maps →',
+        hours: 'Heures d\'ouverture',
+        monTue: 'Lundi & Mardi',
+        wedSun: 'Mercredi - Dimanche',
+        closed: 'Fermé',
+        openLunch: 'Déjeuner: 12:00 - 14:30',
+        openDinner: 'Dîner: 18:30 - 22:00',
+        closedDays: 'Fermé le mardi soir et le mercredi soir'
+      },
       groupMenus: {
         title: 'Groepmenus / Menus de groupe / Group Menus',
         subtitle: '',
@@ -1066,6 +1096,21 @@ function CantinaApp() {
         info: 'You can use this form to make a reservation. Your reservation is confirmed and you will NOT be contacted back unless we are fully booked or if we have further questions.'
       },
       gallery: { title: 'Photos' },
+      info: {
+        title: 'Practical Information',
+        contact: 'Contact',
+        address: 'Address',
+        phone: 'Phone',
+        email: 'Email',
+        openMaps: 'Open in Google Maps →',
+        hours: 'Opening Hours',
+        monTue: 'Monday & Tuesday',
+        wedSun: 'Wednesday - Sunday',
+        closed: 'Closed',
+        openLunch: 'Lunch: 12:00 - 14:30',
+        openDinner: 'Dinner: 18:30 - 22:00',
+        closedDays: 'Closed on Tuesday evening and Wednesday evening'
+      },
       groupMenus: {
         title: 'Groepmenus / Menus de groupe / Group Menus',
         subtitle: '',
@@ -1165,6 +1210,21 @@ function CantinaApp() {
         info: 'Puoi utilizzare questo modulo per effettuare una prenotazione. La tua prenotazione è confermata e NON verrai ricontattato a meno che non siamo al completo o se abbiamo ulteriori domande.'
       },
       gallery: { title: 'Foto' },
+      info: {
+        title: 'Informazioni Pratiche',
+        contact: 'Contatto',
+        address: 'Indirizzo',
+        phone: 'Telefono',
+        email: 'Email',
+        openMaps: 'Apri in Google Maps →',
+        hours: 'Orari di Apertura',
+        monTue: 'Lunedì & Martedì',
+        wedSun: 'Mercoledì - Domenica',
+        closed: 'Chiuso',
+        openLunch: 'Pranzo: 12:00 - 14:30',
+        openDinner: 'Cena: 18:30 - 22:00',
+        closedDays: 'Chiuso il martedì sera e il mercoledì sera'
+      },
       groupMenus: {
         title: 'Groepmenus / Menus de groupe / Group Menus',
         subtitle: '',
@@ -1264,6 +1324,21 @@ function CantinaApp() {
         info: 'Sie können dieses Formular für eine Reservierung verwenden. Ihre Reservierung ist bestätigt und Sie werden NICHT zurückgerufen, es sei denn, wir sind ausgebucht oder haben weitere Fragen.'
       },
       gallery: { title: 'Fotos' },
+      info: {
+        title: 'Praktische Informationen',
+        contact: 'Kontakt',
+        address: 'Adresse',
+        phone: 'Telefon',
+        email: 'E-Mail',
+        openMaps: 'In Google Maps öffnen →',
+        hours: 'Öffnungszeiten',
+        monTue: 'Montag & Dienstag',
+        wedSun: 'Mittwoch - Sonntag',
+        closed: 'Geschlossen',
+        openLunch: 'Mittagessen: 12:00 - 14:30',
+        openDinner: 'Abendessen: 18:30 - 22:00',
+        closedDays: 'Geschlossen am Dienstagabend und Mittwochabend'
+      },
       groupMenus: {
         title: 'Groepmenus / Menus de groupe / Group Menus',
         subtitle: '',
