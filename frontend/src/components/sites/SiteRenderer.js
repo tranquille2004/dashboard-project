@@ -924,11 +924,6 @@ const SiteRenderer = () => {
   const primaryColor = config?.primary_color || '#7D3C32';
   const baseUrl = slug ? `/site/${slug}` : '';
 
-  // If this is a product site, render the ProductSiteRenderer
-  if (site?.site_type === 'product') {
-    return <ProductSiteRenderer siteData={data} />;
-  }
-
   // If this is Cantina, use the original CantinaApp
   if (slug === 'cantina') {
     return <CantinaApp />;
@@ -952,6 +947,11 @@ const SiteRenderer = () => {
   // If this is Tracemaster, use the original TracemasterApp
   if (slug === 'tracemaster') {
     return <TracemasterApp />;
+  }
+
+  // If this is a product site, render the ProductSiteRenderer
+  if (site?.site_type === 'product') {
+    return <ProductSiteRenderer siteData={data} />;
   }
 
   // Check if logged in admin belongs to this site

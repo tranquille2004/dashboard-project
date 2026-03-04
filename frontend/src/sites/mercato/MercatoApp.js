@@ -5,6 +5,7 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 import { BasePathProvider } from "./contexts/BasePathContext";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Menu from "./pages/Menu";
@@ -20,6 +21,7 @@ function MercatoApp() {
     <LanguageProvider>
       <BasePathProvider basePath="/site/mercato">
         <div className="App bg-black min-h-screen">
+          <ScrollToTop />
           <Navigation />
           <Routes>
             <Route index element={<Home />} />

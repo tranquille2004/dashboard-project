@@ -79,10 +79,12 @@ body {
 
 .animate-slide-in-left {
   animation: slideInLeft 0.8s ease-out forwards;
+  opacity: 1;
 }
 
 .animate-slide-in-right {
   animation: slideInRight 0.8s ease-out forwards;
+  opacity: 1;
 }
 
 /* Custom Scrollbar */

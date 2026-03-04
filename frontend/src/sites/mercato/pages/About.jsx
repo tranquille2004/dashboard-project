@@ -20,16 +20,15 @@ const About = () => {
 
         {/* Main Content */}
         <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <div className="space-y-6 animate-slide-in-left">
+          <div className="space-y-6">
             <img
-              src="/images/about/lorenzo.jpg"
+              src="/images/mercato/about/lorenzo.jpg"
               alt="Lorenzo Di Siervi"
               className="w-full h-96 object-cover rounded-lg shadow-2xl border border-gold/20"
-              loading="lazy"
             />
           </div>
           
-          <div className="space-y-6 text-gray-300 leading-relaxed animate-slide-in-right">
+          <div className="space-y-6 text-gray-300 leading-relaxed">
             {t.content[language].split('\n\n').slice(0, 3).map((paragraph, idx) => (
               <p key={idx} className="text-lg">{paragraph}</p>
             ))}
@@ -75,13 +74,13 @@ const About = () => {
         {/* Additional Images */}
         <div className="grid md:grid-cols-2 gap-8 mt-16">
           <img
-            src="/images/about/restaurant-interior.jpg"
+            src="/images/mercato/about/restaurant-interior.jpg"
             alt="Restaurant Interior"
             className="w-full h-72 object-contain rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500 bg-gray-900"
             loading="lazy"
           />
           <img
-            src="/images/about/dining.jpeg"
+            src="/images/mercato/about/dining.jpeg"
             alt="Italian Dining"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
             loading="lazy"

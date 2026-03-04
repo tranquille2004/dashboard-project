@@ -44,7 +44,7 @@ const Navigation = () => {
           {/* Logo */}
           <Link to={basePath} className="flex items-center space-x-3">
             <img 
-              src="/images/logo/mercato-logo.jpg" 
+              src="/images/mercato/logo/mercato-logo.jpg" 
               alt="Mercato Logo" 
               className="h-16 w-auto"
             />

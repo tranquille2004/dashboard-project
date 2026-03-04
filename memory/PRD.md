@@ -90,6 +90,23 @@ grep -rn "weebly" /app/frontend/src/ --include="*.js" --include="*.jsx" | wc -l
 
 **Totale lokale opslag:** 33 MB aan afbeeldingen
 
+### Phase 10 - BUG FIXES ALLE SITES ✅ (4 maart 2026)
+**Gebruiker feedback verwerkt:**
+
+- [x] **Tracemaster navigatie** - Navigatie paden gefixed naar `/site/tracemaster/*`, nu correct 5 menu items
+- [x] **Mercato About foto** - CSS animatie probleem opgelost, Lorenzo foto nu zichtbaar
+- [x] **Mercato scroll reset** - ScrollToTop component toegevoegd, nieuwe pagina's beginnen nu bovenaan
+- [x] **Cantina kaart** - Image paden gecorrigeerd naar `/images/cantina/*`, kaart foto's nu zichtbaar
+- [x] **Ascoli Groepmenus** - Download knop styling verbeterd, groepmenus-ascoli.html gekopieerd
+- [x] **Alle image paden** - Afbeeldingen van originele GitHub repos gekopieerd naar lokale mappen
+
+**Originele repos gecloned:**
+- `/app/cantina_original/` - La Cantina broncode en afbeeldingen
+- `/app/mercato_original/` - Ristorante Mercato broncode en afbeeldingen  
+- `/app/ascoli_original/` - L'Ascoli broncode en afbeeldingen
+- `/app/bottega_original/` - La Bottega broncode en afbeeldingen
+- `/app/tracemaster_original/` - Tracemaster broncode en afbeeldingen
+
 ### Phase 4 - Ristorante Mercato Integration ✅ (3 december 2026)
 - [x] Mercato website toegevoegd (/site/mercato)
 - [x] 3 groepmenus geïmporteerd (Menu 1 €45, Menu 2 €55, Menu 3 €65)

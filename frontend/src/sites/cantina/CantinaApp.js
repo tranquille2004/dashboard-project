@@ -120,7 +120,7 @@ function Navigation({ language, setLanguage, t }) {
     <nav className="main-nav">
       <div className="nav-container">
         <Link to="/site/cantina/" className="logo">
-          <img src="/images/logo-cantina.jpg" alt="La Cantina Italiana" />
+          <img src="/images/cantina/logo-cantina.jpg" alt="La Cantina Italiana" />
         </Link>
 
         <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
@@ -153,7 +153,7 @@ function HomePage({ t }) {
     <div className="page home-page">
       {/* Hero Section */}
       <section className="hero-section">
-        <img src="/images/hero-background.jpg" alt="La Cantina Italiana" className="hero-background-image" />
+        <img src="/images/cantina/hero-background.jpg" alt="La Cantina Italiana" className="hero-background-image" />
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <h1 className="hero-title">{t.hero.title}</h1>
@@ -180,7 +180,7 @@ function HomePage({ t }) {
             </Button>
           </div>
           <div className="image-content">
-            <img src="/images/gallery/cantina6_1_orig.jpg" alt="Restaurant" />
+            <img src="/images/cantina/gallery/cantina6_1_orig.jpg" alt="Restaurant" />
           </div>
         </div>
       </section>
@@ -189,17 +189,17 @@ function HomePage({ t }) {
       <section className="features-section">
         <div className="features-grid">
           <div className="feature-card">
-            <img src="/images/truffels-quality.jpg" alt="Quality" />
+            <img src="/images/cantina/truffels-quality.jpg" alt="Quality" />
             <h3>{t.features.quality.title}</h3>
             <p>{t.features.quality.text}</p>
           </div>
           <div className="feature-card">
-            <img src="/images/gallery/unnamed-17_orig.webp" alt="Fresh" />
+            <img src="/images/cantina/gallery/unnamed-17_orig.webp" alt="Fresh" />
             <h3>{t.features.fresh.title}</h3>
             <p>{t.features.fresh.text}</p>
           </div>
           <div className="feature-card">
-            <img src="/images/gallery/cantina5_1_orig.jpg" alt="Ambiance" />
+            <img src="/images/cantina/gallery/cantina5_1_orig.jpg" alt="Ambiance" />
             <h3>{t.features.ambiance.title}</h3>
             <p>{t.features.ambiance.text}</p>
           </div>
@@ -235,7 +235,7 @@ function KaartPage({ t }) {
           <h3>{t.menu.downloadTitle}</h3>
           <p>{t.menu.downloadText}</p>
           <a 
-            href="/images/menu-pdf.pdf" 
+            href="/images/cantina/menu-pdf.pdf" 
             target="_blank" 
             rel="noopener noreferrer"
             className="btn-primary"
@@ -249,12 +249,12 @@ function KaartPage({ t }) {
       <div className="kaart-photos-section">
         <div className="kaart-photos-grid">
           <img 
-            src="/images/kaart-photo-1.webp" 
+            src="/images/cantina/kaart-photo-1.webp" 
             alt="La Cantina Italiana gerecht" 
             className="kaart-photo"
           />
           <img 
-            src="/images/kaart-photo-2.webp" 
+            src="/images/cantina/kaart-photo-2.webp" 
             alt="La Cantina Italiana gerecht" 
             className="kaart-photo"
           />
@@ -280,7 +280,7 @@ function GroepmenusPage({ t }) {
           {t.groupMenus.reserveNow}
         </Button>
         <a 
-          href="/images/groepmenus.pdf" 
+          href="/images/cantina/groepmenus.pdf" 
           target="_blank" 
           rel="noopener noreferrer"
           className="btn-secondary"
@@ -495,7 +495,7 @@ function GroepmenusPage({ t }) {
           {t.groupMenus.reserveNow}
         </Button>
         <a 
-          href="/images/groepmenus.pdf" 
+          href="/images/cantina/groepmenus.pdf" 
           target="_blank" 
           rel="noopener noreferrer"
           className="btn-secondary"
@@ -607,7 +607,7 @@ function AboutPage({ t }) {
           <p>{t.about.text1}</p>
           <p>{t.about.text2}</p>
         </div>
-        <img src="/images/gallery/cantina5_1_orig.jpg" alt="Restaurant" />
+        <img src="/images/cantina/gallery/cantina5_1_orig.jpg" alt="Restaurant" />
       </div>
     </div>
   );
@@ -792,7 +792,7 @@ function Footer({ t, language }) {
           <a href="https://www.facebook.com/lacantinaitalianatervuren/" target="_blank" rel="noopener noreferrer" className="social-link">
             <Facebook /> Facebook
           </a>
-          <img src="/images/logo-cantina.jpg" alt="Logo" className="footer-logo" />
+          <img src="/images/cantina/logo-cantina.jpg" alt="Logo" className="footer-logo" />
         </div>
       </div>
       <div className="footer-bottom">

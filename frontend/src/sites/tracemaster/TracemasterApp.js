@@ -47,12 +47,19 @@ const Navigation = () => {
   const location = useLocation();
 
   const navLinks = [
-    { path: "/", label: "Home" },
-    { path: "/productos", label: "Rastreador" },
-    { path: "/adaptador", label: "Adaptador" },
-    { path: "/faq", label: "FAQ" },
-    { path: "/contacto", label: "Contáctenos" },
+    { path: "/site/tracemaster", label: "Home" },
+    { path: "/site/tracemaster/productos", label: "Rastreador" },
+    { path: "/site/tracemaster/adaptador", label: "Adaptador" },
+    { path: "/site/tracemaster/faq", label: "FAQ" },
+    { path: "/site/tracemaster/contacto", label: "Contáctenos" },
   ];
+
+  const isActive = (path) => {
+    if (path === "/site/tracemaster") {
+      return location.pathname === path || location.pathname === path + "/";
+    }
+    return location.pathname === path;
+  };
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-xl" data-testid="main-navigation">
@@ -73,7 +80,7 @@ const Navigation = () => {
                 key={link.path}
                 to={link.path}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
-                  location.pathname === link.path
+                  isActive(link.path)
                     ? "bg-red-600 text-white shadow-lg shadow-red-600/30"
                     : "text-gray-300 hover:text-white hover:bg-gray-700"
                 }`}

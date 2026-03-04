@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>L'Ascoli - Groepmenus</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        body {
+            font-family: 'Georgia', serif;
+            color: #333;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid #6b1f1f;
+            padding-bottom: 20px;
+        }
+        
+        .header h1 {
+            font-size: 36px;
+            color: #6b1f1f;
+            margin: 0;
+        }
+        
+        .header p {
+            font-size: 14px;
+            color: #666;
+            margin: 10px 0 0 0;
+        }
+        
+        .menu-container {
+            margin-bottom: 50px;
+            page-break-inside: avoid;
+        }
+        
+        .menu-header {
+            background: linear-gradient(135deg, #6b1f1f 0%, #a02f2f 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        .menu-header h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .menu-header .price {
+            font-size: 24px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        
+        .course {
+            margin-bottom: 25px;
+        }
+        
+        .course-title {
+            font-size: 18px;
+            color: #a48f7a;
+            font-style: italic;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .dish {
+            margin-bottom: 12px;
+            padding-left: 20px;
+            text-align: center;
+            line-height: 1.4;
+        }
+        
+        .dish .fr {
+            font-style: italic;
+        }
+        
+        .separator {
+            text-align: center;
+            color: #a48f7a;
+            font-size: 11px;
+            margin: 8px 0;
+        }
+        
+        .divider {
+            text-align: center;
+            color: #a48f7a;
+            font-size: 18px;
+            margin: 20px 0;
+        }
+        
+        .included {
+            background: #f5f5f5;
+            padding: 10px;
+            border-left: 3px solid #a48f7a;
+            margin-top: 20px;
+            font-size: 12px;
+            font-style: italic;
+            text-align: center;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 2px solid #6b1f1f;
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .group-info {
+            background: #fef9f2;
+            border: 2px solid #a48f7a;
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 8px;
+        }
+        
+        .group-info h3 {
+            color: #6b1f1f;
+            margin-top: 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>L'ASCOLI</h1>
+        <p>Groepmenus • Menus de Groupe • Group Menus</p>
+        <p style="font-size: 12px; margin-top: 10px;">Hector Henneaulaan 136, 1930 Zaventem • +32 2 725 45 45</p>
+    </div>
+
+    <div class="group-info">
+        <h3>Groepen Informatie</h3>
+        <p style="text-align: center;">
+            Onze prachtige zaal bevindt zich op de eerste verdieping en biedt plaats aan <strong>80 personen</strong>.<br>
+            Beneden hebben we een aparte ruimte voor groepen tot <strong>20 personen</strong>.<br>
+            In totaal kunnen wij tot <strong>150 personen</strong> ontvangen.<br><br>
+            <em>Menu mogelijk vanaf minimaal 10 personen</em>
+        </p>
+    </div>
+
+    <!-- MENU TORINO -->
+    <div class="menu-container">
+        <div class="menu-header">
+            <h2>MENU "TORINO"</h2>
+            <div class="price">€ 47,50</div>
+        </div>
+        
+        <div class="course">
+            <div class="course-title">Aperitivo</div>
+            <div class="dish">
+                Italiaans antipasti buffet (Italiaanse fijne vleeswaren, mozzarella, gegrilde groenten van het seizoen)<br>
+                <span class="fr">Buffet d'antipasti italiens (charcuterie fine italienne, mozzarella, légumes grillés de saison)</span><br>
+                Italian antipasti buffet (Italian fine meats, mozzarella, grilled seasonal vegetables)
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">Vitello Tonnato</div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Penne met aubergines, mozzarella en tomaat<br>
+                <span class="fr">Penne aux aubergines, mozzarella et tomate</span><br>
+                Penne with eggplant, mozzarella and tomato
+            </div>
+        </div>
+        
+        <div class="divider">--o--</div>
+        
+        <div class="course">
+            <div class="dish">
+                Emincé van kalkoen met citroen et italiaanse kruiden, geserveerd met groenten of verse pasta<br>
+                <span class="fr">Emincé de dinde au citron et herbes italiennes, servi avec légumes ou pâtes fraîches</span><br>
+                Turkey strips with lemon and Italian herbs, served with vegetables or fresh pasta
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Escalope van zalm, gebakken met grof zout, saus van spumante, geserveerd met een purée van spinazie en kleine peertjes<br>
+                <span class="fr">Escalope de saumon, cuit au gros sel, sauce au spumante, servi avec une purée d'épinards et petites poires</span><br>
+                Salmon escalope, baked with coarse salt, spumante sauce, served with spinach purée and small pears
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Rode poonfilet op Libournaise wijze<br>
+                <span class="fr">Filet de poon rouge à la Libournaise</span><br>
+                Red gurnard fillet Libournaise style
+            </div>
+        </div>
+        
+        <div class="divider">--o--</div>
+        
+        <div class="course">
+            <div class="dish">
+                Italiaanse pâtisserie<br>
+                <span class="fr">Pâtisserie italienne</span><br>
+                Italian pastries
+            </div>
+        </div>
+        
+        <div class="included">
+            Inclusief: Eén fles wijn per 3 personen • Koffie/thee en cantuccini
+        </div>
+    </div>
+
+    <!-- MENU PUGLIA -->
+    <div class="menu-container" style="page-break-before: always;">
+        <div class="menu-header">
+            <h2>MENU "PUGLIA"</h2>
+            <div class="price">€ 52,50</div>
+        </div>
+        
+        <div class="course">
+            <div class="course-title">Aperitivo</div>
+            <div class="dish">
+                Burrata op een bedje van biologische tomaat, vièrge olijfolie, basilicum en oregano<br>
+                <span class="fr">Burrata sur un lit de tomate bio, huile d'olive vierge, basilic et origan</span><br>
+                Burrata on a bed of organic tomato, virgin olive oil, basil and oregano
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Salade van verse zeevruchten, hart van selderij, peterselie en zacht look<br>
+                <span class="fr">Salade de fruits de mer frais, cœur de céleri, persil et ail doux</span><br>
+                Fresh seafood salad, celery heart, parsley and soft garlic
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Ravioli gevuld met rivierkreeftjes en wilde paddenstoelen in hun saus<br>
+                <span class="fr">Raviolis farcis aux écrevisses et champignons sauvages dans leur sauce</span><br>
+                Ravioli stuffed with crayfish and wild mushrooms in their sauce
+            </div>
+        </div>
+        
+        <div class="divider">--o--</div>
+        
+        <div class="course">
+            <div class="dish">
+                Tagliata: emincé van Ierse contre-filet, geserveerd op een bedje van groenten, raketsla, schaafsels van parmezaan, balsamico azijn en olijfolie<br>
+                <span class="fr">Tagliata: émincé de contre-filet irlandais, servi sur un lit de légumes, roquette, copeaux de parmesan, vinaigre balsamique et huile d'olive</span><br>
+                Tagliata: Irish sirloin strips, served on a bed of vegetables, arugula, parmesan shavings, balsamic vinegar and olive oil
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Magret van eend, Marsala saus, geserveerd met een Trevise salade, appelsien, pijnboompitten en basilicum, gratin van witte selderij en zwarte olijven<br>
+                <span class="fr">Magret de canard, sauce Marsala, servi avec une salade de Trévise, orange, pignons de pin et basilic, gratin de céleri blanc et olives noires</span><br>
+                Duck breast, Marsala sauce, served with Treviso salad, orange, pine nuts and basil, white celery and black olive gratin
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Filet van brasem aqua pazza met groenten en gestoomde aardappelen, specialiteit van de amalfikust<br>
+                <span class="fr">Filet de dorade aqua pazza avec légumes et pommes de terre vapeur, spécialité de la côte amalfitaine</span><br>
+                Sea bream fillet aqua pazza with vegetables and steamed potatoes, Amalfi coast specialty
+            </div>
+        </div>
+        
+        <div class="divider">--o--</div>
+        
+        <div class="course">
+            <div class="dish">
+                Profiteroles met warme chocolade<br>
+                <span class="fr">Profiteroles au chocolat chaud</span><br>
+                Profiteroles with hot chocolate
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Affogato: vanille ijs met kersen en amaretto<br>
+                <span class="fr">Affogato: glace vanille aux cerises et amaretto</span><br>
+                Affogato: vanilla ice cream with cherries and amaretto
+            </div>
+        </div>
+        
+        <div class="included">
+            Inclusief: Eén fles wijn per 3 personen • Koffie/thee en cantuccini
+        </div>
+    </div>
+
+    <!-- MENU AMALFI -->
+    <div class="menu-container" style="page-break-before: always;">
+        <div class="menu-header">
+            <h2>MENU "AMALFI"</h2>
+            <div class="price">€ 57,50</div>
+        </div>
+        
+        <div class="course">
+            <div class="course-title">Aperitivo</div>
+            <div class="dish">
+                Risotto met paddenstoelen<br>
+                <span class="fr">Risotto aux champignons</span><br>
+                Risotto with mushrooms
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Paccheri met baarsfilet, kerstomaatjes en oregano<br>
+                <span class="fr">Paccheri au filet de bar, tomates cerises et origan</span><br>
+                Paccheri with sea bass fillet, cherry tomatoes and oregano
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Integrale tagliatelle met pancetta en doperwtjes<br>
+                <span class="fr">Tagliatelle intégrales à la pancetta et petits pois</span><br>
+                Wholegrain tagliatelle with pancetta and peas
+            </div>
+        </div>
+        
+        <div class="divider">--o--</div>
+        
+        <div class="course">
+            <div class="dish">
+                Ballotine van konijn gevuld met ganzenlever en bergspek, rode wijnsaus uit de Piemont, geserveerd met gecarameliseerde appels en groenten<br>
+                <span class="fr">Ballotine de lapin farcie au foie gras et lard de montagne, sauce au vin rouge du Piémont, servie avec pommes caramélisées et légumes</span><br>
+                Rabbit ballotine stuffed with foie gras and mountain bacon, Piedmont red wine sauce, served with caramelized apples and vegetables
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Noisette van lam met thijm en citroen, gratin van witte selderij en artisjok<br>
+                <span class="fr">Noisette d'agneau au thym et citron, gratin de céleri blanc et artichaut</span><br>
+                Lamb noisette with thyme and lemon, white celery and artichoke gratin
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Baarsfilet de ligne met rozemarijn en citroen, olijfolie en salie, geserveerd met groenten<br>
+                <span class="fr">Filet de bar de ligne au romarin et citron, huile d'olive et sauge, servi avec légumes</span><br>
+                Line-caught sea bass fillet with rosemary and lemon, olive oil and sage, served with vegetables
+            </div>
+        </div>
+        
+        <div class="divider">--o--</div>
+        
+        <div class="course">
+            <div class="dish">
+                Ricotta taart met citroen<br>
+                <span class="fr">Tarte à la ricotta et citron</span><br>
+                Ricotta and lemon tart
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Mix van sorbet ijs<br>
+                <span class="fr">Mélange de sorbets</span><br>
+                Mix of sorbet ice creams
+            </div>
+        </div>
+        
+        <div class="included">
+            Inclusief: Eén fles wijn per 3 personen • Koffie/thee en cantuccini
+        </div>
+    </div>
+
+    <!-- MENU ASCOLI -->
+    <div class="menu-container" style="page-break-before: always;">
+        <div class="menu-header">
+            <h2>MENU "ASCOLI"</h2>
+            <div class="price">€ 67,50</div>
+        </div>
+        
+        <div class="course">
+            <div class="course-title">Aperitivo</div>
+            <div class="dish">
+                Slaatje van ganzenlever, geserveerd op een bedje van venkel, groene bonen, olijfolie, balsamico azijn en verse amandelmelk<br>
+                <span class="fr">Salade de foie gras, servie sur un lit de fenouil, haricots verts, huile d'olive, vinaigre balsamique et lait d'amande frais</span><br>
+                Foie gras salad, served on a bed of fennel, green beans, olive oil, balsamic vinegar and fresh almond milk
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Gefrituurde scampi met tartaarsaus, geserveerd met gepaneerde stokjes van courgette en citroen<br>
+                <span class="fr">Scampi frits sauce tartare, servis avec bâtonnets panés de courgette et citron</span><br>
+                Fried scampi with tartar sauce, served with breaded zucchini sticks and lemon
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Tartaar van verse zalm, sint jakobs, groene appel, pijnboompitten, en gember<br>
+                <span class="fr">Tartare de saumon frais, saint-jacques, pomme verte, pignons de pin et gingembre</span><br>
+                Fresh salmon tartare, scallops, green apple, pine nuts and ginger
+            </div>
+        </div>
+        
+        <div class="divider">--o--</div>
+        
+        <div class="course">
+            <div class="dish">
+                Kabeljauwfilet livornese met seizoensgroenten, kappertjes, olijven, sjalot, zacht look en oregano<br>
+                <span class="fr">Filet de cabillaud livornese avec légumes de saison, câpres, olives, échalote, ail doux et origan</span><br>
+                Cod fillet livornese with seasonal vegetables, capers, olives, shallot, soft garlic and oregano
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">Saltimbocca alla Romana</div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">
+                Filet van varken op wijze van Maremma met regionale kruiden en kastanjehoning, geserveerd met een purée van zoete aardappel en biet<br>
+                <span class="fr">Filet de porc façon Maremme aux herbes régionales et miel de châtaigne, servi avec une purée de patate douce et betterave</span><br>
+                Pork fillet Maremma style with regional herbs and chestnut honey, served with sweet potato and beetroot purée
+            </div>
+        </div>
+        
+        <div class="divider">--o--</div>
+        
+        <div class="course">
+            <div class="dish">
+                Fruitsalade<br>
+                <span class="fr">Salade de fruits</span><br>
+                Fruit salad
+            </div>
+            <div class="separator">OF / OU / OR</div>
+            <div class="dish">Panna cotta</div>
+        </div>
+        
+        <div class="included">
+            Inclusief: Eén fles wijn per 3 personen • Koffie/thee en cantuccini
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>Reserveren:</strong> +32 2 725 45 45 • www.ascolizaventem.com</p>
+        <p style="font-style: italic; color: #6b1f1f;">Per il piacere di un momento da vivere e ricordare</p>
+    </div>
+</body>
+</html>

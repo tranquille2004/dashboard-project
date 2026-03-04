@@ -22,12 +22,12 @@ const Menu = () => {
         {/* Menu Preview Images */}
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <img
-            src="/images/menu/aperol.webp"
+            src="/images/mercato/menu/aperol.webp"
             alt="Aperol Spritz"
             className="w-full h-80 object-cover rounded-lg shadow-2xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="/images/menu/pizza.jpg"
+            src="/images/mercato/menu/pizza.jpg"
             alt="Pizza"
             className="w-full h-80 object-cover rounded-lg shadow-2xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
@@ -64,17 +64,17 @@ const Menu = () => {
         {/* Feature Images */}
         <div className="grid md:grid-cols-3 gap-6 mt-16">
           <img
-            src="/images/menu/dish1.jpg"
+            src="/images/mercato/menu/dish1.jpg"
             alt="Restaurant"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="/images/menu/dish2.jpg"
+            src="/images/mercato/menu/dish2.jpg"
             alt="Italian Cuisine"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="/images/menu/dish3.jpg"
+            src="/images/mercato/menu/dish3.jpg"
             alt="Ambiance"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />

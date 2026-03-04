@@ -64,7 +64,7 @@ const Footer = () => {
             </a>
             <div className="mt-6">
               <img 
-                src="/images/logo/mercato-logo.jpg" 
+                src="/images/mercato/logo/mercato-logo.jpg" 
                 alt="Mercato Logo" 
                 className="h-20 w-auto opacity-80"
                 loading="lazy"

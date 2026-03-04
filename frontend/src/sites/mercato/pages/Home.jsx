@@ -29,7 +29,7 @@ const Home = () => {
           }}
         >
           <img
-            src="/images/home/hero-background.jpg"
+            src="/images/mercato/home/hero-background.jpg"
             alt="Mercato Restaurant"
             className="w-full h-full object-cover"
           />
@@ -125,7 +125,7 @@ const Home = () => {
             </div>
             <div className="animate-slide-in-right">
               <img
-                src="/images/home/interior.jpg"
+                src="/images/mercato/home/interior.jpg"
                 alt="Restaurant Interior"
                 className="rounded-lg shadow-2xl border border-gold/20 hover:scale-105 transition-transform duration-500"
                 loading="lazy"
