@@ -10,6 +10,7 @@ import CantinaApp from '@/sites/cantina/CantinaApp';
 import BottegaApp from '@/sites/bottega/BottegaApp';
 import AscoliApp from '@/sites/ascoli/AscoliApp';
 import MercatoApp from '@/sites/mercato/MercatoApp';
+import TracemasterApp from '@/sites/tracemaster/TracemasterApp';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -946,6 +947,11 @@ const SiteRenderer = () => {
   // If this is Mercato, use the original MercatoApp
   if (slug === 'mercato') {
     return <MercatoApp />;
+  }
+
+  // If this is Tracemaster, use the original TracemasterApp
+  if (slug === 'tracemaster') {
+    return <TracemasterApp />;
   }
 
   // Check if logged in admin belongs to this site
