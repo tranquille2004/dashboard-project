@@ -195,8 +195,10 @@ Voorbeeld:
 - [x] **Navigatie bugs gefixt** ✅ (4 maart 2026) - Alle 5 sites navigeren nu correct binnen hun eigen `/site/{slug}/*` context
 - [x] **L'Ascoli website EXACT REPLICA** ✅ (4 december 2026) - Pixel-perfect replica voltooid met alle correcties
 - [x] **Mercato website EXACT REPLICA** ✅ (4 maart 2026) - Correct geïntegreerd met navigatie fixes
-- [x] **Mercato download knop** ✅ (4 maart 2026) - Styling aangepast naar origineel, download attribuut toegevoegd
+- [x] **Mercato Kaart download knop** ✅ (4 maart 2026) - Styling aangepast naar origineel, download attribuut toegevoegd
 - [x] **Cantina vertalingen** ✅ (4 maart 2026) - "Praktische Info" vertaling werkt correct in alle 5 talen
+- [x] **Mercato Groepmenus PDF knop** ✅ (4 maart 2026) - Grote gouden knop met juiste PDF pad, PDF gekopieerd van originele repo
+- [x] **Mercato Kaart met embedded PDF** ✅ (4 maart 2026) - Menu PDF direct zichtbaar via Google Docs viewer (zoals La Cantina)
 
 ### P1 - Medium Priority (NEXT)
 - [ ] **USER VERIFICATIE** - Vraag gebruiker om alle 5 sites te controleren:

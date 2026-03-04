@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
-import { Wine, Users, ChefHat } from 'lucide-react';
+import { Wine, Users, ChefHat, Download, ExternalLink } from 'lucide-react';
 
 const GroupMenus = () => {
   const { language } = useLanguage();
@@ -146,20 +146,24 @@ const GroupMenus = () => {
             {reserveButton[language]}
           </Link>
           
-          {/* PDF link */}
-          <div className="mt-4">
+          {/* PDF Download - Duidelijke knop */}
+          <div className="mt-6">
             <a
-              href="/groepmenus-mercato.pdf"
+              href="/images/mercato/groepmenus-mercato.pdf"
+              download="groepmenus-mercato.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block text-gray-400 hover:text-gold transition-colors text-sm underline"
+              className="inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              data-testid="groepmenus-download-button"
             >
-              📄 {language === 'nl' && 'Bekijk Groepmenus PDF'}
-              {language === 'fr' && 'Voir Menus de Groupe PDF'}
-              {language === 'en' && 'View Group Menus PDF'}
-              {language === 'es' && 'Ver Menús de Grupo PDF'}
-              {language === 'de' && 'Gruppenmenüs PDF ansehen'}
-              {language === 'it' && 'Visualizza Menu di Gruppo PDF'}
+              <Download className="mr-2" size={20} />
+              {language === 'nl' && 'Download Groepmenus PDF'}
+              {language === 'fr' && 'Télécharger Menus de Groupe PDF'}
+              {language === 'en' && 'Download Group Menus PDF'}
+              {language === 'es' && 'Descargar Menús de Grupo PDF'}
+              {language === 'de' && 'Gruppenmenüs PDF herunterladen'}
+              {language === 'it' && 'Scarica Menu di Gruppo PDF'}
+              <ExternalLink className="ml-2" size={20} />
             </a>
           </div>
         </div>

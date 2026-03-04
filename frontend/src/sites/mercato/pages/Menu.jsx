@@ -7,11 +7,14 @@ const Menu = () => {
   const { language } = useLanguage();
   const t = translations.menu;
 
+  // PDF URL for embedded viewer
+  const pdfUrl = '/images/mercato/gallery/ss-mains_mercato_09_24__1_.pdf';
+
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
+        <div className="text-center mb-12 animate-fade-in">
           <h1 className="text-5xl md:text-6xl font-bold text-gold mb-4">
             {t.title[language]}
           </h1>
@@ -19,38 +22,44 @@ const Menu = () => {
           <div className="w-24 h-1 bg-gold mx-auto mt-6"></div>
         </div>
 
-        {/* Menu Preview Images */}
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          <img
-            src="/images/mercato/menu/aperol.webp"
-            alt="Aperol Spritz"
-            className="w-full h-80 object-cover rounded-lg shadow-2xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-          />
-          <img
-            src="/images/mercato/menu/pizza.jpg"
-            alt="Pizza"
-            className="w-full h-80 object-cover rounded-lg shadow-2xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-          />
+        {/* Embedded PDF Menu - Direct zichtbaar */}
+        <div className="mb-12 animate-fade-in">
+          <div className="bg-gradient-to-br from-gray-900 to-black p-4 rounded-lg border-2 border-gold/30 shadow-2xl">
+            <iframe
+              src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + pdfUrl)}&embedded=true`}
+              title="Menu Ristorante Mercato"
+              className="w-full rounded-lg"
+              style={{ height: '800px', border: 'none' }}
+              data-testid="menu-pdf-viewer"
+            >
+              <p className="text-gray-300">
+                Uw browser ondersteunt geen PDF weergave. 
+                <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline ml-1">
+                  Klik hier om de PDF te downloaden
+                </a>.
+              </p>
+            </iframe>
+          </div>
         </div>
 
         {/* PDF Download Card */}
-        <div className="max-w-2xl mx-auto bg-gradient-to-br from-gray-900 to-black p-12 rounded-lg border-2 border-gold/30 shadow-2xl text-center animate-fade-in">
-          <Download size={64} className="text-gold mx-auto mb-6" />
-          <h2 className="text-3xl font-bold text-white mb-4">
+        <div className="max-w-2xl mx-auto bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border-2 border-gold/30 shadow-2xl text-center animate-fade-in mb-12">
+          <Download size={48} className="text-gold mx-auto mb-4" />
+          <h2 className="text-2xl font-bold text-white mb-3">
             {t.download[language]}
           </h2>
-          <p className="text-gray-300 mb-8 text-lg">
+          <p className="text-gray-300 mb-6">
             {{
-              nl: 'Bekijk onze volledige menukaart met alle gerechten en prijzen',
-              fr: 'Consultez notre carte complète avec tous les plats et prix',
-              en: 'View our complete menu with all dishes and prices',
-              es: 'Vea nuestro menú completo con todos los platos y precios',
-              de: 'Sehen Sie unsere vollständige Speisekarte mit allen Gerichten und Preisen',
-              it: 'Visualizza il nostro menu completo con tutti i piatti e i prezzi'
+              nl: 'Download onze menukaart als PDF bestand',
+              fr: 'Téléchargez notre carte en fichier PDF',
+              en: 'Download our menu as a PDF file',
+              es: 'Descargue nuestro menú como archivo PDF',
+              de: 'Laden Sie unsere Speisekarte als PDF herunter',
+              it: 'Scarica il nostro menu come file PDF'
             }[language]}
           </p>
           <a
-            href="/images/mercato/gallery/ss-mains_mercato_09_24__1_.pdf"
+            href={pdfUrl}
             download="menukaart-mercato.pdf"
             target="_blank"
             rel="noopener noreferrer"
@@ -63,22 +72,22 @@ const Menu = () => {
           </a>
         </div>
 
-        {/* Feature Images */}
-        <div className="grid md:grid-cols-3 gap-6 mt-16">
+        {/* Feature Images - Smaller below PDF */}
+        <div className="grid md:grid-cols-3 gap-6">
+          <img
+            src="/images/mercato/menu/aperol.webp"
+            alt="Aperol Spritz"
+            className="w-full h-48 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
+          />
+          <img
+            src="/images/mercato/menu/pizza.jpg"
+            alt="Pizza"
+            className="w-full h-48 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
+          />
           <img
             src="/images/mercato/menu/dish1.jpg"
             alt="Restaurant"
-            className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-          />
-          <img
-            src="/images/mercato/menu/dish2.jpg"
-            alt="Italian Cuisine"
-            className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-          />
-          <img
-            src="/images/mercato/menu/dish3.jpg"
-            alt="Ambiance"
-            className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
+            className="w-full h-48 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
         </div>
       </div>
