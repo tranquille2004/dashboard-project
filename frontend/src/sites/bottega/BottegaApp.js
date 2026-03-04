@@ -7,6 +7,8 @@ import LanguageSwitcher from './components/LanguageSwitcher';
 
 // Bordeaux color from logo
 const BRAND_COLOR = '#7D3C32';
+// Achtergrondkleur voor alle paginas - warm beige
+const BG_COLOR = '#FAF6F1';
 
 // ScrollToTop component - scrolls to top on route change
 function ScrollToTop() {
@@ -211,7 +213,7 @@ function HomePage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation activeSection={activeSection} scrollToSection={scrollToSection} />
 
       {/* Hero Section */}
@@ -517,7 +519,7 @@ function HomePage() {
 function ReserverenPage() {
   const { t } = useLanguage();
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-5xl mx-auto px-4 py-12">
@@ -560,7 +562,7 @@ function ReserverenPage() {
 function AfhalenPage() {
   const { t } = useLanguage();
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-5xl mx-auto px-4 py-12">
@@ -613,7 +615,7 @@ function KaartPage() {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-4 py-12">
@@ -623,21 +625,27 @@ function KaartPage() {
             
             {/* Download Button */}
             <div className="flex justify-center mb-8">
-              <a 
-                href={`${window.location.origin}/images/bottega/kaart-bottega.pdf`}
-                download="La-Bottega-Kaart.pdf"
-                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
+              <button 
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/images/bottega/kaart-bottega.pdf';
+                  link.download = 'La-Bottega-Kaart.pdf';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl cursor-pointer"
                 data-testid="kaart-download-btn"
               >
                 📥 Download Kaart PDF
-              </a>
+              </button>
             </div>
           </div>
 
           {/* PDF Viewer using Google Docs - Works on all devices */}
           <div className="bg-white rounded-lg shadow-xl overflow-hidden mb-6">
             <iframe
-              src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + '/images/bottega/kaart-bottega.pdf')}&embedded=true`}
+              src={`https://docs.google.com/viewer?url=${encodeURIComponent('https://fworks-consolidate-1.preview.emergentagent.com/images/bottega/kaart-bottega.pdf')}&embedded=true`}
               className="w-full"
               style={{ height: '1200px', border: 'none' }}
               title="La Bottega Kaart"
@@ -725,7 +733,7 @@ function GroepmenusPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#F5F0E8]">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-4 py-12">
@@ -735,14 +743,20 @@ function GroepmenusPage() {
             <p className="text-lg text-gray-600 mb-2">{t('groupMenusPageSubtitle')}</p>
             <div className="w-20 h-1 bg-[#7D3C32] mx-auto my-6"></div>
             <div className="flex flex-col items-center gap-4 mt-8">
-              <a 
-                href={`${window.location.origin}/images/bottega/groepmenus-bottega.pdf`}
-                download="La-Bottega-Groepmenus.pdf"
-                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
+              <button 
+                onClick={() => {
+                  const link = document.createElement('a');
+                  link.href = '/images/bottega/groepmenus-bottega.pdf';
+                  link.download = 'La-Bottega-Groepmenus.pdf';
+                  document.body.appendChild(link);
+                  link.click();
+                  document.body.removeChild(link);
+                }}
+                className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl cursor-pointer"
                 data-testid="groepmenus-download-btn"
               >
                 📥 Download Groepmenus PDF
-              </a>
+              </button>
               <Link 
                 to="/site/bottega/reserveren"
                 className="inline-flex items-center justify-center bg-[#D4A574] text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-[#C49564] transition-all shadow-lg hover:shadow-xl"
@@ -894,7 +908,7 @@ function GaleriePage() {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-7xl mx-auto px-4 py-12">
@@ -977,7 +991,7 @@ function ConfirmationPage() {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-4xl mx-auto px-4 py-12">
@@ -1045,7 +1059,7 @@ function Confirmation2Page() {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-20">
         <div className="max-w-4xl mx-auto px-4 py-12">
@@ -1156,7 +1170,7 @@ function OverOnsPage() {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen bg-[#F5F0E8]">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
@@ -1213,7 +1227,7 @@ function OpeningstijdenPage() {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen bg-[#F5F0E8]">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-6xl mx-auto">
@@ -1282,7 +1296,7 @@ function ContactPage() {
   const { t } = useLanguage();
   
   return (
-    <div className="min-h-screen bg-[#F5F0E8]">
+    <div className="min-h-screen bg-[#FAF6F1]">
       <Navigation />
       <div className="pt-24 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
