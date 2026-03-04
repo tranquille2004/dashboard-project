@@ -45,18 +45,27 @@ Zie eerdere documentatie.
 - [x] **La Bottega Italiana** - Originele code uit `tranquille2004/Bottega` repo geïntegreerd
 - [x] **L'Ascoli Zaventem** - Originele code uit `tranquille2004/Ascoli` repo geïntegreerd
 - [x] **Ristorante Mercato** - Originele code uit `tranquille2004/Mercato` repo geïntegreerd
+- [x] **Tracemaster** - Originele code uit `tranquille2004/tracemaster` repo geïntegreerd
 - [x] Alle sites werken nu met hun originele code, niet herbouwd
-- [x] Multi-tenant routing correct geconfigureerd (`/site/cantina`, `/site/bottega`, `/site/ascoli`, `/site/mercato`)
+- [x] Multi-tenant routing correct geconfigureerd (`/site/cantina`, `/site/bottega`, `/site/ascoli`, `/site/mercato`, `/site/tracemaster`)
 - [x] Super Admin dashboard (`/admin`) behouden met fworks logo en Google Login
 - [x] Site Admin dashboard (`/site/{naam}/manage`) beschikbaar voor klanten
-- [x] Navigatie fixes toegepast (Ascoli spacing)
-- [x] L'Ascoli website toegevoegd (/site/ascoli)
-- [x] 36 menu items geïmporteerd (voorgerechten, soepen, pasta, vis, vlees)
-- [x] 4 groepmenus geïmporteerd (Torino, Puglia, Amalfi, Ascoli)
-- [x] 145 galerij foto's toegevoegd (uit GitHub repo)
-- [x] Site configuratie met adres, telefoon, openingstijden
-- [x] Site Admin login aangemaakt voor L'Ascoli
-- [x] Site Admin login aangemaakt voor La Cantina
+
+### Phase 8 - NAVIGATIE FIXES VOOR MULTI-TENANT ✅ (4 maart 2026)
+**KRITIEKE BUG OPGELOST**: Navigatie links gingen naar verkeerde URLs (bijv. `/menu` i.p.v. `/site/mercato/menu`)
+
+**Fixes toegepast:**
+- [x] **Mercato** - BasePathContext toegevoegd, alle Link components aangepast om `/site/mercato/*` paths te gebruiken
+- [x] **Cantina** - CSS import gefixt (`./App.css` i.p.v. `@/App.css`) voor correcte navigatie styling
+- [x] **Ascoli** - BasePathContext toegevoegd, alle pagina's (Home, Menu, GroupMenu, Confirmation) aangepast
+- [x] **Bottega** - Werkte al correct (had al `/site/bottega/*` paths)
+- [x] **Tracemaster** - Werkte al correct
+
+**Technische details:**
+- Nieuwe `BasePathContext.jsx` bestanden aangemaakt voor Mercato en Ascoli
+- `useBasePath()` hook gebruikt in Navigation, Home, Menu, GroupMenu, Confirmation, Takeaway pagina's
+- Alle `<Link to="/path">` vervangen door `<Link to={\`${basePath}/path\`}>`
+- Routes veranderd van absolute (`/menu`) naar relatieve (`menu`) paths in App routers
 
 ### Phase 4 - Ristorante Mercato Integration ✅ (3 december 2026)
 - [x] Mercato website toegevoegd (/site/mercato)
@@ -142,12 +151,18 @@ Voorbeeld:
 
 ## Prioritized Backlog
 
-### P0 - High Priority (NEXT)
+### P0 - High Priority (COMPLETED)
+- [x] **Navigatie bugs gefixt** ✅ (4 maart 2026) - Alle 5 sites navigeren nu correct binnen hun eigen `/site/{slug}/*` context
 - [x] **L'Ascoli website EXACT REPLICA** ✅ (4 december 2026) - Pixel-perfect replica voltooid met alle correcties
-- [ ] **Mercato website EXACT REPLICA** - Repliceer met originele code van `tranquille2004/Mercato` repo
-- [ ] **Tracemaster evalueren** - Vraag gebruiker of deze ook exact gerepliceerd moet worden
+- [x] **Mercato website EXACT REPLICA** ✅ (4 maart 2026) - Correct geïntegreerd met navigatie fixes
 
-### P1 - Medium Priority  
+### P1 - Medium Priority (NEXT)
+- [ ] **USER VERIFICATIE** - Vraag gebruiker om alle 5 sites te controleren:
+  - `/site/cantina` - La Cantina Italiana
+  - `/site/bottega` - La Bottega Italiana  
+  - `/site/ascoli` - L'Ascoli Zaventem
+  - `/site/mercato` - Ristorante Mercato
+  - `/site/tracemaster` - Tracemaster Rastreadores
 - [ ] Site Admin voor La Cantina aanmaken (ontbreekt nog!)
 - [ ] Menu beheer voor Bottega aanpassen (PDF upload i.p.v. itemized editor)
 - [ ] Password reset for site admins

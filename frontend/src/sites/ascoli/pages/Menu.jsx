@@ -2,10 +2,12 @@ import React from 'react';
 import Hero from '../components/Hero';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
 
 const Menu = () => {
   const { currentLanguage } = useLanguage();
+  const basePath = useBasePath();
   const t = allTranslations.menu[currentLanguage] || allTranslations.menu.nl;
 
   return (
@@ -387,7 +389,7 @@ const Menu = () => {
             {/* CTA */}
             <div className="text-center mt-16">
               <Link
-                to="/reservations"
+                to={`${basePath}/reservations`}
                 className="inline-block px-10 py-4 bg-[#6b1f1f] hover:bg-[#7d2424] text-white rounded-sm transition-colors text-lg uppercase tracking-wide"
               >
                 {t.makeReservation}

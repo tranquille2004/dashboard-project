@@ -11,7 +11,7 @@ export default defineConfig({
     ['json', { outputFile: '/root/.emergent/automation_output/20260304_005503/results.json' }],
   ],
   use: {
-    baseURL: 'https://exact-replica-app-2.preview.emergentagent.com',
+    baseURL: 'https://bottega-staging-1.preview.emergentagent.com',
     screenshot: 'only-on-failure',
     trace: 'off',
     headless: true,

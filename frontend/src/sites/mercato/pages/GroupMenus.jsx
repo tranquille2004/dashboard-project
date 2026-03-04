@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useBasePath } from '../contexts/BasePathContext';
 import { Wine, Users, ChefHat } from 'lucide-react';
 
 const GroupMenus = () => {
   const { language } = useLanguage();
+  const basePath = useBasePath();
 
   const pageTitle = {
     nl: 'Groepmenus',
@@ -138,7 +140,7 @@ const GroupMenus = () => {
           
           {/* Reserve link boven menus */}
           <Link
-            to="/reserve"
+            to={`${basePath}/reserve`}
             className="inline-block bg-gold text-black px-8 py-3 rounded-lg font-bold text-lg hover:bg-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-4"
           >
             {reserveButton[language]}
@@ -220,7 +222,7 @@ const GroupMenus = () => {
         {/* Reserve Button */}
         <div className="text-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
           <Link
-            to="/reserve"
+            to={`${basePath}/reserve`}
             className="inline-block bg-gold text-black px-12 py-4 rounded-lg font-bold text-xl hover:bg-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             {reserveButton[language]}

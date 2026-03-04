@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useBasePath } from '../contexts/BasePathContext';
 import { translations } from '../data/translations';
 import { Menu, X, Globe } from 'lucide-react';
 
 const Navigation = () => {
   const { language, changeLanguage } = useLanguage();
+  const basePath = useBasePath();
   const [isOpen, setIsOpen] = useState(false);
   const [langMenuOpen, setLangMenuOpen] = useState(false);
   const location = useLocation();
@@ -23,24 +25,24 @@ const Navigation = () => {
   const currentLang = languages.find(l => l.code === language);
 
   const navLinks = [
-    { path: '/', label: t.home[language] },
-    { path: '/about', label: t.about[language] },
-    { path: '/menu', label: t.menu[language] },
-    { path: '/group-menus', label: t.groupMenus[language] },
-    { path: '/reserve', label: t.reserve[language] },
-    { path: '/takeaway', label: t.takeaway[language] },
-    { path: '/gallery', label: t.gallery[language] },
-    { path: '/info', label: t.info[language] }
+    { path: basePath, label: t.home[language] },
+    { path: `${basePath}/about`, label: t.about[language] },
+    { path: `${basePath}/menu`, label: t.menu[language] },
+    { path: `${basePath}/group-menus`, label: t.groupMenus[language] },
+    { path: `${basePath}/reserve`, label: t.reserve[language] },
+    { path: `${basePath}/takeaway`, label: t.takeaway[language] },
+    { path: `${basePath}/gallery`, label: t.gallery[language] },
+    { path: `${basePath}/info`, label: t.info[language] }
   ];
 
-  const isActive = (path) => location.pathname === path;
+  const isActive = (path) => location.pathname === path || (path === basePath && location.pathname === `${basePath}/`);
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-gold/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to={basePath} className="flex items-center space-x-3">
             <img 
               src="/images/logo/mercato-logo.jpg" 
               alt="Mercato Logo" 

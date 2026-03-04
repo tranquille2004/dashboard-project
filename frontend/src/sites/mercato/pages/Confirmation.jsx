@@ -1,10 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useBasePath } from '../contexts/BasePathContext';
 import { CheckCircle } from 'lucide-react';
 
 const Confirmation = () => {
   const { language } = useLanguage();
+  const basePath = useBasePath();
 
   const content = {
     nl: {
@@ -98,7 +100,7 @@ const Confirmation = () => {
         {/* Back to Home Button */}
         <div className="text-center">
           <Link
-            to="/"
+            to={basePath}
             className="inline-block bg-gold text-black px-8 py-4 rounded-lg font-bold text-lg hover:bg-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             {t.backButton}

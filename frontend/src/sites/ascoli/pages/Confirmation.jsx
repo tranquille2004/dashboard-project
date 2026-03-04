@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
+import { useBasePath } from '../context/BasePathContext';
 
 const Confirmation = () => {
+  const basePath = useBasePath();
+  
   return (
     <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center px-4">
       <div className="max-w-2xl w-full">
@@ -40,7 +43,7 @@ const Confirmation = () => {
 
           <div className="space-y-4">
             <Link
-              to="/"
+              to={basePath}
               className="inline-block px-8 py-3 bg-[#6b1f1f] hover:bg-[#7d2424] text-white rounded-sm transition-colors"
             >
               Klik hier om terug te gaan naar de site

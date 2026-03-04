@@ -1,11 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useBasePath } from '../contexts/BasePathContext';
 import { translations } from '../data/translations';
 import { ShoppingBag, Clock, Phone, Info, ArrowRight } from 'lucide-react';
 
 const Takeaway = () => {
   const { language } = useLanguage();
+  const basePath = useBasePath();
   const t = translations;
 
   return (
@@ -28,7 +30,7 @@ const Takeaway = () => {
             <div>
               <p className="text-white font-semibold mb-2">
                 {t.takeaway.note[language]}{' '}
-                <Link to="/reserve" className="text-gold hover:text-gold/80 underline inline-flex items-center">
+                <Link to={`${basePath}/reserve`} className="text-gold hover:text-gold/80 underline inline-flex items-center">
                   {t.takeaway.clickHere[language]}
                   <ArrowRight size={16} className="ml-1" />
                 </Link>
@@ -63,7 +65,7 @@ const Takeaway = () => {
               de: 'Speisekarte ansehen',
               it: 'Visualizza menu'
             }[language]}</h3>
-            <Link to="/menu" className="text-gold hover:text-gold/80 transition-colors">
+            <Link to={`${basePath}/menu`} className="text-gold hover:text-gold/80 transition-colors">
               {t.menu.title[language]}
             </Link>
           </div>

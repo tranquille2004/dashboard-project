@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useBasePath } from '../contexts/BasePathContext';
 import { translations } from '../data/translations';
 import { ChevronRight, UtensilsCrossed } from 'lucide-react';
 
 const Home = () => {
   const { language } = useLanguage();
+  const basePath = useBasePath();
   const t = translations;
   const [scrollY, setScrollY] = useState(0);
 
@@ -48,14 +50,14 @@ const Home = () => {
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/reserve"
+              to={`${basePath}/reserve`}
               className="group inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               {t.home.cta.reserve[language]}
               <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              to="/takeaway"
+              to={`${basePath}/takeaway`}
               className="group inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold hover:text-black transition-all duration-300 transform hover:scale-105"
             >
               {t.home.cta.takeaway[language]}
@@ -107,7 +109,7 @@ const Home = () => {
                 }[language]}
               </p>
               <Link
-                to="/about"
+                to={`${basePath}/about`}
                 className="inline-flex items-center text-gold hover:text-gold/80 transition-colors font-semibold"
               >
                 {{
@@ -199,7 +201,7 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/reserve"
+              to={`${basePath}/reserve`}
               className="inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               {{
@@ -213,7 +215,7 @@ const Home = () => {
               <ChevronRight className="ml-2" />
             </Link>
             <Link
-              to="/takeaway"
+              to={`${basePath}/takeaway`}
               className="inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold hover:text-black transition-all duration-300 transform hover:scale-105"
             >
               {{

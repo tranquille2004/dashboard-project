@@ -4,10 +4,12 @@ import FeatureCard from '../components/FeatureCard';
 import { ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
+import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
 
 const Home = () => {
   const { currentLanguage } = useLanguage();
+  const basePath = useBasePath();
   const t = allTranslations.home[currentLanguage] || allTranslations.home.nl;
   
   const features = [
@@ -60,14 +62,14 @@ const Home = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              to="/reservations"
+              to={`${basePath}/reservations`}
               className="group px-8 py-4 bg-[#6b1f1f] hover:bg-[#7d2424] text-white rounded-sm transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-wide font-medium"
             >
               {t.reserve}
               <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
-              to="/menu"
+              to={`${basePath}/menu`}
               className="group px-8 py-4 bg-transparent border-2 border-[#a48f7a] hover:bg-[#a48f7a] text-white rounded-sm transition-all duration-300 flex items-center justify-center gap-2 uppercase tracking-wide font-medium"
             >
               {t.viewMenu}
@@ -93,7 +95,7 @@ const Home = () => {
                 {t.story2}
               </p>
               <Link
-                to="/about"
+                to={`${basePath}/about`}
                 className="inline-flex items-center text-[#6b1f1f] hover:text-[#7d2424] transition-colors group"
               >
                 {t.readOurStory}
@@ -154,7 +156,7 @@ const Home = () => {
 
           <div className="text-center">
             <Link
-              to="/gallery"
+              to={`${basePath}/gallery`}
               className="inline-flex items-center text-[#6b1f1f] hover:text-[#7d2424] transition-colors group text-lg"
             >
               {t.viewGallery}

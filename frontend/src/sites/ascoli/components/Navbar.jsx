@@ -2,13 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
 
-const Navbar = ({ basePath = '' }) => {
+const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLangMenuOpen, setIsLangMenuOpen] = useState(false);
   const { currentLanguage, changeLanguage } = useLanguage();
+  const basePath = useBasePath();
   const location = useLocation();
   const t = allTranslations.nav[currentLanguage] || allTranslations.nav.nl;
 
@@ -21,7 +23,7 @@ const Navbar = ({ basePath = '' }) => {
   }, []);
 
   const navItems = [
-    { name: t.home, path: `${basePath}/` },
+    { name: t.home, path: basePath },
     { name: t.about, path: `${basePath}/about` },
     { name: t.menu, path: `${basePath}/menu` },
     { name: t.groupMenu, path: `${basePath}/group-menu` },
@@ -54,7 +56,7 @@ const Navbar = ({ basePath = '' }) => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link to={`${basePath}/`} className="flex items-center">
+            <Link to={basePath} className="flex items-center">
               <img
                 src="https://ascolizaventem.weebly.com/uploads/1/0/1/5/101515486/ascoli.jpg"
                 alt="L'Ascoli"

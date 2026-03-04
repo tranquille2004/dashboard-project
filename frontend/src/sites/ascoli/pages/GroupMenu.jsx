@@ -3,10 +3,12 @@ import Hero from '../components/Hero';
 import { Link } from 'react-router-dom';
 import { Users, Wine } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
 
 const GroupMenu = () => {
   const { currentLanguage } = useLanguage();
+  const basePath = useBasePath();
   const t = allTranslations.groupMenu[currentLanguage] || allTranslations.groupMenu.nl;
   
   return (
@@ -25,7 +27,7 @@ const GroupMenu = () => {
             <div className="text-center mb-12">
               <div className="w-24 h-1 bg-[#6b1f1f] mx-auto mb-8"></div>
               <Link
-                to="/reservations"
+                to={`${basePath}/reservations`}
                 className="inline-block bg-[#6b1f1f] text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-[#7d2424] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-4"
               >
                 {t.reserveButton}
@@ -466,7 +468,7 @@ const GroupMenu = () => {
             {/* Bottom CTA */}
             <div className="text-center">
               <Link
-                to="/reservations"
+                to={`${basePath}/reservations`}
                 className="inline-block bg-[#6b1f1f] text-white px-12 py-4 rounded-lg font-bold text-xl hover:bg-[#7d2424] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
               >
                 {t.reserveButton}
