@@ -229,21 +229,18 @@ function KaartPage({ t }) {
         <div className="title-divider"></div>
       </div>
 
-      {/* Menu Kaart Foto's - Direct Zichtbaar */}
-      <div className="kaart-photos-main">
-        <img 
-          src="/images/cantina/kaart-photo-1.webp" 
-          alt="Menu La Cantina Italiana - Pagina 1" 
-          className="kaart-photo-large"
-        />
-        <img 
-          src="/images/cantina/kaart-photo-2.webp" 
-          alt="Menu La Cantina Italiana - Pagina 2" 
-          className="kaart-photo-large"
-        />
+      {/* Menu Kaart - Direct Zichtbaar via Google Docs Viewer */}
+      <div className="menu-pdf-container">
+        <iframe
+          src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + '/images/cantina/menu-pdf.pdf')}&embedded=true`}
+          title="Menu La Cantina Italiana"
+          className="menu-pdf-frame"
+        >
+          <p>Uw browser ondersteunt geen PDF weergave. <a href="/images/cantina/menu-pdf.pdf" target="_blank" rel="noopener noreferrer">Klik hier om de PDF te downloaden</a>.</p>
+        </iframe>
       </div>
 
-      {/* PDF Download Optie */}
+      {/* PDF Download Sectie */}
       <div className="pdf-download-section">
         <div className="pdf-card">
           <Download className="download-icon" />
@@ -258,6 +255,22 @@ function KaartPage({ t }) {
             <Download className="btn-icon" />
             {t.menu.downloadButton}
           </a>
+        </div>
+      </div>
+
+      {/* Foto's - Kleiner en onderaan */}
+      <div className="kaart-photos-section">
+        <div className="kaart-photos-grid">
+          <img 
+            src="/images/cantina/kaart-photo-1.webp" 
+            alt="La Cantina Italiana gerecht" 
+            className="kaart-photo"
+          />
+          <img 
+            src="/images/cantina/kaart-photo-2.webp" 
+            alt="La Cantina Italiana gerecht" 
+            className="kaart-photo"
+          />
         </div>
       </div>
     </div>
