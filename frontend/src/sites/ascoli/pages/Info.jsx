@@ -9,14 +9,14 @@ const Info = () => {
   const t = allTranslations.info[currentLanguage] || allTranslations.info.nl;
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#2a2a2a]">
       <Hero
         title={t.title}
         subtitle={t.subtitle}
         image="/images/ascoli/gallery/img-5714_1_orig.jpg"
       />
 
-      <section className="py-24 bg-[#1a1a1a]">
+      <section className="py-24 bg-[#2a2a2a]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
             {/* Contact Information */}
@@ -120,7 +120,7 @@ const Info = () => {
       </section>
 
       {/* Takeaway Notice */}
-      <section className="py-16 bg-[#1a1a1a]">
+      <section className="py-16 bg-[#2a2a2a]">
         <div className="container mx-auto px-4 text-center">
           <h3 className="text-2xl font-serif text-[#a48f7a] mb-4">
             {t.takeawayTitle}

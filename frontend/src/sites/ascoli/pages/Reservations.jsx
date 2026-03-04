@@ -29,14 +29,14 @@ const Reservations = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#2a2a2a]">
       <Hero
         title={t.title}
         subtitle={t.subtitle}
         image="/images/ascoli/gallery/img-5497_1_orig.jpg"
       />
 
-      <section className="py-16 bg-[#1a1a1a]">
+      <section className="py-16 bg-[#2a2a2a]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Important Notice */}

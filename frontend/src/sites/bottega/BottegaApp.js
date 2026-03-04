@@ -61,14 +61,14 @@ function Navigation({ activeSection, scrollToSection }) {
       navigate(path);
     } else if (sectionId) {
       // Check if we're on homepage
-      if (window.location.pathname === '/site/bottega/' || pathname === '/site/bottega') {
+      if (window.location.pathname === '/site/bottega/' || window.location.pathname === '/site/bottega') {
         // We're on homepage, scroll to section
         if (scrollToSection) {
           scrollToSection(sectionId);
         }
       } else {
-        // We're on another page, navigate to homepage with hash
-        navigate('/', { state: { scrollTo: sectionId } });
+        // We're on another page, navigate to homepage first
+        navigate('/site/bottega/', { state: { scrollTo: sectionId } });
         // After navigation, scroll to section
         setTimeout(() => {
           const element = document.getElementById(sectionId);
@@ -1157,14 +1157,15 @@ function BottegaApp() {
     
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/kaart" element={<KaartPage />} />
-        <Route path="/galerie" element={<GaleriePage />} />
-        <Route path="/groepmenus" element={<GroepmenusPage />} />
-        <Route path="/reserveren" element={<ReserverenPage />} />
-        <Route path="/afhalen" element={<AfhalenPage />} />
-        <Route path="/confirmation" element={<ConfirmationPage />} />
-        <Route path="/confirmation2" element={<Confirmation2Page />} />
+        <Route index element={<HomePage />} />
+        <Route path="kaart" element={<KaartPage />} />
+        <Route path="galerie" element={<GaleriePage />} />
+        <Route path="groepmenus" element={<GroepmenusPage />} />
+        <Route path="reserveren" element={<ReserverenPage />} />
+        <Route path="afhalen" element={<AfhalenPage />} />
+        <Route path="confirmation" element={<ConfirmationPage />} />
+        <Route path="confirmation2" element={<Confirmation2Page />} />
+        <Route path="*" element={<HomePage />} />
       </Routes>
     </LanguageProvider>
   );

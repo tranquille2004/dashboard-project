@@ -169,14 +169,14 @@ const Gallery = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#2a2a2a]">
       <Hero
         title={t.title}
         subtitle={t.subtitle}
         image="/images/ascoli/gallery/img-5879_orig.jpg"
       />
 
-      <section className="py-16 bg-[#1a1a1a]">
+      <section className="py-16 bg-[#2a2a2a]">
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {galleryImages.map((image, index) => (
@@ -199,7 +199,7 @@ const Gallery = () => {
       {/* Lightbox */}
       {selectedImage && (
         <div
-          className="fixed inset-0 z-50 bg-[#1a1a1a]/95 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 bg-[#2a2a2a]/95 flex items-center justify-center p-4"
           onClick={() => setSelectedImage(null)}
         >
           <button

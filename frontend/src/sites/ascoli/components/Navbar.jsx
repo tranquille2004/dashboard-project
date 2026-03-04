@@ -50,7 +50,7 @@ const Navbar = () => {
     <>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          isScrolled ? 'bg-[#1a1a1a]/95 shadow-lg' : 'bg-transparent'
+          isScrolled ? 'bg-[#2a2a2a]/95 shadow-lg' : 'bg-transparent'
         }`}
       >
         <div className="container mx-auto px-4">
@@ -93,7 +93,7 @@ const Navbar = () => {
                 </button>
                 
                 {isLangMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-48 bg-[#1a1a1a]/95 border border-gray-800 rounded-sm shadow-lg">
+                  <div className="absolute right-0 mt-2 w-48 bg-[#2a2a2a]/95 border border-gray-800 rounded-sm shadow-lg">
                     {languages.map((lang) => (
                       <button
                         key={lang.code}
@@ -122,7 +122,7 @@ const Navbar = () => {
                 </button>
                 
                 {isLangMenuOpen && (
-                  <div className="absolute right-0 mt-2 w-40 bg-[#1a1a1a]/95 border border-gray-800 rounded-sm shadow-lg z-50">
+                  <div className="absolute right-0 mt-2 w-40 bg-[#2a2a2a]/95 border border-gray-800 rounded-sm shadow-lg z-50">
                     {languages.map((lang) => (
                       <button
                         key={lang.code}
@@ -152,7 +152,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-40 lg:hidden">
-          <div className="fixed inset-0 bg-[#1a1a1a]/95" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="fixed inset-0 bg-[#2a2a2a]/95" onClick={() => setIsMobileMenuOpen(false)}>
             <div className="flex flex-col items-center justify-center h-full space-y-6">
               {navItems.map((item) => (
                 <Link

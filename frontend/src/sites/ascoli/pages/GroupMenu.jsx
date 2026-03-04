@@ -12,14 +12,14 @@ const GroupMenu = () => {
   const t = allTranslations.groupMenu[currentLanguage] || allTranslations.groupMenu.nl;
   
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#2a2a2a]">
       <Hero
         title={t.title}
         subtitle={t.subtitle}
         image="/images/ascoli/gallery/img-5714_1_orig.jpg"
       />
 
-      <section className="py-16 bg-[#1a1a1a]">
+      <section className="py-16 bg-[#2a2a2a]">
         <div className="container mx-auto px-4">
           <div className="max-w-7xl mx-auto">
             
@@ -65,7 +65,7 @@ const GroupMenu = () => {
               
               {/* MENU TORINO */}
               <div className="bg-gradient-to-br from-amber-600/20 to-amber-900/10 border-2 border-[#6b1f1f]/30 rounded-xl overflow-hidden shadow-2xl">
-                <div className="bg-[#1a1a1a]/90 backdrop-blur-sm p-6 border-b border-[#6b1f1f]/20 text-center">
+                <div className="bg-[#2a2a2a]/90 backdrop-blur-sm p-6 border-b border-[#6b1f1f]/20 text-center">
                   <h2 className="text-3xl font-bold text-[#a48f7a] mb-2">TORINO</h2>
                   <p className="text-4xl font-bold text-white">€47,50</p>
                 </div>
@@ -158,7 +158,7 @@ const GroupMenu = () => {
 
               {/* MENU PUGLIA */}
               <div className="bg-gradient-to-br from-green-600/20 to-green-900/10 border-2 border-[#6b1f1f]/30 rounded-xl overflow-hidden shadow-2xl">
-                <div className="bg-[#1a1a1a]/90 backdrop-blur-sm p-6 border-b border-[#6b1f1f]/20 text-center">
+                <div className="bg-[#2a2a2a]/90 backdrop-blur-sm p-6 border-b border-[#6b1f1f]/20 text-center">
                   <h2 className="text-3xl font-bold text-[#a48f7a] mb-2">PUGLIA</h2>
                   <p className="text-4xl font-bold text-white">€52,50</p>
                 </div>
@@ -263,7 +263,7 @@ const GroupMenu = () => {
 
               {/* MENU AMALFI */}
               <div className="bg-gradient-to-br from-red-600/20 to-red-900/10 border-2 border-[#6b1f1f]/30 rounded-xl overflow-hidden shadow-2xl">
-                <div className="bg-[#1a1a1a]/90 backdrop-blur-sm p-6 border-b border-[#6b1f1f]/20 text-center">
+                <div className="bg-[#2a2a2a]/90 backdrop-blur-sm p-6 border-b border-[#6b1f1f]/20 text-center">
                   <h2 className="text-3xl font-bold text-[#a48f7a] mb-2">AMALFI</h2>
                   <p className="text-4xl font-bold text-white">€57,50</p>
                 </div>
@@ -368,7 +368,7 @@ const GroupMenu = () => {
 
               {/* MENU ASCOLI */}
               <div className="bg-gradient-to-br from-blue-600/20 to-blue-900/10 border-2 border-[#6b1f1f]/30 rounded-xl overflow-hidden shadow-2xl">
-                <div className="bg-[#1a1a1a]/90 backdrop-blur-sm p-6 border-b border-[#6b1f1f]/20 text-center">
+                <div className="bg-[#2a2a2a]/90 backdrop-blur-sm p-6 border-b border-[#6b1f1f]/20 text-center">
                   <h2 className="text-3xl font-bold text-[#a48f7a] mb-2">ASCOLI</h2>
                   <p className="text-4xl font-bold text-white">€67,50</p>
                 </div>

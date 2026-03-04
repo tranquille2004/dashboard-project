@@ -7,7 +7,7 @@ const Confirmation = () => {
   const basePath = useBasePath();
   
   return (
-    <div className="min-h-screen bg-[#1a1a1a] flex items-center justify-center px-4">
+    <div className="min-h-screen bg-[#2a2a2a] flex items-center justify-center px-4">
       <div className="max-w-2xl w-full">
         <div className="bg-gray-900 rounded-lg p-12 text-center">
           <CheckCircle className="w-24 h-24 text-green-500 mx-auto mb-6" />

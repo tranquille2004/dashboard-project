@@ -899,6 +899,23 @@ const SiteRenderer = () => {
     setAdmin(null);
     setAdminSite(null);
   };
+
+  // Check for specific site apps FIRST - render immediately without waiting for API data
+  if (slug === 'cantina') {
+    return <CantinaApp />;
+  }
+  if (slug === 'bottega') {
+    return <BottegaApp />;
+  }
+  if (slug === 'ascoli') {
+    return <AscoliApp />;
+  }
+  if (slug === 'mercato') {
+    return <MercatoApp />;
+  }
+  if (slug === 'tracemaster') {
+    return <TracemasterApp />;
+  }
   
   if (loading) {
     return (
@@ -923,31 +940,6 @@ const SiteRenderer = () => {
   const { site, config, menu_items, group_menus, gallery, products } = data;
   const primaryColor = config?.primary_color || '#7D3C32';
   const baseUrl = slug ? `/site/${slug}` : '';
-
-  // If this is Cantina, use the original CantinaApp
-  if (slug === 'cantina') {
-    return <CantinaApp />;
-  }
-
-  // If this is Bottega, use the original BottegaApp
-  if (slug === 'bottega') {
-    return <BottegaApp />;
-  }
-
-  // If this is Ascoli, use the original AscoliApp
-  if (slug === 'ascoli') {
-    return <AscoliApp />;
-  }
-
-  // If this is Mercato, use the original MercatoApp
-  if (slug === 'mercato') {
-    return <MercatoApp />;
-  }
-
-  // If this is Tracemaster, use the original TracemasterApp
-  if (slug === 'tracemaster') {
-    return <TracemasterApp />;
-  }
 
   // If this is a product site, render the ProductSiteRenderer
   if (site?.site_type === 'product') {

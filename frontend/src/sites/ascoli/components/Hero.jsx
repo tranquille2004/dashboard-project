@@ -15,7 +15,7 @@ const Hero = ({ title, subtitle, image, showButtons = false, buttonText1 = 'Rese
           backgroundImage: `url(${image})`,
         }}
       >
-        <div className="absolute inset-0 bg-[#1a1a1a]/60"></div>
+        <div className="absolute inset-0 bg-[#1a1a1a]/50"></div>
       </div>
 
       {/* Content */}

@@ -11,7 +11,7 @@ const Menu = () => {
   const t = allTranslations.menu[currentLanguage] || allTranslations.menu.nl;
 
   return (
-    <div className="min-h-screen bg-[#1a1a1a]">
+    <div className="min-h-screen bg-[#2a2a2a]">
       <Hero
         title={t.title}
         subtitle={t.subtitle}
