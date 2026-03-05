@@ -866,8 +866,9 @@ const SiteAdminPanel = ({ site, config, admin, primaryColor, onLogout }) => {
 };
 
 // Main Site Renderer Component
-const SiteRenderer = () => {
-  const { slug } = useParams();
+const SiteRenderer = ({ forcedSlug }) => {
+  const { slug: paramSlug } = useParams();
+  const slug = forcedSlug || paramSlug;
   const { data, loading, error } = useSiteData(slug);
   const [admin, setAdmin] = useState(null);
   const [adminSite, setAdminSite] = useState(null);
