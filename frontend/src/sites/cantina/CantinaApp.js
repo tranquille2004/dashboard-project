@@ -278,12 +278,13 @@ function GroepmenusPage({ t }) {
   const navigate = useNavigate();
 
   return (
-    <div className="page groepmenus-page">
-      <div className="page-header">
-        <h1>{t.groupMenus.title}</h1>
-        <p className="group-top-note">{t.groupMenus.topNote}</p>
-        <div className="title-divider"></div>
-      </div>
+    <div style={{ background: '#f8f5f0', minHeight: '100vh', paddingTop: '80px' }}>
+      <div className="page groepmenus-page">
+        <div className="page-header">
+          <h1 style={{ color: '#2d5a3d' }}>{t.groupMenus.title}</h1>
+          <p className="group-top-note" style={{ color: '#555' }}>{t.groupMenus.topNote}</p>
+          <div className="title-divider" style={{ background: '#4A7C59' }}></div>
+        </div>
 
       <div className="groepmenus-actions">
         <Button onClick={() => navigate('/site/cantina/reserveren')} className="btn-primary">
@@ -515,7 +516,8 @@ function GroepmenusPage({ t }) {
         </a>
       </div>
       
-      <p className="group-bottom-note">{t.groupMenus.bottomNote}</p>
+      <p className="group-bottom-note" style={{ color: '#555' }}>{t.groupMenus.bottomNote}</p>
+      </div>
     </div>
   );
 }

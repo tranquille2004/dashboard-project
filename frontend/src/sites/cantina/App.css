@@ -2,14 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
 
 :root {
-  --cantina-green: #757A57;
-  --cantina-dark-green: #5F6345;
-  --cantina-light-green: #8B9169;
-  --cantina-olive: #6B7F4E;
-  --cantina-bg: #0a0a0a;
-  --cantina-bg-light: #1a1a1a;
-  --cantina-text: #e5e5e5;
-  --cantina-text-dim: #999;
+  --cantina-green: #4A7C59;
+  --cantina-dark-green: #2d5a3d;
+  --cantina-light-green: #6B9B7A;
+  --cantina-olive: #5A7A4A;
+  --cantina-bg: #1a2e1a;
+  --cantina-bg-light: #f8f5f0;
+  --cantina-text: #333333;
+  --cantina-text-dim: #666666;
   --cantina-cream: #F5F5DC;
 }
 
@@ -783,9 +783,10 @@ main {
   gap: 2rem;
 }
 
+/* Menu 1 - Groen */
 .group-menu-card {
   background: #ffffff;
-  border: 3px solid #2d5a3d;
+  border: 3px solid #4A7C59;
   border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -793,21 +794,24 @@ main {
 
 .group-menu-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
 }
 
+/* Menu 2 - Bordeaux */
 .group-menu-card.featured {
-  border-color: #1e4d2b;
-  background: #fafafa;
+  border-color: #8B3A3A;
+  background: #ffffff;
 }
 
+/* Menu 3 - Goud/Bronze */
 .group-menu-card.premium {
-  border-color: #8b7355;
-  background: #fafafa;
+  border-color: #B8860B;
+  background: #ffffff;
 }
 
+/* Menu 1 Header - Groen */
 .menu-header {
-  background: #2d5a3d;
+  background: linear-gradient(135deg, #4A7C59 0%, #3d6b4a 100%);
   padding: 1.5rem;
   text-align: center;
   color: white;
@@ -817,8 +821,14 @@ main {
   gap: 0.5rem;
 }
 
+/* Menu 2 Header - Bordeaux */
+.group-menu-card.featured .menu-header {
+  background: linear-gradient(135deg, #8B3A3A 0%, #722f2f 100%);
+}
+
+/* Menu 3 Header - Goud */
 .group-menu-card.premium .menu-header {
-  background: #6b5b3d;
+  background: linear-gradient(135deg, #B8860B 0%, #9a7209 100%);
 }
 
 .menu-header h2 {
