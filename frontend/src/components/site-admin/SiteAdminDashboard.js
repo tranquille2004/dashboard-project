@@ -232,6 +232,54 @@ const SiteAdminDashboard = () => {
                     </div>
                   </div>
 
+                  {/* Special Announcement Section */}
+                  <div className="border-2 border-orange-200 bg-orange-50 rounded-lg p-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-lg font-semibold text-orange-800">
+                        📢 Speciale Aankondiging
+                      </h3>
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={config?.special_announcement_active || false}
+                          onChange={(e) => setConfig({ ...config, special_announcement_active: e.target.checked })}
+                          className="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
+                        />
+                        <span className="text-sm font-medium text-gray-700">Actief op website</span>
+                      </label>
+                    </div>
+                    <p className="text-sm text-orange-700 mb-3">
+                      Dit bericht wordt getoond op de homepage en reserveringspagina's. 
+                      Gebruik voor bijzondere evenementen zoals kerst, nieuwjaar, sluitingsdagen, etc.
+                    </p>
+                    <div className="mb-3">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Type bericht</label>
+                      <select
+                        value={config?.special_announcement_type || 'info'}
+                        onChange={(e) => setConfig({ ...config, special_announcement_type: e.target.value })}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
+                      >
+                        <option value="info">ℹ️ Informatie (blauw)</option>
+                        <option value="warning">⚠️ Waarschuwing (oranje)</option>
+                        <option value="success">✅ Goed nieuws (groen)</option>
+                      </select>
+                    </div>
+                    <textarea
+                      value={config?.special_announcement || ''}
+                      onChange={(e) => setConfig({ ...config, special_announcement: e.target.value })}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white h-32"
+                      placeholder="Bijv: 🎄 Kerst Menu beschikbaar! Reserveer nu voor 24 & 25 december. Speciaal 4-gangen menu voor €55 p.p."
+                    />
+                    <button
+                      onClick={saveConfig}
+                      disabled={saving}
+                      className="mt-3 flex items-center space-x-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50"
+                    >
+                      <Save className="w-4 h-4" />
+                      <span>{saving ? 'Opslaan...' : 'Aankondiging Opslaan'}</span>
+                    </button>
+                  </div>
+
                   {permissions.closure_notice && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
+import axios from "axios";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { BasePathProvider } from "./contexts/BasePathContext";
 import Navigation from "./components/Navigation";
@@ -15,14 +16,30 @@ import Gallery from "./pages/Gallery";
 import Info from "./pages/Info";
 import Confirmation from "./pages/Confirmation";
 import GroupMenus from "./pages/GroupMenus";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
+
+const API = process.env.REACT_APP_BACKEND_URL + "/api";
 
 function MercatoApp() {
+  const [siteConfig, setSiteConfig] = useState(null);
+
+  useEffect(() => {
+    axios.get(`${API}/public/site/mercato`)
+      .then(res => setSiteConfig(res.data?.config))
+      .catch(() => {});
+  }, []);
+
   return (
     <LanguageProvider>
       <BasePathProvider basePath="/site/mercato">
         <div className="App bg-black min-h-screen">
           <ScrollToTop />
           <Navigation />
+          <AnnouncementBanner
+            message={siteConfig?.special_announcement}
+            type={siteConfig?.special_announcement_type || 'info'}
+            active={siteConfig?.special_announcement_active}
+          />
           <Routes>
             <Route index element={<Home />} />
             <Route path="about" element={<About />} />

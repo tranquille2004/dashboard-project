@@ -78,6 +78,10 @@ class SiteConfig(BaseModel):
     # Opening hours
     opening_hours: Dict[str, Any] = {}
     closure_notice: Optional[str] = None
+    # Special Announcement (shown on homepage and reservation pages)
+    special_announcement: Optional[str] = None
+    special_announcement_active: bool = False
+    special_announcement_type: str = "info"  # info, warning, success
     # Features
     has_reservations: bool = True
     has_takeaway: bool = False
@@ -644,6 +648,14 @@ async def update_own_site_config(request: Request, admin: dict = Depends(get_cur
         for field in ["phone", "email", "address"]:
             if field in body:
                 allowed_updates[field] = body[field]
+    
+    # Special announcement - always allowed for site admins
+    if "special_announcement" in body:
+        allowed_updates["special_announcement"] = body["special_announcement"]
+    if "special_announcement_active" in body:
+        allowed_updates["special_announcement_active"] = body["special_announcement_active"]
+    if "special_announcement_type" in body:
+        allowed_updates["special_announcement_type"] = body["special_announcement_type"]
     
     if not allowed_updates:
         raise HTTPException(status_code=403, detail="No permission to update these fields")

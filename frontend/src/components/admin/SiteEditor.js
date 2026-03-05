@@ -481,6 +481,70 @@ const SiteEditor = () => {
                       placeholder="Voor het einde van het jaar zijn wij gesloten op..."
                     />
                   </div>
+
+                  {/* Special Announcement Section */}
+                  <div className="border-t pt-6 mt-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Speciale Aankondiging</h3>
+                    <p className="text-sm text-gray-500 mb-4">
+                      Toon een opvallende banner op de homepage, reserveringspagina en afhaal pagina van de website.
+                    </p>
+                    
+                    <div className="flex items-center space-x-3 mb-4">
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          checked={config?.special_announcement_active || false}
+                          onChange={(e) => setConfig({ ...config, special_announcement_active: e.target.checked })}
+                          className="w-5 h-5 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
+                          data-testid="announcement-active-toggle"
+                        />
+                        <span className={`font-medium ${config?.special_announcement_active ? 'text-green-600' : 'text-gray-500'}`}>
+                          {config?.special_announcement_active ? 'Aankondiging Actief' : 'Aankondiging Inactief'}
+                        </span>
+                      </label>
+                    </div>
+
+                    <div className="mb-4">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Type Aankondiging</label>
+                      <select
+                        value={config?.special_announcement_type || 'info'}
+                        onChange={(e) => setConfig({ ...config, special_announcement_type: e.target.value })}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
+                        data-testid="announcement-type-select"
+                      >
+                        <option value="info">Info (Blauw)</option>
+                        <option value="warning">Waarschuwing (Geel)</option>
+                        <option value="success">Succes (Groen)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Aankondiging Tekst</label>
+                      <textarea
+                        value={config?.special_announcement || ''}
+                        onChange={(e) => setConfig({ ...config, special_announcement: e.target.value })}
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 h-24 text-gray-900 bg-white"
+                        placeholder="Bijv: Wij zijn gesloten van 24 december tot 2 januari. Prettige feestdagen!"
+                        data-testid="announcement-text-input"
+                      />
+                    </div>
+
+                    {config?.special_announcement_active && config?.special_announcement && (
+                      <div className="mt-4 p-4 rounded-lg border-l-4" style={{
+                        backgroundColor: config?.special_announcement_type === 'warning' ? '#FEF3C7' : 
+                                        config?.special_announcement_type === 'success' ? '#D1FAE5' : '#DBEAFE',
+                        borderColor: config?.special_announcement_type === 'warning' ? '#F59E0B' : 
+                                    config?.special_announcement_type === 'success' ? '#10B981' : '#3B82F6'
+                      }}>
+                        <p className="text-sm font-medium" style={{
+                          color: config?.special_announcement_type === 'warning' ? '#92400E' : 
+                                config?.special_announcement_type === 'success' ? '#065F46' : '#1E40AF'
+                        }}>
+                          Preview: {config?.special_announcement}
+                        </p>
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
 

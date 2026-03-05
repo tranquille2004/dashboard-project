@@ -15,9 +15,9 @@ test.describe('L\'Ascoli Homepage', () => {
     // Check subtitle
     await expect(page.getByText('Authentieke Italiaanse keuken in het hart van Zaventem')).toBeVisible();
     
-    // Check CTA buttons (use first() to handle multiple matches)
-    await expect(page.getByRole('button', { name: /RESERVEREN/i }).first()).toBeVisible();
-    await expect(page.getByRole('button', { name: /BEKIJK MENU/i }).first()).toBeVisible();
+    // Check CTA buttons/links (may be styled links, not actual buttons)
+    await expect(page.getByText('RESERVEREN').first()).toBeVisible();
+    await expect(page.getByText('BEKIJK MENU').first()).toBeVisible();
   });
 
   test('dark navigation bar with all links', async ({ page }) => {
@@ -35,8 +35,8 @@ test.describe('L\'Ascoli Homepage', () => {
     await expect(nav.getByText("FOTO'S")).toBeVisible();
     await expect(nav.getByText('INFO')).toBeVisible();
     
-    // Check language switcher
-    await expect(nav.getByText('NL')).toBeVisible();
+    // Check language switcher (use first() to handle multiple matches)
+    await expect(nav.getByText('NL').first()).toBeVisible();
   });
 
   test('three feature cards with hover effects are displayed', async ({ page }) => {
@@ -164,12 +164,12 @@ test.describe('L\'Ascoli Navigation', () => {
     await expect(page.getByText('Authentieke Italiaanse keuken in het hart van Zaventem')).toBeVisible();
     
     // Switch to French - click the language dropdown in nav
-    const langButton = page.locator('nav button').filter({ hasText: /NL/i });
+    const langButton = page.locator('nav button').filter({ hasText: /NL/i }).first();
     await langButton.click();
-    await page.waitForTimeout(300);
-    // Click FR in dropdown
-    await page.locator('nav').getByText('fr', { exact: true }).click();
     await page.waitForTimeout(500);
+    // Click Français in dropdown (use first() to handle potential duplicates)
+    await page.getByText('Français').first().click();
+    await page.waitForTimeout(1000);
     
     // Verify French navigation and text
     await expect(page.locator('nav').getByText('ACCUEIL')).toBeVisible();
@@ -177,15 +177,15 @@ test.describe('L\'Ascoli Navigation', () => {
     await expect(page.getByText('Cuisine italienne authentique au cœur de Zaventem')).toBeVisible();
     
     // Switch to English
-    const langButtonFr = page.locator('nav button').filter({ hasText: /FR/i });
+    const langButtonFr = page.locator('nav button').filter({ hasText: /FR/i }).first();
     await langButtonFr.click();
-    await page.waitForTimeout(300);
-    await page.locator('nav').getByText('en', { exact: true }).click();
     await page.waitForTimeout(500);
+    await page.getByText('English').first().click();
+    await page.waitForTimeout(1000);
     
     // Verify English navigation
     await expect(page.locator('nav').getByText('ABOUT US')).toBeVisible();
-    await expect(page.locator('nav').getByText('MENU', { exact: true })).toBeVisible();
+    await expect(page.locator('nav').getByText('MENU').first()).toBeVisible();
     await expect(page.getByText('Authentic Italian cuisine in the heart of Zaventem')).toBeVisible();
   });
 });

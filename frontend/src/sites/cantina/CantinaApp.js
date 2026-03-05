@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Clock, MapPin, Phone, Mail, Download, ChevronRight, Facebook } from 'lucide-react';
 import SEO from '@/components/SEO';
+import AnnouncementBanner from '@/components/AnnouncementBanner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
@@ -877,9 +878,14 @@ function Footer({ t, language }) {
 
 function CantinaApp() {
   const [language, setLanguage] = useState('nl');
+  const [siteConfig, setSiteConfig] = useState(null);
 
   useEffect(() => {
     axios.post(`${API}/init-menu`).catch(() => {});
+    // Fetch site configuration for special announcement
+    axios.get(`${API}/public/site/cantina`)
+      .then(res => setSiteConfig(res.data?.config))
+      .catch(() => {});
   }, []);
 
   const translations = {
@@ -1461,6 +1467,12 @@ function CantinaApp() {
     <>
       <ScrollToTop />
       <div className="App">
+        {/* Special Announcement Banner - Above Navigation */}
+        <AnnouncementBanner
+          message={siteConfig?.special_announcement}
+          type={siteConfig?.special_announcement_type || 'info'}
+          active={siteConfig?.special_announcement_active}
+        />
         <Navigation language={language} setLanguage={setLanguage} t={t} />
         <main>
           <Routes>

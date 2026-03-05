@@ -5,6 +5,10 @@ import { Phone, Mail, MapPin, Clock, ChefHat, Utensils, Wine } from 'lucide-reac
 import { useLanguage, LanguageProvider } from './LanguageContext';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import SEO from '@/components/SEO';
+import AnnouncementBanner from '@/components/AnnouncementBanner';
+import axios from 'axios';
+
+const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
 // Bordeaux color from logo
 const BRAND_COLOR = '#7D3C32';
@@ -1396,9 +1400,21 @@ function ContactPage() {
 }
 
 function BottegaApp() {
+  const [siteConfig, setSiteConfig] = useState(null);
+
+  useEffect(() => {
+    axios.get(`${API}/public/site/bottega`)
+      .then(res => setSiteConfig(res.data?.config))
+      .catch(() => {});
+  }, []);
+
   return (
     <LanguageProvider>
-    
+      <AnnouncementBanner
+        message={siteConfig?.special_announcement}
+        type={siteConfig?.special_announcement_type || 'info'}
+        active={siteConfig?.special_announcement_active}
+      />
       <ScrollToTop />
       <Routes>
         <Route index element={<HomePage />} />

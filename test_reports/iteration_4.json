@@ -1,0 +1,67 @@
+{
+  "summary": "Comprehensive testing of Special Announcement feature. All backend API tests (16) and frontend E2E tests (21) passed. The feature allows restaurants to display announcement banners on their sites and manage them via Site Admin Dashboard.",
+  "mode": "generate",
+  "baseline_commit": "be2e2bb51d6f6d704cca739241b9215dbf76b4be",
+  "head_commit": "e88f64dea933596fd86bc5d76dad561069005888",
+  "backend_issues": {
+    "critical": [],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "regression_results": {
+    "total_specs": 21,
+    "passed": 21,
+    "failed": 0,
+    "skipped": 0
+  },
+  "specs_created": [
+    "/app/tests/e2e/announcement-feature.spec.ts",
+    "/app/backend/tests/test_announcement_api.py",
+    "/app/backend/tests/conftest.py"
+  ],
+  "specs_updated": [
+    "/app/tests/e2e/ascoli.spec.ts"
+  ],
+  "quarantined_tests": [],
+  "test_report_links": [
+    "/app/tests/e2e/announcement-feature.spec.ts",
+    "/app/tests/e2e/ascoli.spec.ts",
+    "/app/backend/tests/test_announcement_api.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "updated_files": [
+    "/app/tests/e2e/announcement-feature.spec.ts",
+    "/app/tests/e2e/ascoli.spec.ts",
+    "/app/backend/tests/conftest.py",
+    "/app/backend/tests/test_announcement_api.py"
+  ],
+  "success_rate": {
+    "backend": "100% (16/16 tests passed)",
+    "frontend": "100% (21/21 tests passed)"
+  },
+  "tested_features": [
+    "AnnouncementBanner displays correctly on Cantina homepage with warning type (orange)",
+    "AnnouncementBanner displays correctly on Mercato homepage with success type (green)",
+    "AnnouncementBanner does NOT display on Bottega (inactive)",
+    "AnnouncementBanner does NOT display on Ascoli (inactive)",
+    "AnnouncementBanner has fixed position and z-index 1100",
+    "AnnouncementBanner stays visible on scroll",
+    "Site Admin Login page loads correctly",
+    "Site Admin can login with valid credentials (cantina@test.be)",
+    "Invalid login shows error message",
+    "Site Admin Dashboard shows Speciale Aankondiging section",
+    "Announcement type selector has info/warning/success options",
+    "Site Admin logout works correctly",
+    "Public API /api/public/site/{slug} returns announcement config fields",
+    "Site Admin API allows updating announcement text, active status, and type",
+    "Unauthenticated requests cannot update site config"
+  ],
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "All Special Announcement feature tests are in /app/tests/e2e/announcement-feature.spec.ts and /app/backend/tests/test_announcement_api.py. The existing ascoli.spec.ts was updated to fix strict mode violations with language selector. Site admin credentials: cantina@test.be/test123, mercato@test.be/test123. The announcement banner uses data-testid='announcement-banner', 'announcement-message', 'announcement-icon'."
+}
