@@ -191,6 +191,29 @@ Voorbeeld:
 
 ## Prioritized Backlog
 
+### Phase 11 - SPECIALE AANKONDIGING FEATURE ✅ (5 maart 2026)
+**Nieuwe feature**: Restaurant eigenaren kunnen nu speciale mededelingen plaatsen (bijv. vakantiesluitingen, speciale menu's).
+
+**Wat is geïmplementeerd:**
+- [x] **AnnouncementBanner component** - Herbruikbaar component met 3 stijlen (info=blauw, warning=oranje, success=groen)
+- [x] **Fixed positionering** - Banner altijd zichtbaar bovenaan met z-index 1100
+- [x] **Site Admin Dashboard** - Sectie voor beheer van aankondiging (actief/inactief toggle, type selectie, tekst input)
+- [x] **Super Admin SiteEditor** - Zelfde aankondiging beheer functionaliteit
+- [x] **Integratie in 4 restaurant sites** - Cantina, Bottega, Ascoli en Mercato tonen de banner indien actief
+- [x] **Automatische test suite** - 16 backend tests + 21 frontend E2E tests (100% passed)
+
+**Technische details:**
+- Backend model velden: `special_announcement`, `special_announcement_active`, `special_announcement_type`
+- Frontend component: `/app/frontend/src/components/AnnouncementBanner.js`
+- Test specs: `/app/tests/e2e/announcement-feature.spec.ts`, `/app/backend/tests/test_announcement_api.py`
+
+**Gebruik:**
+1. Ga naar `/restaurant-login` en log in als restaurant eigenaar
+2. Scroll naar "Speciale Aankondiging" sectie
+3. Vink "Actief op website" aan
+4. Kies type (Info/Waarschuwing/Succes)
+5. Voer de tekst in en klik "Aankondiging Opslaan"
+
 ### P0 - High Priority (COMPLETED)
 - [x] **Navigatie bugs gefixt** ✅ (4 maart 2026) - Alle 5 sites navigeren nu correct binnen hun eigen `/site/{slug}/*` context
 - [x] **L'Ascoli website EXACT REPLICA** ✅ (4 december 2026) - Pixel-perfect replica voltooid met alle correcties
@@ -200,6 +223,7 @@ Voorbeeld:
 - [x] **Mercato Groepmenus PDF knop** ✅ (4 maart 2026) - Grote gouden knop met juiste PDF pad, PDF gekopieerd van originele repo
 - [x] **Mercato Kaart met embedded PDF** ✅ (4 maart 2026) - Menu PDF direct zichtbaar via Google Docs viewer (zoals La Cantina)
 - [x] **Site Admin Dashboards** ✅ (4 maart 2026) - Restaurant eigenaren kunnen nu inloggen en hun site beheren
+- [x] **Speciale Aankondiging Feature** ✅ (5 maart 2026) - Restaurant eigenaren kunnen nu speciale mededelingen plaatsen die zichtbaar zijn op hun website
 
 ### Site Admin Accounts (4 restaurants)
 | Restaurant | Email | Wachtwoord | Rechten |
@@ -218,14 +242,15 @@ Voorbeeld:
   - `/site/ascoli` - L'Ascoli Zaventem
   - `/site/mercato` - Ristorante Mercato
   - `/site/tracemaster` - Tracemaster Rastreadores
-- [ ] Site Admin voor La Cantina aanmaken (ontbreekt nog!)
+- [ ] **DEPLOYMENT BEGELEIDING** - Help gebruiker met:
+  - Eigen domeinen koppelen aan het platform
+  - Oude Emergent apps uitschakelen (hostingkosten besparen)
 - [ ] Menu beheer voor Bottega aanpassen (PDF upload i.p.v. itemized editor)
 - [ ] Password reset for site admins
 - [ ] Email notifications when admin is created
 
 ### P2 - Nice to Have
 - [ ] Generic business template (not restaurant)
-- [ ] Billing/subscription management for site admins (Stripe)
 - [ ] Analytics per site
 - [ ] Activity log per site admin
 
