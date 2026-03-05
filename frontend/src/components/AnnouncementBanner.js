@@ -63,15 +63,18 @@ const AnnouncementBanner = ({
       style={{
         background: currentStyle.background,
         color: currentStyle.textColor,
-        padding: '20px 30px',
+        padding: '16px 30px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         gap: '15px',
-        position: 'relative',
+        position: 'fixed',
+        top: '80px',
+        left: 0,
+        right: 0,
         boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-        zIndex: 9999,
-        minHeight: '60px'
+        zIndex: 40,
+        minHeight: '50px'
       }}
       data-testid="announcement-banner"
     >
