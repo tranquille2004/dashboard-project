@@ -625,20 +625,32 @@ function KaartPage() {
             </div>
           </div>
 
-          {/* PDF Viewer using Google Docs - Works on all devices */}
-          <div className="bg-white rounded-lg shadow-xl overflow-hidden mb-6">
+          {/* PDF Viewer - Gecentreerd */}
+          <div className="bg-white rounded-lg shadow-xl overflow-hidden mb-6 mx-auto" style={{ maxWidth: '900px' }}>
             <iframe
-              src={`https://docs.google.com/viewer?url=${encodeURIComponent('https://fworks-consolidate-1.preview.emergentagent.com/images/bottega/kaart-bottega.pdf')}&embedded=true`}
+              src="/images/bottega/kaart-bottega.pdf"
               className="w-full"
               style={{ height: '1200px', border: 'none' }}
               title="La Bottega Kaart"
             >
-              <p className="p-8 text-center text-gray-600">
-                PDF kan niet worden weergegeven. 
-                <a href="/images/bottega/kaart-bottega.pdf" download className="text-[#7D3C32] underline ml-2">
-                  Klik hier om de kaart te downloaden
-                </a>
-              </p>
+              <div className="p-8 text-center">
+                <p className="text-gray-600 mb-4">
+                  PDF kan niet worden weergegeven in uw browser.
+                </p>
+                <button 
+                  onClick={() => {
+                    const link = document.createElement('a');
+                    link.href = '/images/bottega/kaart-bottega.pdf';
+                    link.download = 'La-Bottega-Kaart.pdf';
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                  }}
+                  className="inline-flex items-center justify-center bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#6A3229] transition-all"
+                >
+                  📥 Download Kaart PDF
+                </button>
+              </div>
             </iframe>
           </div>
 
