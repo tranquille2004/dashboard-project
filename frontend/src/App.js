@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { SiteProvider } from '@/contexts/SiteContext';
@@ -12,7 +12,7 @@ import SiteAdminLogin from '@/components/site-admin/SiteAdminLogin';
 import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
 import './App.css';
 
-// Domain to site mapping
+// Domain to site mapping - BELANGRIJKSTE CODE
 const DOMAIN_MAPPING = {
   'lacantinaitaliana.net': 'cantina',
   'www.lacantinaitaliana.net': 'cantina',
@@ -28,54 +28,47 @@ const DOMAIN_MAPPING = {
   'www.theobeans-export.com': 'theobeans'
 };
 
-// Check if current domain is a custom domain (not preview/localhost)
-const getCustomDomainSlug = () => {
-  const hostname = window.location.hostname;
-  return DOMAIN_MAPPING[hostname] || null;
-};
+// Detecteer custom domain DIRECT bij laden
+const CUSTOM_DOMAIN_SLUG = DOMAIN_MAPPING[window.location.hostname] || null;
 
-// Router wrapper to handle auth callback detection and domain routing
-function AppRouter() {
+// Router voor admin/preview toegang
+function AdminRouter() {
   const location = useLocation();
-  const [customSlug] = useState(() => getCustomDomainSlug());
   
-  // Check URL fragment for session_id (OAuth callback)
   if (location.hash?.includes('session_id=')) {
     return <AuthCallback />;
   }
   
-  // If on custom domain, render the site directly
-  if (customSlug) {
-    return <SiteRenderer forcedSlug={customSlug} />;
-  }
-  
   return (
     <Routes>
-      {/* Admin Routes (jouw dashboard) */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/sites/:siteId" element={<SiteEditor />} />
-      
-      {/* Site Admin Routes (voor restaurant eigenaren) */}
       <Route path="/restaurant-login" element={<SiteAdminLogin />} />
       <Route path="/mijn-site" element={<SiteAdminDashboard />} />
-      
-      {/* Site Preview Routes (elke website heeft zijn eigen /beheer login) */}
       <Route path="/site/:slug/*" element={<SiteRenderer />} />
-      
-      {/* Catch-all for domain-based sites */}
       <Route path="*" element={<SiteRenderer />} />
     </Routes>
   );
 }
 
 function App() {
+  // ALS OP CUSTOM DOMAIN: toon ALLEEN de website, geen routing
+  if (CUSTOM_DOMAIN_SLUG) {
+    return (
+      <BrowserRouter>
+        <SiteRenderer forcedSlug={CUSTOM_DOMAIN_SLUG} />
+      </BrowserRouter>
+    );
+  }
+  
+  // ANDERS: toon volledige app met admin dashboard
   return (
     <BrowserRouter>
       <AuthProvider>
         <SiteProvider>
           <SiteAdminProvider>
-            <AppRouter />
+            <AdminRouter />
           </SiteAdminProvider>
         </SiteProvider>
       </AuthProvider>
