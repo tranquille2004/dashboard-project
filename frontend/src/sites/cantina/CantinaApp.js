@@ -203,9 +203,9 @@ function HomePage({ t }) {
           <h1 className="hero-title">{t.hero.title}</h1>
           <p className="hero-subtitle">{t.hero.subtitle}</p>
           <div className="hero-buttons">
-            <Button onClick={() => navigate('/reserveren')} className="btn-primary">
+            <button onClick={() => navigate('/reserveren')} className="btn-primary">
               {t.hero.cta}
-            </Button>
+            </button>
           </div>
         </div>
       </section>
