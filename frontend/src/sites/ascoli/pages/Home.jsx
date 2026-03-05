@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Hero from '../components/Hero';
 import FeatureCard from '../components/FeatureCard';
 import { ChevronRight } from 'lucide-react';
@@ -7,10 +7,48 @@ import { useLanguage } from '../context/LanguageContext';
 import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
 
+// SEO Configuration for L'Ascoli
+const SEO_CONFIG = {
+  siteName: "L'Ascoli Zaventem",
+  defaultImage: '/images/ascoli/gallery/img-5497_1_orig.jpg',
+  baseUrl: 'https://ascolizaventem.com',
+  title: "L'Ascoli | Italiaans Restaurant Zaventem",
+  description: "L'Ascoli in Zaventem - Verfijnd Italiaans restaurant met authentieke gerechten, verse pasta en uitstekende wijnen. Reserveer nu voor een culinaire ervaring.",
+  keywords: "Italiaans restaurant, Zaventem, L'Ascoli, pasta, Italiaanse keuken, fine dining, Brussel"
+};
+
 const Home = () => {
   const { currentLanguage } = useLanguage();
   const basePath = useBasePath();
   const t = allTranslations.home[currentLanguage] || allTranslations.home.nl;
+  
+  // SEO Effect
+  useEffect(() => {
+    document.title = SEO_CONFIG.title;
+    
+    const setMeta = (name, content, isProperty = false) => {
+      if (!content) return;
+      const attr = isProperty ? 'property' : 'name';
+      let meta = document.querySelector(`meta[${attr}="${name}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute(attr, name);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+    
+    setMeta('description', SEO_CONFIG.description);
+    setMeta('keywords', SEO_CONFIG.keywords);
+    setMeta('og:title', SEO_CONFIG.title, true);
+    setMeta('og:description', SEO_CONFIG.description, true);
+    setMeta('og:image', SEO_CONFIG.defaultImage, true);
+    setMeta('og:url', SEO_CONFIG.baseUrl, true);
+    setMeta('og:site_name', SEO_CONFIG.siteName, true);
+    setMeta('twitter:card', 'summary_large_image');
+    setMeta('twitter:title', SEO_CONFIG.title);
+    setMeta('twitter:description', SEO_CONFIG.description);
+  }, []);
   
   const features = [
     {

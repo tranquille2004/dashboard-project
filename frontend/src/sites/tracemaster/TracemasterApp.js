@@ -5,6 +5,16 @@ import { Menu, X, MapPin, Battery, Shield, Wifi, Clock, Phone, Mail, ChevronDown
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+// SEO Configuration for Tracemaster
+const SEO_CONFIG = {
+  siteName: 'Tracemaster GPS Trackers',
+  defaultImage: '/images/tracemaster/gps-tracker.png',
+  baseUrl: 'https://tracemaster.be',
+  title: 'Tracemaster | GPS Trackers voor Voertuigen en Assets',
+  description: 'Tracemaster GPS trackers - Betrouwbare GPS tracking oplossingen voor voertuigen, machines en waardevolle assets. Realtime locatie, geofencing en meer.',
+  keywords: 'GPS tracker, voertuig tracker, asset tracking, GPS locatie, geofencing, fleet management, Tracemaster'
+};
+
 // Scroll to top on route change
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -204,6 +214,34 @@ const Footer = () => (
 
 // Home Page
 const Home = () => {
+  // SEO Effect
+  useEffect(() => {
+    document.title = SEO_CONFIG.title;
+    
+    const setMeta = (name, content, isProperty = false) => {
+      if (!content) return;
+      const attr = isProperty ? 'property' : 'name';
+      let meta = document.querySelector(`meta[${attr}="${name}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute(attr, name);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+    
+    setMeta('description', SEO_CONFIG.description);
+    setMeta('keywords', SEO_CONFIG.keywords);
+    setMeta('og:title', SEO_CONFIG.title, true);
+    setMeta('og:description', SEO_CONFIG.description, true);
+    setMeta('og:image', SEO_CONFIG.defaultImage, true);
+    setMeta('og:url', SEO_CONFIG.baseUrl, true);
+    setMeta('og:site_name', SEO_CONFIG.siteName, true);
+    setMeta('twitter:card', 'summary_large_image');
+    setMeta('twitter:title', SEO_CONFIG.title);
+    setMeta('twitter:description', SEO_CONFIG.description);
+  }, []);
+  
   const features = [
     { icon: <Shield className="w-8 h-8" />, title: "Soporte rápido de expertos", desc: "Atención 24/7" },
     { icon: <Clock className="w-8 h-8" />, title: "Listo para usar", desc: "Sin configuración" },

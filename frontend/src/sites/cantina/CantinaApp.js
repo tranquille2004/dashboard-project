@@ -9,9 +9,44 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Clock, MapPin, Phone, Mail, Download, ChevronRight, Facebook } from 'lucide-react';
+import SEO from '@/components/SEO';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
+
+// SEO Configuration for La Cantina
+const SEO_CONFIG = {
+  siteName: 'La Cantina Italiana',
+  defaultImage: '/images/cantina/cantina-hero.jpg',
+  baseUrl: 'https://lacantinaitaliana.net',
+  pages: {
+    home: {
+      title: 'La Cantina Italiana | Authentiek Italiaans Restaurant Tervuren',
+      description: 'La Cantina Italiana in Tervuren - Authentieke Italiaanse keuken met verse pasta, pizza uit de houtoven en Italiaanse wijnen. Reserveer nu voor een onvergetelijke eetervaring.',
+      keywords: 'Italiaans restaurant, Tervuren, pasta, pizza, Italiaanse keuken, restaurant België, La Cantina'
+    },
+    menu: {
+      title: 'Menu | La Cantina Italiana Tervuren',
+      description: 'Bekijk onze menukaart met authentieke Italiaanse gerechten. Verse pasta, pizza uit de houtoven, antipasti en heerlijke desserts.',
+      keywords: 'Italiaans menu, pasta, pizza, antipasti, desserts, Tervuren'
+    },
+    groepmenus: {
+      title: 'Groepmenus | La Cantina Italiana Tervuren',
+      description: 'Speciale groepmenus voor feesten en evenementen. Menu 1 €45, Menu 2 €55, Menu 3 €65. Perfect voor groepen vanaf 10 personen.',
+      keywords: 'groepsmenu, feesten, evenementen, groepsarrangement, Italiaans restaurant'
+    },
+    reserveren: {
+      title: 'Reserveren | La Cantina Italiana Tervuren',
+      description: 'Reserveer uw tafel bij La Cantina Italiana. Online reserveren of bel +32 2 767 88 81.',
+      keywords: 'reserveren, tafel reserveren, restaurant reservatie, Tervuren'
+    },
+    info: {
+      title: 'Praktische Info | La Cantina Italiana Tervuren',
+      description: 'Openingstijden, adres en contactgegevens van La Cantina Italiana. Leuvensesteenweg 251, 3071 Tervuren.',
+      keywords: 'openingstijden, adres, contact, Tervuren, parking'
+    }
+  }
+};
 
 // Scroll to top component
 function ScrollToTop() {
@@ -151,6 +186,14 @@ function HomePage({ t }) {
 
   return (
     <div className="page home-page">
+      <SEO 
+        title={SEO_CONFIG.pages.home.title}
+        description={SEO_CONFIG.pages.home.description}
+        keywords={SEO_CONFIG.pages.home.keywords}
+        image={SEO_CONFIG.defaultImage}
+        url={SEO_CONFIG.baseUrl}
+        siteName={SEO_CONFIG.siteName}
+      />
       {/* Hero Section */}
       <section className="hero-section">
         <img src="/images/cantina/hero-background.jpg" alt="La Cantina Italiana" className="hero-background-image" />
@@ -279,6 +322,14 @@ function GroepmenusPage({ t }) {
 
   return (
     <div style={{ background: '#f5f2ed', minHeight: '100vh', paddingTop: '80px' }}>
+      <SEO 
+        title={SEO_CONFIG.pages.groepmenus.title}
+        description={SEO_CONFIG.pages.groepmenus.description}
+        keywords={SEO_CONFIG.pages.groepmenus.keywords}
+        image={SEO_CONFIG.defaultImage}
+        url={`${SEO_CONFIG.baseUrl}/groepmenus`}
+        siteName={SEO_CONFIG.siteName}
+      />
       <div className="page groepmenus-page">
         <div className="page-header">
           <h1 style={{ color: '#3d5a35' }}>{t.groupMenus.title}</h1>
@@ -679,6 +730,14 @@ function FotosPage({ t }) {
 function InfoPage({ t }) {
   return (
     <div className="page info-page">
+      <SEO 
+        title={SEO_CONFIG.pages.info.title}
+        description={SEO_CONFIG.pages.info.description}
+        keywords={SEO_CONFIG.pages.info.keywords}
+        image={SEO_CONFIG.defaultImage}
+        url={`${SEO_CONFIG.baseUrl}/info`}
+        siteName={SEO_CONFIG.siteName}
+      />
       <div className="page-header">
         <h1>{t.info.title}</h1>
         <div className="title-divider"></div>

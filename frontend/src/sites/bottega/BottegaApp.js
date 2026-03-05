@@ -4,11 +4,41 @@ import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom'
 import { Phone, Mail, MapPin, Clock, ChefHat, Utensils, Wine } from 'lucide-react';
 import { useLanguage, LanguageProvider } from './LanguageContext';
 import LanguageSwitcher from './components/LanguageSwitcher';
+import SEO from '@/components/SEO';
 
 // Bordeaux color from logo
 const BRAND_COLOR = '#7D3C32';
 // Achtergrondkleur voor alle paginas - warm beige
 const BG_COLOR = '#FAF6F1';
+
+// SEO Configuration for La Bottega
+const SEO_CONFIG = {
+  siteName: 'La Bottega Italiana Herent',
+  defaultImage: '/images/bottega/gallery/bottega-exterior.jpg',
+  baseUrl: 'https://labottegaherent.be',
+  pages: {
+    home: {
+      title: 'La Bottega Italiana | Italiaans Restaurant Herent',
+      description: 'La Bottega Italiana in Herent - Gezellig Italiaans restaurant met authentieke gerechten, verse pasta en pizza. Afhalen mogelijk. Reserveer nu!',
+      keywords: 'Italiaans restaurant, Herent, pasta, pizza, afhalen, La Bottega, Italiaanse keuken'
+    },
+    kaart: {
+      title: 'Menu | La Bottega Italiana Herent',
+      description: 'Bekijk onze menukaart met verse Italiaanse gerechten. Pasta, pizza, antipasti en meer. Ook voor afhaal beschikbaar.',
+      keywords: 'menu, kaart, pasta, pizza, Italiaans, Herent, afhalen'
+    },
+    groepmenus: {
+      title: 'Groepmenus | La Bottega Italiana Herent',
+      description: 'Speciale menu\'s voor groepen en feesten. Ideaal voor verjaardagen, familiebijeenkomsten en bedrijfsevenementen.',
+      keywords: 'groepsmenu, feesten, groepen, evenementen, Herent'
+    },
+    reserveren: {
+      title: 'Reserveren | La Bottega Italiana Herent',
+      description: 'Reserveer uw tafel bij La Bottega Italiana Herent. Online reserveren of telefonisch.',
+      keywords: 'reserveren, tafel, restaurant, Herent'
+    }
+  }
+};
 
 // ScrollToTop component - scrolls to top on route change
 function ScrollToTop() {
@@ -214,6 +244,14 @@ function HomePage() {
 
   return (
     <div className="min-h-screen bg-[#FAF6F1]">
+      <SEO 
+        title={SEO_CONFIG.pages.home.title}
+        description={SEO_CONFIG.pages.home.description}
+        keywords={SEO_CONFIG.pages.home.keywords}
+        image={SEO_CONFIG.defaultImage}
+        url={SEO_CONFIG.baseUrl}
+        siteName={SEO_CONFIG.siteName}
+      />
       <Navigation activeSection={activeSection} scrollToSection={scrollToSection} />
 
       {/* Hero Section */}

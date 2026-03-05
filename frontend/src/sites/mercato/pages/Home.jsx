@@ -5,6 +5,16 @@ import { useBasePath } from '../contexts/BasePathContext';
 import { translations } from '../data/translations';
 import { ChevronRight, UtensilsCrossed } from 'lucide-react';
 
+// SEO Configuration for Ristorante Mercato
+const SEO_CONFIG = {
+  siteName: 'Ristorante Pizzeria Mercato',
+  defaultImage: '/images/mercato/home/hero.jpg',
+  baseUrl: 'https://ristorantemercato.be',
+  title: 'Ristorante Pizzeria Mercato | Italiaans Restaurant',
+  description: 'Ristorante Pizzeria Mercato - Authentiek Italiaans restaurant met verse pizza uit de houtoven, pasta en Italiaanse specialiteiten. Reserveer nu!',
+  keywords: 'Italiaans restaurant, pizzeria, Mercato, pizza, pasta, Italiaanse keuken, houtoven pizza'
+};
+
 const Home = () => {
   const { language } = useLanguage();
   const basePath = useBasePath();
@@ -15,6 +25,34 @@ const Home = () => {
     const handleScroll = () => setScrollY(window.scrollY);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+  
+  // SEO Effect
+  useEffect(() => {
+    document.title = SEO_CONFIG.title;
+    
+    const setMeta = (name, content, isProperty = false) => {
+      if (!content) return;
+      const attr = isProperty ? 'property' : 'name';
+      let meta = document.querySelector(`meta[${attr}="${name}"]`);
+      if (!meta) {
+        meta = document.createElement('meta');
+        meta.setAttribute(attr, name);
+        document.head.appendChild(meta);
+      }
+      meta.setAttribute('content', content);
+    };
+    
+    setMeta('description', SEO_CONFIG.description);
+    setMeta('keywords', SEO_CONFIG.keywords);
+    setMeta('og:title', SEO_CONFIG.title, true);
+    setMeta('og:description', SEO_CONFIG.description, true);
+    setMeta('og:image', SEO_CONFIG.defaultImage, true);
+    setMeta('og:url', SEO_CONFIG.baseUrl, true);
+    setMeta('og:site_name', SEO_CONFIG.siteName, true);
+    setMeta('twitter:card', 'summary_large_image');
+    setMeta('twitter:title', SEO_CONFIG.title);
+    setMeta('twitter:description', SEO_CONFIG.description);
   }, []);
 
   return (
