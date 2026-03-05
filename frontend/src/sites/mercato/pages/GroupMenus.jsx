@@ -177,7 +177,7 @@ const GroupMenus = () => {
               style={{ animationDelay: `${idx * 0.2}s` }}
             >
               {/* Menu Header */}
-              <div className="bg-black/60 backdrop-blur-sm p-6 border-b border-gold/20">
+              <div className="bg-black/60 backdrop-blur-sm p-6 border-b border-gold/20 text-center">
                 <h2 className="text-3xl font-bold text-gold mb-2">{menu.name}</h2>
                 <p className="text-4xl font-bold text-white">{menu.price}</p>
               </div>
