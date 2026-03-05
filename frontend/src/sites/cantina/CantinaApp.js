@@ -278,12 +278,12 @@ function GroepmenusPage({ t }) {
   const navigate = useNavigate();
 
   return (
-    <div style={{ background: '#f8f5f0', minHeight: '100vh', paddingTop: '80px' }}>
+    <div style={{ background: '#f5f2ed', minHeight: '100vh', paddingTop: '80px' }}>
       <div className="page groepmenus-page">
         <div className="page-header">
-          <h1 style={{ color: '#2d5a3d' }}>{t.groupMenus.title}</h1>
-          <p className="group-top-note" style={{ color: '#555' }}>{t.groupMenus.topNote}</p>
-          <div className="title-divider" style={{ background: '#4A7C59' }}></div>
+          <h1 style={{ color: '#3d5a35' }}>{t.groupMenus.title}</h1>
+          <p className="group-top-note" style={{ color: '#6a6a6a' }}>{t.groupMenus.topNote}</p>
+          <div className="title-divider" style={{ background: '#7a8a72' }}></div>
         </div>
 
       <div className="groepmenus-actions">

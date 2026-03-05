@@ -783,35 +783,36 @@ main {
   gap: 2rem;
 }
 
-/* Menu 1 - Groen */
+/* Menu Cards - Elegant & Subtiel */
 .group-menu-card {
-  background: #ffffff;
-  border: 3px solid #4A7C59;
-  border-radius: 12px;
+  background: #faf8f5;
+  border: 1px solid #d4c5b0;
+  border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .group-menu-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Menu 2 - Bordeaux */
+/* Menu 2 - Iets donkerder accent */
 .group-menu-card.featured {
-  border-color: #8B3A3A;
-  background: #ffffff;
+  border-color: #c4b5a0;
+  background: #faf8f5;
 }
 
-/* Menu 3 - Goud/Bronze */
+/* Menu 3 - Premium accent */
 .group-menu-card.premium {
-  border-color: #B8860B;
-  background: #ffffff;
+  border-color: #b8a080;
+  background: #faf8f5;
 }
 
-/* Menu 1 Header - Groen */
+/* Alle headers dezelfde elegante stijl */
 .menu-header {
-  background: linear-gradient(135deg, #4A7C59 0%, #3d6b4a 100%);
+  background: linear-gradient(135deg, #4a6741 0%, #5a7751 100%);
   padding: 1.5rem;
   text-align: center;
   color: white;
@@ -821,31 +822,32 @@ main {
   gap: 0.5rem;
 }
 
-/* Menu 2 Header - Bordeaux */
+/* Menu 2 Header - Iets andere tint groen */
 .group-menu-card.featured .menu-header {
-  background: linear-gradient(135deg, #8B3A3A 0%, #722f2f 100%);
+  background: linear-gradient(135deg, #3d5a35 0%, #4d6a45 100%);
 }
 
-/* Menu 3 Header - Goud */
+/* Menu 3 Header - Donkerste groen */
 .group-menu-card.premium .menu-header {
-  background: linear-gradient(135deg, #B8860B 0%, #9a7209 100%);
+  background: linear-gradient(135deg, #2d4a25 0%, #3d5a35 100%);
 }
 
 .menu-header h2 {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   margin: 0;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .menu-price {
-  font-size: 2.2rem;
+  font-size: 2rem;
   font-weight: 700;
 }
 
 .menu-items {
   padding: 1.5rem 1.5rem;
   text-align: center;
-  background: #ffffff;
+  background: #faf8f5;
 }
 
 .menu-item {
@@ -857,18 +859,18 @@ main {
 }
 
 .menu-item h4 {
-  color: #1a472a;
-  font-size: 1.15rem;
+  color: #3d5a35;
+  font-size: 1.1rem;
   margin-bottom: 0.4rem;
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1.3;
   display: block;
   width: 100%;
 }
 
 .item-description {
-  color: #333333;
-  font-size: 0.9rem;
+  color: #5a5a5a;
+  font-size: 0.85rem;
   line-height: 1.4;
   margin: 0;
   display: block;
@@ -877,39 +879,39 @@ main {
 
 .menu-divider {
   text-align: center;
-  color: #2d5a3d;
-  font-weight: 700;
+  color: #7a8a72;
+  font-weight: 600;
   margin: 0.5rem 0;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   border: none;
   background: none;
 }
 
 .course-divider {
-  height: 3px;
-  background: #2d5a3d;
+  height: 1px;
+  background: #d4c5b0;
   margin: 1.2rem 0;
 }
 
 .course-label, .dessert-label {
   font-style: italic;
-  color: #1a472a;
-  font-weight: 700;
-  font-size: 1.1rem;
+  color: #3d5a35;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 .aperitivo {
   text-align: center;
   padding: 0.8rem;
-  background: #e8f0ea;
-  border-radius: 8px;
+  background: #f0ebe3;
+  border-radius: 6px;
   margin-bottom: 1.2rem;
-  border: 1px solid #2d5a3d;
+  border: 1px solid #d4c5b0;
 }
 
 .wine-note {
-  color: #444444;
-  font-size: 0.85rem;
+  color: #6a6a6a;
+  font-size: 0.8rem;
   font-style: italic;
   margin-top: 0.3rem;
 }
