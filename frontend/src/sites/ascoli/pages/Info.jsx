@@ -94,31 +94,6 @@ const Info = () => {
         </div>
       </section>
 
-      {/* Special Notice */}
-      <section className="py-16 bg-gray-900">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <div className="bg-[#6b1f1f]/10 border border-[#6b1f1f] rounded-sm p-8">
-              <h3 className="text-2xl font-serif text-[#6b1f1f] mb-4">
-                {t.importantNotice}
-              </h3>
-              <p className="text-white text-lg mb-4">
-                <strong>{t.closedPeriod}</strong>
-              </p>
-              <p className="text-white text-lg" style={{ whiteSpace: 'pre-line' }}>
-                {t.closedDates}
-              </p>
-              <div className="mt-6 pt-6 border-t border-[#6b1f1f]/30">
-                <p className="text-gray-300" style={{ whiteSpace: 'pre-line' }}>
-                  <strong>{t.closedPeriodFR}</strong><br />
-                  {t.closedDatesFR}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Takeaway Notice */}
       <section className="py-16 bg-[#2a2a2a]">
         <div className="container mx-auto px-4 text-center">
