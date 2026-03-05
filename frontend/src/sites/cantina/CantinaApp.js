@@ -164,9 +164,6 @@ function HomePage({ t }) {
             </Button>
           </div>
         </div>
-        <div className="hero-announcement">
-          <p>{t.hero.announcement}</p>
-        </div>
       </section>
 
       {/* About Preview */}
@@ -534,7 +531,6 @@ function ReserverenPage({ t }) {
 
       <div className="reserve-content">
         <div className="jotform-announcement">
-          <p><strong>{t.reservation.announcement}</strong></p>
           <p>{t.reservation.info}</p>
         </div>
 
@@ -756,10 +752,6 @@ function InfoPage({ t }) {
 
             <p className="hours-note">{t.contact.hoursNote}</p>
 
-            <div className="closure-notice">
-              <h4>Sluitingsdagen</h4>
-              <p>Voor het einde van het jaar zijn wij gesloten op: 24,25 december en 31 december en 1 januari 2026. Open weer vanaf 2 januari 2026.</p>
-            </div>
           </div>
         </div>
 

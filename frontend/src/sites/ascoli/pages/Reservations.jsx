@@ -39,14 +39,6 @@ const Reservations = () => {
       <section className="py-16 bg-[#1a1a1a]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            {/* Important Notice */}
-            <div className="bg-[#8B4513]/20 border-2 border-[#D4A574] rounded-lg p-8 mb-12">
-              <p className="text-[#D4A574] text-lg text-center font-semibold">
-                <strong>{t.closedNotice}</strong><br />
-                <span className="text-white">{t.closedDates}</span>
-              </p>
-            </div>
-
             {/* Reservation Instructions */}
             <div className="bg-[#2a2a2a] border border-[#D4A574]/30 rounded-lg p-8 mb-12">
               <div className="prose prose-invert max-w-none">

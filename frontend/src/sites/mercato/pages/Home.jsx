@@ -74,15 +74,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Notice Section */}
-      <section className="bg-gradient-to-r from-gold/10 via-gold/5 to-gold/10 py-6 border-y border-gold/20">
-        <div className="max-w-7xl mx-auto px-4 text-center">
-          <p className="text-white text-sm md:text-base">
-            {t.home.closedNotice[language]}
-          </p>
-        </div>
-      </section>
-
       {/* Welcome Section */}
       <section className="py-24 bg-black">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -141,34 +132,33 @@ const Home = () => {
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
-                img: '/images/home/quality.jpg',
-                title: { nl: 'Italiaanse Kwaliteit', fr: 'Qualité Italienne' },
-                desc: { nl: 'Authentieke Italiaanse ingrediënten', fr: 'Ingrédients italiens authentiques' }
+                img: '/images/mercato/menu/dish1.jpg',
+                title: { nl: 'Italiaanse Kwaliteit', fr: 'Qualité Italienne', en: 'Italian Quality', es: 'Calidad Italiana', de: 'Italienische Qualität', it: 'Qualità Italiana' },
+                desc: { nl: 'Authentieke Italiaanse ingrediënten', fr: 'Ingrédients italiens authentiques', en: 'Authentic Italian ingredients', es: 'Ingredientes italianos auténticos', de: 'Authentische italienische Zutaten', it: 'Ingredienti italiani autentici' }
               },
               {
-                img: '/images/home/fresh.jpg',
-                title: { nl: 'Verse Bereiding', fr: 'Préparation Fraîche' },
-                desc: { nl: 'Dagelijks vers bereid', fr: 'Préparé frais quotidiennement' }
+                img: '/images/mercato/menu/pizza.jpg',
+                title: { nl: 'Verse Bereiding', fr: 'Préparation Fraîche', en: 'Fresh Preparation', es: 'Preparación Fresca', de: 'Frische Zubereitung', it: 'Preparazione Fresca' },
+                desc: { nl: 'Dagelijks vers bereid', fr: 'Préparé frais quotidiennement', en: 'Freshly prepared daily', es: 'Preparado fresco diariamente', de: 'Täglich frisch zubereitet', it: 'Preparato fresco ogni giorno' }
               },
               {
-                img: '/images/home/ambiance.jpg',
-                title: { nl: 'Elegante Ambiance', fr: 'Ambiance Élégante' },
-                desc: { nl: 'Verfijnde eetervaring', fr: 'Expérience culinaire raffinée' }
+                img: '/images/mercato/home/ambiance.jpg',
+                title: { nl: 'Elegante Ambiance', fr: 'Ambiance Élégante', en: 'Elegant Ambiance', es: 'Ambiente Elegante', de: 'Elegantes Ambiente', it: 'Ambiente Elegante' },
+                desc: { nl: 'Verfijnde eetervaring', fr: 'Expérience culinaire raffinée', en: 'Refined dining experience', es: 'Experiencia gastronómica refinada', de: 'Raffiniertes Speiseerlebnis', it: 'Esperienza culinaria raffinata' }
               }
             ].map((feature, idx) => (
               <div key={idx} className="group relative overflow-hidden rounded-lg shadow-xl hover:shadow-2xl transition-all duration-300 animate-fade-in" style={{ animationDelay: `${idx * 0.2}s` }}>
-                <div className="aspect-w-16 aspect-h-12">
+                <div className="relative h-64">
                   <img
                     src={feature.img}
-                    alt={feature.title[language]}
-                    className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-500"
-                    loading="lazy"
+                    alt={feature.title[language] || feature.title.nl}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
                 </div>
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h3 className="text-2xl font-bold text-gold mb-2">{feature.title[language]}</h3>
-                  <p className="text-gray-300">{feature.desc[language]}</p>
+                  <h3 className="text-2xl font-bold text-gold mb-2">{feature.title[language] || feature.title.nl}</h3>
+                  <p className="text-gray-300">{feature.desc[language] || feature.desc.nl}</p>
                 </div>
               </div>
             ))}

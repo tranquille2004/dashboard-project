@@ -237,14 +237,6 @@ function HomePage() {
       </section>
 
       {/* Holiday Closure Notice */}
-      <div className="bg-[#FFF4E6] border-l-4 border-[#7D3C32] py-6 px-4">
-        <div className="max-w-7xl mx-auto">
-          <p className="text-center text-[#7D3C32] font-medium" data-testid="closure-notice">
-            <span className="font-bold">{t('letOp')}</span> {t('closureNotice')}
-          </p>
-        </div>
-      </div>
-
       {/* About Section */}
       <section id="about" className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
@@ -527,12 +519,6 @@ function ReserverenPage() {
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">{t('reservePageTitle')}</h1>
             <p className="text-lg text-gray-600">{t('reservePageSubtitle')}</p>
           </div>
-          
-          <div className="bg-[#FFF4E6] border-l-4 border-[#7D3C32] p-6 mb-8 rounded">
-            <p className="text-[#7D3C32] font-medium">
-              <span className="font-bold">{t('letOp')}</span> {t('closureNotice')}
-            </p>
-          </div>
 
           <div className="bg-white rounded-lg shadow-xl p-4 md:p-8">
             <iframe
@@ -572,9 +558,6 @@ function AfhalenPage() {
           </div>
           
           <div className="bg-[#FFF4E6] border-l-4 border-[#7D3C32] p-6 mb-8 rounded">
-            <p className="text-[#7D3C32] font-medium mb-2">
-              <span className="font-bold">{t('letOp')}</span> {t('closureNotice')}
-            </p>
             <p className="text-[#7D3C32] font-medium">
               <span className="font-bold">Pizza's</span> alleen beschikbaar in de avonden!
             </p>
