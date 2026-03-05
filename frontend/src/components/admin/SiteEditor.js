@@ -290,7 +290,7 @@ const SiteEditor = () => {
                         type="text"
                         value={site.name}
                         onChange={(e) => setSite({ ...site, name: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       />
                     </div>
                     <div>
@@ -299,7 +299,7 @@ const SiteEditor = () => {
                         type="text"
                         value={site.slug}
                         onChange={(e) => setSite({ ...site, slug: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       />
                     </div>
                   </div>
@@ -309,7 +309,7 @@ const SiteEditor = () => {
                     <textarea
                       value={site.domains?.join('\n') || ''}
                       onChange={(e) => setSite({ ...site, domains: e.target.value.split('\n').filter(d => d.trim()) })}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2 h-24"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 h-24 text-gray-900 bg-white"
                       placeholder="lacantinaitaliana.net&#10;www.lacantinaitaliana.net"
                     />
                   </div>
@@ -328,7 +328,7 @@ const SiteEditor = () => {
                           type="text"
                           value={config?.primary_color || '#7D3C32'}
                           onChange={(e) => setConfig({ ...config, primary_color: e.target.value })}
-                          className="flex-1 border border-gray-300 rounded-lg px-3 py-2"
+                          className="flex-1 border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                         />
                       </div>
                     </div>
@@ -338,7 +338,7 @@ const SiteEditor = () => {
                         type="text"
                         value={config?.logo_url || ''}
                         onChange={(e) => setConfig({ ...config, logo_url: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                         placeholder="https://..."
                       />
                     </div>
@@ -350,7 +350,7 @@ const SiteEditor = () => {
                       type="text"
                       value={config?.reservation_form_url || ''}
                       onChange={(e) => setConfig({ ...config, reservation_form_url: e.target.value })}
-                      className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       placeholder="https://form.jotform.com/..."
                     />
                   </div>
@@ -392,7 +392,7 @@ const SiteEditor = () => {
                         type="text"
                         value={config?.address || ''}
                         onChange={(e) => setConfig({ ...config, address: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       />
                     </div>
                     <div>
@@ -403,7 +403,7 @@ const SiteEditor = () => {
                         type="text"
                         value={config?.phone || ''}
                         onChange={(e) => setConfig({ ...config, phone: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       />
                     </div>
                   </div>
@@ -417,7 +417,7 @@ const SiteEditor = () => {
                         type="email"
                         value={config?.email || ''}
                         onChange={(e) => setConfig({ ...config, email: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       />
                     </div>
                     <div>
@@ -426,7 +426,7 @@ const SiteEditor = () => {
                         type="text"
                         value={config?.btw_number || ''}
                         onChange={(e) => setConfig({ ...config, btw_number: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       />
                     </div>
                   </div>
@@ -440,7 +440,7 @@ const SiteEditor = () => {
                         type="text"
                         value={config?.facebook_url || ''}
                         onChange={(e) => setConfig({ ...config, facebook_url: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       />
                     </div>
                     <div>
@@ -451,7 +451,7 @@ const SiteEditor = () => {
                         type="text"
                         value={config?.instagram_url || ''}
                         onChange={(e) => setConfig({ ...config, instagram_url: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       />
                     </div>
                   </div>
@@ -705,7 +705,7 @@ const SiteEditor = () => {
                   type="text"
                   value={newAdmin.name}
                   onChange={(e) => setNewAdmin({ ...newAdmin, name: e.target.value })}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                   placeholder="Naam van de klant"
                   data-testid="new-admin-name"
                 />
@@ -716,7 +716,7 @@ const SiteEditor = () => {
                   type="email"
                   value={newAdmin.email}
                   onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                   placeholder="klant@email.be"
                   data-testid="new-admin-email"
                 />
@@ -727,7 +727,7 @@ const SiteEditor = () => {
                   type="password"
                   value={newAdmin.password}
                   onChange={(e) => setNewAdmin({ ...newAdmin, password: e.target.value })}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                   placeholder="Kies een wachtwoord"
                   data-testid="new-admin-password"
                 />

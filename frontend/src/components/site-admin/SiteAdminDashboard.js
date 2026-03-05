@@ -240,7 +240,7 @@ const SiteAdminDashboard = () => {
                       <textarea
                         value={config?.closure_notice || ''}
                         onChange={(e) => setConfig({ ...config, closure_notice: e.target.value })}
-                        className="w-full border border-gray-300 rounded-lg px-4 py-3 h-24"
+                        className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white h-24"
                         placeholder="Bijv: Wij zijn gesloten van 24-26 december..."
                       />
                       <button
@@ -291,7 +291,7 @@ const SiteAdminDashboard = () => {
                           setConfig({ ...config, opening_hours: hours });
                         } catch (err) {}
                       }}
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 h-48 font-mono text-sm"
+                      className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white h-48 font-mono text-sm"
                     />
                   </div>
                 </div>
@@ -326,7 +326,7 @@ const SiteAdminDashboard = () => {
                               <select
                                 value={item.category}
                                 onChange={(e) => updateMenuItem(item.item_id, { category: e.target.value })}
-                                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm"
+                                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm text-gray-900 bg-white"
                               >
                                 <option value="antipasti">Antipasti</option>
                                 <option value="primi">Primi</option>
@@ -343,7 +343,7 @@ const SiteAdminDashboard = () => {
                                 type="text"
                                 value={item.name_nl}
                                 onChange={(e) => updateMenuItem(item.item_id, { name_nl: e.target.value })}
-                                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm"
+                                className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm text-gray-900 bg-white"
                               />
                             </div>
                             <div className="flex items-end space-x-2">
@@ -354,7 +354,7 @@ const SiteAdminDashboard = () => {
                                   step="0.50"
                                   value={item.price}
                                   onChange={(e) => updateMenuItem(item.item_id, { price: parseFloat(e.target.value) })}
-                                  className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm"
+                                  className="w-full border border-gray-300 rounded px-2 py-1.5 text-sm text-gray-900 bg-white"
                                   disabled={!permissions.menu_prices}
                                 />
                               </div>
