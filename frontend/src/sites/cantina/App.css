@@ -244,16 +244,18 @@ main {
 
 .hero-title {
   font-size: 4.5rem;
-  color: var(--cantina-light-green);
+  color: #ffffff;
   margin-bottom: 1.5rem;
   font-weight: 700;
   line-height: 1.2;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
 }
 
 .hero-subtitle {
   font-size: 1.8rem;
-  color: var(--cantina-text);
+  color: #ffffff;
   margin-bottom: 2.5rem;
+  text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
 }
 
 .hero-buttons {
