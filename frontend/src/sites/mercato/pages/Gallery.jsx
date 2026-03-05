@@ -14,7 +14,7 @@ const Gallery = () => {
     const num = (i + 1).toString().padStart(2, '0');
     const ext = [1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,46].includes(i+1) ? 'jpg' : 
                 [7,30,31,32,33,34,35,36,37,38,39,40,41].includes(i+1) ? 'jpeg' : 'webp';
-    return `/images/gallery/gallery-${num}.${ext}`;
+    return `/images/mercato/gallery/gallery-${num}.${ext}`;
   }).filter((_, index) => index !== 48 && index !== 52); // Verwijder foto 49 en 53
 
   const openLightbox = (index) => {
@@ -67,9 +67,6 @@ const Gallery = () => {
                 src={img}
                 alt={`Gallery ${idx + 1}`}
                 className="w-full h-72 object-cover group-hover:scale-110 transition-transform duration-500"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-                crossOrigin="anonymous"
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
                 <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-lg font-semibold">
@@ -116,8 +113,6 @@ const Gallery = () => {
               alt={`Gallery ${selectedImage + 1}`}
               className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
-              referrerPolicy="no-referrer"
-              crossOrigin="anonymous"
             />
             
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-white text-sm">
