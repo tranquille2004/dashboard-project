@@ -80,7 +80,7 @@ main {
 }
 
 .nav-link {
-  color: var(--cantina-text);
+  color: #ffffff;
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 400;
