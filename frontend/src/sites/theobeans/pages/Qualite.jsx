@@ -51,7 +51,7 @@ const Qualite = () => {
                 src="/images/gallery/photo10.jpg"
                 alt="Cacao process"
                 className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
-                loading="lazy"
+                loading="lazy" style={{ opacity: 1 }}
               />
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
@@ -59,7 +59,7 @@ const Qualite = () => {
                 src="/images/gallery/photo12.jpg"
                 alt="Cacao quality"
                 className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
-                loading="lazy"
+                loading="lazy" style={{ opacity: 1 }}
               />
             </div>
           </div>

@@ -128,9 +128,9 @@ const Varietes = () => {
 
           {/* Image Gallery */}
           <div className="grid md:grid-cols-3 gap-4 mt-12">
-            <img src="/images/gallery/photo8.jpg" alt="Cacao" className="w-full h-48 object-cover rounded-lg shadow-md" loading="lazy" />
-            <img src="/images/gallery/photo9.jpg" alt="Cacao" className="w-full h-48 object-cover rounded-lg shadow-md" loading="lazy" />
-            <img src="/images/gallery/photo13.jpg" alt="Cacao" className="w-full h-48 object-cover rounded-lg shadow-md" loading="lazy" />
+            <img src="/images/gallery/photo8.jpg" alt="Cacao" className="w-full h-48 object-cover rounded-lg shadow-md" loading="lazy" style={{ opacity: 1 }} />
+            <img src="/images/gallery/photo9.jpg" alt="Cacao" className="w-full h-48 object-cover rounded-lg shadow-md" loading="lazy" style={{ opacity: 1 }} />
+            <img src="/images/gallery/photo13.jpg" alt="Cacao" className="w-full h-48 object-cover rounded-lg shadow-md" loading="lazy" style={{ opacity: 1 }} />
           </div>
         </div>
       </section>

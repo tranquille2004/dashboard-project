@@ -200,7 +200,7 @@ const Contact = () => {
                       src={img}
                       alt={`Contact ${index + 1}`}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                      loading="lazy"
+                      loading="lazy" style={{ opacity: 1 }}
                     />
                   </div>
                 ))}

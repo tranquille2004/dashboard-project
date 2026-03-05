@@ -62,7 +62,7 @@ const Tracabilite = () => {
               src="/images/gallery/photo14.jpg"
               alt="Cacao traceability"
               className="w-full h-96 object-cover"
-              loading="lazy"
+              loading="lazy" style={{ opacity: 1 }}
             />
           </div>
         </div>
