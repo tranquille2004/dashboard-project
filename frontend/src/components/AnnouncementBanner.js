@@ -63,27 +63,28 @@ const AnnouncementBanner = ({
       style={{
         background: currentStyle.background,
         color: currentStyle.textColor,
-        padding: '14px 20px',
+        padding: '20px 30px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: '12px',
+        gap: '15px',
         position: 'relative',
-        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
-        zIndex: 50
+        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
+        zIndex: 9999,
+        minHeight: '60px'
       }}
       data-testid="announcement-banner"
     >
       <IconComponent 
-        size={20} 
+        size={28} 
         style={{ flexShrink: 0 }}
         data-testid="announcement-icon"
       />
       <p 
         style={{
           margin: 0,
-          fontSize: '15px',
-          fontWeight: 500,
+          fontSize: '18px',
+          fontWeight: 600,
           textAlign: 'center',
           lineHeight: 1.5
         }}
