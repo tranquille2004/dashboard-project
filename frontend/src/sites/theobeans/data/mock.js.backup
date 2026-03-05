@@ -1,0 +1,328 @@
+// Language translations
+export const translations = {
+  fr: {
+    nav: {
+      accueil: "ACCUEIL",
+      photos: "PHOTOS",
+      objectif: "OBJECTIF",
+      varietes: "VARIÉTÉS",
+      qualite: "CONTROL DE QUALITÉ",
+      tracabilite: "TRAÇABILITÉ",
+      contact: "CONTACT"
+    },
+    footer: {
+      rights: "Tous droits réservés",
+      webmasterText: "Vous voyez une erreur sur ce site? Ou vous cherchez un site web professionnel? Contactez le webmaster via WhatsApp.",
+      webmaster: "Webmaster"
+    },
+    home: {
+      founder: "Fondatrice",
+      founderStory: "L'amour pour le cacao et le savoir-faire viennent de mon enfance. J'ai eu la chance de grandir entouré d'une nature très riche et diverse, à côté des gens qui partageaient leurs savoir-faire et toute leur connaissance du cacao avec passion et amour. C'est avec le même amour pour le cacao que j'ai transformé ma passion en mon métier, en créant l'entreprise Theo Beans."
+    },
+    photos: {
+      title: "PHOTOS"
+    },
+    contact: {
+      title: "CONTACT",
+      firstName: "Prénom",
+      lastName: "Nom",
+      email: "E-mail",
+      phone: "Téléphone",
+      message: "Message",
+      send: "Envoyer",
+      sending: "Envoi en cours...",
+      success: "Message envoyé!",
+      successDesc: "Merci pour votre message. Nous vous contacterons bientôt.",
+      error: "Erreur",
+      errorDesc: "Une erreur s'est produite. Veuillez réessayer.",
+      address: "Adresse",
+      facebook: "Facebook"
+    }
+  },
+  nl: {
+    nav: {
+      accueil: "HOME",
+      photos: "FOTO'S",
+      objectif: "DOELSTELLING",
+      varietes: "VARIËTEITEN",
+      qualite: "KWALITEITSCONTROLE",
+      tracabilite: "TRACEERBAARHEID",
+      contact: "CONTACT"
+    },
+    footer: {
+      rights: "Alle rechten voorbehouden",
+      webmasterText: "Ziet u een fout op deze site? Of zoekt u een professionele website? Contacteer de webmaster via WhatsApp.",
+      webmaster: "Webmaster"
+    },
+    home: {
+      founder: "Oprichtster",
+      founderStory: "De liefde voor cacao en de knowhow komen uit mijn kindertijd. Ik had het geluk op te groeien omringd door een zeer rijke en diverse natuur, naast mensen die hun knowhow en al hun kennis van cacao met passie en liefde deelden. Het is met diezelfde liefde voor cacao dat ik mijn passie in mijn beroep heb omgezet, door het bedrijf Theo Beans op te richten."
+    },
+    photos: {
+      title: "FOTO'S"
+    },
+    contact: {
+      title: "CONTACT",
+      firstName: "Voornaam",
+      lastName: "Achternaam",
+      email: "E-mail",
+      phone: "Telefoon",
+      message: "Bericht",
+      send: "Verzenden",
+      sending: "Verzenden...",
+      success: "Bericht verzonden!",
+      successDesc: "Bedankt voor uw bericht. We nemen binnenkort contact met u op.",
+      error: "Fout",
+      errorDesc: "Er is een fout opgetreden. Probeer het opnieuw.",
+      address: "Adres",
+      facebook: "Facebook"
+    }
+  },
+  en: {
+    nav: {
+      accueil: "HOME",
+      photos: "PHOTOS",
+      objectif: "OBJECTIVE",
+      varietes: "VARIETIES",
+      qualite: "QUALITY CONTROL",
+      tracabilite: "TRACEABILITY",
+      contact: "CONTACT"
+    },
+    footer: {
+      rights: "All rights reserved",
+      webmasterText: "Do you see an error on this site? Or are you looking for a professional website? Contact the webmaster via WhatsApp.",
+      webmaster: "Webmaster"
+    },
+    home: {
+      founder: "Founder",
+      founderStory: "The love for cocoa and the know-how come from my childhood. I was lucky enough to grow up surrounded by a very rich and diverse nature, alongside people who shared their know-how and all their knowledge of cocoa with passion and love. It is with the same love for cocoa that I transformed my passion into my profession, by creating the company Theo Beans."
+    },
+    photos: {
+      title: "PHOTOS"
+    },
+    contact: {
+      title: "CONTACT",
+      firstName: "First name",
+      lastName: "Last name",
+      email: "Email",
+      phone: "Phone",
+      message: "Message",
+      send: "Send",
+      sending: "Sending...",
+      success: "Message sent!",
+      successDesc: "Thank you for your message. We will contact you soon.",
+      error: "Error",
+      errorDesc: "An error occurred. Please try again.",
+      address: "Address",
+      facebook: "Facebook"
+    }
+  },
+  es: {
+    nav: {
+      accueil: "INICIO",
+      photos: "FOTOS",
+      objectif: "OBJETIVO",
+      varietes: "VARIEDADES",
+      qualite: "CONTROL DE CALIDAD",
+      tracabilite: "TRAZABILIDAD",
+      contact: "CONTACTO"
+    },
+    footer: {
+      rights: "Todos los derechos reservados",
+      webmasterText: "¿Ve un error en este sitio? ¿O busca un sitio web profesional? Contacte al webmaster vía WhatsApp.",
+      webmaster: "Webmaster"
+    },
+    home: {
+      founder: "Fundadora",
+      founderStory: "El amor por el cacao y el saber hacer vienen de mi infancia. Tuve la suerte de crecer rodeada de una naturaleza muy rica y diversa, junto a personas que compartían su saber hacer y todo su conocimiento del cacao con pasión y amor. Es con el mismo amor por el cacao que transformé mi pasión en mi profesión, creando la empresa Theo Beans."
+    },
+    photos: {
+      title: "FOTOS"
+    },
+    contact: {
+      title: "CONTACTO",
+      firstName: "Nombre",
+      lastName: "Apellido",
+      email: "Correo electrónico",
+      phone: "Teléfono",
+      message: "Mensaje",
+      send: "Enviar",
+      sending: "Enviando...",
+      success: "¡Mensaje enviado!",
+      successDesc: "Gracias por su mensaje. Nos pondremos en contacto pronto.",
+      error: "Error",
+      errorDesc: "Ocurrió un error. Inténtelo de nuevo.",
+      address: "Dirección",
+      facebook: "Facebook"
+    }
+  },
+  it: {
+    nav: {
+      accueil: "HOME",
+      photos: "FOTO",
+      objectif: "OBIETTIVO",
+      varietes: "VARIETÀ",
+      qualite: "CONTROLLO QUALITÀ",
+      tracabilite: "TRACCIABILITÀ",
+      contact: "CONTATTO"
+    },
+    footer: {
+      rights: "Tutti i diritti riservati",
+      webmasterText: "Vedi un errore su questo sito? O cerchi un sito web professionale? Contatta il webmaster via WhatsApp.",
+      webmaster: "Webmaster"
+    },
+    home: {
+      founder: "Fondatrice",
+      founderStory: "L'amore per il cacao e il know-how vengono dalla mia infanzia. Ho avuto la fortuna di crescere circondata da una natura molto ricca e diversificata, accanto a persone che condividevano il loro know-how e tutta la loro conoscenza del cacao con passione e amore. È con lo stesso amore per il cacao che ho trasformato la mia passione nella mia professione, creando l'azienda Theo Beans."
+    },
+    photos: {
+      title: "FOTO"
+    },
+    contact: {
+      title: "CONTATTO",
+      firstName: "Nome",
+      lastName: "Cognome",
+      email: "Email",
+      phone: "Telefono",
+      message: "Messaggio",
+      send: "Invia",
+      sending: "Invio in corso...",
+      success: "Messaggio inviato!",
+      successDesc: "Grazie per il tuo messaggio. Ti contatteremo presto.",
+      error: "Errore",
+      errorDesc: "Si è verificato un errore. Riprova.",
+      address: "Indirizzo",
+      facebook: "Facebook"
+    }
+  }
+};
+
+// Mock data for Theo Beans Export website
+export const siteData = {
+  companyName: "THEO BEANS EXPORT",
+  tagline: "VERONCIA VALENCIA EXPORT",
+  
+  navigation: [
+    { name: "ACCUEIL", path: "/", key: "accueil" },
+    { name: "PHOTOS", path: "/photos", key: "photos" },
+    { name: "OBJECTIF", path: "/objectif", key: "objectif" },
+    { name: "VARIÉTÉS", path: "/varietes", key: "varietes" },
+    { name: "CONTROL DE QUALITÉ", path: "/qualite", key: "qualite" },
+    { name: "TRAÇABILITÉ", path: "/tracabilite", key: "tracabilite" },
+    { name: "CONTACT", path: "/contact", key: "contact" }
+  ],
+
+  founder: {
+    name: "Verónica Valencia",
+    title: "Fondatrice",
+    image: "/images/founder/founder.jpeg",
+    story: "L'amour pour le cacao et le savoir-faire viennent de mon enfance. J'ai eu la chance de grandir entouré d'une nature très riche et diverse, à côté des gens qui partageaient leurs savoir-faire et toute leur connaissance du cacao avec passion et amour. C'est avec le même amour pour le cacao que j'ai transformé ma passion en mon métier, en créant l'entreprise Theo Beans."
+  },
+
+  photos: [
+    "/images/gallery/photo1.jpg",
+    "/images/gallery/photo2.jpg",
+    "/images/gallery/photo3.jpg",
+    "/images/gallery/photo4.jpg",
+    "/images/gallery/photo5.jpg",
+    "/images/gallery/photo6.jpg",
+    "/images/gallery/photo7.jpg",
+    "/images/gallery/photo8.jpg",
+    "/images/gallery/photo9.jpg",
+    "/images/gallery/photo10.jpg",
+    "/images/gallery/photo11.jpg",
+    "/images/gallery/photo12.jpg",
+    "/images/gallery/photo13.jpg",
+    "/images/gallery/photo14.jpg",
+    "/images/gallery/photo15.jpg",
+    "/images/gallery/photo16.jpg"
+  ],
+
+  objectif: {
+    title: "OBJECTIF",
+    subtitle: "Theo Beans: engagement",
+    intro: "Notre engagement est de bâtir, ensemble, une filière cacao qui respecte profondément à la fois la nature et les droits humains. Nous croyons en un modèle économique durable, qui préserve l'environnement tout en garantissant des conditions de travail justes et équitables pour tous les acteurs de la chaîne de valeur. Nous œuvrons pour une culture de cacao responsable, où chaque étape, de la plantation à la consommation, est conçue pour avoir un impact positif. Ainsi, nous contribuons à un avenir plus juste et inclusif, dans lequel la durabilité n'est pas un choix, mais une exigence. En alliant innovation, éthique et transparence, nous voulons offrir un cacao de qualité, tout en soutenant les communautés locales et en préservant la biodiversité pour les générations futures.",
+    objectives: [
+      {
+        number: "1",
+        title: "Offrir un accès facilité aux conseils d'experts",
+        content: "Nous voulons démocratiser l'accès aux connaissances techniques et aux meilleures pratiques agricoles. En collaborant avec des agronomes et des spécialistes du cacao, nous fournissons aux petits producteurs des outils et des formations adaptés. Ces initiatives permettent d'améliorer leurs compétences, tout en renforçant leur autonomie face aux défis de la production."
+      },
+      {
+        number: "2",
+        title: "Améliorer les pratiques agricoles avec des méthodes respectueuses de l'environnement",
+        content: "Nous encourageons l'utilisation de techniques agroécologiques, comme l'agroforesterie, la rotation des cultures et l'intégration d'espèces locales pour préserver la biodiversité. Nous privilégions aussi des intrants naturels qui protègent les sols, réduisent l'érosion et limitent l'usage de produits chimiques. Ces pratiques augmentent la qualité des récoltes tout en préservant l'écosystème."
+      },
+      {
+        number: "3",
+        title: "Promouvoir une culture durable du cacao",
+        content: "Notre engagement va au-delà de la production. Nous accompagnons les producteurs dans la gestion durable de leurs parcelles en les sensibilisant à l'importance de conserver les forêts environnantes. Par ailleurs, nous œuvrons à créer un équilibre entre rendement agricole et respect des écosystèmes, tout en offrant des opportunités économiques équitables pour améliorer la qualité de vie des communautés agricoles."
+      },
+      {
+        number: "4",
+        title: "Renforcer les conditions socio-économiques des agriculteurs",
+        content: "Cultiver durablement, c'est aussi soutenir ceux qui font vivre cette filière. Nous travaillons à instaurer des partenariats équitables en garantissant des revenus stables et justes pour les producteurs. En les impliquant activement dans nos projets, nous favorisons leur autonomie financière, leur accès à l'éducation et à des conditions de vie dignes."
+      }
+    ],
+    conclusion: "En unissant nos efforts avec les producteurs, les experts et les consommateurs, nous pouvons bâtir une filière durable où chacun joue un rôle clé. Le cacao équatorien mérite d'être valorisé pour sa qualité exceptionnelle et pour son rôle dans le développement durable."
+  },
+
+  qualite: {
+    title: "QUALITE",
+    subtitle: "Récolte - Fermentation – Séchage – Sélection – Stockage",
+    processes: [
+      {
+        title: "Récolte",
+        content: "Une fois que le cacao est prêt pour la récolte, on peut commencer à récolter les cabosses manuellement. Étant donné que les cabosses de cacao mûrissent à des moments différents, la récolte mécanique n'est pas possible. Pour cela, un ciseau est souvent utilisé. Maintenant que le cacao a été récolté et classé, il est prêt pour la prochaine étape : la transformation. Et cela commence par la fermentation."
+      },
+      {
+        title: "La fermentation",
+        content: "La fermentation du cacao élimine le mucilage, tue l'embryon, améliore l'apparence de la fève et induit les changements qui plus tard, dans sa transformation industrielle, produiront la saveur et l'arôme du chocolat. Il existe plusieurs méthodes de fermentation du cacao et les plus importantes sont présentées ci-dessous : La fermentation en caisses en bois est la méthode la plus avantageuse lorsque de grandes quantités de cacao sont traitées. Ces caisses sont construites en bois doux (bois laurier), avec des dimensions variables qui sont liées à la quantité de cacao qui peut être récoltée et transformée. La fermentation se termine lorsque la température de la masse de cacao baisse, les amandes gonflent et acquièrent une couleur aux tons roses ou clairs."
+      },
+      {
+        title: "Séchage",
+        content: "Une fois les fèves fermentées, elles ont une teneur en humidité allant de 40% à 60%, qui devrait être réduit à 6 ou 7 %, pour un stockage et un transport sûrs. Une teneur en humidité plus élevée entraînera la croissance de moisissures pendant le stockage. Le processus de séchage est basé sur le mouvement de l'air dans les grains pour aider à réduire l'humidité. La méthode de séchage appropriée utilise l'énergie solaire, mais dans les régions où la récolte coïncide avec des pluies fréquentes, des méthodes de séchage artificielles ou une combinaison des deux sont utilisées."
+      },
+      {
+        title: "Sélection",
+        content: "Avant que les grains ne soient emballés, une sélection est effectuée où toutes les impuretés sont éliminées, telles que les déchets, les grains cassés, moisis, collés, vains et petits. Cela peut être fait manuellement ou avec des trieurs de grains de manière à ne sélectionner que des grains sains et aptes à la vente."
+      },
+      {
+        title: "Stockage",
+        content: "Pour maintenir la qualité du cacao sec, il doit être stocké dans un endroit sec et ventilé, dans des conditions d'humidité relative de 65% à 70% où il n'est pas contaminé par des odeurs d'essence, de kérosène, de poisons agricoles et d'autres types de matériaux qui affecter la qualité du cacao."
+      }
+    ]
+  },
+
+  tracabilite: {
+    title: "TRACABILITE",
+    intro: "La traçabilité est la situation dans laquelle on dispose de l'information nécessaire et suffisante pour connaître éventuellement de façon rétrospective la composition d'un produit du commerce tout au long de sa chaîne de production, de transformation et de distribution.",
+    subtitle: "Afin de clarifier « quand, où et par qui le produit a été élaboré car la traçabilité du cacao commence par la terre et l'environnement de l'écosystème qui l'entoure.",
+    elements: [
+      "localité",
+      "variété de la plante et son origine",
+      "durabilité",
+      "formation et responsabilité",
+      "control de qualité",
+      "traçage",
+      "distribution"
+    ],
+    process: "Les processus de récolte, fermentation, séchage, sélection, conditionnement et stockage jusqu'au transport.",
+    conclusion: "Tous ces éléments ont une grande importance afin de déterminer tous les processus donnés au produit jusqu'à sa destination finale, qui dans ce cas serait le chocolatier ou l'acheteur. La transparence de la traçabilité permet l'identification d'un chocolat dont l'histoire est connue."
+  },
+
+  contact: {
+    title: "CONTACT",
+    heroImage: "/images/contact/contact-hero.jpg",
+    email: "info@theobeans-export.com",
+    phone: "+32 465 63 56 26",
+    address: "Avenue Louise 421, 1050 Ixelles (Bruxelles) Belgique",
+    facebook: "www.facebook.com/theobeanstobar",
+    images: [
+      "/images/contact/contact1.jpeg",
+      "/images/contact/contact2.jpeg",
+      "/images/contact/contact3.jpeg",
+      "/images/contact/contact4.jpeg"
+    ]
+  }
+};

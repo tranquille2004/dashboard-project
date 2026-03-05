@@ -794,41 +794,41 @@ export const siteData = {
 
   founder: {
     name: "Veronica Valencia",
-    image: "/images/theobeans/founder/founder.jpeg"
+    image: "/images/founder/founder.jpeg"
   },
 
   photos: [
-    "/images/theobeans/gallery/photo1.jpg",
-    "/images/theobeans/gallery/photo2.jpg",
-    "/images/theobeans/gallery/photo3.jpg",
-    "/images/theobeans/gallery/photo4.jpg",
-    "/images/theobeans/gallery/photo5.jpg",
-    "/images/theobeans/gallery/photo6.jpg",
-    "/images/theobeans/gallery/photo7.jpg",
-    "/images/theobeans/gallery/photo8.jpg",
-    "/images/theobeans/gallery/photo9.jpg",
-    "/images/theobeans/gallery/photo10.jpg",
-    "/images/theobeans/gallery/photo11.jpg",
-    "/images/theobeans/gallery/photo12.jpg",
-    "/images/theobeans/gallery/photo4.jpg",
-    "/images/theobeans/gallery/photo14.jpg",
-    "/images/theobeans/gallery/photo15.jpg",
-    "/images/theobeans/gallery/photo16.jpg",
-    "/images/theobeans/gallery/tracabilite-hero.jpg",
-    "/images/theobeans/gallery/qualite-hero.jpg"
+    "/images/gallery/photo1.jpg",
+    "/images/gallery/photo2.jpg",
+    "/images/gallery/photo3.jpg",
+    "/images/gallery/photo4.jpg",
+    "/images/gallery/photo5.jpg",
+    "/images/gallery/photo6.jpg",
+    "/images/gallery/photo7.jpg",
+    "/images/gallery/photo8.jpg",
+    "/images/gallery/photo9.jpg",
+    "/images/gallery/photo10.jpg",
+    "/images/gallery/photo11.jpg",
+    "/images/gallery/photo12.jpg",
+    "/images/gallery/photo4.jpg",
+    "/images/gallery/photo14.jpg",
+    "/images/gallery/photo15.jpg",
+    "/images/gallery/photo16.jpg",
+    "/images/gallery/tracabilite-hero.jpg",
+    "/images/gallery/qualite-hero.jpg"
   ],
 
   contact: {
-    heroImage: "/images/theobeans/contact/contact-hero.jpg",
+    heroImage: "/images/contact/contact-hero.jpg",
     email: "info@theobeans-export.com",
     phone: "+32 465 63 56 26",
     address: "Avenue Louise 421, 1050 Ixelles (Bruxelles) Belgique",
     facebook: "www.facebook.com/theobeanstobar",
     images: [
-      "/images/theobeans/contact/contact1.jpeg",
-      "/images/theobeans/contact/contact2.jpeg",
-      "/images/theobeans/contact/contact3.jpeg",
-      "/images/theobeans/contact/contact4.jpeg"
+      "/images/contact/contact1.jpeg",
+      "/images/contact/contact2.jpeg",
+      "/images/contact/contact3.jpeg",
+      "/images/contact/contact4.jpeg"
     ]
   }
 };

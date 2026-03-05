@@ -1,12 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '../context/BasePathContext';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
-import { useBasePath } from '../context/BasePathContext';
 
 const Footer = () => {
   const { t } = useLanguage();
-  const basePath = useBasePath();
 
   return (
     <footer className="bg-[#b8999e] text-white">
@@ -17,7 +15,7 @@ const Footer = () => {
             {siteData.navigation.map((item, index) => (
               <React.Fragment key={item.path}>
                 <Link
-                  to={item.path === '/' ? basePath : `${basePath}${item.path}`}
+                  to={item.path}
                   className="hover:opacity-70 transition-opacity font-light tracking-wide text-white/90 hover:text-white"
                 >
                   {t.nav[item.key]}
@@ -49,7 +47,7 @@ const Footer = () => {
                 className="hover:opacity-80 transition-opacity"
               >
                 <img 
-                  src="/images/theobeans/fworks-logo.png" 
+                  src="/images/fworks-logo.png" 
                   alt="f.works builders" 
                   className="h-12 w-auto"
                 />

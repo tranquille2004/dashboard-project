@@ -1,6 +1,8 @@
 import React, { createContext, useContext } from 'react';
+import { Link as RouterLink, useLocation } from 'react-router-dom';
 
-const BasePathContext = createContext('/site/theobeans');
+// Context voor de base path
+const BasePathContext = createContext('');
 
 export const useBasePath = () => useContext(BasePathContext);
 
@@ -9,3 +11,25 @@ export const BasePathProvider = ({ basePath, children }) => (
     {children}
   </BasePathContext.Provider>
 );
+
+// Custom Link component die automatisch basePath toevoegt
+export const Link = ({ to, children, ...props }) => {
+  const basePath = useBasePath();
+  
+  // Als to begint met /, voeg basePath toe
+  const fullPath = to.startsWith('/') ? `${basePath}${to === '/' ? '' : to}` : to;
+  
+  return (
+    <RouterLink to={fullPath || basePath} {...props}>
+      {children}
+    </RouterLink>
+  );
+};
+
+// Hook om te checken of huidige path matched (met basePath support)
+export const usePathMatch = (path) => {
+  const location = useLocation();
+  const basePath = useBasePath();
+  const fullPath = path === '/' ? basePath : `${basePath}${path}`;
+  return location.pathname === fullPath || location.pathname === fullPath + '/';
+};

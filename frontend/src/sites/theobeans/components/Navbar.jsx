@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Link, useBasePath } from '../context/BasePathContext';
 import { Menu, X } from 'lucide-react';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
-import { useBasePath } from '../context/BasePathContext';
 import LanguageSelector from './LanguageSelector';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
-  const { t } = useLanguage();
   const basePath = useBasePath();
+  const { t } = useLanguage();
+
+  // Helper om te checken of path actief is
+  const isActive = (path) => {
+    const fullPath = path === '/' ? basePath : `${basePath}${path}`;
+    return location.pathname === fullPath || location.pathname === fullPath + '/';
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -31,7 +37,7 @@ const Navbar = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <Link
-            to={basePath}
+            to="/"
             className="text-white font-light tracking-wider text-xs md:text-sm hover:opacity-80 transition-opacity"
           >
             {siteData.tagline}
@@ -42,9 +48,9 @@ const Navbar = () => {
             {siteData.navigation.map((item) => (
               <Link
                 key={item.path}
-                to={item.path === '/' ? basePath : `${basePath}${item.path}`}
+                to={item.path}
                 className={`px-4 py-2 text-xs font-normal tracking-wide transition-all duration-200 ${
-                  location.pathname === (item.path === '/' ? basePath : `${basePath}${item.path}`)
+                  isActive(item.path)
                     ? 'text-white border border-white/50'
                     : 'text-white/95 hover:text-white hover:border hover:border-white/30'
                 }`}
@@ -75,10 +81,10 @@ const Navbar = () => {
             {siteData.navigation.map((item) => (
               <Link
                 key={item.path}
-                to={item.path === '/' ? basePath : `${basePath}${item.path}`}
+                to={item.path}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={`block px-4 py-3 text-sm font-light tracking-wide transition-all ${
-                  location.pathname === (item.path === '/' ? basePath : `${basePath}${item.path}`)
+                  isActive(item.path)
                     ? 'text-white bg-white/20 border border-white/50'
                     : 'text-white/95 hover:bg-white/10'
                 }`}
