@@ -29,42 +29,42 @@ const Reservations = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#2a2a2a]">
+    <div className="min-h-screen bg-[#1a1a1a]">
       <Hero
         title={t.title}
         subtitle={t.subtitle}
         image="/images/ascoli/gallery/img-5497_1_orig.jpg"
       />
 
-      <section className="py-16 bg-[#2a2a2a]">
+      <section className="py-16 bg-[#1a1a1a]">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Important Notice */}
-            <div className="bg-[#6b1f1f]/10 border border-[#6b1f1f] rounded-sm p-8 mb-12">
-              <p className="text-[#6b1f1f] text-lg text-center font-semibold">
+            <div className="bg-[#8B4513]/20 border-2 border-[#D4A574] rounded-lg p-8 mb-12">
+              <p className="text-[#D4A574] text-lg text-center font-semibold">
                 <strong>{t.closedNotice}</strong><br />
-                {t.closedDates}
+                <span className="text-white">{t.closedDates}</span>
               </p>
             </div>
 
             {/* Reservation Instructions */}
-            <div className="bg-gray-900 border border-gray-800 rounded-sm p-8 mb-12">
+            <div className="bg-[#2a2a2a] border border-[#D4A574]/30 rounded-lg p-8 mb-12">
               <div className="prose prose-invert max-w-none">
-                <p className="text-gray-300 mb-6">
-                  <strong className="text-white">{t.instructions}</strong> {t.confirmed} <strong>{t.notContacted}</strong> {t.unlessBooked}{' '}
-                  <strong>{t.groupReservation}</strong>
+                <p className="text-gray-200 mb-6 leading-relaxed">
+                  <strong className="text-[#D4A574]">{t.instructions}</strong> {t.confirmed} <strong className="text-white">{t.notContacted}</strong> {t.unlessBooked}{' '}
+                  <strong className="text-white">{t.groupReservation}</strong>
                 </p>
 
-                <div className="bg-[#6b1f1f]/10 border-l-4 border-[#6b1f1f] p-6 mt-6">
-                  <p className="text-[#6b1f1f] text-lg font-semibold">
-                    {t.closedSaturday} <span className="text-green-500">{t.eveningOpen}</span> {t.sundayClosed}
+                <div className="bg-[#8B4513]/20 border-l-4 border-[#D4A574] p-6 mt-6 rounded-r-lg">
+                  <p className="text-white text-lg">
+                    <span className="text-[#D4A574] font-semibold">{t.closedSaturday}</span> <span className="text-green-400 font-bold">{t.eveningOpen}</span> <span className="text-[#D4A574] font-semibold">{t.sundayClosed}</span>
                   </p>
                 </div>
               </div>
             </div>
 
             {/* JotForm Embed */}
-            <div className="bg-white rounded-sm overflow-hidden">
+            <div className="bg-white rounded-lg overflow-hidden shadow-xl">
               <iframe
                 id="JotFormIFrame-81428826238362"
                 title="ASCOLI Reservation Form"
@@ -84,20 +84,20 @@ const Reservations = () => {
             </div>
 
             {/* Contact Information */}
-            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+            <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6 text-center bg-[#2a2a2a] rounded-lg p-8 border border-[#D4A574]/30">
               <div>
-                <h4 className="text-[#a48f7a] font-semibold mb-2 uppercase text-sm">{t.website}</h4>
-                <p className="text-gray-400">www.ascolizaventem.com</p>
+                <h4 className="text-[#D4A574] font-semibold mb-2 uppercase text-sm">{t.website}</h4>
+                <p className="text-white">www.ascolizaventem.com</p>
               </div>
               <div>
-                <h4 className="text-[#a48f7a] font-semibold mb-2 uppercase text-sm">{t.phone}</h4>
-                <a href="tel:+3227254545" className="text-gray-400 hover:text-[#6b1f1f] transition-colors">
+                <h4 className="text-[#D4A574] font-semibold mb-2 uppercase text-sm">{t.phone}</h4>
+                <a href="tel:+3227254545" className="text-white hover:text-[#D4A574] transition-colors">
                   +32 2 725 45 45
                 </a>
               </div>
               <div>
-                <h4 className="text-[#a48f7a] font-semibold mb-2 uppercase text-sm">{t.address}</h4>
-                <p className="text-gray-400">
+                <h4 className="text-[#D4A574] font-semibold mb-2 uppercase text-sm">{t.address}</h4>
+                <p className="text-white">
                   Hector Henneaulaan 136<br />
                   1930 Zaventem
                 </p>
