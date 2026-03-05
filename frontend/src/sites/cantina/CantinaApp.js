@@ -155,18 +155,18 @@ function Navigation({ language, setLanguage, t }) {
   return (
     <nav className="main-nav">
       <div className="nav-container">
-        <Link to="/site/cantina/" className="logo">
+        <Link to="/" className="logo">
           <img src="/images/cantina/logo-cantina.jpg" alt="La Cantina Italiana" />
         </Link>
 
         <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          <Link to="/site/cantina/" className="nav-link" onClick={closeMenu}>{t.nav.home}</Link>
-          <Link to="/site/cantina/about" className="nav-link" onClick={closeMenu}>{t.nav.about}</Link>
-          <Link to="/site/cantina/kaart" className="nav-link kaart-link" onClick={closeMenu}>{t.nav.menu}</Link>
-          <Link to="/site/cantina/groepmenus" className="nav-link" onClick={closeMenu}>{t.nav.groupMenus}</Link>
-          <Link to="/site/cantina/reserveren" className="nav-link" onClick={closeMenu}>{t.nav.reservation}</Link>
-          <Link to="/site/cantina/fotos" className="nav-link" onClick={closeMenu}>{t.nav.gallery}</Link>
-          <Link to="/site/cantina/info" className="nav-link" onClick={closeMenu}>{t.nav.contact}</Link>
+          <Link to="/" className="nav-link" onClick={closeMenu}>{t.nav.home}</Link>
+          <Link to="/about" className="nav-link" onClick={closeMenu}>{t.nav.about}</Link>
+          <Link to="/kaart" className="nav-link kaart-link" onClick={closeMenu}>{t.nav.menu}</Link>
+          <Link to="/groepmenus" className="nav-link" onClick={closeMenu}>{t.nav.groupMenus}</Link>
+          <Link to="/reserveren" className="nav-link" onClick={closeMenu}>{t.nav.reservation}</Link>
+          <Link to="/fotos" className="nav-link" onClick={closeMenu}>{t.nav.gallery}</Link>
+          <Link to="/info" className="nav-link" onClick={closeMenu}>{t.nav.contact}</Link>
         </div>
         
         <div className="nav-right">

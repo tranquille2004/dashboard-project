@@ -75,7 +75,7 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-xl" data-testid="main-navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link to="/site/tracemaster/" className="flex items-center" data-testid="logo-link">
+          <Link to="/" className="flex items-center" data-testid="logo-link">
             <img
               src="/images/tracemaster/logoecuadorpetit.jpg"
               alt="Tracemaster Logo"
@@ -169,10 +169,10 @@ const Footer = () => (
         <div>
           <h3 className="text-white font-semibold mb-4">Enlaces Rápidos</h3>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/site/tracemaster/productos" className="hover:text-red-500 transition-colors">Productos</Link></li>
-            <li><Link to="/site/tracemaster/adaptador" className="hover:text-red-500 transition-colors">Adaptador</Link></li>
-            <li><Link to="/site/tracemaster/faq" className="hover:text-red-500 transition-colors">FAQ</Link></li>
-            <li><Link to="/site/tracemaster/contacto" className="hover:text-red-500 transition-colors">Contáctenos</Link></li>
+            <li><Link to="/productos" className="hover:text-red-500 transition-colors">Productos</Link></li>
+            <li><Link to="/adaptador" className="hover:text-red-500 transition-colors">Adaptador</Link></li>
+            <li><Link to="/faq" className="hover:text-red-500 transition-colors">FAQ</Link></li>
+            <li><Link to="/contacto" className="hover:text-red-500 transition-colors">Contáctenos</Link></li>
           </ul>
         </div>
         <div>
@@ -266,14 +266,14 @@ const Home = () => {
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
                 <Link
-                  to="/site/tracemaster/productos"
+                  to="/productos"
                   className="bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-lg shadow-red-600/30"
                   data-testid="cta-productos"
                 >
                   Ver Productos
                 </Link>
                 <Link
-                  to="/site/tracemaster/contacto"
+                  to="/contacto"
                   className="bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900 px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300"
                   data-testid="cta-contacto"
                 >
@@ -393,7 +393,7 @@ const Home = () => {
             Solo <span className="font-bold text-white text-3xl">$199</span> IVA incluido
           </p>
           <Link
-            to="/site/tracemaster/contacto"
+            to="/contacto"
             className="inline-block bg-white text-red-600 hover:bg-gray-100 px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105 shadow-xl"
             data-testid="cta-order"
           >
@@ -499,7 +499,7 @@ const Productos = () => {
                 </ul>
 
                 <Link
-                  to="/site/tracemaster/contacto"
+                  to="/contacto"
                   className="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-[1.02] shadow-lg"
                   data-testid="order-button"
                 >
@@ -507,7 +507,7 @@ const Productos = () => {
                 </Link>
 
                 <Link
-                  to="/site/tracemaster/adaptador"
+                  to="/adaptador"
                   className="block w-full mt-4 bg-gray-700 hover:bg-gray-600 text-white text-center py-3 rounded-xl font-medium transition-all duration-300"
                 >
                   Ver Adaptador para Vehículo →
@@ -542,7 +542,7 @@ const Productos = () => {
             </p>
             <div className="bg-red-600/20 p-4 rounded-xl border-l-4 border-red-600">
               <p className="text-white font-medium">
-                <strong>Si no tienes ganas de cargar manualmente, te recomendamos adquirir nuestro <Link to="/site/tracemaster/adaptador" className="text-red-400 hover:text-red-300 underline">cargador de coche especial</Link> para que tu dispositivo esté siempre cargado.</strong>
+                <strong>Si no tienes ganas de cargar manualmente, te recomendamos adquirir nuestro <Link to="/adaptador" className="text-red-400 hover:text-red-300 underline">cargador de coche especial</Link> para que tu dispositivo esté siempre cargado.</strong>
               </p>
             </div>
 
@@ -717,7 +717,7 @@ const Adaptador = () => {
                 </ul>
 
                 <Link
-                  to="/site/tracemaster/contacto"
+                  to="/contacto"
                   className="block w-full bg-red-600 hover:bg-red-700 text-white text-center py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-[1.02] shadow-lg"
                 >
                   Hacer Pedido
@@ -733,7 +733,7 @@ const Adaptador = () => {
 
               {/* Link to main product */}
               <Link
-                to="/site/tracemaster/productos"
+                to="/productos"
                 className="mt-6 flex items-center gap-4 p-4 bg-gray-800 rounded-xl hover:bg-gray-700 transition-all"
               >
                 <img
@@ -855,7 +855,7 @@ Si el rastreador GPS permanece fuera de línea, puede intentar reiniciarlo con e
                   <div className="px-6 pb-5 animate-fadeIn">
                     <p className="text-gray-400 leading-relaxed whitespace-pre-line">{faq.answer}</p>
                     {faq.question === "Optimizar la duración de la batería" && (
-                      <Link to="/site/tracemaster/adaptador" className="inline-block mt-4 text-red-500 hover:text-red-400 font-medium">
+                      <Link to="/adaptador" className="inline-block mt-4 text-red-500 hover:text-red-400 font-medium">
                         → Ver cargador de coche especial
                       </Link>
                     )}
@@ -878,7 +878,7 @@ Si el rastreador GPS permanece fuera de línea, puede intentar reiniciarlo con e
                 <p className="text-gray-300 mb-4">Sistema de seguimiento – ¡Sin costes adicionales! Con SIM incorporada.</p>
                 <p className="text-3xl font-bold text-red-500 mb-4">$199 <span className="text-sm text-gray-400 font-normal">IVA incluido</span></p>
                 <Link
-                  to="/site/tracemaster/contacto"
+                  to="/contacto"
                   className="inline-block bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-xl font-semibold transition-all duration-300"
                 >
                   Hacer Pedido
@@ -1199,7 +1199,7 @@ const Confirmacion = () => {
           {/* Back to Home */}
           <div>
             <Link
-              to="/site/tracemaster/"
+              to="/"
               className="text-gray-400 hover:text-white transition-colors"
             >
               ← Volver a la página principal

@@ -121,7 +121,7 @@ function Navigation({ activeSection, scrollToSection }) {
     <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link to="/site/bottega/" className="flex items-center space-x-2">
+          <Link to="/" className="flex items-center space-x-2">
             <img src="/images/logo.jpg" alt="La Bottega Italiana" className="h-10 w-auto" />
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-gray-900">La Bottega Italiana</h1>
@@ -131,22 +131,22 @@ function Navigation({ activeSection, scrollToSection }) {
           
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-6">
-            <Link to="/site/bottega/" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
-            <Link to="/site/bottega/over-ons" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
-            <Link to="/site/bottega/kaart" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
-            <Link to="/site/bottega/galerie" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
-            <Link to="/site/bottega/groepmenus" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
-            <Link to="/site/bottega/openingstijden" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
-            <Link to="/site/bottega/contact" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
+            <Link to="/" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
+            <Link to="/over-ons" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
+            <Link to="/kaart" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
+            <Link to="/galerie" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
+            <Link to="/groepmenus" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
+            <Link to="/openingstijden" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
+            <Link to="/contact" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
             <LanguageSwitcher />
           </div>
           
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            <Link to="/site/bottega/reserveren" className="bg-[#7D3C32] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#6A3229] transition-colors shadow-lg hover:shadow-xl">
+            <Link to="/reserveren" className="bg-[#7D3C32] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#6A3229] transition-colors shadow-lg hover:shadow-xl">
               {t('reserve')}
             </Link>
-            <Link to="/site/bottega/afhalen" className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-2.5 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors shadow-lg hover:shadow-xl">
+            <Link to="/afhalen" className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-2.5 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors shadow-lg hover:shadow-xl">
               {t('takeaway')}
             </Link>
           </div>
@@ -173,18 +173,18 @@ function Navigation({ activeSection, scrollToSection }) {
         {mobileMenuOpen && (
           <div className="lg:hidden pb-4">
             <div className="flex flex-col space-y-3">
-              <Link to="/site/bottega/" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
-              <Link to="/site/bottega/over-ons" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
-              <Link to="/site/bottega/kaart" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
-              <Link to="/site/bottega/galerie" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
-              <Link to="/site/bottega/groepmenus" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
-              <Link to="/site/bottega/openingstijden" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
-              <Link to="/site/bottega/contact" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
+              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
+              <Link to="/over-ons" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
+              <Link to="/kaart" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
+              <Link to="/galerie" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
+              <Link to="/groepmenus" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
+              <Link to="/openingstijden" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
+              <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
               <div className="flex flex-col space-y-3 pt-4 border-t border-gray-200">
-                <Link to="/site/bottega/reserveren" onClick={() => setMobileMenuOpen(false)} className="bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#6A3229] transition-colors text-center">
+                <Link to="/reserveren" onClick={() => setMobileMenuOpen(false)} className="bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#6A3229] transition-colors text-center">
                   {t('reserve')}
                 </Link>
-                <Link to="/site/bottega/afhalen" onClick={() => setMobileMenuOpen(false)} className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-3 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors text-center">
+                <Link to="/afhalen" onClick={() => setMobileMenuOpen(false)} className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-3 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors text-center">
                   {t('takeaway')}
                 </Link>
               </div>
@@ -268,10 +268,10 @@ function HomePage() {
           <h1 className="text-5xl md:text-7xl font-bold mb-6" data-testid="hero-title">{t('heroTitle')}</h1>
           <p className="text-xl md:text-2xl mb-8 font-light">{t('heroSubtitle')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/site/bottega/reserveren" className="bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="reserve-table-btn">
+            <Link to="/reserveren" className="bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="reserve-table-btn">
               {t('reserveTable')}
             </Link>
-            <Link to="/site/bottega/afhalen" className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="takeaway-btn">
+            <Link to="/afhalen" className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="takeaway-btn">
               {t('orderTakeaway')}
             </Link>
           </div>
@@ -338,7 +338,7 @@ function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Link to="/site/bottega/kaart" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="menu-card-link">
+            <Link to="/kaart" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="menu-card-link">
               <div className="flex justify-center mb-4">
                 <Utensils className="w-16 h-16 text-[#7D3C32]" />
               </div>
@@ -347,7 +347,7 @@ function HomePage() {
               <span className="text-[#7D3C32] font-semibold">{t('viewMenuLink')}</span>
             </Link>
 
-            <Link to="/site/bottega/groepmenus" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="group-menu-link">
+            <Link to="/groepmenus" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="group-menu-link">
               <div className="flex justify-center mb-4">
                 <Wine className="w-16 h-16 text-[#7D3C32]" />
               </div>
@@ -497,10 +497,10 @@ function HomePage() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">{t('ctaTitle')}</h2>
           <p className="text-xl mb-8">{t('ctaSubtitle')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/site/bottega/reserveren" className="bg-white text-[#7D3C32] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-reserve-btn">
+            <Link to="/reserveren" className="bg-white text-[#7D3C32] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-reserve-btn">
               {t('reserveTable')}
             </Link>
-            <Link to="/site/bottega/afhalen" className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#7D3C32] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-takeaway-btn">
+            <Link to="/afhalen" className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#7D3C32] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-takeaway-btn">
               {t('orderTakeaway')}
             </Link>
           </div>
@@ -576,7 +576,7 @@ function ReserverenPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <Link to="/site/bottega/" className="text-[#7D3C32] hover:underline font-medium">
+            <Link to="/" className="text-[#7D3C32] hover:underline font-medium">
               ← Terug naar Home
             </Link>
           </div>
@@ -625,7 +625,7 @@ function AfhalenPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <Link to="/site/bottega/" className="text-[#7D3C32] hover:underline font-medium">
+            <Link to="/" className="text-[#7D3C32] hover:underline font-medium">
               ← Terug naar Home
             </Link>
           </div>
@@ -697,7 +697,7 @@ function KaartPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <Link to="/site/bottega/" className="text-[#7D3C32] hover:underline font-medium text-lg">
+            <Link to="/" className="text-[#7D3C32] hover:underline font-medium text-lg">
               {t('backToHome')}
             </Link>
           </div>
@@ -795,7 +795,7 @@ function GroepmenusPage() {
                 📥 Download Groepmenus PDF
               </button>
               <Link 
-                to="/site/bottega/reserveren"
+                to="/reserveren"
                 className="inline-flex items-center justify-center bg-[#D4A574] text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-[#C49564] transition-all shadow-lg hover:shadow-xl"
               >
                 Reserveer voor groepen
@@ -878,7 +878,7 @@ function GroepmenusPage() {
 
           {/* Back to Home */}
           <div className="mt-8 text-center">
-            <Link to="/site/bottega/" className="text-[#D4A574] hover:text-[#C49564] font-medium text-lg transition-colors">
+            <Link to="/" className="text-[#D4A574] hover:text-[#C49564] font-medium text-lg transition-colors">
               ← {t('backToHome')}
             </Link>
           </div>
@@ -1013,7 +1013,7 @@ function GaleriePage() {
           )}
 
           <div className="mt-12 text-center">
-            <Link to="/site/bottega/" className="text-[#7D3C32] hover:underline font-medium text-lg">
+            <Link to="/" className="text-[#7D3C32] hover:underline font-medium text-lg">
               {t('backToHome')}
             </Link>
           </div>
@@ -1079,7 +1079,7 @@ function ConfirmationPage() {
           {/* Back Button */}
           <div className="text-center">
             <Link 
-              to="/site/bottega/"
+              to="/"
               className="inline-block bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
             >
               Klik hier om terug te gaan naar de site
@@ -1190,7 +1190,7 @@ function Confirmation2Page() {
           {/* Action Button */}
           <div className="text-center">
             <Link 
-              to="/site/bottega/"
+              to="/"
               className="inline-block bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
             >
               Terug naar Home

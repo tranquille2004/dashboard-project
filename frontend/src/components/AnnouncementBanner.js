@@ -58,74 +58,66 @@ const AnnouncementBanner = ({
   };
 
   return (
-    <>
-      {/* Fixed banner at top */}
-      <div 
-        className="announcement-banner"
+    <div 
+      className="announcement-banner"
+      style={{
+        background: currentStyle.background,
+        color: currentStyle.textColor,
+        padding: '14px 20px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '12px',
+        position: 'relative',
+        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+        zIndex: 50
+      }}
+      data-testid="announcement-banner"
+    >
+      <IconComponent 
+        size={20} 
+        style={{ flexShrink: 0 }}
+        data-testid="announcement-icon"
+      />
+      <p 
         style={{
-          background: currentStyle.background,
-          color: currentStyle.textColor,
-          padding: '14px 20px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '12px',
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-          zIndex: 1100
+          margin: 0,
+          fontSize: '15px',
+          fontWeight: 500,
+          textAlign: 'center',
+          lineHeight: 1.5
         }}
-        data-testid="announcement-banner"
+        data-testid="announcement-message"
       >
-        <IconComponent 
-          size={20} 
-          style={{ flexShrink: 0 }}
-          data-testid="announcement-icon"
-        />
-        <p 
+        {message}
+      </p>
+      {dismissible && (
+        <button
+          onClick={handleClose}
           style={{
-            margin: 0,
-            fontSize: '15px',
-            fontWeight: 500,
-            textAlign: 'center',
-            lineHeight: 1.5
+            position: 'absolute',
+            right: '16px',
+            top: '50%',
+            transform: 'translateY(-50%)',
+            background: 'rgba(255,255,255,0.2)',
+            border: 'none',
+            borderRadius: '50%',
+            padding: '6px',
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'background 0.2s'
           }}
-          data-testid="announcement-message"
+          onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.3)'}
+          onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+          aria-label="Sluiten"
+          data-testid="announcement-close-btn"
         >
-          {message}
-        </p>
-        {dismissible && (
-          <button
-            onClick={handleClose}
-            style={{
-              position: 'absolute',
-              right: '16px',
-              top: '50%',
-              transform: 'translateY(-50%)',
-              background: 'rgba(255,255,255,0.2)',
-              border: 'none',
-              borderRadius: '50%',
-              padding: '6px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'background 0.2s'
-            }}
-            onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.3)'}
-            onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
-            aria-label="Sluiten"
-            data-testid="announcement-close-btn"
-          >
-            <X size={16} color={currentStyle.textColor} />
-          </button>
-        )}
-      </div>
-      {/* Spacer to push content down */}
-      <div style={{ height: '48px' }} data-testid="announcement-spacer" />
-    </>
+          <X size={16} color={currentStyle.textColor} />
+        </button>
+      )}
+    </div>
   );
 };
 
