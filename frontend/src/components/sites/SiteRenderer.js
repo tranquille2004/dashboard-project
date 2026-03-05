@@ -11,6 +11,7 @@ import BottegaApp from '@/sites/bottega/BottegaApp';
 import AscoliApp from '@/sites/ascoli/AscoliApp';
 import MercatoApp from '@/sites/mercato/MercatoApp';
 import TracemasterApp from '@/sites/tracemaster/TracemasterApp';
+import TheobeansApp from '@/sites/theobeans/TheobeansApp';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -915,6 +916,9 @@ const SiteRenderer = () => {
   }
   if (slug === 'tracemaster') {
     return <TracemasterApp />;
+  }
+  if (slug === 'theobeans') {
+    return <TheobeansApp />;
   }
   
   if (loading) {

@@ -191,6 +191,28 @@ Voorbeeld:
 
 ## Prioritized Backlog
 
+### Phase 12 - THEO BEANS WEBSITE MIGRATIE ✅ (5 maart 2026)
+**Nieuwe site**: Theo Beans Export (theobeans-export.com) - Cacao export bedrijf uit Ecuador
+
+**Wat is gemigreerd:**
+- [x] **Website bestanden** - Alle pagina's (Home, Photos, Objectif, Varietes, Qualite, Tracabilite, Contact) gekopieerd
+- [x] **Afbeeldingen** - Alle assets naar `/app/frontend/public/images/theobeans/` verplaatst
+- [x] **Multi-tenant routing** - Site toegevoegd aan SiteRenderer met `/site/theobeans` pad
+- [x] **Database records** - Site, config en admin account aangemaakt
+- [x] **Site Admin Dashboard** - Theo Beans eigenaar kan nu inloggen en de site beheren
+- [x] **Speciale Aankondiging** - Werkt ook op deze niet-restaurant site
+- [x] **Meertalige ondersteuning** - FR/EN/NL/ES/DE blijft behouden
+
+**Login gegevens:**
+- URL: `/restaurant-login`
+- Email: `theobeans@test.be`
+- Wachtwoord: `test123`
+
+**Belangrijke URLs:**
+- Website: `/site/theobeans`
+- Photos: `/site/theobeans/photos`
+- Contact: `/site/theobeans/contact`
+
 ### Phase 11 - SPECIALE AANKONDIGING FEATURE ✅ (5 maart 2026)
 **Nieuwe feature**: Restaurant eigenaren kunnen nu speciale mededelingen plaatsen (bijv. vakantiesluitingen, speciale menu's).
 
@@ -224,6 +246,7 @@ Voorbeeld:
 - [x] **Mercato Kaart met embedded PDF** ✅ (4 maart 2026) - Menu PDF direct zichtbaar via Google Docs viewer (zoals La Cantina)
 - [x] **Site Admin Dashboards** ✅ (4 maart 2026) - Restaurant eigenaren kunnen nu inloggen en hun site beheren
 - [x] **Speciale Aankondiging Feature** ✅ (5 maart 2026) - Restaurant eigenaren kunnen nu speciale mededelingen plaatsen die zichtbaar zijn op hun website
+- [x] **Theo Beans Export Website** ✅ (5 maart 2026) - 6e website (niet-restaurant) succesvol gemigreerd naar het platform
 
 ### Site Admin Accounts (4 restaurants)
 | Restaurant | Email | Wachtwoord | Rechten |
