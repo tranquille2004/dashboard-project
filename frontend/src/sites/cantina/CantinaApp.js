@@ -1476,6 +1476,7 @@ function CantinaApp() {
         <Navigation language={language} setLanguage={setLanguage} t={t} />
         <main>
           <Routes>
+            <Route index element={<HomePage t={t} />} />
             <Route path="/" element={<HomePage t={t} />} />
             <Route path="/about" element={<AboutPage t={t} />} />
             <Route path="/kaart" element={<KaartPage t={t} />} />
@@ -1485,6 +1486,7 @@ function CantinaApp() {
             <Route path="/confirmation.html" element={<ConfirmationPage t={t} />} />
             <Route path="/fotos" element={<FotosPage t={t} />} />
             <Route path="/info" element={<InfoPage t={t} />} />
+            <Route path="*" element={<HomePage t={t} />} />
           </Routes>
         </main>
         <Footer t={t} language={language} />
