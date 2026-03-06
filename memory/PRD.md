@@ -177,14 +177,22 @@ grep -rn "weebly" /app/frontend/src/ --include="*.js" --include="*.jsx" | wc -l
 | group_menus | Manage group menus |
 
 ### URLs
-- **Jouw Admin Login**: `/` → direct naar `/admin` na Google login
+- **Jouw Admin Login**: `/beheer` of `/admin` → Super-admin dashboard
 - **Jouw Dashboard**: `/admin` 
 - **Site Editor**: `/admin/sites/{siteId}` (inclusief Beheerders tab)
 - **Site Preview**: `/site/{slug}` (bijv. `/site/bottega`)
-- **Klant Login** (per site): `/site/{slug}/beheer` of `/site/{slug}/login`
+- **Klant Login (centrale URL)**: `/restaurant-login`
+- **Klant Login (op eigen domein)**: `www.hunsite.com/admin` → Redirect naar centrale login
 
-Voorbeeld:
-- La Bottega eigenaar gaat naar: `labottegaherent.com/beheer` (of in preview: `/site/bottega/beheer`)
+**Handige URLs:**
+| Wie | URL | Resultaat |
+|-----|-----|-----------|
+| U (super-admin) | `site-consolidator.preview.emergentagent.com/beheer` | Super-admin dashboard |
+| Klanten | `www.hunsite.com/admin` | Centrale restaurant login |
+
+**Hoe /admin redirect werkt per domein:**
+- **5 Cloudflare-beheerde sites** (bottega, ascoli, mercato, tracemaster, theobeans): Cloudflare Worker redirect
+- **La Cantina** (direct gekoppeld): Frontend App.js redirect
 
 ### Test Accounts
 - Site Admin (La Bottega): bottega@test.be / test123
@@ -247,6 +255,7 @@ Voorbeeld:
 - [x] **Site Admin Dashboards** ✅ (4 maart 2026) - Restaurant eigenaren kunnen nu inloggen en hun site beheren
 - [x] **Speciale Aankondiging Feature** ✅ (5 maart 2026) - Restaurant eigenaren kunnen nu speciale mededelingen plaatsen die zichtbaar zijn op hun website
 - [x] **Theo Beans Export Website** ✅ (5 maart 2026) - 6e website (niet-restaurant) succesvol gemigreerd naar het platform
+- [x] **Easy Admin URLs** ✅ (6 maart 2026) - `/admin` op alle 6 client-domeinen redirect naar centrale login, `/beheer` URL voor super-admin
 
 ### Site Admin Accounts (4 restaurants)
 | Restaurant | Email | Wachtwoord | Rechten |
