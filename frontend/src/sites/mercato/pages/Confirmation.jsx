@@ -4,9 +4,21 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
 import { CheckCircle } from 'lucide-react';
 
+// CSS voor de hartslag animatie
+const pulseAnimation = `
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+`;
+
 const Confirmation = () => {
   const { language } = useLanguage();
   const basePath = useBasePath();
+  const homePath = basePath || '/';
 
   const content = {
     nl: {
@@ -63,11 +75,17 @@ const Confirmation = () => {
 
   return (
     <div className="min-h-screen bg-black pt-20">
+      {/* Inject animation CSS */}
+      <style>{pulseAnimation}</style>
+      
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Success Icon */}
+        {/* Success Icon with Heartbeat Animation */}
         <div className="flex justify-center mb-8">
-          <div className="bg-gold/10 p-6 rounded-full">
-            <CheckCircle size={80} className="text-gold" />
+          <div 
+            className="bg-green-500/20 p-6 rounded-full"
+            style={{ animation: 'heartbeat 1.5s ease-in-out infinite' }}
+          >
+            <CheckCircle size={80} className="text-green-500" strokeWidth={2.5} />
           </div>
         </div>
 
@@ -84,15 +102,15 @@ const Confirmation = () => {
 
           <div className="space-y-6 text-gray-300">
             <p className="text-lg md:text-xl leading-relaxed">
-              <span className="font-bold text-gold">✓</span> {t.message1}
+              <span className="font-bold text-green-500">✓</span> {t.message1}
             </p>
             
             <p className="text-lg md:text-xl leading-relaxed">
-              <span className="font-bold text-gold">✓</span> {t.message2}
+              <span className="font-bold text-green-500">✓</span> {t.message2}
             </p>
             
             <p className="text-lg md:text-xl leading-relaxed">
-              <span className="font-bold text-gold">✓</span> {t.message3}
+              <span className="font-bold text-green-500">✓</span> {t.message3}
             </p>
           </div>
         </div>
@@ -100,7 +118,7 @@ const Confirmation = () => {
         {/* Back to Home Button */}
         <div className="text-center">
           <Link
-            to={basePath}
+            to={homePath}
             className="inline-block bg-gold text-black px-8 py-4 rounded-lg font-bold text-lg hover:bg-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
           >
             {t.backButton}

@@ -3,14 +3,34 @@ import { Link } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
 import { useBasePath } from '../context/BasePathContext';
 
+// CSS voor de hartslag animatie
+const pulseAnimation = `
+  @keyframes heartbeat {
+    0% { transform: scale(1); }
+    25% { transform: scale(1.1); }
+    50% { transform: scale(1); }
+    75% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+  }
+`;
+
 const Confirmation = () => {
   const basePath = useBasePath();
+  const homePath = basePath || '/';
   
   return (
     <div className="min-h-screen bg-[#2a2a2a] flex items-center justify-center px-4">
+      {/* Inject animation CSS */}
+      <style>{pulseAnimation}</style>
+      
       <div className="max-w-2xl w-full">
         <div className="bg-gray-900 rounded-lg p-12 text-center">
-          <CheckCircle className="w-24 h-24 text-green-500 mx-auto mb-6" />
+          <div 
+            className="inline-block"
+            style={{ animation: 'heartbeat 1.5s ease-in-out infinite' }}
+          >
+            <CheckCircle className="w-24 h-24 text-green-500 mx-auto mb-6" />
+          </div>
           
           <h1 className="text-4xl font-serif text-white mb-8">Grazie!</h1>
           
@@ -43,7 +63,7 @@ const Confirmation = () => {
 
           <div className="space-y-4">
             <Link
-              to={basePath}
+              to={homePath}
               className="inline-block px-8 py-3 bg-[#6b1f1f] hover:bg-[#7d2424] text-white rounded-sm transition-colors"
             >
               Klik hier om terug te gaan naar de site

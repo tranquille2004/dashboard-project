@@ -24,8 +24,11 @@ const Navigation = () => {
 
   const currentLang = languages.find(l => l.code === language);
 
+  // Als basePath leeg is, gebruik "/" voor home
+  const homePath = basePath || '/';
+  
   const navLinks = [
-    { path: basePath, label: t.home[language] },
+    { path: homePath, label: t.home[language] },
     { path: `${basePath}/about`, label: t.about[language] },
     { path: `${basePath}/menu`, label: t.menu[language] },
     { path: `${basePath}/group-menus`, label: t.groupMenus[language] },
@@ -35,14 +38,14 @@ const Navigation = () => {
     { path: `${basePath}/info`, label: t.info[language] }
   ];
 
-  const isActive = (path) => location.pathname === path || (path === basePath && location.pathname === `${basePath}/`);
+  const isActive = (path) => location.pathname === path || (path === homePath && (location.pathname === `${basePath}/` || location.pathname === basePath || location.pathname === '/'));
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-sm border-b border-gold/20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to={basePath} className="flex items-center space-x-3">
+          <Link to={homePath} className="flex items-center space-x-3">
             <img 
               src="/images/mercato/logo/mercato-logo.jpg" 
               alt="Mercato Logo" 

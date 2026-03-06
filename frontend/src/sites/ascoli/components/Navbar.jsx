@@ -22,8 +22,11 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Als basePath leeg is, gebruik "/" voor home
+  const homePath = basePath || '/';
+  
   const navItems = [
-    { name: t.home, path: basePath },
+    { name: t.home, path: homePath },
     { name: t.about, path: `${basePath}/about` },
     { name: t.menu, path: `${basePath}/menu` },
     { name: t.groupMenu, path: `${basePath}/group-menu` },
@@ -56,7 +59,7 @@ const Navbar = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link to={basePath} className="flex items-center">
+            <Link to={homePath} className="flex items-center">
               <img
                 src="/images/ascoli/logo/ascoli.jpg"
                 alt="L'Ascoli"

@@ -1029,12 +1029,24 @@ function ConfirmationPage() {
   
   return (
     <div className="min-h-screen bg-[#FAF6F1]">
+      <style>{`
+        @keyframes heartbeat {
+          0% { transform: scale(1); }
+          25% { transform: scale(1.1); }
+          50% { transform: scale(1); }
+          75% { transform: scale(1.05); }
+          100% { transform: scale(1); }
+        }
+      `}</style>
       <Navigation />
       <div className="pt-20">
         <div className="max-w-4xl mx-auto px-4 py-12">
-          {/* Success Icon */}
+          {/* Success Icon with Heartbeat Animation */}
           <div className="text-center mb-8">
-            <div className="inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-6">
+            <div 
+              className="inline-flex items-center justify-center w-24 h-24 bg-green-100 rounded-full mb-6"
+              style={{ animation: 'heartbeat 1.5s ease-in-out infinite' }}
+            >
               <svg className="w-12 h-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
               </svg>
