@@ -3,7 +3,9 @@ import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import { 
   Globe, Smartphone, Shield, Zap, MessageCircle, Mail, Phone, 
   ChevronRight, Check, Star, Menu, X, ArrowRight, Settings,
-  CreditCard, Calendar, Languages, BarChart3, Clock
+  CreditCard, Calendar, Languages, BarChart3, Clock, Bell,
+  Image, FileText, Users, ShoppingCart, MapPin, ChevronLeft,
+  Monitor, Palette, Lock, Megaphone
 } from 'lucide-react';
 import SEO from '@/components/SEO';
 import './FWorks.css';
@@ -11,47 +13,71 @@ import './FWorks.css';
 // Translations
 const translations = {
   nl: {
-    nav: { home: 'Home', services: 'Diensten', portfolio: 'Portfolio', pricing: 'Prijzen', contact: 'Contact' },
+    nav: { home: 'Home', features: 'Mogelijkheden', portfolio: 'Portfolio', pricing: 'Prijzen', contact: 'Contact' },
     hero: {
       title: 'Professionele Websites',
       subtitle: 'Die Klanten Aantrekken',
       description: 'Moderne, snelle en mobielvriendelijke websites met eigen beheerdashboard. Volledig op maat gemaakt voor uw bedrijf.',
       cta: 'Gratis Offerte Aanvragen',
-      ctaSecondary: 'Bekijk Portfolio'
-    },
-    services: {
-      title: 'Wat Wij Bieden',
-      subtitle: 'Alles wat u nodig heeft voor online succes',
-      items: [
-        { icon: 'globe', title: 'Maatwerk Website', desc: 'Uniek ontwerp dat past bij uw merk en doelgroep' },
-        { icon: 'smartphone', title: 'Mobiel Geoptimaliseerd', desc: 'Perfect op elk apparaat, van desktop tot smartphone' },
-        { icon: 'settings', title: 'Eigen Dashboard', desc: 'Beheer uw website zelf met een eenvoudig dashboard' },
-        { icon: 'shield', title: 'Veilig & Betrouwbaar', desc: 'SSL-certificaat en dagelijkse backups inbegrepen' },
-        { icon: 'zap', title: 'Supersnel', desc: 'Geoptimaliseerd voor snelle laadtijden en SEO' },
-        { icon: 'languages', title: 'Meertalig', desc: 'Bereik meer klanten met meerdere talen' }
-      ]
+      ctaSecondary: 'Bekijk Mogelijkheden'
     },
     features: {
-      title: 'Krachtige Functies',
-      subtitle: 'Ingebouwd in elke website',
-      items: [
-        { icon: 'calendar', title: 'Reservatiesysteem', desc: 'Laat klanten online reserveren of afspraken maken' },
-        { icon: 'creditcard', title: 'Betalingen', desc: 'Accepteer online betalingen via Stripe of PayPal' },
-        { icon: 'messagecircle', title: 'Mededelingen', desc: 'Plaats belangrijke aankondigingen op uw website' },
-        { icon: 'barchart', title: 'Analytics', desc: 'Volg bezoekers en prestaties van uw website' }
-      ]
+      title: 'Wat Kan Uw Website Allemaal?',
+      subtitle: 'Ontdek de krachtige functies die wij bieden',
+      dashboard: {
+        title: 'Eigen Beheerdashboard',
+        desc: 'Beheer uw website zelf! Wijzig teksten, foto\'s en instellingen wanneer u maar wilt.',
+        features: ['Onbeperkte wijzigingen', 'Geen technische kennis nodig', '24/7 toegang']
+      },
+      announcement: {
+        title: 'Mededelingen & Aankondigingen',
+        desc: 'Plaats belangrijke berichten direct op uw website. Sluitingsdagen, speciale acties, of nieuws.',
+        features: ['Direct zichtbaar', 'Meerdere stijlen', 'Tijdelijk of permanent']
+      },
+      reservation: {
+        title: 'Reservatie & Contactformulieren',
+        desc: 'Laat klanten online reserveren of contact opnemen. Alle aanvragen direct in uw inbox.',
+        features: ['Online reservaties', 'Contactformulieren', 'E-mail notificaties']
+      },
+      menu: {
+        title: 'Menu\'s & Producten',
+        desc: 'Toon uw menu of producten met prijzen, beschrijvingen en foto\'s.',
+        features: ['Categorieën', 'Prijzen beheren', 'Foto galerijen']
+      },
+      payment: {
+        title: 'Online Betalingen',
+        desc: 'Accepteer betalingen via Stripe, PayPal of andere betaalmethodes.',
+        features: ['Veilig betalen', 'Meerdere opties', 'Automatische facturen']
+      },
+      multilingual: {
+        title: 'Meertalige Website',
+        desc: 'Bereik meer klanten met een website in meerdere talen.',
+        features: ['Nederlands', 'Frans', 'Engels', 'Andere talen']
+      }
+    },
+    demo: {
+      title: 'Probeer Het Zelf',
+      subtitle: 'Klik op de knoppen om te zien wat u allemaal kunt doen',
+      dashboardTitle: 'Beheerdashboard',
+      announcement: 'Mededeling Plaatsen',
+      announcementText: '🎄 Wij zijn gesloten van 24 tot 26 december. Fijne feestdagen!',
+      gallery: 'Foto\'s Beheren',
+      menu: 'Menu Aanpassen',
+      contact: 'Berichten Bekijken',
+      hours: 'Openingstijden'
     },
     portfolio: {
-      title: 'Ons Portfolio',
-      subtitle: 'Enkele van onze recente projecten',
-      viewSite: 'Bekijk Website'
+      title: 'Onze Websites',
+      subtitle: 'Bekijk enkele van onze recente projecten',
+      viewSite: 'Bekijk Website',
+      liveDemo: 'Live Demo'
     },
     pricing: {
       title: 'Transparante Prijzen',
       subtitle: 'Geen verrassingen, alles inbegrepen',
       price: '199',
       period: 'per jaar',
-      includes: 'Inclusief:',
+      includes: 'Inbegrepen:',
       features: [
         'Professionele maatwerk website',
         'Eigen beheerdashboard',
@@ -90,40 +116,64 @@ const translations = {
     }
   },
   fr: {
-    nav: { home: 'Accueil', services: 'Services', portfolio: 'Portfolio', pricing: 'Tarifs', contact: 'Contact' },
+    nav: { home: 'Accueil', features: 'Fonctionnalités', portfolio: 'Portfolio', pricing: 'Tarifs', contact: 'Contact' },
     hero: {
       title: 'Sites Web Professionnels',
       subtitle: 'Qui Attirent Les Clients',
       description: 'Sites web modernes, rapides et adaptés aux mobiles avec tableau de bord personnel. Entièrement personnalisé pour votre entreprise.',
       cta: 'Demander Un Devis Gratuit',
-      ctaSecondary: 'Voir Portfolio'
-    },
-    services: {
-      title: 'Nos Services',
-      subtitle: 'Tout ce dont vous avez besoin pour réussir en ligne',
-      items: [
-        { icon: 'globe', title: 'Site Sur Mesure', desc: 'Design unique adapté à votre marque et public cible' },
-        { icon: 'smartphone', title: 'Optimisé Mobile', desc: 'Parfait sur tous les appareils, du desktop au smartphone' },
-        { icon: 'settings', title: 'Tableau de Bord', desc: 'Gérez votre site vous-même avec un dashboard simple' },
-        { icon: 'shield', title: 'Sécurisé & Fiable', desc: 'Certificat SSL et sauvegardes quotidiennes inclus' },
-        { icon: 'zap', title: 'Ultra Rapide', desc: 'Optimisé pour des temps de chargement rapides et SEO' },
-        { icon: 'languages', title: 'Multilingue', desc: 'Atteignez plus de clients avec plusieurs langues' }
-      ]
+      ctaSecondary: 'Voir Les Fonctionnalités'
     },
     features: {
-      title: 'Fonctionnalités Puissantes',
-      subtitle: 'Intégrées dans chaque site',
-      items: [
-        { icon: 'calendar', title: 'Système de Réservation', desc: 'Permettez aux clients de réserver en ligne' },
-        { icon: 'creditcard', title: 'Paiements', desc: 'Acceptez les paiements en ligne via Stripe ou PayPal' },
-        { icon: 'messagecircle', title: 'Annonces', desc: 'Publiez des annonces importantes sur votre site' },
-        { icon: 'barchart', title: 'Analytiques', desc: 'Suivez les visiteurs et performances de votre site' }
-      ]
+      title: 'Que Peut Faire Votre Site?',
+      subtitle: 'Découvrez les fonctionnalités puissantes que nous offrons',
+      dashboard: {
+        title: 'Tableau de Bord Personnel',
+        desc: 'Gérez votre site vous-même! Modifiez textes, photos et paramètres quand vous voulez.',
+        features: ['Modifications illimitées', 'Aucune connaissance technique', 'Accès 24/7']
+      },
+      announcement: {
+        title: 'Annonces & Messages',
+        desc: 'Publiez des messages importants directement sur votre site. Fermetures, promotions, ou actualités.',
+        features: ['Visible immédiatement', 'Plusieurs styles', 'Temporaire ou permanent']
+      },
+      reservation: {
+        title: 'Réservations & Formulaires',
+        desc: 'Permettez aux clients de réserver ou de vous contacter en ligne.',
+        features: ['Réservations en ligne', 'Formulaires de contact', 'Notifications par e-mail']
+      },
+      menu: {
+        title: 'Menus & Produits',
+        desc: 'Affichez votre menu ou produits avec prix, descriptions et photos.',
+        features: ['Catégories', 'Gestion des prix', 'Galeries photos']
+      },
+      payment: {
+        title: 'Paiements En Ligne',
+        desc: 'Acceptez les paiements via Stripe, PayPal ou autres méthodes.',
+        features: ['Paiement sécurisé', 'Plusieurs options', 'Factures automatiques']
+      },
+      multilingual: {
+        title: 'Site Multilingue',
+        desc: 'Atteignez plus de clients avec un site en plusieurs langues.',
+        features: ['Néerlandais', 'Français', 'Anglais', 'Autres langues']
+      }
+    },
+    demo: {
+      title: 'Essayez Vous-Même',
+      subtitle: 'Cliquez sur les boutons pour voir ce que vous pouvez faire',
+      dashboardTitle: 'Tableau de Bord',
+      announcement: 'Publier Une Annonce',
+      announcementText: '🎄 Nous sommes fermés du 24 au 26 décembre. Joyeuses fêtes!',
+      gallery: 'Gérer Les Photos',
+      menu: 'Modifier Le Menu',
+      contact: 'Voir Les Messages',
+      hours: 'Horaires'
     },
     portfolio: {
-      title: 'Notre Portfolio',
-      subtitle: 'Quelques-uns de nos projets récents',
-      viewSite: 'Voir Le Site'
+      title: 'Nos Sites Web',
+      subtitle: 'Découvrez quelques-uns de nos projets récents',
+      viewSite: 'Voir Le Site',
+      liveDemo: 'Démo Live'
     },
     pricing: {
       title: 'Tarifs Transparents',
@@ -169,40 +219,64 @@ const translations = {
     }
   },
   en: {
-    nav: { home: 'Home', services: 'Services', portfolio: 'Portfolio', pricing: 'Pricing', contact: 'Contact' },
+    nav: { home: 'Home', features: 'Features', portfolio: 'Portfolio', pricing: 'Pricing', contact: 'Contact' },
     hero: {
       title: 'Professional Websites',
       subtitle: 'That Attract Customers',
       description: 'Modern, fast, and mobile-friendly websites with your own management dashboard. Fully customized for your business.',
       cta: 'Get A Free Quote',
-      ctaSecondary: 'View Portfolio'
-    },
-    services: {
-      title: 'What We Offer',
-      subtitle: 'Everything you need for online success',
-      items: [
-        { icon: 'globe', title: 'Custom Website', desc: 'Unique design that fits your brand and target audience' },
-        { icon: 'smartphone', title: 'Mobile Optimized', desc: 'Perfect on every device, from desktop to smartphone' },
-        { icon: 'settings', title: 'Own Dashboard', desc: 'Manage your website yourself with a simple dashboard' },
-        { icon: 'shield', title: 'Secure & Reliable', desc: 'SSL certificate and daily backups included' },
-        { icon: 'zap', title: 'Super Fast', desc: 'Optimized for fast loading times and SEO' },
-        { icon: 'languages', title: 'Multilingual', desc: 'Reach more customers with multiple languages' }
-      ]
+      ctaSecondary: 'View Features'
     },
     features: {
-      title: 'Powerful Features',
-      subtitle: 'Built into every website',
-      items: [
-        { icon: 'calendar', title: 'Reservation System', desc: 'Let customers book online or make appointments' },
-        { icon: 'creditcard', title: 'Payments', desc: 'Accept online payments via Stripe or PayPal' },
-        { icon: 'messagecircle', title: 'Announcements', desc: 'Post important announcements on your website' },
-        { icon: 'barchart', title: 'Analytics', desc: 'Track visitors and performance of your website' }
-      ]
+      title: 'What Can Your Website Do?',
+      subtitle: 'Discover the powerful features we offer',
+      dashboard: {
+        title: 'Personal Dashboard',
+        desc: 'Manage your website yourself! Change texts, photos and settings whenever you want.',
+        features: ['Unlimited changes', 'No technical knowledge needed', '24/7 access']
+      },
+      announcement: {
+        title: 'Announcements & Notices',
+        desc: 'Post important messages directly on your website. Closures, promotions, or news.',
+        features: ['Instantly visible', 'Multiple styles', 'Temporary or permanent']
+      },
+      reservation: {
+        title: 'Reservations & Contact Forms',
+        desc: 'Let customers book online or contact you. All inquiries directly in your inbox.',
+        features: ['Online reservations', 'Contact forms', 'Email notifications']
+      },
+      menu: {
+        title: 'Menus & Products',
+        desc: 'Display your menu or products with prices, descriptions and photos.',
+        features: ['Categories', 'Manage prices', 'Photo galleries']
+      },
+      payment: {
+        title: 'Online Payments',
+        desc: 'Accept payments via Stripe, PayPal or other payment methods.',
+        features: ['Secure payment', 'Multiple options', 'Automatic invoices']
+      },
+      multilingual: {
+        title: 'Multilingual Website',
+        desc: 'Reach more customers with a website in multiple languages.',
+        features: ['Dutch', 'French', 'English', 'Other languages']
+      }
+    },
+    demo: {
+      title: 'Try It Yourself',
+      subtitle: 'Click the buttons to see what you can do',
+      dashboardTitle: 'Dashboard',
+      announcement: 'Post Announcement',
+      announcementText: '🎄 We are closed from December 24 to 26. Happy holidays!',
+      gallery: 'Manage Photos',
+      menu: 'Edit Menu',
+      contact: 'View Messages',
+      hours: 'Opening Hours'
     },
     portfolio: {
-      title: 'Our Portfolio',
-      subtitle: 'Some of our recent projects',
-      viewSite: 'View Website'
+      title: 'Our Websites',
+      subtitle: 'Check out some of our recent projects',
+      viewSite: 'View Website',
+      liveDemo: 'Live Demo'
     },
     pricing: {
       title: 'Transparent Pricing',
@@ -249,83 +323,65 @@ const translations = {
   }
 };
 
-// Portfolio data with actual screenshots from our sites
+// Portfolio data with real website screenshots (iframe previews)
 const portfolioItems = [
   {
     name: 'La Cantina Italiana',
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant' },
     location: 'Tervuren',
-    image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600&h=400&fit=crop',
     url: 'https://lacantinaitaliana.net',
-    features: ['reservation', 'multilingual', 'menu']
+    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/cantina',
+    features: ['Reservaties', 'Meertalig', 'Menu']
   },
   {
     name: 'La Bottega Italiana',
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant' },
     location: 'Herent',
-    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=600&h=400&fit=crop',
     url: 'https://labottegaherent.com',
-    features: ['reservation', 'takeaway', 'multilingual']
+    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/bottega',
+    features: ['Reservaties', 'Afhalen', 'Groepsmenu\'s']
   },
   {
     name: "L'Ascoli",
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant' },
     location: 'Zaventem',
-    image: 'https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=600&h=400&fit=crop',
     url: 'https://ascolizaventem.com',
-    features: ['reservation', 'groupmenus', 'gallery']
+    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/ascoli',
+    features: ['Reservaties', 'Galerij', 'Evenementen']
   },
   {
     name: 'Ristorante Mercato',
     type: { nl: 'Pizzeria & Restaurant', fr: 'Pizzeria & Restaurant', en: 'Pizzeria & Restaurant' },
     location: 'Zaventem',
-    image: 'https://images.unsplash.com/photo-1579027989536-b7b1f875659b?w=600&h=400&fit=crop',
     url: 'https://ristorantemercato.be',
-    features: ['reservation', 'takeaway', 'menu']
+    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/mercato',
+    features: ['Reservaties', 'Afhalen', 'Menu']
   },
   {
     name: 'Theo Beans Export',
     type: { nl: 'Cacao Export', fr: 'Export de Cacao', en: 'Cacao Export' },
     location: 'Ecuador',
-    image: 'https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=600&h=400&fit=crop',
     url: 'https://theobeans-export.com',
-    features: ['multilingual', 'gallery', 'contact']
+    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/theobeans',
+    features: ['Meertalig', 'Galerij', 'Contact']
   },
   {
     name: 'Tracemaster',
     type: { nl: 'GPS Tracking', fr: 'Suivi GPS', en: 'GPS Tracking' },
     location: 'Ecuador',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop',
     url: 'https://tracemaster-rastreadores.com',
-    features: ['ecommerce', 'multilingual', 'whatsapp']
+    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/tracemaster',
+    features: ['E-commerce', 'WhatsApp', 'Producten']
   }
 ];
 
-// Icon component
-const IconComponent = ({ name, className }) => {
-  const icons = {
-    globe: Globe,
-    smartphone: Smartphone,
-    shield: Shield,
-    zap: Zap,
-    settings: Settings,
-    languages: Languages,
-    calendar: Calendar,
-    creditcard: CreditCard,
-    messagecircle: MessageCircle,
-    barchart: BarChart3
-  };
-  const Icon = icons[name] || Globe;
-  return <Icon className={className} />;
-};
-
-// Language Selector
+// Language Selector - More visible
 const LanguageSelector = ({ lang, setLang }) => {
   const [open, setOpen] = useState(false);
   const langs = [
-    { code: 'nl', flag: '🇳🇱', name: 'NL' },
-    { code: 'fr', flag: '🇫🇷', name: 'FR' },
-    { code: 'en', flag: '🇬🇧', name: 'EN' }
+    { code: 'nl', flag: '🇳🇱', name: 'Nederlands' },
+    { code: 'fr', flag: '🇫🇷', name: 'Français' },
+    { code: 'en', flag: '🇬🇧', name: 'English' }
   ];
   const current = langs.find(l => l.code === lang);
 
@@ -333,21 +389,23 @@ const LanguageSelector = ({ lang, setLang }) => {
     <div className="relative">
       <button 
         onClick={() => setOpen(!open)}
-        className="flex items-center space-x-2 px-3 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition-colors"
+        className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors border border-white/30"
       >
-        <span>{current?.flag}</span>
-        <span className="text-sm font-medium">{current?.name}</span>
+        <span className="text-lg">{current?.flag}</span>
+        <span className="text-sm font-semibold text-white">{current?.name}</span>
+        <ChevronRight className={`w-4 h-4 text-white transition-transform ${open ? 'rotate-90' : ''}`} />
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-2 bg-gray-900 border border-gray-700 rounded-lg overflow-hidden shadow-xl z-50">
+        <div className="absolute right-0 top-full mt-2 bg-white rounded-xl overflow-hidden shadow-2xl z-50 min-w-[160px]">
           {langs.map(l => (
             <button
               key={l.code}
               onClick={() => { setLang(l.code); setOpen(false); }}
-              className={`w-full px-4 py-2 text-left flex items-center space-x-2 hover:bg-gray-800 transition-colors ${lang === l.code ? 'bg-gray-800' : ''}`}
+              className={`w-full px-4 py-3 text-left flex items-center space-x-3 hover:bg-gray-100 transition-colors ${lang === l.code ? 'bg-amber-50 text-amber-700' : 'text-gray-700'}`}
             >
-              <span>{l.flag}</span>
-              <span className="text-sm">{l.name}</span>
+              <span className="text-lg">{l.flag}</span>
+              <span className="text-sm font-medium">{l.name}</span>
+              {lang === l.code && <Check className="w-4 h-4 ml-auto text-amber-500" />}
             </button>
           ))}
         </div>
@@ -381,22 +439,20 @@ const Navigation = ({ t, lang, setLang }) => {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <a href="#home" onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center">
-              <span className="text-gray-900 font-bold text-xl">F</span>
-            </div>
-            <span className="text-xl font-bold text-white">F.Works</span>
+            <img src="/images/fworks-logo.png" alt="F.Works" className="h-12 w-auto" />
+            <span className="text-xl font-bold text-white hidden sm:block">F.Works Builders</span>
           </a>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-8">
-            <button onClick={() => scrollToSection('services')} className="text-gray-300 hover:text-white transition-colors">{t.nav.services}</button>
-            <button onClick={() => scrollToSection('portfolio')} className="text-gray-300 hover:text-white transition-colors">{t.nav.portfolio}</button>
-            <button onClick={() => scrollToSection('pricing')} className="text-gray-300 hover:text-white transition-colors">{t.nav.pricing}</button>
-            <button onClick={() => scrollToSection('contact')} className="text-gray-300 hover:text-white transition-colors">{t.nav.contact}</button>
+            <button onClick={() => scrollToSection('features')} className="text-white/90 hover:text-white transition-colors font-medium">{t.nav.features}</button>
+            <button onClick={() => scrollToSection('portfolio')} className="text-white/90 hover:text-white transition-colors font-medium">{t.nav.portfolio}</button>
+            <button onClick={() => scrollToSection('pricing')} className="text-white/90 hover:text-white transition-colors font-medium">{t.nav.pricing}</button>
+            <button onClick={() => scrollToSection('contact')} className="text-white/90 hover:text-white transition-colors font-medium">{t.nav.contact}</button>
             <LanguageSelector lang={lang} setLang={setLang} />
             <button 
               onClick={() => scrollToSection('contact')}
-              className="px-5 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold rounded-lg hover:from-amber-500 hover:to-amber-600 transition-all shadow-lg"
+              className="px-6 py-2.5 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold rounded-lg hover:from-amber-500 hover:to-amber-600 transition-all shadow-lg"
             >
               {t.hero.cta}
             </button>
@@ -413,12 +469,12 @@ const Navigation = ({ t, lang, setLang }) => {
 
         {/* Mobile Menu */}
         {menuOpen && (
-          <div className="lg:hidden bg-gray-900/95 backdrop-blur-md border-t border-gray-800 pb-6">
+          <div className="lg:hidden bg-gray-900/95 backdrop-blur-md border-t border-white/10 pb-6">
             <div className="flex flex-col space-y-4 pt-4">
-              <button onClick={() => scrollToSection('services')} className="text-gray-300 hover:text-white py-2">{t.nav.services}</button>
-              <button onClick={() => scrollToSection('portfolio')} className="text-gray-300 hover:text-white py-2">{t.nav.portfolio}</button>
-              <button onClick={() => scrollToSection('pricing')} className="text-gray-300 hover:text-white py-2">{t.nav.pricing}</button>
-              <button onClick={() => scrollToSection('contact')} className="text-gray-300 hover:text-white py-2">{t.nav.contact}</button>
+              <button onClick={() => scrollToSection('features')} className="text-white/90 hover:text-white py-2 font-medium">{t.nav.features}</button>
+              <button onClick={() => scrollToSection('portfolio')} className="text-white/90 hover:text-white py-2 font-medium">{t.nav.portfolio}</button>
+              <button onClick={() => scrollToSection('pricing')} className="text-white/90 hover:text-white py-2 font-medium">{t.nav.pricing}</button>
+              <button onClick={() => scrollToSection('contact')} className="text-white/90 hover:text-white py-2 font-medium">{t.nav.contact}</button>
               <button 
                 onClick={() => scrollToSection('contact')}
                 className="px-5 py-3 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold rounded-lg"
@@ -433,28 +489,35 @@ const Navigation = ({ t, lang, setLang }) => {
   );
 };
 
-// Hero Section
+// Hero Section with background image
 const HeroSection = ({ t }) => {
   const scrollToContact = () => {
     document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   };
-  const scrollToPortfolio = () => {
-    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+  const scrollToFeatures = () => {
+    document.getElementById('features')?.scrollIntoView({ behavior: 'smooth' });
   };
 
   return (
     <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxnIGZpbGw9IiNmZmYiIGZpbGwtb3BhY2l0eT0iMC4wMyI+PHBhdGggZD0iTTM2IDM0djItSDI0di0yaDEyek0zNiAyNHYySDI0di0yaDEyeiIvPjwvZz48L2c+PC9zdmc+')] opacity-40"></div>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl"></div>
+      {/* Background Image */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{ 
+          backgroundImage: 'url(https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1920&q=80)',
+        }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900/95 via-gray-900/90 to-gray-800/95"></div>
       </div>
 
+      {/* Decorative elements */}
+      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl"></div>
+
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
-        <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-8">
+        <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-8 border border-white/20">
           <Star className="w-4 h-4 text-amber-400" />
-          <span className="text-sm text-gray-300">Trusted by 10+ businesses</span>
+          <span className="text-sm text-white/90">Vertrouwd door 10+ bedrijven</span>
         </div>
 
         <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-white mb-4">
@@ -463,7 +526,7 @@ const HeroSection = ({ t }) => {
         <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-amber-400 to-amber-500 bg-clip-text text-transparent mb-8">
           {t.hero.subtitle}
         </h2>
-        <p className="text-xl text-gray-400 max-w-3xl mx-auto mb-12">
+        <p className="text-xl text-white/80 max-w-3xl mx-auto mb-12">
           {t.hero.description}
         </p>
 
@@ -476,8 +539,8 @@ const HeroSection = ({ t }) => {
             <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </button>
           <button 
-            onClick={scrollToPortfolio}
-            className="px-8 py-4 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/20 transition-all border border-white/20"
+            onClick={scrollToFeatures}
+            className="px-8 py-4 bg-white/10 text-white font-semibold rounded-xl hover:bg-white/20 transition-all border border-white/30 backdrop-blur-sm"
           >
             {t.hero.ctaSecondary}
           </button>
@@ -485,73 +548,217 @@ const HeroSection = ({ t }) => {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ChevronRight className="w-8 h-8 text-gray-500 rotate-90" />
+          <ChevronRight className="w-8 h-8 text-white/50 rotate-90" />
         </div>
       </div>
     </section>
   );
 };
 
-// Services Section
-const ServicesSection = ({ t }) => {
-  return (
-    <section id="services" className="py-24 bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">{t.services.title}</h2>
-          <p className="text-xl text-gray-400">{t.services.subtitle}</p>
-        </div>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {t.services.items.map((item, index) => (
-            <div 
-              key={index}
-              className="group p-8 bg-gray-800/50 rounded-2xl border border-gray-700/50 hover:border-amber-500/50 transition-all hover:bg-gray-800"
-            >
-              <div className="w-14 h-14 bg-gradient-to-br from-amber-400 to-amber-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
-                <IconComponent name={item.icon} className="w-7 h-7 text-gray-900" />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-3">{item.title}</h3>
-              <p className="text-gray-400">{item.desc}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-};
-
-// Features Section
+// Interactive Features Section
 const FeaturesSection = ({ t }) => {
+  const [activeFeature, setActiveFeature] = useState('dashboard');
+  
+  const featuresList = [
+    { id: 'dashboard', icon: Settings, color: 'amber' },
+    { id: 'announcement', icon: Megaphone, color: 'red' },
+    { id: 'reservation', icon: Calendar, color: 'blue' },
+    { id: 'menu', icon: FileText, color: 'green' },
+    { id: 'payment', icon: CreditCard, color: 'purple' },
+    { id: 'multilingual', icon: Languages, color: 'cyan' }
+  ];
+
+  const getColorClasses = (color, isActive) => {
+    const colors = {
+      amber: isActive ? 'bg-amber-500 text-white' : 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20',
+      red: isActive ? 'bg-red-500 text-white' : 'bg-red-500/10 text-red-400 hover:bg-red-500/20',
+      blue: isActive ? 'bg-blue-500 text-white' : 'bg-blue-500/10 text-blue-400 hover:bg-blue-500/20',
+      green: isActive ? 'bg-green-500 text-white' : 'bg-green-500/10 text-green-400 hover:bg-green-500/20',
+      purple: isActive ? 'bg-purple-500 text-white' : 'bg-purple-500/10 text-purple-400 hover:bg-purple-500/20',
+      cyan: isActive ? 'bg-cyan-500 text-white' : 'bg-cyan-500/10 text-cyan-400 hover:bg-cyan-500/20'
+    };
+    return colors[color];
+  };
+
   return (
-    <section className="py-24 bg-gradient-to-b from-gray-900 to-gray-800">
+    <section id="features" className="py-24 bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-4">{t.features.title}</h2>
           <p className="text-xl text-gray-400">{t.features.subtitle}</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {t.features.items.map((item, index) => (
-            <div 
-              key={index}
-              className="text-center p-6 bg-gray-800/30 rounded-xl border border-gray-700/30"
-            >
-              <div className="w-12 h-12 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <IconComponent name={item.icon} className="w-6 h-6 text-amber-400" />
+        {/* Feature Tabs */}
+        <div className="flex flex-wrap justify-center gap-3 mb-12">
+          {featuresList.map((feature) => {
+            const Icon = feature.icon;
+            const isActive = activeFeature === feature.id;
+            return (
+              <button
+                key={feature.id}
+                onClick={() => setActiveFeature(feature.id)}
+                className={`flex items-center space-x-2 px-5 py-3 rounded-xl transition-all ${getColorClasses(feature.color, isActive)}`}
+              >
+                <Icon className="w-5 h-5" />
+                <span className="font-medium">{t.features[feature.id].title}</span>
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Active Feature Details */}
+        <div className="bg-gray-800/50 rounded-3xl p-8 md:p-12 border border-gray-700/50">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h3 className="text-3xl font-bold text-white mb-4">
+                {t.features[activeFeature].title}
+              </h3>
+              <p className="text-xl text-gray-400 mb-8">
+                {t.features[activeFeature].desc}
+              </p>
+              <div className="space-y-4">
+                {t.features[activeFeature].features.map((feature, idx) => (
+                  <div key={idx} className="flex items-center space-x-3">
+                    <div className="w-6 h-6 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Check className="w-4 h-4 text-amber-400" />
+                    </div>
+                    <span className="text-white">{feature}</span>
+                  </div>
+                ))}
               </div>
-              <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
-              <p className="text-sm text-gray-400">{item.desc}</p>
             </div>
-          ))}
+
+            {/* Interactive Demo */}
+            <div className="bg-gray-900 rounded-2xl p-6 border border-gray-700">
+              <div className="bg-gray-800 rounded-lg p-4 mb-4">
+                <div className="flex items-center space-x-2 mb-3">
+                  <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                  <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                  <span className="text-xs text-gray-500 ml-2">{t.demo.dashboardTitle}</span>
+                </div>
+                
+                {activeFeature === 'dashboard' && (
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
+                      <span className="text-white text-sm">{t.demo.announcement}</span>
+                      <Bell className="w-4 h-4 text-amber-400" />
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
+                      <span className="text-white text-sm">{t.demo.gallery}</span>
+                      <Image className="w-4 h-4 text-blue-400" />
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
+                      <span className="text-white text-sm">{t.demo.menu}</span>
+                      <FileText className="w-4 h-4 text-green-400" />
+                    </div>
+                    <div className="flex items-center justify-between p-3 bg-gray-700/50 rounded-lg">
+                      <span className="text-white text-sm">{t.demo.hours}</span>
+                      <Clock className="w-4 h-4 text-purple-400" />
+                    </div>
+                  </div>
+                )}
+
+                {activeFeature === 'announcement' && (
+                  <div className="space-y-3">
+                    <div className="p-4 bg-amber-500/20 border border-amber-500/50 rounded-lg">
+                      <p className="text-amber-200 text-sm">{t.demo.announcementText}</p>
+                    </div>
+                    <div className="flex space-x-2">
+                      <button className="px-3 py-1.5 bg-green-500/20 text-green-400 rounded text-xs">Activeren</button>
+                      <button className="px-3 py-1.5 bg-gray-700 text-gray-400 rounded text-xs">Bewerken</button>
+                    </div>
+                  </div>
+                )}
+
+                {activeFeature === 'reservation' && (
+                  <div className="space-y-3">
+                    <div className="p-3 bg-gray-700/50 rounded-lg flex justify-between items-center">
+                      <div>
+                        <p className="text-white text-sm">Jan Janssen</p>
+                        <p className="text-gray-400 text-xs">4 personen • 19:00</p>
+                      </div>
+                      <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded">Nieuw</span>
+                    </div>
+                    <div className="p-3 bg-gray-700/50 rounded-lg flex justify-between items-center">
+                      <div>
+                        <p className="text-white text-sm">Marie Dubois</p>
+                        <p className="text-gray-400 text-xs">2 personen • 20:30</p>
+                      </div>
+                      <span className="px-2 py-1 bg-blue-500/20 text-blue-400 text-xs rounded">Bevestigd</span>
+                    </div>
+                  </div>
+                )}
+
+                {activeFeature === 'menu' && (
+                  <div className="space-y-3">
+                    <div className="p-3 bg-gray-700/50 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <span className="text-white text-sm">Margherita</span>
+                        <span className="text-amber-400 text-sm">€12.50</span>
+                      </div>
+                      <p className="text-gray-400 text-xs mt-1">Tomaat, mozzarella, basilicum</p>
+                    </div>
+                    <div className="p-3 bg-gray-700/50 rounded-lg">
+                      <div className="flex justify-between items-center">
+                        <span className="text-white text-sm">Quattro Formaggi</span>
+                        <span className="text-amber-400 text-sm">€14.50</span>
+                      </div>
+                      <p className="text-gray-400 text-xs mt-1">Vier kazen</p>
+                    </div>
+                  </div>
+                )}
+
+                {activeFeature === 'payment' && (
+                  <div className="space-y-3">
+                    <div className="flex space-x-3">
+                      <div className="p-3 bg-gray-700/50 rounded-lg flex-1 text-center">
+                        <CreditCard className="w-6 h-6 text-blue-400 mx-auto mb-1" />
+                        <span className="text-xs text-gray-400">Kaart</span>
+                      </div>
+                      <div className="p-3 bg-gray-700/50 rounded-lg flex-1 text-center">
+                        <div className="w-6 h-6 bg-[#0070ba] rounded mx-auto mb-1 flex items-center justify-center text-white text-xs font-bold">P</div>
+                        <span className="text-xs text-gray-400">PayPal</span>
+                      </div>
+                      <div className="p-3 bg-gray-700/50 rounded-lg flex-1 text-center">
+                        <div className="w-6 h-6 bg-[#5433FF] rounded mx-auto mb-1"></div>
+                        <span className="text-xs text-gray-400">Stripe</span>
+                      </div>
+                    </div>
+                    <div className="p-3 bg-green-500/20 rounded-lg text-center">
+                      <Check className="w-5 h-5 text-green-400 mx-auto" />
+                      <span className="text-green-400 text-sm">Betaling succesvol</span>
+                    </div>
+                  </div>
+                )}
+
+                {activeFeature === 'multilingual' && (
+                  <div className="space-y-3">
+                    <div className="flex space-x-2">
+                      <button className="px-3 py-2 bg-amber-500 text-white rounded-lg text-sm font-medium">🇳🇱 NL</button>
+                      <button className="px-3 py-2 bg-gray-700 text-gray-300 rounded-lg text-sm">🇫🇷 FR</button>
+                      <button className="px-3 py-2 bg-gray-700 text-gray-300 rounded-lg text-sm">🇬🇧 EN</button>
+                    </div>
+                    <div className="p-3 bg-gray-700/50 rounded-lg">
+                      <p className="text-white text-sm">Welkom bij ons restaurant!</p>
+                      <p className="text-gray-500 text-xs mt-1">→ Bienvenue dans notre restaurant!</p>
+                      <p className="text-gray-500 text-xs">→ Welcome to our restaurant!</p>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
-// Portfolio Section
+// Portfolio Section with live previews
 const PortfolioSection = ({ t, lang }) => {
+  const [selectedSite, setSelectedSite] = useState(null);
+
   return (
     <section id="portfolio" className="py-24 bg-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -566,22 +773,26 @@ const PortfolioSection = ({ t, lang }) => {
               key={index}
               className="group bg-gray-900 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-amber-500/50 transition-all"
             >
-              <div className="relative overflow-hidden">
-                <img 
-                  src={item.image} 
-                  alt={item.name}
-                  className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500"
-                  onError={(e) => {
-                    e.target.src = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=400&fit=crop';
-                  }}
+              {/* Live Preview in iframe */}
+              <div className="relative h-48 overflow-hidden bg-gray-800">
+                <iframe
+                  src={item.previewUrl}
+                  className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none"
+                  title={item.name}
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
+                <div className="absolute top-3 right-3">
+                  <span className="px-2 py-1 bg-green-500/20 text-green-400 text-xs rounded-full border border-green-500/30">
+                    ● Live
+                  </span>
+                </div>
               </div>
+              
               <div className="p-6">
                 <h3 className="text-xl font-semibold text-white mb-1">{item.name}</h3>
                 <p className="text-amber-400 text-sm mb-3">{item.type[lang]} • {item.location}</p>
                 <div className="flex flex-wrap gap-2 mb-4">
-                  {item.features.slice(0, 3).map((feature, idx) => (
+                  {item.features.map((feature, idx) => (
                     <span key={idx} className="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded">
                       {feature}
                     </span>
@@ -591,7 +802,7 @@ const PortfolioSection = ({ t, lang }) => {
                   href={item.url} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center space-x-2 text-amber-400 hover:text-amber-300 transition-colors"
+                  className="inline-flex items-center space-x-2 text-amber-400 hover:text-amber-300 transition-colors font-medium"
                 >
                   <span>{t.portfolio.viewSite}</span>
                   <ArrowRight className="w-4 h-4" />
@@ -670,11 +881,9 @@ const ContactSection = ({ t }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    // Simulate sending
     await new Promise(r => setTimeout(r, 1500));
     setSending(false);
     setSent(true);
-    // Open WhatsApp with message
     const text = `Hallo! Ik ben ${formData.name} (${formData.business}). ${formData.message}`;
     window.open(`https://wa.me/32494516064?text=${encodeURIComponent(text)}`, '_blank');
   };
@@ -808,9 +1017,7 @@ const Footer = ({ t }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-3 mb-4 md:mb-0">
-            <div className="w-10 h-10 bg-gradient-to-br from-amber-400 to-amber-600 rounded-lg flex items-center justify-center">
-              <span className="text-gray-900 font-bold text-xl">F</span>
-            </div>
+            <img src="/images/fworks-logo.png" alt="F.Works" className="h-10 w-auto" />
             <div>
               <span className="text-xl font-bold text-white">F.Works Builders</span>
               <p className="text-sm text-gray-500">{t.footer.tagline}</p>
@@ -849,7 +1056,6 @@ function FWorksApp() {
       />
       <Navigation t={t} lang={lang} setLang={setLang} />
       <HeroSection t={t} />
-      <ServicesSection t={t} />
       <FeaturesSection t={t} />
       <PortfolioSection t={t} lang={lang} />
       <PricingSection t={t} />
