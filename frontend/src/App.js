@@ -10,6 +10,7 @@ import SiteEditor from '@/components/admin/SiteEditor';
 import SiteRenderer from '@/components/sites/SiteRenderer';
 import SiteAdminLogin from '@/components/site-admin/SiteAdminLogin';
 import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
+import FWorksApp from '@/sites/fworks/FWorksApp';
 import './App.css';
 
 // Domain to site mapping - BELANGRIJKSTE CODE
@@ -25,7 +26,9 @@ const DOMAIN_MAPPING = {
   'tracemaster-rastreadores.com': 'tracemaster',
   'www.tracemaster-rastreadores.com': 'tracemaster',
   'theobeans-export.com': 'theobeans',
-  'www.theobeans-export.com': 'theobeans'
+  'www.theobeans-export.com': 'theobeans',
+  'fworksbuilders.com': 'fworks',
+  'www.fworksbuilders.com': 'fworks'
 };
 
 // Detecteer custom domain DIRECT bij laden
@@ -41,6 +44,10 @@ function AdminRouter() {
   
   // BELANGRIJK: Als het pad begint met /site/, toon de website met ALLE subroutes
   if (location.pathname.startsWith('/site/')) {
+    // Special handling for /site/fworks
+    if (location.pathname.startsWith('/site/fworks')) {
+      return <FWorksApp />;
+    }
     return (
       <Routes>
         <Route path="/site/:slug/*" element={<SiteRenderer />} />
@@ -64,6 +71,29 @@ function AdminRouter() {
 // Custom Domain Router - voor restaurant sites met /admin pad
 function CustomDomainRouter({ slug }) {
   const location = useLocation();
+  
+  // FWorksBuilders.com - Promotie website
+  if (slug === 'fworks') {
+    // /admin gaat naar super admin dashboard
+    if (location.pathname === '/admin' || location.pathname === '/admin/') {
+      return (
+        <AuthProvider>
+          <SiteProvider>
+            <Routes>
+              <Route path="/admin" element={<AdminDashboard />} />
+            </Routes>
+          </SiteProvider>
+        </AuthProvider>
+      );
+    }
+    // Contact pagina
+    if (location.pathname === '/contact' || location.pathname === '/contact/') {
+      return <FWorksApp />;
+    }
+    // Alle andere paden -> toon FWorks promotie website
+    return <FWorksApp />;
+  }
+  
   const isAdmin = location.pathname === '/admin' || location.pathname === '/admin/';
   const isRestaurantLogin = location.pathname === '/restaurant-login' || location.pathname === '/restaurant-login/';
   const isMijnSite = location.pathname === '/mijn-site' || location.pathname === '/mijn-site/';
