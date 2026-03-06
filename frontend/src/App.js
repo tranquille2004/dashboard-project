@@ -31,10 +31,6 @@ const DOMAIN_MAPPING = {
 // Detecteer custom domain DIRECT bij laden
 const CUSTOM_DOMAIN_SLUG = DOMAIN_MAPPING[window.location.hostname] || null;
 
-// Check of we op /admin of /restaurant-login pad zijn (voor custom domain redirect naar centrale login)
-const isAdminPath = window.location.pathname === '/admin' || window.location.pathname === '/admin/';
-const isRestaurantLoginPath = window.location.pathname === '/restaurant-login' || window.location.pathname === '/restaurant-login/';
-
 // Router voor admin/preview toegang
 function AdminRouter() {
   const location = useLocation();
@@ -65,26 +61,36 @@ function AdminRouter() {
   );
 }
 
-function App() {
-  // ALS OP CUSTOM DOMAIN EN /admin OF /restaurant-login PAD: redirect naar centrale login
-  if (CUSTOM_DOMAIN_SLUG && (isAdminPath || isRestaurantLoginPath)) {
-    // Redirect naar centrale login pagina met site info
-    window.location.href = `https://fworks-admin.preview.emergentagent.com/restaurant-login?site=${CUSTOM_DOMAIN_SLUG}`;
+// Custom Domain Router - voor restaurant sites met /admin pad
+function CustomDomainRouter({ slug }) {
+  const location = useLocation();
+  const isAdmin = location.pathname === '/admin' || location.pathname === '/admin/';
+  const isRestaurantLogin = location.pathname === '/restaurant-login' || location.pathname === '/restaurant-login/';
+  const isMijnSite = location.pathname === '/mijn-site' || location.pathname === '/mijn-site/';
+  
+  // /admin of /restaurant-login of /mijn-site -> toon restaurant admin pagina's
+  if (isAdmin || isRestaurantLogin || isMijnSite) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-100">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Doorsturen naar login pagina...</p>
-        </div>
-      </div>
+      <SiteAdminProvider>
+        <Routes>
+          <Route path="/admin" element={<SiteAdminLogin preSelectedSite={slug} />} />
+          <Route path="/restaurant-login" element={<SiteAdminLogin preSelectedSite={slug} />} />
+          <Route path="/mijn-site" element={<SiteAdminDashboard />} />
+        </Routes>
+      </SiteAdminProvider>
     );
   }
+  
+  // Alle andere paden -> toon de website
+  return <SiteRenderer forcedSlug={slug} />;
+}
 
-  // ALS OP CUSTOM DOMAIN: toon ALLEEN de website, geen routing
+function App() {
+  // ALS OP CUSTOM DOMAIN: toon website met eigen admin routes
   if (CUSTOM_DOMAIN_SLUG) {
     return (
       <BrowserRouter>
-        <SiteRenderer forcedSlug={CUSTOM_DOMAIN_SLUG} />
+        <CustomDomainRouter slug={CUSTOM_DOMAIN_SLUG} />
       </BrowserRouter>
     );
   }

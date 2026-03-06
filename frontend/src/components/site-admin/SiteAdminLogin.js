@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
 
-const SiteAdminLogin = () => {
+const SiteAdminLogin = ({ preSelectedSite }) => {
   const { login } = useSiteAdmin();
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
@@ -26,13 +26,33 @@ const SiteAdminLogin = () => {
     }
   };
 
+  // Site name for display
+  const siteNames = {
+    'cantina': 'La Cantina Italiana',
+    'bottega': 'La Bottega Herent',
+    'ascoli': "L'Ascoli Zaventem",
+    'mercato': 'Ristorante Mercato',
+    'tracemaster': 'Tracemaster',
+    'theobeans': 'Theo Beans Export'
+  };
+  const siteName = preSelectedSite ? siteNames[preSelectedSite] || preSelectedSite : null;
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
       <div className="w-full max-w-md">
         <div className="bg-white rounded-2xl shadow-xl p-8">
           <div className="text-center mb-8">
-            <h1 className="text-2xl font-bold text-gray-900">Restaurant Login</h1>
-            <p className="text-gray-600 mt-2">Log in om je website te beheren</p>
+            {siteName ? (
+              <>
+                <h1 className="text-2xl font-bold text-gray-900">{siteName}</h1>
+                <p className="text-gray-600 mt-2">Eigenaar Login</p>
+              </>
+            ) : (
+              <>
+                <h1 className="text-2xl font-bold text-gray-900">Restaurant Login</h1>
+                <p className="text-gray-600 mt-2">Log in om je website te beheren</p>
+              </>
+            )}
           </div>
 
           {error && (
