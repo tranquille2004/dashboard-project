@@ -144,148 +144,113 @@ const AdminDashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-50" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" }}>
       {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <header className="bg-white shadow-sm border-b border-gray-200">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
           <div className="flex items-center space-x-4">
-            <img src={FWORKS_LOGO} alt="fworks builders" className="h-12 w-auto" />
+            <img src={FWORKS_LOGO} alt="fworks builders" className="h-10 w-auto" />
           </div>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             {/* Language Switcher */}
-            <div className="flex items-center space-x-1 bg-gray-100 rounded-lg p-1">
+            <div className="flex items-center space-x-1 bg-gray-100 rounded-md p-0.5">
               {['fr', 'nl', 'en'].map(l => (
                 <button key={l} onClick={() => setLang(l)}
-                  className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${lang === l ? 'bg-white shadow text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
+                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${lang === l ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
                   {l.toUpperCase()}
                 </button>
               ))}
             </div>
             <div className="flex items-center space-x-2">
               {user.picture && (
-                <img src={user.picture} alt={user.name} className="w-8 h-8 rounded-full" />
+                <img src={user.picture} alt={user.name} className="w-7 h-7 rounded-full" />
               )}
-              <span className="text-gray-700">{user.name}</span>
+              <span className="text-gray-600 text-sm">{user.name}</span>
             </div>
             <button
               onClick={logout}
-              className="flex items-center space-x-1 text-gray-600 hover:text-gray-900"
+              className="flex items-center space-x-1 text-gray-500 hover:text-gray-700 text-sm"
               data-testid="logout-btn"
             >
-              <LogOut className="w-5 h-5" />
+              <LogOut className="w-4 h-4" />
               <span>{t('logout')}</span>
             </button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">{t('totalSites')}</p>
-                <p className="text-3xl font-bold text-gray-900">{sites.length}</p>
-              </div>
-              <Globe className="w-12 h-12 text-blue-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">{t('restaurants')}</p>
-                <p className="text-3xl font-bold text-gray-900">
-                  {sites.filter(s => s.site_type === 'restaurant').length}
-                </p>
-              </div>
-              <Menu className="w-12 h-12 text-green-500 opacity-50" />
-            </div>
-          </div>
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center justify-between">
-              <div>
-                <p className="text-gray-500 text-sm">{t('otherBusiness')}</p>
-                <p className="text-3xl font-bold text-gray-900">
-                  {sites.filter(s => s.site_type !== 'restaurant').length}
-                </p>
-              </div>
-              <Users className="w-12 h-12 text-purple-500 opacity-50" />
-            </div>
-          </div>
-        </div>
-
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
         {/* Sites List */}
-        <div className="bg-white rounded-lg shadow">
-          <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-xl font-semibold text-gray-900">{t('mySites')}</h2>
+        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
+          <div className="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-gray-800">{t('mySites')}</h2>
             <button
               onClick={() => setShowNewSiteModal(true)}
-              className="flex items-center space-x-2 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+              className="flex items-center space-x-1.5 bg-blue-600 text-white px-3 py-1.5 rounded-md hover:bg-blue-700 transition-colors text-sm"
               data-testid="add-site-btn"
             >
-              <Plus className="w-5 h-5" />
+              <Plus className="w-4 h-4" />
               <span>{t('newSite')}</span>
             </button>
           </div>
           
           {sites.length === 0 ? (
-            <div className="p-12 text-center">
-              <Globe className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500 text-lg">{t('noSites')}</p>
-              <p className="text-gray-400">{t('clickToStart')}</p>
+            <div className="p-8 text-center">
+              <Globe className="w-12 h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500">{t('noSites')}</p>
+              <p className="text-gray-400 text-sm">{t('clickToStart')}</p>
             </div>
           ) : (
-            <div className="divide-y divide-gray-200">
+            <div className="divide-y divide-gray-100">
               {sites.map(site => (
-                <div key={site.site_id} className="p-6 hover:bg-gray-50 transition-colors">
+                <div key={site.site_id} className="px-4 py-3 hover:bg-gray-50 transition-colors">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${
-                        site.site_type === 'restaurant' ? 'bg-green-100' : 'bg-purple-100'
+                    <div className="flex items-center space-x-3">
+                      <div className={`w-9 h-9 rounded-md flex items-center justify-center ${
+                        site.site_type === 'restaurant' ? 'bg-green-50' : 'bg-purple-50'
                       }`}>
                         {site.site_type === 'restaurant' ? (
-                          <Menu className="w-6 h-6 text-green-600" />
+                          <Menu className="w-5 h-5 text-green-600" />
                         ) : (
-                          <Globe className="w-6 h-6 text-purple-600" />
+                          <Globe className="w-5 h-5 text-purple-600" />
                         )}
                       </div>
                       <div>
-                        <h3 className="text-lg font-semibold text-gray-900">{site.name}</h3>
-                        <p className="text-gray-500 text-sm">
+                        <h3 className="text-sm font-medium text-gray-900">{site.name}</h3>
+                        <p className="text-gray-400 text-xs">
                           {site.domains?.length > 0 ? site.domains[0] : `/${site.slug}`}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2">
+                    <div className="flex items-center space-x-1">
                       <Link
                         to={`/site/${site.slug}`}
                         target="_blank"
-                        className="p-2 text-gray-400 hover:text-blue-600 transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
                         title="Preview"
                       >
-                        <Eye className="w-5 h-5" />
+                        <Eye className="w-4 h-4" />
                       </Link>
                       <Link
                         to={`/admin/sites/${site.site_id}`}
-                        className="p-2 text-gray-400 hover:text-green-600 transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-green-600 transition-colors"
                         title="Bewerken"
                       >
-                        <Edit className="w-5 h-5" />
+                        <Edit className="w-4 h-4" />
                       </Link>
                       <button
                         onClick={() => deleteSite(site.site_id)}
-                        className="p-2 text-gray-400 hover:text-red-600 transition-colors"
+                        className="p-1.5 text-gray-400 hover:text-red-600 transition-colors"
                         title="Verwijderen"
                       >
-                        <Trash2 className="w-5 h-5" />
+                        <Trash2 className="w-4 h-4" />
                       </button>
                       <Link
                         to={`/admin/sites/${site.site_id}`}
-                        className="flex items-center space-x-1 text-blue-600 hover:text-blue-800"
+                        className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-sm ml-2"
                       >
                         <span>{t('manage')}</span>
-                        <ChevronRight className="w-4 h-4" />
+                        <ChevronRight className="w-3 h-3" />
                       </Link>
                     </div>
                   </div>
