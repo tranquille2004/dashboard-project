@@ -16,11 +16,15 @@ export const BasePathProvider = ({ basePath, children }) => (
 export const Link = ({ to, children, ...props }) => {
   const basePath = useBasePath();
   
-  // Als to begint met /, voeg basePath toe
-  const fullPath = to.startsWith('/') ? `${basePath}${to === '/' ? '' : to}` : to;
+  // Op custom domain is basePath leeg, dus gebruik gewoon het originele pad
+  // Op preview (/site/theobeans) voeg basePath toe
+  let fullPath = to;
+  if (basePath && to.startsWith('/')) {
+    fullPath = `${basePath}${to === '/' ? '' : to}`;
+  }
   
   return (
-    <RouterLink to={fullPath || basePath} {...props}>
+    <RouterLink to={fullPath || '/'} {...props}>
       {children}
     </RouterLink>
   );

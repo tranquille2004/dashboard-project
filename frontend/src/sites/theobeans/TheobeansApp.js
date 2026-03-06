@@ -18,11 +18,16 @@ import Qualite from './pages/Qualite';
 import Tracabilite from './pages/Tracabilite';
 import Contact from './pages/Contact';
 
+// Detecteer of we op custom domain of preview zijn
+const isCustomDomain = !window.location.hostname.includes('emergentagent.com') && 
+                        !window.location.hostname.includes('localhost');
+const basePath = isCustomDomain ? '' : '/site/theobeans';
+
 // Dit is de ENIGE wijziging: geen BrowserRouter (die zit al in hoofdapp)
 function TheobeansApp() {
   return (
     <LanguageProvider>
-      <BasePathProvider basePath="/site/theobeans">
+      <BasePathProvider basePath={basePath}>
         <div className="App">
           <ScrollToTop />
           <Navbar />
