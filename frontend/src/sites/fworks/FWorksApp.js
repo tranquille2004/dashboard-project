@@ -10,6 +10,35 @@ import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 import SEO from '@/components/SEO';
 import './FWorks.css';
 
+// Error Boundary Component
+class ErrorBoundary extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+  componentDidCatch(error, errorInfo) {
+    console.error('FWorks Error:', error, errorInfo);
+  }
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+          <div className="text-center">
+            <h1 className="text-2xl font-bold text-white mb-4">Oops!</h1>
+            <button onClick={() => window.location.reload()} className="px-6 py-3 bg-amber-500 text-gray-900 rounded-lg font-semibold">
+              Pagina herladen
+            </button>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
 // Translations - NL, FR, EN, ES, IT
 const translations = {
   nl: {
@@ -561,39 +590,38 @@ const portfolioItems = [
   }
 ];
 
-// Language Selector with 5 languages
+// Language Selector with 5 languages - Discrete gold/black theme
 const LanguageSelector = ({ lang, setLang }) => {
   const [open, setOpen] = useState(false);
   const langs = [
-    { code: 'nl', flag: '🇳🇱', name: 'Nederlands' },
-    { code: 'fr', flag: '🇫🇷', name: 'Français' },
-    { code: 'en', flag: '🇬🇧', name: 'English' },
-    { code: 'es', flag: '🇪🇸', name: 'Español' },
-    { code: 'it', flag: '🇮🇹', name: 'Italiano' }
+    { code: 'nl', flag: '🇳🇱', name: 'NL' },
+    { code: 'fr', flag: '🇫🇷', name: 'FR' },
+    { code: 'en', flag: '🇬🇧', name: 'EN' },
+    { code: 'es', flag: '🇪🇸', name: 'ES' },
+    { code: 'it', flag: '🇮🇹', name: 'IT' }
   ];
-  const current = langs.find(l => l.code === lang);
+  const current = langs.find(l => l.code === lang) || langs[0];
 
   return (
     <div className="relative">
       <button 
         onClick={() => setOpen(!open)}
-        className="flex items-center space-x-2 px-4 py-2 rounded-lg bg-white text-gray-800 hover:bg-gray-100 transition-colors shadow-md"
+        className="flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-transparent border border-amber-500/30 text-amber-400 hover:bg-amber-500/10 hover:border-amber-500/50 transition-colors"
       >
-        <span className="text-lg">{current?.flag}</span>
-        <span className="text-sm font-semibold">{current?.name}</span>
-        <ChevronRight className={`w-4 h-4 transition-transform ${open ? 'rotate-90' : ''}`} />
+        <Globe className="w-4 h-4" />
+        <span className="text-sm font-medium">{current?.name}</span>
       </button>
       {open && (
-        <div className="absolute right-0 top-full mt-2 bg-white rounded-xl overflow-hidden shadow-2xl z-50 min-w-[160px]">
+        <div className="absolute right-0 top-full mt-2 bg-gray-900 border border-amber-500/30 rounded-lg overflow-hidden shadow-2xl z-50 min-w-[120px]">
           {langs.map(l => (
             <button
               key={l.code}
               onClick={() => { setLang(l.code); setOpen(false); }}
-              className={`w-full px-4 py-3 text-left flex items-center space-x-3 hover:bg-gray-100 transition-colors ${lang === l.code ? 'bg-amber-50 text-amber-700' : 'text-gray-700'}`}
+              className={`w-full px-4 py-2.5 text-left flex items-center space-x-2 hover:bg-amber-500/10 transition-colors ${lang === l.code ? 'bg-amber-500/20 text-amber-400' : 'text-gray-300'}`}
             >
-              <span className="text-lg">{l.flag}</span>
+              <span className="text-sm">{l.flag}</span>
               <span className="text-sm font-medium">{l.name}</span>
-              {lang === l.code && <Check className="w-4 h-4 ml-auto text-amber-500" />}
+              {lang === l.code && <Check className="w-3 h-3 ml-auto text-amber-500" />}
             </button>
           ))}
         </div>
@@ -736,17 +764,17 @@ const HeroSection = ({ t }) => {
   );
 };
 
-// Realistic Feature Demos - kept compact for this file
+// Realistic Feature Demos - Gold/Black theme only
 const FeatureDemoContent = ({ activeFeature, t }) => {
   const [demoState, setDemoState] = useState({ announcementActive: true, selectedLang: 'nl' });
 
   const demos = {
     dashboard: (
-      <div className="bg-gradient-to-br from-[#1a1a2e] to-[#16213e] rounded-xl overflow-hidden shadow-2xl border border-gray-700">
-        <div className="bg-gray-800 px-4 py-3 flex items-center space-x-2">
-          <div className="w-3 h-3 rounded-full bg-red-500"></div>
-          <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-          <div className="w-3 h-3 rounded-full bg-green-500"></div>
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-2xl border border-amber-500/20">
+        <div className="bg-gray-800 px-4 py-3 flex items-center space-x-2 border-b border-amber-500/20">
+          <div className="w-3 h-3 rounded-full bg-amber-500"></div>
+          <div className="w-3 h-3 rounded-full bg-amber-400"></div>
+          <div className="w-3 h-3 rounded-full bg-amber-300"></div>
           <span className="text-xs text-gray-400 ml-3">fworksbuilders - Dashboard</span>
         </div>
         <div className="p-4 flex gap-4">
@@ -761,13 +789,13 @@ const FeatureDemoContent = ({ activeFeature, t }) => {
           <div className="flex-1 bg-gray-800/30 rounded-lg p-4">
             <h4 className="text-white font-semibold mb-3">Welkom terug!</h4>
             <div className="grid grid-cols-2 gap-3">
-              <div className="bg-green-500/10 border border-green-500/30 rounded-lg p-3 text-center">
-                <p className="text-2xl font-bold text-green-400">247</p>
-                <p className="text-xs text-green-300">Bezoekers</p>
+              <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 text-center">
+                <p className="text-2xl font-bold text-amber-400">247</p>
+                <p className="text-xs text-amber-300">Bezoekers</p>
               </div>
-              <div className="bg-blue-500/10 border border-blue-500/30 rounded-lg p-3 text-center">
-                <p className="text-2xl font-bold text-blue-400">12</p>
-                <p className="text-xs text-blue-300">Reservaties</p>
+              <div className="bg-amber-600/10 border border-amber-600/30 rounded-lg p-3 text-center">
+                <p className="text-2xl font-bold text-amber-500">12</p>
+                <p className="text-xs text-amber-400">Reservaties</p>
               </div>
             </div>
           </div>
@@ -776,74 +804,74 @@ const FeatureDemoContent = ({ activeFeature, t }) => {
     ),
     announcement: (
       <div className="space-y-4">
-        <div className="bg-gradient-to-br from-[#7D3C32] to-[#5a2d26] rounded-xl overflow-hidden shadow-2xl">
+        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-2xl border border-amber-500/20">
           <div className="bg-amber-500 px-4 py-3 flex items-center justify-between animate-pulse">
             <span className="text-sm font-medium text-gray-900">🎄 Wij zijn gesloten van 24 tot 26 december!</span>
             <X className="w-4 h-4 text-gray-900" />
           </div>
           <div className="p-6 text-center">
             <h3 className="text-2xl font-bold text-white mb-2">La Cantina Italiana</h3>
-            <p className="text-white/70 text-sm">Authentieke Italiaanse keuken</p>
+            <p className="text-gray-400 text-sm">Authentieke Italiaanse keuken</p>
           </div>
         </div>
         <div className="bg-gray-800 rounded-lg p-4 flex gap-2">
-          {['Waarschuwing', 'Info', 'Succes'].map((style, i) => (
-            <span key={i} className={`px-2 py-1 text-xs rounded cursor-pointer ${i === 0 ? 'bg-amber-500/20 text-amber-400' : i === 1 ? 'bg-blue-500/20 text-blue-400' : 'bg-green-500/20 text-green-400'}`}>{style}</span>
+          {['Belangrijk', 'Nieuws', 'Actie'].map((style, i) => (
+            <span key={i} className={`px-3 py-1 text-xs rounded cursor-pointer ${i === 0 ? 'bg-amber-500 text-gray-900' : 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'}`}>{style}</span>
           ))}
         </div>
       </div>
     ),
     reservation: (
-      <div className="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f23] rounded-xl overflow-hidden shadow-2xl border border-gray-700">
-        <div className="bg-gradient-to-r from-[#7D3C32] to-[#9a4a3d] px-4 py-3">
-          <h4 className="text-white font-semibold">Reserveer een tafel</h4>
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-2xl border border-amber-500/20">
+        <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-3">
+          <h4 className="text-gray-900 font-semibold">Reserveer een tafel</h4>
         </div>
         <div className="p-4 space-y-3">
           <div className="grid grid-cols-2 gap-3">
-            <input type="text" value="15 maart 2026" readOnly className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-white text-sm" />
-            <input type="text" value="19:30" readOnly className="w-full bg-gray-800 border border-gray-700 rounded px-3 py-2 text-white text-sm" />
+            <input type="text" value="15 maart 2026" readOnly className="w-full bg-gray-800 border border-amber-500/30 rounded px-3 py-2 text-white text-sm" />
+            <input type="text" value="19:30" readOnly className="w-full bg-gray-800 border border-amber-500/30 rounded px-3 py-2 text-white text-sm" />
           </div>
-          <button className="w-full bg-gradient-to-r from-[#7D3C32] to-[#9a4a3d] text-white py-3 rounded-lg font-semibold">Reserveer Nu</button>
+          <button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-gray-900 py-3 rounded-lg font-semibold">Reserveer Nu</button>
         </div>
       </div>
     ),
     menu: (
-      <div className="bg-gradient-to-br from-[#faf6f1] to-[#f5efe8] rounded-xl overflow-hidden shadow-2xl">
-        <div className="bg-[#7D3C32] px-4 py-3"><h4 className="text-white font-semibold text-center">Onze Kaart</h4></div>
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-2xl border border-amber-500/20">
+        <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-4 py-3"><h4 className="text-gray-900 font-semibold text-center">Onze Kaart</h4></div>
         <div className="p-4 space-y-3">
           {[{name: 'Pizza Margherita', desc: 'Tomaat, mozzarella', price: '€12.50'}, {name: 'Spaghetti Carbonara', desc: 'Spek, ei, parmezaan', price: '€14.00'}].map((item, i) => (
-            <div key={i} className="flex justify-between p-3 bg-white rounded-lg shadow-sm">
-              <div><h5 className="font-semibold text-gray-800">{item.name}</h5><p className="text-xs text-gray-500">{item.desc}</p></div>
-              <span className="text-[#7D3C32] font-bold">{item.price}</span>
+            <div key={i} className="flex justify-between p-3 bg-gray-800 border border-amber-500/20 rounded-lg">
+              <div><h5 className="font-semibold text-white">{item.name}</h5><p className="text-xs text-gray-400">{item.desc}</p></div>
+              <span className="text-amber-400 font-bold">{item.price}</span>
             </div>
           ))}
         </div>
       </div>
     ),
     payment: (
-      <div className="bg-gradient-to-br from-[#1a1a2e] to-[#0f0f23] rounded-xl overflow-hidden shadow-2xl border border-gray-700 p-4 space-y-4">
-        <div className="flex justify-between border-b border-gray-700 pb-2"><span className="text-white font-semibold">Totaal</span><span className="text-amber-400 font-bold text-xl">€45.50</span></div>
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-2xl border border-amber-500/20 p-4 space-y-4">
+        <div className="flex justify-between border-b border-amber-500/20 pb-2"><span className="text-white font-semibold">Totaal</span><span className="text-amber-400 font-bold text-xl">€45.50</span></div>
         <div className="space-y-2">
-          {[{name: 'Stripe', color: '#635bff'}, {name: 'PayPal', color: '#0070ba'}].map((p, i) => (
-            <div key={i} className="p-3 border rounded-lg flex items-center space-x-3 cursor-pointer hover:bg-gray-800/50" style={{borderColor: p.color + '50', background: p.color + '10'}}>
-              <div className="w-10 h-6 rounded flex items-center justify-center text-white text-xs font-bold" style={{background: p.color}}>{p.name[0]}</div>
+          {[{name: 'Kaart', icon: '💳'}, {name: 'Bancontact', icon: '🏦'}].map((p, i) => (
+            <div key={i} className="p-3 border border-amber-500/30 rounded-lg flex items-center space-x-3 cursor-pointer hover:bg-amber-500/10 transition-colors">
+              <span className="text-xl">{p.icon}</span>
               <span className="text-white text-sm">{p.name}</span>
             </div>
           ))}
         </div>
-        <button className="w-full bg-green-500 text-white py-3 rounded-lg font-semibold flex items-center justify-center space-x-2"><Lock className="w-4 h-4" /><span>Veilig Betalen</span></button>
+        <button className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-gray-900 py-3 rounded-lg font-semibold flex items-center justify-center space-x-2"><Lock className="w-4 h-4" /><span>Veilig Betalen</span></button>
       </div>
     ),
     multilingual: (
-      <div className="bg-gradient-to-br from-[#7D3C32] to-[#5a2d26] rounded-xl overflow-hidden shadow-2xl">
-        <div className="bg-black/20 px-4 py-2 flex justify-end space-x-2">
+      <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-2xl border border-amber-500/20">
+        <div className="bg-gray-800 px-4 py-2 flex justify-end space-x-2 border-b border-amber-500/20">
           {[{l: 'nl', f: '🇳🇱'}, {l: 'fr', f: '🇫🇷'}, {l: 'en', f: '🇬🇧'}].map((lang, i) => (
-            <button key={i} onClick={() => setDemoState({...demoState, selectedLang: lang.l})} className={`px-3 py-1 rounded text-xs font-medium ${demoState.selectedLang === lang.l ? 'bg-white text-gray-900' : 'text-white/80 hover:bg-white/20'}`}>{lang.f}</button>
+            <button key={i} onClick={() => setDemoState({...demoState, selectedLang: lang.l})} className={`px-3 py-1 rounded text-xs font-medium transition-colors ${demoState.selectedLang === lang.l ? 'bg-amber-500 text-gray-900' : 'text-gray-300 hover:bg-amber-500/20'}`}>{lang.f}</button>
           ))}
         </div>
         <div className="p-6 text-center">
           <h3 className="text-2xl font-bold text-white mb-2">{demoState.selectedLang === 'nl' ? 'Welkom!' : demoState.selectedLang === 'fr' ? 'Bienvenue!' : 'Welcome!'}</h3>
-          <button className="mt-4 bg-white text-[#7D3C32] px-6 py-2 rounded-lg font-semibold">{demoState.selectedLang === 'nl' ? 'Reserveer' : demoState.selectedLang === 'fr' ? 'Réservez' : 'Book Now'}</button>
+          <button className="mt-4 bg-gradient-to-r from-amber-500 to-amber-600 text-gray-900 px-6 py-2 rounded-lg font-semibold">{demoState.selectedLang === 'nl' ? 'Reserveer' : demoState.selectedLang === 'fr' ? 'Réservez' : 'Book Now'}</button>
         </div>
       </div>
     )
@@ -852,22 +880,17 @@ const FeatureDemoContent = ({ activeFeature, t }) => {
   return demos[activeFeature] || null;
 };
 
-// Features Section (compact)
+// Features Section (compact) - Gold/Black theme
 const FeaturesSection = ({ t }) => {
   const [activeFeature, setActiveFeature] = useState('dashboard');
   const featuresList = [
-    { id: 'dashboard', icon: Settings, color: 'amber' },
-    { id: 'announcement', icon: Megaphone, color: 'red' },
-    { id: 'reservation', icon: Calendar, color: 'blue' },
-    { id: 'menu', icon: FileText, color: 'green' },
-    { id: 'payment', icon: CreditCard, color: 'purple' },
-    { id: 'multilingual', icon: Languages, color: 'cyan' }
+    { id: 'dashboard', icon: Settings },
+    { id: 'announcement', icon: Megaphone },
+    { id: 'reservation', icon: Calendar },
+    { id: 'menu', icon: FileText },
+    { id: 'payment', icon: CreditCard },
+    { id: 'multilingual', icon: Languages }
   ];
-
-  const getColorClasses = (color, isActive) => {
-    const colors = { amber: isActive ? 'bg-amber-500 text-white' : 'bg-amber-500/10 text-amber-400', red: isActive ? 'bg-red-500 text-white' : 'bg-red-500/10 text-red-400', blue: isActive ? 'bg-blue-500 text-white' : 'bg-blue-500/10 text-blue-400', green: isActive ? 'bg-green-500 text-white' : 'bg-green-500/10 text-green-400', purple: isActive ? 'bg-purple-500 text-white' : 'bg-purple-500/10 text-purple-400', cyan: isActive ? 'bg-cyan-500 text-white' : 'bg-cyan-500/10 text-cyan-400' };
-    return colors[color];
-  };
 
   return (
     <section id="features" className="py-24 bg-gray-900 relative overflow-hidden">
@@ -880,20 +903,21 @@ const FeaturesSection = ({ t }) => {
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {featuresList.map((feature) => {
             const Icon = feature.icon;
+            const isActive = activeFeature === feature.id;
             return (
-              <button key={feature.id} onClick={() => setActiveFeature(feature.id)} className={`flex items-center space-x-2 px-5 py-3 rounded-xl transition-all ${getColorClasses(feature.color, activeFeature === feature.id)}`}>
-                <Icon className="w-5 h-5" /><span className="font-medium">{t.features[feature.id].title}</span>
+              <button key={feature.id} onClick={() => setActiveFeature(feature.id)} className={`flex items-center space-x-2 px-5 py-3 rounded-xl transition-all ${isActive ? 'bg-amber-500 text-gray-900' : 'bg-amber-500/10 text-amber-400 hover:bg-amber-500/20'}`}>
+                <Icon className="w-5 h-5" /><span className="font-medium">{t.features[feature.id]?.title || feature.id}</span>
               </button>
             );
           })}
         </div>
-        <div className="bg-gray-800/50 rounded-3xl p-8 md:p-12 border border-gray-700/50 backdrop-blur-sm">
+        <div className="bg-gray-800/50 rounded-3xl p-8 md:p-12 border border-amber-500/20 backdrop-blur-sm">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <h3 className="text-3xl font-bold text-white mb-4">{t.features[activeFeature].title}</h3>
-              <p className="text-xl text-gray-400 mb-8">{t.features[activeFeature].desc}</p>
+              <h3 className="text-3xl font-bold text-white mb-4">{t.features[activeFeature]?.title || ''}</h3>
+              <p className="text-xl text-gray-400 mb-8">{t.features[activeFeature]?.desc || ''}</p>
               <div className="space-y-4">
-                {t.features[activeFeature].features.map((feature, idx) => (
+                {(t.features[activeFeature]?.features || []).map((feature, idx) => (
                   <div key={idx} className="flex items-center space-x-3">
                     <div className="w-6 h-6 bg-amber-500/20 rounded-full flex items-center justify-center"><Check className="w-4 h-4 text-amber-400" /></div>
                     <span className="text-white">{feature}</span>
@@ -920,16 +944,16 @@ const PortfolioSection = ({ t, lang }) => (
       </div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {portfolioItems.map((item, index) => (
-          <div key={index} className="group bg-gray-900 rounded-2xl overflow-hidden border border-gray-700/50 hover:border-amber-500/50 transition-all hover:scale-[1.02]">
+          <div key={index} className="group bg-gray-900 rounded-2xl overflow-hidden border border-amber-500/20 hover:border-amber-500/50 transition-all hover:scale-[1.02]">
             <div className="relative h-48 overflow-hidden bg-gray-800">
               <iframe src={item.previewUrl} className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none" title={item.name} />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
-              <div className="absolute top-3 right-3"><span className="px-2 py-1 bg-amber-500 text-white text-xs rounded-full font-medium flex items-center space-x-1"><span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span><span>{t.portfolio.liveDemo}</span></span></div>
+              <div className="absolute top-3 right-3"><span className="px-2 py-1 bg-amber-500 text-gray-900 text-xs rounded-full font-medium flex items-center space-x-1"><span className="w-1.5 h-1.5 bg-gray-900 rounded-full animate-pulse"></span><span>{t.portfolio.liveDemo}</span></span></div>
             </div>
             <div className="p-6">
               <h3 className="text-xl font-semibold text-white mb-1">{item.name}</h3>
               <p className="text-amber-400 text-sm mb-3">{item.type[lang] || item.type.en} • {item.location}</p>
-              <div className="flex flex-wrap gap-2 mb-4">{item.features.map((f, i) => <span key={i} className="text-xs bg-gray-800 text-gray-400 px-2 py-1 rounded">{f}</span>)}</div>
+              <div className="flex flex-wrap gap-2 mb-4">{item.features.map((f, i) => <span key={i} className="text-xs bg-amber-500/10 text-amber-400 px-2 py-1 rounded">{f}</span>)}</div>
               <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-amber-400 hover:text-amber-300 font-medium"><span>{t.portfolio.viewSite}</span><ExternalLink className="w-4 h-4" /></a>
             </div>
           </div>
@@ -939,7 +963,7 @@ const PortfolioSection = ({ t, lang }) => (
   </section>
 );
 
-// Pricing Section with 24h and updated note
+// Pricing Section with 24h and updated note - Gold/Black theme
 const PricingSection = ({ t }) => {
   const scrollToContact = () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
   return (
@@ -950,22 +974,22 @@ const PricingSection = ({ t }) => {
           <h2 className="text-4xl font-bold text-white mb-4">{t.pricing.title}</h2>
           <p className="text-xl text-gray-400">{t.pricing.subtitle}</p>
         </div>
-        <div className="bg-gradient-to-br from-gray-800 to-gray-800/50 rounded-3xl border border-gray-700 overflow-hidden">
+        <div className="bg-gradient-to-br from-gray-800 to-gray-800/50 rounded-3xl border border-amber-500/30 overflow-hidden">
           <div className="bg-gradient-to-r from-amber-500 to-amber-600 px-6 py-3 text-center">
-            <span className="text-white font-bold flex items-center justify-center space-x-2"><Rocket className="w-5 h-5" /><span>{t.pricing.speed}</span></span>
+            <span className="text-gray-900 font-bold flex items-center justify-center space-x-2"><Rocket className="w-5 h-5" /><span>{t.pricing.speed}</span></span>
           </div>
           <div className="p-8 md:p-12">
             <div className="text-center mb-10">
               <div className="flex items-baseline justify-center space-x-2">
-                <span className="text-2xl text-gray-400">€</span>
+                <span className="text-2xl text-amber-400">€</span>
                 <span className="text-7xl font-bold text-white">{t.pricing.price}</span>
-                <span className="text-xl text-gray-400">/{t.pricing.period}</span>
+                <span className="text-xl text-amber-400">/{t.pricing.period}</span>
               </div>
             </div>
             <div className="mb-10">
               <p className="text-amber-400 font-semibold mb-4">{t.pricing.includes}</p>
               <div className="grid md:grid-cols-2 gap-4">
-                {t.pricing.features.map((feature, index) => (
+                {(t.pricing.features || []).map((feature, index) => (
                   <div key={index} className="flex items-center space-x-3">
                     <div className="w-5 h-5 bg-amber-500/20 rounded-full flex items-center justify-center"><Check className="w-3 h-3 text-amber-400" /></div>
                     <span className="text-gray-300">{feature}</span>
@@ -975,7 +999,7 @@ const PricingSection = ({ t }) => {
             </div>
             <div className="text-center">
               <button onClick={scrollToContact} className="w-full md:w-auto px-12 py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold rounded-xl hover:from-amber-500 hover:to-amber-600 transition-all shadow-lg hover:scale-105">{t.pricing.cta}</button>
-              <p className="text-sm text-gray-400 mt-4">{t.pricing.note}</p>
+              <p className="text-sm text-amber-400/70 mt-4">{t.pricing.note}</p>
             </div>
           </div>
         </div>
@@ -984,7 +1008,7 @@ const PricingSection = ({ t }) => {
   );
 };
 
-// Contact Section - no hours
+// Contact Section - no hours, gold/black theme
 const ContactSection = ({ t }) => {
   const [formData, setFormData] = useState({name: '', email: '', phone: '', business: '', message: ''});
   const [sending, setSending] = useState(false);
@@ -1008,43 +1032,43 @@ const ContactSection = ({ t }) => {
           <p className="text-xl text-gray-400">{t.contact.subtitle}</p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12">
-          <div className="bg-gray-900 rounded-2xl p-8 border border-gray-700">
+          <div className="bg-gray-900 rounded-2xl p-8 border border-amber-500/20">
             {sent ? (
               <div className="text-center py-12">
-                <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce"><Check className="w-8 h-8 text-green-400" /></div>
+                <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce"><Check className="w-8 h-8 text-amber-400" /></div>
                 <h3 className="text-2xl font-bold text-white mb-2">Bedankt!</h3>
                 <p className="text-gray-400">We nemen zo snel mogelijk contact met u op.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.name}</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500" /></div>
-                  <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.email}</label><input type="email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500" /></div>
+                  <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.name}</label><input type="text" required value={formData.name} onChange={(e) => setFormData({...formData, name: e.target.value})} className="w-full bg-gray-800 border border-amber-500/30 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500" /></div>
+                  <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.email}</label><input type="email" required value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} className="w-full bg-gray-800 border border-amber-500/30 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500" /></div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
-                  <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.phone}</label><input type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500" /></div>
-                  <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.business}</label><input type="text" value={formData.business} onChange={(e) => setFormData({...formData, business: e.target.value})} className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500" placeholder="Restaurant, Winkel, ..." /></div>
+                  <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.phone}</label><input type="tel" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} className="w-full bg-gray-800 border border-amber-500/30 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500" /></div>
+                  <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.business}</label><input type="text" value={formData.business} onChange={(e) => setFormData({...formData, business: e.target.value})} className="w-full bg-gray-800 border border-amber-500/30 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Restaurant, Winkel, ..." /></div>
                 </div>
-                <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.message}</label><textarea rows={4} required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500"></textarea></div>
+                <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.message}</label><textarea rows={4} required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full bg-gray-800 border border-amber-500/30 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500"></textarea></div>
                 <button type="submit" disabled={sending} className="w-full py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold rounded-lg hover:from-amber-500 hover:to-amber-600 disabled:opacity-50">{sending ? '...' : t.contact.form.submit}</button>
               </form>
             )}
           </div>
           <div className="space-y-8">
-            <div className="bg-gray-900 rounded-2xl p-8 border border-gray-700">
+            <div className="bg-gray-900 rounded-2xl p-8 border border-amber-500/20">
               <h3 className="text-xl font-semibold text-white mb-6">{t.contact.info.title}</h3>
               <div className="space-y-4">
                 <a href="mailto:fworks@mail.be" className="flex items-center space-x-4 text-gray-300 hover:text-amber-400 transition-colors"><Mail className="w-5 h-5" /><span>{t.contact.info.email}</span></a>
-                <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-gray-300 hover:text-green-400 transition-colors">
+                <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-gray-300 hover:text-amber-400 transition-colors">
                   <MessageCircle className="w-5 h-5" />
                   <div><span className="block">{t.contact.info.phone}</span><span className="text-xs text-gray-500">{t.contact.whatsappOnly}</span></div>
                 </a>
               </div>
             </div>
-            <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="block bg-green-600 hover:bg-green-500 transition-all rounded-2xl p-8 text-center hover:scale-[1.02]">
-              <MessageCircle className="w-12 h-12 text-white mx-auto mb-4 animate-bounce" />
-              <h3 className="text-xl font-semibold text-white mb-2">{t.contact.whatsapp}</h3>
-              <p className="text-green-200">+32 494 51 60 64</p>
+            <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="block bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 transition-all rounded-2xl p-8 text-center hover:scale-[1.02]">
+              <MessageCircle className="w-12 h-12 text-gray-900 mx-auto mb-4 animate-bounce" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">{t.contact.whatsapp}</h3>
+              <p className="text-gray-800">+32 494 51 60 64</p>
             </a>
           </div>
         </div>
@@ -1170,30 +1194,32 @@ function FWorksApp() {
   const currentSeo = seoContent[lang] || seoContent.en;
 
   return (
-    <div className="min-h-screen bg-gray-900">
-      <SEO 
-        title={currentSeo.title}
-        description={currentSeo.description}
-        keywords={currentSeo.keywords}
-        image="https://fworksbuilders.com/images/fworks-logo.png"
-        url="https://fworksbuilders.com"
-        siteName="fworksbuilders"
-        locale={lang === 'nl' ? 'nl_BE' : lang === 'fr' ? 'fr_BE' : lang === 'es' ? 'es_ES' : lang === 'it' ? 'it_IT' : 'en_US'}
-      />
-      <Navigation t={t} lang={lang} setLang={setLang} />
-      <HeroSection t={t} />
-      <FeaturesSection t={t} />
-      <PortfolioSection t={t} lang={lang} />
-      <PricingSection t={t} />
-      <ContactSection t={t} />
-      <Footer t={t} />
-      
-      {/* Tawk.to Live Chat */}
-      <TawkMessengerReact
-        propertyId="5d83c092c22bdd393bb6bf8b"
-        widgetId="default"
-      />
-    </div>
+    <ErrorBoundary>
+      <div className="min-h-screen bg-gray-900">
+        <SEO 
+          title={currentSeo.title}
+          description={currentSeo.description}
+          keywords={currentSeo.keywords}
+          image="https://fworksbuilders.com/images/fworks-logo.png"
+          url="https://fworksbuilders.com"
+          siteName="fworksbuilders"
+          locale={lang === 'nl' ? 'nl_BE' : lang === 'fr' ? 'fr_BE' : lang === 'es' ? 'es_ES' : lang === 'it' ? 'it_IT' : 'en_US'}
+        />
+        <Navigation t={t} lang={lang} setLang={setLang} />
+        <HeroSection t={t} />
+        <FeaturesSection t={t} />
+        <PortfolioSection t={t} lang={lang} />
+        <PricingSection t={t} />
+        <ContactSection t={t} />
+        <Footer t={t} />
+        
+        {/* Tawk.to Live Chat */}
+        <TawkMessengerReact
+          propertyId="5d83c092c22bdd393bb6bf8b"
+          widgetId="default"
+        />
+      </div>
+    </ErrorBoundary>
   );
 }
 
