@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
   ArrowLeft, Save, Globe, Settings, Image, Menu, Users, 
-  Clock, Phone, Mail, MapPin, Facebook, Instagram, Plus, Trash2, Eye, UserPlus, Shield
+  Clock, Phone, Mail, MapPin, Facebook, Instagram, Plus, Trash2, Eye, UserPlus, Shield, Bell
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -209,6 +209,7 @@ const SiteEditor = () => {
 
   const tabs = [
     { id: 'general', label: 'Algemeen', icon: Settings },
+    { id: 'announcement', label: 'Aankondiging', icon: Bell },
     { id: 'contact', label: 'Contact & Uren', icon: Clock },
     { id: 'menu', label: 'Menu', icon: Menu },
     { id: 'gallery', label: 'Foto\'s', icon: Image },
@@ -374,6 +375,91 @@ const SiteEditor = () => {
                       />
                       <span>Afhalen ingeschakeld</span>
                     </label>
+                  </div>
+                </div>
+              )}
+
+              {/* Announcement Tab */}
+              {activeTab === 'announcement' && (
+                <div className="space-y-6">
+                  <h2 className="text-xl font-semibold border-b pb-4">Speciale Aankondiging</h2>
+                  
+                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                    <p className="text-blue-800 text-sm">
+                      Gebruik dit om een belangrijk bericht te tonen bovenaan de website, bijvoorbeeld voor feestdagen, vakanties, of speciale acties.
+                    </p>
+                  </div>
+
+                  <div className="flex items-center space-x-3 mb-4">
+                    <label className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={config?.special_announcement_active === true}
+                        onChange={(e) => setConfig({ ...config, special_announcement_active: e.target.checked })}
+                        className="w-5 h-5"
+                      />
+                      <span className="font-medium">Aankondiging actief</span>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Bericht</label>
+                    <textarea
+                      value={config?.special_announcement || ''}
+                      onChange={(e) => setConfig({ ...config, special_announcement: e.target.value })}
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2 h-24 text-gray-900 bg-white"
+                      placeholder="Bijv: Wij zijn gesloten op 25 december. Prettige feestdagen!"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Type bericht</label>
+                    <div className="flex space-x-4">
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="announcement_type"
+                          value="success"
+                          checked={config?.special_announcement_type === 'success' || !config?.special_announcement_type}
+                          onChange={(e) => setConfig({ ...config, special_announcement_type: e.target.value })}
+                          className="w-4 h-4"
+                        />
+                        <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Positief (groen)</span>
+                      </label>
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="announcement_type"
+                          value="warning"
+                          checked={config?.special_announcement_type === 'warning'}
+                          onChange={(e) => setConfig({ ...config, special_announcement_type: e.target.value })}
+                          className="w-4 h-4"
+                        />
+                        <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">Waarschuwing (oranje)</span>
+                      </label>
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="announcement_type"
+                          value="info"
+                          checked={config?.special_announcement_type === 'info'}
+                          onChange={(e) => setConfig({ ...config, special_announcement_type: e.target.value })}
+                          className="w-4 h-4"
+                        />
+                        <span className="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Info (blauw)</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="pt-4 border-t">
+                    <button
+                      onClick={saveConfig}
+                      disabled={saving}
+                      className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+                    >
+                      <Save className="w-5 h-5" />
+                      <span>{saving ? 'Opslaan...' : 'Aankondiging Opslaan'}</span>
+                    </button>
                   </div>
                 </div>
               )}

@@ -206,14 +206,8 @@ const AdminDashboard = () => {
                 <div key={site.site_id} className="px-4 py-3 hover:bg-gray-50 transition-colors">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-3">
-                      <div className={`w-9 h-9 rounded-md flex items-center justify-center ${
-                        site.site_type === 'restaurant' ? 'bg-green-50' : 'bg-purple-50'
-                      }`}>
-                        {site.site_type === 'restaurant' ? (
-                          <Menu className="w-5 h-5 text-green-600" />
-                        ) : (
-                          <Globe className="w-5 h-5 text-purple-600" />
-                        )}
+                      <div className="w-9 h-9 rounded-md flex items-center justify-center bg-blue-50">
+                        <Globe className="w-5 h-5 text-blue-600" />
                       </div>
                       <div>
                         <h3 className="text-sm font-medium text-gray-900">{site.name}</h3>
@@ -288,18 +282,6 @@ const AdminDashboard = () => {
                   placeholder="cantina"
                   data-testid="new-site-slug"
                 />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">{t('type')}</label>
-                <select
-                  value={newSite.site_type}
-                  onChange={(e) => setNewSite({ ...newSite, site_type: e.target.value })}
-                  className="w-full border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  data-testid="new-site-type"
-                >
-                  <option value="restaurant">{t('restaurant')}</option>
-                  <option value="business">{t('business')}</option>
-                </select>
               </div>
             </div>
             <div className="flex justify-end space-x-3 mt-6">
