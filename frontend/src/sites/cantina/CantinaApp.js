@@ -15,6 +15,22 @@ import AnnouncementBanner from '@/components/AnnouncementBanner';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Helper to detect if we're on custom domain or preview
+const isOnCustomDomain = () => {
+  return !window.location.hostname.includes('preview.emergentagent.com') && 
+         !window.location.hostname.includes('localhost');
+};
+
+// Get base path for links
+const getBasePath = () => isOnCustomDomain() ? '' : '/site/cantina';
+
+// Helper to create correct path
+const getPath = (path) => {
+  const basePath = getBasePath();
+  if (path === '/') return basePath || '/';
+  return `${basePath}${path}`;
+};
+
 // SEO Configuration for La Cantina
 const SEO_CONFIG = {
   siteName: 'La Cantina Italiana',
@@ -155,18 +171,18 @@ function Navigation({ language, setLanguage, t }) {
   return (
     <nav className="main-nav">
       <div className="nav-container">
-        <Link to="/" className="logo">
+        <Link to={getPath('/')} className="logo">
           <img src="/images/cantina/logo-cantina.jpg" alt="La Cantina Italiana" />
         </Link>
 
         <div className={`nav-links ${menuOpen ? 'active' : ''}`}>
-          <Link to="/" className="nav-link" onClick={closeMenu}>{t.nav.home}</Link>
-          <Link to="/about" className="nav-link" onClick={closeMenu}>{t.nav.about}</Link>
-          <Link to="/kaart" className="nav-link kaart-link" onClick={closeMenu}>{t.nav.menu}</Link>
-          <Link to="/groepmenus" className="nav-link" onClick={closeMenu}>{t.nav.groupMenus}</Link>
-          <Link to="/reserveren" className="nav-link" onClick={closeMenu}>{t.nav.reservation}</Link>
-          <Link to="/fotos" className="nav-link" onClick={closeMenu}>{t.nav.gallery}</Link>
-          <Link to="/info" className="nav-link" onClick={closeMenu}>{t.nav.contact}</Link>
+          <Link to={getPath('/')} className="nav-link" onClick={closeMenu}>{t.nav.home}</Link>
+          <Link to={getPath('/about')} className="nav-link" onClick={closeMenu}>{t.nav.about}</Link>
+          <Link to={getPath('/kaart')} className="nav-link kaart-link" onClick={closeMenu}>{t.nav.menu}</Link>
+          <Link to={getPath('/groepmenus')} className="nav-link" onClick={closeMenu}>{t.nav.groupMenus}</Link>
+          <Link to={getPath('/reserveren')} className="nav-link" onClick={closeMenu}>{t.nav.reservation}</Link>
+          <Link to={getPath('/fotos')} className="nav-link" onClick={closeMenu}>{t.nav.gallery}</Link>
+          <Link to={getPath('/info')} className="nav-link" onClick={closeMenu}>{t.nav.contact}</Link>
         </div>
         
         <div className="nav-right">

@@ -69,7 +69,7 @@ function App() {
   // ALS OP CUSTOM DOMAIN EN /admin OF /restaurant-login PAD: redirect naar centrale login
   if (CUSTOM_DOMAIN_SLUG && (isAdminPath || isRestaurantLoginPath)) {
     // Redirect naar centrale login pagina met site info
-    window.location.href = `https://site-consolidator.preview.emergentagent.com/restaurant-login?site=${CUSTOM_DOMAIN_SLUG}`;
+    window.location.href = `https://fworks-admin.preview.emergentagent.com/restaurant-login?site=${CUSTOM_DOMAIN_SLUG}`;
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">

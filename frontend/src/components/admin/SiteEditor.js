@@ -435,7 +435,7 @@ const SiteEditor = () => {
               {/* General Tab */}
               {activeTab === 'general' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold border-b pb-4">Algemene Instellingen</h2>
+                  <h2 className="text-xl font-semibold border-b pb-4">{t('general')}</h2>
                   
                   <div className="grid grid-cols-2 gap-6">
                     <div>
@@ -535,7 +535,7 @@ const SiteEditor = () => {
               {/* Announcement Tab */}
               {activeTab === 'announcement' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold border-b pb-4">Speciale Aankondiging</h2>
+                  <h2 className="text-xl font-semibold border-b pb-4">{t('specialAnnouncement')}</h2>
                   
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
                     <p className="text-blue-800 text-sm">
@@ -551,7 +551,7 @@ const SiteEditor = () => {
                         onChange={(e) => setConfig({ ...config, special_announcement_active: e.target.checked })}
                         className="w-5 h-5"
                       />
-                      <span className="font-medium">Aankondiging actief</span>
+                      <span className="font-medium">{t('announcementActive')}</span>
                     </label>
                   </div>
 
@@ -611,7 +611,7 @@ const SiteEditor = () => {
                       className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                     >
                       <Save className="w-5 h-5" />
-                      <span>{saving ? 'Opslaan...' : 'Aankondiging Opslaan'}</span>
+                      <span>{saving ? t('saving') : t('saveAnnouncement')}</span>
                     </button>
                   </div>
                 </div>

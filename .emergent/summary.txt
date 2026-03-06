@@ -1,146 +1,218 @@
 <analysis>**original_problem_statement:**
-The user's initial goal was to consolidate five existing websites (La Cantina Italiana, La Bottega Herent, L'Ascoli Zaventem, Ristorante Mercato, Tracemaster) into a single multi-tenant application to reduce hosting costs and centralize management. During development, a sixth website, , was added to the scope. The absolute core requirement is that each consolidated website must be an exact visual and functional replica of its original version.
+The user's initial goal was to consolidate five existing websites (La Cantina Italiana, La Bottega Herent, L'Ascoli Zaventem, Ristorante Mercato, Tracemaster) into a single multi-tenant application. A sixth website, , was added later. The core requirement is that each consolidated website must be an exact visual and functional replica of its original version. The user also required an easy-to-use super-admin dashboard for themselves and per-site admin dashboards for their clients. A new custom domain, , was purchased to create a memorable URL for the super-admin dashboard.
 
 **PRODUCT REQUIREMENTS:**
 1.  **Consolidation:** Combine six websites into one application.
 2.  **Visual Fidelity:** Each site must be a 1:1, pixel-perfect replica of its original.
 3.  **Multi-Tenancy:** The application must identify the website to display based on the incoming domain name.
 4.  **Super Admin Dashboard:** A central dashboard () for the user to manage all sites.
-5.  **Site Admin Dashboard:** A per-site dashboard for clients to manage their content, accessible via an easy-to-remember URL.
-6.  **SEO:** All pages on all sites must have appropriate SEO meta tags.
-7.  **Special Announcements:** A feature managed via the dashboards to display a prominent announcement banner on the websites.
+5.  **Site Admin Dashboard:** A per-site dashboard for clients to manage their content.
+6.  **Easy URLs:** Simple, memorable URLs for both super-admin and client-admin dashboards (e.g., ).
+7.  **SEO:** All pages on all sites must have appropriate SEO meta tags.
+8.  **Special Announcements:** A feature managed via the dashboards to display a prominent announcement banner on the websites.
 
 **User's preferred language**: Nederlands (Dutch). You MUST respond in Dutch.
 
 **what currently exists?**
-A multi-tenant FastAPI/React application hosting all six websites is in place. The application is feature-complete, including dynamic SEO and a Special Announcement system. A major architectural challenge was discovered late in the project: the platform only supports one custom domain per app. This was resolved by implementing a Cloudflare Worker as a reverse proxy for 5 of the 6 domains.  is linked directly, while the other five domains are routed through the Cloudflare Worker. Site-specific admin dashboards are functional and accessible via a central login page. The agent was in the process of creating user-friendly  URLs for all sites.
+A multi-tenant FastAPI/React application hosts all six websites.  is directly linked, while the other five domains are routed through a Cloudflare Worker (). This worker uses an  to serve the content while keeping the custom domain in the address bar. A new domain, , has been configured to redirect  to the super-admin dashboard.
+
+However, the application is highly unstable. There are two critical, unresolved issues:
+1.  A **database desynchronization** where the live production deployment uses a different, older database than the preview/admin environment. This makes it impossible for the user or their clients to update live site content (like special announcements).
+2.  **Intermittent production outages** where the five proxied sites become unavailable and show a Google login page. This has happened repeatedly and was the source of major user frustration and debugging loops during the session.
+
+Several UI/UX fixes and features were implemented, including redesigning the super-admin dashboard and fixing broken internal navigation.
 
 **Last working item**:
-*   **Last item agent was working:** The user requested an easy-to-remember URL for clients to access their dashboards (e.g., ) and a similar easy URL for their own super-admin dashboard. The agent successfully updated the Cloudflare Worker to handle the  redirect for the 5 sites it manages. The implementation for La Cantina (directly linked) and the super-admin dashboard is still pending.
+*   **Last item agent was working:** Fixing incomplete French translations in the super-admin's site editor dashboard. The user reported that after selecting French, parts of the UI like Algemene Instellingen remained in Dutch. The agent identified hardcoded Dutch strings in the components and was in the process of replacing them with the i18n translation function.
 *   **Status:** IN PROGRESS
 *   **Agent Testing Done:** N
-*   **Which testing method agent to use?** both. The backend logic for the La Cantina redirect needs to be implemented and tested. The frontend agent can verify that  on all 6 domains correctly redirects to the central login page, and that the new super-admin URL works.
-*   **User Testing Done:** N
+*   **Which testing method agent to use?** Frontend testing agent. The agent should verify that all text in the super-admin dashboard (both the main page and the site editor modal) correctly switches between Dutch and French when the language is changed. A screenshot after logging in and switching the language would also suffice for a quick check.
+*   **User Testing Done:** N (User reported the bug).
 
 **All Pending/In progress Issue list**:
-*   **Issue 1: Complete Easy Admin URL Feature (P0 - HIGHEST)**
-    *   **Description:** The user wants an easy-to-remember  URL for all client sites and a simple URL for their own super-admin dashboard. The Cloudflare part is done, but the directly-linked site and the super-admin access are not.
-    *   **Attempted fixes:** The Cloudflare Worker script was updated to redirect  to the central login page.
+*   **Issue 1: Production Database Desynchronization (P0 - CRITICAL BLOCKER)**
+*   **Issue 2: Intermittent Production Outages (P0 - CRITICAL BLOCKER)**
+*   **Issue 3: Incomplete French Translations in Admin Dashboard (P1 - HIGH)**
+*   **Issue 4: La Cantina Announcement Banner Not Updating (P1 - HIGH)**
+*   **Issue 5: Implement Automatic Translation for Announcements (P2 - MEDIUM)**
+*   **Issue 6: Super Admin Dashboard Photo Gallery Discrepancy (P3 - LOW)**
+
+**Issues Detail:**
+*   **Issue 1: Production Database Desynchronization (P0 - CRITICAL BLOCKER)**
+    *   **Description:** The live deployed application is connected to an old, separate database from the preview environment. This means any content changes made in the admin dashboards (which use the preview DB) are not reflected on the live sites. The user cannot update announcements or other content.
+    *   **Attempted fixes:** The agent confirmed the desync by fetching data from both environments. A temporary API endpoint was created to clear the data, but it failed because the production deployment didn't have the new code. The agent concluded this is a platform-level issue that they cannot fix. The user has been instructed to email Emergent Support.
     *   **Next debug checklist:**
-        1.  **La Cantina Redirect:** Modify  to include a route for  that redirects users to the  page.
-        2.  **Super Admin URL:** Modify the main  to add a new, simple route (e.g., ) that redirects to the super-admin dashboard ().
-        3.  **Testing:** Verify the redirect works for all 6 client domains and for the new super-admin URL.
-    *   **Why fix this issue and what will be achieved with the fix?** This is a direct user request to improve usability for both their clients and themselves. It's the final piece of the requested functionality.
+        1.  Check with the user if they have received a response from Emergent Support.
+        2.  Once support confirms the database is synced, thoroughly test the announcement feature end-to-end for La Cantina. Verify that a change in the admin dashboard is immediately visible on the live site ().
+    *   **Why fix this issue and what will be achieved with the fix?** This is the single biggest blocker. Fixing it will restore the core functionality of the CMS, allowing the user and their clients to manage their website content.
+    *   **Status:** BLOCKED (Waiting on Emergent Support)
+    *   **Is recurring issue?** Y
+    *   **Should Test frontend/backend/both after fix?** Both
+    *   **Blocked on other issue:** N/A (Blocked on external support).
+
+*   **Issue 2: Intermittent Production Outages (P0 - CRITICAL BLOCKER)**
+    *   **Description:** The five websites routed through the Cloudflare Worker (, , etc.) periodically and unpredictably fail, showing the super-admin's Google login page instead of the website. After a few minutes, they often start working again.
+    *   **Attempted fixes:** This issue caused a massive, circular debugging session. Fixes attempted included: creating a new Cloudflare worker, deleting a conflicting old worker, fixing DNS records (A-records pointing to a dummy IP), and trying three different worker implementation strategies (proxy, redirect, iframe). The current implementation uses an  and  headers, but the user reported the issue returned even after this.
+    *   **Next debug checklist:**
+        1.  The root cause is likely a conflict in Cloudflare's routing, caching, or how it interacts with the Emergent platform's own security/routing.
+        2.  Review the  worker's Triggers and the DNS A records for all 5 domains to ensure they are perfectly configured and there are no residual conflicts.
+        3.  Consider adding more robust logging to the Cloudflare worker to capture what happens during a failure.
+        4.  If the issue persists, the  method may be flawed. The next step would be to re-investigate a stable  solution, which may involve contacting Emergent Support to whitelist Cloudflare Worker requests.
+    *   **Why fix this issue and what will be achieved with the fix?** This is a catastrophic failure mode that makes the client-facing websites unreliable. It must be resolved for the application to be considered production-ready.
+    *   **Status:** IN PROGRESS
+    *   **Is recurring issue?** Y
+    *   **Should Test frontend/backend/both after fix?** Backend (Cloudflare worker is server-side logic).
+    *   **Blocked on other issue:** None.
+
+*   **Issue 3: Incomplete French Translations in Admin Dashboard (P1 - HIGH)**
+    *   **Description:** The user wants the super-admin dashboard to be fully French when FR is selected. The agent added translations for the  component, but hardcoded Dutch text remains for labels like Algemene Instellingen.
+    *   **Attempted fixes:** The agent added a translations object to  and wrapped the component in the . They were in the process of finding and replacing hardcoded text.
+    *   **Next debug checklist:**
+        1.  Resume work in .
+        2.  Search for all hardcoded Dutch strings (Algemene Instellingen, Speciale Aankondiging, etc.).
+        3.  Replace them with the translation function, e.g., .
+        4.  Ensure the  object in  contains the French equivalents for all keys.
+        5.  Test by logging into the super-admin dashboard, switching the language to FR, and opening the site editor modal.
+    *   **Why fix this issue and what will be achieved with the fix?** Fulfills a direct user request for UI internationalization.
     *   **Status:** IN PROGRESS
     *   **Is recurring issue?** N
-    *   **Should Test frontend/backend/both after fix?** Both
+    *   **Should Test frontend/backend/both after fix?** Frontend.
+    *   **Blocked on other issue:** None.
+
+*   **Issue 4: La Cantina Announcement Banner Not Updating (P1 - HIGH)**
+    *   **Description:** The live La Cantina website continuously shows an old orange Christmas announcement, even though it has been deleted from the admin dashboard.
+    *   **Status:** BLOCKED
+    *   **Is recurring issue?** Y
+    *   **Blocked on other issue:** This is a direct symptom of **Issue 1: Production Database Desynchronization**. It cannot be fixed until the databases are synced by Emergent Support.
+
+*   **Issue 5: Implement Automatic Translation for Announcements (P2 - MEDIUM)**
+    *   **Description:** The user requested that the Special Announcement and Closure Notice messages be automatically translated based on the language the visitor selects on the website.
+    *   **Status:** NOT STARTED
+    *   **Blocked on other issue:** This should only be implemented after **Issue 1 (Database Desync)** is resolved, as it's impossible to test otherwise.
+
+*   **Issue 6: Super Admin Dashboard Photo Gallery Discrepancy (P3 - LOW)**
+    *   **Description:** The user noticed the photo gallery in the super-admin dashboard shows only a few images, while the live website displays many more.
+    *   **Attempted fixes:** The agent identified that the dashboard reads images from the database (for dynamically managed galleries), whereas the live site uses hardcoded image paths from the local filesystem. This is expected behavior, but not what the user wants.
+    *   **Next debug checklist:**
+        1.  Propose a solution to the user: Modify the super-admin dashboard's gallery tab to read directly from the filesystem for each site (e.g., scan ).
+        2.  This would make the gallery read-only in the admin panel but would show all images. A more complex solution would be to create a script that syncs the local files into the database.
+    *   **Why fix this issue and what will be achieved with the fix?** Improves the admin experience and avoids user confusion.
+    *   **Status:** NOT STARTED
+    *   **Is recurring issue?** N
+    *   **Should Test frontend/backend/both after fix?** Frontend.
     *   **Blocked on other issue:** None.
 
 **In progress Task List**:
-*   None.
+*   None. All active work is categorized as an issue.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P0) Full User Verification & Handoff:** After the admin URLs are fixed, guide the user through a final, thorough review of all 6 sites. Provide them with a clear, written guide on how to add new websites to the application in the future, as they requested.
+    *   **(P0) Full User Verification & Handoff:** Once all P0/P1 issues are resolved and the system is stable, guide the user through a final, thorough review of all 6 sites and the admin dashboards.
+    *   **(P1) Create User Guide:** Write a simple markdown document explaining how to add a 7th website in the future (cloning the app, configuring the new domain in the Cloudflare Worker, etc.).
 *   **Future Tasks:**
     *   Implement an itemized menu editor in the admin dashboards.
-    *   Integrate Stripe for automated billing/payments (User has currently rejected this).
+    *   Integrate Stripe for billing (currently rejected by the user).
 
 **Completed work in this session**
-- **Theo Beans Website Migration:** Successfully migrated the 6th website () into the multi-tenant application. This involved extensive debugging to fix visual fidelity issues (missing images, font/layout mismatches) and adapt the site for the multi-tenant routing structure.
-- **Solved Multi-Domain Limitation via Cloudflare:** Identified that the platform only supports one custom domain and implemented a **Cloudflare Worker** as a reverse proxy to handle requests for 5 of the 6 websites. Guided the user through the entire setup process. This was a critical fix that saved the project.
-- **Implemented Special Announcement Feature:** Added the feature end-to-end, including database model updates, API endpoints, and UI in both admin dashboards. Fixed positioning to ensure the banner displays correctly below the navigation bar on all sites and on mobile.
-- **Fixed Critical Production Routing Bug:** Resolved an issue where all traffic to custom domains was being incorrectly redirected to the admin dashboard after deployment.
-- **UI/UX Polish:**
-    - Restored the preferred dark theme and gold button styling for the La Cantina website, as requested by the user.
-    - Implemented easy  redirect URLs for the 5 sites managed by Cloudflare.
-- **User Education:** Explained the new architecture, the Cloudflare workaround, and the process for adding future websites without incurring new deployment costs.
+- **Admin URLs:** Implemented  redirects for both client sites (La Cantina) and the super-admin dashboard.
+- ** Setup:** Successfully configured the user's new domain to redirect  to the super-admin login page.
+- **Production Outage Firefighting:** Diagnosed and implemented several workarounds for multiple production outages, eventually settling on a new Cloudflare Worker () with an -based approach.
+- **Navigation Fixes:** Resolved critical bugs where internal links on proxied sites (Mercato, Ascoli) were not working after the Cloudflare redirect. Also fixed an issue where Ascoli's main navigation menu was invisible.
+- **UI/UX Improvements:**
+    - Redesigned the super-admin dashboard to be more compact by removing statistic cards and reducing spacing.
+    - Changed the font of the admin dashboard to Poppins.
+    - Added an Announcements tab to the super-admin site editor.
+    - Added an animated heartbeat checkmark icon to reservation/order confirmation pages for all relevant sites.
 
 **Earlier issues found/mentioned but not fixed**
-*   None.
+*   **Theo Beans Image Organization:** The original handoff mentioned that some images for  were placed in the root of  and should be moved to . This was never addressed.
 
 **Known issue recurrence from previous fork**
-- **Visual Fidelity Failure:** The agent initially failed to create a 1:1 replica of the  website, repeating a previous mistake and causing extreme user frustration. This required significant rework to fix images, fonts, and layouts to match the original. This highlights the absolute necessity of prioritizing pixel-perfect replication.
+*   **Intermittent Site Unavailability:** A new and severe recurring issue emerged in this session. The five proxied websites repeatedly become unavailable, showing the super-admin login page. This happened at least 3-4 times, requiring extensive debugging and causing significant user frustration. The root cause appears to be related to Cloudflare routing/caching conflicts.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
--   **Multi-tenant routing:** The app uses  in  to determine which site slug to render via the  component.
--   **Cloudflare Worker as Reverse Proxy:** This is a **critical** piece of the architecture. A JS script running on Cloudflare intercepts requests for 5 domains and transparently proxies them to the correct path on the single Emergent preview URL (e.g.,  -> ). This works around the platform's single-domain limitation.
--   **Dynamic SEO:** Using  with site-specific configuration.
--   **Backend:** A single FastAPI  file contains all models (Pydantic), API routes, and database logic for authentication and site configuration management.
+-   **Multi-Domain Architecture:** One site () is directly connected. Five sites are routed through a Cloudflare Worker.
+-   **Cloudflare Worker ():** This is the most critical and fragile part of the infrastructure. The current method uses an **iframe** to serve content from the preview URL while keeping the custom domain in the address bar. This was a workaround after  and  methods failed or had undesirable side effects.
+-   **Database Desynchronization:** A new and critical issue where the production deployment and preview/admin environment are using two different databases. This is a platform-level problem blocking all content updates.
+-   **Client-Side Routing Complexity:** React Router's  interacts in complex ways with the Cloudflare Worker's routing, which required significant fixes in  and individual site components to make internal navigation work.
 
 **key DB schema**
--   ****: ,  (array of strings), .
--   ****: , , , etc.
--   ****: , , , .
+- No changes were made to the database schema in this session.
+-   ****: , , .
+-   ****: , , .
+-   ****: , , .
 
 **All files of reference**
-*    (This is a placeholder for the code deployed to the Cloudflare worker. The code itself is in the LLM history, message 566).
-*   : Contains the top-level domain routing logic.
-*   : Dynamically renders the correct site component based on the slug.
-*   : The folder containing all components for the newly added site.
-*   : The component that displays special announcements.
-*   : The single file containing all backend logic.
+*   : Main application router, frequently modified to fix production outages.
+*   : UI was restyled (font, spacing).
+*   : Last file being worked on for translation fixes.
+*   : Modified to fix broken navigation on proxied sites.
+*   : Representative example of a site app that was fixed for routing.
+*   : Modified to fix the invisible menu items.
+*   The logic for the Cloudflare worker  is not stored in a file but is critical context from the chat history.
 
 **Areas that need refactoring**:
-*   The cloned repository for Theo Beans at  can be safely deleted to clean up the workspace.
-*   During the Theo Beans migration, some images were copied to the root of  as a quick fix. These should be moved into the  subdirectory and all paths updated accordingly for better organization.
+*   The Cloudflare Worker implementation is a fragile workaround. The  method has negative SEO implications (individual pages are not indexed) and may cause other issues. A stable, true proxy solution would be a major improvement.
+*   The cloned  repository from the previous session at  can likely be deleted.
+*   The  image cleanup task from the previous handoff is still pending.
 
 **key api endpoints**
-*   : For site owners to log in.
-*   : Authenticated endpoint for site owners to get/update their site's configuration.
-*   : Fetches public site data.
+*   No new persistent API endpoints were added. A temporary one () was created in  to debug the database issue but was ineffective and should probably be removed.
 
 **Critical Info for New Agent**
-*   **USER TRUST IS EXTREMELY FRAGILE.** The project nearly failed because the agent suggested a multi-domain architecture on a platform that doesn't support it, leading to a major crisis. The user was extremely frustrated with this and with repeated visual bugs. The next agent must be meticulous, empathetic, and flawless in execution.
-*   **CLOUDFLARE IS ESSENTIAL.** You must understand that 5 of the 6 live domains are NOT pointed directly at the app. They are pointed at Cloudflare, which runs a Worker script to proxy requests. If you change routing or file paths, you may need to instruct the user to update the Worker script. Do not touch this unless absolutely necessary.
+*   **USER TRUST IS EXTREMELY LOW:** The project is in a worse state of trust than at the start of the session. Multiple severe production outages and a major database issue have occurred, costing the user time and credits. You must be extremely careful, empathetic, and prioritize stability above all else. Do not make any changes to the Cloudflare worker without a clear reason and a rollback plan.
+*   **DATABASE DESYNC IS A HARD BLOCKER:** You **CANNOT** fix content-related issues (like the stuck announcement banner) via code. This is a platform issue. Your first action should be to check with the user for an update from Emergent Support. Do not waste time trying to debug this further.
+*   **CLOUDFLARE WORKER IS UNSTABLE:** The entire multi-domain setup for 5 sites depends on the  Cloudflare worker. It has been the source of repeated, intermittent outages. The current  implementation is a workaround. Be aware that any change here could bring all sites down again.
 *   **Always communicate in Dutch.** This is non-negotiable.
-*   The project is in its final phase. Focus only on the remaining tasks (admin URLs) and user handoff. Do not propose new features.
 
 **documents and test reports created in this job**
-*    (has been updated)
-*   
+*    (was updated by the agent)
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User:** Requests an easier login URL for their clients, like . (IN PROGRESS)
-2.  **User:** Also asks for an easy URL for their own super-admin dashboard. (PENDING)
-3.  **User:** Asks why Theo Beans URL has  but others don't in the agent's message. (Clarified as a typo)
-4.  **User:** Asks if the project is finally complete and how to add a 7th website in the future. (Agent explained the process of forking this app and re-deploying).
-5.  **User:** Expresses happiness about the cost savings of the new one-app model.
-6.  **User:** Asks for the client dashboard URL and passwords. (Agent provided the central URL and test credentials).
-7.  **User:** Reports the provided dashboard URL ( on the custom domain) just shows the website. (Agent realized a central URL is needed and proposed  on each domain).
-8.  **User:** Agrees to the  URL proposal.
-9.  **User:** Confirms the Cloudflare Worker update is done.
-10. **Agent:** Informs user to update the  URL for La Cantina and their super-admin dashboard. (Last agent action).
+1.  **User:** Asks for the super-admin dashboard URL to be made easier, mentioning the  domain they purchased. (Completed)
+2.  **User:** Notes the dashboard should default to French, but Algemene Instellingen is still in Dutch. (In Progress)
+3.  **User:** Asks for a different font on the dashboard. (Completed - set to Poppins)
+4.  **User:** Acknowledges the font change but reports the French translations are still not working. (In Progress - last active issue)
+5.  **User:** Sends an urgent message: All websites are down again, showing the Google login. (Resolved, but part of the recurring outage issue)
+6.  **User:** Confirms the sites are working again but asks why this keeps happening. (Agent explained it's a cache/propagation issue).
+7.  **User:** Reports the issue happened again on a different laptop, proving it's not local cache and the system is unstable. (In Progress - recurring outage issue)
+8.  **User:** Asks to delete the old, unused Cloudflare worker. (Completed)
+9.  **User:** Expresses extreme frustration that the agent didn't notice the conflicting old worker sooner, costing hours of time and credits. (Agent apologized).
+10. **User:** Reports that after deleting the old worker, the ugly preview URL is visible again. (Resolved by switching to the iframe method).
 
 **Project Health Check:**
-*   **Mocked:** Multi-domain functionality is not native; it's handled by a Cloudflare Worker acting as a reverse proxy. This is a critical workaround.
+*   **Broken:**
+    *   Content management is broken due to the database desynchronization.
+    *   The stability of the five proxied websites is broken, with intermittent outages.
+*   **Mocked:**
+    *   The multi-domain functionality is a workaround handled by a Cloudflare Worker using an , which is not ideal for SEO or complex navigation.
 
 **3rd Party Integrations**
-*   **Cloudflare:** Used for DNS and a **critical** Worker script that acts as a reverse proxy for 5 of the 6 sites.
-*   **Google OAuth 2.0:** Used for the Super Admin () login.
+*   **Cloudflare:** Used for DNS and a **critical** Worker script () that routes 5 of the 6 sites. Also used for DNS for the new  admin domain.
+*   **Google OAuth 2.0:** Used for the Super Admin login.
 *   **JotForm:** Used for the reservation form on the L'Ascoli website.
 *   **react-helmet:** Used for managing SEO meta tags.
 
 **Testing status**
--   **Testing agent used after significant changes:** YES, for the announcement feature.
--   **Troubleshoot agent used after agent stuck in loop:** NO
--   **Test files created:** None.
--   **Known regressions:** None.
+*   **Testing agent used after significant changes:** NO
+*   **Troubleshoot agent used after agent stuck in loop:** NO
+*   **Test files created:** None.
+*   **Known regressions:** The fix for the ugly URL (using an ) prevents sub-page paths (like ) from appearing in the address bar, which is a regression from how the directly-linked  site behaves.
 
 **Credentials to test flow:**
-*   **Super Admin:** Use the Login with Google button on the  page.
-*   **Site Admin Login URL:** 
+*   **Super Admin URL:**  (should redirect to login)
+*   **Super Admin Login:** Use the Login with Google button.
+*   **Site Admin Login URL:**  (e.g., )
 *   **Site Admin Credentials:**
-    *   La Cantina:  / 
-    *   La Bottega:  / 
-    *   L'Ascoli:  / 
-    *   Mercato:  / 
-    *   Theo Beans:  / 
+    *   Email: , , etc.
+    *   Password: 
 
 **What agent forgot to execute**
-The agent was asked to create easy admin URLs for *all* sites and for the super-admin. They only implemented the part for the 5 sites managed by the Cloudflare worker. They still need to:
-1.  Implement the  redirect for the  site (which is not behind Cloudflare).
-2.  Create an easy-to-remember URL for the user's super-admin dashboard.</analysis>
+*   The agent never fully stabilized the Cloudflare Worker, leading to multiple production outages. The current  solution is a workaround, not a definitive fix.
+*   The agent failed to check for conflicting domains/routes on the old Cloudflare worker when the user first asked if it should be deleted, leading to hours of wasted time and user frustration.
+*   The agent has not started the automatic translation feature for announcements.
+*   The agent has not implemented a solution for the admin dashboard's photo gallery to show all local files.
+*   The  image folder refactoring from the previous fork's summary was not addressed.</analysis>

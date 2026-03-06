@@ -15,6 +15,22 @@ const BRAND_COLOR = '#7D3C32';
 // Achtergrondkleur voor alle paginas - warm beige
 const BG_COLOR = '#FAF6F1';
 
+// Helper to detect if we're on custom domain or preview
+const isOnCustomDomain = () => {
+  return !window.location.hostname.includes('preview.emergentagent.com') && 
+         !window.location.hostname.includes('localhost');
+};
+
+// Get base path for links
+const getBasePath = () => isOnCustomDomain() ? '' : '/site/bottega';
+
+// Helper to create correct path
+const getPath = (path) => {
+  const basePath = getBasePath();
+  if (path === '/') return basePath || '/';
+  return `${basePath}${path}`;
+};
+
 // SEO Configuration for La Bottega
 const SEO_CONFIG = {
   siteName: 'La Bottega Italiana Herent',
@@ -89,22 +105,39 @@ function Footer() {
 
 function Navigation({ activeSection, scrollToSection }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  // Detect if we're on a custom domain (iframe) or on the preview site
+  const isCustomDomain = !window.location.hostname.includes('preview.emergentagent.com') && 
+                          !window.location.hostname.includes('localhost');
+  
+  // Base path for links - empty for custom domain, /site/bottega for preview
+  const basePath = isCustomDomain ? '' : '/site/bottega';
+  
+  // Helper function to create correct path
+  const getPath = (path) => {
+    if (path === '/') return basePath || '/';
+    return `${basePath}${path}`;
+  };
 
   const handleNavClick = (path, sectionId) => {
     if (path) {
-      navigate(path);
+      navigate(getPath(path));
     } else if (sectionId) {
       // Check if we're on homepage
-      if (window.location.pathname === '/site/bottega/' || window.location.pathname === '/site/bottega') {
+      const isHomepage = location.pathname === '/' || 
+                         location.pathname === '/site/bottega' || 
+                         location.pathname === '/site/bottega/';
+      if (isHomepage) {
         // We're on homepage, scroll to section
         if (scrollToSection) {
           scrollToSection(sectionId);
         }
       } else {
         // We're on another page, navigate to homepage first
-        navigate('/site/bottega/', { state: { scrollTo: sectionId } });
+        navigate(getPath('/'), { state: { scrollTo: sectionId } });
         // After navigation, scroll to section
         setTimeout(() => {
           const element = document.getElementById(sectionId);
@@ -121,7 +154,7 @@ function Navigation({ activeSection, scrollToSection }) {
     <nav className="fixed top-0 w-full bg-white/95 backdrop-blur-sm shadow-md z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link to="/" className="flex items-center space-x-2">
+          <Link to={getPath('/')} className="flex items-center space-x-2">
             <img src="/images/logo.jpg" alt="La Bottega Italiana" className="h-10 w-auto" />
             <div className="hidden sm:block">
               <h1 className="text-lg font-bold text-gray-900">La Bottega Italiana</h1>
@@ -131,22 +164,22 @@ function Navigation({ activeSection, scrollToSection }) {
           
           {/* Desktop Menu */}
           <div className="hidden lg:flex items-center space-x-6">
-            <Link to="/" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
-            <Link to="/over-ons" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
-            <Link to="/kaart" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
-            <Link to="/galerie" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
-            <Link to="/groepmenus" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
-            <Link to="/openingstijden" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
-            <Link to="/contact" className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
+            <Link to={getPath('/')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
+            <Link to={getPath('/over-ons')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
+            <Link to={getPath('/kaart')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
+            <Link to={getPath('/galerie')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
+            <Link to={getPath('/groepmenus')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
+            <Link to={getPath('/openingstijden')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
+            <Link to={getPath('/contact')} className="text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
             <LanguageSwitcher />
           </div>
           
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            <Link to="/reserveren" className="bg-[#7D3C32] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#6A3229] transition-colors shadow-lg hover:shadow-xl">
+            <Link to={getPath('/reserveren')} className="bg-[#7D3C32] text-white px-6 py-2.5 rounded-lg font-medium hover:bg-[#6A3229] transition-colors shadow-lg hover:shadow-xl">
               {t('reserve')}
             </Link>
-            <Link to="/afhalen" className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-2.5 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors shadow-lg hover:shadow-xl">
+            <Link to={getPath('/afhalen')} className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-2.5 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors shadow-lg hover:shadow-xl">
               {t('takeaway')}
             </Link>
           </div>
@@ -173,18 +206,18 @@ function Navigation({ activeSection, scrollToSection }) {
         {mobileMenuOpen && (
           <div className="lg:hidden pb-4">
             <div className="flex flex-col space-y-3">
-              <Link to="/" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
-              <Link to="/over-ons" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
-              <Link to="/kaart" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
-              <Link to="/galerie" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
-              <Link to="/groepmenus" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
-              <Link to="/openingstijden" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
-              <Link to="/contact" onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
+              <Link to={getPath('/')} onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('home')}</Link>
+              <Link to={getPath('/over-ons')} onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('about')}</Link>
+              <Link to={getPath('/kaart')} onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('menu')}</Link>
+              <Link to={getPath('/galerie')} onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('gallery')}</Link>
+              <Link to={getPath('/groepmenus')} onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('groupMenus')}</Link>
+              <Link to={getPath('/openingstijden')} onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('hours')}</Link>
+              <Link to={getPath('/contact')} onClick={() => setMobileMenuOpen(false)} className="py-2 text-sm font-medium text-gray-700 hover:text-[#7D3C32] transition-colors">{t('contact')}</Link>
               <div className="flex flex-col space-y-3 pt-4 border-t border-gray-200">
-                <Link to="/reserveren" onClick={() => setMobileMenuOpen(false)} className="bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#6A3229] transition-colors text-center">
+                <Link to={getPath('/reserveren')} onClick={() => setMobileMenuOpen(false)} className="bg-[#7D3C32] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#6A3229] transition-colors text-center">
                   {t('reserve')}
                 </Link>
-                <Link to="/afhalen" onClick={() => setMobileMenuOpen(false)} className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-3 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors text-center">
+                <Link to={getPath('/afhalen')} onClick={() => setMobileMenuOpen(false)} className="bg-white text-[#7D3C32] border-2 border-[#7D3C32] px-5 py-3 rounded-lg font-medium hover:bg-[#7D3C32] hover:text-white transition-colors text-center">
                   {t('takeaway')}
                 </Link>
               </div>
@@ -268,10 +301,10 @@ function HomePage() {
           <h1 className="text-5xl md:text-7xl font-bold mb-6" data-testid="hero-title">{t('heroTitle')}</h1>
           <p className="text-xl md:text-2xl mb-8 font-light">{t('heroSubtitle')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/reserveren" className="bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="reserve-table-btn">
+            <Link to={getPath('/reserveren')} className="bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="reserve-table-btn">
               {t('reserveTable')}
             </Link>
-            <Link to="/afhalen" className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="takeaway-btn">
+            <Link to={getPath('/afhalen')} className="bg-white text-gray-900 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="takeaway-btn">
               {t('orderTakeaway')}
             </Link>
           </div>
@@ -338,7 +371,7 @@ function HomePage() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-            <Link to="/kaart" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="menu-card-link">
+            <Link to={getPath('/kaart')} className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="menu-card-link">
               <div className="flex justify-center mb-4">
                 <Utensils className="w-16 h-16 text-[#7D3C32]" />
               </div>
@@ -347,7 +380,7 @@ function HomePage() {
               <span className="text-[#7D3C32] font-semibold">{t('viewMenuLink')}</span>
             </Link>
 
-            <Link to="/groepmenus" className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="group-menu-link">
+            <Link to={getPath('/groepmenus')} className="bg-gray-50 rounded-lg p-8 text-center hover:shadow-xl transition-all transform hover:scale-105" data-testid="group-menu-link">
               <div className="flex justify-center mb-4">
                 <Wine className="w-16 h-16 text-[#7D3C32]" />
               </div>
@@ -497,10 +530,10 @@ function HomePage() {
           <h2 className="text-4xl md:text-5xl font-bold mb-6">{t('ctaTitle')}</h2>
           <p className="text-xl mb-8">{t('ctaSubtitle')}</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link to="/reserveren" className="bg-white text-[#7D3C32] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-reserve-btn">
+            <Link to={getPath('/reserveren')} className="bg-white text-[#7D3C32] px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-reserve-btn">
               {t('reserveTable')}
             </Link>
-            <Link to="/afhalen" className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#7D3C32] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-takeaway-btn">
+            <Link to={getPath('/afhalen')} className="bg-transparent border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-[#7D3C32] transition-all shadow-lg hover:shadow-2xl transform hover:scale-105" data-testid="cta-takeaway-btn">
               {t('orderTakeaway')}
             </Link>
           </div>
@@ -576,7 +609,7 @@ function ReserverenPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <Link to="/" className="text-[#7D3C32] hover:underline font-medium">
+            <Link to={getPath('/')} className="text-[#7D3C32] hover:underline font-medium">
               ← Terug naar Home
             </Link>
           </div>
@@ -625,7 +658,7 @@ function AfhalenPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <Link to="/" className="text-[#7D3C32] hover:underline font-medium">
+            <Link to={getPath('/')} className="text-[#7D3C32] hover:underline font-medium">
               ← Terug naar Home
             </Link>
           </div>
@@ -697,7 +730,7 @@ function KaartPage() {
           </div>
 
           <div className="mt-8 text-center">
-            <Link to="/" className="text-[#7D3C32] hover:underline font-medium text-lg">
+            <Link to={getPath('/')} className="text-[#7D3C32] hover:underline font-medium text-lg">
               {t('backToHome')}
             </Link>
           </div>
@@ -795,7 +828,7 @@ function GroepmenusPage() {
                 📥 Download Groepmenus PDF
               </button>
               <Link 
-                to="/reserveren"
+                to={getPath('/reserveren')}
                 className="inline-flex items-center justify-center bg-[#D4A574] text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-[#C49564] transition-all shadow-lg hover:shadow-xl"
               >
                 Reserveer voor groepen
@@ -878,7 +911,7 @@ function GroepmenusPage() {
 
           {/* Back to Home */}
           <div className="mt-8 text-center">
-            <Link to="/" className="text-[#D4A574] hover:text-[#C49564] font-medium text-lg transition-colors">
+            <Link to={getPath('/')} className="text-[#D4A574] hover:text-[#C49564] font-medium text-lg transition-colors">
               ← {t('backToHome')}
             </Link>
           </div>
@@ -1013,7 +1046,7 @@ function GaleriePage() {
           )}
 
           <div className="mt-12 text-center">
-            <Link to="/" className="text-[#7D3C32] hover:underline font-medium text-lg">
+            <Link to={getPath('/')} className="text-[#7D3C32] hover:underline font-medium text-lg">
               {t('backToHome')}
             </Link>
           </div>
@@ -1091,7 +1124,7 @@ function ConfirmationPage() {
           {/* Back Button */}
           <div className="text-center">
             <Link 
-              to="/"
+              to={getPath('/')}
               className="inline-block bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
             >
               Klik hier om terug te gaan naar de site
@@ -1202,7 +1235,7 @@ function Confirmation2Page() {
           {/* Action Button */}
           <div className="text-center">
             <Link 
-              to="/"
+              to={getPath('/')}
               className="inline-block bg-[#7D3C32] text-white px-8 py-4 rounded-lg font-semibold hover:bg-[#6A3229] transition-all shadow-lg hover:shadow-xl"
             >
               Terug naar Home
