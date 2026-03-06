@@ -31,8 +31,9 @@ const DOMAIN_MAPPING = {
 // Detecteer custom domain DIRECT bij laden
 const CUSTOM_DOMAIN_SLUG = DOMAIN_MAPPING[window.location.hostname] || null;
 
-// Check of we op /admin pad zijn (voor custom domain redirect naar centrale login)
+// Check of we op /admin of /restaurant-login pad zijn (voor custom domain redirect naar centrale login)
 const isAdminPath = window.location.pathname === '/admin' || window.location.pathname === '/admin/';
+const isRestaurantLoginPath = window.location.pathname === '/restaurant-login' || window.location.pathname === '/restaurant-login/';
 
 // Router voor admin/preview toegang
 function AdminRouter() {
@@ -65,8 +66,8 @@ function AdminRouter() {
 }
 
 function App() {
-  // ALS OP CUSTOM DOMAIN EN /admin PAD: redirect naar centrale login
-  if (CUSTOM_DOMAIN_SLUG && isAdminPath) {
+  // ALS OP CUSTOM DOMAIN EN /admin OF /restaurant-login PAD: redirect naar centrale login
+  if (CUSTOM_DOMAIN_SLUG && (isAdminPath || isRestaurantLoginPath)) {
     // Redirect naar centrale login pagina met site info
     window.location.href = `https://site-consolidator.preview.emergentagent.com/restaurant-login?site=${CUSTOM_DOMAIN_SLUG}`;
     return (

@@ -825,6 +825,32 @@ async def root():
 async def health():
     return {"status": "healthy"}
 
+# Tijdelijke endpoint om announcement te wissen voor een site
+@public_router.post("/site/{slug}/clear-announcement")
+async def clear_site_announcement(slug: str, secret: str = "fworks2024"):
+    """Tijdelijke endpoint om announcement te wissen - verwijder na gebruik"""
+    if secret != "fworks2024":
+        raise HTTPException(status_code=403, detail="Invalid secret")
+    
+    # Zoek de site config
+    site = await db.sites.find_one({"slug": slug})
+    if not site:
+        raise HTTPException(status_code=404, detail="Site not found")
+    
+    config_id = site.get("site_config_id")
+    if config_id:
+        await db.site_configs.update_one(
+            {"_id": config_id},
+            {"$set": {
+                "special_announcement": "",
+                "special_announcement_active": False,
+                "closure_notice": ""
+            }}
+        )
+        return {"success": True, "message": f"Announcement cleared for {slug}"}
+    
+    raise HTTPException(status_code=404, detail="Site config not found")
+
 # Include routers
 app.include_router(api_router)
 app.include_router(auth_router)
