@@ -1138,16 +1138,47 @@ function FWorksApp() {
 
   const t = translations[lang];
 
+  // Dynamic SEO based on language
+  const seoContent = {
+    nl: {
+      title: "fworksbuilders | Professionele Websites op Maat - Klaar in 24 uur!",
+      description: "Professionele websites vanaf €199/jaar + €50 opzet. Standaard website klaar in 24 uur! Eigen beheerdashboard, meertalig, mobielvriendelijk. Webdesign België.",
+      keywords: "website maken, webdesign, website laten maken, professionele website, België, goedkoop website, 24 uur website, webdesigner"
+    },
+    fr: {
+      title: "fworksbuilders | Sites Web Professionnels Sur Mesure - Prêt en 24h!",
+      description: "Sites web professionnels à partir de €199/an + €50 création. Site standard prêt en 24 heures! Tableau de bord personnel, multilingue. Webdesign Belgique.",
+      keywords: "création site web, webdesign, site web professionnel, Belgique, site web pas cher, 24 heures, webdesigner"
+    },
+    en: {
+      title: "fworksbuilders | Professional Custom Websites - Ready in 24 Hours!",
+      description: "Professional websites from €199/year + €50 setup. Standard website ready in 24 hours! Personal dashboard, multilingual, mobile-friendly. Web design worldwide.",
+      keywords: "website design, web development, professional website, cheap website, 24 hour website, web designer, custom website"
+    },
+    es: {
+      title: "fworksbuilders | Sitios Web Profesionales a Medida - ¡Listo en 24h!",
+      description: "Sitios web profesionales desde €199/año + €50 configuración. ¡Sitio web estándar listo en 24 horas! Panel de control personal, multilingüe. Diseño web mundial.",
+      keywords: "diseño web, crear sitio web, sitio web profesional, sitio web barato, 24 horas, diseñador web"
+    },
+    it: {
+      title: "fworksbuilders | Siti Web Professionali Su Misura - Pronto in 24h!",
+      description: "Siti web professionali da €199/anno + €50 setup. Sito web standard pronto in 24 ore! Pannello di controllo personale, multilingue. Web design mondiale.",
+      keywords: "web design, creare sito web, sito web professionale, sito web economico, 24 ore, web designer"
+    }
+  };
+
+  const currentSeo = seoContent[lang] || seoContent.en;
+
   return (
     <div className="min-h-screen bg-gray-900">
       <SEO 
-        title="fworksbuilders | Professionele Websites op Maat - Klaar in 24 uur!"
-        description="Professionele websites vanaf €199/jaar + €50 opzet. Standaard website klaar in 24 uur! Eigen beheerdashboard, meertalig, mobielvriendelijk. Webdesign België."
-        keywords="website maken, webdesign, website laten maken, professionele website, België, snel website, goedkoop website, 24 uur website, webdesigner, website bouwen, horeca website, restaurant website, zakelijke website, eigen dashboard, meertalige website"
+        title={currentSeo.title}
+        description={currentSeo.description}
+        keywords={currentSeo.keywords}
         image="https://fworksbuilders.com/images/fworks-logo.png"
         url="https://fworksbuilders.com"
         siteName="fworksbuilders"
-        locale="nl_BE"
+        locale={lang === 'nl' ? 'nl_BE' : lang === 'fr' ? 'fr_BE' : lang === 'es' ? 'es_ES' : lang === 'it' ? 'it_IT' : 'en_US'}
       />
       <Navigation t={t} lang={lang} setLang={setLang} />
       <HeroSection t={t} />
