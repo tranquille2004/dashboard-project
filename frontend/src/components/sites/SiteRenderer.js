@@ -903,23 +903,48 @@ const SiteRenderer = ({ forcedSlug }) => {
   };
 
   // Check for specific site apps FIRST - render immediately without waiting for API data
+  // Wrap in Routes to handle the /site/slug prefix correctly
   if (slug === 'cantina') {
-    return <CantinaApp />;
+    return (
+      <Routes>
+        <Route path="/*" element={<CantinaApp />} />
+      </Routes>
+    );
   }
   if (slug === 'bottega') {
-    return <BottegaApp />;
+    return (
+      <Routes>
+        <Route path="/*" element={<BottegaApp />} />
+      </Routes>
+    );
   }
   if (slug === 'ascoli') {
-    return <AscoliApp />;
+    return (
+      <Routes>
+        <Route path="/*" element={<AscoliApp />} />
+      </Routes>
+    );
   }
   if (slug === 'mercato') {
-    return <MercatoApp />;
+    return (
+      <Routes>
+        <Route path="/*" element={<MercatoApp />} />
+      </Routes>
+    );
   }
   if (slug === 'tracemaster') {
-    return <TracemasterApp />;
+    return (
+      <Routes>
+        <Route path="/*" element={<TracemasterApp />} />
+      </Routes>
+    );
   }
   if (slug === 'theobeans') {
-    return <TheobeansApp />;
+    return (
+      <Routes>
+        <Route path="/*" element={<TheobeansApp />} />
+      </Routes>
+    );
   }
   
   if (loading) {

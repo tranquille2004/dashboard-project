@@ -42,8 +42,7 @@ function AdminRouter() {
     return <AuthCallback />;
   }
   
-  // BELANGRIJK: Als het pad begint met /site/, toon ALLEEN de website (geen admin UI)
-  // Dit is voor Cloudflare Worker die verkeer doorstuurt naar /site/slug paden
+  // BELANGRIJK: Als het pad begint met /site/, toon de website met ALLE subroutes
   if (location.pathname.startsWith('/site/')) {
     return (
       <Routes>

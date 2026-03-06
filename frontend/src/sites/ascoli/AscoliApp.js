@@ -21,6 +21,11 @@ const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
 function AscoliApp() {
   const [siteConfig, setSiteConfig] = useState(null);
+  
+  // Detecteer of we op een custom domain zijn (niet op preview URL)
+  const isCustomDomain = !window.location.hostname.includes('preview.emergentagent.com') && 
+                         !window.location.hostname.includes('localhost');
+  const basePath = isCustomDomain ? '' : '/site/ascoli';
 
   useEffect(() => {
     axios.get(`${API}/public/site/ascoli`)
@@ -30,7 +35,7 @@ function AscoliApp() {
 
   return (
     <LanguageProvider>
-      <BasePathProvider basePath="/site/ascoli">
+      <BasePathProvider basePath={basePath}>
         <div className="App">
           <>
             <ScrollToTop />

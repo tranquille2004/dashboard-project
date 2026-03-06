@@ -1,8 +1,8 @@
 import React, { createContext, useContext } from 'react';
 
-const BasePathContext = createContext('/site/mercato');
+const BasePathContext = createContext('');
 
-export const BasePathProvider = ({ basePath = '/site/mercato', children }) => {
+export const BasePathProvider = ({ basePath = '', children }) => {
   return (
     <BasePathContext.Provider value={basePath}>
       {children}
