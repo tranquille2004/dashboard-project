@@ -1068,7 +1068,7 @@ const Footer = ({ t }) => (
   </footer>
 );
 
-// Main App with Tawk.to
+// Main App with Tawk.to and SEO
 function FWorksApp() {
   const [lang, setLang] = useState(() => {
     const saved = localStorage.getItem('fworks_lang');
@@ -1079,6 +1079,61 @@ function FWorksApp() {
 
   useEffect(() => {
     localStorage.setItem('fworks_lang', lang);
+    
+    // Add structured data (JSON-LD) for better SEO
+    const structuredData = {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "fworksbuilders",
+      "description": "Professionele websites op maat. Standaard website klaar in 24 uur! Eigen beheerdashboard, meertalig, mobielvriendelijk.",
+      "url": "https://fworksbuilders.com",
+      "logo": "https://fworksbuilders.com/images/fworks-logo.png",
+      "image": "https://fworksbuilders.com/images/fworks-logo.png",
+      "telephone": "+32494516064",
+      "email": "fworks@mail.be",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "BE"
+      },
+      "priceRange": "€199/jaar",
+      "serviceType": ["Web Design", "Website Development", "Web Hosting"],
+      "areaServed": ["Belgium", "Netherlands", "Europe"],
+      "sameAs": [
+        "https://wa.me/32494516064"
+      ],
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Website Services",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Professionele Website",
+              "description": "Maatwerk website met eigen beheerdashboard"
+            },
+            "price": "199",
+            "priceCurrency": "EUR",
+            "priceValidUntil": "2027-12-31"
+          }
+        ]
+      }
+    };
+    
+    // Remove existing structured data
+    const existingScript = document.querySelector('script[type="application/ld+json"]');
+    if (existingScript) existingScript.remove();
+    
+    // Add new structured data
+    const script = document.createElement('script');
+    script.type = 'application/ld+json';
+    script.text = JSON.stringify(structuredData);
+    document.head.appendChild(script);
+    
+    return () => {
+      const scriptToRemove = document.querySelector('script[type="application/ld+json"]');
+      if (scriptToRemove) scriptToRemove.remove();
+    };
   }, [lang]);
 
   const t = translations[lang];
@@ -1087,8 +1142,12 @@ function FWorksApp() {
     <div className="min-h-screen bg-gray-900">
       <SEO 
         title="fworksbuilders | Professionele Websites op Maat - Klaar in 24 uur!"
-        description="Moderne, snelle en mobielvriendelijke websites met eigen beheerdashboard. Standaard website klaar in 24 uur! Vanaf €199/jaar + €50 opzet."
-        keywords="website maken, webdesign, website laten maken, professionele website, België, snel website, goedkoop website, 24 uur website"
+        description="Professionele websites vanaf €199/jaar + €50 opzet. Standaard website klaar in 24 uur! Eigen beheerdashboard, meertalig, mobielvriendelijk. Webdesign België."
+        keywords="website maken, webdesign, website laten maken, professionele website, België, snel website, goedkoop website, 24 uur website, webdesigner, website bouwen, horeca website, restaurant website, zakelijke website, eigen dashboard, meertalige website"
+        image="https://fworksbuilders.com/images/fworks-logo.png"
+        url="https://fworksbuilders.com"
+        siteName="fworksbuilders"
+        locale="nl_BE"
       />
       <Navigation t={t} lang={lang} setLang={setLang} />
       <HeroSection t={t} />
