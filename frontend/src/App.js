@@ -42,17 +42,25 @@ function AdminRouter() {
     return <AuthCallback />;
   }
   
+  // BELANGRIJK: Als het pad begint met /site/, toon ALLEEN de website (geen admin UI)
+  // Dit is voor Cloudflare Worker die verkeer doorstuurt naar /site/slug paden
+  if (location.pathname.startsWith('/site/')) {
+    return (
+      <Routes>
+        <Route path="/site/:slug/*" element={<SiteRenderer />} />
+      </Routes>
+    );
+  }
+  
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/sites/:siteId" element={<SiteEditor />} />
-      {/* Easy URL voor super-admin dashboard */}
-      <Route path="/beheer" element={<Navigate to="/admin" replace />} />
       <Route path="/restaurant-login" element={<SiteAdminLogin />} />
       <Route path="/mijn-site" element={<SiteAdminDashboard />} />
       <Route path="/site/:slug/*" element={<SiteRenderer />} />
-      <Route path="*" element={<SiteRenderer />} />
+      <Route path="*" element={<LandingPage />} />
     </Routes>
   );
 }
