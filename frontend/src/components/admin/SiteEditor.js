@@ -9,10 +9,163 @@ import {
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
+const translations = {
+  fr: {
+    general: 'Général',
+    announcement: 'Annonce',
+    contact: 'Contact & Heures',
+    menu: 'Menu',
+    photos: 'Photos',
+    admins: 'Administrateurs',
+    save: 'Enregistrer',
+    saving: 'Enregistrement...',
+    preview: 'Aperçu',
+    siteName: 'Nom du site',
+    siteSlug: 'Slug',
+    siteType: 'Type',
+    restaurant: 'Restaurant',
+    business: 'Entreprise',
+    domains: 'Domaines',
+    reservationsEnabled: 'Réservations activées',
+    takeawayEnabled: 'À emporter activé',
+    specialAnnouncement: 'Annonce spéciale',
+    announcementActive: 'Annonce active',
+    announcementMessage: 'Message',
+    announcementType: 'Type de message',
+    positive: 'Positif (vert)',
+    warning: 'Avertissement (orange)',
+    info: 'Info (bleu)',
+    saveAnnouncement: 'Enregistrer l\'annonce',
+    announcementHelp: 'Utilisez ceci pour afficher un message important en haut du site, par exemple pour les jours fériés, vacances ou promotions.',
+    openingHours: 'Heures d\'ouverture',
+    contactInfo: 'Informations de contact',
+    address: 'Adresse',
+    phone: 'Téléphone',
+    email: 'Email',
+    socialMedia: 'Réseaux sociaux',
+    addAdmin: 'Ajouter admin',
+    adminName: 'Nom',
+    adminEmail: 'Email',
+    adminPassword: 'Mot de passe',
+    permissions: 'Permissions',
+    cancel: 'Annuler',
+    create: 'Créer',
+    active: 'Actif',
+    inactive: 'Inactif',
+    menuItems: 'Articles du menu',
+    menuPrices: 'Prix',
+    closureNotice: 'Avis de fermeture',
+    gallery: 'Galerie',
+    groupMenus: 'Menus de groupe',
+    back: 'Retour'
+  },
+  nl: {
+    general: 'Algemeen',
+    announcement: 'Aankondiging',
+    contact: 'Contact & Uren',
+    menu: 'Menu',
+    photos: 'Foto\'s',
+    admins: 'Beheerders',
+    save: 'Opslaan',
+    saving: 'Opslaan...',
+    preview: 'Preview',
+    siteName: 'Site naam',
+    siteSlug: 'Slug',
+    siteType: 'Type',
+    restaurant: 'Restaurant',
+    business: 'Bedrijf',
+    domains: 'Domeinen',
+    reservationsEnabled: 'Reservaties ingeschakeld',
+    takeawayEnabled: 'Afhalen ingeschakeld',
+    specialAnnouncement: 'Speciale Aankondiging',
+    announcementActive: 'Aankondiging actief',
+    announcementMessage: 'Bericht',
+    announcementType: 'Type bericht',
+    positive: 'Positief (groen)',
+    warning: 'Waarschuwing (oranje)',
+    info: 'Info (blauw)',
+    saveAnnouncement: 'Aankondiging Opslaan',
+    announcementHelp: 'Gebruik dit om een belangrijk bericht te tonen bovenaan de website, bijvoorbeeld voor feestdagen, vakanties, of speciale acties.',
+    openingHours: 'Openingsuren',
+    contactInfo: 'Contact informatie',
+    address: 'Adres',
+    phone: 'Telefoon',
+    email: 'Email',
+    socialMedia: 'Sociale media',
+    addAdmin: 'Admin toevoegen',
+    adminName: 'Naam',
+    adminEmail: 'Email',
+    adminPassword: 'Wachtwoord',
+    permissions: 'Rechten',
+    cancel: 'Annuleren',
+    create: 'Aanmaken',
+    active: 'Actief',
+    inactive: 'Inactief',
+    menuItems: 'Menu items',
+    menuPrices: 'Prijzen',
+    closureNotice: 'Sluitingsbericht',
+    gallery: 'Foto\'s',
+    groupMenus: 'Groepsmenu\'s',
+    back: 'Terug'
+  },
+  en: {
+    general: 'General',
+    announcement: 'Announcement',
+    contact: 'Contact & Hours',
+    menu: 'Menu',
+    photos: 'Photos',
+    admins: 'Administrators',
+    save: 'Save',
+    saving: 'Saving...',
+    preview: 'Preview',
+    siteName: 'Site name',
+    siteSlug: 'Slug',
+    siteType: 'Type',
+    restaurant: 'Restaurant',
+    business: 'Business',
+    domains: 'Domains',
+    reservationsEnabled: 'Reservations enabled',
+    takeawayEnabled: 'Takeaway enabled',
+    specialAnnouncement: 'Special Announcement',
+    announcementActive: 'Announcement active',
+    announcementMessage: 'Message',
+    announcementType: 'Message type',
+    positive: 'Positive (green)',
+    warning: 'Warning (orange)',
+    info: 'Info (blue)',
+    saveAnnouncement: 'Save Announcement',
+    announcementHelp: 'Use this to display an important message at the top of the website, for example for holidays, vacations, or special promotions.',
+    openingHours: 'Opening hours',
+    contactInfo: 'Contact information',
+    address: 'Address',
+    phone: 'Phone',
+    email: 'Email',
+    socialMedia: 'Social media',
+    addAdmin: 'Add admin',
+    adminName: 'Name',
+    adminEmail: 'Email',
+    adminPassword: 'Password',
+    permissions: 'Permissions',
+    cancel: 'Cancel',
+    create: 'Create',
+    active: 'Active',
+    inactive: 'Inactive',
+    menuItems: 'Menu items',
+    menuPrices: 'Prices',
+    closureNotice: 'Closure notice',
+    gallery: 'Gallery',
+    groupMenus: 'Group menus',
+    back: 'Back'
+  }
+};
+
 const SiteEditor = () => {
   const { siteId } = useParams();
   const navigate = useNavigate();
   const { user, loading: authLoading } = useAuth();
+  
+  const [lang] = useState(() => localStorage.getItem('admin_lang') || 'fr');
+  const t = (key) => translations[lang]?.[key] || translations['en']?.[key] || key;
   
   const [activeTab, setActiveTab] = useState('general');
   const [site, setSite] = useState(null);
@@ -208,12 +361,12 @@ const SiteEditor = () => {
   if (!user || !site) return null;
 
   const tabs = [
-    { id: 'general', label: 'Algemeen', icon: Settings },
-    { id: 'announcement', label: 'Aankondiging', icon: Bell },
-    { id: 'contact', label: 'Contact & Uren', icon: Clock },
-    { id: 'menu', label: 'Menu', icon: Menu },
-    { id: 'gallery', label: 'Foto\'s', icon: Image },
-    { id: 'admins', label: 'Beheerders', icon: Shield },
+    { id: 'general', label: t('general'), icon: Settings },
+    { id: 'announcement', label: t('announcement'), icon: Bell },
+    { id: 'contact', label: t('contact'), icon: Clock },
+    { id: 'menu', label: t('menu'), icon: Menu },
+    { id: 'gallery', label: t('photos'), icon: Image },
+    { id: 'admins', label: t('admins'), icon: Shield },
   ];
 
   return (
@@ -238,7 +391,7 @@ const SiteEditor = () => {
                 className="flex items-center space-x-2 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50"
               >
                 <Eye className="w-5 h-5" />
-                <span>Preview</span>
+                <span>{t('preview')}</span>
               </Link>
               <button
                 onClick={activeTab === 'general' || activeTab === 'contact' ? saveConfig : saveSite}
@@ -247,7 +400,7 @@ const SiteEditor = () => {
                 data-testid="save-btn"
               >
                 <Save className="w-5 h-5" />
-                <span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+                <span>{saving ? t('saving') : t('save')}</span>
               </button>
             </div>
           </div>
