@@ -516,7 +516,7 @@ const portfolioItems = [
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant', es: 'Restaurante Italiano', it: 'Ristorante Italiano' },
     location: 'Tervuren',
     url: 'https://lacantinaitaliana.net',
-    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/cantina',
+    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/cantina',
     features: ['Reservaties', 'Meertalig', 'Menu']
   },
   {
@@ -524,7 +524,7 @@ const portfolioItems = [
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant', es: 'Restaurante Italiano', it: 'Ristorante Italiano' },
     location: 'Herent',
     url: 'https://labottegaherent.com',
-    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/bottega',
+    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/bottega',
     features: ['Reservaties', 'Afhalen', 'Groepsmenu\'s']
   },
   {
@@ -532,7 +532,7 @@ const portfolioItems = [
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant', es: 'Restaurante Italiano', it: 'Ristorante Italiano' },
     location: 'Zaventem',
     url: 'https://ascolizaventem.com',
-    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/ascoli',
+    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/ascoli',
     features: ['Reservaties', 'Galerij', 'Evenementen']
   },
   {
@@ -540,7 +540,7 @@ const portfolioItems = [
     type: { nl: 'Pizzeria & Restaurant', fr: 'Pizzeria & Restaurant', en: 'Pizzeria & Restaurant', es: 'Pizzería y Restaurante', it: 'Pizzeria e Ristorante' },
     location: 'Zaventem',
     url: 'https://ristorantemercato.be',
-    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/mercato',
+    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/mercato',
     features: ['Reservaties', 'Afhalen', 'Menu']
   },
   {
@@ -548,7 +548,7 @@ const portfolioItems = [
     type: { nl: 'Cacao Export', fr: 'Export de Cacao', en: 'Cacao Export', es: 'Exportación de Cacao', it: 'Esportazione Cacao' },
     location: 'Ecuador',
     url: 'https://theobeans-export.com',
-    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/theobeans',
+    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/theobeans',
     features: ['Meertalig', 'Galerij', 'Contact']
   },
   {
@@ -556,7 +556,7 @@ const portfolioItems = [
     type: { nl: 'GPS Tracking', fr: 'Suivi GPS', en: 'GPS Tracking', es: 'Rastreo GPS', it: 'Tracciamento GPS' },
     location: 'Ecuador',
     url: 'https://tracemaster-rastreadores.com',
-    previewUrl: 'https://fworks-admin.preview.emergentagent.com/site/tracemaster',
+    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/tracemaster',
     features: ['E-commerce', 'WhatsApp', 'Producten']
   }
 ];
