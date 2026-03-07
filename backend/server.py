@@ -851,6 +851,106 @@ async def clear_site_announcement(slug: str, secret: str = "fworks2024"):
     
     raise HTTPException(status_code=404, detail="Site config not found")
 
+# ============== VISITOR TRACKING ==============
+
+@public_router.post("/track-visit")
+async def track_visit(request: Request):
+    """Track a website visit"""
+    body = await request.json()
+    site_slug = body.get("site_slug")
+    
+    if not site_slug:
+        raise HTTPException(status_code=400, detail="site_slug required")
+    
+    visit = {
+        "site_slug": site_slug,
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "user_agent": request.headers.get("user-agent", ""),
+        "referer": request.headers.get("referer", "")
+    }
+    
+    await db.site_visits.insert_one(visit)
+    return {"status": "tracked"}
+
+@admin_router.get("/sites/{site_id}/stats")
+async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
+    """Get visitor statistics for a site"""
+    site = await db.sites.find_one({"site_id": site_id}, {"_id": 0})
+    if not site:
+        raise HTTPException(status_code=404, detail="Site not found")
+    
+    site_slug = site.get("slug", site_id)
+    now = datetime.now(timezone.utc)
+    
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    week_start = today_start - timedelta(days=7)
+    month_start = today_start - timedelta(days=30)
+    
+    total_visits = await db.site_visits.count_documents({"site_slug": site_slug})
+    today_visits = await db.site_visits.count_documents({
+        "site_slug": site_slug,
+        "timestamp": {"$gte": today_start.isoformat()}
+    })
+    week_visits = await db.site_visits.count_documents({
+        "site_slug": site_slug,
+        "timestamp": {"$gte": week_start.isoformat()}
+    })
+    month_visits = await db.site_visits.count_documents({
+        "site_slug": site_slug,
+        "timestamp": {"$gte": month_start.isoformat()}
+    })
+    
+    return {
+        "site_id": site_id,
+        "site_slug": site_slug,
+        "stats": {
+            "today": today_visits,
+            "week": week_visits,
+            "month": month_visits,
+            "total": total_visits
+        }
+    }
+
+@admin_router.get("/all-stats")
+async def get_all_stats(user: User = Depends(get_current_user)):
+    """Get visitor statistics for all sites"""
+    sites = await db.sites.find({}, {"_id": 0}).to_list(100)
+    
+    now = datetime.now(timezone.utc)
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    week_start = today_start - timedelta(days=7)
+    month_start = today_start - timedelta(days=30)
+    
+    stats = []
+    for site in sites:
+        site_slug = site.get("slug", site.get("site_id"))
+        
+        total_visits = await db.site_visits.count_documents({"site_slug": site_slug})
+        today_visits = await db.site_visits.count_documents({
+            "site_slug": site_slug,
+            "timestamp": {"$gte": today_start.isoformat()}
+        })
+        week_visits = await db.site_visits.count_documents({
+            "site_slug": site_slug,
+            "timestamp": {"$gte": week_start.isoformat()}
+        })
+        month_visits = await db.site_visits.count_documents({
+            "site_slug": site_slug,
+            "timestamp": {"$gte": month_start.isoformat()}
+        })
+        
+        stats.append({
+            "site_id": site.get("site_id"),
+            "site_name": site.get("name"),
+            "site_slug": site_slug,
+            "today": today_visits,
+            "week": week_visits,
+            "month": month_visits,
+            "total": total_visits
+        })
+    
+    return stats
+
 # Include routers
 app.include_router(api_router)
 app.include_router(auth_router)
@@ -867,6 +967,8 @@ app.add_middleware(
 )
 
 # Configure logging
+
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'

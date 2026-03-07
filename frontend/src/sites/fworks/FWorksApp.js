@@ -119,6 +119,10 @@ const translations = {
     contact: {
       title: 'Neem Contact Op',
       subtitle: 'Laten we uw project bespreken',
+      emailForm: 'Stuur een email',
+      supportChannels: 'Support per email en WhatsApp',
+      thanks: 'Bedankt!',
+      thanksMsg: 'We nemen zo snel mogelijk contact met u op.',
       form: {
         name: 'Uw Naam',
         email: 'E-mailadres',
@@ -218,6 +222,10 @@ const translations = {
     contact: {
       title: 'Contactez-Nous',
       subtitle: 'Discutons de votre projet',
+      emailForm: 'Envoyez un email',
+      supportChannels: 'Support par email et WhatsApp',
+      thanks: 'Merci!',
+      thanksMsg: 'Nous vous contacterons dès que possible.',
       form: {
         name: 'Votre Nom',
         email: 'Adresse E-mail',
@@ -317,6 +325,10 @@ const translations = {
     contact: {
       title: 'Get In Touch',
       subtitle: 'Let\'s discuss your project',
+      emailForm: 'Send an email',
+      supportChannels: 'Support via email and WhatsApp',
+      thanks: 'Thank you!',
+      thanksMsg: 'We will contact you as soon as possible.',
       form: {
         name: 'Your Name',
         email: 'Email Address',
@@ -416,6 +428,10 @@ const translations = {
     contact: {
       title: 'Contáctenos',
       subtitle: 'Hablemos de su proyecto',
+      emailForm: 'Enviar un email',
+      supportChannels: 'Soporte por email y WhatsApp',
+      thanks: '¡Gracias!',
+      thanksMsg: 'Nos pondremos en contacto lo antes posible.',
       form: {
         name: 'Su Nombre',
         email: 'Correo Electrónico',
@@ -515,6 +531,10 @@ const translations = {
     contact: {
       title: 'Contattaci',
       subtitle: 'Parliamo del tuo progetto',
+      emailForm: 'Invia un\'email',
+      supportChannels: 'Supporto via email e WhatsApp',
+      thanks: 'Grazie!',
+      thanksMsg: 'Ti contatteremo il prima possibile.',
       form: {
         name: 'Il Tuo Nome',
         email: 'Indirizzo Email',

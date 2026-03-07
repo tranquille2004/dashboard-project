@@ -15,6 +15,19 @@ import TheobeansApp from '@/sites/theobeans/TheobeansApp';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
+// Track visit when site loads
+const trackSiteVisit = async (slug) => {
+  try {
+    await fetch(`${API}/public/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ site_slug: slug })
+    });
+  } catch (error) {
+    // Silent fail
+  }
+};
+
 // Site data fetcher
 const useSiteData = (slug) => {
   const [data, setData] = useState(null);
@@ -25,6 +38,9 @@ const useSiteData = (slug) => {
     const fetchData = async () => {
       try {
         if (slug) {
+          // Track the visit
+          trackSiteVisit(slug);
+          
           const response = await axios.get(`${API}/public/site/${slug}`);
           setData(response.data);
         } else {
@@ -33,6 +49,10 @@ const useSiteData = (slug) => {
           if (hostname !== 'localhost' && !hostname.includes('preview.emergentagent.com')) {
             const response = await axios.get(`${API}/public/site-by-domain?domain=${hostname}`);
             if (response.data) {
+              // Track with the slug from domain lookup
+              if (response.data.slug) {
+                trackSiteVisit(response.data.slug);
+              }
               setData(response.data);
             }
           }

@@ -30,7 +30,12 @@ const translations = {
     business: 'Autre Entreprise',
     cancel: 'Annuler',
     create: 'Créer',
-    confirmDelete: 'Êtes-vous sûr de vouloir supprimer ce site?'
+    confirmDelete: 'Êtes-vous sûr de vouloir supprimer ce site?',
+    visitors: 'Visiteurs',
+    today: "Aujourd'hui",
+    week: 'Semaine',
+    month: 'Mois',
+    total: 'Total'
   },
   nl: {
     title: 'Website Platform',
@@ -50,7 +55,12 @@ const translations = {
     business: 'Ander Bedrijf',
     cancel: 'Annuleren',
     create: 'Aanmaken',
-    confirmDelete: 'Weet je zeker dat je deze site wilt verwijderen?'
+    confirmDelete: 'Weet je zeker dat je deze site wilt verwijderen?',
+    visitors: 'Bezoekers',
+    today: 'Vandaag',
+    week: 'Week',
+    month: 'Maand',
+    total: 'Totaal'
   },
   en: {
     title: 'Website Platform',
@@ -70,7 +80,12 @@ const translations = {
     business: 'Other Business',
     cancel: 'Cancel',
     create: 'Create',
-    confirmDelete: 'Are you sure you want to delete this site?'
+    confirmDelete: 'Are you sure you want to delete this site?',
+    visitors: 'Visitors',
+    today: 'Today',
+    week: 'Week',
+    month: 'Month',
+    total: 'Total'
   }
 };
 
@@ -82,6 +97,7 @@ const AdminDashboard = () => {
   const [showNewSiteModal, setShowNewSiteModal] = useState(false);
   const [newSite, setNewSite] = useState({ name: '', slug: '', site_type: 'restaurant' });
   const [lang, setLang] = useState(() => localStorage.getItem('admin_lang') || 'fr');
+  const [siteStats, setSiteStats] = useState({});
 
   const t = (key) => translations[lang]?.[key] || key;
 
@@ -105,6 +121,18 @@ const AdminDashboard = () => {
     try {
       const response = await axios.get(`${API}/admin/sites`, { withCredentials: true });
       setSites(response.data);
+      
+      // Load stats for all sites
+      try {
+        const statsResponse = await axios.get(`${API}/admin/all-stats`, { withCredentials: true });
+        const statsMap = {};
+        statsResponse.data.forEach(stat => {
+          statsMap[stat.site_id] = stat;
+        });
+        setSiteStats(statsMap);
+      } catch (statsError) {
+        console.error('Error loading stats:', statsError);
+      }
     } catch (error) {
       console.error('Error loading sites:', error);
     } finally {
@@ -248,6 +276,16 @@ const AdminDashboard = () => {
                       </Link>
                     </div>
                   </div>
+                  {/* Visitor Stats */}
+                  {siteStats[site.site_id] && (
+                    <div className="mt-2 ml-12 flex items-center space-x-4 text-xs">
+                      <span className="text-gray-400">{t('visitors')}:</span>
+                      <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded">{t('today')}: {siteStats[site.site_id].today}</span>
+                      <span className="bg-blue-100 text-blue-700 px-2 py-0.5 rounded">{t('week')}: {siteStats[site.site_id].week}</span>
+                      <span className="bg-purple-100 text-purple-700 px-2 py-0.5 rounded">{t('month')}: {siteStats[site.site_id].month}</span>
+                      <span className="bg-gray-100 text-gray-700 px-2 py-0.5 rounded">{t('total')}: {siteStats[site.site_id].total}</span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
