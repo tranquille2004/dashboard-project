@@ -117,18 +117,7 @@ function Navigation({ activeSection, scrollToSection }) {
   const { t } = useLanguage();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
-  // Detect if we're on a custom domain (iframe) or on the preview site
-  const isCustomDomain = !window.location.hostname.includes('preview.emergentagent.com') && 
-                          !window.location.hostname.includes('localhost');
-  
-  // Base path for links - empty for custom domain, /site/bottega for preview
-  const basePath = isCustomDomain ? '' : '/site/bottega';
-  
-  // Helper function to create correct path
-  const getPath = (path) => {
-    if (path === '/') return basePath || '/';
-    return `${basePath}${path}`;
-  };
+  // Use the global getPath function - no local override needed
 
   const handleNavClick = (path, sectionId) => {
     if (path) {
