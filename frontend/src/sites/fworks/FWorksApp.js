@@ -45,7 +45,7 @@ const translations = {
     nav: { home: 'Home', features: 'Mogelijkheden', portfolio: 'Portfolio', pricing: 'Prijzen', contact: 'Contact' },
     hero: {
       badge: 'Vertrouwd door 10+ bedrijven',
-      fastBadge: '⚡ Standaard website klaar in 24 uur!',
+      fastBadge: '⚡ Standaard website klaar in 48 uur!',
       title: 'Professionele Websites',
       subtitle: 'Snel & Betaalbaar',
       description: 'Moderne, snelle en mobielvriendelijke websites met eigen beheerdashboard. Volledig op maat gemaakt voor uw bedrijf.',
@@ -53,8 +53,8 @@ const translations = {
       ctaSecondary: 'Bekijk Mogelijkheden'
     },
     speed: {
-      title: '24 Uur Levering',
-      desc: 'Standaard websites binnen 24 uur online'
+      title: '48 Uur Levering',
+      desc: 'Standaard websites binnen 48 uur online'
     },
     features: {
       title: 'Wat Kan Uw Website Allemaal?',
@@ -114,7 +114,7 @@ const translations = {
       ],
       cta: 'Start Vandaag',
       note: 'Eenmalige opzet: vanaf €50 (afhankelijk van het werk)',
-      speed: 'Standaard website klaar in 24 uur!'
+      speed: 'Standaard website klaar in 48 uur!'
     },
     contact: {
       title: 'Neem Contact Op',
@@ -144,7 +144,7 @@ const translations = {
     nav: { home: 'Accueil', features: 'Fonctionnalités', portfolio: 'Portfolio', pricing: 'Tarifs', contact: 'Contact' },
     hero: {
       badge: 'Fait confiance par 10+ entreprises',
-      fastBadge: '⚡ Site standard prêt en 24 heures!',
+      fastBadge: '⚡ Site standard prêt en 48 heures!',
       title: 'Sites Web Professionnels',
       subtitle: 'Rapide & Abordable',
       description: 'Sites web modernes, rapides et adaptés aux mobiles avec tableau de bord personnel. Entièrement personnalisé pour votre entreprise.',
@@ -152,8 +152,8 @@ const translations = {
       ctaSecondary: 'Voir Les Fonctionnalités'
     },
     speed: {
-      title: 'Livraison 24h',
-      desc: 'Sites standards en ligne en 24 heures'
+      title: 'Livraison 48h',
+      desc: 'Sites standards en ligne en 48 heures'
     },
     features: {
       title: 'Que Peut Faire Votre Site?',
@@ -213,7 +213,7 @@ const translations = {
       ],
       cta: 'Commencer Aujourd\'hui',
       note: 'Frais de création: à partir de €50 (selon le travail)',
-      speed: 'Site standard prêt en 24 heures!'
+      speed: 'Site standard prêt en 48 heures!'
     },
     contact: {
       title: 'Contactez-Nous',
@@ -243,7 +243,7 @@ const translations = {
     nav: { home: 'Home', features: 'Features', portfolio: 'Portfolio', pricing: 'Pricing', contact: 'Contact' },
     hero: {
       badge: 'Trusted by 10+ businesses',
-      fastBadge: '⚡ Standard website ready in 24 hours!',
+      fastBadge: '⚡ Standard website ready in 48 hours!',
       title: 'Professional Websites',
       subtitle: 'Fast & Affordable',
       description: 'Modern, fast, and mobile-friendly websites with your own management dashboard. Fully customized for your business.',
@@ -251,8 +251,8 @@ const translations = {
       ctaSecondary: 'View Features'
     },
     speed: {
-      title: '24 Hour Delivery',
-      desc: 'Standard websites online within 24 hours'
+      title: '48 Hour Delivery',
+      desc: 'Standard websites online within 48 hours'
     },
     features: {
       title: 'What Can Your Website Do?',
@@ -312,7 +312,7 @@ const translations = {
       ],
       cta: 'Start Today',
       note: 'One-time setup: from €50 (depending on work)',
-      speed: 'Standard website ready in 24 hours!'
+      speed: 'Standard website ready in 48 hours!'
     },
     contact: {
       title: 'Get In Touch',
@@ -342,7 +342,7 @@ const translations = {
     nav: { home: 'Inicio', features: 'Funciones', portfolio: 'Portfolio', pricing: 'Precios', contact: 'Contacto' },
     hero: {
       badge: 'Confiado por más de 10 empresas',
-      fastBadge: '⚡ ¡Sitio web estándar listo en 24 horas!',
+      fastBadge: '⚡ ¡Sitio web estándar listo en 48 horas!',
       title: 'Sitios Web Profesionales',
       subtitle: 'Rápido y Asequible',
       description: 'Sitios web modernos, rápidos y adaptados a móviles con su propio panel de control. Totalmente personalizado para su negocio.',
@@ -351,7 +351,7 @@ const translations = {
     },
     speed: {
       title: 'Entrega en 24h',
-      desc: 'Sitios estándar en línea en 24 horas'
+      desc: 'Sitios estándar en línea en 48 horas'
     },
     features: {
       title: '¿Qué Puede Hacer Su Sitio Web?',
@@ -411,7 +411,7 @@ const translations = {
       ],
       cta: 'Empezar Hoy',
       note: 'Configuración única: desde €50 (según el trabajo)',
-      speed: '¡Sitio web estándar listo en 24 horas!'
+      speed: '¡Sitio web estándar listo en 48 horas!'
     },
     contact: {
       title: 'Contáctenos',
@@ -441,7 +441,7 @@ const translations = {
     nav: { home: 'Home', features: 'Funzionalità', portfolio: 'Portfolio', pricing: 'Prezzi', contact: 'Contatto' },
     hero: {
       badge: 'Scelto da oltre 10 aziende',
-      fastBadge: '⚡ Sito web standard pronto in 24 ore!',
+      fastBadge: '⚡ Sito web standard pronto in 48 ore!',
       title: 'Siti Web Professionali',
       subtitle: 'Veloce e Conveniente',
       description: 'Siti web moderni, veloci e ottimizzati per dispositivi mobili con il proprio pannello di controllo. Completamente personalizzato per la tua attività.',
@@ -450,7 +450,7 @@ const translations = {
     },
     speed: {
       title: 'Consegna in 24h',
-      desc: 'Siti standard online in 24 ore'
+      desc: 'Siti standard online in 48 ore'
     },
     features: {
       title: 'Cosa Può Fare Il Tuo Sito Web?',
@@ -510,7 +510,7 @@ const translations = {
       ],
       cta: 'Inizia Oggi',
       note: 'Setup una tantum: da €50 (a seconda del lavoro)',
-      speed: 'Sito web standard pronto in 24 ore!'
+      speed: 'Sito web standard pronto in 48 ore!'
     },
     contact: {
       title: 'Contattaci',
@@ -1008,19 +1008,47 @@ const PricingSection = ({ t }) => {
   );
 };
 
-// Contact Section - no hours, gold/black theme
+// Contact Section - Email form + WhatsApp support
 const ContactSection = ({ t }) => {
   const [formData, setFormData] = useState({name: '', email: '', phone: '', business: '', message: ''});
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSending(true);
-    await new Promise(r => setTimeout(r, 1500));
+    setError(false);
+    
+    try {
+      // Send email via backend
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          business: formData.business,
+          message: formData.message,
+          to: 'fworks@mail.be'
+        })
+      });
+      
+      if (response.ok) {
+        setSent(true);
+      } else {
+        // Fallback: open email client
+        window.location.href = `mailto:fworks@mail.be?subject=Contact van ${formData.name}&body=${encodeURIComponent(`Naam: ${formData.name}\nEmail: ${formData.email}\nTelefoon: ${formData.phone}\nBedrijf: ${formData.business}\n\nBericht:\n${formData.message}`)}`;
+        setSent(true);
+      }
+    } catch (err) {
+      // Fallback: open email client
+      window.location.href = `mailto:fworks@mail.be?subject=Contact van ${formData.name}&body=${encodeURIComponent(`Naam: ${formData.name}\nEmail: ${formData.email}\nTelefoon: ${formData.phone}\nBedrijf: ${formData.business}\n\nBericht:\n${formData.message}`)}`;
+      setSent(true);
+    }
+    
     setSending(false);
-    setSent(true);
-    window.open(`https://wa.me/32494516064?text=${encodeURIComponent(`Hallo! Ik ben ${formData.name} (${formData.business}). ${formData.message}`)}`, '_blank');
   };
 
   return (
@@ -1030,14 +1058,16 @@ const ContactSection = ({ t }) => {
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-white mb-4">{t.contact.title}</h2>
           <p className="text-xl text-gray-400">{t.contact.subtitle}</p>
+          <p className="text-amber-400 mt-2">{t.contact.supportChannels || 'Support per email en WhatsApp'}</p>
         </div>
         <div className="grid lg:grid-cols-2 gap-12">
           <div className="bg-gray-900 rounded-2xl p-8 border border-amber-500/20">
+            <h3 className="text-xl font-semibold text-white mb-6 flex items-center space-x-2"><Mail className="w-5 h-5 text-amber-400" /><span>{t.contact.emailForm || 'Stuur een email'}</span></h3>
             {sent ? (
               <div className="text-center py-12">
                 <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center mx-auto mb-4 animate-bounce"><Check className="w-8 h-8 text-amber-400" /></div>
-                <h3 className="text-2xl font-bold text-white mb-2">Bedankt!</h3>
-                <p className="text-gray-400">We nemen zo snel mogelijk contact met u op.</p>
+                <h3 className="text-2xl font-bold text-white mb-2">{t.contact.thanks || 'Bedankt!'}</h3>
+                <p className="text-gray-400">{t.contact.thanksMsg || 'We nemen zo snel mogelijk contact met u op.'}</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
@@ -1050,7 +1080,10 @@ const ContactSection = ({ t }) => {
                   <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.business}</label><input type="text" value={formData.business} onChange={(e) => setFormData({...formData, business: e.target.value})} className="w-full bg-gray-800 border border-amber-500/30 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500" placeholder="Restaurant, Winkel, ..." /></div>
                 </div>
                 <div><label className="block text-sm font-medium text-gray-300 mb-2">{t.contact.form.message}</label><textarea rows={4} required value={formData.message} onChange={(e) => setFormData({...formData, message: e.target.value})} className="w-full bg-gray-800 border border-amber-500/30 rounded-lg px-4 py-3 text-white focus:ring-2 focus:ring-amber-500 focus:border-amber-500"></textarea></div>
-                <button type="submit" disabled={sending} className="w-full py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold rounded-lg hover:from-amber-500 hover:to-amber-600 disabled:opacity-50">{sending ? '...' : t.contact.form.submit}</button>
+                <button type="submit" disabled={sending} className="w-full py-4 bg-gradient-to-r from-amber-400 to-amber-500 text-gray-900 font-semibold rounded-lg hover:from-amber-500 hover:to-amber-600 disabled:opacity-50 flex items-center justify-center space-x-2">
+                  <Mail className="w-5 h-5" />
+                  <span>{sending ? '...' : t.contact.form.submit}</span>
+                </button>
               </form>
             )}
           </div>
@@ -1059,16 +1092,16 @@ const ContactSection = ({ t }) => {
               <h3 className="text-xl font-semibold text-white mb-6">{t.contact.info.title}</h3>
               <div className="space-y-4">
                 <a href="mailto:fworks@mail.be" className="flex items-center space-x-4 text-gray-300 hover:text-amber-400 transition-colors"><Mail className="w-5 h-5" /><span>{t.contact.info.email}</span></a>
-                <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-gray-300 hover:text-amber-400 transition-colors">
+                <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-gray-300 hover:text-green-400 transition-colors">
                   <MessageCircle className="w-5 h-5" />
-                  <div><span className="block">{t.contact.info.phone}</span><span className="text-xs text-gray-500">{t.contact.whatsappOnly}</span></div>
+                  <div><span className="block">{t.contact.info.phone}</span><span className="text-xs text-gray-500">WhatsApp</span></div>
                 </a>
               </div>
             </div>
-            <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="block bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 transition-all rounded-2xl p-8 text-center hover:scale-[1.02]">
-              <MessageCircle className="w-12 h-12 text-gray-900 mx-auto mb-4 animate-bounce" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">{t.contact.whatsapp}</h3>
-              <p className="text-gray-800">+32 494 51 60 64</p>
+            <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="block bg-gradient-to-r from-green-600 to-green-500 hover:from-green-500 hover:to-green-400 transition-all rounded-2xl p-8 text-center hover:scale-[1.02]">
+              <MessageCircle className="w-12 h-12 text-white mx-auto mb-4 animate-bounce" />
+              <h3 className="text-xl font-semibold text-white mb-2">{t.contact.whatsapp}</h3>
+              <p className="text-green-100">+32 494 51 60 64</p>
             </a>
           </div>
         </div>
@@ -1077,16 +1110,22 @@ const ContactSection = ({ t }) => {
   );
 };
 
-// Footer
+// Footer with legal info
 const Footer = ({ t }) => (
   <footer className="bg-gray-900 border-t border-gray-800 py-12">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row justify-between items-center">
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8">
         <div className="flex items-center space-x-3 mb-4 md:mb-0">
           <img src="/images/fworks-logo.png" alt="fworksbuilders" className="h-10 w-auto" />
           <div><span className="text-xl font-bold text-white">fworksbuilders</span><p className="text-sm text-gray-500">{t.footer.tagline}</p></div>
         </div>
         <p className="text-gray-500 text-sm">© {new Date().getFullYear()} fworksbuilders. {t.footer.rights}.</p>
+      </div>
+      {/* Legal Information */}
+      <div className="border-t border-gray-800 pt-6 text-center">
+        <p className="text-xs text-gray-600">
+          fworksbuilders • RUC: 17598849900001 • Via Aventura, Santo Domingo, Ecuador
+        </p>
       </div>
     </div>
   </footer>
@@ -1181,13 +1220,13 @@ function FWorksApp() {
     },
     es: {
       title: "fworksbuilders | Sitios Web Profesionales a Medida - ¡Listo en 24h!",
-      description: "Sitios web profesionales desde €199/año + €50 configuración. ¡Sitio web estándar listo en 24 horas! Panel de control personal, multilingüe. Diseño web mundial.",
-      keywords: "diseño web, crear sitio web, sitio web profesional, sitio web barato, 24 horas, diseñador web"
+      description: "Sitios web profesionales desde €199/año + €50 configuración. ¡Sitio web estándar listo en 48 horas! Panel de control personal, multilingüe. Diseño web mundial.",
+      keywords: "diseño web, crear sitio web, sitio web profesional, sitio web barato, 48 horas, diseñador web"
     },
     it: {
       title: "fworksbuilders | Siti Web Professionali Su Misura - Pronto in 24h!",
-      description: "Siti web professionali da €199/anno + €50 setup. Sito web standard pronto in 24 ore! Pannello di controllo personale, multilingue. Web design mondiale.",
-      keywords: "web design, creare sito web, sito web professionale, sito web economico, 24 ore, web designer"
+      description: "Siti web professionali da €199/anno + €50 setup. Sito web standard pronto in 48 ore! Pannello di controllo personale, multilingue. Web design mondiale.",
+      keywords: "web design, creare sito web, sito web professionale, sito web economico, 48 ore, web designer"
     }
   };
 
