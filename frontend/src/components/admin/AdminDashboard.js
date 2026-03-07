@@ -4,7 +4,8 @@ import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
   Plus, Settings, Image, Menu, Users, Globe, LogOut, 
-  ChevronRight, Trash2, Edit, Eye, Clock, Phone, Mail 
+  ChevronRight, Trash2, Edit, Eye, Clock, Phone, Mail,
+  BarChart2, X, MapPin
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -35,7 +36,13 @@ const translations = {
     today: "Aujourd'hui",
     week: 'Semaine',
     month: 'Mois',
-    total: 'Total'
+    total: 'Total',
+    statistics: 'Statistiques',
+    uniqueVisitors: 'Visiteurs uniques',
+    byCountry: 'Par pays',
+    dailyVisits: 'Visites quotidiennes',
+    recentVisitors: 'Visiteurs récents',
+    noData: 'Pas de données'
   },
   nl: {
     title: 'Website Platform',
@@ -60,7 +67,13 @@ const translations = {
     today: 'Vandaag',
     week: 'Week',
     month: 'Maand',
-    total: 'Totaal'
+    total: 'Totaal',
+    statistics: 'Statistieken',
+    uniqueVisitors: 'Unieke bezoekers',
+    byCountry: 'Per land',
+    dailyVisits: 'Dagelijkse bezoeken',
+    recentVisitors: 'Recente bezoekers',
+    noData: 'Geen gegevens'
   },
   en: {
     title: 'Website Platform',
@@ -85,7 +98,13 @@ const translations = {
     today: 'Today',
     week: 'Week',
     month: 'Month',
-    total: 'Total'
+    total: 'Total',
+    statistics: 'Statistics',
+    uniqueVisitors: 'Unique visitors',
+    byCountry: 'By country',
+    dailyVisits: 'Daily visits',
+    recentVisitors: 'Recent visitors',
+    noData: 'No data'
   }
 };
 
@@ -98,8 +117,24 @@ const AdminDashboard = () => {
   const [newSite, setNewSite] = useState({ name: '', slug: '', site_type: 'restaurant' });
   const [lang, setLang] = useState(() => localStorage.getItem('admin_lang') || 'fr');
   const [siteStats, setSiteStats] = useState({});
+  const [showStatsModal, setShowStatsModal] = useState(false);
+  const [selectedSiteStats, setSelectedSiteStats] = useState(null);
+  const [loadingStats, setLoadingStats] = useState(false);
 
   const t = (key) => translations[lang]?.[key] || key;
+
+  const openStatsModal = async (siteId) => {
+    setLoadingStats(true);
+    setShowStatsModal(true);
+    try {
+      const response = await axios.get(`${API}/admin/sites/${siteId}/stats`, { withCredentials: true });
+      setSelectedSiteStats(response.data);
+    } catch (error) {
+      console.error('Error loading detailed stats:', error);
+    } finally {
+      setLoadingStats(false);
+    }
+  };
 
   useEffect(() => {
     localStorage.setItem('admin_lang', lang);
@@ -245,6 +280,13 @@ const AdminDashboard = () => {
                       </div>
                     </div>
                     <div className="flex items-center space-x-1">
+                      <button
+                        onClick={() => openStatsModal(site.site_id)}
+                        className="p-1.5 text-gray-400 hover:text-purple-600 transition-colors"
+                        title={t('statistics')}
+                      >
+                        <BarChart2 className="w-4 h-4" />
+                      </button>
                       <Link
                         to={`/site/${site.slug}`}
                         target="_blank"
@@ -338,6 +380,117 @@ const AdminDashboard = () => {
                 {t('create')}
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* Statistics Modal */}
+      {showStatsModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-gray-900 flex items-center space-x-2">
+                <BarChart2 className="w-5 h-5 text-purple-600" />
+                <span>{t('statistics')}: {selectedSiteStats?.site_name || '...'}</span>
+              </h2>
+              <button onClick={() => setShowStatsModal(false)} className="p-1 hover:bg-gray-100 rounded">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            
+            {loadingStats ? (
+              <div className="p-12 text-center text-gray-500">Loading...</div>
+            ) : selectedSiteStats ? (
+              <div className="p-6 space-y-6">
+                {/* Overview Stats */}
+                <div className="grid grid-cols-4 gap-4">
+                  <div className="bg-green-50 rounded-lg p-4 text-center">
+                    <p className="text-2xl font-bold text-green-600">{selectedSiteStats.stats?.today || 0}</p>
+                    <p className="text-sm text-green-700">{t('today')}</p>
+                  </div>
+                  <div className="bg-blue-50 rounded-lg p-4 text-center">
+                    <p className="text-2xl font-bold text-blue-600">{selectedSiteStats.stats?.week || 0}</p>
+                    <p className="text-sm text-blue-700">{t('week')}</p>
+                  </div>
+                  <div className="bg-purple-50 rounded-lg p-4 text-center">
+                    <p className="text-2xl font-bold text-purple-600">{selectedSiteStats.stats?.month || 0}</p>
+                    <p className="text-sm text-purple-700">{t('month')}</p>
+                  </div>
+                  <div className="bg-gray-100 rounded-lg p-4 text-center">
+                    <p className="text-2xl font-bold text-gray-700">{selectedSiteStats.stats?.total || 0}</p>
+                    <p className="text-sm text-gray-600">{t('total')}</p>
+                  </div>
+                </div>
+
+                {/* Countries */}
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
+                    <MapPin className="w-4 h-4" />
+                    <span>{t('byCountry')}</span>
+                  </h3>
+                  {selectedSiteStats.countries?.length > 0 ? (
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="space-y-2">
+                        {selectedSiteStats.countries.map((c, i) => (
+                          <div key={i} className="flex items-center justify-between">
+                            <span className="text-sm text-gray-700">{c.country}</span>
+                            <span className="text-sm font-medium text-gray-900">{c.visitors} {t('visitors').toLowerCase()}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500">{t('noData')}</p>
+                  )}
+                </div>
+
+                {/* Daily Visits */}
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('dailyVisits')} (7 {t('week').toLowerCase()})</h3>
+                  {selectedSiteStats.daily?.length > 0 ? (
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="flex items-end justify-between h-32 space-x-2">
+                        {selectedSiteStats.daily.slice().reverse().map((d, i) => {
+                          const maxVisitors = Math.max(...selectedSiteStats.daily.map(x => x.visitors), 1);
+                          const height = (d.visitors / maxVisitors) * 100;
+                          return (
+                            <div key={i} className="flex-1 flex flex-col items-center">
+                              <div 
+                                className="w-full bg-blue-500 rounded-t"
+                                style={{ height: `${Math.max(height, 5)}%` }}
+                                title={`${d.date}: ${d.visitors}`}
+                              />
+                              <span className="text-xs text-gray-500 mt-1">{d.date?.slice(-5)}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500">{t('noData')}</p>
+                  )}
+                </div>
+
+                {/* Recent Visitors */}
+                <div>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('recentVisitors')}</h3>
+                  {selectedSiteStats.recent_visitors?.length > 0 ? (
+                    <div className="bg-gray-50 rounded-lg divide-y">
+                      {selectedSiteStats.recent_visitors.map((v, i) => (
+                        <div key={i} className="px-4 py-2 flex items-center justify-between text-sm">
+                          <span className="text-gray-600">{v.country || 'Unknown'}</span>
+                          <span className="text-gray-400 text-xs">{new Date(v.timestamp).toLocaleString()}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-sm text-gray-500">{t('noData')}</p>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <div className="p-12 text-center text-gray-500">{t('noData')}</div>
+            )}
           </div>
         </div>
       )}

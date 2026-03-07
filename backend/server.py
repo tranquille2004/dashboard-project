@@ -855,16 +855,53 @@ async def clear_site_announcement(slug: str, secret: str = "fworks2024"):
 
 @public_router.post("/track-visit")
 async def track_visit(request: Request):
-    """Track a website visit"""
+    """Track a unique website visit"""
     body = await request.json()
     site_slug = body.get("site_slug")
     
     if not site_slug:
         raise HTTPException(status_code=400, detail="site_slug required")
     
+    # Get visitor IP
+    forwarded = request.headers.get("x-forwarded-for")
+    visitor_ip = forwarded.split(",")[0].strip() if forwarded else request.client.host
+    
+    # Create unique visitor ID for today (IP + date)
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    visitor_id = f"{visitor_ip}_{today}"
+    
+    # Check if this visitor already visited today
+    existing = await db.site_visits.find_one({
+        "site_slug": site_slug,
+        "visitor_id": visitor_id
+    })
+    
+    if existing:
+        # Already tracked today, just update timestamp
+        return {"status": "already_tracked"}
+    
+    # Try to get country from IP (using free API)
+    country = "Unknown"
+    country_code = "XX"
+    try:
+        import httpx
+        async with httpx.AsyncClient(timeout=2.0) as client:
+            geo_response = await client.get(f"http://ip-api.com/json/{visitor_ip}?fields=country,countryCode")
+            if geo_response.status_code == 200:
+                geo_data = geo_response.json()
+                country = geo_data.get("country", "Unknown")
+                country_code = geo_data.get("countryCode", "XX")
+    except:
+        pass  # Silent fail, use Unknown
+    
     visit = {
         "site_slug": site_slug,
+        "visitor_id": visitor_id,
+        "visitor_ip": visitor_ip,
         "timestamp": datetime.now(timezone.utc).isoformat(),
+        "date": today,
+        "country": country,
+        "country_code": country_code,
         "user_agent": request.headers.get("user-agent", ""),
         "referer": request.headers.get("referer", "")
     }
@@ -874,7 +911,7 @@ async def track_visit(request: Request):
 
 @admin_router.get("/sites/{site_id}/stats")
 async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
-    """Get visitor statistics for a site"""
+    """Get detailed visitor statistics for a site"""
     site = await db.sites.find_one({"site_id": site_id}, {"_id": 0})
     if not site:
         raise HTTPException(status_code=404, detail="Site not found")
@@ -886,10 +923,11 @@ async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
     week_start = today_start - timedelta(days=7)
     month_start = today_start - timedelta(days=30)
     
+    # Count unique visitors
     total_visits = await db.site_visits.count_documents({"site_slug": site_slug})
     today_visits = await db.site_visits.count_documents({
         "site_slug": site_slug,
-        "timestamp": {"$gte": today_start.isoformat()}
+        "date": now.strftime("%Y-%m-%d")
     })
     week_visits = await db.site_visits.count_documents({
         "site_slug": site_slug,
@@ -900,15 +938,45 @@ async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
         "timestamp": {"$gte": month_start.isoformat()}
     })
     
+    # Get country breakdown
+    country_pipeline = [
+        {"$match": {"site_slug": site_slug}},
+        {"$group": {"_id": "$country", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+        {"$limit": 10}
+    ]
+    countries = await db.site_visits.aggregate(country_pipeline).to_list(10)
+    country_stats = [{"country": c["_id"] or "Unknown", "visitors": c["count"]} for c in countries]
+    
+    # Get daily visits for last 7 days
+    daily_pipeline = [
+        {"$match": {"site_slug": site_slug, "timestamp": {"$gte": week_start.isoformat()}}},
+        {"$group": {"_id": "$date", "count": {"$sum": 1}}},
+        {"$sort": {"_id": -1}},
+        {"$limit": 7}
+    ]
+    daily = await db.site_visits.aggregate(daily_pipeline).to_list(7)
+    daily_stats = [{"date": d["_id"], "visitors": d["count"]} for d in daily]
+    
+    # Get recent visitors (last 10)
+    recent = await db.site_visits.find(
+        {"site_slug": site_slug},
+        {"_id": 0, "visitor_ip": 0, "visitor_id": 0}
+    ).sort("timestamp", -1).limit(10).to_list(10)
+    
     return {
         "site_id": site_id,
+        "site_name": site.get("name"),
         "site_slug": site_slug,
         "stats": {
             "today": today_visits,
             "week": week_visits,
             "month": month_visits,
             "total": total_visits
-        }
+        },
+        "countries": country_stats,
+        "daily": daily_stats,
+        "recent_visitors": recent
     }
 
 @admin_router.get("/all-stats")
