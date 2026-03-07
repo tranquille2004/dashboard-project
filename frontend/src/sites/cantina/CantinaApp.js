@@ -227,7 +227,7 @@ function HomePage({ t }) {
           <h1 className="hero-title">{t.hero.title}</h1>
           <p className="hero-subtitle">{t.hero.subtitle}</p>
           <div className="hero-buttons">
-            <button onClick={() => navigate('/reserveren')} className="btn-primary">
+            <button onClick={() => navigate(getPath('/reserveren'))} className="btn-primary">
               {t.hero.cta}
             </button>
           </div>
@@ -240,7 +240,7 @@ function HomePage({ t }) {
           <div className="text-content">
             <h2>{t.about.title}</h2>
             <p>{t.about.preview}</p>
-            <Button onClick={() => navigate('/about')} className="btn-secondary">
+            <Button onClick={() => navigate(getPath('/about'))} className="btn-secondary">
               {t.about.readMore}
             </Button>
           </div>
@@ -276,7 +276,7 @@ function HomePage({ t }) {
         <h2>{t.cta.title}</h2>
         <p>{t.cta.subtitle}</p>
         <div className="cta-buttons">
-          <Button onClick={() => navigate('/reserveren')} className="btn-primary">
+          <Button onClick={() => navigate(getPath('/reserveren'))} className="btn-primary">
             {t.cta.reserve} <ChevronRight />
           </Button>
         </div>
@@ -363,7 +363,7 @@ function GroepmenusPage({ t }) {
         </div>
 
       <div className="groepmenus-actions">
-        <Button onClick={() => navigate('/site/cantina/reserveren')} className="btn-primary">
+        <Button onClick={() => navigate(getPath('/reserveren'))} className="btn-primary">
           {t.groupMenus.reserveNow}
         </Button>
         <a 
@@ -578,7 +578,7 @@ function GroepmenusPage({ t }) {
       </div>
 
       <div className="groepmenus-actions">
-        <Button onClick={() => navigate('/reserveren')} className="btn-primary">
+        <Button onClick={() => navigate(getPath('/reserveren'))} className="btn-primary">
           {t.groupMenus.reserveNow}
         </Button>
         <a 
@@ -674,7 +674,7 @@ function ConfirmationPage({ t }) {
         
         <p className="confirmation-note">{t.confirmation.autoConfirm}</p>
         
-        <button onClick={() => navigate('/')} className="confirmation-button">
+        <button onClick={() => navigate(getPath('/'))} className="confirmation-button">
           {t.confirmation.backToSite}
         </button>
       </div>

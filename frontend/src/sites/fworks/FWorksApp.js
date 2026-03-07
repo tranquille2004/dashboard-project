@@ -545,7 +545,7 @@ const portfolioItems = [
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant', es: 'Restaurante Italiano', it: 'Ristorante Italiano' },
     location: 'Tervuren',
     url: 'https://lacantinaitaliana.net',
-    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/cantina',
+    image: '/images/cantina/hero-background.jpg',
     features: ['Reservaties', 'Meertalig', 'Menu']
   },
   {
@@ -553,7 +553,7 @@ const portfolioItems = [
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant', es: 'Restaurante Italiano', it: 'Ristorante Italiano' },
     location: 'Herent',
     url: 'https://labottegaherent.com',
-    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/bottega',
+    image: '/images/bottega/gallery/3_1_orig.jpg',
     features: ['Reservaties', 'Afhalen', 'Groepsmenu\'s']
   },
   {
@@ -561,7 +561,7 @@ const portfolioItems = [
     type: { nl: 'Italiaans Restaurant', fr: 'Restaurant Italien', en: 'Italian Restaurant', es: 'Restaurante Italiano', it: 'Ristorante Italiano' },
     location: 'Zaventem',
     url: 'https://ascolizaventem.com',
-    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/ascoli',
+    image: '/images/ascoli/gallery/20689781-1380875678699421-9174551204022883676-o_1_orig.jpg',
     features: ['Reservaties', 'Galerij', 'Evenementen']
   },
   {
@@ -569,7 +569,7 @@ const portfolioItems = [
     type: { nl: 'Pizzeria & Restaurant', fr: 'Pizzeria & Restaurant', en: 'Pizzeria & Restaurant', es: 'Pizzería y Restaurante', it: 'Pizzeria e Ristorante' },
     location: 'Zaventem',
     url: 'https://ristorantemercato.be',
-    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/mercato',
+    image: '/images/logo/mercato-logo.jpg',
     features: ['Reservaties', 'Afhalen', 'Menu']
   },
   {
@@ -577,7 +577,7 @@ const portfolioItems = [
     type: { nl: 'Cacao Export', fr: 'Export de Cacao', en: 'Cacao Export', es: 'Exportación de Cacao', it: 'Esportazione Cacao' },
     location: 'Ecuador',
     url: 'https://theobeans-export.com',
-    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/theobeans',
+    image: '/images/theobeans/gallery/qualite-hero.jpg',
     features: ['Meertalig', 'Galerij', 'Contact']
   },
   {
@@ -585,7 +585,7 @@ const portfolioItems = [
     type: { nl: 'GPS Tracking', fr: 'Suivi GPS', en: 'GPS Tracking', es: 'Rastreo GPS', it: 'Tracciamento GPS' },
     location: 'Ecuador',
     url: 'https://tracemaster-rastreadores.com',
-    previewUrl: 'https://payment-portal-267.preview.emergentagent.com/site/tracemaster',
+    image: '/images/tracemaster/chargeur1_orig.jpg',
     features: ['E-commerce', 'WhatsApp', 'Producten']
   }
 ];
@@ -946,7 +946,7 @@ const PortfolioSection = ({ t, lang }) => (
         {portfolioItems.map((item, index) => (
           <div key={index} className="group bg-gray-900 rounded-2xl overflow-hidden border border-amber-500/20 hover:border-amber-500/50 transition-all hover:scale-[1.02]">
             <div className="relative h-48 overflow-hidden bg-gray-800">
-              <iframe src={item.previewUrl} className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none" title={item.name} />
+              <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
               <div className="absolute top-3 right-3"><span className="px-2 py-1 bg-green-500 text-white text-xs rounded-full font-medium flex items-center space-x-1"><span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span><span>{t.portfolio.liveDemo}</span></span></div>
             </div>
