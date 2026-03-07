@@ -23,10 +23,15 @@ const API = process.env.REACT_APP_BACKEND_URL + "/api";
 function MercatoApp() {
   const [siteConfig, setSiteConfig] = useState(null);
   
-  // Detecteer of we op een custom domain zijn (niet op preview/production Emergent URL)
-  const isCustomDomain = !window.location.hostname.includes('preview.emergentagent.com') && 
-                         !window.location.hostname.includes('.emergent.host') &&
-                         !window.location.hostname.includes('localhost');
+  // BEKENDE CUSTOM DOMAINS voor Mercato
+  const KNOWN_CUSTOM_DOMAINS = [
+    'ristorantemercato.be',
+    'www.ristorantemercato.be',
+    'ristorantemercato.com',
+    'www.ristorantemercato.com'
+  ];
+  const hostname = window.location.hostname.toLowerCase();
+  const isCustomDomain = KNOWN_CUSTOM_DOMAINS.includes(hostname);
   const basePath = isCustomDomain ? '' : '/site/mercato';
 
   useEffect(() => {

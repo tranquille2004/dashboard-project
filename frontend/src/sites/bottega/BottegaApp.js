@@ -15,16 +15,21 @@ const BRAND_COLOR = '#7D3C32';
 // Achtergrondkleur voor alle paginas - warm beige
 const BG_COLOR = '#FAF6F1';
 
-// Helper to detect if we're on custom domain or preview/production Emergent URL
+// BEKENDE CUSTOM DOMAINS - alleen deze krijgen lege basePath
+const KNOWN_CUSTOM_DOMAINS = [
+  'labottegaherent.com',
+  'www.labottegaherent.com',
+  'labottegaherent.be',
+  'www.labottegaherent.be'
+];
+
+// Helper to detect if we're on a known custom domain
 const isOnCustomDomain = () => {
-  const hostname = window.location.hostname;
-  // Check if NOT on any Emergent URL (preview or production) and NOT localhost
-  return !hostname.includes('preview.emergentagent.com') && 
-         !hostname.includes('.emergent.host') &&
-         !hostname.includes('localhost');
+  const hostname = window.location.hostname.toLowerCase();
+  return KNOWN_CUSTOM_DOMAINS.includes(hostname);
 };
 
-// Get base path for links
+// Get base path for links - ALLEEN leeg op bekende custom domains
 const getBasePath = () => isOnCustomDomain() ? '' : '/site/bottega';
 
 // Helper to create correct path

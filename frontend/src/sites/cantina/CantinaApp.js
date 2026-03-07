@@ -15,16 +15,21 @@ import AnnouncementBanner from '@/components/AnnouncementBanner';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
-// Helper to detect if we're on custom domain or preview/production Emergent URL
+// BEKENDE CUSTOM DOMAINS - alleen deze krijgen lege basePath
+const KNOWN_CUSTOM_DOMAINS = [
+  'lacantinaitaliana.net',
+  'www.lacantinaitaliana.net',
+  'lacantinaitaliana.be',
+  'www.lacantinaitaliana.be'
+];
+
+// Helper to detect if we're on a known custom domain
 const isOnCustomDomain = () => {
-  const hostname = window.location.hostname;
-  // Check if NOT on any Emergent URL (preview or production) and NOT localhost
-  return !hostname.includes('preview.emergentagent.com') && 
-         !hostname.includes('.emergent.host') &&
-         !hostname.includes('localhost');
+  const hostname = window.location.hostname.toLowerCase();
+  return KNOWN_CUSTOM_DOMAINS.includes(hostname);
 };
 
-// Get base path for links
+// Get base path for links - ALLEEN leeg op bekende custom domains
 const getBasePath = () => isOnCustomDomain() ? '' : '/site/cantina';
 
 // Helper to create correct path

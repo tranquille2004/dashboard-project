@@ -3,6 +3,35 @@
 ## Project Overzicht
 Een multi-tenant applicatie die 6 websites consolideert in één beheerbare platform met super-admin en site-admin dashboards.
 
+## ⚠️ KRITIEKE INFORMATIE - NOOIT VERGETEN ⚠️
+
+### NAVIGATIE BUG PREVENTIE
+**Probleem:** Menu knoppen leiden naar super dashboard in plaats van de juiste pagina.
+**Oorzaak:** De `isOnCustomDomain()` functie herkent nieuwe Emergent URLs niet.
+**Oplossing:** Gebruik WHITELIST van bekende custom domains, NIET blacklist van Emergent URLs.
+
+**ELKE site moet deze code structuur hebben:**
+```javascript
+const KNOWN_CUSTOM_DOMAINS = [
+  'labottegaherent.com',
+  'www.labottegaherent.com',
+  // etc.
+];
+const isOnCustomDomain = () => {
+  return KNOWN_CUSTOM_DOMAINS.includes(window.location.hostname.toLowerCase());
+};
+const getBasePath = () => isOnCustomDomain() ? '' : '/site/[slug]';
+```
+
+**NA ELKE DEPLOYMENT:** Test navigatie op productie! Als menu links niet werken, check deze functie.
+
+### BIJ NIEUWE FORK/DEPLOYMENT
+1. ✅ Check of Cloudflare Worker URL correct is
+2. ✅ Test navigatie op PRODUCTIE (niet alleen preview)
+3. ✅ De code fix is nu permanent - mag NIET meer terugkeren
+
+---
+
 ## Geconsolideerde Websites
 1. **La Cantina Italiana** (lacantinaitaliana.net) - Direct verbonden met productie
 2. **La Bottega Herent** (labottegaherent.com) - Via Cloudflare Worker

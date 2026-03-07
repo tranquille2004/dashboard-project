@@ -18,10 +18,15 @@ import Qualite from './pages/Qualite';
 import Tracabilite from './pages/Tracabilite';
 import Contact from './pages/Contact';
 
-// Detecteer of we op custom domain of preview/production Emergent zijn
-const isCustomDomain = !window.location.hostname.includes('emergentagent.com') && 
-                        !window.location.hostname.includes('.emergent.host') &&
-                        !window.location.hostname.includes('localhost');
+// BEKENDE CUSTOM DOMAINS voor Theobeans
+const KNOWN_CUSTOM_DOMAINS = [
+  'theobeans-export.com',
+  'www.theobeans-export.com',
+  'theobeans.com',
+  'www.theobeans.com'
+];
+const hostname = window.location.hostname.toLowerCase();
+const isCustomDomain = KNOWN_CUSTOM_DOMAINS.includes(hostname);
 const basePath = isCustomDomain ? '' : '/site/theobeans';
 
 // Dit is de ENIGE wijziging: geen BrowserRouter (die zit al in hoofdapp)

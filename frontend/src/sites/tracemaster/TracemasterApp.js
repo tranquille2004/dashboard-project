@@ -5,15 +5,21 @@ import { Menu, X, MapPin, Battery, Shield, Wifi, Clock, Phone, Mail, ChevronDown
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
-// Helper to detect if we're on custom domain or Emergent URL
+// BEKENDE CUSTOM DOMAINS voor Tracemaster
+const KNOWN_CUSTOM_DOMAINS = [
+  'tracemaster-rastreadores.com',
+  'www.tracemaster-rastreadores.com',
+  'tracemaster.be',
+  'www.tracemaster.be'
+];
+
+// Helper to detect if we're on a known custom domain
 const isOnCustomDomain = () => {
-  const hostname = window.location.hostname;
-  return !hostname.includes('preview.emergentagent.com') && 
-         !hostname.includes('.emergent.host') &&
-         !hostname.includes('localhost');
+  const hostname = window.location.hostname.toLowerCase();
+  return KNOWN_CUSTOM_DOMAINS.includes(hostname);
 };
 
-// Get base path for links
+// Get base path for links - ALLEEN leeg op bekende custom domains
 const getBasePath = () => isOnCustomDomain() ? '' : '/site/tracemaster';
 
 // Helper to create correct path
