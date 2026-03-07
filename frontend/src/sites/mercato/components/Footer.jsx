@@ -80,7 +80,7 @@ const Footer = () => {
           {/* Webmaster Contact */}
           <div className="mt-6 pt-4 border-t border-gold/5 flex items-center justify-center gap-3 text-xs opacity-70 hover:opacity-100 transition-opacity">
             <img 
-              src="/fworksbuilders-logo.png" 
+              src="/images/fworksbuilders-logo.png" 
               alt="fworksbuilders logo" 
               className="h-8 w-auto"
             />

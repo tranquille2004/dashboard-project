@@ -100,7 +100,7 @@ const Footer = ({ basePath = '' }) => {
             <p className="mb-3">{t.webmasterText}</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
               <img 
-                src="/logo-fworks.png" 
+                src="/images/fworksbuilders-logo.png" 
                 alt="fworksbuilders" 
                 className="h-8 w-auto"
               />

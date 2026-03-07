@@ -804,10 +804,10 @@ const FeatureDemoContent = ({ activeFeature, t }) => {
     ),
     announcement: (
       <div className="space-y-4">
-        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-2xl border border-amber-500/20">
-          <div className="bg-amber-500 px-4 py-3 flex items-center justify-between animate-pulse">
-            <span className="text-sm font-medium text-gray-900">🎄 Wij zijn gesloten van 24 tot 26 december!</span>
-            <X className="w-4 h-4 text-gray-900" />
+        <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl overflow-hidden shadow-2xl border border-red-500/20">
+          <div className="bg-red-600 px-4 py-3 flex items-center justify-between animate-pulse">
+            <span className="text-sm font-medium text-white">🎄 Wij zijn gesloten van 24 tot 26 december!</span>
+            <X className="w-4 h-4 text-white" />
           </div>
           <div className="p-6 text-center">
             <h3 className="text-2xl font-bold text-white mb-2">La Cantina Italiana</h3>
@@ -816,7 +816,7 @@ const FeatureDemoContent = ({ activeFeature, t }) => {
         </div>
         <div className="bg-gray-800 rounded-lg p-4 flex gap-2">
           {['Belangrijk', 'Nieuws', 'Actie'].map((style, i) => (
-            <span key={i} className={`px-3 py-1 text-xs rounded cursor-pointer ${i === 0 ? 'bg-amber-500 text-gray-900' : 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'}`}>{style}</span>
+            <span key={i} className={`px-3 py-1 text-xs rounded cursor-pointer ${i === 0 ? 'bg-red-600 text-white' : 'bg-amber-500/20 text-amber-400 hover:bg-amber-500/30'}`}>{style}</span>
           ))}
         </div>
       </div>
@@ -1102,6 +1102,7 @@ const ContactSection = ({ t }) => {
               <MessageCircle className="w-12 h-12 text-white mx-auto mb-4 animate-bounce" />
               <h3 className="text-xl font-semibold text-white mb-2">{t.contact.whatsapp}</h3>
               <p className="text-green-100">+32 494 51 60 64</p>
+              <p className="text-green-200 text-sm mt-1">+593 98 901 3622</p>
             </a>
           </div>
         </div>
@@ -1123,6 +1124,9 @@ const Footer = ({ t }) => (
       </div>
       {/* Legal Information */}
       <div className="border-t border-gray-800 pt-6 text-center">
+        <div className="flex items-center justify-center space-x-3 mb-2">
+          <img src="/images/fworks-logo.png" alt="fworksbuilders" className="h-6 w-auto opacity-60" />
+        </div>
         <p className="text-xs text-gray-600">
           fworksbuilders • RUC: 17598849900001 • Via Aventura, Santo Domingo, Ecuador
         </p>
