@@ -44,7 +44,7 @@ const translations = {
   nl: {
     nav: { home: 'Home', features: 'Mogelijkheden', portfolio: 'Portfolio', pricing: 'Prijzen', contact: 'Contact' },
     hero: {
-      badge: 'Vertrouwd door 10+ bedrijven',
+      badge: 'Vertrouwd door 100+ bedrijven',
       fastBadge: '⚡ Standaard website klaar in 48 uur!',
       title: 'Professionele Websites',
       subtitle: 'Snel & Betaalbaar',
@@ -143,7 +143,7 @@ const translations = {
   fr: {
     nav: { home: 'Accueil', features: 'Fonctionnalités', portfolio: 'Portfolio', pricing: 'Tarifs', contact: 'Contact' },
     hero: {
-      badge: 'Fait confiance par 10+ entreprises',
+      badge: 'Fait confiance par 100+ entreprises',
       fastBadge: '⚡ Site standard prêt en 48 heures!',
       title: 'Sites Web Professionnels',
       subtitle: 'Rapide & Abordable',
@@ -242,7 +242,7 @@ const translations = {
   en: {
     nav: { home: 'Home', features: 'Features', portfolio: 'Portfolio', pricing: 'Pricing', contact: 'Contact' },
     hero: {
-      badge: 'Trusted by 10+ businesses',
+      badge: 'Trusted by 100+ businesses',
       fastBadge: '⚡ Standard website ready in 48 hours!',
       title: 'Professional Websites',
       subtitle: 'Fast & Affordable',
@@ -341,7 +341,7 @@ const translations = {
   es: {
     nav: { home: 'Inicio', features: 'Funciones', portfolio: 'Portfolio', pricing: 'Precios', contact: 'Contacto' },
     hero: {
-      badge: 'Confiado por más de 10 empresas',
+      badge: 'Confiado por más de 100 empresas',
       fastBadge: '⚡ ¡Sitio web estándar listo en 48 horas!',
       title: 'Sitios Web Profesionales',
       subtitle: 'Rápido y Asequible',
@@ -440,7 +440,7 @@ const translations = {
   it: {
     nav: { home: 'Home', features: 'Funzionalità', portfolio: 'Portfolio', pricing: 'Prezzi', contact: 'Contatto' },
     hero: {
-      badge: 'Scelto da oltre 10 aziende',
+      badge: 'Scelto da oltre 100 aziende',
       fastBadge: '⚡ Sito web standard pronto in 48 ore!',
       title: 'Siti Web Professionali',
       subtitle: 'Veloce e Conveniente',
@@ -1124,12 +1124,11 @@ const Footer = ({ t }) => (
       </div>
       {/* Legal Information */}
       <div className="border-t border-gray-800 pt-6 text-center">
-        <div className="flex items-center justify-center space-x-3 mb-2">
-          <img src="/images/fworks-logo.png" alt="fworksbuilders" className="h-6 w-auto opacity-60" />
-        </div>
-        <p className="text-xs text-gray-600">
-          fworksbuilders • RUC: 17598849900001 • Via Aventura, Santo Domingo, Ecuador
+        <p className="text-xs text-gray-600 flex items-center justify-center space-x-2">
+          <img src="/images/fworks-logo.png" alt="fworksbuilders" className="h-4 w-auto opacity-60" />
+          <span>fworksbuilders • RUC: 17598849900001 • Via Aventura, Santo Domingo, Ecuador</span>
         </p>
+        <p className="text-xs text-gray-700 mt-2">© {new Date().getFullYear()} fworksbuilders. All rights reserved.</p>
       </div>
     </div>
   </footer>
