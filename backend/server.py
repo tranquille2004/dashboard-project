@@ -825,6 +825,115 @@ async def root():
 async def health():
     return {"status": "healthy"}
 
+# ============== ONE-TIME SEED ENDPOINT ==============
+# Dit endpoint vult de database met alle 7 websites
+# Na uitvoeren wordt het veilig uitgeschakeld (returned already seeded)
+
+@api_router.get("/seed-sites")
+async def seed_all_sites(secret: str = ""):
+    """
+    Eenmalige seed endpoint om alle 7 websites toe te voegen aan de database.
+    Beveiligd met een geheime sleutel.
+    Na eerste uitvoering worden duplicaten voorkomen.
+    """
+    # Beveiligingscheck
+    if secret != "fworks-seed-2024":
+        return {"error": "Invalid secret. Use ?secret=fworks-seed-2024"}
+    
+    # Alle 7 websites die beheerd worden
+    all_sites = [
+        {
+            "site_id": "site_cantina",
+            "name": "La Cantina Italiana",
+            "slug": "cantina",
+            "domains": ["lacantinaitaliana.net", "www.lacantinaitaliana.net"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_bottega",
+            "name": "La Bottega Herent",
+            "slug": "bottega",
+            "domains": ["labottegaherent.com", "www.labottegaherent.com"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_ascoli",
+            "name": "L'Ascoli Zaventem",
+            "slug": "ascoli",
+            "domains": ["ascolizaventem.com", "www.ascolizaventem.com"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_mercato",
+            "name": "Ristorante Mercato",
+            "slug": "mercato",
+            "domains": ["ristorantemercato.be", "www.ristorantemercato.be"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_tracemaster",
+            "name": "Tracemaster Rastreadores",
+            "slug": "tracemaster",
+            "domains": ["tracemaster-rastreadores.com", "www.tracemaster-rastreadores.com"],
+            "site_type": "business",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_theobeans",
+            "name": "Theo Beans Export",
+            "slug": "theobeans",
+            "domains": ["theobeans-export.com", "www.theobeans-export.com"],
+            "site_type": "business",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_fworks",
+            "name": "F.Works Builders",
+            "slug": "fworks",
+            "domains": ["fworksbuilders.com", "www.fworksbuilders.com"],
+            "site_type": "business",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+    ]
+    
+    added = []
+    skipped = []
+    
+    for site in all_sites:
+        # Check of site al bestaat (op basis van slug)
+        existing = await db.sites.find_one({"slug": site["slug"]})
+        if existing:
+            skipped.append(site["name"])
+        else:
+            await db.sites.insert_one(site)
+            added.append(site["name"])
+    
+    return {
+        "success": True,
+        "message": f"Seed voltooid! {len(added)} toegevoegd, {len(skipped)} al aanwezig.",
+        "added": added,
+        "skipped": skipped,
+        "total_sites": len(all_sites)
+    }
+
 # Tijdelijke endpoint om announcement te wissen voor een site
 @public_router.post("/site/{slug}/clear-announcement")
 async def clear_site_announcement(slug: str, secret: str = "fworks2024"):

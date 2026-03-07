@@ -84,6 +84,14 @@ Handelt routing af voor 5 van de 6 sites via iframe methode. La Cantina is direc
 - Navigatie links gerepareerd voor custom domains
 - /admin routing gefixd voor La Cantina (nu naar eigenaren dashboard)
 - fworksbuilders.com landingspagina toegevoegd
+- **NIEUW:** Seed endpoint toegevoegd om productie database te vullen
+
+## Productie Database Seeding
+**BELANGRIJK:** Na elke nieuwe deployment naar productie, moet je deze URL bezoeken om alle 7 sites in de productie database te laden:
+```
+https://fworksbuilders.com/api/seed-sites?secret=fworks-seed-2024
+```
+Dit lost het probleem op dat `mongo` commando's in preview niet doorwerken naar productie.
 
 ## Volgende Stap
-Nieuwe promotie-website bouwen voor fworksbuilders.com
+- Cantina announcement bug onderzoeken en fixen
