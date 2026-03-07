@@ -208,120 +208,146 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50" style={{ fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
-      {/* Header */}
+      {/* Header - Mobile Responsive */}
       <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <img src={FWORKS_LOGO} alt="fworks builders" className="h-10 w-auto" />
-          </div>
-          <div className="flex items-center space-x-3">
-            {/* Language Switcher */}
-            <div className="flex items-center space-x-1 bg-gray-100 rounded-md p-0.5">
-              {['fr', 'nl', 'en'].map(l => (
-                <button key={l} onClick={() => setLang(l)}
-                  className={`px-2 py-1 rounded text-xs font-medium transition-colors ${lang === l ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
-                  {l.toUpperCase()}
-                </button>
-              ))}
+        <div className="max-w-5xl mx-auto px-3 sm:px-6 py-2 sm:py-3">
+          {/* Mobile: Stack vertically, Desktop: Row */}
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+            {/* Logo */}
+            <div className="flex items-center justify-between">
+              <img src={FWORKS_LOGO} alt="fworks builders" className="h-8 sm:h-10 w-auto" />
+              {/* Mobile: Show logout icon only */}
+              <button
+                onClick={logout}
+                className="sm:hidden p-2 text-gray-500 hover:text-gray-700"
+                data-testid="logout-btn-mobile"
+              >
+                <LogOut className="w-5 h-5" />
+              </button>
             </div>
-            <div className="flex items-center space-x-2">
-              {user.picture && (
-                <img src={user.picture} alt={user.name} className="w-7 h-7 rounded-full" />
-              )}
-              <span className="text-gray-600 text-sm">{user.name}</span>
+            
+            {/* Controls Row */}
+            <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3">
+              {/* Language Switcher */}
+              <div className="flex items-center space-x-0.5 sm:space-x-1 bg-gray-100 rounded-md p-0.5">
+                {['fr', 'nl', 'en'].map(l => (
+                  <button key={l} onClick={() => setLang(l)}
+                    className={`px-1.5 sm:px-2 py-1 rounded text-xs font-medium transition-colors ${lang === l ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
+                    {l.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+              
+              {/* User Info - Hidden on very small screens */}
+              <div className="hidden xs:flex items-center space-x-2">
+                {user.picture && (
+                  <img src={user.picture} alt={user.name} className="w-6 sm:w-7 h-6 sm:h-7 rounded-full" />
+                )}
+                <span className="text-gray-600 text-xs sm:text-sm truncate max-w-[100px] sm:max-w-none">{user.name}</span>
+              </div>
+              
+              {/* Desktop Logout */}
+              <button
+                onClick={logout}
+                className="hidden sm:flex items-center space-x-1 text-gray-500 hover:text-gray-700 text-sm"
+                data-testid="logout-btn"
+              >
+                <LogOut className="w-4 h-4" />
+                <span>{t('logout')}</span>
+              </button>
             </div>
-            <button
-              onClick={logout}
-              className="flex items-center space-x-1 text-gray-500 hover:text-gray-700 text-sm"
-              data-testid="logout-btn"
-            >
-              <LogOut className="w-4 h-4" />
-              <span>{t('logout')}</span>
-            </button>
           </div>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-6">
+      <main className="max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-6">
         {/* Sites List */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="px-4 py-3 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-gray-800">{t('mySites')}</h2>
+          <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200 flex justify-between items-center">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-800">{t('mySites')}</h2>
             <button
               onClick={() => setShowNewSiteModal(true)}
-              className="flex items-center space-x-1.5 bg-blue-600 text-white px-3 py-1.5 rounded-md hover:bg-blue-700 transition-colors text-sm"
+              className="flex items-center space-x-1 sm:space-x-1.5 bg-blue-600 text-white px-2 sm:px-3 py-1.5 rounded-md hover:bg-blue-700 transition-colors text-xs sm:text-sm"
               data-testid="add-site-btn"
             >
-              <Plus className="w-4 h-4" />
-              <span>{t('newSite')}</span>
+              <Plus className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
+              <span className="hidden xs:inline">{t('newSite')}</span>
+              <span className="xs:hidden">+</span>
             </button>
           </div>
           
           {sites.length === 0 ? (
-            <div className="p-8 text-center">
-              <Globe className="w-12 h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500">{t('noSites')}</p>
-              <p className="text-gray-400 text-sm">{t('clickToStart')}</p>
+            <div className="p-6 sm:p-8 text-center">
+              <Globe className="w-10 sm:w-12 h-10 sm:h-12 text-gray-300 mx-auto mb-3" />
+              <p className="text-gray-500 text-sm sm:text-base">{t('noSites')}</p>
+              <p className="text-gray-400 text-xs sm:text-sm">{t('clickToStart')}</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-100">
               {sites.map(site => (
-                <div key={site.site_id} className="px-4 py-2 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0">
-                  <div className="flex items-center justify-between">
+                <div key={site.site_id} className="px-3 sm:px-4 py-3 sm:py-2 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0">
+                  {/* Mobile: Stack layout, Desktop: Row */}
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
+                    {/* Site Info */}
                     <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 rounded-md flex items-center justify-center bg-blue-50">
+                      <div className="w-8 h-8 rounded-md flex items-center justify-center bg-blue-50 flex-shrink-0">
                         <Globe className="w-4 h-4 text-blue-600" />
                       </div>
-                      <div>
-                        <h3 className="text-sm font-medium text-gray-900">{site.name}</h3>
-                        <p className="text-gray-400 text-xs">
+                      <div className="min-w-0">
+                        <h3 className="text-sm font-medium text-gray-900 truncate">{site.name}</h3>
+                        <p className="text-gray-400 text-xs truncate">
                           {site.domains?.length > 0 ? site.domains[0] : `/${site.slug}`}
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-1">
-                      <button
-                        onClick={() => openStatsModal(site.site_id)}
-                        className="p-1.5 text-gray-400 hover:text-purple-600 transition-colors"
-                        title={t('statistics')}
-                      >
-                        <BarChart2 className="w-4 h-4" />
-                      </button>
-                      <Link
-                        to={`/site/${site.slug}`}
-                        target="_blank"
-                        className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
-                        title="Preview"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </Link>
+                    
+                    {/* Action Buttons */}
+                    <div className="flex items-center justify-between sm:justify-end ml-11 sm:ml-0">
+                      <div className="flex items-center space-x-1">
+                        <button
+                          onClick={() => openStatsModal(site.site_id)}
+                          className="p-1.5 text-gray-400 hover:text-purple-600 transition-colors"
+                          title={t('statistics')}
+                        >
+                          <BarChart2 className="w-4 h-4" />
+                        </button>
+                        <Link
+                          to={`/site/${site.slug}`}
+                          target="_blank"
+                          className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
+                          title="Preview"
+                        >
+                          <Eye className="w-4 h-4" />
+                        </Link>
+                        <Link
+                          to={`/admin/sites/${site.site_id}`}
+                          className="p-1.5 text-gray-400 hover:text-green-600 transition-colors"
+                          title="Bewerken"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </Link>
+                        <button
+                          onClick={() => deleteSite(site.site_id)}
+                          className="p-1.5 text-gray-400 hover:text-red-600 transition-colors"
+                          title="Verwijderen"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                       <Link
                         to={`/admin/sites/${site.site_id}`}
-                        className="p-1.5 text-gray-400 hover:text-green-600 transition-colors"
-                        title="Bewerken"
-                      >
-                        <Edit className="w-4 h-4" />
-                      </Link>
-                      <button
-                        onClick={() => deleteSite(site.site_id)}
-                        className="p-1.5 text-gray-400 hover:text-red-600 transition-colors"
-                        title="Verwijderen"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                      <Link
-                        to={`/admin/sites/${site.site_id}`}
-                        className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-sm ml-2"
+                        className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-xs sm:text-sm ml-2"
                       >
                         <span>{t('manage')}</span>
                         <ChevronRight className="w-3 h-3" />
                       </Link>
                     </div>
                   </div>
-                  {/* Compact Visitor Stats */}
+                  
+                  {/* Visitor Stats - Responsive Grid on Mobile */}
                   {siteStats[site.site_id] && (
-                    <div className="mt-1 ml-11 flex items-center space-x-3 text-xs">
-                      <span className="text-gray-400">{t('visitors')}:</span>
+                    <div className="mt-2 ml-11 grid grid-cols-2 sm:flex sm:items-center gap-1 sm:gap-3 text-xs">
+                      <span className="col-span-2 sm:col-span-1 text-gray-400">{t('visitors')}:</span>
                       <span className="text-green-600">{t('today')}: {siteStats[site.site_id].today}</span>
                       <span className="text-blue-600">{t('week')}: {siteStats[site.site_id].week}</span>
                       <span className="text-purple-600">{t('month')}: {siteStats[site.site_id].month}</span>
@@ -384,57 +410,57 @@ const AdminDashboard = () => {
         </div>
       )}
 
-      {/* Statistics Modal */}
+      {/* Statistics Modal - Mobile Responsive */}
       {showStatsModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 bg-white border-b px-6 py-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-900 flex items-center space-x-2">
-                <BarChart2 className="w-5 h-5 text-purple-600" />
-                <span>{t('statistics')}: {selectedSiteStats?.site_name || '...'}</span>
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl max-h-[95vh] sm:max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+              <h2 className="text-base sm:text-xl font-semibold text-gray-900 flex items-center space-x-2">
+                <BarChart2 className="w-4 sm:w-5 h-4 sm:h-5 text-purple-600" />
+                <span className="truncate">{t('statistics')}: {selectedSiteStats?.site_name || '...'}</span>
               </h2>
-              <button onClick={() => setShowStatsModal(false)} className="p-1 hover:bg-gray-100 rounded">
+              <button onClick={() => setShowStatsModal(false)} className="p-1.5 hover:bg-gray-100 rounded flex-shrink-0">
                 <X className="w-5 h-5" />
               </button>
             </div>
             
             {loadingStats ? (
-              <div className="p-12 text-center text-gray-500">Loading...</div>
+              <div className="p-8 sm:p-12 text-center text-gray-500">Loading...</div>
             ) : selectedSiteStats ? (
-              <div className="p-6 space-y-6">
-                {/* Overview Stats */}
-                <div className="grid grid-cols-4 gap-4">
-                  <div className="bg-green-50 rounded-lg p-4 text-center">
-                    <p className="text-2xl font-bold text-green-600">{selectedSiteStats.stats?.today || 0}</p>
-                    <p className="text-sm text-green-700">{t('today')}</p>
+              <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+                {/* Overview Stats - 2x2 grid on mobile */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
+                  <div className="bg-green-50 rounded-lg p-3 sm:p-4 text-center">
+                    <p className="text-xl sm:text-2xl font-bold text-green-600">{selectedSiteStats.stats?.today || 0}</p>
+                    <p className="text-xs sm:text-sm text-green-700">{t('today')}</p>
                   </div>
-                  <div className="bg-blue-50 rounded-lg p-4 text-center">
-                    <p className="text-2xl font-bold text-blue-600">{selectedSiteStats.stats?.week || 0}</p>
-                    <p className="text-sm text-blue-700">{t('week')}</p>
+                  <div className="bg-blue-50 rounded-lg p-3 sm:p-4 text-center">
+                    <p className="text-xl sm:text-2xl font-bold text-blue-600">{selectedSiteStats.stats?.week || 0}</p>
+                    <p className="text-xs sm:text-sm text-blue-700">{t('week')}</p>
                   </div>
-                  <div className="bg-purple-50 rounded-lg p-4 text-center">
-                    <p className="text-2xl font-bold text-purple-600">{selectedSiteStats.stats?.month || 0}</p>
-                    <p className="text-sm text-purple-700">{t('month')}</p>
+                  <div className="bg-purple-50 rounded-lg p-3 sm:p-4 text-center">
+                    <p className="text-xl sm:text-2xl font-bold text-purple-600">{selectedSiteStats.stats?.month || 0}</p>
+                    <p className="text-xs sm:text-sm text-purple-700">{t('month')}</p>
                   </div>
-                  <div className="bg-gray-100 rounded-lg p-4 text-center">
-                    <p className="text-2xl font-bold text-gray-700">{selectedSiteStats.stats?.total || 0}</p>
-                    <p className="text-sm text-gray-600">{t('total')}</p>
+                  <div className="bg-gray-100 rounded-lg p-3 sm:p-4 text-center">
+                    <p className="text-xl sm:text-2xl font-bold text-gray-700">{selectedSiteStats.stats?.total || 0}</p>
+                    <p className="text-xs sm:text-sm text-gray-600">{t('total')}</p>
                   </div>
                 </div>
 
                 {/* Countries */}
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3 flex items-center space-x-2">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2 sm:mb-3 flex items-center space-x-2">
                     <MapPin className="w-4 h-4" />
                     <span>{t('byCountry')}</span>
                   </h3>
                   {selectedSiteStats.countries?.length > 0 ? (
-                    <div className="bg-gray-50 rounded-lg p-4">
+                    <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
                       <div className="space-y-2">
                         {selectedSiteStats.countries.map((c, i) => (
                           <div key={i} className="flex items-center justify-between">
-                            <span className="text-sm text-gray-700">{c.country}</span>
-                            <span className="text-sm font-medium text-gray-900">{c.visitors} {t('visitors').toLowerCase()}</span>
+                            <span className="text-xs sm:text-sm text-gray-700">{c.country}</span>
+                            <span className="text-xs sm:text-sm font-medium text-gray-900">{c.visitors}</span>
                           </div>
                         ))}
                       </div>
@@ -446,10 +472,10 @@ const AdminDashboard = () => {
 
                 {/* Daily Visits */}
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('dailyVisits')} (7 {t('week').toLowerCase()})</h3>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2 sm:mb-3">{t('dailyVisits')} (7 {t('week').toLowerCase()})</h3>
                   {selectedSiteStats.daily?.length > 0 ? (
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <div className="flex items-end justify-between h-32 space-x-2">
+                    <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
+                      <div className="flex items-end justify-between h-24 sm:h-32 space-x-1 sm:space-x-2">
                         {selectedSiteStats.daily.slice().reverse().map((d, i) => {
                           const maxVisitors = Math.max(...selectedSiteStats.daily.map(x => x.visitors), 1);
                           const height = (d.visitors / maxVisitors) * 100;
@@ -460,7 +486,7 @@ const AdminDashboard = () => {
                                 style={{ height: `${Math.max(height, 5)}%` }}
                                 title={`${d.date}: ${d.visitors}`}
                               />
-                              <span className="text-xs text-gray-500 mt-1">{d.date?.slice(-5)}</span>
+                              <span className="text-[10px] sm:text-xs text-gray-500 mt-1">{d.date?.slice(-5)}</span>
                             </div>
                           );
                         })}
@@ -473,13 +499,13 @@ const AdminDashboard = () => {
 
                 {/* Recent Visitors */}
                 <div>
-                  <h3 className="text-sm font-semibold text-gray-700 mb-3">{t('recentVisitors')}</h3>
+                  <h3 className="text-sm font-semibold text-gray-700 mb-2 sm:mb-3">{t('recentVisitors')}</h3>
                   {selectedSiteStats.recent_visitors?.length > 0 ? (
                     <div className="bg-gray-50 rounded-lg divide-y">
                       {selectedSiteStats.recent_visitors.map((v, i) => (
-                        <div key={i} className="px-4 py-2 flex items-center justify-between text-sm">
+                        <div key={i} className="px-3 sm:px-4 py-2 flex items-center justify-between text-xs sm:text-sm">
                           <span className="text-gray-600">{v.country || 'Unknown'}</span>
-                          <span className="text-gray-400 text-xs">{new Date(v.timestamp).toLocaleString()}</span>
+                          <span className="text-gray-400 text-[10px] sm:text-xs">{new Date(v.timestamp).toLocaleString()}</span>
                         </div>
                       ))}
                     </div>
@@ -489,7 +515,7 @@ const AdminDashboard = () => {
                 </div>
               </div>
             ) : (
-              <div className="p-12 text-center text-gray-500">{t('noData')}</div>
+              <div className="p-8 sm:p-12 text-center text-gray-500">{t('noData')}</div>
             )}
           </div>
         </div>
