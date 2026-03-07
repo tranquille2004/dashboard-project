@@ -22,8 +22,9 @@ const API = process.env.REACT_APP_BACKEND_URL + '/api';
 function AscoliApp() {
   const [siteConfig, setSiteConfig] = useState(null);
   
-  // Detecteer of we op een custom domain zijn (niet op preview URL)
+  // Detecteer of we op een custom domain zijn (niet op preview/production Emergent URL)
   const isCustomDomain = !window.location.hostname.includes('preview.emergentagent.com') && 
+                         !window.location.hostname.includes('.emergent.host') &&
                          !window.location.hostname.includes('localhost');
   const basePath = isCustomDomain ? '' : '/site/ascoli';
 

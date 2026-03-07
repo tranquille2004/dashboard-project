@@ -5,6 +5,24 @@ import { Menu, X, MapPin, Battery, Shield, Wifi, Clock, Phone, Mail, ChevronDown
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
+// Helper to detect if we're on custom domain or Emergent URL
+const isOnCustomDomain = () => {
+  const hostname = window.location.hostname;
+  return !hostname.includes('preview.emergentagent.com') && 
+         !hostname.includes('.emergent.host') &&
+         !hostname.includes('localhost');
+};
+
+// Get base path for links
+const getBasePath = () => isOnCustomDomain() ? '' : '/site/tracemaster';
+
+// Helper to create correct path
+const getPath = (path) => {
+  const basePath = getBasePath();
+  if (path === '/') return basePath || '/';
+  return `${basePath}${path}`;
+};
+
 // SEO Configuration for Tracemaster
 const SEO_CONFIG = {
   siteName: 'Tracemaster GPS Trackers',
@@ -55,17 +73,20 @@ const Lightbox = ({ image, onClose }) => {
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  
+  const basePath = getBasePath();
 
   const navLinks = [
-    { path: "/site/tracemaster", label: "Home" },
-    { path: "/site/tracemaster/productos", label: "Rastreador" },
-    { path: "/site/tracemaster/adaptador", label: "Adaptador" },
-    { path: "/site/tracemaster/faq", label: "FAQ" },
-    { path: "/site/tracemaster/contacto", label: "Contáctenos" },
+    { path: basePath || "/", label: "Home" },
+    { path: `${basePath}/productos`, label: "Rastreador" },
+    { path: `${basePath}/adaptador`, label: "Adaptador" },
+    { path: `${basePath}/faq`, label: "FAQ" },
+    { path: `${basePath}/contacto`, label: "Contáctenos" },
   ];
 
   const isActive = (path) => {
-    if (path === "/site/tracemaster") {
+    const homePath = basePath || "/";
+    if (path === homePath) {
       return location.pathname === path || location.pathname === path + "/";
     }
     return location.pathname === path;
@@ -75,7 +96,7 @@ const Navigation = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-xl" data-testid="main-navigation">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          <Link to="/" className="flex items-center" data-testid="logo-link">
+          <Link to={getPath('/')} className="flex items-center" data-testid="logo-link">
             <img
               src="/images/tracemaster/logoecuadorpetit.jpg"
               alt="Tracemaster Logo"
@@ -169,10 +190,10 @@ const Footer = () => (
         <div>
           <h3 className="text-white font-semibold mb-4">Enlaces Rápidos</h3>
           <ul className="space-y-2 text-sm">
-            <li><Link to="/productos" className="hover:text-red-500 transition-colors">Productos</Link></li>
-            <li><Link to="/adaptador" className="hover:text-red-500 transition-colors">Adaptador</Link></li>
-            <li><Link to="/faq" className="hover:text-red-500 transition-colors">FAQ</Link></li>
-            <li><Link to="/contacto" className="hover:text-red-500 transition-colors">Contáctenos</Link></li>
+            <li><Link to={getPath('/productos')} className="hover:text-red-500 transition-colors">Productos</Link></li>
+            <li><Link to={getPath('/adaptador')} className="hover:text-red-500 transition-colors">Adaptador</Link></li>
+            <li><Link to={getPath('/faq')} className="hover:text-red-500 transition-colors">FAQ</Link></li>
+            <li><Link to={getPath('/contacto')} className="hover:text-red-500 transition-colors">Contáctenos</Link></li>
           </ul>
         </div>
         <div>
@@ -542,7 +563,7 @@ const Productos = () => {
             </p>
             <div className="bg-red-600/20 p-4 rounded-xl border-l-4 border-red-600">
               <p className="text-white font-medium">
-                <strong>Si no tienes ganas de cargar manualmente, te recomendamos adquirir nuestro <Link to="/adaptador" className="text-red-400 hover:text-red-300 underline">cargador de coche especial</Link> para que tu dispositivo esté siempre cargado.</strong>
+                <strong>Si no tienes ganas de cargar manualmente, te recomendamos adquirir nuestro <Link to={getPath('/adaptador')} className="text-red-400 hover:text-red-300 underline">cargador de coche especial</Link> para que tu dispositivo esté siempre cargado.</strong>
               </p>
             </div>
 
@@ -855,7 +876,7 @@ Si el rastreador GPS permanece fuera de línea, puede intentar reiniciarlo con e
                   <div className="px-6 pb-5 animate-fadeIn">
                     <p className="text-gray-400 leading-relaxed whitespace-pre-line">{faq.answer}</p>
                     {faq.question === "Optimizar la duración de la batería" && (
-                      <Link to="/adaptador" className="inline-block mt-4 text-red-500 hover:text-red-400 font-medium">
+                      <Link to={getPath('/adaptador')} className="inline-block mt-4 text-red-500 hover:text-red-400 font-medium">
                         → Ver cargador de coche especial
                       </Link>
                     )}

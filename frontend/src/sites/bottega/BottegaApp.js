@@ -15,10 +15,13 @@ const BRAND_COLOR = '#7D3C32';
 // Achtergrondkleur voor alle paginas - warm beige
 const BG_COLOR = '#FAF6F1';
 
-// Helper to detect if we're on custom domain or preview
+// Helper to detect if we're on custom domain or preview/production Emergent URL
 const isOnCustomDomain = () => {
-  return !window.location.hostname.includes('preview.emergentagent.com') && 
-         !window.location.hostname.includes('localhost');
+  const hostname = window.location.hostname;
+  // Check if NOT on any Emergent URL (preview or production) and NOT localhost
+  return !hostname.includes('preview.emergentagent.com') && 
+         !hostname.includes('.emergent.host') &&
+         !hostname.includes('localhost');
 };
 
 // Get base path for links

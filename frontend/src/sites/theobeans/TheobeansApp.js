@@ -18,8 +18,9 @@ import Qualite from './pages/Qualite';
 import Tracabilite from './pages/Tracabilite';
 import Contact from './pages/Contact';
 
-// Detecteer of we op custom domain of preview zijn
+// Detecteer of we op custom domain of preview/production Emergent zijn
 const isCustomDomain = !window.location.hostname.includes('emergentagent.com') && 
+                        !window.location.hostname.includes('.emergent.host') &&
                         !window.location.hostname.includes('localhost');
 const basePath = isCustomDomain ? '' : '/site/theobeans';
 
