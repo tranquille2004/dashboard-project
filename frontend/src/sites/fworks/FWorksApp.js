@@ -948,7 +948,7 @@ const PortfolioSection = ({ t, lang }) => (
             <div className="relative h-48 overflow-hidden bg-gray-800">
               <iframe src={item.previewUrl} className="w-[200%] h-[200%] transform scale-50 origin-top-left pointer-events-none" title={item.name} />
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"></div>
-              <div className="absolute top-3 right-3"><span className="px-2 py-1 bg-amber-500 text-gray-900 text-xs rounded-full font-medium flex items-center space-x-1"><span className="w-1.5 h-1.5 bg-gray-900 rounded-full animate-pulse"></span><span>{t.portfolio.liveDemo}</span></span></div>
+              <div className="absolute top-3 right-3"><span className="px-2 py-1 bg-green-500 text-white text-xs rounded-full font-medium flex items-center space-x-1"><span className="w-1.5 h-1.5 bg-white rounded-full animate-pulse"></span><span>{t.portfolio.liveDemo}</span></span></div>
             </div>
             <div className="p-6">
               <h3 className="text-xl font-semibold text-white mb-1">{item.name}</h3>
