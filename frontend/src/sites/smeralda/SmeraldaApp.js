@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin, ChevronDown, ChevronLeft, ChevronRight, Globe, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Calendar } from 'lucide-react';
 
+// fworks logo for footer
+const FWORKS_LOGO = '/images/fworksbuilders.png';
+
 // Images
 const IMAGES = {
   logo: '/images/smeralda/logo-full.png',
+  poolMain: '/images/smeralda/pool-main.jpg',
   hero: [
+    '/images/smeralda/pool-main.jpg',
     '/images/smeralda/hero-1.png',
     '/images/smeralda/hero-2.png',
     '/images/smeralda/hero-3.png',
@@ -18,7 +23,9 @@ const IMAGES = {
     '/images/smeralda/standard-3.png',
     '/images/smeralda/standard-4.png',
     '/images/smeralda/standard-5.png',
-    '/images/smeralda/standard-6.png'
+    '/images/smeralda/standard-6.png',
+    '/images/smeralda/standard-terrace-1.png',
+    '/images/smeralda/standard-terrace-2.png'
   ],
   executive: [
     '/images/smeralda/executive-1.png',
@@ -26,15 +33,24 @@ const IMAGES = {
     '/images/smeralda/executive-3.png',
     '/images/smeralda/executive-4.png',
     '/images/smeralda/executive-5.png',
-    '/images/smeralda/executive-6.png'
+    '/images/smeralda/executive-6.png',
+    '/images/smeralda/exec-pool-1.png',
+    '/images/smeralda/exec-pool-2.png',
+    '/images/smeralda/exec-pool-3.png'
   ],
   gallery: [
+    '/images/smeralda/pool-main.jpg',
     '/images/smeralda/gallery-1.jpg',
     '/images/smeralda/gallery-2.jpg',
     '/images/smeralda/gallery-3.jpg',
     '/images/smeralda/gallery-4.jpg',
     '/images/smeralda/gallery-5.jpg',
-    '/images/smeralda/gallery-6.jpg'
+    '/images/smeralda/gallery-6.jpg',
+    '/images/smeralda/pool-area-1.png',
+    '/images/smeralda/property-1.png',
+    '/images/smeralda/property-2.png',
+    '/images/smeralda/property-5.png',
+    '/images/smeralda/bg-reserve.jpg'
   ]
 };
 
@@ -846,11 +862,15 @@ const SmeraldaApp = () => {
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{t.gallery.title}</h2>
             <p className="text-gray-600">{t.gallery.subtitle}</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
             {IMAGES.gallery.map((img, i) => (
-              <div key={i} className={`rounded-xl overflow-hidden ${i === 0 ? 'md:col-span-2 md:row-span-2' : ''}`}>
-                <img src={img} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-500" 
-                  style={{ minHeight: i === 0 ? '400px' : '200px' }} />
+              <div key={i} className={`rounded-xl overflow-hidden cursor-pointer group ${
+                i === 0 ? 'col-span-2 row-span-2' : 
+                i === 3 || i === 7 ? 'col-span-2' : ''
+              }`}>
+                <img src={img} alt={`Gallery ${i + 1}`} 
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                  style={{ minHeight: i === 0 ? '400px' : i === 3 || i === 7 ? '200px' : '180px' }} />
               </div>
             ))}
           </div>
@@ -994,13 +1014,14 @@ const SmeraldaApp = () => {
             </div>
             <div className="text-center md:text-right text-sm text-gray-400">
               <p>&copy; {new Date().getFullYear()} Villa Smeralda. {t.footer.rights}</p>
-              <p className="mt-1">
-                {t.footer.webmaster}{' '}
+              <div className="mt-2 flex items-center justify-center md:justify-end gap-2">
+                <span>{t.footer.webmaster}</span>
                 <a href="https://fworksbuilders.com" target="_blank" rel="noopener noreferrer" 
-                  className="text-blue-400 hover:text-blue-300 transition-colors">
-                  fworks builders
+                  className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
+                  <img src={FWORKS_LOGO} alt="fworks builders" className="h-6 w-auto" />
+                  <span>fworks builders</span>
                 </a>
-              </p>
+              </div>
             </div>
           </div>
         </div>
