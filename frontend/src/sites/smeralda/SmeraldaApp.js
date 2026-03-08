@@ -1,63 +1,39 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, MapPin, ChevronDown, ChevronLeft, ChevronRight, Globe, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Calendar } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Bath, TreePine, Mountain } from 'lucide-react';
 
 // fworks logo for footer
 const FWORKS_LOGO = '/images/fworksbuilders.png';
 
-// Images
+// Generate image arrays
+const generateImages = (prefix, count) => 
+  Array.from({ length: count }, (_, i) => `/images/smeralda/${prefix}-${i + 1}.jpg`);
+
+// Images organized by type
 const IMAGES = {
   logo: '/images/smeralda/logo-full.png',
-  poolMain: '/images/smeralda/pool-main.jpg',
   hero: [
     '/images/smeralda/pool-main.jpg',
     '/images/smeralda/hero-1.png',
     '/images/smeralda/hero-2.png',
     '/images/smeralda/hero-3.png',
-    '/images/smeralda/hero-4.png',
-    '/images/smeralda/hero-5.png',
-    '/images/smeralda/hero-6.png'
   ],
-  standard: [
-    '/images/smeralda/standard-1.png',
-    '/images/smeralda/standard-2.png',
-    '/images/smeralda/standard-3.png',
-    '/images/smeralda/standard-4.png',
-    '/images/smeralda/standard-5.png',
-    '/images/smeralda/standard-6.png',
-    '/images/smeralda/standard-terrace-1.png',
-    '/images/smeralda/standard-terrace-2.png'
+  standard: generateImages('std', 40), // Use first 40 of 71
+  executive: generateImages('exec', 15),
+  mobilhome: [
+    '/images/smeralda/mobilhome-1.jpg',
+    '/images/smeralda/mobilhome-6.jpg',
+    '/images/smeralda/mobilhome-11.jpg',
+    '/images/smeralda/mobilhome-12.jpg',
+    '/images/smeralda/mobilhome-13.jpg',
+    '/images/smeralda/mobilhome-14.jpg',
   ],
-  executive: [
-    '/images/smeralda/executive-1.png',
-    '/images/smeralda/executive-2.png',
-    '/images/smeralda/executive-3.png',
-    '/images/smeralda/executive-4.png',
-    '/images/smeralda/executive-5.png',
-    '/images/smeralda/executive-6.png',
-    '/images/smeralda/exec-pool-1.png',
-    '/images/smeralda/exec-pool-2.png',
-    '/images/smeralda/exec-pool-3.png'
-  ],
-  gallery: [
-    '/images/smeralda/pool-main.jpg',
-    '/images/smeralda/gallery-1.jpg',
-    '/images/smeralda/gallery-2.jpg',
-    '/images/smeralda/gallery-3.jpg',
-    '/images/smeralda/gallery-4.jpg',
-    '/images/smeralda/gallery-5.jpg',
-    '/images/smeralda/gallery-6.jpg',
-    '/images/smeralda/pool-area-1.png',
-    '/images/smeralda/property-1.png',
-    '/images/smeralda/property-2.png',
-    '/images/smeralda/property-5.png',
-    '/images/smeralda/bg-reserve.jpg'
-  ]
+  exterior: generateImages('ext', 30), // Use first 30 of 48
 };
 
-// Translations
+// Translations - 6 languages
 const translations = {
   en: {
-    nav: { home: 'Home', apartments: 'Apartments', standard: 'Standard', executive: 'Executive', prices: 'Prices', gallery: 'Gallery', contact: 'Contact', location: 'Location' },
+    nav: { home: 'Home', apartments: 'Accommodations', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobile Home', prices: 'Prices 2026', gallery: 'Gallery', contact: 'Contact', location: 'Location' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Your paradise in Sardinia', cta: 'Book Now', location: 'Telti, Sardinia - Italy' },
     intro: {
       title: 'Welcome to Villa Smeralda',
@@ -65,28 +41,38 @@ const translations = {
       features: ['Large Swimming Pool', 'Free WiFi', 'Air Conditioning', 'Private Terrace', 'BBQ', 'Restaurant & Bar']
     },
     apartments: {
-      title: 'Our Apartments',
+      title: 'Our Accommodations',
       standard: {
         title: 'Standard Apartment',
         subtitle: 'Shared Pool',
-        desc: 'Private apartments of 60m² with fully equipped kitchen, private terrace with barbecue, bedroom, living room and bathroom.',
-        features: ['1 or 2 bedrooms', 'Up to 7 persons', 'Shared pool', 'Garden or pool view'],
-        oneBed: '1-Bedroom (up to 5 persons)',
-        twoBed: '2-Bedroom (up to 7 persons)'
+        desc: 'Private apartments of 60m² with fully equipped kitchen, private terrace with barbecue, bedroom, living room and bathroom. Available in 1 or 2 bedroom configuration.',
+        features: ['1 or 2 bedrooms', 'Up to 7 persons', 'Shared pool', 'Private terrace', 'Full kitchen', 'Air conditioning'],
+        btn: 'View Gallery'
       },
       executive: {
         title: 'Executive Apartment',
         subtitle: 'Private Pool',
-        desc: 'Our premium apartment built in 2017, separated from others and higher on the hill with amazing views. The only one with a private pool!',
-        features: ['1 bedroom + wall bed', 'Up to 5 persons', 'Private pool', 'Mountain view']
+        desc: 'Our premium apartment built in 2017, separated from others and higher on the hill with amazing views. The only apartment with a private pool! Features 1 bedroom plus a wall bed in the living room.',
+        features: ['1 bedroom + wall bed', 'Up to 5 persons', 'Private pool', 'Mountain view', 'Premium finishing', 'Panoramic terrace'],
+        btn: 'View Gallery'
+      },
+      mobilhome: {
+        title: 'Mobile Home',
+        subtitle: 'Private Pool',
+        desc: 'Our newest addition! A cozy mobile home with modern interior, fully equipped kitchen, bathroom with shower, and your own private pool. Perfect for couples or small families.',
+        features: ['1 bedroom', 'Up to 4 persons', 'Private pool', 'Covered terrace', 'Full kitchen', 'BBQ area'],
+        btn: 'View Gallery'
       }
     },
     prices: {
       title: 'Prices 2026',
-      subtitle: 'Below prices are rack rates. Contact us for better deals. Long stays get discounts.',
-      perNight: 'per night',
+      subtitle: 'Prices below are rack rates per night. Contact us for special deals on longer stays.',
+      perNight: '/night',
       from: 'From',
+      oneBed: '1-Bedroom',
+      twoBed: '2-Bedroom',
       seasons: {
+        period: 'Period',
         low: 'Apr 1 - Jun 15',
         mid1: 'Jun 16 - Jun 30',
         high1: 'Jul 1 - Jul 31',
@@ -100,7 +86,8 @@ const translations = {
           'Prices are per apartment for up to 4 persons',
           'Extra person: €15 per night',
           'Final cleaning: €70 one-time',
-          'Gas: €5 extra, Electricity: €10 extra',
+          'Gas consumption: €5 extra per stay',
+          'Electricity: €10 extra per stay',
           'Breakfast: €10 per person',
           'Dinner with wine: €40 per person',
           'Airport pickup Olbia: €30',
@@ -108,38 +95,27 @@ const translations = {
         ]
       }
     },
-    gallery: { title: 'Gallery', subtitle: 'Discover our beautiful property' },
+    gallery: { 
+      title: 'Photo Gallery', 
+      subtitle: 'Discover our beautiful property and surroundings',
+      tabs: { standard: 'Standard Apartments', executive: 'Executive', mobilhome: 'Mobile Home', exterior: 'Park & Surroundings' }
+    },
     contact: {
       title: 'Contact & Reservation',
       subtitle: 'We speak 6 languages and reply within 24 hours',
-      form: { name: 'Full Name', email: 'Email', phone: 'Phone', arrival: 'Arrival Date', departure: 'Departure Date', apartment: 'Apartment Type', persons: 'Number of Persons', message: 'Message', submit: 'Send Request', select: 'Select...', oneBed: '1-Bedroom Standard', twoBed: '2-Bedroom Standard', execApt: 'Executive Apartment' },
+      form: { name: 'Full Name', email: 'Email', phone: 'Phone', arrival: 'Arrival Date', departure: 'Departure Date', apartment: 'Accommodation Type', persons: 'Number of Persons', message: 'Message', submit: 'Send Request', select: 'Select...', oneBed: '1-Bedroom Standard', twoBed: '2-Bedroom Standard', execApt: 'Executive Apartment', mobHome: 'Mobile Home' },
       info: { phone: 'WhatsApp Only', address: 'Address', company: 'Company' },
-      bookiply: 'Or book instantly via our partner Bookiply'
     },
     location: {
       title: 'How to Find Us',
-      text: 'We are located only 5km from Olbia and 20 minutes from the sea. Olbia Costa Smeralda airport is 10 minutes by car.',
+      text: 'We are located only 5km from Olbia and 20 minutes from the beautiful beaches. Olbia Costa Smeralda airport is just 10 minutes by car.',
       directions: 'Search "Villa Smeralda Telti" on Google Maps'
     },
-    footer: {
-      rights: 'All rights reserved',
-      webmaster: 'Website by'
-    },
-    features: {
-      pool: 'Swimming Pool',
-      wifi: 'Free WiFi',
-      ac: 'Air Conditioning',
-      parking: 'Free Parking',
-      bbq: 'BBQ',
-      restaurant: 'Restaurant',
-      bar: 'Bar',
-      garden: '30,000m² Garden',
-      animals: 'Horses & Animals',
-      beach: '20 min to Beach'
-    }
+    footer: { rights: 'All rights reserved', webmaster: 'Website by' },
+    features: { pool: 'Swimming Pool', wifi: 'Free WiFi', ac: 'Air Conditioning', parking: 'Free Parking', bbq: 'BBQ', restaurant: 'Restaurant' }
   },
   nl: {
-    nav: { home: 'Home', apartments: 'Appartementen', standard: 'Standaard', executive: 'Executive', prices: 'Prijzen', gallery: 'Galerij', contact: 'Contact', location: 'Locatie' },
+    nav: { home: 'Home', apartments: 'Accommodaties', standard: 'Standaard', executive: 'Executive', mobilhome: 'Stacaravan', prices: 'Prijzen 2026', gallery: 'Galerij', contact: 'Contact', location: 'Locatie' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Uw paradijs op Sardinië', cta: 'Boek Nu', location: 'Telti, Sardinië - Italië' },
     intro: {
       title: 'Welkom bij Villa Smeralda',
@@ -147,28 +123,38 @@ const translations = {
       features: ['Groot Zwembad', 'Gratis WiFi', 'Airconditioning', 'Privé Terras', 'BBQ', 'Restaurant & Bar']
     },
     apartments: {
-      title: 'Onze Appartementen',
+      title: 'Onze Accommodaties',
       standard: {
         title: 'Standaard Appartement',
         subtitle: 'Gedeeld Zwembad',
-        desc: 'Privé appartementen van 60m² met volledig uitgeruste keuken, privé terras met barbecue, slaapkamer, woonkamer en badkamer.',
-        features: ['1 of 2 slaapkamers', 'Tot 7 personen', 'Gedeeld zwembad', 'Tuin- of zwembadzicht'],
-        oneBed: '1-Slaapkamer (tot 5 personen)',
-        twoBed: '2-Slaapkamers (tot 7 personen)'
+        desc: 'Privé appartementen van 60m² met volledig uitgeruste keuken, privé terras met barbecue, slaapkamer, woonkamer en badkamer. Beschikbaar met 1 of 2 slaapkamers.',
+        features: ['1 of 2 slaapkamers', 'Tot 7 personen', 'Gedeeld zwembad', 'Privé terras', 'Volledige keuken', 'Airconditioning'],
+        btn: 'Bekijk Galerij'
       },
       executive: {
         title: 'Executive Appartement',
         subtitle: 'Privé Zwembad',
-        desc: 'Ons premium appartement gebouwd in 2017, gescheiden van de andere en hoger op de heuvel met geweldig uitzicht. De enige met privé zwembad!',
-        features: ['1 slaapkamer + wandbed', 'Tot 5 personen', 'Privé zwembad', 'Bergzicht']
+        desc: 'Ons premium appartement gebouwd in 2017, gescheiden van de andere en hoger op de heuvel met geweldig uitzicht. Het enige appartement met privé zwembad! Heeft 1 slaapkamer plus een wandbed in de woonkamer.',
+        features: ['1 slaapkamer + wandbed', 'Tot 5 personen', 'Privé zwembad', 'Bergzicht', 'Premium afwerking', 'Panoramisch terras'],
+        btn: 'Bekijk Galerij'
+      },
+      mobilhome: {
+        title: 'Stacaravan',
+        subtitle: 'Privé Zwembad',
+        desc: 'Onze nieuwste toevoeging! Een gezellige stacaravan met modern interieur, volledig uitgeruste keuken, badkamer met douche, en uw eigen privé zwembad. Perfect voor koppels of kleine gezinnen.',
+        features: ['1 slaapkamer', 'Tot 4 personen', 'Privé zwembad', 'Overdekt terras', 'Volledige keuken', 'BBQ gebied'],
+        btn: 'Bekijk Galerij'
       }
     },
     prices: {
       title: 'Prijzen 2026',
-      subtitle: 'Onderstaande prijzen zijn standaardtarieven. Neem contact op voor betere deals. Lange verblijven krijgen korting.',
-      perNight: 'per nacht',
+      subtitle: 'Onderstaande prijzen zijn standaardtarieven per nacht. Neem contact op voor speciale deals bij langere verblijven.',
+      perNight: '/nacht',
       from: 'Vanaf',
+      oneBed: '1-Slaapkamer',
+      twoBed: '2-Slaapkamers',
       seasons: {
+        period: 'Periode',
         low: '1 apr - 15 jun',
         mid1: '16 jun - 30 jun',
         high1: '1 jul - 31 jul',
@@ -182,7 +168,8 @@ const translations = {
           'Prijzen zijn per appartement voor max 4 personen',
           'Extra persoon: €15 per nacht',
           'Eindschoonmaak: €70 eenmalig',
-          'Gas: €5 extra, Elektriciteit: €10 extra',
+          'Gasverbruik: €5 extra per verblijf',
+          'Elektriciteit: €10 extra per verblijf',
           'Ontbijt: €10 per persoon',
           'Diner met wijn: €40 per persoon',
           'Luchthaven ophalen Olbia: €30',
@@ -190,38 +177,27 @@ const translations = {
         ]
       }
     },
-    gallery: { title: 'Galerij', subtitle: 'Ontdek ons prachtige domein' },
+    gallery: { 
+      title: 'Fotogalerij', 
+      subtitle: 'Ontdek ons prachtige domein en omgeving',
+      tabs: { standard: 'Standaard Appartementen', executive: 'Executive', mobilhome: 'Stacaravan', exterior: 'Park & Omgeving' }
+    },
     contact: {
       title: 'Contact & Reservering',
       subtitle: 'Wij spreken 6 talen en antwoorden binnen 24 uur',
-      form: { name: 'Volledige Naam', email: 'E-mail', phone: 'Telefoon', arrival: 'Aankomstdatum', departure: 'Vertrekdatum', apartment: 'Type Appartement', persons: 'Aantal Personen', message: 'Bericht', submit: 'Verstuur Aanvraag', select: 'Selecteer...', oneBed: '1-Slaapkamer Standaard', twoBed: '2-Slaapkamers Standaard', execApt: 'Executive Appartement' },
+      form: { name: 'Volledige Naam', email: 'E-mail', phone: 'Telefoon', arrival: 'Aankomstdatum', departure: 'Vertrekdatum', apartment: 'Type Accommodatie', persons: 'Aantal Personen', message: 'Bericht', submit: 'Verstuur Aanvraag', select: 'Selecteer...', oneBed: '1-Slaapkamer Standaard', twoBed: '2-Slaapkamers Standaard', execApt: 'Executive Appartement', mobHome: 'Stacaravan' },
       info: { phone: 'Alleen WhatsApp', address: 'Adres', company: 'Bedrijf' },
-      bookiply: 'Of boek direct via onze partner Bookiply'
     },
     location: {
       title: 'Hoe Ons Te Vinden',
-      text: 'We liggen op slechts 5km van Olbia en 20 minuten van de zee. Olbia Costa Smeralda luchthaven is 10 minuten met de auto.',
+      text: 'We liggen op slechts 5km van Olbia en 20 minuten van de prachtige stranden. Olbia Costa Smeralda luchthaven is slechts 10 minuten met de auto.',
       directions: 'Zoek "Villa Smeralda Telti" op Google Maps'
     },
-    footer: {
-      rights: 'Alle rechten voorbehouden',
-      webmaster: 'Website door'
-    },
-    features: {
-      pool: 'Zwembad',
-      wifi: 'Gratis WiFi',
-      ac: 'Airconditioning',
-      parking: 'Gratis Parkeren',
-      bbq: 'BBQ',
-      restaurant: 'Restaurant',
-      bar: 'Bar',
-      garden: '30.000m² Tuin',
-      animals: 'Paarden & Dieren',
-      beach: '20 min naar Strand'
-    }
+    footer: { rights: 'Alle rechten voorbehouden', webmaster: 'Website door' },
+    features: { pool: 'Zwembad', wifi: 'Gratis WiFi', ac: 'Airconditioning', parking: 'Gratis Parkeren', bbq: 'BBQ', restaurant: 'Restaurant' }
   },
   fr: {
-    nav: { home: 'Accueil', apartments: 'Appartements', standard: 'Standard', executive: 'Executive', prices: 'Tarifs', gallery: 'Galerie', contact: 'Contact', location: 'Localisation' },
+    nav: { home: 'Accueil', apartments: 'Hébergements', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobil-home', prices: 'Tarifs 2026', gallery: 'Galerie', contact: 'Contact', location: 'Localisation' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Votre paradis en Sardaigne', cta: 'Réserver', location: 'Telti, Sardaigne - Italie' },
     intro: {
       title: 'Bienvenue à Villa Smeralda',
@@ -229,28 +205,38 @@ const translations = {
       features: ['Grande Piscine', 'WiFi Gratuit', 'Climatisation', 'Terrasse Privée', 'BBQ', 'Restaurant & Bar']
     },
     apartments: {
-      title: 'Nos Appartements',
+      title: 'Nos Hébergements',
       standard: {
         title: 'Appartement Standard',
         subtitle: 'Piscine Partagée',
-        desc: 'Appartements privés de 60m² avec cuisine équipée, terrasse privée avec barbecue, chambre, salon et salle de bain.',
-        features: ['1 ou 2 chambres', 'Jusqu\'à 7 personnes', 'Piscine partagée', 'Vue jardin ou piscine'],
-        oneBed: '1 Chambre (jusqu\'à 5 pers.)',
-        twoBed: '2 Chambres (jusqu\'à 7 pers.)'
+        desc: 'Appartements privés de 60m² avec cuisine équipée, terrasse privée avec barbecue, chambre, salon et salle de bain. Disponible en configuration 1 ou 2 chambres.',
+        features: ['1 ou 2 chambres', 'Jusqu\'à 7 personnes', 'Piscine partagée', 'Terrasse privée', 'Cuisine complète', 'Climatisation'],
+        btn: 'Voir Galerie'
       },
       executive: {
         title: 'Appartement Executive',
         subtitle: 'Piscine Privée',
-        desc: 'Notre appartement premium construit en 2017, séparé des autres et plus haut sur la colline avec une vue magnifique. Le seul avec piscine privée!',
-        features: ['1 chambre + lit mural', 'Jusqu\'à 5 personnes', 'Piscine privée', 'Vue montagne']
+        desc: 'Notre appartement premium construit en 2017, séparé des autres et plus haut sur la colline avec une vue magnifique. Le seul appartement avec piscine privée! Dispose de 1 chambre plus un lit mural.',
+        features: ['1 chambre + lit mural', 'Jusqu\'à 5 personnes', 'Piscine privée', 'Vue montagne', 'Finitions premium', 'Terrasse panoramique'],
+        btn: 'Voir Galerie'
+      },
+      mobilhome: {
+        title: 'Mobil-home',
+        subtitle: 'Piscine Privée',
+        desc: 'Notre dernière nouveauté! Un mobil-home cosy avec intérieur moderne, cuisine équipée, salle de bain avec douche, et votre propre piscine privée. Parfait pour les couples ou petites familles.',
+        features: ['1 chambre', 'Jusqu\'à 4 personnes', 'Piscine privée', 'Terrasse couverte', 'Cuisine complète', 'Coin BBQ'],
+        btn: 'Voir Galerie'
       }
     },
     prices: {
       title: 'Tarifs 2026',
-      subtitle: 'Les prix ci-dessous sont des tarifs standards. Contactez-nous pour de meilleures offres.',
-      perNight: 'par nuit',
+      subtitle: 'Les prix ci-dessous sont des tarifs standards par nuit. Contactez-nous pour des offres spéciales sur les longs séjours.',
+      perNight: '/nuit',
       from: 'À partir de',
+      oneBed: '1 Chambre',
+      twoBed: '2 Chambres',
       seasons: {
+        period: 'Période',
         low: '1 avr - 15 juin',
         mid1: '16 juin - 30 juin',
         high1: '1 juil - 31 juil',
@@ -264,7 +250,8 @@ const translations = {
           'Prix par appartement pour max 4 personnes',
           'Personne supplémentaire: €15 par nuit',
           'Ménage final: €70 une fois',
-          'Gaz: €5, Électricité: €10',
+          'Consommation gaz: €5 extra par séjour',
+          'Électricité: €10 extra par séjour',
           'Petit-déjeuner: €10 par personne',
           'Dîner avec vin: €40 par personne',
           'Transfert aéroport Olbia: €30',
@@ -272,38 +259,27 @@ const translations = {
         ]
       }
     },
-    gallery: { title: 'Galerie', subtitle: 'Découvrez notre belle propriété' },
+    gallery: { 
+      title: 'Galerie Photo', 
+      subtitle: 'Découvrez notre belle propriété et ses environs',
+      tabs: { standard: 'Appartements Standard', executive: 'Executive', mobilhome: 'Mobil-home', exterior: 'Parc & Environs' }
+    },
     contact: {
       title: 'Contact & Réservation',
       subtitle: 'Nous parlons 6 langues et répondons sous 24h',
-      form: { name: 'Nom Complet', email: 'E-mail', phone: 'Téléphone', arrival: 'Date d\'arrivée', departure: 'Date de départ', apartment: 'Type d\'appartement', persons: 'Nombre de personnes', message: 'Message', submit: 'Envoyer', select: 'Sélectionner...', oneBed: '1 Chambre Standard', twoBed: '2 Chambres Standard', execApt: 'Appartement Executive' },
+      form: { name: 'Nom Complet', email: 'E-mail', phone: 'Téléphone', arrival: 'Date d\'arrivée', departure: 'Date de départ', apartment: 'Type d\'hébergement', persons: 'Nombre de personnes', message: 'Message', submit: 'Envoyer', select: 'Sélectionner...', oneBed: '1 Chambre Standard', twoBed: '2 Chambres Standard', execApt: 'Appartement Executive', mobHome: 'Mobil-home' },
       info: { phone: 'WhatsApp Uniquement', address: 'Adresse', company: 'Société' },
-      bookiply: 'Ou réservez directement via notre partenaire Bookiply'
     },
     location: {
       title: 'Comment Nous Trouver',
-      text: 'Nous sommes situés à seulement 5km d\'Olbia et 20 minutes de la mer. L\'aéroport Olbia Costa Smeralda est à 10 minutes en voiture.',
+      text: 'Nous sommes situés à seulement 5km d\'Olbia et 20 minutes des belles plages. L\'aéroport Olbia Costa Smeralda est à 10 minutes en voiture.',
       directions: 'Cherchez "Villa Smeralda Telti" sur Google Maps'
     },
-    footer: {
-      rights: 'Tous droits réservés',
-      webmaster: 'Site web par'
-    },
-    features: {
-      pool: 'Piscine',
-      wifi: 'WiFi Gratuit',
-      ac: 'Climatisation',
-      parking: 'Parking Gratuit',
-      bbq: 'BBQ',
-      restaurant: 'Restaurant',
-      bar: 'Bar',
-      garden: 'Jardin 30.000m²',
-      animals: 'Chevaux & Animaux',
-      beach: '20 min de la Plage'
-    }
+    footer: { rights: 'Tous droits réservés', webmaster: 'Site web par' },
+    features: { pool: 'Piscine', wifi: 'WiFi Gratuit', ac: 'Climatisation', parking: 'Parking Gratuit', bbq: 'BBQ', restaurant: 'Restaurant' }
   },
   it: {
-    nav: { home: 'Home', apartments: 'Appartamenti', standard: 'Standard', executive: 'Executive', prices: 'Prezzi', gallery: 'Galleria', contact: 'Contatti', location: 'Dove Siamo' },
+    nav: { home: 'Home', apartments: 'Alloggi', standard: 'Standard', executive: 'Executive', mobilhome: 'Casa Mobile', prices: 'Prezzi 2026', gallery: 'Galleria', contact: 'Contatti', location: 'Dove Siamo' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Il tuo paradiso in Sardegna', cta: 'Prenota Ora', location: 'Telti, Sardegna - Italia' },
     intro: {
       title: 'Benvenuti a Villa Smeralda',
@@ -311,28 +287,38 @@ const translations = {
       features: ['Grande Piscina', 'WiFi Gratuito', 'Aria Condizionata', 'Terrazza Privata', 'BBQ', 'Ristorante & Bar']
     },
     apartments: {
-      title: 'I Nostri Appartamenti',
+      title: 'I Nostri Alloggi',
       standard: {
         title: 'Appartamento Standard',
         subtitle: 'Piscina Condivisa',
-        desc: 'Appartamenti privati di 60m² con cucina attrezzata, terrazza privata con barbecue, camera da letto, soggiorno e bagno.',
-        features: ['1 o 2 camere', 'Fino a 7 persone', 'Piscina condivisa', 'Vista giardino o piscina'],
-        oneBed: '1 Camera (fino a 5 pers.)',
-        twoBed: '2 Camere (fino a 7 pers.)'
+        desc: 'Appartamenti privati di 60m² con cucina attrezzata, terrazza privata con barbecue, camera da letto, soggiorno e bagno. Disponibile con 1 o 2 camere da letto.',
+        features: ['1 o 2 camere', 'Fino a 7 persone', 'Piscina condivisa', 'Terrazza privata', 'Cucina completa', 'Aria condizionata'],
+        btn: 'Vedi Galleria'
       },
       executive: {
         title: 'Appartamento Executive',
         subtitle: 'Piscina Privata',
-        desc: 'Il nostro appartamento premium costruito nel 2017, separato dagli altri e più in alto sulla collina con vista mozzafiato. L\'unico con piscina privata!',
-        features: ['1 camera + letto a muro', 'Fino a 5 persone', 'Piscina privata', 'Vista montagna']
+        desc: 'Il nostro appartamento premium costruito nel 2017, separato dagli altri e più in alto sulla collina con vista mozzafiato. L\'unico appartamento con piscina privata! Ha 1 camera più un letto a muro.',
+        features: ['1 camera + letto a muro', 'Fino a 5 persone', 'Piscina privata', 'Vista montagna', 'Finiture premium', 'Terrazza panoramica'],
+        btn: 'Vedi Galleria'
+      },
+      mobilhome: {
+        title: 'Casa Mobile',
+        subtitle: 'Piscina Privata',
+        desc: 'La nostra ultima novità! Una casa mobile accogliente con interni moderni, cucina attrezzata, bagno con doccia, e la vostra piscina privata. Perfetta per coppie o piccole famiglie.',
+        features: ['1 camera', 'Fino a 4 persone', 'Piscina privata', 'Terrazza coperta', 'Cucina completa', 'Area BBQ'],
+        btn: 'Vedi Galleria'
       }
     },
     prices: {
       title: 'Prezzi 2026',
-      subtitle: 'I prezzi sotto sono tariffe standard. Contattateci per offerte migliori.',
-      perNight: 'a notte',
+      subtitle: 'I prezzi sotto sono tariffe standard a notte. Contattateci per offerte speciali sui soggiorni lunghi.',
+      perNight: '/notte',
       from: 'Da',
+      oneBed: '1 Camera',
+      twoBed: '2 Camere',
       seasons: {
+        period: 'Periodo',
         low: '1 apr - 15 giu',
         mid1: '16 giu - 30 giu',
         high1: '1 lug - 31 lug',
@@ -346,7 +332,8 @@ const translations = {
           'Prezzi per appartamento per max 4 persone',
           'Persona extra: €15 a notte',
           'Pulizia finale: €70 una tantum',
-          'Gas: €5, Elettricità: €10',
+          'Consumo gas: €5 extra per soggiorno',
+          'Elettricità: €10 extra per soggiorno',
           'Colazione: €10 a persona',
           'Cena con vino: €40 a persona',
           'Transfer aeroporto Olbia: €30',
@@ -354,38 +341,27 @@ const translations = {
         ]
       }
     },
-    gallery: { title: 'Galleria', subtitle: 'Scopri la nostra bella proprietà' },
+    gallery: { 
+      title: 'Galleria Fotografica', 
+      subtitle: 'Scopri la nostra bella proprietà e i dintorni',
+      tabs: { standard: 'Appartamenti Standard', executive: 'Executive', mobilhome: 'Casa Mobile', exterior: 'Parco & Dintorni' }
+    },
     contact: {
       title: 'Contatti & Prenotazione',
       subtitle: 'Parliamo 6 lingue e rispondiamo entro 24 ore',
-      form: { name: 'Nome Completo', email: 'E-mail', phone: 'Telefono', arrival: 'Data Arrivo', departure: 'Data Partenza', apartment: 'Tipo Appartamento', persons: 'Numero Persone', message: 'Messaggio', submit: 'Invia Richiesta', select: 'Seleziona...', oneBed: '1 Camera Standard', twoBed: '2 Camere Standard', execApt: 'Appartamento Executive' },
+      form: { name: 'Nome Completo', email: 'E-mail', phone: 'Telefono', arrival: 'Data Arrivo', departure: 'Data Partenza', apartment: 'Tipo Alloggio', persons: 'Numero Persone', message: 'Messaggio', submit: 'Invia Richiesta', select: 'Seleziona...', oneBed: '1 Camera Standard', twoBed: '2 Camere Standard', execApt: 'Appartamento Executive', mobHome: 'Casa Mobile' },
       info: { phone: 'Solo WhatsApp', address: 'Indirizzo', company: 'Azienda' },
-      bookiply: 'Oppure prenota direttamente tramite il nostro partner Bookiply'
     },
     location: {
       title: 'Come Trovarci',
-      text: 'Siamo situati a soli 5km da Olbia e 20 minuti dal mare. L\'aeroporto Olbia Costa Smeralda è a 10 minuti in auto.',
+      text: 'Siamo situati a soli 5km da Olbia e 20 minuti dalle belle spiagge. L\'aeroporto Olbia Costa Smeralda è a 10 minuti in auto.',
       directions: 'Cerca "Villa Smeralda Telti" su Google Maps'
     },
-    footer: {
-      rights: 'Tutti i diritti riservati',
-      webmaster: 'Sito web di'
-    },
-    features: {
-      pool: 'Piscina',
-      wifi: 'WiFi Gratuito',
-      ac: 'Aria Condizionata',
-      parking: 'Parcheggio Gratuito',
-      bbq: 'BBQ',
-      restaurant: 'Ristorante',
-      bar: 'Bar',
-      garden: 'Giardino 30.000m²',
-      animals: 'Cavalli & Animali',
-      beach: '20 min dalla Spiaggia'
-    }
+    footer: { rights: 'Tutti i diritti riservati', webmaster: 'Sito web di' },
+    features: { pool: 'Piscina', wifi: 'WiFi Gratuito', ac: 'Aria Condizionata', parking: 'Parcheggio Gratuito', bbq: 'BBQ', restaurant: 'Ristorante' }
   },
   es: {
-    nav: { home: 'Inicio', apartments: 'Apartamentos', standard: 'Estándar', executive: 'Executive', prices: 'Precios', gallery: 'Galería', contact: 'Contacto', location: 'Ubicación' },
+    nav: { home: 'Inicio', apartments: 'Alojamientos', standard: 'Estándar', executive: 'Executive', mobilhome: 'Casa Móvil', prices: 'Precios 2026', gallery: 'Galería', contact: 'Contacto', location: 'Ubicación' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Tu paraíso en Cerdeña', cta: 'Reservar', location: 'Telti, Cerdeña - Italia' },
     intro: {
       title: 'Bienvenidos a Villa Smeralda',
@@ -393,28 +369,38 @@ const translations = {
       features: ['Gran Piscina', 'WiFi Gratis', 'Aire Acondicionado', 'Terraza Privada', 'BBQ', 'Restaurante & Bar']
     },
     apartments: {
-      title: 'Nuestros Apartamentos',
+      title: 'Nuestros Alojamientos',
       standard: {
         title: 'Apartamento Estándar',
         subtitle: 'Piscina Compartida',
-        desc: 'Apartamentos privados de 60m² con cocina equipada, terraza privada con barbacoa, dormitorio, salón y baño.',
-        features: ['1 o 2 dormitorios', 'Hasta 7 personas', 'Piscina compartida', 'Vista jardín o piscina'],
-        oneBed: '1 Dormitorio (hasta 5 pers.)',
-        twoBed: '2 Dormitorios (hasta 7 pers.)'
+        desc: 'Apartamentos privados de 60m² con cocina equipada, terraza privada con barbacoa, dormitorio, salón y baño. Disponible en configuración de 1 o 2 dormitorios.',
+        features: ['1 o 2 dormitorios', 'Hasta 7 personas', 'Piscina compartida', 'Terraza privada', 'Cocina completa', 'Aire acondicionado'],
+        btn: 'Ver Galería'
       },
       executive: {
         title: 'Apartamento Executive',
         subtitle: 'Piscina Privada',
-        desc: 'Nuestro apartamento premium construido en 2017, separado de los demás y más alto en la colina con vistas increíbles. ¡El único con piscina privada!',
-        features: ['1 dormitorio + cama mural', 'Hasta 5 personas', 'Piscina privada', 'Vista montaña']
+        desc: 'Nuestro apartamento premium construido en 2017, separado de los demás y más alto en la colina con vistas increíbles. ¡El único apartamento con piscina privada! Tiene 1 dormitorio más cama mural.',
+        features: ['1 dormitorio + cama mural', 'Hasta 5 personas', 'Piscina privada', 'Vista montaña', 'Acabados premium', 'Terraza panorámica'],
+        btn: 'Ver Galería'
+      },
+      mobilhome: {
+        title: 'Casa Móvil',
+        subtitle: 'Piscina Privada',
+        desc: '¡Nuestra última novedad! Una acogedora casa móvil con interior moderno, cocina equipada, baño con ducha, y su propia piscina privada. Perfecta para parejas o familias pequeñas.',
+        features: ['1 dormitorio', 'Hasta 4 personas', 'Piscina privada', 'Terraza cubierta', 'Cocina completa', 'Zona BBQ'],
+        btn: 'Ver Galería'
       }
     },
     prices: {
       title: 'Precios 2026',
-      subtitle: 'Los precios son tarifas estándar. Contáctenos para mejores ofertas.',
-      perNight: 'por noche',
+      subtitle: 'Los precios son tarifas estándar por noche. Contáctenos para ofertas especiales en estancias largas.',
+      perNight: '/noche',
       from: 'Desde',
+      oneBed: '1 Dormitorio',
+      twoBed: '2 Dormitorios',
       seasons: {
+        period: 'Período',
         low: '1 abr - 15 jun',
         mid1: '16 jun - 30 jun',
         high1: '1 jul - 31 jul',
@@ -428,7 +414,8 @@ const translations = {
           'Precios por apartamento para máx. 4 personas',
           'Persona extra: €15 por noche',
           'Limpieza final: €70 una vez',
-          'Gas: €5, Electricidad: €10',
+          'Consumo gas: €5 extra por estancia',
+          'Electricidad: €10 extra por estancia',
           'Desayuno: €10 por persona',
           'Cena con vino: €40 por persona',
           'Transfer aeropuerto Olbia: €30',
@@ -436,38 +423,27 @@ const translations = {
         ]
       }
     },
-    gallery: { title: 'Galería', subtitle: 'Descubre nuestra hermosa propiedad' },
+    gallery: { 
+      title: 'Galería de Fotos', 
+      subtitle: 'Descubre nuestra hermosa propiedad y alrededores',
+      tabs: { standard: 'Apartamentos Estándar', executive: 'Executive', mobilhome: 'Casa Móvil', exterior: 'Parque & Alrededores' }
+    },
     contact: {
       title: 'Contacto & Reserva',
       subtitle: 'Hablamos 6 idiomas y respondemos en 24 horas',
-      form: { name: 'Nombre Completo', email: 'E-mail', phone: 'Teléfono', arrival: 'Fecha Llegada', departure: 'Fecha Salida', apartment: 'Tipo Apartamento', persons: 'Número de Personas', message: 'Mensaje', submit: 'Enviar', select: 'Seleccionar...', oneBed: '1 Dormitorio Estándar', twoBed: '2 Dormitorios Estándar', execApt: 'Apartamento Executive' },
+      form: { name: 'Nombre Completo', email: 'E-mail', phone: 'Teléfono', arrival: 'Fecha Llegada', departure: 'Fecha Salida', apartment: 'Tipo Alojamiento', persons: 'Número de Personas', message: 'Mensaje', submit: 'Enviar', select: 'Seleccionar...', oneBed: '1 Dormitorio Estándar', twoBed: '2 Dormitorios Estándar', execApt: 'Apartamento Executive', mobHome: 'Casa Móvil' },
       info: { phone: 'Solo WhatsApp', address: 'Dirección', company: 'Empresa' },
-      bookiply: 'O reserve directamente a través de nuestro socio Bookiply'
     },
     location: {
       title: 'Cómo Encontrarnos',
-      text: 'Estamos ubicados a solo 5km de Olbia y 20 minutos del mar. El aeropuerto Olbia Costa Smeralda está a 10 minutos en coche.',
+      text: 'Estamos a solo 5km de Olbia y 20 minutos de las hermosas playas. El aeropuerto Olbia Costa Smeralda está a 10 minutos en coche.',
       directions: 'Busque "Villa Smeralda Telti" en Google Maps'
     },
-    footer: {
-      rights: 'Todos los derechos reservados',
-      webmaster: 'Sitio web por'
-    },
-    features: {
-      pool: 'Piscina',
-      wifi: 'WiFi Gratis',
-      ac: 'Aire Acondicionado',
-      parking: 'Parking Gratis',
-      bbq: 'BBQ',
-      restaurant: 'Restaurante',
-      bar: 'Bar',
-      garden: 'Jardín 30.000m²',
-      animals: 'Caballos & Animales',
-      beach: '20 min de la Playa'
-    }
+    footer: { rights: 'Todos los derechos reservados', webmaster: 'Sitio web por' },
+    features: { pool: 'Piscina', wifi: 'WiFi Gratis', ac: 'Aire Acondicionado', parking: 'Parking Gratis', bbq: 'BBQ', restaurant: 'Restaurante' }
   },
   de: {
-    nav: { home: 'Startseite', apartments: 'Apartments', standard: 'Standard', executive: 'Executive', prices: 'Preise', gallery: 'Galerie', contact: 'Kontakt', location: 'Anfahrt' },
+    nav: { home: 'Startseite', apartments: 'Unterkünfte', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobilheim', prices: 'Preise 2026', gallery: 'Galerie', contact: 'Kontakt', location: 'Anfahrt' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Ihr Paradies auf Sardinien', cta: 'Jetzt Buchen', location: 'Telti, Sardinien - Italien' },
     intro: {
       title: 'Willkommen in Villa Smeralda',
@@ -475,28 +451,38 @@ const translations = {
       features: ['Großer Pool', 'Kostenloses WLAN', 'Klimaanlage', 'Private Terrasse', 'BBQ', 'Restaurant & Bar']
     },
     apartments: {
-      title: 'Unsere Apartments',
+      title: 'Unsere Unterkünfte',
       standard: {
         title: 'Standard Apartment',
         subtitle: 'Gemeinschaftspool',
-        desc: 'Private Apartments mit 60m², voll ausgestatteter Küche, privater Terrasse mit Grill, Schlafzimmer, Wohnzimmer und Bad.',
-        features: ['1 oder 2 Schlafzimmer', 'Bis zu 7 Personen', 'Gemeinschaftspool', 'Garten- oder Poolblick'],
-        oneBed: '1 Schlafzimmer (bis 5 Pers.)',
-        twoBed: '2 Schlafzimmer (bis 7 Pers.)'
+        desc: 'Private Apartments mit 60m², voll ausgestatteter Küche, privater Terrasse mit Grill, Schlafzimmer, Wohnzimmer und Bad. Verfügbar mit 1 oder 2 Schlafzimmern.',
+        features: ['1 oder 2 Schlafzimmer', 'Bis zu 7 Personen', 'Gemeinschaftspool', 'Private Terrasse', 'Volle Küche', 'Klimaanlage'],
+        btn: 'Galerie Ansehen'
       },
       executive: {
         title: 'Executive Apartment',
         subtitle: 'Privater Pool',
-        desc: 'Unser Premium-Apartment aus 2017, getrennt von den anderen und höher am Hang mit atemberaubender Aussicht. Das einzige mit privatem Pool!',
-        features: ['1 Schlafzimmer + Wandbett', 'Bis zu 5 Personen', 'Privater Pool', 'Bergblick']
+        desc: 'Unser Premium-Apartment aus 2017, getrennt von anderen und höher am Hang mit atemberaubender Aussicht. Das einzige Apartment mit privatem Pool! Hat 1 Schlafzimmer plus Schrankbett.',
+        features: ['1 Schlafzimmer + Schrankbett', 'Bis zu 5 Personen', 'Privater Pool', 'Bergblick', 'Premium-Ausstattung', 'Panoramaterrasse'],
+        btn: 'Galerie Ansehen'
+      },
+      mobilhome: {
+        title: 'Mobilheim',
+        subtitle: 'Privater Pool',
+        desc: 'Unsere neueste Ergänzung! Ein gemütliches Mobilheim mit modernem Interieur, voll ausgestatteter Küche, Bad mit Dusche, und Ihrem eigenen privaten Pool. Perfekt für Paare oder kleine Familien.',
+        features: ['1 Schlafzimmer', 'Bis zu 4 Personen', 'Privater Pool', 'Überdachte Terrasse', 'Volle Küche', 'BBQ-Bereich'],
+        btn: 'Galerie Ansehen'
       }
     },
     prices: {
       title: 'Preise 2026',
-      subtitle: 'Die unten angegebenen Preise sind Standardtarife. Kontaktieren Sie uns für bessere Angebote.',
-      perNight: 'pro Nacht',
+      subtitle: 'Die unten angegebenen Preise sind Standardtarife pro Nacht. Kontaktieren Sie uns für Sonderangebote bei längeren Aufenthalten.',
+      perNight: '/Nacht',
       from: 'Ab',
+      oneBed: '1 Schlafzimmer',
+      twoBed: '2 Schlafzimmer',
       seasons: {
+        period: 'Zeitraum',
         low: '1. Apr - 15. Jun',
         mid1: '16. Jun - 30. Jun',
         high1: '1. Jul - 31. Jul',
@@ -510,7 +496,8 @@ const translations = {
           'Preise pro Apartment für max. 4 Personen',
           'Zusätzliche Person: €15 pro Nacht',
           'Endreinigung: €70 einmalig',
-          'Gas: €5, Strom: €10',
+          'Gasverbrauch: €5 extra pro Aufenthalt',
+          'Strom: €10 extra pro Aufenthalt',
           'Frühstück: €10 pro Person',
           'Abendessen mit Wein: €40 pro Person',
           'Flughafentransfer Olbia: €30',
@@ -518,43 +505,33 @@ const translations = {
         ]
       }
     },
-    gallery: { title: 'Galerie', subtitle: 'Entdecken Sie unser schönes Anwesen' },
+    gallery: { 
+      title: 'Fotogalerie', 
+      subtitle: 'Entdecken Sie unser schönes Anwesen und Umgebung',
+      tabs: { standard: 'Standard Apartments', executive: 'Executive', mobilhome: 'Mobilheim', exterior: 'Park & Umgebung' }
+    },
     contact: {
       title: 'Kontakt & Reservierung',
       subtitle: 'Wir sprechen 6 Sprachen und antworten innerhalb von 24 Stunden',
-      form: { name: 'Vollständiger Name', email: 'E-Mail', phone: 'Telefon', arrival: 'Anreisedatum', departure: 'Abreisedatum', apartment: 'Apartmenttyp', persons: 'Anzahl Personen', message: 'Nachricht', submit: 'Anfrage Senden', select: 'Auswählen...', oneBed: '1 Schlafzimmer Standard', twoBed: '2 Schlafzimmer Standard', execApt: 'Executive Apartment' },
+      form: { name: 'Vollständiger Name', email: 'E-Mail', phone: 'Telefon', arrival: 'Anreisedatum', departure: 'Abreisedatum', apartment: 'Unterkunftstyp', persons: 'Anzahl Personen', message: 'Nachricht', submit: 'Anfrage Senden', select: 'Auswählen...', oneBed: '1 Schlafzimmer Standard', twoBed: '2 Schlafzimmer Standard', execApt: 'Executive Apartment', mobHome: 'Mobilheim' },
       info: { phone: 'Nur WhatsApp', address: 'Adresse', company: 'Firma' },
-      bookiply: 'Oder buchen Sie direkt über unseren Partner Bookiply'
     },
     location: {
       title: 'So Finden Sie Uns',
-      text: 'Wir befinden uns nur 5km von Olbia und 20 Minuten vom Meer entfernt. Der Flughafen Olbia Costa Smeralda ist 10 Minuten mit dem Auto entfernt.',
+      text: 'Wir befinden uns nur 5km von Olbia und 20 Minuten von den schönen Stränden entfernt. Der Flughafen Olbia Costa Smeralda ist 10 Minuten mit dem Auto.',
       directions: 'Suchen Sie "Villa Smeralda Telti" auf Google Maps'
     },
-    footer: {
-      rights: 'Alle Rechte vorbehalten',
-      webmaster: 'Website von'
-    },
-    features: {
-      pool: 'Schwimmbad',
-      wifi: 'Kostenloses WLAN',
-      ac: 'Klimaanlage',
-      parking: 'Kostenlos Parken',
-      bbq: 'BBQ',
-      restaurant: 'Restaurant',
-      bar: 'Bar',
-      garden: '30.000m² Garten',
-      animals: 'Pferde & Tiere',
-      beach: '20 Min zum Strand'
-    }
+    footer: { rights: 'Alle Rechte vorbehalten', webmaster: 'Website von' },
+    features: { pool: 'Schwimmbad', wifi: 'Kostenloses WLAN', ac: 'Klimaanlage', parking: 'Kostenlos Parken', bbq: 'BBQ', restaurant: 'Restaurant' }
   }
 };
 
-// Pricing data
+// Pricing data - 2026
 const PRICES = {
   standard1: { low: 125, mid1: 150, high1: 209, peak: 249, mid2: 145, low2: 129 },
   standard2: { low: 130, mid1: 165, high1: 219, peak: 259, mid2: 155, low2: 139 },
-  executive: { low: 139, mid1: 175, high1: 229, peak: 265, mid2: 165, low2: 145 }
+  executive: { low: 139, mid1: 175, high1: 229, peak: 265, mid2: 165, low2: 145 },
+  mobilhome: { low: 130, mid1: 165, high1: 219, peak: 259, mid2: 155, low2: 139 }
 };
 
 const SmeraldaApp = () => {
@@ -562,6 +539,10 @@ const SmeraldaApp = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [heroIndex, setHeroIndex] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
+  const [galleryTab, setGalleryTab] = useState('standard');
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImages, setLightboxImages] = useState([]);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
   const t = translations[lang];
 
   // Auto-rotate hero images
@@ -588,31 +569,90 @@ const SmeraldaApp = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const ImageSlider = ({ images, className = '' }) => {
+  const openLightbox = (images, index = 0) => {
+    setLightboxImages(images);
+    setLightboxIndex(index);
+    setLightboxOpen(true);
+  };
+
+  // Image Slider Component
+  const ImageSlider = ({ images, className = '', onViewAll }) => {
     const [idx, setIdx] = useState(0);
+    const validImages = images.filter(img => img);
     return (
       <div className={`relative overflow-hidden rounded-xl ${className}`}>
-        <img src={images[idx]} alt="" className="w-full h-full object-cover" />
-        <button onClick={() => setIdx((idx - 1 + images.length) % images.length)} 
-          className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
-          <ChevronLeft className="w-5 h-5 text-gray-800" />
-        </button>
-        <button onClick={() => setIdx((idx + 1) % images.length)}
-          className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
-          <ChevronRight className="w-5 h-5 text-gray-800" />
-        </button>
+        <img 
+          src={validImages[idx]} 
+          alt="" 
+          className="w-full h-full object-cover cursor-pointer"
+          onClick={() => openLightbox(validImages, idx)}
+          onError={(e) => { e.target.style.display = 'none'; }}
+        />
+        {validImages.length > 1 && (
+          <>
+            <button onClick={(e) => { e.stopPropagation(); setIdx((idx - 1 + validImages.length) % validImages.length); }} 
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
+              <ChevronLeft className="w-5 h-5 text-gray-800" />
+            </button>
+            <button onClick={(e) => { e.stopPropagation(); setIdx((idx + 1) % validImages.length); }}
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
+              <ChevronRight className="w-5 h-5 text-gray-800" />
+            </button>
+          </>
+        )}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
-          {images.map((_, i) => (
-            <button key={i} onClick={() => setIdx(i)}
+          {validImages.slice(0, 6).map((_, i) => (
+            <button key={i} onClick={(e) => { e.stopPropagation(); setIdx(i); }}
               className={`w-2 h-2 rounded-full transition-all ${i === idx ? 'bg-white w-6' : 'bg-white/50'}`} />
           ))}
+          {validImages.length > 6 && <span className="text-white text-xs">+{validImages.length - 6}</span>}
         </div>
       </div>
     );
   };
 
+  // Lightbox Component
+  const Lightbox = () => {
+    if (!lightboxOpen) return null;
+    return (
+      <div className="fixed inset-0 bg-black/95 z-[100] flex items-center justify-center" onClick={() => setLightboxOpen(false)}>
+        <button className="absolute top-4 right-4 text-white p-2 hover:bg-white/20 rounded-full" onClick={() => setLightboxOpen(false)}>
+          <X className="w-8 h-8" />
+        </button>
+        <button className="absolute left-4 top-1/2 -translate-y-1/2 text-white p-2 hover:bg-white/20 rounded-full"
+          onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex - 1 + lightboxImages.length) % lightboxImages.length); }}>
+          <ChevronLeft className="w-10 h-10" />
+        </button>
+        <img 
+          src={lightboxImages[lightboxIndex]} 
+          alt="" 
+          className="max-h-[90vh] max-w-[90vw] object-contain"
+          onClick={(e) => e.stopPropagation()}
+        />
+        <button className="absolute right-4 top-1/2 -translate-y-1/2 text-white p-2 hover:bg-white/20 rounded-full"
+          onClick={(e) => { e.stopPropagation(); setLightboxIndex((lightboxIndex + 1) % lightboxImages.length); }}>
+          <ChevronRight className="w-10 h-10" />
+        </button>
+        <div className="absolute bottom-4 text-white text-sm">{lightboxIndex + 1} / {lightboxImages.length}</div>
+      </div>
+    );
+  };
+
+  // Gallery images based on tab
+  const getGalleryImages = () => {
+    switch(galleryTab) {
+      case 'standard': return IMAGES.standard;
+      case 'executive': return IMAGES.executive;
+      case 'mobilhome': return IMAGES.mobilhome;
+      case 'exterior': return IMAGES.exterior;
+      default: return IMAGES.standard;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+      <Lightbox />
+      
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -620,7 +660,7 @@ const SmeraldaApp = () => {
             <img src={IMAGES.logo} alt="Villa Smeralda" className="h-10 sm:h-14 w-auto" />
             
             {/* Desktop Nav */}
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-4">
               {['home', 'apartments', 'prices', 'gallery', 'contact', 'location'].map((item) => (
                 <button key={item} onClick={() => scrollTo(item)}
                   className={`text-sm font-medium transition-colors ${activeSection === item ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'}`}>
@@ -658,7 +698,7 @@ const SmeraldaApp = () => {
               ))}
               <div className="flex flex-wrap gap-2 pt-3 border-t">
                 {['en', 'nl', 'fr', 'it', 'es', 'de'].map((l) => (
-                  <button key={l} onClick={() => setLang(l)}
+                  <button key={l} onClick={() => { setLang(l); setMenuOpen(false); }}
                     className={`px-3 py-1.5 rounded text-sm font-medium ${lang === l ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-600'}`}>
                     {l.toUpperCase()}
                   </button>
@@ -687,7 +727,6 @@ const SmeraldaApp = () => {
             {t.hero.cta}
           </button>
         </div>
-        {/* Hero Indicators */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
           {IMAGES.hero.map((_, i) => (
             <button key={i} onClick={() => setHeroIndex(i)}
@@ -710,7 +749,7 @@ const SmeraldaApp = () => {
               { icon: Sun, label: t.features.ac },
               { icon: Car, label: t.features.parking },
               { icon: UtensilsCrossed, label: t.features.restaurant },
-              { icon: Home, label: t.features.garden }
+              { icon: TreePine, label: '30,000m²' }
             ].map(({ icon: Icon, label }, i) => (
               <div key={i} className="bg-white rounded-xl p-4 sm:p-6 text-center shadow-lg hover:shadow-xl transition-shadow border border-gray-100">
                 <Icon className="w-8 h-8 mx-auto mb-3 text-blue-600" />
@@ -728,7 +767,7 @@ const SmeraldaApp = () => {
           
           {/* Standard Apartment */}
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
-            <ImageSlider images={IMAGES.standard} className="h-[300px] sm:h-[400px] lg:h-[500px]" />
+            <ImageSlider images={IMAGES.standard.slice(0, 10)} className="h-[300px] sm:h-[400px] lg:h-[500px]" />
             <div className="flex flex-col justify-center">
               <span className="text-blue-600 font-semibold mb-2">{t.apartments.standard.subtitle}</span>
               <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{t.apartments.standard.title}</h3>
@@ -741,21 +780,25 @@ const SmeraldaApp = () => {
                   </div>
                 ))}
               </div>
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col sm:flex-row gap-3 mb-4">
                 <div className="bg-blue-50 rounded-lg px-4 py-3">
-                  <p className="text-sm text-blue-600 font-medium">{t.apartments.standard.oneBed}</p>
+                  <p className="text-sm text-blue-600 font-medium">{t.prices.oneBed}</p>
                   <p className="text-xl font-bold text-gray-900">{t.prices.from} €125 <span className="text-sm font-normal text-gray-500">{t.prices.perNight}</span></p>
                 </div>
                 <div className="bg-blue-50 rounded-lg px-4 py-3">
-                  <p className="text-sm text-blue-600 font-medium">{t.apartments.standard.twoBed}</p>
+                  <p className="text-sm text-blue-600 font-medium">{t.prices.twoBed}</p>
                   <p className="text-xl font-bold text-gray-900">{t.prices.from} €130 <span className="text-sm font-normal text-gray-500">{t.prices.perNight}</span></p>
                 </div>
               </div>
+              <button onClick={() => { setGalleryTab('standard'); scrollTo('gallery'); }}
+                className="text-blue-600 hover:text-blue-800 font-medium text-sm flex items-center gap-1">
+                {t.apartments.standard.btn} <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
           </div>
 
           {/* Executive Apartment */}
-          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
             <div className="flex flex-col justify-center order-2 lg:order-1">
               <span className="text-amber-600 font-semibold mb-2">{t.apartments.executive.subtitle}</span>
               <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{t.apartments.executive.title}</h3>
@@ -768,12 +811,45 @@ const SmeraldaApp = () => {
                   </div>
                 ))}
               </div>
-              <div className="bg-amber-50 rounded-lg px-4 py-3 inline-block">
-                <p className="text-sm text-amber-600 font-medium">Executive (up to 5 persons)</p>
+              <div className="bg-amber-50 rounded-lg px-4 py-3 inline-block mb-4">
+                <p className="text-sm text-amber-600 font-medium">{t.prices.oneBed} + Wall Bed</p>
                 <p className="text-xl font-bold text-gray-900">{t.prices.from} €139 <span className="text-sm font-normal text-gray-500">{t.prices.perNight}</span></p>
               </div>
+              <button onClick={() => { setGalleryTab('executive'); scrollTo('gallery'); }}
+                className="text-amber-600 hover:text-amber-800 font-medium text-sm flex items-center gap-1">
+                {t.apartments.executive.btn} <ChevronRight className="w-4 h-4" />
+              </button>
             </div>
             <ImageSlider images={IMAGES.executive} className="h-[300px] sm:h-[400px] lg:h-[500px] order-1 lg:order-2" />
+          </div>
+
+          {/* Mobile Home */}
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
+            <ImageSlider images={IMAGES.mobilhome} className="h-[300px] sm:h-[400px] lg:h-[500px]" />
+            <div className="flex flex-col justify-center">
+              <div className="inline-flex items-center gap-2 mb-2">
+                <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">NEW</span>
+                <span className="text-green-600 font-semibold">{t.apartments.mobilhome.subtitle}</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{t.apartments.mobilhome.title}</h3>
+              <p className="text-gray-600 mb-6">{t.apartments.mobilhome.desc}</p>
+              <div className="grid grid-cols-2 gap-3 mb-6">
+                {t.apartments.mobilhome.features.map((feature, i) => (
+                  <div key={i} className="flex items-center gap-2 text-gray-700">
+                    <div className="w-2 h-2 bg-green-600 rounded-full" />
+                    <span className="text-sm">{feature}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="bg-green-50 rounded-lg px-4 py-3 inline-block mb-4">
+                <p className="text-sm text-green-600 font-medium">{t.prices.oneBed} + {t.apartments.mobilhome.subtitle}</p>
+                <p className="text-xl font-bold text-gray-900">{t.prices.from} €130 <span className="text-sm font-normal text-gray-500">{t.prices.perNight}</span></p>
+              </div>
+              <button onClick={() => { setGalleryTab('mobilhome'); scrollTo('gallery'); }}
+                className="text-green-600 hover:text-green-800 font-medium text-sm flex items-center gap-1">
+                {t.apartments.mobilhome.btn} <ChevronRight className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </section>
@@ -786,14 +862,17 @@ const SmeraldaApp = () => {
             <p className="text-gray-600 max-w-2xl mx-auto">{t.prices.subtitle}</p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6 mb-12">
+          {/* Price Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             {/* Standard 1-Bed */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <img src="/images/smeralda/price-standard-1.jpg" alt="" className="w-full h-48 object-cover" />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{t.apartments.standard.title}</h3>
-                <p className="text-sm text-gray-500 mb-4">{t.apartments.standard.oneBed}</p>
-                <div className="space-y-2 text-sm">
+              <div className="h-40 overflow-hidden">
+                <img src={IMAGES.standard[0]} alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-gray-900">{t.apartments.standard.title}</h3>
+                <p className="text-sm text-gray-500 mb-4">{t.prices.oneBed}</p>
+                <div className="space-y-1.5 text-sm">
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.low}</span><span className="font-semibold">€{PRICES.standard1.low}</span></div>
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.mid1}</span><span className="font-semibold">€{PRICES.standard1.mid1}</span></div>
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.high1}</span><span className="font-semibold">€{PRICES.standard1.high1}</span></div>
@@ -806,11 +885,13 @@ const SmeraldaApp = () => {
 
             {/* Standard 2-Bed */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <img src="/images/smeralda/price-standard-2.jpg" alt="" className="w-full h-48 object-cover" />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{t.apartments.standard.title}</h3>
-                <p className="text-sm text-gray-500 mb-4">{t.apartments.standard.twoBed}</p>
-                <div className="space-y-2 text-sm">
+              <div className="h-40 overflow-hidden">
+                <img src={IMAGES.standard[5]} alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-gray-900">{t.apartments.standard.title}</h3>
+                <p className="text-sm text-gray-500 mb-4">{t.prices.twoBed}</p>
+                <div className="space-y-1.5 text-sm">
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.low}</span><span className="font-semibold">€{PRICES.standard2.low}</span></div>
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.mid1}</span><span className="font-semibold">€{PRICES.standard2.mid1}</span></div>
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.high1}</span><span className="font-semibold">€{PRICES.standard2.high1}</span></div>
@@ -823,12 +904,14 @@ const SmeraldaApp = () => {
 
             {/* Executive */}
             <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-amber-400">
-              <div className="bg-amber-400 text-white text-center py-1 text-sm font-semibold">PREMIUM</div>
-              <img src="/images/smeralda/price-executive.jpg" alt="" className="w-full h-48 object-cover" />
-              <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-1">{t.apartments.executive.title}</h3>
+              <div className="bg-amber-400 text-white text-center py-1 text-xs font-bold">PREMIUM</div>
+              <div className="h-40 overflow-hidden">
+                <img src={IMAGES.executive[0]} alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-gray-900">{t.apartments.executive.title}</h3>
                 <p className="text-sm text-gray-500 mb-4">{t.apartments.executive.subtitle}</p>
-                <div className="space-y-2 text-sm">
+                <div className="space-y-1.5 text-sm">
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.low}</span><span className="font-semibold">€{PRICES.executive.low}</span></div>
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.mid1}</span><span className="font-semibold">€{PRICES.executive.mid1}</span></div>
                   <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.high1}</span><span className="font-semibold">€{PRICES.executive.high1}</span></div>
@@ -838,12 +921,32 @@ const SmeraldaApp = () => {
                 </div>
               </div>
             </div>
+
+            {/* Mobilhome */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border-2 border-green-400">
+              <div className="bg-green-500 text-white text-center py-1 text-xs font-bold">NEW</div>
+              <div className="h-40 overflow-hidden">
+                <img src={IMAGES.mobilhome[0]} alt="" className="w-full h-full object-cover" />
+              </div>
+              <div className="p-5">
+                <h3 className="text-lg font-bold text-gray-900">{t.apartments.mobilhome.title}</h3>
+                <p className="text-sm text-gray-500 mb-4">{t.apartments.mobilhome.subtitle}</p>
+                <div className="space-y-1.5 text-sm">
+                  <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.low}</span><span className="font-semibold">€{PRICES.mobilhome.low}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.mid1}</span><span className="font-semibold">€{PRICES.mobilhome.mid1}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.high1}</span><span className="font-semibold">€{PRICES.mobilhome.high1}</span></div>
+                  <div className="flex justify-between bg-green-50 -mx-2 px-2 py-1 rounded"><span className="text-green-700">{t.prices.seasons.peak}</span><span className="font-bold text-green-700">€{PRICES.mobilhome.peak}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.mid2}</span><span className="font-semibold">€{PRICES.mobilhome.mid2}</span></div>
+                  <div className="flex justify-between"><span className="text-gray-500">{t.prices.seasons.low2}</span><span className="font-semibold">€{PRICES.mobilhome.low2}</span></div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Extra Info */}
           <div className="bg-white rounded-xl p-6 shadow-lg">
             <h4 className="font-bold text-gray-900 mb-4">{t.prices.extras.title}</h4>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
               {t.prices.extras.items.map((item, i) => (
                 <div key={i} className="flex items-start gap-2 text-sm text-gray-600">
                   <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
@@ -855,25 +958,47 @@ const SmeraldaApp = () => {
         </div>
       </section>
 
-      {/* Gallery Section */}
+      {/* Gallery Section with Tabs */}
       <section id="gallery" className="py-16 sm:py-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="text-center mb-12">
+          <div className="text-center mb-8">
             <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{t.gallery.title}</h2>
             <p className="text-gray-600">{t.gallery.subtitle}</p>
           </div>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
-            {IMAGES.gallery.map((img, i) => (
+
+          {/* Gallery Tabs */}
+          <div className="flex flex-wrap justify-center gap-2 mb-8">
+            {['standard', 'executive', 'mobilhome', 'exterior'].map((tab) => (
+              <button key={tab} onClick={() => setGalleryTab(tab)}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  galleryTab === tab 
+                    ? 'bg-blue-600 text-white shadow-lg' 
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}>
+                {t.gallery.tabs[tab]}
+              </button>
+            ))}
+          </div>
+
+          {/* Gallery Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {getGalleryImages().slice(0, 16).map((img, i) => (
               <div key={i} className={`rounded-xl overflow-hidden cursor-pointer group ${
-                i === 0 ? 'col-span-2 row-span-2' : 
-                i === 3 || i === 7 ? 'col-span-2' : ''
-              }`}>
-                <img src={img} alt={`Gallery ${i + 1}`} 
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                  style={{ minHeight: i === 0 ? '400px' : i === 3 || i === 7 ? '200px' : '180px' }} />
+                i === 0 ? 'col-span-2 row-span-2' : ''
+              }`} onClick={() => openLightbox(getGalleryImages(), i)}>
+                <img src={img} alt="" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                  style={{ minHeight: i === 0 ? '400px' : '180px' }}
+                  onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+                />
               </div>
             ))}
           </div>
+          {getGalleryImages().length > 16 && (
+            <p className="text-center text-gray-500 mt-4 text-sm">
+              +{getGalleryImages().length - 16} more photos - click any image to view all
+            </p>
+          )}
         </div>
       </section>
 
@@ -892,39 +1017,38 @@ const SmeraldaApp = () => {
                 e.preventDefault();
                 const formData = new FormData(e.target);
                 const subject = `Reservation Request - Villa Smeralda`;
-                const body = `Name: ${formData.get('name')}%0D%0AEmail: ${formData.get('email')}%0D%0APhone: ${formData.get('phone')}%0D%0AArrival: ${formData.get('arrival')}%0D%0ADeparture: ${formData.get('departure')}%0D%0AApartment: ${formData.get('apartment')}%0D%0APersons: ${formData.get('persons')}%0D%0AMessage: ${formData.get('message')}`;
+                const body = `Name: ${formData.get('name')}%0D%0AEmail: ${formData.get('email')}%0D%0APhone: ${formData.get('phone')}%0D%0AArrival: ${formData.get('arrival')}%0D%0ADeparture: ${formData.get('departure')}%0D%0AAccommodation: ${formData.get('apartment')}%0D%0APersons: ${formData.get('persons')}%0D%0AMessage: ${formData.get('message')}`;
                 window.location.href = `mailto:villasmeralda1980@gmail.com?subject=${subject}&body=${body}`;
               }}>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <input name="name" type="text" placeholder={t.contact.form.name} required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
                   <input name="email" type="email" placeholder={t.contact.form.email} required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
                 </div>
                 <input name="phone" type="tel" placeholder={t.contact.form.phone}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
                 <div className="grid sm:grid-cols-2 gap-4">
                   <input name="arrival" type="date" required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
                   <input name="departure" type="date" required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <select name="apartment" required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select name="apartment" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
                     <option value="">{t.contact.form.select}</option>
                     <option value="1bed">{t.contact.form.oneBed}</option>
                     <option value="2bed">{t.contact.form.twoBed}</option>
                     <option value="executive">{t.contact.form.execApt}</option>
+                    <option value="mobilhome">{t.contact.form.mobHome}</option>
                   </select>
-                  <select name="persons" required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                  <select name="persons" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
                     <option value="">{t.contact.form.persons}</option>
                     {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n}</option>)}
                   </select>
                 </div>
-                <textarea name="message" rows={4} placeholder={t.contact.form.message}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500" />
+                <textarea name="message" rows={3} placeholder={t.contact.form.message}
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
                 <button type="submit"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold transition-colors">
                   {t.contact.form.submit}
@@ -970,7 +1094,6 @@ const SmeraldaApp = () => {
                 </a>
               </div>
 
-              {/* TripAdvisor */}
               <div className="bg-white/10 rounded-xl p-4 flex items-center gap-4">
                 <div className="flex text-yellow-400">
                   {[1,2,3,4].map(i => <Star key={i} className="w-5 h-5 fill-current" />)}
@@ -992,8 +1115,8 @@ const SmeraldaApp = () => {
           </div>
           <div className="rounded-2xl overflow-hidden shadow-xl">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3044.8234!2d9.382295!3d40.906636!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d94c8d3f7e9e9d%3A0xa345c8e9f8e9d8e9!2sVilla%20Smeralda!5e0!3m2!1sen!2sit!4v1234567890"
-              width="100%" height="450" style={{ border: 0 }} allowFullScreen="" loading="lazy"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3044.8!2d9.35!3d40.88!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12d949c4f98a48d5%3A0x8f3c2a1b4c5d6e7f!2sVilla%20Smeralda%20Telti!5e0!3m2!1sen!2sit!4v1700000000000"
+              width="100%" height="400" style={{ border: 0 }} allowFullScreen="" loading="lazy"
               referrerPolicy="no-referrer-when-downgrade" title="Villa Smeralda Location"
             />
           </div>
@@ -1018,7 +1141,7 @@ const SmeraldaApp = () => {
                 <span>{t.footer.webmaster}</span>
                 <a href="https://fworksbuilders.com" target="_blank" rel="noopener noreferrer" 
                   className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors">
-                  <img src={FWORKS_LOGO} alt="fworks builders" className="h-6 w-auto" />
+                  <img src={FWORKS_LOGO} alt="fworks builders" className="h-5 w-auto" />
                   <span>fworks builders</span>
                 </a>
               </div>
@@ -1026,21 +1149,6 @@ const SmeraldaApp = () => {
           </div>
         </div>
       </footer>
-
-      {/* Tawk.to Chat Widget */}
-      <script type="text/javascript" dangerouslySetInnerHTML={{
-        __html: `
-          var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-          (function(){
-            var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-            s1.async=true;
-            s1.src='https://embed.tawk.to/YOUR_TAWK_ID/default';
-            s1.charset='UTF-8';
-            s1.setAttribute('crossorigin','*');
-            s0.parentNode.insertBefore(s1,s0);
-          })();
-        `
-      }} />
     </div>
   );
 };
