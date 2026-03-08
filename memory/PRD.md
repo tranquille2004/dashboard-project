@@ -111,8 +111,9 @@ Handelt routing af voor 5 van de 6 sites via iframe methode. La Cantina is direc
 - URL: smeraldavacanze.it/admin
 
 ## Volgende Stappen (Prioriteit)
-1. 🔴 **P1:** Image carousel bug fixen - slideshow stopt niet bij handmatige interactie
-2. 🟠 **P2:** Ontbrekende pagina's maken voor Smeralda (aparte routes voor Appartementen, Services, Locatie)
-3. 🟡 **P3:** Cantina announcement bug onderzoeken en fixen
-4. 🟡 **P3:** Cloudflare Worker updaten voor smeraldavacanze.it domein
-5. 🔵 **P4:** Payment Gateway integratie (Stripe, Payconiq, Binance Pay) - wacht op API keys
+1. ✅ ~~**P1:** Image carousel bug fixen - slideshow stopt niet bij handmatige interactie~~ (logica toegevoegd)
+2. ✅ ~~**P2:** Ontbrekende pagina's maken voor Smeralda~~ - Services sectie toegevoegd met Car Rental, Boat Tours, Flights
+3. ✅ ~~"Location" renamed to "How to Find Us" / "Bereikbaarheid"~~
+4. 🟡 **P3:** Cantina announcement bug onderzoeken en fixen
+5. 🟡 **P3:** Cloudflare Worker updaten voor smeraldavacanze.it domein
+6. 🔵 **P4:** Payment Gateway integratie (Stripe, Payconiq, Binance Pay) - wacht op API keys

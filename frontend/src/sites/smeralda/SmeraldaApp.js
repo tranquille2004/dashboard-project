@@ -29,7 +29,7 @@ const IMAGES = {
 // Translations - 6 languages
 const translations = {
   en: {
-    nav: { home: 'Home', apartments: 'Accommodations', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobile Home', prices: 'Prices 2026', gallery: 'Gallery', contact: 'Contact', location: 'Location' },
+    nav: { home: 'Home', apartments: 'Accommodations', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobile Home', prices: 'Prices 2026', gallery: 'Gallery', services: 'Services', contact: 'Contact', location: 'How to Find Us' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Your paradise in Sardinia', cta: 'Book Now', location: 'Telti, Sardinia - Italy' },
     intro: {
       title: 'Welcome to Villa Smeralda',
@@ -107,6 +107,28 @@ const translations = {
       form: { name: 'Full Name', email: 'Email', phone: 'Phone', arrival: 'Arrival Date', departure: 'Departure Date', apartment: 'Accommodation Type', persons: 'Number of Persons', message: 'Message', submit: 'Send Request', select: 'Select...', oneBed: '1-Bedroom Standard', twoBed: '2-Bedroom Standard', execApt: 'Executive Apartment', mobHome: 'Mobile Home' },
       info: { phone: 'WhatsApp Only', address: 'Address', company: 'Company' },
     },
+    services: {
+      title: 'Services',
+      subtitle: 'We arrange everything for your perfect holiday',
+      carRental: {
+        title: 'Car Rental',
+        desc: 'The best way to discover our beautiful island is with a rental car. Book via us for the best prices - cheaper than airport or online! Basic insurance included.',
+        price: 'From €65 per day',
+        cta: 'Ask a Quote',
+        cars: ['Smart Forfour (automatic)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
+      },
+      boatRental: {
+        title: 'Boat Tours',
+        desc: 'We are only 20 minutes from the sea. The Costa Smeralda has the most beautiful crystal clear waters. Arrange a half-day or full-day boat tour via us.',
+        cta: 'Ask a Quote'
+      },
+      flights: {
+        title: 'Flight Information',
+        desc: 'Olbia airport is only 10 minutes away. We offer free airport transfer from Olbia. Transfer from Alghero (2 hours) is available for €80.',
+        airlines: 'Popular airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
+        tip: 'Check Google Flights for the best deals!'
+      }
+    },
     location: {
       title: 'How to Find Us',
       text: 'We are located only 5km from Olbia and 20 minutes from the beautiful beaches. Olbia Costa Smeralda airport is just 10 minutes by car.',
@@ -116,7 +138,7 @@ const translations = {
     features: { pool: 'Swimming Pool', wifi: 'Free WiFi', ac: 'Air Conditioning', parking: 'Free Parking', bbq: 'BBQ', restaurant: 'Restaurant' }
   },
   nl: {
-    nav: { home: 'Home', apartments: 'Accommodaties', standard: 'Standaard', executive: 'Executive', mobilhome: 'Stacaravan', prices: 'Prijzen 2026', gallery: 'Galerij', contact: 'Contact', location: 'Locatie' },
+    nav: { home: 'Home', apartments: 'Accommodaties', standard: 'Standaard', executive: 'Executive', mobilhome: 'Stacaravan', prices: 'Prijzen 2026', gallery: 'Galerij', services: 'Diensten', contact: 'Contact', location: 'Bereikbaarheid' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Uw paradijs op Sardinië', cta: 'Boek Nu', location: 'Telti, Sardinië - Italië' },
     intro: {
       title: 'Welkom bij Villa Smeralda',
@@ -194,6 +216,28 @@ const translations = {
       form: { name: 'Volledige Naam', email: 'E-mail', phone: 'Telefoon', arrival: 'Aankomstdatum', departure: 'Vertrekdatum', apartment: 'Type Accommodatie', persons: 'Aantal Personen', message: 'Bericht', submit: 'Verstuur Aanvraag', select: 'Selecteer...', oneBed: '1-Slaapkamer Standaard', twoBed: '2-Slaapkamers Standaard', execApt: 'Executive Appartement', mobHome: 'Stacaravan' },
       info: { phone: 'Alleen WhatsApp', address: 'Adres', company: 'Bedrijf' },
     },
+    services: {
+      title: 'Diensten',
+      subtitle: 'Wij regelen alles voor uw perfecte vakantie',
+      carRental: {
+        title: 'Autoverhuur',
+        desc: 'De beste manier om ons prachtige eiland te ontdekken is met een huurauto. Boek via ons voor de beste prijzen - goedkoper dan op de luchthaven of online! Basisverzekering inbegrepen.',
+        price: 'Vanaf €65 per dag',
+        cta: 'Vraag een Offerte',
+        cars: ['Smart Forfour (automaat)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
+      },
+      boatRental: {
+        title: 'Boottochten',
+        desc: 'We liggen op slechts 20 minuten van de zee. De Costa Smeralda heeft het mooiste kristalheldere water. Regel via ons een halve dag of hele dag boottocht.',
+        cta: 'Vraag een Offerte'
+      },
+      flights: {
+        title: 'Vluchtinformatie',
+        desc: 'De luchthaven van Olbia is slechts 10 minuten rijden. We bieden gratis luchthaventransfer vanaf Olbia. Transfer vanaf Alghero (2 uur) is beschikbaar voor €80.',
+        airlines: 'Populaire airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
+        tip: 'Check Google Flights voor de beste deals!'
+      }
+    },
     location: {
       title: 'Hoe Ons Te Vinden',
       text: 'We liggen op slechts 5km van Olbia en 20 minuten van de prachtige stranden. Olbia Costa Smeralda luchthaven is slechts 10 minuten met de auto.',
@@ -203,7 +247,7 @@ const translations = {
     features: { pool: 'Zwembad', wifi: 'Gratis WiFi', ac: 'Airconditioning', parking: 'Gratis Parkeren', bbq: 'BBQ', restaurant: 'Restaurant' }
   },
   fr: {
-    nav: { home: 'Accueil', apartments: 'Hébergements', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobil-home', prices: 'Tarifs 2026', gallery: 'Galerie', contact: 'Contact', location: 'Localisation' },
+    nav: { home: 'Accueil', apartments: 'Hébergements', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobil-home', prices: 'Tarifs 2026', gallery: 'Galerie', services: 'Services', contact: 'Contact', location: 'Comment Nous Trouver' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Votre paradis en Sardaigne', cta: 'Réserver', location: 'Telti, Sardaigne - Italie' },
     intro: {
       title: 'Bienvenue à Villa Smeralda',
@@ -281,6 +325,28 @@ const translations = {
       form: { name: 'Nom Complet', email: 'E-mail', phone: 'Téléphone', arrival: 'Date d\'arrivée', departure: 'Date de départ', apartment: 'Type d\'hébergement', persons: 'Nombre de personnes', message: 'Message', submit: 'Envoyer', select: 'Sélectionner...', oneBed: '1 Chambre Standard', twoBed: '2 Chambres Standard', execApt: 'Appartement Executive', mobHome: 'Mobil-home' },
       info: { phone: 'WhatsApp Uniquement', address: 'Adresse', company: 'Société' },
     },
+    services: {
+      title: 'Services',
+      subtitle: 'Nous organisons tout pour vos vacances parfaites',
+      carRental: {
+        title: 'Location de Voiture',
+        desc: 'La meilleure façon de découvrir notre belle île est en voiture de location. Réservez via nous pour les meilleurs prix - moins cher qu\'à l\'aéroport ou en ligne! Assurance de base incluse.',
+        price: 'À partir de €65 par jour',
+        cta: 'Demander un Devis',
+        cars: ['Smart Forfour (automatique)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
+      },
+      boatRental: {
+        title: 'Tours en Bateau',
+        desc: 'Nous sommes à seulement 20 minutes de la mer. La Costa Smeralda a les eaux cristallines les plus belles. Organisez une excursion d\'une demi-journée ou journée complète via nous.',
+        cta: 'Demander un Devis'
+      },
+      flights: {
+        title: 'Informations Vol',
+        desc: 'L\'aéroport d\'Olbia est à seulement 10 minutes. Nous offrons un transfert gratuit depuis Olbia. Transfert depuis Alghero (2 heures) disponible pour €80.',
+        airlines: 'Compagnies populaires: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
+        tip: 'Consultez Google Flights pour les meilleures offres!'
+      }
+    },
     location: {
       title: 'Comment Nous Trouver',
       text: 'Nous sommes situés à seulement 5km d\'Olbia et 20 minutes des belles plages. L\'aéroport Olbia Costa Smeralda est à 10 minutes en voiture.',
@@ -290,7 +356,7 @@ const translations = {
     features: { pool: 'Piscine', wifi: 'WiFi Gratuit', ac: 'Climatisation', parking: 'Parking Gratuit', bbq: 'BBQ', restaurant: 'Restaurant' }
   },
   it: {
-    nav: { home: 'Home', apartments: 'Alloggi', standard: 'Standard', executive: 'Executive', mobilhome: 'Casa Mobile', prices: 'Prezzi 2026', gallery: 'Galleria', contact: 'Contatti', location: 'Dove Siamo' },
+    nav: { home: 'Home', apartments: 'Alloggi', standard: 'Standard', executive: 'Executive', mobilhome: 'Casa Mobile', prices: 'Prezzi 2026', gallery: 'Galleria', services: 'Servizi', contact: 'Contatti', location: 'Come Trovarci' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Il tuo paradiso in Sardegna', cta: 'Prenota Ora', location: 'Telti, Sardegna - Italia' },
     intro: {
       title: 'Benvenuti a Villa Smeralda',
@@ -368,6 +434,28 @@ const translations = {
       form: { name: 'Nome Completo', email: 'E-mail', phone: 'Telefono', arrival: 'Data Arrivo', departure: 'Data Partenza', apartment: 'Tipo Alloggio', persons: 'Numero Persone', message: 'Messaggio', submit: 'Invia Richiesta', select: 'Seleziona...', oneBed: '1 Camera Standard', twoBed: '2 Camere Standard', execApt: 'Appartamento Executive', mobHome: 'Casa Mobile' },
       info: { phone: 'Solo WhatsApp', address: 'Indirizzo', company: 'Azienda' },
     },
+    services: {
+      title: 'Servizi',
+      subtitle: 'Organizziamo tutto per la vostra vacanza perfetta',
+      carRental: {
+        title: 'Noleggio Auto',
+        desc: 'Il modo migliore per scoprire la nostra bella isola è con un\'auto a noleggio. Prenotate tramite noi per i migliori prezzi - più economico che in aeroporto o online! Assicurazione base inclusa.',
+        price: 'Da €65 al giorno',
+        cta: 'Richiedi Preventivo',
+        cars: ['Smart Forfour (automatico)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
+      },
+      boatRental: {
+        title: 'Tour in Barca',
+        desc: 'Siamo a soli 20 minuti dal mare. La Costa Smeralda ha le acque cristalline più belle. Organizzate un\'escursione di mezza giornata o giornata intera tramite noi.',
+        cta: 'Richiedi Preventivo'
+      },
+      flights: {
+        title: 'Informazioni Volo',
+        desc: 'L\'aeroporto di Olbia è a soli 10 minuti. Offriamo transfer gratuito da Olbia. Transfer da Alghero (2 ore) disponibile a €80.',
+        airlines: 'Compagnie popolari: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
+        tip: 'Controllate Google Flights per le migliori offerte!'
+      }
+    },
     location: {
       title: 'Come Trovarci',
       text: 'Siamo situati a soli 5km da Olbia e 20 minuti dalle belle spiagge. L\'aeroporto Olbia Costa Smeralda è a 10 minuti in auto.',
@@ -377,7 +465,7 @@ const translations = {
     features: { pool: 'Piscina', wifi: 'WiFi Gratuito', ac: 'Aria Condizionata', parking: 'Parcheggio Gratuito', bbq: 'BBQ', restaurant: 'Ristorante' }
   },
   es: {
-    nav: { home: 'Inicio', apartments: 'Alojamientos', standard: 'Estándar', executive: 'Executive', mobilhome: 'Casa Móvil', prices: 'Precios 2026', gallery: 'Galería', contact: 'Contacto', location: 'Ubicación' },
+    nav: { home: 'Inicio', apartments: 'Alojamientos', standard: 'Estándar', executive: 'Executive', mobilhome: 'Casa Móvil', prices: 'Precios 2026', gallery: 'Galería', services: 'Servicios', contact: 'Contacto', location: 'Cómo Llegar' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Tu paraíso en Cerdeña', cta: 'Reservar', location: 'Telti, Cerdeña - Italia' },
     intro: {
       title: 'Bienvenidos a Villa Smeralda',
@@ -455,6 +543,28 @@ const translations = {
       form: { name: 'Nombre Completo', email: 'E-mail', phone: 'Teléfono', arrival: 'Fecha Llegada', departure: 'Fecha Salida', apartment: 'Tipo Alojamiento', persons: 'Número de Personas', message: 'Mensaje', submit: 'Enviar', select: 'Seleccionar...', oneBed: '1 Dormitorio Estándar', twoBed: '2 Dormitorios Estándar', execApt: 'Apartamento Executive', mobHome: 'Casa Móvil' },
       info: { phone: 'Solo WhatsApp', address: 'Dirección', company: 'Empresa' },
     },
+    services: {
+      title: 'Servicios',
+      subtitle: 'Organizamos todo para sus vacaciones perfectas',
+      carRental: {
+        title: 'Alquiler de Coches',
+        desc: 'La mejor manera de descubrir nuestra hermosa isla es con un coche de alquiler. ¡Reserve a través de nosotros para los mejores precios - más barato que en el aeropuerto o en línea! Seguro básico incluido.',
+        price: 'Desde €65 por día',
+        cta: 'Solicitar Presupuesto',
+        cars: ['Smart Forfour (automático)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
+      },
+      boatRental: {
+        title: 'Tours en Barco',
+        desc: 'Estamos a solo 20 minutos del mar. La Costa Smeralda tiene las aguas cristalinas más hermosas. Organice una excursión de medio día o día completo a través de nosotros.',
+        cta: 'Solicitar Presupuesto'
+      },
+      flights: {
+        title: 'Información de Vuelos',
+        desc: 'El aeropuerto de Olbia está a solo 10 minutos. Ofrecemos transfer gratuito desde Olbia. Transfer desde Alghero (2 horas) disponible por €80.',
+        airlines: 'Aerolíneas populares: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
+        tip: '¡Consulte Google Flights para las mejores ofertas!'
+      }
+    },
     location: {
       title: 'Cómo Encontrarnos',
       text: 'Estamos a solo 5km de Olbia y 20 minutos de las hermosas playas. El aeropuerto Olbia Costa Smeralda está a 10 minutos en coche.',
@@ -464,7 +574,7 @@ const translations = {
     features: { pool: 'Piscina', wifi: 'WiFi Gratis', ac: 'Aire Acondicionado', parking: 'Parking Gratis', bbq: 'BBQ', restaurant: 'Restaurante' }
   },
   de: {
-    nav: { home: 'Startseite', apartments: 'Unterkünfte', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobilheim', prices: 'Preise 2026', gallery: 'Galerie', contact: 'Kontakt', location: 'Anfahrt' },
+    nav: { home: 'Startseite', apartments: 'Unterkünfte', standard: 'Standard', executive: 'Executive', mobilhome: 'Mobilheim', prices: 'Preise 2026', gallery: 'Galerie', services: 'Services', contact: 'Kontakt', location: 'Anfahrt' },
     hero: { title: 'Résidence Villa Smeralda', subtitle: 'Ihr Paradies auf Sardinien', cta: 'Jetzt Buchen', location: 'Telti, Sardinien - Italien' },
     intro: {
       title: 'Willkommen in Villa Smeralda',
@@ -541,6 +651,28 @@ const translations = {
       subtitle: 'Wir sprechen 6 Sprachen und antworten innerhalb von 24 Stunden',
       form: { name: 'Vollständiger Name', email: 'E-Mail', phone: 'Telefon', arrival: 'Anreisedatum', departure: 'Abreisedatum', apartment: 'Unterkunftstyp', persons: 'Anzahl Personen', message: 'Nachricht', submit: 'Anfrage Senden', select: 'Auswählen...', oneBed: '1 Schlafzimmer Standard', twoBed: '2 Schlafzimmer Standard', execApt: 'Executive Apartment', mobHome: 'Mobilheim' },
       info: { phone: 'Nur WhatsApp', address: 'Adresse', company: 'Firma' },
+    },
+    services: {
+      title: 'Services',
+      subtitle: 'Wir organisieren alles für Ihren perfekten Urlaub',
+      carRental: {
+        title: 'Mietwagen',
+        desc: 'Der beste Weg, unsere schöne Insel zu entdecken, ist mit einem Mietwagen. Buchen Sie über uns für die besten Preise - günstiger als am Flughafen oder online! Basisversicherung inklusive.',
+        price: 'Ab €65 pro Tag',
+        cta: 'Angebot Anfragen',
+        cars: ['Smart Forfour (Automatik)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
+      },
+      boatRental: {
+        title: 'Bootstouren',
+        desc: 'Wir sind nur 20 Minuten vom Meer entfernt. Die Costa Smeralda hat das schönste kristallklare Wasser. Organisieren Sie einen Halbtages- oder Ganztagesausflug über uns.',
+        cta: 'Angebot Anfragen'
+      },
+      flights: {
+        title: 'Fluginformationen',
+        desc: 'Der Flughafen Olbia ist nur 10 Minuten entfernt. Wir bieten kostenlosen Transfer ab Olbia. Transfer ab Alghero (2 Stunden) ist für €80 verfügbar.',
+        airlines: 'Beliebte Airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
+        tip: 'Prüfen Sie Google Flights für die besten Angebote!'
+      }
     },
     location: {
       title: 'So Finden Sie Uns',
@@ -694,7 +826,7 @@ const SmeraldaApp = () => {
             
             {/* Desktop Nav */}
             <div className="hidden lg:flex items-center gap-4">
-              {['home', 'apartments', 'prices', 'gallery', 'contact', 'location'].map((item) => (
+              {['home', 'apartments', 'prices', 'gallery', 'services', 'contact', 'location'].map((item) => (
                 <button key={item} onClick={() => scrollTo(item)}
                   className={`text-sm font-medium transition-colors ${activeSection === item ? 'text-blue-600' : 'text-gray-600 hover:text-blue-600'}`}>
                   {t.nav[item]}
@@ -723,7 +855,7 @@ const SmeraldaApp = () => {
         {menuOpen && (
           <div className="lg:hidden bg-white border-t">
             <div className="px-4 py-4 space-y-3">
-              {['home', 'apartments', 'prices', 'gallery', 'contact', 'location'].map((item) => (
+              {['home', 'apartments', 'prices', 'gallery', 'services', 'contact', 'location'].map((item) => (
                 <button key={item} onClick={() => scrollTo(item)}
                   className="block w-full text-left py-2 text-gray-600 hover:text-blue-600 font-medium">
                   {t.nav[item]}
@@ -1048,6 +1180,100 @@ const SmeraldaApp = () => {
               +{getGalleryImages().length - 16} more photos - click any image to view all
             </p>
           )}
+        </div>
+      </section>
+
+      {/* Services Section - Car Rental, Boat Tours, Flights */}
+      <section id="services" className="py-16 sm:py-24 bg-gradient-to-b from-blue-50 to-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-4">{t.services.title}</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto">{t.services.subtitle}</p>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* Car Rental */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1725103895205-4b958d980520?w=800&q=80" 
+                  alt="Car rental in Sardinia" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Car className="w-6 h-6 text-blue-600" />
+                  <h3 className="text-xl font-bold text-gray-900">{t.services.carRental.title}</h3>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">{t.services.carRental.desc}</p>
+                <div className="bg-blue-50 rounded-lg px-4 py-2 mb-4">
+                  <p className="text-blue-600 font-bold">{t.services.carRental.price}</p>
+                </div>
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {t.services.carRental.cars.slice(0, 3).map((car, i) => (
+                    <span key={i} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">{car}</span>
+                  ))}
+                </div>
+                <button onClick={() => scrollTo('contact')}
+                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg font-medium transition-colors">
+                  {t.services.carRental.cta}
+                </button>
+              </div>
+            </div>
+
+            {/* Boat Tours */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1634405277712-617c29ea436e?w=800&q=80" 
+                  alt="Boat tours Costa Smeralda" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Waves className="w-6 h-6 text-cyan-600" />
+                  <h3 className="text-xl font-bold text-gray-900">{t.services.boatRental.title}</h3>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">{t.services.boatRental.desc}</p>
+                <div className="grid grid-cols-2 gap-2 mb-4">
+                  <img src="https://images.unsplash.com/photo-1570299630586-ee0d58600179?w=400&q=80" alt="" className="rounded-lg h-20 w-full object-cover" />
+                  <img src="https://images.unsplash.com/photo-1688142819011-200dbbd01049?w=400&q=80" alt="" className="rounded-lg h-20 w-full object-cover" />
+                </div>
+                <button onClick={() => scrollTo('contact')}
+                  className="w-full bg-cyan-600 hover:bg-cyan-700 text-white py-2 rounded-lg font-medium transition-colors">
+                  {t.services.boatRental.cta}
+                </button>
+              </div>
+            </div>
+
+            {/* Flights */}
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
+              <div className="h-48 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1502646136642-4c344ccd35c4?w=800&q=80" 
+                  alt="Flight to Sardinia" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <Mountain className="w-6 h-6 text-amber-600" />
+                  <h3 className="text-xl font-bold text-gray-900">{t.services.flights.title}</h3>
+                </div>
+                <p className="text-gray-600 text-sm mb-4">{t.services.flights.desc}</p>
+                <p className="text-xs text-gray-500 mb-2">{t.services.flights.airlines}</p>
+                <div className="bg-amber-50 rounded-lg px-4 py-2 mb-4">
+                  <p className="text-amber-700 font-medium text-sm">{t.services.flights.tip}</p>
+                </div>
+                <a href="https://www.google.com/travel/flights" target="_blank" rel="noopener noreferrer"
+                  className="block w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded-lg font-medium transition-colors text-center">
+                  Google Flights →
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
