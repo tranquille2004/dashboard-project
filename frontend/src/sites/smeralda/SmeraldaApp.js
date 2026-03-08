@@ -11,12 +11,7 @@ const generateImages = (prefix, count) =>
 // Images organized by type
 const IMAGES = {
   logo: '/images/smeralda/logo-full.png',
-  hero: [
-    '/images/smeralda/hero-pool-main.jpg',
-    '/images/smeralda/hero-1.png',
-    '/images/smeralda/hero-2.png',
-    '/images/smeralda/hero-3.png',
-  ],
+  heroMain: '/images/smeralda/hero-pool-main.jpg', // Single hero image - pool with palm trees
   standard: generateImages('std', 40), // Use first 40 of 71
   executive: generateImages('exec', 15),
   mobilhome: [
@@ -567,21 +562,12 @@ const PRICES = {
 const SmeraldaApp = () => {
   const [lang, setLang] = useState('en');
   const [menuOpen, setMenuOpen] = useState(false);
-  const [heroIndex, setHeroIndex] = useState(0);
   const [activeSection, setActiveSection] = useState('home');
   const [galleryTab, setGalleryTab] = useState('standard');
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [lightboxImages, setLightboxImages] = useState([]);
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const t = translations[lang];
-
-  // Auto-rotate hero images
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setHeroIndex((prev) => (prev + 1) % IMAGES.hero.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, []);
 
   // Track visitor
   useEffect(() => {
@@ -755,13 +741,11 @@ const SmeraldaApp = () => {
         )}
       </nav>
 
-      {/* Hero Section */}
+      {/* Hero Section - Static single image */}
       <section id="home" className="relative h-screen min-h-[600px]">
         <div className="absolute inset-0">
-          {IMAGES.hero.map((img, i) => (
-            <img key={i} src={img} alt="" 
-              className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${i === heroIndex ? 'opacity-100' : 'opacity-0'}`} />
-          ))}
+          <img src={IMAGES.heroMain} alt="Villa Smeralda Pool" 
+            className="absolute inset-0 w-full h-full object-cover" />
           <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
         </div>
         <div className="relative h-full flex flex-col items-center justify-center text-center text-white px-4">
@@ -772,12 +756,6 @@ const SmeraldaApp = () => {
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all hover:scale-105 shadow-xl">
             {t.hero.cta}
           </button>
-        </div>
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
-          {IMAGES.hero.map((_, i) => (
-            <button key={i} onClick={() => setHeroIndex(i)}
-              className={`w-3 h-3 rounded-full transition-all ${i === heroIndex ? 'bg-white w-8' : 'bg-white/50 hover:bg-white/70'}`} />
-          ))}
         </div>
       </section>
 
