@@ -11,6 +11,7 @@ import SiteRenderer from '@/components/sites/SiteRenderer';
 import SiteAdminLogin from '@/components/site-admin/SiteAdminLogin';
 import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
 import FWorksApp from '@/sites/fworks/FWorksApp';
+import SmeraldaApp from '@/sites/smeralda/SmeraldaApp';
 import './App.css';
 
 // Domain to site mapping - BELANGRIJKSTE CODE
@@ -28,7 +29,9 @@ const DOMAIN_MAPPING = {
   'theobeans-export.com': 'theobeans',
   'www.theobeans-export.com': 'theobeans',
   'fworksbuilders.com': 'fworks',
-  'www.fworksbuilders.com': 'fworks'
+  'www.fworksbuilders.com': 'fworks',
+  'smeraldavacanze.it': 'smeralda',
+  'www.smeraldavacanze.it': 'smeralda'
 };
 
 // Detecteer custom domain DIRECT bij laden
@@ -47,6 +50,10 @@ function AdminRouter() {
     // Special handling for /site/fworks
     if (location.pathname.startsWith('/site/fworks')) {
       return <FWorksApp />;
+    }
+    // Special handling for /site/smeralda
+    if (location.pathname.startsWith('/site/smeralda')) {
+      return <SmeraldaApp />;
     }
     return (
       <Routes>
@@ -92,6 +99,31 @@ function CustomDomainRouter({ slug }) {
     }
     // Alle andere paden -> toon FWorks promotie website
     return <FWorksApp />;
+  }
+  
+  // Smeralda Vacanze - Vakantie website
+  if (slug === 'smeralda') {
+    // /admin gaat naar klant admin login
+    if (location.pathname === '/admin' || location.pathname === '/admin/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/admin" element={<SiteAdminLogin preSelectedSite={slug} />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    if (location.pathname === '/mijn-site' || location.pathname === '/mijn-site/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/mijn-site" element={<SiteAdminDashboard />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    // Alle andere paden -> toon Smeralda website
+    return <SmeraldaApp />;
   }
   
   const isAdmin = location.pathname === '/admin' || location.pathname === '/admin/';

@@ -80,18 +80,28 @@ Handelt routing af voor 5 van de 6 sites via iframe methode. La Cantina is direc
 - Voor andere sites: admin wijzigingen werken direct (zelfde preview environment)
 
 ## Laatste Updates (Maart 2026)
-- Cloudflare Worker bijgewerkt naar correcte preview URL
+- Cloudflare Worker bijgewerkt naar correcte preview URL: `fworks-promo.preview.emergentagent.com`
 - Navigatie links gerepareerd voor custom domains
 - /admin routing gefixd voor La Cantina (nu naar eigenaren dashboard)
 - fworksbuilders.com landingspagina toegevoegd
-- **NIEUW:** Seed endpoint toegevoegd om productie database te vullen
+- **NIEUW:** Auto-seed functie toegevoegd - database wordt automatisch gevuld bij app startup
+- **NIEUW:** Smeralda Vacanze website toegevoegd (8e site)
 
-## Productie Database Seeding
-**BELANGRIJK:** Na elke nieuwe deployment naar productie, moet je deze URL bezoeken om alle 7 sites in de productie database te laden:
-```
-https://fworksbuilders.com/api/seed-sites?secret=fworks-seed-2024
-```
-Dit lost het probleem op dat `mongo` commando's in preview niet doorwerken naar productie.
+## Sites Beheerd (8 totaal)
+1. La Cantina Italiana - lacantinaitaliana.net
+2. La Bottega Herent - labottegaherent.com
+3. L'Ascoli Zaventem - ascolizaventem.com
+4. Ristorante Mercato - ristorantemercato.be
+5. Tracemaster Rastreadores - tracemaster-rastreadores.com
+6. Theo Beans Export - theobeans-export.com
+7. F.Works Builders - fworksbuilders.com
+8. **Résidence Villa Smeralda** - smeraldavacanze.it (NIEUW)
+
+## Smeralda Admin Login
+- Email: villasmeralda1980@gmail.com
+- Password: smeralda2024
+- URL: smeraldavacanze.it/admin
 
 ## Volgende Stap
 - Cantina announcement bug onderzoeken en fixen
+- Cloudflare Worker updaten voor smeraldavacanze.it domein

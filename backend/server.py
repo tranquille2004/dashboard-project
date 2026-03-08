@@ -1152,6 +1152,106 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# ============== AUTO-SEED ON STARTUP ==============
+@app.on_event("startup")
+async def seed_sites_on_startup():
+    """Automatically seed all 7 sites when the app starts"""
+    all_sites = [
+        {
+            "site_id": "site_cantina",
+            "name": "La Cantina Italiana",
+            "slug": "cantina",
+            "domains": ["lacantinaitaliana.net", "www.lacantinaitaliana.net"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_bottega",
+            "name": "La Bottega Herent",
+            "slug": "bottega",
+            "domains": ["labottegaherent.com", "www.labottegaherent.com"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_ascoli",
+            "name": "L'Ascoli Zaventem",
+            "slug": "ascoli",
+            "domains": ["ascolizaventem.com", "www.ascolizaventem.com"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_mercato",
+            "name": "Ristorante Mercato",
+            "slug": "mercato",
+            "domains": ["ristorantemercato.be", "www.ristorantemercato.be"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_tracemaster",
+            "name": "Tracemaster Rastreadores",
+            "slug": "tracemaster",
+            "domains": ["tracemaster-rastreadores.com", "www.tracemaster-rastreadores.com"],
+            "site_type": "business",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_theobeans",
+            "name": "Theo Beans Export",
+            "slug": "theobeans",
+            "domains": ["theobeans-export.com", "www.theobeans-export.com"],
+            "site_type": "business",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_fworks",
+            "name": "F.Works Builders",
+            "slug": "fworks",
+            "domains": ["fworksbuilders.com", "www.fworksbuilders.com"],
+            "site_type": "business",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_smeralda",
+            "name": "Résidence Villa Smeralda",
+            "slug": "smeralda",
+            "domains": ["smeraldavacanze.it", "www.smeraldavacanze.it"],
+            "site_type": "vacation",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+    ]
+    
+    added = 0
+    for site in all_sites:
+        existing = await db.sites.find_one({"slug": site["slug"]})
+        if not existing:
+            await db.sites.insert_one(site)
+            added += 1
+            logger.info(f"Auto-seeded site: {site['name']}")
+    
+    if added > 0:
+        logger.info(f"Auto-seed complete: {added} sites added")
+    else:
+        logger.info("Auto-seed: All sites already present")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
