@@ -791,10 +791,10 @@ const SmeraldaApp = () => {
           
           {/* Standard Apartment */}
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
-            <ImageSlider images={IMAGES.standard.slice(0, 10)} className="h-[300px] sm:h-[400px] lg:h-[500px]" />
+            <ImageSlider images={IMAGES.standard.slice(0, 10)} className="h-[300px] sm:h-[400px] lg:h-[500px]" autoRotate={true} />
             <div className="flex flex-col justify-center">
-              <span className="text-blue-600 font-semibold mb-2">{t.apartments.standard.subtitle}</span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{t.apartments.standard.title}</h3>
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{t.apartments.standard.title}</h3>
+              <span className="text-blue-600 font-semibold mb-4">{t.apartments.standard.subtitle}</span>
               <p className="text-gray-600 mb-6">{t.apartments.standard.desc}</p>
               <div className="grid grid-cols-2 gap-3 mb-6">
                 {t.apartments.standard.features.map((feature, i) => (
@@ -824,8 +824,8 @@ const SmeraldaApp = () => {
           {/* Executive Apartment */}
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 mb-16">
             <div className="flex flex-col justify-center order-2 lg:order-1">
-              <span className="text-amber-600 font-semibold mb-2">{t.apartments.executive.subtitle}</span>
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{t.apartments.executive.title}</h3>
+              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-1">{t.apartments.executive.title}</h3>
+              <span className="text-amber-600 font-semibold mb-4">{t.apartments.executive.subtitle}</span>
               <p className="text-gray-600 mb-6">{t.apartments.executive.desc}</p>
               <div className="grid grid-cols-2 gap-3 mb-6">
                 {t.apartments.executive.features.map((feature, i) => (
@@ -844,18 +844,18 @@ const SmeraldaApp = () => {
                 {t.apartments.executive.btn} <ChevronRight className="w-4 h-4" />
               </button>
             </div>
-            <ImageSlider images={IMAGES.executive} className="h-[300px] sm:h-[400px] lg:h-[500px] order-1 lg:order-2" />
+            <ImageSlider images={IMAGES.executive} className="h-[300px] sm:h-[400px] lg:h-[500px] order-1 lg:order-2" autoRotate={true} />
           </div>
 
           {/* Mobile Home */}
           <div className="grid lg:grid-cols-2 gap-8 lg:gap-12">
-            <ImageSlider images={IMAGES.mobilhome} className="h-[300px] sm:h-[400px] lg:h-[500px]" />
+            <ImageSlider images={IMAGES.mobilhome} className="h-[300px] sm:h-[400px] lg:h-[500px]" autoRotate={true} />
             <div className="flex flex-col justify-center">
-              <div className="inline-flex items-center gap-2 mb-2">
+              <div className="inline-flex items-center gap-2 mb-1">
+                <h3 className="text-2xl sm:text-3xl font-bold text-gray-900">{t.apartments.mobilhome.title}</h3>
                 <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded">NEW</span>
-                <span className="text-green-600 font-semibold">{t.apartments.mobilhome.subtitle}</span>
               </div>
-              <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-4">{t.apartments.mobilhome.title}</h3>
+              <span className="text-green-600 font-semibold mb-4">{t.apartments.mobilhome.subtitle}</span>
               <p className="text-gray-600 mb-6">{t.apartments.mobilhome.desc}</p>
               <div className="grid grid-cols-2 gap-3 mb-6">
                 {t.apartments.mobilhome.features.map((feature, i) => (
