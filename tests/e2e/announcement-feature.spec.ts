@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE_URL = 'https://fworks-promo.preview.emergentagent.com';
+const BASE_URL = 'https://resort-showcase-2.preview.emergentagent.com';
 
 test.describe('Announcement Banner - Restaurant Sites', () => {
   

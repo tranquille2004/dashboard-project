@@ -6,14 +6,19 @@ from motor.motor_asyncio import AsyncIOMotorClient
 import os
 import logging
 import httpx
+import asyncio
+import resend
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict
+from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional, Dict, Any
 import uuid
 from datetime import datetime, timezone, timedelta
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
+
+# Resend configuration
+resend.api_key = os.environ.get('RESEND_API_KEY', '')
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -131,6 +136,19 @@ class GalleryImage(BaseModel):
     sort_order: int = 0
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+# Contact Form Email Models
+class ContactFormRequest(BaseModel):
+    site: str  # Which site the form is from (smeralda, fworks, etc.)
+    name: str
+    email: str
+    phone: Optional[str] = None
+    message: str
+    # Optional fields for reservation forms
+    arrival: Optional[str] = None
+    departure: Optional[str] = None
+    apartment: Optional[str] = None
+    persons: Optional[int] = None
+
 class SiteAdmin(BaseModel):
     """Site-level admin (restaurant owner)"""
     model_config = ConfigDict(extra="ignore")
@@ -199,6 +217,128 @@ async def get_current_user(request: Request) -> User:
     return User(**user_doc)
 
 # ============== AUTH ROUTES ==============
+
+# ============== CONTACT FORM EMAIL ==============
+
+SITE_EMAIL_CONFIG = {
+    'smeralda': {
+        'to': 'villasmeralda1980@gmail.com',
+        'subject_prefix': 'Villa Smeralda Reservation',
+        'from_name': 'Villa Smeralda Website'
+    },
+    'fworks': {
+        'to': 'fworks@mail.be',
+        'subject_prefix': 'FWorks Builders Contact',
+        'from_name': 'FWorks Builders Website'
+    }
+}
+
+@public_router.post("/contact")
+async def send_contact_form(form: ContactFormRequest):
+    """Send contact form email via Resend"""
+    config = SITE_EMAIL_CONFIG.get(form.site, SITE_EMAIL_CONFIG['fworks'])
+    
+    # Build email HTML
+    html_content = f"""
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        <h2 style="color: #333; border-bottom: 2px solid #0066cc; padding-bottom: 10px;">
+            {config['subject_prefix']}
+        </h2>
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold; width: 150px;">Name:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.name}</td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Email:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;"><a href="mailto:{form.email}">{form.email}</a></td>
+            </tr>
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Phone:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.phone or 'Not provided'}</td>
+            </tr>
+    """
+    
+    # Add reservation fields if present
+    if form.arrival:
+        html_content += f"""
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Arrival:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.arrival}</td>
+            </tr>
+        """
+    if form.departure:
+        html_content += f"""
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Departure:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.departure}</td>
+            </tr>
+        """
+    if form.apartment:
+        html_content += f"""
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Accommodation:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.apartment}</td>
+            </tr>
+        """
+    if form.persons:
+        html_content += f"""
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Persons:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.persons}</td>
+            </tr>
+        """
+    
+    html_content += f"""
+            <tr>
+                <td style="padding: 10px; font-weight: bold; vertical-align: top;">Message:</td>
+                <td style="padding: 10px;">{form.message.replace(chr(10), '<br>')}</td>
+            </tr>
+        </table>
+        <p style="color: #666; font-size: 12px; margin-top: 20px;">
+            This message was sent from the {form.site} website contact form.
+        </p>
+    </div>
+    """
+    
+    # Save to database as backup
+    await db.contact_submissions.insert_one({
+        "site": form.site,
+        "name": form.name,
+        "email": form.email,
+        "phone": form.phone,
+        "message": form.message,
+        "arrival": form.arrival,
+        "departure": form.departure,
+        "apartment": form.apartment,
+        "persons": form.persons,
+        "submitted_at": datetime.now(timezone.utc).isoformat()
+    })
+    
+    # Send email via Resend
+    try:
+        params = {
+            "from": f"{config['from_name']} <onboarding@resend.dev>",
+            "to": [config['to']],
+            "subject": f"{config['subject_prefix']} - {form.name}",
+            "html": html_content,
+            "reply_to": form.email
+        }
+        
+        email_result = await asyncio.to_thread(resend.Emails.send, params)
+        logger.info(f"Email sent successfully: {email_result}")
+        
+        return {
+            "success": True,
+            "message": "Your message has been sent successfully!"
+        }
+    except Exception as e:
+        logger.error(f"Failed to send email: {str(e)}")
+        # Still return success since we saved to DB
+        return {
+            "success": True,
+            "message": "Your message has been received. We will contact you soon."
+        }
 
 @auth_router.post("/session")
 async def exchange_session(request: Request, response: Response):

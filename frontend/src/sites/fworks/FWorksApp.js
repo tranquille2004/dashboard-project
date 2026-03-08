@@ -1041,31 +1041,26 @@ const ContactSection = ({ t }) => {
     setError(false);
     
     try {
-      // Send email via backend
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/contact`, {
+      // Send email via backend - correct endpoint is /api/public/contact
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/public/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          site: 'fworks',
           name: formData.name,
           email: formData.email,
           phone: formData.phone,
-          business: formData.business,
-          message: formData.message,
-          to: 'fworks@mail.be'
+          message: `Type bedrijf: ${formData.business}\n\n${formData.message}`
         })
       });
       
       if (response.ok) {
         setSent(true);
       } else {
-        // Fallback: open email client
-        window.location.href = `mailto:fworks@mail.be?subject=Contact van ${formData.name}&body=${encodeURIComponent(`Naam: ${formData.name}\nEmail: ${formData.email}\nTelefoon: ${formData.phone}\nBedrijf: ${formData.business}\n\nBericht:\n${formData.message}`)}`;
-        setSent(true);
+        setError(true);
       }
     } catch (err) {
-      // Fallback: open email client
-      window.location.href = `mailto:fworks@mail.be?subject=Contact van ${formData.name}&body=${encodeURIComponent(`Naam: ${formData.name}\nEmail: ${formData.email}\nTelefoon: ${formData.phone}\nBedrijf: ${formData.business}\n\nBericht:\n${formData.message}`)}`;
-      setSent(true);
+      setError(true);
     }
     
     setSending(false);

@@ -86,6 +86,14 @@ Handelt routing af voor 5 van de 6 sites via iframe methode. La Cantina is direc
 - fworksbuilders.com landingspagina toegevoegd
 - **NIEUW:** Auto-seed functie toegevoegd - database wordt automatisch gevuld bij app startup
 - **NIEUW:** Smeralda Vacanze website toegevoegd (8e site)
+- **8 maart 2026:** Resend email integratie voltooid voor FWorks en Smeralda contactformulieren
+- **8 maart 2026:** Tawk.to live chat toegevoegd aan Smeralda website
+
+## Email Configuratie (Resend API)
+- **FWorks contactformulier:** Emails naar fworks@mail.be
+- **Smeralda reserveringsformulier:** Emails naar villasmeralda1980@gmail.com
+- **Backend endpoint:** POST /api/public/contact
+- **API Key:** Geconfigureerd in backend/.env (RESEND_API_KEY)
 
 ## Sites Beheerd (8 totaal)
 1. La Cantina Italiana - lacantinaitaliana.net
@@ -102,6 +110,9 @@ Handelt routing af voor 5 van de 6 sites via iframe methode. La Cantina is direc
 - Password: smeralda2024
 - URL: smeraldavacanze.it/admin
 
-## Volgende Stap
-- Cantina announcement bug onderzoeken en fixen
-- Cloudflare Worker updaten voor smeraldavacanze.it domein
+## Volgende Stappen (Prioriteit)
+1. 🔴 **P1:** Image carousel bug fixen - slideshow stopt niet bij handmatige interactie
+2. 🟠 **P2:** Ontbrekende pagina's maken voor Smeralda (aparte routes voor Appartementen, Services, Locatie)
+3. 🟡 **P3:** Cantina announcement bug onderzoeken en fixen
+4. 🟡 **P3:** Cloudflare Worker updaten voor smeraldavacanze.it domein
+5. 🔵 **P4:** Payment Gateway integratie (Stripe, Payconiq, Binance Pay) - wacht op API keys

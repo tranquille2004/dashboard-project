@@ -11,7 +11,7 @@ export default defineConfig({
     ['json', { outputFile: '/root/.emergent/automation_output/20260305_102808/results.json' }],
   ],
   use: {
-    baseURL: 'https://fworks-promo.preview.emergentagent.com',
+    baseURL: 'https://resort-showcase-2.preview.emergentagent.com',
     screenshot: 'only-on-failure',
     trace: 'off',
     headless: true,

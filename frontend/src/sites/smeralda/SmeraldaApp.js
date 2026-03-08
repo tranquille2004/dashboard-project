@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Bath, TreePine, Mountain } from 'lucide-react';
+import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 // fworks logo for footer
 const FWORKS_LOGO = '/images/fworksbuilders.png';
@@ -1061,12 +1062,44 @@ const SmeraldaApp = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="bg-white rounded-2xl p-6 sm:p-8 text-gray-900">
-              <form className="space-y-4" onSubmit={(e) => {
+              <form className="space-y-4" onSubmit={async (e) => {
                 e.preventDefault();
-                const formData = new FormData(e.target);
-                const subject = `Reservation Request - Villa Smeralda`;
-                const body = `Name: ${formData.get('name')}%0D%0AEmail: ${formData.get('email')}%0D%0APhone: ${formData.get('phone')}%0D%0AArrival: ${formData.get('arrival')}%0D%0ADeparture: ${formData.get('departure')}%0D%0AAccommodation: ${formData.get('apartment')}%0D%0APersons: ${formData.get('persons')}%0D%0AMessage: ${formData.get('message')}`;
-                window.location.href = `mailto:villasmeralda1980@gmail.com?subject=${subject}&body=${body}`;
+                const form = e.target;
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn.innerText;
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Sending...';
+                
+                try {
+                  const formData = new FormData(form);
+                  const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/public/contact`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                      site: 'smeralda',
+                      name: formData.get('name'),
+                      email: formData.get('email'),
+                      phone: formData.get('phone'),
+                      message: formData.get('message') || '',
+                      arrival: formData.get('arrival'),
+                      departure: formData.get('departure'),
+                      apartment: formData.get('apartment'),
+                      persons: parseInt(formData.get('persons')) || null
+                    })
+                  });
+                  
+                  if (response.ok) {
+                    alert('Thank you! Your message has been sent successfully.');
+                    form.reset();
+                  } else {
+                    alert('Something went wrong. Please try again or contact us directly.');
+                  }
+                } catch (err) {
+                  alert('Network error. Please try again later.');
+                } finally {
+                  submitBtn.disabled = false;
+                  submitBtn.innerText = originalText;
+                }
               }}>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <input name="name" type="text" placeholder={t.contact.form.name} required
@@ -1197,6 +1230,12 @@ const SmeraldaApp = () => {
           </div>
         </div>
       </footer>
+      
+      {/* Tawk.to Live Chat - Same account as fworksbuilders */}
+      <TawkMessengerReact
+        propertyId="5d83c092c22bdd393bb6bf8b"
+        widgetId="default"
+      />
     </div>
   );
 };
