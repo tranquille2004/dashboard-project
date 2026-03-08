@@ -12,7 +12,7 @@ const generateImages = (prefix, count) =>
 const IMAGES = {
   logo: '/images/smeralda/logo-full.png',
   hero: [
-    '/images/smeralda/pool-main.jpg',
+    '/images/smeralda/hero-pool-main.jpg',
     '/images/smeralda/hero-1.png',
     '/images/smeralda/hero-2.png',
     '/images/smeralda/hero-3.png',
@@ -82,12 +82,17 @@ const translations = {
       },
       extras: {
         title: 'Additional Information',
-        items: [
+        mandatory: 'Mandatory',
+        optional: 'Optional',
+        mandatoryItems: [
           'Prices are per apartment for up to 4 persons',
           'Extra person: €15 per night',
           'Final cleaning: €70 one-time',
           'Gas consumption: €5 extra per stay',
           'Electricity: €10 extra per stay',
+          'Pet: €150 per stay'
+        ],
+        optionalItems: [
           'Breakfast: €10 per person',
           'Dinner with wine: €40 per person',
           'Airport pickup Olbia: €30',
@@ -164,12 +169,17 @@ const translations = {
       },
       extras: {
         title: 'Extra Informatie',
-        items: [
+        mandatory: 'Verplicht',
+        optional: 'Optioneel',
+        mandatoryItems: [
           'Prijzen zijn per appartement voor max 4 personen',
           'Extra persoon: €15 per nacht',
           'Eindschoonmaak: €70 eenmalig',
           'Gasverbruik: €5 extra per verblijf',
           'Elektriciteit: €10 extra per verblijf',
+          'Huisdier: €150 per verblijf'
+        ],
+        optionalItems: [
           'Ontbijt: €10 per persoon',
           'Diner met wijn: €40 per persoon',
           'Luchthaven ophalen Olbia: €30',
@@ -246,12 +256,17 @@ const translations = {
       },
       extras: {
         title: 'Informations Supplémentaires',
-        items: [
+        mandatory: 'Obligatoire',
+        optional: 'Optionnel',
+        mandatoryItems: [
           'Prix par appartement pour max 4 personnes',
           'Personne supplémentaire: €15 par nuit',
           'Ménage final: €70 une fois',
           'Consommation gaz: €5 extra par séjour',
           'Électricité: €10 extra par séjour',
+          'Animal: €150 par séjour'
+        ],
+        optionalItems: [
           'Petit-déjeuner: €10 par personne',
           'Dîner avec vin: €40 par personne',
           'Transfert aéroport Olbia: €30',
@@ -328,12 +343,17 @@ const translations = {
       },
       extras: {
         title: 'Informazioni Aggiuntive',
-        items: [
+        mandatory: 'Obbligatorio',
+        optional: 'Opzionale',
+        mandatoryItems: [
           'Prezzi per appartamento per max 4 persone',
           'Persona extra: €15 a notte',
           'Pulizia finale: €70 una tantum',
           'Consumo gas: €5 extra per soggiorno',
           'Elettricità: €10 extra per soggiorno',
+          'Animale: €150 per soggiorno'
+        ],
+        optionalItems: [
           'Colazione: €10 a persona',
           'Cena con vino: €40 a persona',
           'Transfer aeroporto Olbia: €30',
@@ -410,12 +430,17 @@ const translations = {
       },
       extras: {
         title: 'Información Adicional',
-        items: [
+        mandatory: 'Obligatorio',
+        optional: 'Opcional',
+        mandatoryItems: [
           'Precios por apartamento para máx. 4 personas',
           'Persona extra: €15 por noche',
           'Limpieza final: €70 una vez',
           'Consumo gas: €5 extra por estancia',
           'Electricidad: €10 extra por estancia',
+          'Mascota: €150 por estancia'
+        ],
+        optionalItems: [
           'Desayuno: €10 por persona',
           'Cena con vino: €40 por persona',
           'Transfer aeropuerto Olbia: €30',
@@ -492,12 +517,17 @@ const translations = {
       },
       extras: {
         title: 'Zusätzliche Informationen',
-        items: [
+        mandatory: 'Pflicht',
+        optional: 'Optional',
+        mandatoryItems: [
           'Preise pro Apartment für max. 4 Personen',
           'Zusätzliche Person: €15 pro Nacht',
           'Endreinigung: €70 einmalig',
           'Gasverbrauch: €5 extra pro Aufenthalt',
           'Strom: €10 extra pro Aufenthalt',
+          'Haustier: €150 pro Aufenthalt'
+        ],
+        optionalItems: [
           'Frühstück: €10 pro Person',
           'Abendessen mit Wein: €40 pro Person',
           'Flughafentransfer Olbia: €30',
@@ -575,10 +605,26 @@ const SmeraldaApp = () => {
     setLightboxOpen(true);
   };
 
-  // Image Slider Component
-  const ImageSlider = ({ images, className = '', onViewAll }) => {
+  // Image Slider Component - stops auto-rotation on manual interaction
+  const ImageSlider = ({ images, className = '', autoRotate = false }) => {
     const [idx, setIdx] = useState(0);
+    const [userInteracted, setUserInteracted] = useState(false);
     const validImages = images.filter(img => img);
+    
+    // Auto-rotate only if enabled AND user hasn't interacted
+    useEffect(() => {
+      if (!autoRotate || userInteracted || validImages.length <= 1) return;
+      const timer = setInterval(() => {
+        setIdx((prev) => (prev + 1) % validImages.length);
+      }, 5000);
+      return () => clearInterval(timer);
+    }, [autoRotate, userInteracted, validImages.length]);
+    
+    const handleManualNav = (newIdx) => {
+      setUserInteracted(true); // Stop auto-rotation
+      setIdx(newIdx);
+    };
+    
     return (
       <div className={`relative overflow-hidden rounded-xl ${className}`}>
         <img 
@@ -590,11 +636,11 @@ const SmeraldaApp = () => {
         />
         {validImages.length > 1 && (
           <>
-            <button onClick={(e) => { e.stopPropagation(); setIdx((idx - 1 + validImages.length) % validImages.length); }} 
+            <button onClick={(e) => { e.stopPropagation(); handleManualNav((idx - 1 + validImages.length) % validImages.length); }} 
               className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
               <ChevronLeft className="w-5 h-5 text-gray-800" />
             </button>
-            <button onClick={(e) => { e.stopPropagation(); setIdx((idx + 1) % validImages.length); }}
+            <button onClick={(e) => { e.stopPropagation(); handleManualNav((idx + 1) % validImages.length); }}
               className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white p-2 rounded-full shadow-lg">
               <ChevronRight className="w-5 h-5 text-gray-800" />
             </button>
@@ -602,7 +648,7 @@ const SmeraldaApp = () => {
         )}
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-2">
           {validImages.slice(0, 6).map((_, i) => (
-            <button key={i} onClick={(e) => { e.stopPropagation(); setIdx(i); }}
+            <button key={i} onClick={(e) => { e.stopPropagation(); handleManualNav(i); }}
               className={`w-2 h-2 rounded-full transition-all ${i === idx ? 'bg-white w-6' : 'bg-white/50'}`} />
           ))}
           {validImages.length > 6 && <span className="text-white text-xs">+{validImages.length - 6}</span>}
@@ -943,16 +989,40 @@ const SmeraldaApp = () => {
             </div>
           </div>
 
-          {/* Extra Info */}
+          {/* Extra Info - Mandatory & Optional */}
           <div className="bg-white rounded-xl p-6 shadow-lg">
             <h4 className="font-bold text-gray-900 mb-4">{t.prices.extras.title}</h4>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {t.prices.extras.items.map((item, i) => (
-                <div key={i} className="flex items-start gap-2 text-sm text-gray-600">
-                  <div className="w-1.5 h-1.5 bg-blue-600 rounded-full mt-2 flex-shrink-0" />
-                  <span>{item}</span>
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Mandatory */}
+              <div>
+                <h5 className="text-sm font-semibold text-red-600 mb-3 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-red-600 rounded-full"></span>
+                  {t.prices.extras.mandatory}
+                </h5>
+                <div className="space-y-2">
+                  {t.prices.extras.mandatoryItems.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                      <div className="w-1.5 h-1.5 bg-red-400 rounded-full mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              </div>
+              {/* Optional */}
+              <div>
+                <h5 className="text-sm font-semibold text-green-600 mb-3 flex items-center gap-2">
+                  <span className="w-2 h-2 bg-green-600 rounded-full"></span>
+                  {t.prices.extras.optional}
+                </h5>
+                <div className="space-y-2">
+                  {t.prices.extras.optionalItems.map((item, i) => (
+                    <div key={i} className="flex items-start gap-2 text-sm text-gray-700">
+                      <div className="w-1.5 h-1.5 bg-green-400 rounded-full mt-2 flex-shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </div>
         </div>
