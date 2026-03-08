@@ -54,8 +54,8 @@ const translations = {
       mobilhome: {
         title: 'Mobile Home',
         subtitle: 'Private Pool',
-        desc: 'Our newest addition! A cozy mobile home with modern interior, fully equipped kitchen, bathroom with shower, and your own private pool. Perfect for couples or small families.',
-        features: ['1 bedroom', 'Up to 4 persons', 'Private pool', 'Covered terrace', 'Full kitchen', 'BBQ area'],
+        desc: 'Our newest addition! A cozy mobile home with modern interior, fully equipped kitchen, bathroom with indoor and outdoor shower, and your own private pool. Perfect for couples or small families.',
+        features: ['1 bedroom', '2-4 pers (4 if child incl.)', 'Private pool', 'Outdoor shower', 'Full kitchen', 'BBQ area'],
         btn: 'View Gallery'
       }
     },
@@ -141,8 +141,8 @@ const translations = {
       mobilhome: {
         title: 'Stacaravan',
         subtitle: 'Privé Zwembad',
-        desc: 'Onze nieuwste toevoeging! Een gezellige stacaravan met modern interieur, volledig uitgeruste keuken, badkamer met douche, en uw eigen privé zwembad. Perfect voor koppels of kleine gezinnen.',
-        features: ['1 slaapkamer', 'Tot 4 personen', 'Privé zwembad', 'Overdekt terras', 'Volledige keuken', 'BBQ gebied'],
+        desc: 'Onze nieuwste toevoeging! Een gezellige stacaravan met modern interieur, volledig uitgeruste keuken, badkamer met binnen- en buitendouche, en uw eigen privé zwembad. Perfect voor koppels of kleine gezinnen.',
+        features: ['1 slaapkamer', '2-4 pers (4 met kind)', 'Privé zwembad', 'Buitendouche', 'Volledige keuken', 'BBQ gebied'],
         btn: 'Bekijk Galerij'
       }
     },
@@ -228,8 +228,8 @@ const translations = {
       mobilhome: {
         title: 'Mobil-home',
         subtitle: 'Piscine Privée',
-        desc: 'Notre dernière nouveauté! Un mobil-home cosy avec intérieur moderne, cuisine équipée, salle de bain avec douche, et votre propre piscine privée. Parfait pour les couples ou petites familles.',
-        features: ['1 chambre', 'Jusqu\'à 4 personnes', 'Piscine privée', 'Terrasse couverte', 'Cuisine complète', 'Coin BBQ'],
+        desc: 'Notre dernière nouveauté! Un mobil-home cosy avec intérieur moderne, cuisine équipée, salle de bain avec douche intérieure et extérieure, et votre propre piscine privée. Parfait pour les couples ou petites familles.',
+        features: ['1 chambre', '2-4 pers (4 avec enfant)', 'Piscine privée', 'Douche extérieure', 'Cuisine complète', 'Coin BBQ'],
         btn: 'Voir Galerie'
       }
     },
@@ -315,8 +315,8 @@ const translations = {
       mobilhome: {
         title: 'Casa Mobile',
         subtitle: 'Piscina Privata',
-        desc: 'La nostra ultima novità! Una casa mobile accogliente con interni moderni, cucina attrezzata, bagno con doccia, e la vostra piscina privata. Perfetta per coppie o piccole famiglie.',
-        features: ['1 camera', 'Fino a 4 persone', 'Piscina privata', 'Terrazza coperta', 'Cucina completa', 'Area BBQ'],
+        desc: 'La nostra ultima novità! Una casa mobile accogliente con interni moderni, cucina attrezzata, bagno con doccia interna ed esterna, e la vostra piscina privata. Perfetta per coppie o piccole famiglie.',
+        features: ['1 camera', '2-4 pers (4 con bambino)', 'Piscina privata', 'Doccia esterna', 'Cucina completa', 'Area BBQ'],
         btn: 'Vedi Galleria'
       }
     },
@@ -402,8 +402,8 @@ const translations = {
       mobilhome: {
         title: 'Casa Móvil',
         subtitle: 'Piscina Privada',
-        desc: '¡Nuestra última novedad! Una acogedora casa móvil con interior moderno, cocina equipada, baño con ducha, y su propia piscina privada. Perfecta para parejas o familias pequeñas.',
-        features: ['1 dormitorio', 'Hasta 4 personas', 'Piscina privada', 'Terraza cubierta', 'Cocina completa', 'Zona BBQ'],
+        desc: '¡Nuestra última novedad! Una acogedora casa móvil con interior moderno, cocina equipada, baño con ducha interior y exterior, y su propia piscina privada. Perfecta para parejas o familias pequeñas.',
+        features: ['1 dormitorio', '2-4 pers (4 con niño)', 'Piscina privada', 'Ducha exterior', 'Cocina completa', 'Zona BBQ'],
         btn: 'Ver Galería'
       }
     },
@@ -489,8 +489,8 @@ const translations = {
       mobilhome: {
         title: 'Mobilheim',
         subtitle: 'Privater Pool',
-        desc: 'Unsere neueste Ergänzung! Ein gemütliches Mobilheim mit modernem Interieur, voll ausgestatteter Küche, Bad mit Dusche, und Ihrem eigenen privaten Pool. Perfekt für Paare oder kleine Familien.',
-        features: ['1 Schlafzimmer', 'Bis zu 4 Personen', 'Privater Pool', 'Überdachte Terrasse', 'Volle Küche', 'BBQ-Bereich'],
+        desc: 'Unsere neueste Ergänzung! Ein gemütliches Mobilheim mit modernem Interieur, voll ausgestatteter Küche, Bad mit Innen- und Außendusche, und Ihrem eigenen privaten Pool. Perfekt für Paare oder kleine Familien.',
+        features: ['1 Schlafzimmer', '2-4 Pers (4 mit Kind)', 'Privater Pool', 'Außendusche', 'Volle Küche', 'BBQ-Bereich'],
         btn: 'Galerie Ansehen'
       }
     },
@@ -1050,12 +1050,12 @@ const SmeraldaApp = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="py-16 sm:py-24 bg-blue-900 text-white">
+      {/* Contact Section - Warm terracotta theme */}
+      <section id="contact" className="py-16 sm:py-24 bg-gradient-to-br from-amber-800 via-orange-800 to-amber-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-12">
             <h2 className="text-3xl sm:text-4xl font-bold mb-4">{t.contact.title}</h2>
-            <p className="text-blue-200">{t.contact.subtitle}</p>
+            <p className="text-amber-200">{t.contact.subtitle}</p>
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
@@ -1070,35 +1070,35 @@ const SmeraldaApp = () => {
               }}>
                 <div className="grid sm:grid-cols-2 gap-4">
                   <input name="name" type="text" placeholder={t.contact.form.name} required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                   <input name="email" type="email" placeholder={t.contact.form.email} required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                 </div>
                 <input name="phone" type="tel" placeholder={t.contact.form.phone}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                 <div className="grid sm:grid-cols-2 gap-4">
                   <input name="arrival" type="date" required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                   <input name="departure" type="date" required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
+                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <select name="apartment" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
+                  <select name="apartment" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
                     <option value="">{t.contact.form.select}</option>
                     <option value="1bed">{t.contact.form.oneBed}</option>
                     <option value="2bed">{t.contact.form.twoBed}</option>
                     <option value="executive">{t.contact.form.execApt}</option>
                     <option value="mobilhome">{t.contact.form.mobHome}</option>
                   </select>
-                  <select name="persons" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
+                  <select name="persons" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
                     <option value="">{t.contact.form.persons}</option>
                     {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n}</option>)}
                   </select>
                 </div>
                 <textarea name="message" rows={3} placeholder={t.contact.form.message}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
+                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                 <button type="submit"
-                  className="w-full bg-blue-600 hover:bg-blue-700 text-white py-4 rounded-lg font-semibold transition-colors">
+                  className="w-full bg-amber-600 hover:bg-amber-700 text-white py-4 rounded-lg font-semibold transition-colors">
                   {t.contact.form.submit}
                 </button>
               </form>
@@ -1117,7 +1117,7 @@ const SmeraldaApp = () => {
 
               <div>
                 <h3 className="text-xl font-bold mb-4">{t.contact.info.address}</h3>
-                <div className="flex items-start gap-3 text-blue-200">
+                <div className="flex items-start gap-3 text-amber-200">
                   <MapPin className="w-5 h-5 mt-1 flex-shrink-0" />
                   <div>
                     <p>Località CAPRULEDDU Via Campu 179</p>
@@ -1129,14 +1129,14 @@ const SmeraldaApp = () => {
 
               <div>
                 <h3 className="text-xl font-bold mb-4">{t.contact.info.company}</h3>
-                <div className="text-blue-200 text-sm">
+                <div className="text-amber-200 text-sm">
                   <p>Smeralda Immobiliare srl</p>
                   <p>IT06286710964</p>
                 </div>
               </div>
 
               <div>
-                <a href="mailto:villasmeralda1980@gmail.com" className="flex items-center gap-3 text-blue-200 hover:text-white transition-colors">
+                <a href="mailto:villasmeralda1980@gmail.com" className="flex items-center gap-3 text-amber-200 hover:text-white transition-colors">
                   <Mail className="w-5 h-5" />
                   villasmeralda1980@gmail.com
                 </a>
