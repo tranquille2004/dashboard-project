@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Bath, TreePine, Mountain } from 'lucide-react';
-import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 
 // fworks logo for footer
 const FWORKS_LOGO = '/images/fworksbuilders.png';
@@ -712,6 +711,26 @@ const SmeraldaApp = () => {
     }).catch(() => {});
   }, []);
 
+  // Tawk.to live chat - load via script
+  useEffect(() => {
+    var Tawk_API = window.Tawk_API || {};
+    var Tawk_LoadStart = new Date();
+    var s1 = document.createElement("script");
+    var s0 = document.getElementsByTagName("script")[0];
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/5d83c092c22bdd393bb6bf8b/default';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+    
+    return () => {
+      // Cleanup on unmount
+      if (window.Tawk_API && window.Tawk_API.hideWidget) {
+        window.Tawk_API.hideWidget();
+      }
+    };
+  }, []);
+
   const scrollTo = (id) => {
     setMenuOpen(false);
     setActiveSection(id);
@@ -1351,7 +1370,7 @@ const SmeraldaApp = () => {
                   </select>
                   <select name="persons" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
                     <option value="">{t.contact.form.persons}</option>
-                    {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n}</option>)}
+                    {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n} {n === 1 ? 'person' : 'persons'}</option>)}
                   </select>
                 </div>
                 <textarea name="message" rows={3} placeholder={t.contact.form.message}
@@ -1457,11 +1476,7 @@ const SmeraldaApp = () => {
         </div>
       </footer>
       
-      {/* Tawk.to Live Chat - Same account as fworksbuilders */}
-      <TawkMessengerReact
-        propertyId="5d83c092c22bdd393bb6bf8b"
-        widgetId="default"
-      />
+      {/* Tawk.to Live Chat - loaded via script */}
     </div>
   );
 };
