@@ -1059,7 +1059,7 @@ async def seed_all_sites(secret: str = ""):
         },
         {
             "site_id": "site_fworks",
-            "name": "F.Works Builders",
+            "name": "fworksbuilders",
             "slug": "fworks",
             "domains": ["fworksbuilders.com", "www.fworksbuilders.com"],
             "site_type": "business",
@@ -1527,7 +1527,7 @@ async def seed_sites_on_startup():
         },
         {
             "site_id": "site_fworks",
-            "name": "F.Works Builders",
+            "name": "fworksbuilders",
             "slug": "fworks",
             "domains": ["fworksbuilders.com", "www.fworksbuilders.com"],
             "site_type": "business",
