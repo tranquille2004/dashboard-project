@@ -6,7 +6,7 @@ import {
   Plus, Settings, Image, Menu, Users, Globe, LogOut, 
   ChevronRight, Trash2, Edit, Eye, Clock, Phone, Mail,
   BarChart2, X, MapPin, TrendingUp, Activity, ExternalLink,
-  Calendar, UserCheck, MousePointer, Check, AlertTriangle
+  Calendar, UserCheck, Check, AlertTriangle
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
