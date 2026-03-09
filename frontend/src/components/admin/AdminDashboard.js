@@ -15,7 +15,7 @@ const FWORKS_LOGO = 'https://customer-assets.emergentagent.com/job_c5f93e02-948a
 // Admin Dashboard Translations
 const translations = {
   fr: {
-    title: 'Plateforme Web',
+    title: 'fworksbuilders',
     logout: 'Déconnexion',
     totalSites: 'Total Websites',
     restaurants: 'Restaurants',
@@ -44,12 +44,12 @@ const translations = {
     dailyVisits: 'Visites quotidiennes',
     recentVisitors: 'Visiteurs récents',
     noData: 'Pas de données',
-    welcome: 'Bienvenue!',
+    welcome: 'Bienvenue Franck de Schiffart!',
     sitesOnline: 'sites en ligne',
     visitorsToday: 'visiteurs aujourd\'hui'
   },
   nl: {
-    title: 'Website Platform',
+    title: 'fworksbuilders',
     logout: 'Uitloggen',
     totalSites: 'Totaal Websites',
     restaurants: 'Restaurants',
@@ -78,12 +78,12 @@ const translations = {
     dailyVisits: 'Dagelijkse bezoeken',
     recentVisitors: 'Recente bezoekers',
     noData: 'Geen gegevens',
-    welcome: 'Welkom terug!',
+    welcome: 'Welkom Franck de Schiffart!',
     sitesOnline: 'sites online',
     visitorsToday: 'bezoekers vandaag'
   },
   en: {
-    title: 'Website Platform',
+    title: 'fworksbuilders',
     logout: 'Log out',
     totalSites: 'Total Websites',
     restaurants: 'Restaurants',
@@ -112,7 +112,7 @@ const translations = {
     dailyVisits: 'Daily visits',
     recentVisitors: 'Recent visitors',
     noData: 'No data',
-    welcome: 'Welcome back!',
+    welcome: 'Welcome Franck de Schiffart!',
     sitesOnline: 'sites online',
     visitorsToday: 'visitors today'
   }
