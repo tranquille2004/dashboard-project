@@ -6,7 +6,6 @@ import {
   Image, FileText, Users, ShoppingCart, MapPin, ChevronLeft,
   Monitor, Palette, Lock, Megaphone, ExternalLink, Rocket
 } from 'lucide-react';
-import TawkMessengerReact from '@tawk.to/tawk-messenger-react';
 import SEO from '@/components/SEO';
 import './FWorks.css';
 
@@ -1217,6 +1216,25 @@ function FWorksApp() {
     };
   }, [lang]);
 
+  // Tawk.to live chat - load via script (more reliable than React component)
+  useEffect(() => {
+    var Tawk_API = window.Tawk_API || {};
+    var Tawk_LoadStart = new Date();
+    var s1 = document.createElement("script");
+    var s0 = document.getElementsByTagName("script")[0];
+    s1.async = true;
+    s1.src = 'https://embed.tawk.to/5d83c092c22bdd393bb6bf8b/default';
+    s1.charset = 'UTF-8';
+    s1.setAttribute('crossorigin', '*');
+    s0.parentNode.insertBefore(s1, s0);
+    
+    return () => {
+      if (window.Tawk_API && window.Tawk_API.hideWidget) {
+        window.Tawk_API.hideWidget();
+      }
+    };
+  }, []);
+
   const t = translations[lang];
 
   // Dynamic SEO based on language
@@ -1269,12 +1287,6 @@ function FWorksApp() {
         <PricingSection t={t} />
         <ContactSection t={t} />
         <Footer t={t} />
-        
-        {/* Tawk.to Live Chat */}
-        <TawkMessengerReact
-          propertyId="5d83c092c22bdd393bb6bf8b"
-          widgetId="default"
-        />
       </div>
     </ErrorBoundary>
   );
