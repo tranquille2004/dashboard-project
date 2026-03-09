@@ -5,7 +5,8 @@ import { useAuth } from '@/contexts/AuthContext';
 import { 
   Plus, Settings, Image, Menu, Users, Globe, LogOut, 
   ChevronRight, Trash2, Edit, Eye, Clock, Phone, Mail,
-  BarChart2, X, MapPin
+  BarChart2, X, MapPin, TrendingUp, Activity, ExternalLink,
+  Calendar, UserCheck, MousePointer
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -207,158 +208,188 @@ const AdminDashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
-      {/* Header - Mobile Responsive */}
-      <header className="bg-white shadow-sm border-b border-gray-200">
-        <div className="max-w-5xl mx-auto px-3 sm:px-6 py-2 sm:py-3">
-          {/* Mobile: Stack vertically, Desktop: Row */}
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
-            {/* Logo */}
-            <div className="flex items-center justify-between">
+    <div className="min-h-screen bg-slate-50" style={{ fontFamily: "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
+      {/* Header */}
+      <header className="bg-white shadow-sm border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center space-x-4">
               <img src={FWORKS_LOGO} alt="fworks builders" className="h-8 sm:h-10 w-auto" />
-              {/* Mobile: Show logout icon only */}
-              <button
-                onClick={logout}
-                className="sm:hidden p-2 text-gray-500 hover:text-gray-700"
-                data-testid="logout-btn-mobile"
-              >
-                <LogOut className="w-5 h-5" />
-              </button>
+              <div className="hidden sm:block">
+                <h1 className="text-lg font-bold text-slate-800">{t('title')}</h1>
+                <p className="text-xs text-slate-500">{sites.length} websites actief</p>
+              </div>
             </div>
             
-            {/* Controls Row */}
-            <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3">
+            <div className="flex items-center gap-3">
               {/* Language Switcher */}
-              <div className="flex items-center space-x-0.5 sm:space-x-1 bg-gray-100 rounded-md p-0.5">
+              <div className="flex bg-slate-100 rounded-lg p-0.5">
                 {['fr', 'nl', 'en'].map(l => (
                   <button key={l} onClick={() => setLang(l)}
-                    className={`px-1.5 sm:px-2 py-1 rounded text-xs font-medium transition-colors ${lang === l ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-700'}`}>
+                    className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${lang === l ? 'bg-white shadow text-slate-900' : 'text-slate-500 hover:text-slate-700'}`}>
                     {l.toUpperCase()}
                   </button>
                 ))}
               </div>
               
-              {/* User Info - Hidden on very small screens */}
-              <div className="hidden xs:flex items-center space-x-2">
-                {user.picture && (
-                  <img src={user.picture} alt={user.name} className="w-6 sm:w-7 h-6 sm:h-7 rounded-full" />
-                )}
-                <span className="text-gray-600 text-xs sm:text-sm truncate max-w-[100px] sm:max-w-none">{user.name}</span>
+              {/* User */}
+              <div className="hidden sm:flex items-center gap-2 text-sm text-slate-600">
+                {user.picture && <img src={user.picture} alt={user.name} className="w-7 h-7 rounded-full" />}
+                <span className="max-w-[120px] truncate">{user.name}</span>
               </div>
               
-              {/* Desktop Logout */}
-              <button
-                onClick={logout}
-                className="hidden sm:flex items-center space-x-1 text-gray-500 hover:text-gray-700 text-sm"
-                data-testid="logout-btn"
-              >
+              <button onClick={logout} className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 text-sm" data-testid="logout-btn">
                 <LogOut className="w-4 h-4" />
-                <span>{t('logout')}</span>
+                <span className="hidden sm:inline">{t('logout')}</span>
               </button>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="max-w-5xl mx-auto px-3 sm:px-6 py-4 sm:py-6">
-        {/* Sites List */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200">
-          <div className="px-3 sm:px-4 py-2 sm:py-3 border-b border-gray-200 flex justify-between items-center">
-            <h2 className="text-base sm:text-lg font-semibold text-gray-800">{t('mySites')}</h2>
-            <button
-              onClick={() => setShowNewSiteModal(true)}
-              className="flex items-center space-x-1 sm:space-x-1.5 bg-blue-600 text-white px-2 sm:px-3 py-1.5 rounded-md hover:bg-blue-700 transition-colors text-xs sm:text-sm"
-              data-testid="add-site-btn"
-            >
-              <Plus className="w-3.5 sm:w-4 h-3.5 sm:h-4" />
-              <span className="hidden xs:inline">{t('newSite')}</span>
-              <span className="xs:hidden">+</span>
-            </button>
-          </div>
-          
-          {sites.length === 0 ? (
-            <div className="p-6 sm:p-8 text-center">
-              <Globe className="w-10 sm:w-12 h-10 sm:h-12 text-gray-300 mx-auto mb-3" />
-              <p className="text-gray-500 text-sm sm:text-base">{t('noSites')}</p>
-              <p className="text-gray-400 text-xs sm:text-sm">{t('clickToStart')}</p>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        {/* Global Stats Overview */}
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
+          <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-4 text-white">
+            <div className="flex items-center justify-between">
+              <Activity className="w-5 h-5 opacity-80" />
+              <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">{t('today')}</span>
             </div>
-          ) : (
-            <div className="divide-y divide-gray-100">
-              {sites.map(site => (
-                <div key={site.site_id} className="px-3 sm:px-4 py-3 sm:py-2 hover:bg-gray-50 transition-colors border-b border-gray-100 last:border-0">
-                  {/* Mobile: Stack layout, Desktop: Row */}
-                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0">
-                    {/* Site Info */}
-                    <div className="flex items-center space-x-3">
-                      <div className="w-8 h-8 rounded-md flex items-center justify-center bg-blue-50 flex-shrink-0">
-                        <Globe className="w-4 h-4 text-blue-600" />
+            <p className="text-2xl sm:text-3xl font-bold mt-2">
+              {Object.values(siteStats).reduce((sum, s) => sum + (s?.today || 0), 0)}
+            </p>
+            <p className="text-emerald-100 text-xs mt-1">{t('visitors')} vandaag</p>
+          </div>
+          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-4 text-white">
+            <div className="flex items-center justify-between">
+              <TrendingUp className="w-5 h-5 opacity-80" />
+              <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">{t('week')}</span>
+            </div>
+            <p className="text-2xl sm:text-3xl font-bold mt-2">
+              {Object.values(siteStats).reduce((sum, s) => sum + (s?.week || 0), 0)}
+            </p>
+            <p className="text-blue-100 text-xs mt-1">{t('visitors')} deze week</p>
+          </div>
+          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-4 text-white">
+            <div className="flex items-center justify-between">
+              <Calendar className="w-5 h-5 opacity-80" />
+              <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">{t('month')}</span>
+            </div>
+            <p className="text-2xl sm:text-3xl font-bold mt-2">
+              {Object.values(siteStats).reduce((sum, s) => sum + (s?.month || 0), 0)}
+            </p>
+            <p className="text-purple-100 text-xs mt-1">{t('visitors')} deze maand</p>
+          </div>
+          <div className="bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl p-4 text-white">
+            <div className="flex items-center justify-between">
+              <UserCheck className="w-5 h-5 opacity-80" />
+              <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">{t('total')}</span>
+            </div>
+            <p className="text-2xl sm:text-3xl font-bold mt-2">
+              {Object.values(siteStats).reduce((sum, s) => sum + (s?.total || 0), 0)}
+            </p>
+            <p className="text-slate-300 text-xs mt-1">{t('visitors')} totaal</p>
+          </div>
+        </div>
+
+        {/* Sites Header */}
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-lg font-bold text-slate-800">{t('mySites')}</h2>
+          <button
+            onClick={() => setShowNewSiteModal(true)}
+            className="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+            data-testid="add-site-btn"
+          >
+            <Plus className="w-4 h-4" />
+            <span className="hidden sm:inline">{t('newSite')}</span>
+          </button>
+        </div>
+        
+        {/* Sites Grid */}
+        {sites.length === 0 ? (
+          <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
+            <Globe className="w-12 h-12 text-slate-300 mx-auto mb-3" />
+            <p className="text-slate-500">{t('noSites')}</p>
+            <p className="text-slate-400 text-sm">{t('clickToStart')}</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {sites.map(site => (
+              <div key={site.site_id} className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow">
+                {/* Site Header */}
+                <div className="p-4 border-b border-slate-100">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                        <Globe className="w-5 h-5 text-white" />
                       </div>
-                      <div className="min-w-0">
-                        <h3 className="text-sm font-medium text-gray-900 truncate">{site.name}</h3>
-                        <p className="text-gray-400 text-xs truncate">
+                      <div>
+                        <h3 className="font-semibold text-slate-900 text-sm">{site.name}</h3>
+                        <p className="text-xs text-slate-400 truncate max-w-[150px]">
                           {site.domains?.length > 0 ? site.domains[0] : `/${site.slug}`}
                         </p>
                       </div>
                     </div>
-                    
-                    {/* Action Buttons */}
-                    <div className="flex items-center justify-between sm:justify-end ml-11 sm:ml-0">
-                      <div className="flex items-center space-x-1">
-                        <button
-                          onClick={() => openStatsModal(site.site_id)}
-                          className="p-1.5 text-gray-400 hover:text-purple-600 transition-colors"
-                          title={t('statistics')}
-                        >
-                          <BarChart2 className="w-4 h-4" />
-                        </button>
-                        <Link
-                          to={`/site/${site.slug}`}
-                          target="_blank"
-                          className="p-1.5 text-gray-400 hover:text-blue-600 transition-colors"
-                          title="Preview"
-                        >
-                          <Eye className="w-4 h-4" />
-                        </Link>
-                        <Link
-                          to={`/admin/sites/${site.site_id}`}
-                          className="p-1.5 text-gray-400 hover:text-green-600 transition-colors"
-                          title="Bewerken"
-                        >
-                          <Edit className="w-4 h-4" />
-                        </Link>
-                        <button
-                          onClick={() => deleteSite(site.site_id)}
-                          className="p-1.5 text-gray-400 hover:text-red-600 transition-colors"
-                          title="Verwijderen"
-                        >
-                          <Trash2 className="w-4 h-4" />
-                        </button>
-                      </div>
-                      <Link
-                        to={`/admin/sites/${site.site_id}`}
-                        className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-xs sm:text-sm ml-2"
-                      >
-                        <span>{t('manage')}</span>
-                        <ChevronRight className="w-3 h-3" />
-                      </Link>
+                    <a href={site.domains?.length > 0 ? `https://${site.domains[0]}` : `/site/${site.slug}`} 
+                       target="_blank" rel="noopener noreferrer"
+                       className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors">
+                      <ExternalLink className="w-4 h-4" />
+                    </a>
+                  </div>
+                </div>
+                
+                {/* Stats */}
+                {siteStats[site.site_id] && (
+                  <div className="grid grid-cols-4 divide-x divide-slate-100 bg-slate-50">
+                    <div className="p-3 text-center">
+                      <p className="text-lg font-bold text-emerald-600">{siteStats[site.site_id].today}</p>
+                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">{t('today')}</p>
+                    </div>
+                    <div className="p-3 text-center">
+                      <p className="text-lg font-bold text-blue-600">{siteStats[site.site_id].week}</p>
+                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">{t('week')}</p>
+                    </div>
+                    <div className="p-3 text-center">
+                      <p className="text-lg font-bold text-purple-600">{siteStats[site.site_id].month}</p>
+                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">{t('month')}</p>
+                    </div>
+                    <div className="p-3 text-center">
+                      <p className="text-lg font-bold text-slate-700">{siteStats[site.site_id].total}</p>
+                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">{t('total')}</p>
                     </div>
                   </div>
-                  
-                  {/* Visitor Stats - Responsive Grid on Mobile */}
-                  {siteStats[site.site_id] && (
-                    <div className="mt-2 ml-11 grid grid-cols-2 sm:flex sm:items-center gap-1 sm:gap-3 text-xs">
-                      <span className="col-span-2 sm:col-span-1 text-gray-400">{t('visitors')}:</span>
-                      <span className="text-green-600">{t('today')}: {siteStats[site.site_id].today}</span>
-                      <span className="text-blue-600">{t('week')}: {siteStats[site.site_id].week}</span>
-                      <span className="text-purple-600">{t('month')}: {siteStats[site.site_id].month}</span>
-                      <span className="text-gray-500">{t('total')}: {siteStats[site.site_id].total}</span>
-                    </div>
-                  )}
+                )}
+                
+                {/* Actions */}
+                <div className="p-3 flex items-center justify-between border-t border-slate-100">
+                  <div className="flex items-center gap-1">
+                    <button onClick={() => openStatsModal(site.site_id)}
+                      className="p-2 text-slate-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors" title={t('statistics')}>
+                      <BarChart2 className="w-4 h-4" />
+                    </button>
+                    <Link to={`/site/${site.slug}`} target="_blank"
+                      className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Preview">
+                      <Eye className="w-4 h-4" />
+                    </Link>
+                    <Link to={`/admin/sites/${site.site_id}`}
+                      className="p-2 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Bewerken">
+                      <Edit className="w-4 h-4" />
+                    </Link>
+                    <button onClick={() => deleteSite(site.site_id)}
+                      className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Verwijderen">
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+                  </div>
+                  <Link to={`/admin/sites/${site.site_id}`}
+                    className="flex items-center gap-1 text-blue-600 hover:text-blue-800 text-xs font-medium">
+                    <span>{t('manage')}</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </Link>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
 
       {/* New Site Modal */}
