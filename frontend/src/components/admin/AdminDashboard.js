@@ -16,10 +16,10 @@ const translations = {
   fr: {
     title: 'Plateforme Web',
     logout: 'Déconnexion',
-    totalSites: 'Total Sites Web',
+    totalSites: 'Total Websites',
     restaurants: 'Restaurants',
     otherBusiness: 'Autres Entreprises',
-    mySites: 'Mes Sites Web',
+    mySites: 'Mes Websites',
     newSite: 'Nouveau Site',
     noSites: 'Pas encore de sites',
     clickToStart: 'Cliquez sur "Nouveau Site" pour commencer',
@@ -207,7 +207,7 @@ const AdminDashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-gray-50" style={{ fontFamily: "'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
+    <div className="min-h-screen bg-gray-50" style={{ fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
       {/* Header - Mobile Responsive */}
       <header className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-5xl mx-auto px-3 sm:px-6 py-2 sm:py-3">
