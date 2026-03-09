@@ -208,37 +208,37 @@ const AdminDashboard = () => {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-slate-50" style={{ fontFamily: "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
+    <div className="min-h-screen bg-stone-100" style={{ fontFamily: "'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif" }}>
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-slate-200">
+      <header className="bg-white shadow-sm border-b border-stone-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
               <img src={FWORKS_LOGO} alt="fworks builders" className="h-8 sm:h-10 w-auto" />
               <div className="hidden sm:block">
-                <h1 className="text-lg font-bold text-slate-800">{t('title')}</h1>
-                <p className="text-xs text-slate-500">{sites.length} websites actief</p>
+                <h1 className="text-lg font-bold text-stone-800">{t('title')}</h1>
+                <p className="text-xs text-stone-500">{sites.length} websites actief</p>
               </div>
             </div>
             
             <div className="flex items-center gap-3">
               {/* Language Switcher */}
-              <div className="flex bg-slate-100 rounded-lg p-0.5">
+              <div className="flex bg-stone-100 rounded-lg p-0.5">
                 {['fr', 'nl', 'en'].map(l => (
                   <button key={l} onClick={() => setLang(l)}
-                    className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${lang === l ? 'bg-white shadow text-slate-900' : 'text-slate-500 hover:text-slate-700'}`}>
+                    className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all ${lang === l ? 'bg-white shadow text-stone-900' : 'text-stone-500 hover:text-stone-700'}`}>
                     {l.toUpperCase()}
                   </button>
                 ))}
               </div>
               
               {/* User */}
-              <div className="hidden sm:flex items-center gap-2 text-sm text-slate-600">
+              <div className="hidden sm:flex items-center gap-2 text-sm text-stone-600">
                 {user.picture && <img src={user.picture} alt={user.name} className="w-7 h-7 rounded-full" />}
                 <span className="max-w-[120px] truncate">{user.name}</span>
               </div>
               
-              <button onClick={logout} className="flex items-center gap-1.5 text-slate-500 hover:text-slate-700 text-sm" data-testid="logout-btn">
+              <button onClick={logout} className="flex items-center gap-1.5 text-stone-500 hover:text-stone-700 text-sm" data-testid="logout-btn">
                 <LogOut className="w-4 h-4" />
                 <span className="hidden sm:inline">{t('logout')}</span>
               </button>
@@ -248,53 +248,34 @@ const AdminDashboard = () => {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
-        {/* Global Stats Overview */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6">
-          <div className="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-xl p-4 text-white">
-            <div className="flex items-center justify-between">
-              <Activity className="w-5 h-5 opacity-80" />
-              <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">{t('today')}</span>
+        {/* Status Overview */}
+        <div className="bg-white rounded-xl border border-stone-200 p-4 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <h2 className="text-lg font-bold text-stone-800">Welkom terug! 👋</h2>
+              <p className="text-sm text-stone-500">
+                {new Date().toLocaleDateString('nl-NL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+              </p>
             </div>
-            <p className="text-2xl sm:text-3xl font-bold mt-2">
-              {Object.values(siteStats).reduce((sum, s) => sum + (s?.today || 0), 0)}
-            </p>
-            <p className="text-emerald-100 text-xs mt-1">{t('visitors')} vandaag</p>
-          </div>
-          <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-4 text-white">
-            <div className="flex items-center justify-between">
-              <TrendingUp className="w-5 h-5 opacity-80" />
-              <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">{t('week')}</span>
+            <div className="flex items-center gap-4">
+              {/* Site Status Summary */}
+              <div className="flex items-center gap-2 bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg text-sm">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
+                <span className="font-medium">{sites.length} sites online</span>
+              </div>
+              <div className="hidden sm:flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1.5 rounded-lg text-sm">
+                <Activity className="w-4 h-4" />
+                <span className="font-medium">
+                  {Object.values(siteStats).reduce((sum, s) => sum + (s?.today || 0), 0)} bezoekers vandaag
+                </span>
+              </div>
             </div>
-            <p className="text-2xl sm:text-3xl font-bold mt-2">
-              {Object.values(siteStats).reduce((sum, s) => sum + (s?.week || 0), 0)}
-            </p>
-            <p className="text-blue-100 text-xs mt-1">{t('visitors')} deze week</p>
-          </div>
-          <div className="bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl p-4 text-white">
-            <div className="flex items-center justify-between">
-              <Calendar className="w-5 h-5 opacity-80" />
-              <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">{t('month')}</span>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold mt-2">
-              {Object.values(siteStats).reduce((sum, s) => sum + (s?.month || 0), 0)}
-            </p>
-            <p className="text-purple-100 text-xs mt-1">{t('visitors')} deze maand</p>
-          </div>
-          <div className="bg-gradient-to-br from-slate-600 to-slate-700 rounded-xl p-4 text-white">
-            <div className="flex items-center justify-between">
-              <UserCheck className="w-5 h-5 opacity-80" />
-              <span className="text-xs font-medium bg-white/20 px-2 py-0.5 rounded-full">{t('total')}</span>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold mt-2">
-              {Object.values(siteStats).reduce((sum, s) => sum + (s?.total || 0), 0)}
-            </p>
-            <p className="text-slate-300 text-xs mt-1">{t('visitors')} totaal</p>
           </div>
         </div>
 
         {/* Sites Header */}
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-lg font-bold text-slate-800">{t('mySites')}</h2>
+          <h2 className="text-lg font-bold text-stone-800">{t('mySites')}</h2>
           <button
             onClick={() => setShowNewSiteModal(true)}
             className="flex items-center gap-1.5 bg-blue-600 text-white px-3 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
@@ -307,76 +288,79 @@ const AdminDashboard = () => {
         
         {/* Sites Grid */}
         {sites.length === 0 ? (
-          <div className="bg-white rounded-xl border border-slate-200 p-12 text-center">
-            <Globe className="w-12 h-12 text-slate-300 mx-auto mb-3" />
-            <p className="text-slate-500">{t('noSites')}</p>
-            <p className="text-slate-400 text-sm">{t('clickToStart')}</p>
+          <div className="bg-white rounded-xl border border-stone-200 p-12 text-center">
+            <Globe className="w-12 h-12 text-stone-300 mx-auto mb-3" />
+            <p className="text-stone-500">{t('noSites')}</p>
+            <p className="text-stone-400 text-sm">{t('clickToStart')}</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {sites.map(site => (
-              <div key={site.site_id} className="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-lg transition-shadow">
+              <div key={site.site_id} className="bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-lg transition-shadow">
                 {/* Site Header */}
-                <div className="p-4 border-b border-slate-100">
+                <div className="p-4 border-b border-stone-100">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
                         <Globe className="w-5 h-5 text-white" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-slate-900 text-sm">{site.name}</h3>
-                        <p className="text-xs text-slate-400 truncate max-w-[150px]">
+                        <h3 className="font-semibold text-stone-900 text-sm">{site.name}</h3>
+                        <p className="text-xs text-stone-400 truncate max-w-[150px]">
                           {site.domains?.length > 0 ? site.domains[0] : `/${site.slug}`}
                         </p>
                       </div>
                     </div>
-                    <a href={site.domains?.length > 0 ? `https://${site.domains[0]}` : `/site/${site.slug}`} 
-                       target="_blank" rel="noopener noreferrer"
-                       className="p-1.5 text-slate-400 hover:text-blue-600 transition-colors">
-                      <ExternalLink className="w-4 h-4" />
-                    </a>
+                    <div className="flex items-center gap-1">
+                      <div className="w-2 h-2 bg-emerald-500 rounded-full" title="Online"></div>
+                      <a href={site.domains?.length > 0 ? `https://${site.domains[0]}` : `/site/${site.slug}`} 
+                         target="_blank" rel="noopener noreferrer"
+                         className="p-1.5 text-stone-400 hover:text-blue-600 transition-colors">
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                    </div>
                   </div>
                 </div>
                 
                 {/* Stats */}
                 {siteStats[site.site_id] && (
-                  <div className="grid grid-cols-4 divide-x divide-slate-100 bg-slate-50">
+                  <div className="grid grid-cols-4 divide-x divide-stone-100 bg-stone-50">
                     <div className="p-3 text-center">
                       <p className="text-lg font-bold text-emerald-600">{siteStats[site.site_id].today}</p>
-                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">{t('today')}</p>
+                      <p className="text-[10px] text-stone-500 uppercase tracking-wide">{t('today')}</p>
                     </div>
                     <div className="p-3 text-center">
                       <p className="text-lg font-bold text-blue-600">{siteStats[site.site_id].week}</p>
-                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">{t('week')}</p>
+                      <p className="text-[10px] text-stone-500 uppercase tracking-wide">{t('week')}</p>
                     </div>
                     <div className="p-3 text-center">
                       <p className="text-lg font-bold text-purple-600">{siteStats[site.site_id].month}</p>
-                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">{t('month')}</p>
+                      <p className="text-[10px] text-stone-500 uppercase tracking-wide">{t('month')}</p>
                     </div>
                     <div className="p-3 text-center">
-                      <p className="text-lg font-bold text-slate-700">{siteStats[site.site_id].total}</p>
-                      <p className="text-[10px] text-slate-500 uppercase tracking-wide">{t('total')}</p>
+                      <p className="text-lg font-bold text-stone-700">{siteStats[site.site_id].total}</p>
+                      <p className="text-[10px] text-stone-500 uppercase tracking-wide">{t('total')}</p>
                     </div>
                   </div>
                 )}
                 
                 {/* Actions */}
-                <div className="p-3 flex items-center justify-between border-t border-slate-100">
+                <div className="p-3 flex items-center justify-between border-t border-stone-100">
                   <div className="flex items-center gap-1">
                     <button onClick={() => openStatsModal(site.site_id)}
-                      className="p-2 text-slate-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors" title={t('statistics')}>
+                      className="p-2 text-stone-400 hover:text-purple-600 hover:bg-purple-50 rounded-lg transition-colors" title={t('statistics')}>
                       <BarChart2 className="w-4 h-4" />
                     </button>
                     <Link to={`/site/${site.slug}`} target="_blank"
-                      className="p-2 text-slate-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Preview">
+                      className="p-2 text-stone-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors" title="Preview">
                       <Eye className="w-4 h-4" />
                     </Link>
                     <Link to={`/admin/sites/${site.site_id}`}
-                      className="p-2 text-slate-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Bewerken">
+                      className="p-2 text-stone-400 hover:text-green-600 hover:bg-green-50 rounded-lg transition-colors" title="Bewerken">
                       <Edit className="w-4 h-4" />
                     </Link>
                     <button onClick={() => deleteSite(site.site_id)}
-                      className="p-2 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Verwijderen">
+                      className="p-2 text-stone-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors" title="Verwijderen">
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
