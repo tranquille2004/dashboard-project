@@ -133,6 +133,8 @@ const AdminDashboard = () => {
   const [siteHealth, setSiteHealth] = useState([]);
   const [alerts, setAlerts] = useState([]);
   const [checkingHealth, setCheckingHealth] = useState(false);
+  const [liveVisitor, setLiveVisitor] = useState(null);
+  const [lastHealthCheck, setLastHealthCheck] = useState(null);
 
   const t = (key) => translations[lang]?.[key] || key;
 
@@ -164,6 +166,63 @@ const AdminDashboard = () => {
       loadSites();
     }
   }, [user]);
+
+  // Automatic health check every 2 minutes
+  useEffect(() => {
+    if (!user) return;
+    
+    // Initial health check after 5 seconds
+    const initialCheck = setTimeout(() => {
+      checkSiteHealth();
+    }, 5000);
+    
+    // Then every 2 minutes
+    const interval = setInterval(() => {
+      checkSiteHealth();
+    }, 2 * 60 * 1000);
+    
+    return () => {
+      clearTimeout(initialCheck);
+      clearInterval(interval);
+    };
+  }, [user]);
+
+  // Fun live visitor simulation
+  useEffect(() => {
+    if (sites.length === 0) return;
+    
+    const showRandomVisitor = () => {
+      const randomSite = sites[Math.floor(Math.random() * sites.length)];
+      const countries = ['🇧🇪 België', '🇳🇱 Nederland', '🇫🇷 Frankrijk', '🇩🇪 Duitsland', '🇮🇹 Italië', '🇪🇸 Spanje', '🇬🇧 UK', '🇺🇸 USA'];
+      const randomCountry = countries[Math.floor(Math.random() * countries.length)];
+      
+      setLiveVisitor({
+        site: randomSite.name,
+        country: randomCountry,
+        page: ['Homepage', 'Menu', 'Contact', 'Reserveren', 'Over ons'][Math.floor(Math.random() * 5)]
+      });
+      
+      // Hide after 4 seconds
+      setTimeout(() => setLiveVisitor(null), 4000);
+    };
+    
+    // Show visitor every 15-30 seconds randomly
+    const scheduleNext = () => {
+      const delay = 15000 + Math.random() * 15000;
+      return setTimeout(() => {
+        showRandomVisitor();
+        scheduleNext();
+      }, delay);
+    };
+    
+    // Start after 10 seconds
+    const initialDelay = setTimeout(() => {
+      showRandomVisitor();
+      scheduleNext();
+    }, 10000);
+    
+    return () => clearTimeout(initialDelay);
+  }, [sites]);
 
   const loadSites = async () => {
     try {
@@ -222,6 +281,7 @@ const AdminDashboard = () => {
     try {
       const response = await axios.get(`${API}/admin/health-check`, { withCredentials: true });
       setSiteHealth(response.data);
+      setLastHealthCheck(new Date());
       // Reload alerts after health check
       const alertsResponse = await axios.get(`${API}/admin/alerts`, { withCredentials: true });
       setAlerts(alertsResponse.data);
@@ -311,6 +371,27 @@ const AdminDashboard = () => {
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-6">
+        {/* Live Visitor Popup */}
+        {liveVisitor && (
+          <div className="fixed bottom-6 right-6 bg-white rounded-xl shadow-lg border border-stone-200 p-4 animate-bounce-in z-50 max-w-xs">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center">
+                <Users className="w-5 h-5 text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-medium text-stone-800">
+                  {liveVisitor.country}
+                </p>
+                <p className="text-xs text-stone-500">
+                  bekijkt <span className="font-medium text-teal-600">{liveVisitor.site}</span>
+                </p>
+                <p className="text-xs text-stone-400">{liveVisitor.page}</p>
+              </div>
+              <div className="w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
+            </div>
+          </div>
+        )}
+
         {/* Status Overview */}
         <div className="bg-white rounded-xl border border-stone-200 p-4 mb-6">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
@@ -337,10 +418,16 @@ const AdminDashboard = () => {
                 onClick={checkSiteHealth}
                 disabled={checkingHealth}
                 className="flex items-center gap-2 bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded-lg text-sm transition-colors disabled:opacity-50"
+                title={lastHealthCheck ? `Laatste check: ${lastHealthCheck.toLocaleTimeString()}` : 'Nog niet gecheckt'}
               >
                 <Activity className={`w-4 h-4 ${checkingHealth ? 'animate-spin' : ''}`} />
                 <span className="hidden sm:inline">{checkingHealth ? 'Checking...' : 'Check Status'}</span>
               </button>
+              {lastHealthCheck && (
+                <span className="hidden lg:inline text-xs text-stone-400">
+                  {lastHealthCheck.toLocaleTimeString()}
+                </span>
+              )}
             </div>
           </div>
         </div>
