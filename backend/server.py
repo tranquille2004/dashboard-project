@@ -136,6 +136,21 @@ class GalleryImage(BaseModel):
     sort_order: int = 0
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
+# Site Health Monitoring Models
+class SiteAlert(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    alert_id: str = Field(default_factory=lambda: f"alert_{uuid.uuid4().hex[:12]}")
+    site_id: str
+    site_name: str
+    domain: str
+    status: str  # "down", "up", "slow"
+    message: str
+    response_time_ms: Optional[int] = None
+    started_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    resolved_at: Optional[datetime] = None
+    duration_minutes: Optional[int] = None
+    is_active: bool = True
+
 # Contact Form Email Models
 class ContactFormRequest(BaseModel):
     site: str  # Which site the form is from (smeralda, fworks, etc.)
@@ -1267,6 +1282,159 @@ async def get_all_stats(user: User = Depends(get_current_user)):
         })
     
     return stats
+
+# ============== SITE HEALTH MONITORING ==============
+
+@admin_router.get("/health-check")
+async def check_all_sites_health(user: User = Depends(get_current_user)):
+    """Check health of all sites and return status with any alerts"""
+    sites = await db.sites.find({}, {"_id": 0}).to_list(100)
+    
+    health_results = []
+    
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        for site in sites:
+            site_id = site.get("site_id")
+            site_name = site.get("name", "Unknown")
+            domains = site.get("domains", [])
+            slug = site.get("slug", "")
+            
+            # Determine URL to check
+            if domains and len(domains) > 0:
+                check_url = f"https://{domains[0]}"
+                domain = domains[0]
+            else:
+                # Use preview URL for sites without custom domain
+                check_url = f"{os.environ.get('PREVIEW_URL', 'https://resort-showcase-2.preview.emergentagent.com')}/site/{slug}"
+                domain = f"/site/{slug}"
+            
+            try:
+                start_time = datetime.now(timezone.utc)
+                response = await client.get(check_url, follow_redirects=True)
+                end_time = datetime.now(timezone.utc)
+                response_time = int((end_time - start_time).total_seconds() * 1000)
+                
+                if response.status_code == 200:
+                    status = "up"
+                    message = "Site is online"
+                    # Check if slow (> 3 seconds)
+                    if response_time > 3000:
+                        status = "slow"
+                        message = f"Site is slow ({response_time}ms)"
+                elif response.status_code >= 500:
+                    status = "down"
+                    message = f"Server error: {response.status_code}"
+                else:
+                    status = "warning"
+                    message = f"HTTP {response.status_code}"
+                    
+                health_results.append({
+                    "site_id": site_id,
+                    "site_name": site_name,
+                    "domain": domain,
+                    "status": status,
+                    "message": message,
+                    "response_time_ms": response_time,
+                    "checked_at": datetime.now(timezone.utc).isoformat()
+                })
+                
+                # If site is down, create or update alert
+                if status == "down":
+                    existing_alert = await db.site_alerts.find_one({
+                        "site_id": site_id,
+                        "is_active": True
+                    })
+                    if not existing_alert:
+                        alert = SiteAlert(
+                            site_id=site_id,
+                            site_name=site_name,
+                            domain=domain,
+                            status=status,
+                            message=message,
+                            response_time_ms=response_time
+                        )
+                        await db.site_alerts.insert_one(alert.model_dump())
+                else:
+                    # Resolve any active alerts for this site
+                    active_alert = await db.site_alerts.find_one({
+                        "site_id": site_id,
+                        "is_active": True
+                    })
+                    if active_alert:
+                        started = datetime.fromisoformat(active_alert["started_at"].replace("Z", "+00:00")) if isinstance(active_alert["started_at"], str) else active_alert["started_at"]
+                        duration = int((datetime.now(timezone.utc) - started).total_seconds() / 60)
+                        await db.site_alerts.update_one(
+                            {"alert_id": active_alert["alert_id"]},
+                            {"$set": {
+                                "is_active": False,
+                                "resolved_at": datetime.now(timezone.utc).isoformat(),
+                                "duration_minutes": duration
+                            }}
+                        )
+                        
+            except Exception as e:
+                # Site is unreachable
+                health_results.append({
+                    "site_id": site_id,
+                    "site_name": site_name,
+                    "domain": domain,
+                    "status": "down",
+                    "message": f"Unreachable: {str(e)[:50]}",
+                    "response_time_ms": None,
+                    "checked_at": datetime.now(timezone.utc).isoformat()
+                })
+                
+                # Create alert if not exists
+                existing_alert = await db.site_alerts.find_one({
+                    "site_id": site_id,
+                    "is_active": True
+                })
+                if not existing_alert:
+                    alert = SiteAlert(
+                        site_id=site_id,
+                        site_name=site_name,
+                        domain=domain,
+                        status="down",
+                        message=f"Unreachable: {str(e)[:50]}"
+                    )
+                    await db.site_alerts.insert_one(alert.model_dump())
+    
+    return health_results
+
+@admin_router.get("/alerts")
+async def get_site_alerts(user: User = Depends(get_current_user)):
+    """Get all site alerts (active and resolved)"""
+    alerts = await db.site_alerts.find(
+        {}, 
+        {"_id": 0}
+    ).sort("started_at", -1).to_list(50)
+    
+    return alerts
+
+@admin_router.get("/alerts/active")
+async def get_active_alerts(user: User = Depends(get_current_user)):
+    """Get only active (unresolved) alerts"""
+    alerts = await db.site_alerts.find(
+        {"is_active": True}, 
+        {"_id": 0}
+    ).sort("started_at", -1).to_list(50)
+    
+    return alerts
+
+@admin_router.delete("/alerts/{alert_id}")
+async def dismiss_alert(alert_id: str, user: User = Depends(get_current_user)):
+    """Dismiss/acknowledge an alert"""
+    result = await db.site_alerts.update_one(
+        {"alert_id": alert_id},
+        {"$set": {
+            "is_active": False,
+            "resolved_at": datetime.now(timezone.utc).isoformat(),
+            "message": "Manually dismissed"
+        }}
+    )
+    if result.modified_count == 0:
+        raise HTTPException(status_code=404, detail="Alert not found")
+    return {"success": True}
 
 # Include routers
 app.include_router(api_router)

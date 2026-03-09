@@ -6,7 +6,7 @@ import {
   Plus, Settings, Image, Menu, Users, Globe, LogOut, 
   ChevronRight, Trash2, Edit, Eye, Clock, Phone, Mail,
   BarChart2, X, MapPin, TrendingUp, Activity, ExternalLink,
-  Calendar, UserCheck, MousePointer
+  Calendar, UserCheck, MousePointer, Check, AlertTriangle
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -130,6 +130,9 @@ const AdminDashboard = () => {
   const [showStatsModal, setShowStatsModal] = useState(false);
   const [selectedSiteStats, setSelectedSiteStats] = useState(null);
   const [loadingStats, setLoadingStats] = useState(false);
+  const [siteHealth, setSiteHealth] = useState([]);
+  const [alerts, setAlerts] = useState([]);
+  const [checkingHealth, setCheckingHealth] = useState(false);
 
   const t = (key) => translations[lang]?.[key] || key;
 
@@ -178,6 +181,14 @@ const AdminDashboard = () => {
       } catch (statsError) {
         console.error('Error loading stats:', statsError);
       }
+      
+      // Load alerts
+      try {
+        const alertsResponse = await axios.get(`${API}/admin/alerts`, { withCredentials: true });
+        setAlerts(alertsResponse.data);
+      } catch (alertsError) {
+        console.error('Error loading alerts:', alertsError);
+      }
     } catch (error) {
       console.error('Error loading sites:', error);
     } finally {
@@ -204,6 +215,49 @@ const AdminDashboard = () => {
     } catch (error) {
       console.error('Error deleting site:', error);
     }
+  };
+
+  const checkSiteHealth = async () => {
+    setCheckingHealth(true);
+    try {
+      const response = await axios.get(`${API}/admin/health-check`, { withCredentials: true });
+      setSiteHealth(response.data);
+      // Reload alerts after health check
+      const alertsResponse = await axios.get(`${API}/admin/alerts`, { withCredentials: true });
+      setAlerts(alertsResponse.data);
+    } catch (error) {
+      console.error('Error checking health:', error);
+    } finally {
+      setCheckingHealth(false);
+    }
+  };
+
+  const dismissAlert = async (alertId) => {
+    try {
+      await axios.delete(`${API}/admin/alerts/${alertId}`, { withCredentials: true });
+      setAlerts(alerts.filter(a => a.alert_id !== alertId));
+    } catch (error) {
+      console.error('Error dismissing alert:', error);
+    }
+  };
+
+  const formatDuration = (minutes) => {
+    if (!minutes) return '-';
+    if (minutes < 60) return `${minutes} min`;
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}u ${mins}m`;
+  };
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return '-';
+    const date = new Date(dateStr);
+    return date.toLocaleString(lang === 'nl' ? 'nl-NL' : lang === 'fr' ? 'fr-FR' : 'en-US', {
+      day: '2-digit',
+      month: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit'
+    });
   };
 
   if (authLoading || loading) {
@@ -278,9 +332,67 @@ const AdminDashboard = () => {
                   {Object.values(siteStats).reduce((sum, s) => sum + (s?.today || 0), 0)} {t('visitorsToday')}
                 </span>
               </div>
+              {/* Health Check Button */}
+              <button 
+                onClick={checkSiteHealth}
+                disabled={checkingHealth}
+                className="flex items-center gap-2 bg-stone-100 hover:bg-stone-200 text-stone-600 px-3 py-1.5 rounded-lg text-sm transition-colors disabled:opacity-50"
+              >
+                <Activity className={`w-4 h-4 ${checkingHealth ? 'animate-spin' : ''}`} />
+                <span className="hidden sm:inline">{checkingHealth ? 'Checking...' : 'Check Status'}</span>
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Alerts Section */}
+        {alerts.length > 0 && (
+          <div className="bg-white rounded-xl border border-stone-200 mb-6 overflow-hidden">
+            <div className="px-4 py-3 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
+                <h3 className="font-semibold text-stone-800">Site Alerts ({alerts.filter(a => a.is_active).length} actief)</h3>
+              </div>
+            </div>
+            <div className="divide-y divide-stone-100 max-h-64 overflow-y-auto">
+              {alerts.map(alert => (
+                <div key={alert.alert_id} className={`px-4 py-3 flex items-center justify-between ${alert.is_active ? 'bg-red-50' : 'bg-stone-50'}`}>
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${alert.is_active ? 'bg-red-100' : 'bg-stone-200'}`}>
+                      {alert.is_active ? (
+                        <X className="w-4 h-4 text-red-600" />
+                      ) : (
+                        <Check className="w-4 h-4 text-teal-600" />
+                      )}
+                    </div>
+                    <div>
+                      <p className="font-medium text-stone-900 text-sm">{alert.site_name}</p>
+                      <p className="text-xs text-stone-500">{alert.domain}</p>
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <p className={`text-sm font-medium ${alert.is_active ? 'text-red-600' : 'text-teal-600'}`}>
+                      {alert.is_active ? 'DOWN' : 'Opgelost'}
+                    </p>
+                    <p className="text-xs text-stone-500">
+                      {formatDate(alert.started_at)}
+                      {alert.duration_minutes && ` • ${formatDuration(alert.duration_minutes)}`}
+                    </p>
+                  </div>
+                  {alert.is_active && (
+                    <button 
+                      onClick={() => dismissAlert(alert.alert_id)}
+                      className="ml-3 p-1.5 text-stone-400 hover:text-stone-600 hover:bg-stone-100 rounded"
+                      title="Dismiss"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         {/* Sites Header */}
         <div className="flex justify-between items-center mb-4">
