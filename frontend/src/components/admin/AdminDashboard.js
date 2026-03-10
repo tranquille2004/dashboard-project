@@ -187,42 +187,34 @@ const AdminDashboard = () => {
     };
   }, [user]);
 
-  // Fun live visitor simulation
+  // Real live visitor data (fetches from backend)
   useEffect(() => {
-    if (sites.length === 0) return;
+    if (!user) return;
     
-    const showRandomVisitor = () => {
-      const randomSite = sites[Math.floor(Math.random() * sites.length)];
-      const countries = ['🇧🇪 België', '🇳🇱 Nederland', '🇫🇷 Frankrijk', '🇩🇪 Duitsland', '🇮🇹 Italië', '🇪🇸 Spanje', '🇬🇧 UK', '🇺🇸 USA'];
-      const randomCountry = countries[Math.floor(Math.random() * countries.length)];
-      
-      setLiveVisitor({
-        site: randomSite.name,
-        country: randomCountry,
-        page: ['Homepage', 'Menu', 'Contact', 'Reserveren', 'Over ons'][Math.floor(Math.random() * 5)]
-      });
-      
-      // Hide after 4 seconds
-      setTimeout(() => setLiveVisitor(null), 4000);
+    const fetchLiveVisitor = async () => {
+      try {
+        const response = await axios.get(`${API}/admin/live-visitor`, { withCredentials: true });
+        if (response.data) {
+          setLiveVisitor(response.data);
+          // Hide after 5 seconds
+          setTimeout(() => setLiveVisitor(null), 5000);
+        }
+      } catch (error) {
+        // Silently fail - no fake data
+      }
     };
     
-    // Show visitor every 15-30 seconds randomly
-    const scheduleNext = () => {
-      const delay = 15000 + Math.random() * 15000;
-      return setTimeout(() => {
-        showRandomVisitor();
-        scheduleNext();
-      }, delay);
+    // Check for new visitors every 30 seconds
+    const interval = setInterval(fetchLiveVisitor, 30000);
+    
+    // Initial check after 5 seconds
+    const initialDelay = setTimeout(fetchLiveVisitor, 5000);
+    
+    return () => {
+      clearInterval(interval);
+      clearTimeout(initialDelay);
     };
-    
-    // Start after 10 seconds
-    const initialDelay = setTimeout(() => {
-      showRandomVisitor();
-      scheduleNext();
-    }, 10000);
-    
-    return () => clearTimeout(initialDelay);
-  }, [sites]);
+  }, [user]);
 
   const loadSites = async () => {
     try {

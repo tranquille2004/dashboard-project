@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { 
   AlertTriangle, Bell, Clock, CheckCircle, XCircle, 
   Users, Calendar, Filter, RefreshCw, ChevronLeft,
-  TrendingUp, Activity, Server, ShoppingCart
+  TrendingUp, Activity, Server, ShoppingCart, X
 } from 'lucide-react';
 import axios from 'axios';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
 const AlertsPage = () => {
+  const navigate = useNavigate();
   const [alerts, setAlerts] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -125,12 +126,17 @@ const AlertsPage = () => {
   return (
     <div className="min-h-screen bg-stone-100 p-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
+        {/* Header with prominent back button */}
         <div className="mb-6">
-          <Link to="/admin" className="inline-flex items-center text-stone-600 hover:text-stone-900 mb-4">
-            <ChevronLeft className="w-4 h-4 mr-1" />
-            Terug naar Dashboard
-          </Link>
+          <div className="flex items-center gap-4 mb-4">
+            <button 
+              onClick={() => navigate('/admin')}
+              className="flex items-center gap-2 px-4 py-2 bg-white border border-stone-300 rounded-lg hover:bg-stone-50 text-stone-700 font-medium shadow-sm"
+            >
+              <ChevronLeft className="w-5 h-5" />
+              Terug naar Dashboard
+            </button>
+          </div>
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-stone-900">Alert Centrum</h1>
@@ -282,21 +288,35 @@ const AlertsPage = () => {
               {alerts.map(alert => (
                 <div 
                   key={alert.alert_id} 
-                  className={`p-4 ${getAlertColor(alert)} border-l-4`}
+                  className={`p-4 ${getAlertColor(alert)} border-l-4 ${!alert.is_active ? 'border-l-teal-500' : ''}`}
                 >
                   <div className="flex items-start justify-between">
                     <div className="flex items-start gap-3">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
-                        !alert.is_active ? 'bg-stone-200' : 
-                        alert.status === 'no_reservations' ? 'bg-purple-100' :
-                        alert.status === 'no_visitors' ? 'bg-amber-100' : 'bg-red-100'
-                      }`}>
-                        {getAlertIcon(alert.alert_type, alert.status)}
+                      {/* Icon with green checkmark overlay for resolved */}
+                      <div className="relative">
+                        <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${
+                          !alert.is_active ? 'bg-teal-100' : 
+                          alert.status === 'no_reservations' ? 'bg-purple-100' :
+                          alert.status === 'no_visitors' ? 'bg-amber-100' : 'bg-red-100'
+                        }`}>
+                          {!alert.is_active ? (
+                            <CheckCircle className="w-6 h-6 text-teal-600" />
+                          ) : (
+                            getAlertIcon(alert.alert_type, alert.status)
+                          )}
+                        </div>
                       </div>
                       <div>
                         <div className="flex items-center gap-2 mb-1">
                           <h4 className="font-semibold text-stone-900">{alert.site_name}</h4>
                           {getStatusBadge(alert)}
+                          {/* Extra green checkmark for resolved */}
+                          {!alert.is_active && (
+                            <span className="flex items-center gap-1 text-teal-600 font-medium text-sm">
+                              <CheckCircle className="w-4 h-4" />
+                              Opgelost
+                            </span>
+                          )}
                         </div>
                         <p className="text-sm text-stone-600 mb-2">{alert.message}</p>
                         <div className="flex flex-wrap gap-4 text-xs text-stone-500">
@@ -305,7 +325,7 @@ const AlertsPage = () => {
                             Start: {formatDate(alert.started_at)}
                           </span>
                           {alert.resolved_at && (
-                            <span className="flex items-center gap-1">
+                            <span className="flex items-center gap-1 text-teal-600">
                               <CheckCircle className="w-3 h-3" />
                               Opgelost: {formatDate(alert.resolved_at)}
                             </span>

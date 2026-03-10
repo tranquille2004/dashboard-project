@@ -1679,6 +1679,67 @@ async def get_all_stats(user: User = Depends(get_current_user)):
     
     return stats
 
+@admin_router.get("/live-visitor")
+async def get_latest_visitor(user: User = Depends(get_current_user)):
+    """Get the most recent visitor across all sites (for live animation)"""
+    # Get the most recent visit from the last 5 minutes
+    five_mins_ago = (datetime.now(timezone.utc) - timedelta(minutes=5)).isoformat()
+    
+    recent_visit = await db.site_visits.find_one(
+        {"timestamp": {"$gte": five_mins_ago}},
+        {"_id": 0, "visitor_ip": 0, "visitor_id": 0},
+        sort=[("timestamp", -1)]
+    )
+    
+    if not recent_visit:
+        return None
+    
+    # Get site name
+    site_slug = recent_visit.get("site_slug", "")
+    site = await db.sites.find_one({"slug": site_slug}, {"_id": 0, "name": 1})
+    site_name = site.get("name", site_slug) if site else site_slug
+    
+    # Format country with flag
+    country = recent_visit.get("country", "Onbekend")
+    country_flags = {
+        "Belgium": "🇧🇪 België",
+        "Netherlands": "🇳🇱 Nederland",
+        "France": "🇫🇷 Frankrijk",
+        "Germany": "🇩🇪 Duitsland",
+        "Italy": "🇮🇹 Italië",
+        "Spain": "🇪🇸 Spanje",
+        "United Kingdom": "🇬🇧 UK",
+        "United States": "🇺🇸 USA",
+        "Ecuador": "🇪🇨 Ecuador",
+        "Colombia": "🇨🇴 Colombia",
+        "Peru": "🇵🇪 Peru",
+    }
+    country_display = country_flags.get(country, f"🌍 {country}")
+    
+    # Format path nicely
+    path = recent_visit.get("path", "/")
+    page_names = {
+        "/": "Homepage",
+        "/kaart": "Menu",
+        "/menu": "Menu",
+        "/contact": "Contact",
+        "/reserveren": "Reserveren",
+        "/reserve": "Reserveren",
+        "/about": "Over ons",
+        "/over-ons": "Over ons",
+        "/gallery": "Galerij",
+        "/fotos": "Foto's",
+        "/info": "Info"
+    }
+    page_display = page_names.get(path, path)
+    
+    return {
+        "site": site_name,
+        "country": country_display,
+        "page": page_display,
+        "timestamp": recent_visit.get("timestamp")
+    }
+
 # ============== SITE HEALTH MONITORING ==============
 
 @admin_router.get("/health-check")
