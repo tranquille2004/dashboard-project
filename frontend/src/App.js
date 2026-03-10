@@ -82,25 +82,15 @@ function CustomDomainRouter({ slug }) {
   
   // FWorksBuilders.com - Promotie website
   if (slug === 'fworks') {
-    // /admin gaat naar super admin dashboard
-    if (location.pathname === '/admin' || location.pathname === '/admin/') {
+    // Alle /admin/* routes
+    if (location.pathname.startsWith('/admin')) {
       return (
         <AuthProvider>
           <SiteProvider>
             <Routes>
               <Route path="/admin" element={<AdminDashboard />} />
-            </Routes>
-          </SiteProvider>
-        </AuthProvider>
-      );
-    }
-    // /admin/alerts gaat naar alerts pagina
-    if (location.pathname.startsWith('/admin/alerts')) {
-      return (
-        <AuthProvider>
-          <SiteProvider>
-            <Routes>
               <Route path="/admin/alerts" element={<AlertsPage />} />
+              <Route path="/admin/sites/:siteId" element={<SiteEditor />} />
             </Routes>
           </SiteProvider>
         </AuthProvider>
