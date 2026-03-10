@@ -1305,7 +1305,7 @@ async def check_all_sites_health(user: User = Depends(get_current_user)):
                 domain = domains[0]
             else:
                 # Use preview URL for sites without custom domain
-                check_url = f"{os.environ.get('PREVIEW_URL', 'https://resort-showcase-2.preview.emergentagent.com')}/site/{slug}"
+                check_url = f"{os.environ.get('PREVIEW_URL', 'https://smeralda-hub.preview.emergentagent.com')}/site/{slug}"
                 domain = f"/site/{slug}"
             
             try:

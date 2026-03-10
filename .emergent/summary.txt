@@ -1,187 +1,216 @@
 <analysis>**original_problem_statement:**
-The user's initial project was to consolidate six restaurant websites into a single multi-tenant application with admin dashboards. This phase was largely completed, but plagued by stability issues.
+The initial project was to create a multi-tenant application for six restaurant websites. This pivoted to a high-priority task of building a promotional website for the user's business, . A new, major project was then added: modernize the  website into a full-featured, multi-lingual booking/showcase site. The platform has since expanded to include a super-admin dashboard for managing all sites, with features like visitor analytics and site health monitoring. The core challenge of the project is managing the live deployments, which are handled via a Cloudflare Worker script that must be manually updated by the user after every fork or deployment, a concept that is a recurring point of failure and user frustration.
 
-The project then pivoted to a new, high-priority request: build a professional promotional website for the user's web development business, to be hosted on the  domain.
+**PRODUCT REQUIREMENTS (Smeralda Vacanze Website):**
+1.  **Main Goal:** Modernize the existing Weebly site into an attractive, professional booking website.
+2.  **Content & Features:**
+    *   Replicate all pages and content from the original site.
+    *   Implement multi-language support (EN, NL, FR, ES, IT, DE).
+    *   Create filterable galleries for apartments and surroundings.
+    *   Display detailed pricing and costs.
+    *   Include an fworksbuilders webmaster logo/info in the footer.
+    *   Integrate Tawk.to for live chat.
+    *   A contact form that sends emails via a backend service (Resend).
 
-**PRODUCT REQUIREMENTS (New Website):**
-1.  **Main Goal:** Create an attractive, professional website to promote the user's web development services and attract clients.
-2.  **Pages:** A single-page application with a contact section/form.
-3.  **Design:** Elegant, dark theme (Design B), with a professional background photo and the user's  logo.
-4.  **Content & Features:**
-    *   Advertise the ability to build websites for clients.
-    *   Showcase the platform's features: personal client dashboards, special announcements, payment systems, restaurant reservation systems, multi-language support.
-    *   The feature showcase should be interactive and use realistic examples, not generic placeholders.
-    *   Portfolio section displaying the user's existing six websites, preferably with live previews.
-    *   Pricing Section: Display a one-time setup fee (from €50, depending on work) and an annual fee (€199/year).
-    *   Prominently feature a Website ready in 24 hours promise.
-5.  **Contact & Communication:**
-    *   Include the email .
-    *   Include a WhatsApp-only phone number with a direct  link.
-    *   Integrate a live chat feature (Tawk.to).
-6.  **Internationalization:** The site must be translated into English, French, Dutch, Spanish, and Italian.
-7.  **SEO:** The website must be highly optimized for search engines (Google, Bing) to attract people searching for web developers. This includes meta tags, structured data (JSON-LD), and a .
-8.  **Payment Integration:** Implement a system for clients to pay the €50 setup fee and/or the €199 annual fee online. Requested providers: Stripe, Payconiq, and Binance Pay.
+**PRODUCT REQUIREMENTS (Super-Admin Dashboard):**
+1.  Provide a unified view of all managed websites.
+2.  Display visitor statistics for each site.
+3.  Implement a site health monitoring system to show downtime alerts.
+4.  The live visitor animation must reflect real visitor data.
 
 **User's preferred language**: Nederlands (Dutch). You MUST respond in Dutch.
 
 **what currently exists?**
-A new single-page promotional website has been created at . It is a sophisticated React component featuring:
-- An elegant dark theme with a background image and the user's logo.
-- Multiple sections: Hero, an interactive feature showcase with tabs, a portfolio with live iframe previews of the other 6 sites, pricing, and contact.
-- Multi-language support (EN, NL, FR, ES, IT) with a language switcher.
-- Advanced SEO with , dynamic meta tags per language, and JSON-LD structured data.
-- A  file for  and all 6 other client sites.
-- A Tawk.to live chat widget integration, configured with the user's ID.
-- The Cloudflare worker has been updated to serve this new site on  while keeping  for the super-admin dashboard.
-- The original multi-tenant application and its critical bugs (routing, database desync) have been fixed and are stable.
+The application is a multi-site platform featuring , , and six restaurant websites, all managed through a super-admin dashboard. All sites are routed through a single Cloudflare Worker script. The dashboard has been recently redesigned with a grid layout, a new font (Inter), and a site health monitoring system. However, the entire platform is currently running on a **temporary preview URL** because production deployments are consistently failing. This makes the system fragile, as a new chat fork by the user requires a manual update of the Cloudflare Worker script to point to a new preview URL, which is a constant source of errors and site downtime.
 
 **Last working item**:
-*   **Last item agent was working:** The agent was gathering requirements and fetching integration playbooks for implementing a payment system on the new  website. The user confirmed they want to integrate Stripe, Payconiq, and Binance Pay to accept payments for the setup and annual fees. The agent successfully received the playbooks from the  tool.
-*   **Status:** NOT STARTED (Code implementation has not begun).
-*   **Agent Testing Done:** N
-*   **Which testing method agent to use?** Both. Backend agent to test the new API endpoints for creating payment intents and handling webhooks. Frontend agent to test the UI flow for selecting a plan and completing a payment.
-*   **User Testing Done:** N
+- **Last item agent was working:** Diagnosing and resolving multiple site failures and errors that occurred immediately after the user created a new fork (Smeralda Booking Hub). The root cause is that the Cloudflare Worker is still pointing to the old, now-inactive preview URL. The user also reported new bugs on the Cantina and Ascoli sites that appeared after the fork.
+- **Status:** IN PROGRESS
+- **Agent Testing Done:** N
+- **Which testing method agent to use?** Manual verification. The user must first update their Cloudflare Worker with the new preview URL. After that, the agent must investigate the new bugs on the Cantina and Ascoli sites.
+- **User Testing Done:** N
 
 **All Pending/In progress Issue list**:
-There are no outstanding *bugs* or *issues*. The work has transitioned to new feature development. Old issues are listed under Earlier issues found/mentioned but not fixed.
+- **Issue 1: All sites are inaccessible or show errors after the latest user fork (P0 - CRITICAL BLOCKER)**
+  - **Attempted fixes:** The agent correctly identified that the user forked the project, creating a new preview URL (), but the Cloudflare Worker is still pointing to the old one. The agent provided the user with the updated worker code.
+  - **Next debug checklist:**
+    1.  Ensure the user successfully updates the Cloudflare Worker code with the new .
+    2.  Once the sites are back online, investigate the new follow-up bugs (Issue 2 & 3).
+  - **Why fix this issue and what will be achieved with the fix?** This is a complete blocker. No sites are working correctly until the Cloudflare Worker is fixed.
+  - **Status:** IN PROGRESS
+  - **Is recurring issue?** Y
+  - **Should Test frontend/backend/both after fix?** Both.
+  - **Blocked on other issue:** None. This is the primary blocker.
+
+- **Issue 2: Menu on 'La Cantina' website is not working (P1)**
+  - **Debug checklist:** This bug appeared after the latest fork. Once the Cloudflare Worker is fixed, navigate to the La Cantina site and investigate the JavaScript console for errors related to the menu component.
+  - **Why fix this issue and what will be achieved with the fix?** Core functionality of the restaurant site is broken.
+  - **Status:** NOT STARTED
+  - **Is recurring issue?** N
+  - **Should Test frontend/backend/both after fix?** Frontend.
+  - **Blocked on other issue:** Issue 1.
+
+- **Issue 3: Ascoli website shows a cross-origin frame error (P1)**
+  - **Attempted fixes:** The error is . This is due to the iframe-based setup in the Cloudflare Worker trying to perform an action () on a different origin (the new preview URL).
+  - **Next debug checklist:** After Issue 1 is resolved, investigate the code in  that triggers the  function and find a cross-origin safe way to implement it, perhaps using .
+  - **Why fix this issue and what will be achieved with the fix?** The site is throwing a visible error, which is unprofessional.
+  - **Status:** NOT STARTED
+  - **Is recurring issue?** Y (happens with new preview URLs).
+  - **Should Test frontend/backend/both after fix?** Frontend.
+  - **Blocked on other issue:** Issue 1.
+
+- **Issue 4: Production deployments are failing (P1)**
+  - **Attempted fixes:** The user has tried deploying to production multiple times. The deployments either fail during the build process or result in a non-functional URL (, 520 errors). The user has been advised to contact Emergent support.
+  - **Next debug checklist:** This is likely a platform issue. The next agent should check with the user if they received a response from support.
+  - **Why fix this issue and what will be achieved with the fix?** This is critical to creating a stable, professional environment that doesn't rely on fragile, temporary preview URLs.
+  - **Status:** BLOCKED (on Emergent support)
+  - **Is recurring issue?** Y
+  - **Should Test frontend/backend/both after fix?** Both.
+
+- **Issue 5: Image carousel on Smeralda site does not stop auto-play on manual interaction (P2)**
+  - **Next debug checklist:** Review the  and  state logic in the  component in . The  needs to be cleared when  becomes true.
+  - **Why fix this issue and what will be achieved with the fix?** Improves user experience on the Smeralda site.
+  - **Status:** NOT STARTED
+  - **Is recurring issue?** N
+  - **Should Test frontend/backend/both after fix?** Frontend.
 
 **In progress Task List**:
-*   **Task 1: Implement Payment Gateway Integration (P0 - HIGHEST)**
-    *   **Where to resume:** The agent has the integration playbooks for Stripe, Payconiq, and Binance Pay. The next step is to start implementing the backend and frontend code.
-        1.  **Backend:** Create new API endpoints in  to handle payment intent creation for the different providers.
-        2.  **Frontend:** In , build a new component for the payment flow. This should allow a user to select either the €50 setup fee or the €199 annual fee and then proceed to pay with one of the available methods.
-        3.  **Secrets:** Add required API keys for Stripe, Payconiq, and Binance Pay to the  files. You will need to ask the user for these keys.
-    *   **What will be achieved with this?** This will complete a core requirement for the new promotional website, allowing the user to accept payments from new clients directly on the site.
-    *   **Status:** IN PROGRESS
-    *   **Should Test frontend/backend/both after fix?** Both.
-    *   **Blocked on something:** User-provided API keys for Stripe, Payconiq, and Binance Pay.
+- **Task 1: Make live visitor animation use REAL data (P1)**
+  - **Where to resume:** The user discovered the current animation is a simulation. The backend () already tracks visitor data (). The  component needs to be modified.
+    1.  Create a new backend endpoint (e.g., ) that returns the last few unique visitor entries (with country, site, etc.).
+    2.  Modify the  in  to fetch from this new endpoint.
+    3.  Update the animation logic to display the real data instead of random data.
+  - **What will be achieved with this?** Fulfills a direct user request for the feature to be authentic.
+  - **Status:** IN PROGRESS
+  - **Should Test frontend/backend/both after fix?** Both.
+  - **Blocked on something:** Issue 1.
+
+- **Task 2: Improve site health monitoring (P2)**
+  - **Where to resume:** The user wants the check to run in the background, not just when the dashboard is open.
+  - **Next debug checklist:** This requires a backend-driven approach.
+    1.  Create a background task (e.g., using  or a similar library in FastAPI) that runs the health check function every few minutes, independent of any user being logged in.
+    2.  This task should log any downtime directly to the  collection in the database.
+    3.  The frontend dashboard will then simply fetch and display these pre-existing alerts.
+  - **What will be achieved with this?** Creates a reliable, true monitoring system that captures all downtime events.
+  - **Status:** NOT STARTED
+  - **Should Test frontend/backend/both after fix?** Backend.
 
 **Upcoming and Future Tasks**
 *   **Upcoming Tasks:**
-    *   **(P1) Final User Verification & Deployment:** Once the payment integration is complete, guide the user through a final test of the entire  website before they do a final deployment.
+    *   **(P1) Create Missing Pages for Smeralda Site:** The user explicitly stated that not all pages from the original Weebly site were created. The current site is a single-page app. The next agent needs to clarify if the new Services section is sufficient or if separate pages/routes are needed.
+    *   **(P2) Integrate Payment Gateway Integration:** Stripe, Payconiq, and Binance Pay. Blocked on receiving API keys from the user.
 *   **Future Tasks:**
-    *   **(P2) Create User Guide:** Write a simple markdown document explaining how to add an 8th website in the future.
-    *   **(P2) Itemized Menu Editor:** Implement a more advanced menu editor in the admin dashboards for the restaurant sites.
-    *   **(P3) Complete French Translations:** Finish the incomplete French translations in the super-admin dashboard.
+    *   **(P2) Create User Guide:** Write a markdown document explaining how to add a 9th website.
+    *   **(P3) Itemized Menu Editor:** Implement an advanced menu editor for the restaurant sites.
+    *   **(P3) Complete French Translations:** Finish incomplete translations in the super-admin dashboard.
 
 **Completed work in this session**
+- **Dashboard Redesign & Feature Enhancement:**
+  - Redesigned the super-admin dashboard with a compact grid layout, new font (Inter), and a warmer color palette ( background,  accents).
+  - Implemented a site health monitoring system with a manual Check Status button and an alerts section to log downtime.
+  - Added an automatic (every 2 mins) health check that runs while the dashboard is open.
+  - Added a (currently fake) live visitor animation.
+  - Translated new dashboard elements into FR, NL, and EN.
+  - Updated the welcome message to include the user's name.
 - **Critical Bug Fixes:**
-    - **Cloudflare & Routing:** Diagnosed and fixed multiple critical routing issues where internal navigation on proxied sites led to the wrong page. This involved updating the Cloudflare worker to point to the correct preview URL and fixing relative link paths in  and .
-    - **La Cantina Admin & DB Desync:** Correctly diagnosed the production vs. preview database issue based on user-provided support emails. Fixed  to correctly route  to the site-specific admin login, which writes to the production DB. This finally allowed the user to remove the stale Christmas announcement.
-- **New Feature Development ( website):**
-    - **Full Website Creation:** Built the entire single-page promotional website from scratch ().
-    - **UI/UX:** Implemented an elegant dark theme, interactive feature showcase with tabs, animated elements, and live iframe previews in the portfolio.
-    - **Integrations:** Successfully integrated Tawk.to for live chat.
-    - **SEO:** Implemented comprehensive SEO, including dynamic meta tags for 5 languages, JSON-LD structured data, and generated  files for all 7 websites.
-    - **Content:** Added all user-requested content, including pricing, contact info, WhatsApp links, and feature descriptions.
+  - Fixed a recurring Tawk.to React error () on both the Smeralda and FWorksBuilder sites by replacing the React component with a more reliable script-based loading method.
+  - Fixed the name of the fworksbuilders site in the database after user request.
+- **New Content:**
+  - Added Car Rental, Boat Rental, and Flights as a Services section to the Smeralda site with multi-language translations.
+- **User Support & Guidance:**
+  - Repeatedly diagnosed and explained the root cause of site outages (the Cloudflare  issue).
+  - Guided the user through setting up two new domains (, ) in Cloudflare from scratch, including DNS records, Worker routes, and SSL certificate provisioning.
+  - Advised the user on managing their Emergent deployments to avoid extra costs.
 
 **Earlier issues found/mentioned but not fixed**
-*   **Issue 1: Incomplete French Translations in Admin Dashboard**
-    - **Debug checklist:** Resume work in , find hardcoded Dutch strings, and replace them with the i18n translation function.
-    - **Why to solve this issue and what will be achieved with this?** Fulfills the user's original request for full internationalization of the admin panel.
-    - **Should Test frontend/backend/both after fix:** Frontend.
-    - **Is recurring issue?** N
-*   **Issue 2: Super Admin Dashboard Photo Gallery Discrepancy**
-    - **Debug checklist:** Propose a solution to read images from the local filesystem () instead of the database to match the live sites.
-    - **Why to solve this issue and what will be achieved with this?** Avoids admin confusion by making the dashboard gallery reflect the live site.
-    - **Should Test frontend/backend/both after fix:** Frontend.
-    - **Is recurring issue?** N
-*   **Issue 3: Theo Beans Image Organization**
-    - **Debug checklist:** Move images from  into the  subdirectory.
-    - **Why to solve this issue and what will be achieved with this?** Codebase cleanup and organization.
-    - **Should Test frontend/backend/both after fix:** Frontend (verify images still load).
-    - **Is recurring issue?** N
+-   **Super Admin Dashboard Photo Gallery Discrepancy:** Gallery shows DB images, live site shows filesystem images.
+-   **Theo Beans Image Organization:** User had previously mentioned issues with how images were organized.
+-   **Super-admin announcements for Cantina do not work.**
 
 **Known issue recurrence from previous fork**
-- None. The critical recurring issues from the previous fork (production outages, DB desync) were diagnosed and resolved in this session.
+- **Issue:** **THE CLOUDFLARE WORKER **. This is the single most recurring and critical issue in the entire project. The application's stability is tied to a temporary preview URL that changes with every new fork. The user does not fully grasp that they MUST update this URL in their Cloudflare Worker script after forking, leading to predictable site-wide outages.
+- **Recurrence count:** 15+
+- **Status:** RESOLVED (for the current fork), but will 100% recur on the next fork. The next agent must be prepared to provide the new Cloudflare worker code immediately.
 
 **Code Architecture**
 
 
 **Key Technical Concepts**
-- **Multi-Domain Architecture:** 6 sites run on a multi-tenant app, 5 of which are proxied via a Cloudflare Worker . 1 site () is a new, separate React app served by the same backend.
-- **Advanced Frontend:** The new  uses modern React with hooks, interactive tabs, CSS animations, and  for live previews.
-- **Advanced SEO:** Using  for dynamic meta tags per language and  for Google structured data snippets.
-- **3rd Party Integrations:** Tawk.to (live chat) is implemented. Stripe, Payconiq, and Binance Pay are next.
+- **Cloudflare Worker URL:** The entire multi-site setup is proxied through a single Cloudflare Worker. The stability of all sites depends on the  variable in this script pointing to the correct, active Emergent preview/deployment URL. This is the project's Achilles' heel.
+- **Frontend-driven Health Checks:** The current site monitoring runs via  in the  component, meaning it only works when a user has the dashboard open in their browser.
+- **Fake Real-time Data:** The live visitor animation is currently a simulation using hardcoded data and . It does not pull from the actual visitor database.
 
 **key DB schema**
-- No schema changes. The payment integration will likely not require new tables, but will interact with the payments provider APIs.
+- ****: Stores data for each of the 8+ websites.
+- ****: Logs visitor data (IP, country, site, timestamp).
+- ****: **(NEW)** Stores logs of site downtime events. .
 
 **All files of reference**
-- : The newly created promotional website.
-- : Contains crucial routing logic fixes for the admin panels and site routing.
-- : Updated with base SEO meta tags.
-- : Main sitemap generated for the new site.
-- : Folder containing sitemaps for all other websites.
-- The three  responses for Stripe, Payconiq, and Binance Pay (in agent thought history).
+- : The file for the super-admin dashboard. All recent UI/UX changes and new features (health check, animation) are here.
+- : Contains the backend logic, including stats and the new health check API endpoints.
+- **User's Cloudflare Worker Script:** The agent does not have this file, but must provide updated versions to the user after every fork.
 
 **Areas that need refactoring**:
-- The Cloudflare Worker  approach is functional but not ideal for SEO for the 5 restaurant sites. However, it's stable and the user is happy, so this is a very low priority.
+-  is still a monolith (>1500 lines) and should be broken down into smaller components.
+- The health check logic should be moved from a frontend poll to a true backend background task for reliable monitoring.
 
 **key api endpoints**
-- The agent will need to create new endpoints for payment processing, likely:
-    - 
-    - 
+- : Sends contact form emails via Resend.
+- : Gets visitor stats for a site.
+- : Gets all sites for the dashboard.
+- : **(NEW)** Manually triggers a health check for all sites.
+- : **(NEW)** Gets active downtime alerts.
 
 **Critical Info for New Agent**
-- **User Trust is High:** The user is very pleased with the resolution of old bugs and the creation of the new promotional website. Maintain this positive momentum by being proactive and delivering high-quality work on the payment integration.
-- **Prioritize the New Website:** The focus is now entirely on completing the  site. The payment integration is the last major feature requested for it.
-- **Ask for API Keys:** You cannot proceed with the payment task without getting the necessary API keys from the user for Stripe, Payconiq, and Binance Pay. Ask for these clearly.
-- **Always communicate in Dutch.** This is a strict requirement.
+- **YOU ARE IN A NEW FORK.** The user just created this fork (Smeralda Booking Hub). All sites are currently broken for the user because their Cloudflare Worker points to the old preview URL. Your **FIRST ACTION** must be to provide the user with the updated Cloudflare Worker code pointing to the new preview URL: .
+- **PRODUCTION DEPLOYMENTS ARE FAILING.** Do not waste time trying to deploy. The app runs entirely on the temporary preview URL. This is a known platform issue the user has reported to support.
+- **EXPECT THE CLOUDFLARE ISSUE.** The user will repeatedly face issues where sites are down. The cause is always the  in their Cloudflare Worker. Be prepared to explain this concept again and provide the correct URL.
+- **Address the new bugs immediately** after the sites are back online (Cantina menu, Ascoli error). These are regressions from the new fork/URL.
 
 **documents and test reports created in this job**
-- Sitemaps for all 7 websites (e.g., , ).
-- Multiple screenshots were generated to , but the agent was unable to reliably access them.
+- /app/memory/PRD.md
 
 **Last 10 User Messages and any pending HUMAN messages**
-1.  **User:** Asks for sitemaps for all other websites. (Completed)
-2.  **User:** Confirms intent to use Payconiq (not Paytonic), Stripe, and Binance. Declines PayPal for now. (Awaiting Implementation)
-3.  **User:** Asks what  is and requests one. Also asks if SEO is multi-language and if a payment system can be built. (Agent explained and started tasks).
-4.  **User:** Asks if they can just redeploy to make the site live and if SEO has been handled. (Agent started SEO task).
-5.  **User:** Provides Tawk.to ID and asks to change green brand colors to orange/gold. (Completed).
-6.  **User:** Asks to remove opening hours, add note that €50 setup depends on work, promote ready in 24 hours, and add Spanish/Italian translations + Tawk.to integration. (Completed).
-7.  **User:** Provides feedback on the first draft of the new site: use fworksbuilders not F.workq, use correct email, make background photo clearer, add WhatsApp link, change setup price to €50, make feature demos more realistic, and add animations. (Completed).
-8.  **User:** Reports a bug with the new Cloudflare Worker code provided by the agent. (Agent provided a corrected version).
-9.  **User:** Gives more feedback on the new site: wants a nice background photo, language menu is too dark, use the real FWorks logo, and use real website screenshots instead of stock photos. Demands more interactivity to showcase features. (Completed).
-10. **User:** Deploys the fix for La Cantina and asks if the agent's theory about the other sites was correct. He then announces the project is finished and describes the new project: a promotional website for . (This was the major pivot point).
+1.  **User:** Sites were temporarily offline. Why didn't the new alert system show this? Also, the live visitor animation is fake. **I just forked the session**, do I need to update the Worker? (YES)
+2.  **User:** Reports Cantina menus are broken and the Ascoli site has a cross-origin error.
+3.  **Agent:** Confirms a new Fork was created and provides the updated Cloudflare worker code with the new preview URL.
+4.  **User:** Is confused about why they had to Fork when the agent said to stay in the same chat.
+5.  **Agent:** Explains that the platform forces a Fork when the context limit is reached, which is out of the agent's control.
+6.  **User:** Is confused about which chat is the main one and if they can delete the others.
+7.  **Agent:** Explains the difference between a chat session (code), a preview URL (temporary, tied to chat), and a deployment (permanent, but failing).
+8.  **User:** Asks if they can delete all deployments and pay 0 credits while keeping sites live via the preview URL.
+9.  **Agent:** Explains this is possible but risky, and a deployment is the professional solution for stability.
+10. **User:** Follows advice, deletes the failed Resort Showcase 2 deployment, but now La Cantina is down. The agent guides them to move La Cantina to Cloudflare as well, which is now done and working. The final user request is to get the sites on a stable production deployment.
 
 **Project Health Check:**
-*   **Healthy:** The original multi-tenant application is now stable.
-*   **In Development:** The new  promotional website is built but requires the payment integration to be complete.
+*   **Broken:**
+    *   **All sites** (for the user) are currently showing errors because of the new fork and outdated Cloudflare Worker.
+    *   Production deployments are consistently failing.
+    *   The menu on the 'La Cantina' site is broken.
+    *   The 'Ascoli' site has a cross-origin error.
+*   **Mocked:**
+    *   The live visitor animation uses fake data, not real visitor stats.
 
 **3rd Party Integrations**
-*   **Cloudflare:** DNS and a critical Worker script for routing 5 sites.
+*   **Cloudflare:** Manages DNS and routes all 8 domains via a critical Worker script.
 *   **Google OAuth 2.0:** Super Admin login.
-*   **JotForm:** Used on the L'Ascoli website.
-*   **react-helmet-async:** SEO meta tags.
-*   **Tawk.to:** Live chat widget on .
-*   **Stripe (Pending):** Payment processing.
-*   **Payconiq (Pending):** Payment processing.
-*   **Binance Pay (Pending):** Cryptocurrency payment processing.
+*   **Resend:** Used for the backend email service on contact forms.
+*   **Tawk.to:** Live chat widget.
+*   **Stripe, Payconiq, Binance Pay (Pending):** For future payment integration.
 
 **Testing status**
 - **Testing agent used after significant changes:** NO
 - **Troubleshoot agent used after agent stuck in loop:** NO
-- **Test files created:**
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-    - 
-- **Known regressions:** None from this session.
+- **Test files created:** None.
+- **Known regressions:** Cantina menu and Ascoli scroll functionality broke after the latest fork.
 
 **Credentials to test flow:**
-*   **Super Admin URL:** Access via  on the main preview URL or  on production.
+*   **Super Admin URL:** Access via  on the preview URL.
 *   **Super Admin Login:** Use the Login with Google button.
-*   **Site Admin URL:**  (e.g., )
-*   **Site Admin Credentials:**
-    *   Email: , , etc.
-    *   Password: 
+*   **Site Admin URLs:**  (e.g., , ).
+*   **Site Admin Credentials:** , , etc. | Password: 
 
 **What agent forgot to execute**
-- The agent correctly prioritized the user's new, major request to build the promotional website. This meant that older, lower-priority tasks from the previous project were intentionally and correctly placed on the back burner. These include:
-    - Finishing the French translations in the admin dashboard.
-    - Fixing the photo gallery discrepancy in the admin dashboard.
-    - Reorganizing the Theo Beans image folder.</analysis>
+- The agent has not yet implemented a true background worker for health checks; the current implementation is a frontend poll.
+- The user's original request for separate pages for Smeralda services (Car Rental, etc.) was implemented as sections on the homepage. This might not be what the user wanted and requires clarification.
+- The carousel not stopping bug on the Smeralda site is still outstanding from the previous session.</analysis>
