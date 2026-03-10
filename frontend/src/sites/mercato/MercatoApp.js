@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import axios from "axios";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { BasePathProvider } from "./contexts/BasePathContext";
@@ -22,6 +22,31 @@ import URLSync from '@/components/URLSync';
 
 const API = process.env.REACT_APP_BACKEND_URL + "/api";
 
+// Track page visits - sends path to backend
+const trackPageVisit = async (path) => {
+  try {
+    await fetch(`${API}/public/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        site_slug: 'mercato',
+        path: path
+      })
+    });
+  } catch (error) {
+    // Silent fail
+  }
+};
+
+// Hook to track every page view
+const usePageTracking = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    trackPageVisit(location.pathname);
+  }, [location.pathname]);
+};
+
 // SEO Configuration for Ristorante Mercato
 const SEO_CONFIG = {
   siteName: "Ristorante Pizzeria Mercato",
@@ -31,6 +56,38 @@ const SEO_CONFIG = {
   description: "Ristorante Pizzeria Mercato - Authentieke Italiaanse keuken met verse ingrediënten. Pizza uit houtoven, huisgemaakte pasta, Italiaanse wijnen. Reserveer nu!",
   keywords: "Italiaans restaurant, Mercato, pizza, pasta, België, Italiaanse keuken, houtoven pizza, reserveren"
 };
+
+// Inner component that tracks page visits
+function MercatoAppInner({ siteConfig }) {
+  usePageTracking();
+  
+  return (
+    <>
+      <ScrollToTop />
+      <URLSync />
+      <Navigation />
+      <AnnouncementBanner
+        message={siteConfig?.special_announcement}
+        type={siteConfig?.special_announcement_type || 'info'}
+        active={siteConfig?.special_announcement_active}
+      />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="menu" element={<Menu />} />
+        <Route path="reserve" element={<Reserve />} />
+        <Route path="takeaway" element={<Takeaway />} />
+        <Route path="gallery" element={<Gallery />} />
+        <Route path="info" element={<Info />} />
+        <Route path="group-menus" element={<GroupMenus />} />
+        <Route path="confirmation" element={<Confirmation />} />
+        <Route path="confirmation.html" element={<Confirmation />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
+      <Footer />
+    </>
+  );
+}
 
 function MercatoApp() {
   const [siteConfig, setSiteConfig] = useState(null);
@@ -64,28 +121,7 @@ function MercatoApp() {
             url={SEO_CONFIG.baseUrl}
             siteName={SEO_CONFIG.siteName}
           />
-          <ScrollToTop />
-          <URLSync />
-          <Navigation />
-          <AnnouncementBanner
-            message={siteConfig?.special_announcement}
-            type={siteConfig?.special_announcement_type || 'info'}
-            active={siteConfig?.special_announcement_active}
-          />
-          <Routes>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="menu" element={<Menu />} />
-            <Route path="reserve" element={<Reserve />} />
-            <Route path="takeaway" element={<Takeaway />} />
-            <Route path="gallery" element={<Gallery />} />
-            <Route path="info" element={<Info />} />
-            <Route path="group-menus" element={<GroupMenus />} />
-            <Route path="confirmation" element={<Confirmation />} />
-            <Route path="confirmation.html" element={<Confirmation />} />
-            <Route path="*" element={<Home />} />
-          </Routes>
-          <Footer />
+          <MercatoAppInner siteConfig={siteConfig} />
         </div>
       </BasePathProvider>
     </LanguageProvider>

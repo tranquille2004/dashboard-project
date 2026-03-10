@@ -326,9 +326,15 @@ async def check_reservation_activity():
                     
                     if last_reservation:
                         last_time = last_reservation.get("timestamp", "onbekend")
-                        alert_msg = f"Geen reservaties sinds {last_time}"
+                        # Format the timestamp nicely
+                        try:
+                            dt = datetime.fromisoformat(last_time.replace("Z", "+00:00"))
+                            formatted_time = dt.strftime("%d-%m-%Y %H:%M")
+                            alert_msg = f"Geen reservaties sinds {formatted_time}. Meer dan 2 uur geleden."
+                        except:
+                            alert_msg = f"Geen reservaties sinds {last_time}. Meer dan 2 uur geleden."
                     else:
-                        alert_msg = "Nog geen reservaties geregistreerd vandaag"
+                        alert_msg = "Nog geen reservaties geregistreerd (confirmation page niet bezocht)"
                     
                     alert_domain = domains[0] if domains else slug
                     alert = SiteAlert(
@@ -1629,9 +1635,10 @@ async def clear_site_announcement(slug: str, secret: str = "fworks2024"):
 
 @public_router.post("/track-visit")
 async def track_visit(request: Request):
-    """Track a unique website visit"""
+    """Track a website visit with page path"""
     body = await request.json()
     site_slug = body.get("site_slug")
+    page_path = body.get("path", "/")  # Now receiving path from frontend
     
     if not site_slug:
         raise HTTPException(status_code=400, detail="site_slug required")
@@ -1640,27 +1647,26 @@ async def track_visit(request: Request):
     forwarded = request.headers.get("x-forwarded-for")
     visitor_ip = forwarded.split(",")[0].strip() if forwarded else request.client.host
     
-    # Create unique visitor ID for today (IP + date)
+    # Create unique visitor ID for this page visit (IP + date + path)
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    visitor_id = f"{visitor_ip}_{today}"
+    visitor_id = f"{visitor_ip}_{today}_{page_path}"
     
-    # Check if this visitor already visited today
+    # Check if this exact page was already visited today by this visitor
     existing = await db.site_visits.find_one({
         "site_slug": site_slug,
         "visitor_id": visitor_id
     })
     
     if existing:
-        # Already tracked today, just update timestamp
+        # Already tracked this page today
         return {"status": "already_tracked"}
     
     # Try to get country from IP (using free API)
     country = "Unknown"
     country_code = "XX"
     try:
-        import httpx
-        async with httpx.AsyncClient(timeout=2.0) as client:
-            geo_response = await client.get(f"http://ip-api.com/json/{visitor_ip}?fields=country,countryCode")
+        async with httpx.AsyncClient(timeout=2.0) as client_http:
+            geo_response = await client_http.get(f"http://ip-api.com/json/{visitor_ip}?fields=country,countryCode")
             if geo_response.status_code == 200:
                 geo_data = geo_response.json()
                 country = geo_data.get("country", "Unknown")
@@ -1672,6 +1678,7 @@ async def track_visit(request: Request):
         "site_slug": site_slug,
         "visitor_id": visitor_id,
         "visitor_ip": visitor_ip,
+        "path": page_path,  # NOW STORING THE PATH
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "date": today,
         "country": country,
@@ -1681,7 +1688,7 @@ async def track_visit(request: Request):
     }
     
     await db.site_visits.insert_one(visit)
-    return {"status": "tracked"}
+    return {"status": "tracked", "path": page_path}
 
 @admin_router.get("/sites/{site_id}/stats")
 async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { LanguageProvider } from './context/LanguageContext';
 import { BasePathProvider } from './context/BasePathContext';
@@ -21,6 +21,31 @@ import URLSync from '@/components/URLSync';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
+// Track page visits - sends path to backend
+const trackPageVisit = async (path) => {
+  try {
+    await fetch(`${API}/public/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        site_slug: 'ascoli',
+        path: path
+      })
+    });
+  } catch (error) {
+    // Silent fail
+  }
+};
+
+// Hook to track every page view
+const usePageTracking = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    trackPageVisit(location.pathname);
+  }, [location.pathname]);
+};
+
 // SEO Configuration for L'Ascoli
 const SEO_CONFIG = {
   siteName: "L'Ascoli Zaventem",
@@ -30,6 +55,38 @@ const SEO_CONFIG = {
   description: "L'Ascoli - Authentiek Italiaans restaurant in Zaventem. Verse pasta, pizza uit houtoven, Italiaanse wijnen. Gezellige sfeer, perfecte locatie nabij Brussels Airport.",
   keywords: "Italiaans restaurant, Zaventem, L'Ascoli, pasta, pizza, Brussels Airport, Italiaanse keuken, reserveren"
 };
+
+// Inner component that tracks page visits
+function AscoliAppInner({ siteConfig }) {
+  usePageTracking();
+  
+  return (
+    <>
+      <ScrollToTop />
+      <URLSync />
+      <Navbar />
+      <AnnouncementBanner
+        message={siteConfig?.special_announcement}
+        type={siteConfig?.special_announcement_type || 'info'}
+        active={siteConfig?.special_announcement_active}
+      />
+      <main className="pt-20">
+        <Routes>
+          <Route index element={<Home />} />
+          <Route path="about" element={<About />} />
+          <Route path="menu" element={<Menu />} />
+          <Route path="group-menu" element={<GroupMenu />} />
+          <Route path="reservations" element={<Reservations />} />
+          <Route path="gallery" element={<Gallery />} />
+          <Route path="info" element={<Info />} />
+          <Route path="confirmation" element={<Confirmation />} />
+          <Route path="*" element={<Home />} />
+        </Routes>
+      </main>
+      <Footer />
+    </>
+  );
+}
 
 function AscoliApp() {
   const [siteConfig, setSiteConfig] = useState(null);
@@ -63,30 +120,7 @@ function AscoliApp() {
             url={SEO_CONFIG.baseUrl}
             siteName={SEO_CONFIG.siteName}
           />
-          <>
-            <ScrollToTop />
-            <URLSync />
-            <Navbar />
-            <AnnouncementBanner
-              message={siteConfig?.special_announcement}
-              type={siteConfig?.special_announcement_type || 'info'}
-              active={siteConfig?.special_announcement_active}
-            />
-            <main className="pt-20">
-              <Routes>
-                <Route index element={<Home />} />
-                <Route path="about" element={<About />} />
-                <Route path="menu" element={<Menu />} />
-                <Route path="group-menu" element={<GroupMenu />} />
-                <Route path="reservations" element={<Reservations />} />
-                <Route path="gallery" element={<Gallery />} />
-                <Route path="info" element={<Info />} />
-                <Route path="confirmation" element={<Confirmation />} />
-                <Route path="*" element={<Home />} />
-              </Routes>
-            </main>
-            <Footer />
-          </>
+          <AscoliAppInner siteConfig={siteConfig} />
         </div>
       </BasePathProvider>
     </LanguageProvider>

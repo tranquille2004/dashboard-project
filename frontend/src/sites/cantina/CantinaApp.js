@@ -16,6 +16,31 @@ import AnnouncementBanner from '@/components/AnnouncementBanner';
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;
 
+// Track page visits - sends path to backend
+const trackPageVisit = async (path) => {
+  try {
+    await fetch(`${API}/public/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        site_slug: 'cantina',
+        path: path
+      })
+    });
+  } catch (error) {
+    // Silent fail
+  }
+};
+
+// Hook to track every page view
+const usePageTracking = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    trackPageVisit(location.pathname);
+  }, [location.pathname]);
+};
+
 // BEKENDE CUSTOM DOMAINS - alleen deze krijgen lege basePath
 const KNOWN_CUSTOM_DOMAINS = [
   'lacantinaitaliana.net',
@@ -1492,8 +1517,14 @@ function CantinaApp() {
 
   const t = translations[language];
 
+  // Hook to track page views
+  const TrackingWrapper = ({ children }) => {
+    usePageTracking();
+    return children;
+  };
+
   return (
-    <>
+    <TrackingWrapper>
       <ScrollToTop />
       <div className="App">
         {/* Special Announcement Banner - Above Navigation */}
@@ -1521,7 +1552,7 @@ function CantinaApp() {
         </main>
         <Footer t={t} language={language} />
       </div>
-    </>
+    </TrackingWrapper>
   );
 }
 

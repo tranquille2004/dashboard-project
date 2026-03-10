@@ -11,6 +11,31 @@ import axios from 'axios';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
+// Track page visits - sends path to backend
+const trackPageVisit = async (path) => {
+  try {
+    await fetch(`${API}/public/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        site_slug: 'bottega',
+        path: path
+      })
+    });
+  } catch (error) {
+    // Silent fail
+  }
+};
+
+// Hook to track every page view
+const usePageTracking = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    trackPageVisit(location.pathname);
+  }, [location.pathname]);
+};
+
 // Bordeaux color from logo
 const BRAND_COLOR = '#7D3C32';
 // Achtergrondkleur voor alle paginas - warm beige
@@ -1445,22 +1470,13 @@ function ContactPage() {
   );
 }
 
-function BottegaApp() {
-  const [siteConfig, setSiteConfig] = useState(null);
-
-  useEffect(() => {
-    axios.get(`${API}/public/site/bottega`)
-      .then(res => setSiteConfig(res.data?.config))
-      .catch(() => {});
-  }, []);
-
+// Inner component that uses the tracking hook
+function BottegaAppInner() {
+  // Track every page view
+  usePageTracking();
+  
   return (
-    <LanguageProvider>
-      <AnnouncementBanner
-        message={siteConfig?.special_announcement}
-        type={siteConfig?.special_announcement_type || 'info'}
-        active={siteConfig?.special_announcement_active}
-      />
+    <>
       <ScrollToTop />
       <URLSync />
       <Routes>
@@ -1477,6 +1493,27 @@ function BottegaApp() {
         <Route path="confirmation2" element={<Confirmation2Page />} />
         <Route path="*" element={<HomePage />} />
       </Routes>
+    </>
+  );
+}
+
+function BottegaApp() {
+  const [siteConfig, setSiteConfig] = useState(null);
+
+  useEffect(() => {
+    axios.get(`${API}/public/site/bottega`)
+      .then(res => setSiteConfig(res.data?.config))
+      .catch(() => {});
+  }, []);
+
+  return (
+    <LanguageProvider>
+      <AnnouncementBanner
+        message={siteConfig?.special_announcement}
+        type={siteConfig?.special_announcement_type || 'info'}
+        active={siteConfig?.special_announcement_active}
+      />
+      <BottegaAppInner />
     </LanguageProvider>
   );
 }

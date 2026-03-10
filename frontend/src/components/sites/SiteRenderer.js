@@ -15,17 +15,32 @@ import TheobeansApp from '@/sites/theobeans/TheobeansApp';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
-// Track visit when site loads
-const trackSiteVisit = async (slug) => {
+// Track visit when site loads - now includes path
+const trackSiteVisit = async (slug, path = null) => {
   try {
+    const currentPath = path || window.location.pathname;
     await fetch(`${API}/public/track-visit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ site_slug: slug })
+      body: JSON.stringify({ 
+        site_slug: slug,
+        path: currentPath
+      })
     });
   } catch (error) {
     // Silent fail
   }
+};
+
+// Hook to track page views on route changes
+const usePageTracking = (slug) => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    if (slug) {
+      trackSiteVisit(slug, location.pathname);
+    }
+  }, [slug, location.pathname]);
 };
 
 // Site data fetcher
