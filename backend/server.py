@@ -1190,9 +1190,9 @@ SITE_SEO_DATA = {
     },
     'tracemaster': {
         'domain': 'tracemaster-rastreadores.com',
-        'name': 'Tracemaster GPS Rastreadores - Ecuador',
-        'description': 'Rastreadores GPS profesionales para vehículos y activos. Seguimiento en tiempo real, geocercas, alarmas.',
-        'keywords': 'rastreador GPS, GPS tracker, Ecuador, seguimiento vehicular, localizador',
+        'name': 'Tracemaster GPS Rastreadores - América Latina',
+        'description': 'Rastreadores GPS profesionales para vehículos y activos en Latinoamérica. Seguimiento en tiempo real, geocercas, alarmas. Calidad holandesa, soporte local.',
+        'keywords': 'rastreador GPS, GPS tracker, América Latina, Ecuador, Colombia, Perú, seguimiento vehicular, localizador GPS, rastreo satelital',
         'pages': ['/', '/productos', '/contacto']
     },
     'bottega': {

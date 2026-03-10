@@ -16,8 +16,19 @@ import Info from './pages/Info';
 import Reservations from './pages/Reservations';
 import Confirmation from './pages/Confirmation';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
+import SEO from '@/components/SEO';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
+
+// SEO Configuration for L'Ascoli
+const SEO_CONFIG = {
+  siteName: "L'Ascoli Zaventem",
+  defaultImage: 'https://ascolizaventem.com/images/ascoli/hero.jpg',
+  baseUrl: 'https://ascolizaventem.com',
+  title: "L'Ascoli | Italiaans Restaurant Zaventem",
+  description: "L'Ascoli - Authentiek Italiaans restaurant in Zaventem. Verse pasta, pizza uit houtoven, Italiaanse wijnen. Gezellige sfeer, perfecte locatie nabij Brussels Airport.",
+  keywords: "Italiaans restaurant, Zaventem, L'Ascoli, pasta, pizza, Brussels Airport, Italiaanse keuken, reserveren"
+};
 
 function AscoliApp() {
   const [siteConfig, setSiteConfig] = useState(null);
@@ -43,6 +54,14 @@ function AscoliApp() {
     <LanguageProvider>
       <BasePathProvider basePath={basePath}>
         <div className="App">
+          <SEO 
+            title={SEO_CONFIG.title}
+            description={SEO_CONFIG.description}
+            keywords={SEO_CONFIG.keywords}
+            image={SEO_CONFIG.defaultImage}
+            url={SEO_CONFIG.baseUrl}
+            siteName={SEO_CONFIG.siteName}
+          />
           <>
             <ScrollToTop />
             <Navbar />

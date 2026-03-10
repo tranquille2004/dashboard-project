@@ -1,5 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Bath, TreePine, Mountain } from 'lucide-react';
+import SEO from '@/components/SEO';
+
+// SEO Configuration for Smeralda
+const SEO_CONFIG = {
+  siteName: "Résidence Villa Smeralda",
+  defaultImage: 'https://smeraldavacanze.it/images/smeralda/hero-pool-main.jpg',
+  baseUrl: 'https://smeraldavacanze.it',
+  title: "Villa Smeralda | Vakantieappartementen Sardinië, Italië",
+  description: "Résidence Villa Smeralda - Prachtige vakantieappartementen in Sardinië, Italië. Groot zwembad, restaurant, bar. Standaard en Executive appartementen met privé zwembad. Boek nu uw droomvakantie!",
+  keywords: "vakantie Sardinië, appartement Sardinia, Villa Smeralda, Italië vakantie, zwembad, Telti, Costa Smeralda, vakantiewoning, ferienwohnung sardinien"
+};
 
 // fworks logo for footer
 const FWORKS_LOGO = '/images/fworksbuilders.png';
@@ -835,6 +846,15 @@ const SmeraldaApp = () => {
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Poppins', sans-serif" }}>
+      <SEO 
+        title={SEO_CONFIG.title}
+        description={SEO_CONFIG.description}
+        keywords={SEO_CONFIG.keywords}
+        image={SEO_CONFIG.defaultImage}
+        url={SEO_CONFIG.baseUrl}
+        siteName={SEO_CONFIG.siteName}
+        locale="it_IT"
+      />
       <Lightbox />
       
       {/* Navigation */}

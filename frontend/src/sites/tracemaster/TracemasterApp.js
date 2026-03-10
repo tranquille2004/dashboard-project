@@ -35,9 +35,9 @@ const SEO_CONFIG = {
   siteName: 'Tracemaster GPS Rastreadores',
   defaultImage: 'https://tracemaster-rastreadores.com/images/tracemaster/gps-tracker.png',
   baseUrl: 'https://tracemaster-rastreadores.com',
-  title: 'Tracemaster | Rastreadores GPS para Vehículos - Ecuador',
-  description: 'Tracemaster GPS rastreadores - Soluciones confiables de rastreo GPS para vehículos, maquinaria y activos valiosos. Ubicación en tiempo real, geocercas y más. Importados de Países Bajos.',
-  keywords: 'rastreador GPS, GPS tracker, rastreo vehicular, localizador GPS, geocercas, Ecuador, Tracemaster, seguimiento GPS'
+  title: 'Tracemaster | Rastreadores GPS para Vehículos - América Latina',
+  description: 'Tracemaster GPS rastreadores - Soluciones confiables de rastreo GPS para vehículos, maquinaria y activos en Latinoamérica. Ubicación en tiempo real, geocercas y más. Calidad holandesa con soporte local.',
+  keywords: 'rastreador GPS, GPS tracker, rastreo vehicular, localizador GPS, geocercas, América Latina, Ecuador, Colombia, Perú, Tracemaster, seguimiento GPS'
 };
 
 // Scroll to top on route change

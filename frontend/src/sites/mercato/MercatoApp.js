@@ -17,8 +17,19 @@ import Info from "./pages/Info";
 import Confirmation from "./pages/Confirmation";
 import GroupMenus from "./pages/GroupMenus";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
+import SEO from '@/components/SEO';
 
 const API = process.env.REACT_APP_BACKEND_URL + "/api";
+
+// SEO Configuration for Ristorante Mercato
+const SEO_CONFIG = {
+  siteName: "Ristorante Pizzeria Mercato",
+  defaultImage: 'https://ristorantemercato.be/images/mercato/hero.jpg',
+  baseUrl: 'https://ristorantemercato.be',
+  title: "Ristorante Mercato | Italiaans Restaurant België",
+  description: "Ristorante Pizzeria Mercato - Authentieke Italiaanse keuken met verse ingrediënten. Pizza uit houtoven, huisgemaakte pasta, Italiaanse wijnen. Reserveer nu!",
+  keywords: "Italiaans restaurant, Mercato, pizza, pasta, België, Italiaanse keuken, houtoven pizza, reserveren"
+};
 
 function MercatoApp() {
   const [siteConfig, setSiteConfig] = useState(null);
@@ -44,6 +55,14 @@ function MercatoApp() {
     <LanguageProvider>
       <BasePathProvider basePath={basePath}>
         <div className="App bg-black min-h-screen">
+          <SEO 
+            title={SEO_CONFIG.title}
+            description={SEO_CONFIG.description}
+            keywords={SEO_CONFIG.keywords}
+            image={SEO_CONFIG.defaultImage}
+            url={SEO_CONFIG.baseUrl}
+            siteName={SEO_CONFIG.siteName}
+          />
           <ScrollToTop />
           <Navigation />
           <AnnouncementBanner
