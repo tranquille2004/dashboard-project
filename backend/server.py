@@ -127,8 +127,8 @@ async def check_visitor_activity():
             domains = site.get("domains", [])
             
             # Count visitors in last 2 hours
-            recent_visits = await db.visits.count_documents({
-                "site": slug,
+            recent_visits = await db.site_visits.count_documents({
+                "site_slug": slug,
                 "timestamp": {"$gte": two_hours_ago.isoformat()}
             })
             
@@ -142,8 +142,8 @@ async def check_visitor_activity():
                 
                 if not existing_alert:
                     # Get last visit time
-                    last_visit = await db.visits.find_one(
-                        {"site": slug},
+                    last_visit = await db.site_visits.find_one(
+                        {"site_slug": slug},
                         sort=[("timestamp", -1)]
                     )
                     
@@ -206,8 +206,8 @@ async def check_reservation_activity():
             
             # Count confirmation page visits in last hour
             # These indicate successful reservations (both dine-in and takeaway)
-            confirmation_visits = await db.visits.count_documents({
-                "site": slug,
+            confirmation_visits = await db.site_visits.count_documents({
+                "site_slug": slug,
                 "timestamp": {"$gte": one_hour_ago.isoformat()},
                 "$or": [
                     {"path": {"$regex": "confirmation", "$options": "i"}},
@@ -226,9 +226,9 @@ async def check_reservation_activity():
                 
                 if not existing_alert:
                     # Get last reservation time
-                    last_reservation = await db.visits.find_one(
+                    last_reservation = await db.site_visits.find_one(
                         {
-                            "site": slug,
+                            "site_slug": slug,
                             "$or": [
                                 {"path": {"$regex": "confirmation", "$options": "i"}},
                                 {"path": {"$regex": "grazie", "$options": "i"}},
