@@ -244,7 +244,9 @@ const AdminDashboard = () => {
       // Load alerts
       try {
         const alertsResponse = await axios.get(`${API}/admin/alerts`, { withCredentials: true });
-        setAlerts(alertsResponse.data);
+        // Handle both paginated response and direct array
+        const alertsData = alertsResponse.data.alerts || alertsResponse.data;
+        setAlerts(Array.isArray(alertsData) ? alertsData : []);
       } catch (alertsError) {
         console.error('Error loading alerts:', alertsError);
       }
@@ -284,7 +286,8 @@ const AdminDashboard = () => {
       setLastHealthCheck(new Date());
       // Reload alerts after health check
       const alertsResponse = await axios.get(`${API}/admin/alerts`, { withCredentials: true });
-      setAlerts(alertsResponse.data);
+      const alertsData = alertsResponse.data.alerts || alertsResponse.data;
+      setAlerts(Array.isArray(alertsData) ? alertsData : []);
     } catch (error) {
       console.error('Error checking health:', error);
     } finally {
