@@ -186,9 +186,9 @@ function Navigation({ activeSection, scrollToSection }) {
             <LanguageSwitcher />
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-gray-700 hover:text-[#7D3C32] hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-md text-[#7D3C32] hover:text-[#5A2A24] hover:bg-gray-100 transition-colors"
             >
-              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                 {mobileMenuOpen ? (
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 ) : (
