@@ -18,6 +18,7 @@ import Confirmation from "./pages/Confirmation";
 import GroupMenus from "./pages/GroupMenus";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
 import SEO from '@/components/SEO';
+import URLSync from '@/components/URLSync';
 
 const API = process.env.REACT_APP_BACKEND_URL + "/api";
 
@@ -64,6 +65,7 @@ function MercatoApp() {
             siteName={SEO_CONFIG.siteName}
           />
           <ScrollToTop />
+          <URLSync />
           <Navigation />
           <AnnouncementBanner
             message={siteConfig?.special_announcement}

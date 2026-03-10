@@ -5,6 +5,7 @@ import { Phone, Mail, MapPin, Clock, ChefHat, Utensils, Wine, Menu, X } from 'lu
 import { useLanguage, LanguageProvider } from './LanguageContext';
 import LanguageSwitcher from './components/LanguageSwitcher';
 import SEO from '@/components/SEO';
+import URLSync from '@/components/URLSync';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 import axios from 'axios';
 
@@ -1461,6 +1462,7 @@ function BottegaApp() {
         active={siteConfig?.special_announcement_active}
       />
       <ScrollToTop />
+      <URLSync />
       <Routes>
         <Route index element={<HomePage />} />
         <Route path="over-ons" element={<OverOnsPage />} />

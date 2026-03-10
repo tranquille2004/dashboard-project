@@ -8,6 +8,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { Toaster } from './components/ui/toaster';
 import { LanguageProvider } from './context/LanguageContext';
 import { BasePathProvider } from './context/BasePathContext';
+import URLSync from '@/components/URLSync';
 
 // Pages - EXACT zoals origineel
 import Home from './pages/Home';
@@ -36,6 +37,7 @@ function TheobeansApp() {
       <BasePathProvider basePath={basePath}>
         <div className="App">
           <ScrollToTop />
+          <URLSync />
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />

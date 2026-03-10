@@ -3,6 +3,7 @@ import "./App.css";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { Menu, X, MapPin, Battery, Shield, Wifi, Clock, Phone, Mail, ChevronDown, ChevronUp, ExternalLink, Play } from "lucide-react";
 import SEO from '@/components/SEO';
+import URLSync from '@/components/URLSync';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -1264,6 +1265,7 @@ function TracemasterApp() {
     <div className="App bg-gray-900 min-h-screen">
       
         <ScrollToTop />
+        <URLSync />
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />

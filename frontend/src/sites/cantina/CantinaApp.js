@@ -10,6 +10,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Clock, MapPin, Phone, Mail, Download, ChevronRight, Facebook } from 'lucide-react';
 import SEO from '@/components/SEO';
+import URLSync from '@/components/URLSync';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
@@ -1502,6 +1503,7 @@ function CantinaApp() {
           active={siteConfig?.special_announcement_active}
         />
         <Navigation language={language} setLanguage={setLanguage} t={t} />
+        <URLSync />
         <main>
           <Routes>
             <Route index element={<HomePage t={t} />} />

@@ -17,6 +17,7 @@ import Reservations from './pages/Reservations';
 import Confirmation from './pages/Confirmation';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
 import SEO from '@/components/SEO';
+import URLSync from '@/components/URLSync';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -64,6 +65,7 @@ function AscoliApp() {
           />
           <>
             <ScrollToTop />
+            <URLSync />
             <Navbar />
             <AnnouncementBanner
               message={siteConfig?.special_announcement}

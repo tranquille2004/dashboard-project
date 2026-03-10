@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Bath, TreePine, Mountain } from 'lucide-react';
 import SEO from '@/components/SEO';
+import URLSync from '@/components/URLSync';
 
 // SEO Configuration for Smeralda
 const SEO_CONFIG = {
