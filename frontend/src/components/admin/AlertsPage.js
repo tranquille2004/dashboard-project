@@ -108,7 +108,7 @@ const AlertsPage = () => {
       return <span className="px-2 py-1 text-xs rounded-full bg-amber-100 text-amber-700">Geen Bezoekers</span>;
     }
     if (alert.status === 'down') {
-      return <span className="px-2 py-1 text-xs rounded-full bg-red-100 text-red-700">Site Down</span>;
+      return <span className="px-2 py-1 text-xs rounded-full bg-red-100 text-red-700">Offline</span>;
     }
     return <span className="px-2 py-1 text-xs rounded-full bg-stone-100 text-stone-700">{alert.status}</span>;
   };
@@ -274,7 +274,8 @@ const AlertsPage = () => {
           ) : alerts.length === 0 ? (
             <div className="p-8 text-center text-stone-500">
               <CheckCircle className="w-12 h-12 mx-auto mb-2 text-teal-500" />
-              <p>Geen alerts gevonden</p>
+              <p className="font-medium">Geen alerts gevonden</p>
+              <p className="text-sm mt-1">Alle systemen werken normaal</p>
             </div>
           ) : (
             <div className="divide-y divide-stone-100">
@@ -326,7 +327,7 @@ const AlertsPage = () => {
                         onClick={() => dismissAlert(alert.alert_id)}
                         className="px-3 py-1.5 text-sm bg-stone-200 hover:bg-stone-300 rounded-lg text-stone-700"
                       >
-                        Dismiss
+                        Negeren
                       </button>
                     )}
                   </div>
@@ -367,7 +368,7 @@ const AlertsPage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <span className="text-sm text-stone-600">Site Down (Health)</span>
+              <span className="text-sm text-stone-600">Site Offline</span>
             </div>
             <div className="flex items-center gap-2">
               <div className="w-3 h-3 rounded-full bg-amber-500"></div>

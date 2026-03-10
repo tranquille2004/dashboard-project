@@ -452,7 +452,7 @@ const AdminDashboard = () => {
               to="/admin/alerts" 
               className="text-sm text-teal-600 hover:text-teal-700 font-medium"
             >
-              Bekijk Alle Alerts →
+              Bekijk Alle →
             </Link>
           </div>
           
@@ -481,7 +481,7 @@ const AdminDashboard = () => {
                   isTrafficAlert ? 'text-amber-600' : 'text-red-600';
                 const statusText = !alert.is_active ? 'Opgelost' : 
                   isReservationAlert ? 'Geen reservaties (1u+)' :
-                  isTrafficAlert ? 'Geen bezoekers (2u+)' : 'DOWN';
+                  isTrafficAlert ? 'Geen bezoekers (2u+)' : 'Offline';
                 
                 return (
                   <div key={alert.alert_id} className={`px-4 py-3 flex items-center justify-between ${bgColor}`}>
