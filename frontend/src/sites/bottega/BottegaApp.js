@@ -186,13 +186,14 @@ function Navigation({ activeSection, scrollToSection }) {
             <LanguageSwitcher />
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-md text-[#7D3C32] hover:text-[#5A2A24] hover:bg-gray-100 transition-colors"
+              className="p-2 rounded-md hover:bg-gray-100 transition-colors"
+              aria-label="Menu"
             >
-              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+              <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="#7D3C32" strokeWidth={2.5}>
                 {mobileMenuOpen ? (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 ) : (
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                 )}
               </svg>
             </button>
@@ -636,9 +637,9 @@ function AfhalenPage() {
           </div>
 
           <div className="mb-6 text-center">
-            <a href="/images/bottega/onze-kaart1.html" target="_blank" rel="noopener noreferrer" className="text-[#7D3C32] hover:underline font-bold text-lg">
+            <Link to={getPath('/kaart')} className="text-[#7D3C32] hover:underline font-bold text-lg">
               KLIK HIER VOOR DE KAART →
-            </a>
+            </Link>
           </div>
 
           <div className="bg-white rounded-lg shadow-xl p-4 md:p-8">

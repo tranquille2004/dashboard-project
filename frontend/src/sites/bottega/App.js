@@ -579,9 +579,9 @@ function AfhalenPage() {
           </div>
 
           <div className="mb-6 text-center">
-            <a href="/images/bottega/onze-kaart1.html" target="_blank" rel="noopener noreferrer" className="text-[#7D3C32] hover:underline font-bold text-lg">
+            <Link to="/site/bottega/kaart" className="text-[#7D3C32] hover:underline font-bold text-lg">
               KLIK HIER VOOR DE KAART →
-            </a>
+            </Link>
           </div>
 
           <div className="bg-white rounded-lg shadow-xl p-4 md:p-8">
