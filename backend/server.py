@@ -1150,6 +1150,130 @@ async def get_all_public_sites():
     sites = await db.sites.find({"is_active": True}, {"_id": 0, "site_id": 1, "name": 1, "slug": 1, "site_type": 1}).to_list(100)
     return sites
 
+# ============== SEO ENDPOINTS ==============
+
+# Site domain to slug mapping for SEO
+DOMAIN_SLUG_MAP = {
+    'fworksbuilders.com': 'fworks',
+    'www.fworksbuilders.com': 'fworks',
+    'theobeans-export.com': 'theobeans',
+    'www.theobeans-export.com': 'theobeans',
+    'tracemaster-rastreadores.com': 'tracemaster',
+    'www.tracemaster-rastreadores.com': 'tracemaster',
+    'labottegaherent.com': 'bottega',
+    'www.labottegaherent.com': 'bottega',
+    'lacantinaitaliana.net': 'cantina',
+    'www.lacantinaitaliana.net': 'cantina',
+    'ascolizaventem.com': 'ascoli',
+    'www.ascolizaventem.com': 'ascoli',
+    'ristorantemercato.be': 'mercato',
+    'www.ristorantemercato.be': 'mercato',
+    'smeraldavacanze.it': 'smeralda',
+    'www.smeraldavacanze.it': 'smeralda',
+}
+
+# SEO data per site
+SITE_SEO_DATA = {
+    'fworks': {
+        'domain': 'fworksbuilders.com',
+        'name': 'F.Works Builders - Web Design & Development',
+        'description': 'Professionele website ontwikkeling en webdesign. Wij bouwen moderne, snelle websites voor restaurants en bedrijven.',
+        'keywords': 'webdesign, website maken, web development, fworksbuilders, België',
+        'pages': ['/', '/#features', '/#portfolio', '/#pricing', '/#contact']
+    },
+    'theobeans': {
+        'domain': 'theobeans-export.com',
+        'name': 'Theo Beans Export - Premium Cacao uit Ecuador',
+        'description': 'Premium cacao bonen rechtstreeks uit Ecuador. Duurzame teelt, uitstekende kwaliteit, directe handel.',
+        'keywords': 'cacao, Ecuador, cacao bonen, premium cacao, export, chocolade',
+        'pages': ['/', '/photos', '/objectif', '/varietes', '/qualite', '/tracabilite', '/contact']
+    },
+    'tracemaster': {
+        'domain': 'tracemaster-rastreadores.com',
+        'name': 'Tracemaster GPS Rastreadores - Ecuador',
+        'description': 'Rastreadores GPS profesionales para vehículos y activos. Seguimiento en tiempo real, geocercas, alarmas.',
+        'keywords': 'rastreador GPS, GPS tracker, Ecuador, seguimiento vehicular, localizador',
+        'pages': ['/', '/productos', '/contacto']
+    },
+    'bottega': {
+        'domain': 'labottegaherent.com',
+        'name': 'La Bottega Italiana Herent',
+        'description': 'Authentiek Italiaans restaurant in Herent. Verse pasta, pizza, en Italiaanse specialiteiten.',
+        'keywords': 'Italiaans restaurant, Herent, pasta, pizza, La Bottega',
+        'pages': ['/', '/over-ons', '/kaart', '/galerie', '/groepmenus', '/openingstijden', '/contact', '/reserveren', '/afhalen']
+    },
+    'cantina': {
+        'domain': 'lacantinaitaliana.net',
+        'name': 'La Cantina Italiana Tervuren',
+        'description': 'Gezellig Italiaans restaurant in Tervuren. Authentieke Italiaanse keuken, pizza en pasta.',
+        'keywords': 'Italiaans restaurant, Tervuren, La Cantina, pizza, pasta',
+        'pages': ['/', '/about', '/kaart', '/groepmenus', '/reserveren', '/fotos', '/info']
+    },
+    'ascoli': {
+        'domain': 'ascolizaventem.com',
+        'name': "L'Ascoli Zaventem",
+        'description': 'Italiaans restaurant in Zaventem. Traditionele Italiaanse gerechten in een gezellige sfeer.',
+        'keywords': 'Italiaans restaurant, Zaventem, Ascoli, pasta, pizza',
+        'pages': ['/', '/menu', '/reserveren', '/contact']
+    },
+    'mercato': {
+        'domain': 'ristorantemercato.be',
+        'name': 'Ristorante Mercato',
+        'description': 'Italiaans restaurant met verse ingrediënten en traditionele recepten.',
+        'keywords': 'Italiaans restaurant, Mercato, pasta, pizza',
+        'pages': ['/', '/menu', '/reserveren', '/contact']
+    },
+    'smeralda': {
+        'domain': 'smeraldavacanze.it',
+        'name': 'Résidence Villa Smeralda - Sardinia',
+        'description': 'Vakantieappartementen in Sardinië, Italië. Prachtige ligging nabij strand en natuur.',
+        'keywords': 'vakantie Sardinië, appartement Sardinia, Villa Smeralda, Italië vakantie',
+        'pages': ['/', '/apartments', '/gallery', '/prices', '/contact']
+    }
+}
+
+@api_router.get("/robots.txt")
+async def get_robots_txt(request: Request):
+    """Dynamic robots.txt based on request host"""
+    host = request.headers.get('host', '').lower().replace(':443', '').replace(':80', '')
+    slug = DOMAIN_SLUG_MAP.get(host, 'fworks')
+    seo_data = SITE_SEO_DATA.get(slug, SITE_SEO_DATA['fworks'])
+    domain = seo_data['domain']
+    
+    robots_content = f"""User-agent: *
+Allow: /
+
+Sitemap: https://{domain}/sitemap.xml
+"""
+    return Response(content=robots_content, media_type="text/plain")
+
+@api_router.get("/sitemap.xml")
+async def get_sitemap_xml(request: Request):
+    """Dynamic sitemap.xml based on request host"""
+    host = request.headers.get('host', '').lower().replace(':443', '').replace(':80', '')
+    slug = DOMAIN_SLUG_MAP.get(host, 'fworks')
+    seo_data = SITE_SEO_DATA.get(slug, SITE_SEO_DATA['fworks'])
+    domain = seo_data['domain']
+    pages = seo_data['pages']
+    
+    today = datetime.now(timezone.utc).strftime('%Y-%m-%d')
+    
+    sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n'
+    sitemap += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+    
+    for page in pages:
+        priority = '1.0' if page == '/' else '0.8'
+        sitemap += f'  <url>\n'
+        sitemap += f'    <loc>https://{domain}{page}</loc>\n'
+        sitemap += f'    <lastmod>{today}</lastmod>\n'
+        sitemap += f'    <changefreq>weekly</changefreq>\n'
+        sitemap += f'    <priority>{priority}</priority>\n'
+        sitemap += f'  </url>\n'
+    
+    sitemap += '</urlset>'
+    
+    return Response(content=sitemap, media_type="application/xml")
+
 # ============== ROOT ==============
 
 @api_router.get("/")

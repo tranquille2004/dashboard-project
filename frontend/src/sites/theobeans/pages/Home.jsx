@@ -1,12 +1,22 @@
 import React from 'react';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
+import SEO from '@/components/SEO';
 
 const Home = () => {
   const { t } = useLanguage();
 
   return (
     <div className="min-h-screen bg-[#f5f1ed]">
+      <SEO 
+        title="Theo Beans Export - Premium Cacao uit Ecuador"
+        description="Theo Beans Export: Premium cacao bonen rechtstreeks uit Ecuador. Duurzame teelt, uitstekende kwaliteit, directe handel met lokale boeren."
+        keywords="cacao, Ecuador, cacao bonen, premium cacao, duurzaam, export, theobeans, chocolade, fermentatie"
+        image="https://theobeans-export.com/images/theobeans/hero.jpg"
+        url="https://theobeans-export.com"
+        siteName="Theo Beans Export"
+        locale="nl_BE"
+      />
       {/* Hero Section */}
       <section className="relative bg-[#b8999e] text-white py-24 md:py-32 px-4">
         <div className="max-w-7xl mx-auto text-center">

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import { Routes, Route, Link, useLocation } from "react-router-dom";
 import { Menu, X, MapPin, Battery, Shield, Wifi, Clock, Phone, Mail, ChevronDown, ChevronUp, ExternalLink, Play } from "lucide-react";
+import SEO from '@/components/SEO';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -31,12 +32,12 @@ const getPath = (path) => {
 
 // SEO Configuration for Tracemaster
 const SEO_CONFIG = {
-  siteName: 'Tracemaster GPS Trackers',
-  defaultImage: '/images/tracemaster/gps-tracker.png',
-  baseUrl: 'https://tracemaster.be',
-  title: 'Tracemaster | GPS Trackers voor Voertuigen en Assets',
-  description: 'Tracemaster GPS trackers - Betrouwbare GPS tracking oplossingen voor voertuigen, machines en waardevolle assets. Realtime locatie, geofencing en meer.',
-  keywords: 'GPS tracker, voertuig tracker, asset tracking, GPS locatie, geofencing, fleet management, Tracemaster'
+  siteName: 'Tracemaster GPS Rastreadores',
+  defaultImage: 'https://tracemaster-rastreadores.com/images/tracemaster/gps-tracker.png',
+  baseUrl: 'https://tracemaster-rastreadores.com',
+  title: 'Tracemaster | Rastreadores GPS para Vehículos - Ecuador',
+  description: 'Tracemaster GPS rastreadores - Soluciones confiables de rastreo GPS para vehículos, maquinaria y activos valiosos. Ubicación en tiempo real, geocercas y más. Importados de Países Bajos.',
+  keywords: 'rastreador GPS, GPS tracker, rastreo vehicular, localizador GPS, geocercas, Ecuador, Tracemaster, seguimiento GPS'
 };
 
 // Scroll to top on route change
