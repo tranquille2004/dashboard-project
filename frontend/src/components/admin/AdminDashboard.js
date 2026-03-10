@@ -442,41 +442,52 @@ const AdminDashboard = () => {
               </div>
             </div>
             <div className="divide-y divide-stone-100 max-h-64 overflow-y-auto">
-              {alerts.map(alert => (
-                <div key={alert.alert_id} className={`px-4 py-3 flex items-center justify-between ${alert.is_active ? 'bg-red-50' : 'bg-stone-50'}`}>
-                  <div className="flex items-center gap-3">
-                    <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${alert.is_active ? 'bg-red-100' : 'bg-stone-200'}`}>
-                      {alert.is_active ? (
-                        <X className="w-4 h-4 text-red-600" />
-                      ) : (
-                        <Check className="w-4 h-4 text-teal-600" />
-                      )}
+              {alerts.map(alert => {
+                const isTrafficAlert = alert.alert_type === 'traffic' || alert.status === 'no_visitors';
+                const bgColor = !alert.is_active ? 'bg-stone-50' : isTrafficAlert ? 'bg-amber-50' : 'bg-red-50';
+                const iconBg = !alert.is_active ? 'bg-stone-200' : isTrafficAlert ? 'bg-amber-100' : 'bg-red-100';
+                const iconColor = !alert.is_active ? 'text-teal-600' : isTrafficAlert ? 'text-amber-600' : 'text-red-600';
+                const statusColor = !alert.is_active ? 'text-teal-600' : isTrafficAlert ? 'text-amber-600' : 'text-red-600';
+                const statusText = !alert.is_active ? 'Opgelost' : isTrafficAlert ? 'Geen bezoekers (2u+)' : 'DOWN';
+                
+                return (
+                  <div key={alert.alert_id} className={`px-4 py-3 flex items-center justify-between ${bgColor}`}>
+                    <div className="flex items-center gap-3">
+                      <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${iconBg}`}>
+                        {!alert.is_active ? (
+                          <Check className={`w-4 h-4 ${iconColor}`} />
+                        ) : isTrafficAlert ? (
+                          <Users className={`w-4 h-4 ${iconColor}`} />
+                        ) : (
+                          <X className={`w-4 h-4 ${iconColor}`} />
+                        )}
+                      </div>
+                      <div>
+                        <p className="font-medium text-stone-900 text-sm">{alert.site_name}</p>
+                        <p className="text-xs text-stone-500">{alert.message || alert.domain}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="font-medium text-stone-900 text-sm">{alert.site_name}</p>
-                      <p className="text-xs text-stone-500">{alert.domain}</p>
+                    <div className="text-right">
+                      <p className={`text-sm font-medium ${statusColor}`}>
+                        {statusText}
+                      </p>
+                      <p className="text-xs text-stone-500">
+                        {formatDate(alert.started_at)}
+                        {alert.duration_minutes && ` • ${formatDuration(alert.duration_minutes)}`}
+                      </p>
                     </div>
+                    {alert.is_active && (
+                      <button 
+                        onClick={() => dismissAlert(alert.alert_id)}
+                        className="ml-3 p-1.5 text-stone-400 hover:text-stone-600 hover:bg-stone-100 rounded"
+                        title="Dismiss"
+                      >
+                        <X className="w-4 h-4" />
+                      </button>
+                    )}
                   </div>
-                  <div className="text-right">
-                    <p className={`text-sm font-medium ${alert.is_active ? 'text-red-600' : 'text-teal-600'}`}>
-                      {alert.is_active ? 'DOWN' : 'Opgelost'}
-                    </p>
-                    <p className="text-xs text-stone-500">
-                      {formatDate(alert.started_at)}
-                      {alert.duration_minutes && ` • ${formatDuration(alert.duration_minutes)}`}
-                    </p>
-                  </div>
-                  {alert.is_active && (
-                    <button 
-                      onClick={() => dismissAlert(alert.alert_id)}
-                      className="ml-3 p-1.5 text-stone-400 hover:text-stone-600 hover:bg-stone-100 rounded"
-                      title="Dismiss"
-                    >
-                      <X className="w-4 h-4" />
-                    </button>
-                  )}
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

@@ -13,6 +13,8 @@ from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional, Dict, Any
 import uuid
 from datetime import datetime, timezone, timedelta
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
+from contextlib import asynccontextmanager
 
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
@@ -25,8 +27,185 @@ mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
 db = client[os.environ['DB_NAME']]
 
-# Create the main app
-app = FastAPI(title="Multi-Tenant Website Platform")
+# Background scheduler
+scheduler = AsyncIOScheduler()
+
+# ============== BACKGROUND MONITORING TASKS ==============
+
+async def background_health_check():
+    """Background task to check all sites health every 5 minutes"""
+    logging.info("Running background health check...")
+    try:
+        sites = await db.sites.find({}).to_list(1000)
+        
+        for site in sites:
+            slug = site.get("slug", "")
+            domains = site.get("domains", [])
+            site_name = site.get("name", slug)
+            
+            if domains:
+                check_url = f"https://{domains[0]}"
+            else:
+                check_url = f"{os.environ.get('REACT_APP_BACKEND_URL', 'https://smeralda-hub.preview.emergentagent.com')}/site/{slug}"
+            
+            try:
+                async with httpx.AsyncClient(timeout=15.0, verify=False) as client_http:
+                    response = await client_http.get(check_url, follow_redirects=True)
+                    
+                    if response.status_code >= 400:
+                        # Site is down - create alert if not exists
+                        existing_alert = await db.site_alerts.find_one({
+                            "site_id": slug,
+                            "alert_type": "health",
+                            "is_active": True
+                        })
+                        if not existing_alert:
+                            alert = SiteAlert(
+                                site_id=slug,
+                                site_name=site_name,
+                                domain=domains[0] if domains else slug,
+                                status="down",
+                                message=f"Site returned status {response.status_code}",
+                                alert_type="health"
+                            )
+                            await db.site_alerts.insert_one(alert.model_dump())
+                            logging.warning(f"ALERT: Site {site_name} is DOWN (status {response.status_code})")
+                    else:
+                        # Site is up - resolve any active health alerts
+                        active_alert = await db.site_alerts.find_one({
+                            "site_id": slug,
+                            "alert_type": "health",
+                            "is_active": True
+                        })
+                        if active_alert:
+                            started = active_alert["started_at"]
+                            if isinstance(started, str):
+                                started = datetime.fromisoformat(started.replace("Z", "+00:00"))
+                            duration = int((datetime.now(timezone.utc) - started).total_seconds() / 60)
+                            await db.site_alerts.update_one(
+                                {"alert_id": active_alert["alert_id"]},
+                                {"$set": {
+                                    "is_active": False,
+                                    "resolved_at": datetime.now(timezone.utc).isoformat(),
+                                    "duration_minutes": duration
+                                }}
+                            )
+                            logging.info(f"RESOLVED: Site {site_name} is back UP after {duration} minutes")
+                            
+            except Exception as e:
+                # Connection error - site is unreachable
+                existing_alert = await db.site_alerts.find_one({
+                    "site_id": slug,
+                    "alert_type": "health",
+                    "is_active": True
+                })
+                if not existing_alert:
+                    alert = SiteAlert(
+                        site_id=slug,
+                        site_name=site_name,
+                        domain=domains[0] if domains else slug,
+                        status="down",
+                        message=f"Connection failed: {str(e)[:100]}",
+                        alert_type="health"
+                    )
+                    await db.site_alerts.insert_one(alert.model_dump())
+                    logging.warning(f"ALERT: Site {site_name} is UNREACHABLE - {str(e)[:50]}")
+                    
+    except Exception as e:
+        logging.error(f"Background health check failed: {e}")
+
+async def check_visitor_activity():
+    """Check if any site has had no visitors for 2+ hours"""
+    logging.info("Checking visitor activity...")
+    try:
+        sites = await db.sites.find({}).to_list(1000)
+        two_hours_ago = datetime.now(timezone.utc) - timedelta(hours=2)
+        
+        for site in sites:
+            slug = site.get("slug", "")
+            site_name = site.get("name", slug)
+            domains = site.get("domains", [])
+            
+            # Count visitors in last 2 hours
+            recent_visits = await db.visits.count_documents({
+                "site": slug,
+                "timestamp": {"$gte": two_hours_ago.isoformat()}
+            })
+            
+            if recent_visits == 0:
+                # Check if alert already exists
+                existing_alert = await db.site_alerts.find_one({
+                    "site_id": slug,
+                    "alert_type": "traffic",
+                    "is_active": True
+                })
+                
+                if not existing_alert:
+                    # Get last visit time
+                    last_visit = await db.visits.find_one(
+                        {"site": slug},
+                        sort=[("timestamp", -1)]
+                    )
+                    
+                    if last_visit:
+                        last_time = last_visit.get("timestamp", "onbekend")
+                        message = f"Geen bezoekers sinds {last_time}"
+                    else:
+                        message = "Nog nooit bezoekers geregistreerd"
+                    
+                    alert = SiteAlert(
+                        site_id=slug,
+                        site_name=site_name,
+                        domain=domains[0] if domains else slug,
+                        status="no_visitors",
+                        message=message,
+                        alert_type="traffic"
+                    )
+                    await db.site_alerts.insert_one(alert.model_dump())
+                    logging.warning(f"TRAFFIC ALERT: {site_name} has no visitors for 2+ hours")
+            else:
+                # Has visitors - resolve any active traffic alerts
+                active_alert = await db.site_alerts.find_one({
+                    "site_id": slug,
+                    "alert_type": "traffic",
+                    "is_active": True
+                })
+                if active_alert:
+                    started = active_alert["started_at"]
+                    if isinstance(started, str):
+                        started = datetime.fromisoformat(started.replace("Z", "+00:00"))
+                    duration = int((datetime.now(timezone.utc) - started).total_seconds() / 60)
+                    await db.site_alerts.update_one(
+                        {"alert_id": active_alert["alert_id"]},
+                        {"$set": {
+                            "is_active": False,
+                            "resolved_at": datetime.now(timezone.utc).isoformat(),
+                            "duration_minutes": duration
+                        }}
+                    )
+                    logging.info(f"TRAFFIC RESOLVED: {site_name} has visitors again after {duration} minutes")
+                    
+    except Exception as e:
+        logging.error(f"Visitor activity check failed: {e}")
+
+# Lifespan context manager for startup/shutdown
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    logging.info("Starting background monitoring scheduler...")
+    scheduler.add_job(background_health_check, 'interval', minutes=5, id='health_check')
+    scheduler.add_job(check_visitor_activity, 'interval', minutes=30, id='visitor_check')
+    scheduler.start()
+    logging.info("Background scheduler started - Health check every 5 min, Visitor check every 30 min")
+    
+    yield
+    
+    # Shutdown
+    logging.info("Shutting down background scheduler...")
+    scheduler.shutdown()
+
+# Create the main app with lifespan
+app = FastAPI(title="Multi-Tenant Website Platform", lifespan=lifespan)
 
 # Create routers
 api_router = APIRouter(prefix="/api")
@@ -143,13 +322,14 @@ class SiteAlert(BaseModel):
     site_id: str
     site_name: str
     domain: str
-    status: str  # "down", "up", "slow"
+    status: str  # "down", "up", "slow", "no_visitors"
     message: str
     response_time_ms: Optional[int] = None
     started_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     resolved_at: Optional[datetime] = None
     duration_minutes: Optional[int] = None
     is_active: bool = True
+    alert_type: str = "health"  # "health" or "traffic"
 
 # Contact Form Email Models
 class ContactFormRequest(BaseModel):
