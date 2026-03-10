@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
 import { 
   ArrowLeft, Save, Globe, Settings, Image, Menu, Users, 
-  Clock, Phone, Mail, MapPin, Facebook, Instagram, Plus, Trash2, Eye, UserPlus, Shield, Bell
+  Clock, Phone, Mail, MapPin, Facebook, Instagram, Plus, Trash2, Eye, UserPlus, Shield, Bell, RefreshCw
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -290,6 +290,22 @@ const SiteEditor = () => {
       setGallery([...gallery, response.data]);
     } catch (error) {
       console.error('Error adding image:', error);
+    }
+  };
+
+  const syncGalleryFromFilesystem = async () => {
+    if (!window.confirm('Dit zal de huidige galerij vervangen met foto\'s uit het filesystem. Doorgaan?')) {
+      return;
+    }
+    try {
+      const response = await axios.post(`${API}/admin/sites/${siteId}/gallery/sync`, {}, { withCredentials: true });
+      alert(`Gesynchroniseerd: ${response.data.synced_images} foto's gevonden`);
+      // Reload gallery
+      const galleryRes = await axios.get(`${API}/admin/sites/${siteId}/gallery`, { withCredentials: true });
+      setGallery(galleryRes.data);
+    } catch (error) {
+      console.error('Error syncing gallery:', error);
+      alert('Fout bij synchroniseren: ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -867,28 +883,40 @@ const SiteEditor = () => {
                 <div className="space-y-6">
                   <div className="flex items-center justify-between border-b pb-4">
                     <h2 className="text-xl font-semibold">Foto's</h2>
-                    <button
-                      onClick={addGalleryImage}
-                      className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                    >
-                      <Plus className="w-5 h-5" />
-                      <span>Foto Toevoegen</span>
-                    </button>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={syncGalleryFromFilesystem}
+                        className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+                        title="Synchroniseer foto's uit het filesystem"
+                      >
+                        <RefreshCw className="w-5 h-5" />
+                        <span>Sync Filesystem</span>
+                      </button>
+                      <button
+                        onClick={addGalleryImage}
+                        className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+                      >
+                        <Plus className="w-5 h-5" />
+                        <span>URL Toevoegen</span>
+                      </button>
+                    </div>
                   </div>
                   
                   {gallery.length === 0 ? (
                     <div className="text-center py-12 text-gray-500">
                       <Image className="w-12 h-12 mx-auto mb-4 opacity-50" />
                       <p>Nog geen foto's</p>
+                      <p className="text-sm mt-2">Klik op "Sync Filesystem" om foto's te laden</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-4 gap-4">
                       {gallery.map(img => (
                         <div key={img.image_id} className="relative group">
                           <img
-                            src={img.url}
+                            src={img.url.startsWith('/') ? img.url : img.url}
                             alt={img.alt_text || 'Gallery'}
                             className="w-full h-32 object-cover rounded-lg"
+                            onError={(e) => { e.target.src = '/images/placeholder.jpg'; }}
                           />
                           <button
                             onClick={() => deleteGalleryImage(img.image_id)}

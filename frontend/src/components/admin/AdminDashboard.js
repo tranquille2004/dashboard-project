@@ -432,21 +432,34 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Alerts Section */}
-        {alerts.length > 0 && (
-          <div className="bg-white rounded-xl border border-stone-200 mb-6 overflow-hidden">
-            <div className="px-4 py-3 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
-              <div className="flex items-center gap-2">
+        {/* Alerts Section - Always visible */}
+        <div className="bg-white rounded-xl border border-stone-200 mb-6 overflow-hidden">
+          <div className="px-4 py-3 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              {alerts.filter(a => a.is_active).length > 0 ? (
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
-                <h3 className="font-semibold text-stone-800">Site Alerts ({alerts.filter(a => a.is_active).length} actief)</h3>
-              </div>
-              <Link 
-                to="/admin/alerts" 
-                className="text-sm text-teal-600 hover:text-teal-700 font-medium"
-              >
-                Bekijk Alle Alerts →
-              </Link>
+              ) : (
+                <div className="w-2 h-2 bg-teal-500 rounded-full"></div>
+              )}
+              <h3 className="font-semibold text-stone-800">
+                Site Alerts ({alerts.filter(a => a.is_active).length} actief)
+              </h3>
             </div>
+            <Link 
+              to="/admin/alerts" 
+              className="text-sm text-teal-600 hover:text-teal-700 font-medium"
+            >
+              Bekijk Alle Alerts →
+            </Link>
+          </div>
+          
+          {alerts.length === 0 ? (
+            <div className="px-4 py-6 text-center">
+              <Check className="w-8 h-8 text-teal-500 mx-auto mb-2" />
+              <p className="text-stone-600 font-medium">Geen alerts</p>
+              <p className="text-stone-400 text-sm">Alle systemen werken normaal</p>
+            </div>
+          ) : (
             <div className="divide-y divide-stone-100 max-h-64 overflow-y-auto">
               {alerts.map(alert => {
                 const isTrafficAlert = alert.alert_type === 'traffic' || alert.status === 'no_visitors';
@@ -508,8 +521,8 @@ const AdminDashboard = () => {
                 );
               })}
             </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* Sites Header */}
         <div className="flex justify-between items-center mb-4">
