@@ -78,7 +78,11 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    try {
+      window.scrollTo(0, 0);
+    } catch (e) {
+      // Ignore cross-origin errors when running in iframe
+    }
   }, [pathname]);
 
   return null;
@@ -629,7 +633,7 @@ function ReserverenPage({ t }) {
           <iframe
             id="JotFormIFrame-221971858692370"
             title="La Cantina Italiana Reservering"
-            onLoad={() => window.parent.scrollTo(0,0)}
+            onLoad={() => { try { window.scrollTo(0,0); } catch(e) {} }}
             allowTransparency="true"
             allow="geolocation; microphone; camera; fullscreen"
             src="https://form.jotform.com/221971858692370"

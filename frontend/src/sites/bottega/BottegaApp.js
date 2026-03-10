@@ -73,7 +73,11 @@ function ScrollToTop() {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    try {
+      window.scrollTo(0, 0);
+    } catch (e) {
+      // Ignore cross-origin errors when running in iframe
+    }
   }, [pathname]);
 
   return null;
