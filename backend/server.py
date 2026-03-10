@@ -188,6 +188,97 @@ async def check_visitor_activity():
     except Exception as e:
         logging.error(f"Visitor activity check failed: {e}")
 
+async def check_reservation_activity():
+    """Check if restaurant sites have received reservations in the last hour (via confirmation page visits)"""
+    logging.info("Checking reservation activity for restaurants...")
+    try:
+        restaurant_sites = ['cantina', 'bottega', 'ascoli', 'mercato']
+        one_hour_ago = datetime.now(timezone.utc) - timedelta(hours=1)
+        
+        for slug in restaurant_sites:
+            # Get site info
+            site = await db.sites.find_one({"slug": slug})
+            if not site:
+                continue
+                
+            site_name = site.get("name", slug)
+            domains = site.get("domains", [])
+            
+            # Count confirmation page visits in last hour
+            # These indicate successful reservations (both dine-in and takeaway)
+            confirmation_visits = await db.visits.count_documents({
+                "site": slug,
+                "timestamp": {"$gte": one_hour_ago.isoformat()},
+                "$or": [
+                    {"path": {"$regex": "confirmation", "$options": "i"}},
+                    {"path": {"$regex": "grazie", "$options": "i"}},
+                    {"path": {"$regex": "bedankt", "$options": "i"}}
+                ]
+            })
+            
+            if confirmation_visits == 0:
+                # Check if alert already exists
+                existing_alert = await db.site_alerts.find_one({
+                    "site_id": slug,
+                    "alert_type": "reservation",
+                    "is_active": True
+                })
+                
+                if not existing_alert:
+                    # Get last reservation time
+                    last_reservation = await db.visits.find_one(
+                        {
+                            "site": slug,
+                            "$or": [
+                                {"path": {"$regex": "confirmation", "$options": "i"}},
+                                {"path": {"$regex": "grazie", "$options": "i"}},
+                                {"path": {"$regex": "bedankt", "$options": "i"}}
+                            ]
+                        },
+                        sort=[("timestamp", -1)]
+                    )
+                    
+                    if last_reservation:
+                        last_time = last_reservation.get("timestamp", "onbekend")
+                        message = f"Geen reservaties sinds {last_time}"
+                    else:
+                        message = "Nog geen reservaties geregistreerd vandaag"
+                    
+                    alert = SiteAlert(
+                        site_id=slug,
+                        site_name=site_name,
+                        domain=domains[0] if domains else slug,
+                        status="no_reservations",
+                        message=message,
+                        alert_type="reservation"
+                    )
+                    await db.site_alerts.insert_one(alert.model_dump())
+                    logging.warning(f"RESERVATION ALERT: {site_name} has no reservations for 1+ hour")
+            else:
+                # Has reservations - resolve any active reservation alerts
+                active_alert = await db.site_alerts.find_one({
+                    "site_id": slug,
+                    "alert_type": "reservation",
+                    "is_active": True
+                })
+                if active_alert:
+                    started = active_alert["started_at"]
+                    if isinstance(started, str):
+                        started = datetime.fromisoformat(started.replace("Z", "+00:00"))
+                    duration = int((datetime.now(timezone.utc) - started).total_seconds() / 60)
+                    await db.site_alerts.update_one(
+                        {"alert_id": active_alert["alert_id"]},
+                        {"$set": {
+                            "is_active": False,
+                            "resolved_at": datetime.now(timezone.utc).isoformat(),
+                            "duration_minutes": duration
+                        }}
+                    )
+                    logging.info(f"RESERVATION RESOLVED: {site_name} received reservations after {duration} minutes")
+                    
+    except Exception as e:
+        logging.error(f"Reservation activity check failed: {e}")
+
 # Lifespan context manager for startup/shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -195,8 +286,9 @@ async def lifespan(app: FastAPI):
     logging.info("Starting background monitoring scheduler...")
     scheduler.add_job(background_health_check, 'interval', minutes=5, id='health_check')
     scheduler.add_job(check_visitor_activity, 'interval', minutes=30, id='visitor_check')
+    scheduler.add_job(check_reservation_activity, 'interval', minutes=15, id='reservation_check')
     scheduler.start()
-    logging.info("Background scheduler started - Health check every 5 min, Visitor check every 30 min")
+    logging.info("Background scheduler started - Health: 5min, Visitors: 30min, Reservations: 15min")
     
     yield
     
@@ -1706,14 +1798,82 @@ async def check_all_sites_health(user: User = Depends(get_current_user)):
     return health_results
 
 @admin_router.get("/alerts")
-async def get_site_alerts(user: User = Depends(get_current_user)):
-    """Get all site alerts (active and resolved)"""
-    alerts = await db.site_alerts.find(
-        {}, 
-        {"_id": 0}
-    ).sort("started_at", -1).to_list(50)
+async def get_site_alerts(
+    user: User = Depends(get_current_user),
+    limit: int = 100,
+    offset: int = 0,
+    alert_type: Optional[str] = None,
+    site_id: Optional[str] = None,
+    is_active: Optional[bool] = None
+):
+    """Get all site alerts with filters and pagination"""
+    query = {}
+    if alert_type:
+        query["alert_type"] = alert_type
+    if site_id:
+        query["site_id"] = site_id
+    if is_active is not None:
+        query["is_active"] = is_active
     
-    return alerts
+    total = await db.site_alerts.count_documents(query)
+    alerts = await db.site_alerts.find(
+        query, 
+        {"_id": 0}
+    ).sort("started_at", -1).skip(offset).limit(limit).to_list(limit)
+    
+    return {
+        "alerts": alerts,
+        "total": total,
+        "limit": limit,
+        "offset": offset
+    }
+
+@admin_router.get("/alerts/stats")
+async def get_alert_statistics(user: User = Depends(get_current_user)):
+    """Get alert statistics summary"""
+    now = datetime.now(timezone.utc)
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    week_ago = now - timedelta(days=7)
+    
+    # Count by type
+    pipeline = [
+        {"$group": {"_id": "$alert_type", "count": {"$sum": 1}}}
+    ]
+    by_type = await db.site_alerts.aggregate(pipeline).to_list(10)
+    
+    # Active alerts
+    active_count = await db.site_alerts.count_documents({"is_active": True})
+    
+    # Today's alerts
+    today_count = await db.site_alerts.count_documents({
+        "started_at": {"$gte": today_start.isoformat()}
+    })
+    
+    # This week
+    week_count = await db.site_alerts.count_documents({
+        "started_at": {"$gte": week_ago.isoformat()}
+    })
+    
+    # Average resolution time (for resolved alerts)
+    resolved_alerts = await db.site_alerts.find(
+        {"is_active": False, "duration_minutes": {"$exists": True, "$ne": None}},
+        {"duration_minutes": 1}
+    ).to_list(500)
+    
+    avg_resolution = 0
+    if resolved_alerts:
+        durations = [a["duration_minutes"] for a in resolved_alerts if a.get("duration_minutes")]
+        if durations:
+            avg_resolution = sum(durations) / len(durations)
+    
+    return {
+        "active_alerts": active_count,
+        "today_alerts": today_count,
+        "week_alerts": week_count,
+        "total_alerts": await db.site_alerts.count_documents({}),
+        "by_type": {item["_id"]: item["count"] for item in by_type},
+        "avg_resolution_minutes": round(avg_resolution, 1)
+    }
 
 @admin_router.get("/alerts/active")
 async def get_active_alerts(user: User = Depends(get_current_user)):
@@ -1733,12 +1893,118 @@ async def dismiss_alert(alert_id: str, user: User = Depends(get_current_user)):
         {"$set": {
             "is_active": False,
             "resolved_at": datetime.now(timezone.utc).isoformat(),
-            "message": "Manually dismissed"
+            "dismissed_manually": True
         }}
     )
     if result.modified_count == 0:
         raise HTTPException(status_code=404, detail="Alert not found")
     return {"success": True}
+
+# ============== GALLERY SYNC ==============
+
+@admin_router.post("/sites/{site_id}/gallery/sync")
+async def sync_gallery_from_filesystem(site_id: str, user: User = Depends(get_current_user)):
+    """Sync gallery images from filesystem to database"""
+    import glob
+    
+    # Map site_id to folder name
+    site_folders = {
+        'site_bottega001': 'bottega',
+        'site_cantina001': 'cantina',
+        'site_ascoli001': 'ascoli',
+        'site_mercato001': 'mercato',
+        'site_smeralda': 'smeralda',
+        'site_tracemaster001': 'tracemaster',
+        'site_theobeans001': 'theobeans',
+        'site_fworks': 'fworks',
+        # Also support slug directly
+        'bottega': 'bottega',
+        'cantina': 'cantina',
+        'ascoli': 'ascoli',
+        'mercato': 'mercato',
+        'smeralda': 'smeralda',
+        'tracemaster': 'tracemaster',
+        'theobeans': 'theobeans',
+        'fworks': 'fworks',
+    }
+    
+    folder_name = site_folders.get(site_id)
+    if not folder_name:
+        raise HTTPException(status_code=400, detail=f"Unknown site: {site_id}")
+    
+    # Define possible gallery paths
+    base_path = "/app/frontend/public/images"
+    possible_paths = [
+        f"{base_path}/{folder_name}/gallery/*.jpg",
+        f"{base_path}/{folder_name}/gallery/*.jpeg",
+        f"{base_path}/{folder_name}/gallery/*.png",
+        f"{base_path}/{folder_name}/gallery/*.webp",
+        f"{base_path}/{folder_name}/*.jpg",
+        f"{base_path}/{folder_name}/*.jpeg",
+        f"{base_path}/{folder_name}/*.png",
+        f"{base_path}/{folder_name}/*.webp",
+    ]
+    
+    # Find all image files
+    all_images = []
+    for pattern in possible_paths:
+        all_images.extend(glob.glob(pattern))
+    
+    # Remove duplicates and filter out non-gallery images
+    seen = set()
+    unique_images = []
+    for img in all_images:
+        filename = os.path.basename(img)
+        if filename not in seen:
+            # Skip known non-gallery files
+            skip_prefixes = ['logo', 'hero', 'menu', 'bg-', 'icon', 'kaart']
+            if not any(filename.lower().startswith(prefix) for prefix in skip_prefixes):
+                seen.add(filename)
+                unique_images.append(img)
+    
+    # Clear existing gallery for this site
+    await db.gallery_images.delete_many({"site_id": site_id})
+    
+    # Insert new images
+    inserted = 0
+    for i, img_path in enumerate(unique_images):
+        filename = os.path.basename(img_path)
+        relative_path = img_path.replace("/app/frontend/public", "")
+        
+        image_doc = {
+            "image_id": f"img_{folder_name}_{i:03d}",
+            "site_id": site_id,
+            "url": relative_path,
+            "alt_text": filename.replace("-", " ").replace("_", " ").rsplit(".", 1)[0],
+            "sort_order": i,
+            "category": "gallery",
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.gallery_images.insert_one(image_doc)
+        inserted += 1
+    
+    return {
+        "success": True,
+        "synced_images": inserted,
+        "site_id": site_id,
+        "folder": folder_name
+    }
+
+@admin_router.post("/gallery/sync-all")
+async def sync_all_galleries(user: User = Depends(get_current_user)):
+    """Sync gallery images for all sites"""
+    sites = ['site_bottega001', 'site_cantina001', 'site_ascoli001', 'site_mercato001', 
+             'site_smeralda', 'site_tracemaster001', 'site_theobeans001', 'site_fworks']
+    
+    results = {}
+    for site_id in sites:
+        try:
+            result = await sync_gallery_from_filesystem(site_id, user)
+            results[site_id] = result["synced_images"]
+        except Exception as e:
+            results[site_id] = f"Error: {str(e)}"
+    
+    return {"success": True, "results": results}
 
 # Include routers
 app.include_router(api_router)

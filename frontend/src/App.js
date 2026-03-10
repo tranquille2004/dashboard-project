@@ -7,6 +7,7 @@ import LandingPage from '@/components/LandingPage';
 import AuthCallback from '@/components/AuthCallback';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import SiteEditor from '@/components/admin/SiteEditor';
+import AlertsPage from '@/components/admin/AlertsPage';
 import SiteRenderer from '@/components/sites/SiteRenderer';
 import SiteAdminLogin from '@/components/site-admin/SiteAdminLogin';
 import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
@@ -88,6 +89,18 @@ function CustomDomainRouter({ slug }) {
           <SiteProvider>
             <Routes>
               <Route path="/admin" element={<AdminDashboard />} />
+            </Routes>
+          </SiteProvider>
+        </AuthProvider>
+      );
+    }
+    // /admin/alerts gaat naar alerts pagina
+    if (location.pathname.startsWith('/admin/alerts')) {
+      return (
+        <AuthProvider>
+          <SiteProvider>
+            <Routes>
+              <Route path="/admin/alerts" element={<AlertsPage />} />
             </Routes>
           </SiteProvider>
         </AuthProvider>

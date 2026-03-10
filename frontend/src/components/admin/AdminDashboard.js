@@ -440,15 +440,32 @@ const AdminDashboard = () => {
                 <div className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></div>
                 <h3 className="font-semibold text-stone-800">Site Alerts ({alerts.filter(a => a.is_active).length} actief)</h3>
               </div>
+              <Link 
+                to="/admin/alerts" 
+                className="text-sm text-teal-600 hover:text-teal-700 font-medium"
+              >
+                Bekijk Alle Alerts →
+              </Link>
             </div>
             <div className="divide-y divide-stone-100 max-h-64 overflow-y-auto">
               {alerts.map(alert => {
                 const isTrafficAlert = alert.alert_type === 'traffic' || alert.status === 'no_visitors';
-                const bgColor = !alert.is_active ? 'bg-stone-50' : isTrafficAlert ? 'bg-amber-50' : 'bg-red-50';
-                const iconBg = !alert.is_active ? 'bg-stone-200' : isTrafficAlert ? 'bg-amber-100' : 'bg-red-100';
-                const iconColor = !alert.is_active ? 'text-teal-600' : isTrafficAlert ? 'text-amber-600' : 'text-red-600';
-                const statusColor = !alert.is_active ? 'text-teal-600' : isTrafficAlert ? 'text-amber-600' : 'text-red-600';
-                const statusText = !alert.is_active ? 'Opgelost' : isTrafficAlert ? 'Geen bezoekers (2u+)' : 'DOWN';
+                const isReservationAlert = alert.alert_type === 'reservation' || alert.status === 'no_reservations';
+                const bgColor = !alert.is_active ? 'bg-stone-50' : 
+                  isReservationAlert ? 'bg-purple-50' :
+                  isTrafficAlert ? 'bg-amber-50' : 'bg-red-50';
+                const iconBg = !alert.is_active ? 'bg-stone-200' : 
+                  isReservationAlert ? 'bg-purple-100' :
+                  isTrafficAlert ? 'bg-amber-100' : 'bg-red-100';
+                const iconColor = !alert.is_active ? 'text-teal-600' : 
+                  isReservationAlert ? 'text-purple-600' :
+                  isTrafficAlert ? 'text-amber-600' : 'text-red-600';
+                const statusColor = !alert.is_active ? 'text-teal-600' : 
+                  isReservationAlert ? 'text-purple-600' :
+                  isTrafficAlert ? 'text-amber-600' : 'text-red-600';
+                const statusText = !alert.is_active ? 'Opgelost' : 
+                  isReservationAlert ? 'Geen reservaties (1u+)' :
+                  isTrafficAlert ? 'Geen bezoekers (2u+)' : 'DOWN';
                 
                 return (
                   <div key={alert.alert_id} className={`px-4 py-3 flex items-center justify-between ${bgColor}`}>
@@ -456,6 +473,8 @@ const AdminDashboard = () => {
                       <div className={`w-8 h-8 rounded-lg flex items-center justify-center ${iconBg}`}>
                         {!alert.is_active ? (
                           <Check className={`w-4 h-4 ${iconColor}`} />
+                        ) : isReservationAlert ? (
+                          <Clock className={`w-4 h-4 ${iconColor}`} />
                         ) : isTrafficAlert ? (
                           <Users className={`w-4 h-4 ${iconColor}`} />
                         ) : (
