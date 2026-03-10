@@ -95,6 +95,22 @@ Handelt routing af voor 5 van de 6 sites via iframe methode. La Cantina is direc
 - **Backend endpoint:** POST /api/public/contact
 - **API Key:** Geconfigureerd in backend/.env (RESEND_API_KEY)
 
+## 🚨 Alert Email Systeem (NIEUW - 10 maart 2026)
+- **Doel:** Automatische email alerts bij site problemen of gebrek aan reservaties
+- **Ontvanger:** tranquille2004@gmail.com
+- **Alert Types:**
+  - 🔴 **HEALTH:** Site is DOWN - email wordt verstuurd wanneer een website niet bereikbaar is
+  - 🟣 **RESERVATION:** Geen reservaties voor 2+ uur bij één van de vier restaurants (Cantina, Bottega, Ascoli, Mercato)
+- **Onderwerp formaat:** "ALERT - [Restaurant Naam] - [Type]"
+- **Test endpoint:** POST /api/test-alert-email (secret: fworks-test-2024)
+
+## 🐰 Paasmenu Ascoli (NIEUW - 10 maart 2026)
+- **Locatie:** Ascoli homepage, direct onder hero sectie
+- **Prijs:** €65
+- **Datums:** 4 + 6 april (middag en avond)
+- **Talen:** Nederlands en Frans
+- **Features:** Klikbaar - leidt naar reserveringspagina
+
 ## Sites Beheerd (8 totaal)
 1. La Cantina Italiana - lacantinaitaliana.net
 2. La Bottega Herent - labottegaherent.com
@@ -114,6 +130,9 @@ Handelt routing af voor 5 van de 6 sites via iframe methode. La Cantina is direc
 1. ✅ ~~**P1:** Image carousel bug fixen - slideshow stopt niet bij handmatige interactie~~ (logica toegevoegd)
 2. ✅ ~~**P2:** Ontbrekende pagina's maken voor Smeralda~~ - Services sectie toegevoegd met Car Rental, Boat Tours, Flights
 3. ✅ ~~"Location" renamed to "How to Find Us" / "Bereikbaarheid"~~
-4. 🟡 **P3:** Cantina announcement bug onderzoeken en fixen
-5. 🟡 **P3:** Cloudflare Worker updaten voor smeraldavacanze.it domein
-6. 🔵 **P4:** Payment Gateway integratie (Stripe, Payconiq, Binance Pay) - wacht op API keys
+4. ✅ ~~**P0:** Paasmenu voor Ascoli toevoegen~~ (10 maart 2026)
+5. ✅ ~~**P1:** Email alerts voor site down en geen reservaties~~ (10 maart 2026)
+6. 🟡 **P3:** Cantina announcement bug onderzoeken en fixen
+7. 🟡 **P3:** Cloudflare Worker updaten voor smeraldavacanze.it domein
+8. 🔵 **P4:** Payment Gateway integratie (Stripe, Payconiq, Binance Pay) - wacht op API keys
+9. 🔵 **P4:** Image carousel Smeralda stopt niet bij handmatige interactie (P2)

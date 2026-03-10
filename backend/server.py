@@ -30,6 +30,84 @@ db = client[os.environ['DB_NAME']]
 # Background scheduler
 scheduler = AsyncIOScheduler()
 
+# Alert Email Configuration
+ALERT_EMAIL_RECIPIENT = "tranquille2004@gmail.com"
+
+# ============== EMAIL ALERT HELPER ==============
+
+async def send_alert_email(site_name: str, alert_type: str, message: str, domain: str = ""):
+    """Send an email alert to the configured recipient"""
+    try:
+        if not resend.api_key:
+            logging.warning("Resend API key not configured - skipping email alert")
+            return False
+        
+        # Determine subject based on alert type
+        if alert_type == "health":
+            subject = f"🚨 ALERT - {site_name} - Site DOWN"
+            alert_color = "#dc3545"  # red
+            alert_icon = "🔴"
+        elif alert_type == "reservation":
+            subject = f"⚠️ ALERT - {site_name} - Geen Reservaties"
+            alert_color = "#9b59b6"  # purple
+            alert_icon = "🟣"
+        else:
+            subject = f"⚠️ ALERT - {site_name}"
+            alert_color = "#f39c12"  # orange
+            alert_icon = "🟠"
+        
+        # Build email HTML
+        html_content = f"""
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+            <div style="background: {alert_color}; color: white; padding: 20px; border-radius: 8px 8px 0 0; text-align: center;">
+                <h1 style="margin: 0; font-size: 24px;">{alert_icon} SITE ALERT {alert_icon}</h1>
+            </div>
+            <div style="background: #f8f9fa; padding: 20px; border: 1px solid #ddd; border-top: 0; border-radius: 0 0 8px 8px;">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold; width: 140px;">Restaurant:</td>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-size: 18px;">{site_name}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Alert Type:</td>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">{alert_type.upper()}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #eee; font-weight: bold;">Domain:</td>
+                        <td style="padding: 10px 0; border-bottom: 1px solid #eee;">{domain}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px 0; font-weight: bold; vertical-align: top;">Details:</td>
+                        <td style="padding: 10px 0;">{message}</td>
+                    </tr>
+                </table>
+                <div style="margin-top: 20px; padding: 15px; background: #fff; border-left: 4px solid {alert_color}; border-radius: 4px;">
+                    <p style="margin: 0; color: #666; font-size: 14px;">
+                        <strong>Tijd:</strong> {datetime.now(timezone.utc).strftime('%d-%m-%Y %H:%M:%S')} UTC
+                    </p>
+                </div>
+            </div>
+            <div style="text-align: center; padding: 15px; color: #888; font-size: 12px;">
+                <p>Dit bericht is automatisch verzonden door het F.Works monitoring systeem.</p>
+            </div>
+        </div>
+        """
+        
+        params = {
+            "from": "F.Works Alert <onboarding@resend.dev>",
+            "to": [ALERT_EMAIL_RECIPIENT],
+            "subject": subject,
+            "html": html_content
+        }
+        
+        email_result = await asyncio.to_thread(resend.Emails.send, params)
+        logging.info(f"Alert email sent to {ALERT_EMAIL_RECIPIENT}: {email_result}")
+        return True
+        
+    except Exception as e:
+        logging.error(f"Failed to send alert email: {str(e)}")
+        return False
+
 # ============== BACKGROUND MONITORING TASKS ==============
 
 async def background_health_check():
@@ -46,7 +124,7 @@ async def background_health_check():
             if domains:
                 check_url = f"https://{domains[0]}"
             else:
-                check_url = f"{os.environ.get('REACT_APP_BACKEND_URL', 'https://smeralda-hub.preview.emergentagent.com')}/site/{slug}"
+                check_url = f"{os.environ.get('REACT_APP_BACKEND_URL', 'https://ascoli-seasonal.preview.emergentagent.com')}/site/{slug}"
             
             try:
                 async with httpx.AsyncClient(timeout=15.0, verify=False) as client_http:
@@ -60,16 +138,20 @@ async def background_health_check():
                             "is_active": True
                         })
                         if not existing_alert:
+                            alert_msg = f"Site returned status {response.status_code}"
+                            alert_domain = domains[0] if domains else slug
                             alert = SiteAlert(
                                 site_id=slug,
                                 site_name=site_name,
-                                domain=domains[0] if domains else slug,
+                                domain=alert_domain,
                                 status="down",
-                                message=f"Site returned status {response.status_code}",
+                                message=alert_msg,
                                 alert_type="health"
                             )
                             await db.site_alerts.insert_one(alert.model_dump())
                             logging.warning(f"ALERT: Site {site_name} is DOWN (status {response.status_code})")
+                            # Send email alert
+                            await send_alert_email(site_name, "health", alert_msg, alert_domain)
                     else:
                         # Site is up - resolve any active health alerts
                         active_alert = await db.site_alerts.find_one({
@@ -100,16 +182,20 @@ async def background_health_check():
                     "is_active": True
                 })
                 if not existing_alert:
+                    alert_msg = f"Connection failed: {str(e)[:100]}"
+                    alert_domain = domains[0] if domains else slug
                     alert = SiteAlert(
                         site_id=slug,
                         site_name=site_name,
-                        domain=domains[0] if domains else slug,
+                        domain=alert_domain,
                         status="down",
-                        message=f"Connection failed: {str(e)[:100]}",
+                        message=alert_msg,
                         alert_type="health"
                     )
                     await db.site_alerts.insert_one(alert.model_dump())
                     logging.warning(f"ALERT: Site {site_name} is UNREACHABLE - {str(e)[:50]}")
+                    # Send email alert
+                    await send_alert_email(site_name, "health", alert_msg, alert_domain)
                     
     except Exception as e:
         logging.error(f"Background health check failed: {e}")
@@ -189,11 +275,11 @@ async def check_visitor_activity():
         logging.error(f"Visitor activity check failed: {e}")
 
 async def check_reservation_activity():
-    """Check if restaurant sites have received reservations in the last hour (via confirmation page visits)"""
+    """Check if restaurant sites have received reservations in the last 2 hours (via confirmation page visits)"""
     logging.info("Checking reservation activity for restaurants...")
     try:
         restaurant_sites = ['cantina', 'bottega', 'ascoli', 'mercato']
-        one_hour_ago = datetime.now(timezone.utc) - timedelta(hours=1)
+        two_hours_ago = datetime.now(timezone.utc) - timedelta(hours=2)
         
         for slug in restaurant_sites:
             # Get site info
@@ -204,11 +290,11 @@ async def check_reservation_activity():
             site_name = site.get("name", slug)
             domains = site.get("domains", [])
             
-            # Count confirmation page visits in last hour
+            # Count confirmation page visits in last 2 hours
             # These indicate successful reservations (both dine-in and takeaway)
             confirmation_visits = await db.site_visits.count_documents({
                 "site_slug": slug,
-                "timestamp": {"$gte": one_hour_ago.isoformat()},
+                "timestamp": {"$gte": two_hours_ago.isoformat()},
                 "$or": [
                     {"path": {"$regex": "confirmation", "$options": "i"}},
                     {"path": {"$regex": "grazie", "$options": "i"}},
@@ -240,20 +326,23 @@ async def check_reservation_activity():
                     
                     if last_reservation:
                         last_time = last_reservation.get("timestamp", "onbekend")
-                        message = f"Geen reservaties sinds {last_time}"
+                        alert_msg = f"Geen reservaties sinds {last_time}"
                     else:
-                        message = "Nog geen reservaties geregistreerd vandaag"
+                        alert_msg = "Nog geen reservaties geregistreerd vandaag"
                     
+                    alert_domain = domains[0] if domains else slug
                     alert = SiteAlert(
                         site_id=slug,
                         site_name=site_name,
-                        domain=domains[0] if domains else slug,
+                        domain=alert_domain,
                         status="no_reservations",
-                        message=message,
+                        message=alert_msg,
                         alert_type="reservation"
                     )
                     await db.site_alerts.insert_one(alert.model_dump())
-                    logging.warning(f"RESERVATION ALERT: {site_name} has no reservations for 1+ hour")
+                    logging.warning(f"RESERVATION ALERT: {site_name} has no reservations for 2+ hours")
+                    # Send email alert
+                    await send_alert_email(site_name, "reservation", alert_msg, alert_domain)
             else:
                 # Has reservations - resolve any active reservation alerts
                 active_alert = await db.site_alerts.find_one({
@@ -1376,6 +1465,31 @@ async def root():
 async def health():
     return {"status": "healthy"}
 
+# ============== TEST ALERT EMAIL ENDPOINT ==============
+
+@api_router.post("/test-alert-email")
+async def test_alert_email(request: Request):
+    """Test the alert email functionality - protected with secret"""
+    body = await request.json()
+    secret = body.get("secret", "")
+    alert_type = body.get("type", "health")  # health or reservation
+    site_name = body.get("site_name", "Test Restaurant")
+    
+    if secret != "fworks-test-2024":
+        raise HTTPException(status_code=403, detail="Invalid secret")
+    
+    message = f"Dit is een TEST alert voor {site_name}"
+    domain = "test-domain.com"
+    
+    result = await send_alert_email(site_name, alert_type, message, domain)
+    
+    return {
+        "success": result,
+        "message": f"Test email {'verzonden' if result else 'mislukt'} naar {ALERT_EMAIL_RECIPIENT}",
+        "alert_type": alert_type,
+        "site_name": site_name
+    }
+
 # ============== ONE-TIME SEED ENDPOINT ==============
 # Dit endpoint vult de database met alle 7 websites
 # Na uitvoeren wordt het veilig uitgeschakeld (returned already seeded)
@@ -1762,7 +1876,7 @@ async def check_all_sites_health(user: User = Depends(get_current_user)):
                 domain = domains[0]
             else:
                 # Use preview URL for sites without custom domain
-                check_url = f"{os.environ.get('PREVIEW_URL', 'https://smeralda-hub.preview.emergentagent.com')}/site/{slug}"
+                check_url = f"{os.environ.get('PREVIEW_URL', 'https://ascoli-seasonal.preview.emergentagent.com')}/site/{slug}"
                 domain = f"/site/{slug}"
             
             try:
