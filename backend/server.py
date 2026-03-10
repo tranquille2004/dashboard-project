@@ -88,13 +88,13 @@ async def send_alert_email(site_name: str, alert_type: str, message: str, domain
                 </div>
             </div>
             <div style="text-align: center; padding: 15px; color: #888; font-size: 12px;">
-                <p>Dit bericht is automatisch verzonden door het F.Works monitoring systeem.</p>
+                <p>Dit bericht is automatisch verzonden door het fworksbuilders monitoring systeem.</p>
             </div>
         </div>
         """
         
         params = {
-            "from": "F.Works Alert <onboarding@resend.dev>",
+            "from": "fworksbuilders Alert <onboarding@resend.dev>",
             "to": [ALERT_EMAIL_RECIPIENT],
             "subject": subject,
             "html": html_content
