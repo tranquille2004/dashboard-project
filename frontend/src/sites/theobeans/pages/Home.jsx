@@ -26,17 +26,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Official Logo Section */}
-      <section className="py-12 md:py-16 px-4 bg-white">
-        <div className="max-w-md mx-auto">
-          <img
-            src="/images/contact/contact-hero.jpg"
-            alt="Theo Beans Official Logo"
-            className="w-full h-auto"
-          />
-        </div>
-      </section>
-
       {/* Founder Story Section */}
       <section className="py-16 md:py-24 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
@@ -64,6 +53,15 @@ const Home = () => {
                   {siteData.founder.name}
                 </p>
                 <p className="text-gray-600 text-lg">{t.home.founder}</p>
+                
+                {/* Official Logo - Small, under fondatrice */}
+                <div className="mt-6">
+                  <img
+                    src="/images/contact/contact-hero.jpg"
+                    alt="Theo Beans Official Logo"
+                    className="h-16 w-auto"
+                  />
+                </div>
               </div>
             </div>
           </div>
