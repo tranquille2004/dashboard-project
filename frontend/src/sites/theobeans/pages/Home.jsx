@@ -17,17 +17,8 @@ const Home = () => {
         siteName="Theo Beans Export"
         locale="nl_BE"
       />
-      {/* Hero Section with Official Logo as Background */}
-      <section 
-        className="relative bg-cover bg-center py-24 md:py-32 px-4"
-        style={{
-          backgroundImage: 'linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(/images/contact/contact-hero.jpg)',
-          backgroundSize: 'contain',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          backgroundColor: '#b8999e'
-        }}
-      >
+      {/* Hero Section - Simple */}
+      <section className="relative bg-[#b8999e] text-white py-24 md:py-32 px-4">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-[0.2em] animate-fade-in text-white">
             {siteData.companyName}
@@ -35,11 +26,22 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Founder Story Section - SMALLER PHOTO */}
+      {/* Official Logo Section */}
+      <section className="py-12 md:py-16 px-4 bg-white">
+        <div className="max-w-md mx-auto">
+          <img
+            src="/images/contact/contact-hero.jpg"
+            alt="Theo Beans Official Logo"
+            className="w-full h-auto"
+          />
+        </div>
+      </section>
+
+      {/* Founder Story Section */}
       <section className="py-16 md:py-24 px-4 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
-            {/* Image - SMALLER */}
+            {/* Image */}
             <div className="order-2 md:order-1">
               <div className="rounded-lg overflow-hidden shadow-lg max-w-md mx-auto">
                 <img
