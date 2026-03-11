@@ -17,8 +17,17 @@ const Home = () => {
         siteName="Theo Beans Export"
         locale="nl_BE"
       />
-      {/* Hero Section */}
-      <section className="relative bg-[#b8999e] text-white py-24 md:py-32 px-4">
+      {/* Hero Section with Official Logo as Background */}
+      <section 
+        className="relative bg-cover bg-center py-24 md:py-32 px-4"
+        style={{
+          backgroundImage: 'linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(/images/contact/contact-hero.jpg)',
+          backgroundSize: 'contain',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+          backgroundColor: '#b8999e'
+        }}
+      >
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-light tracking-[0.2em] animate-fade-in text-white">
             {siteData.companyName}
