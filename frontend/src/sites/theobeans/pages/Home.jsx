@@ -54,12 +54,12 @@ const Home = () => {
                 </p>
                 <p className="text-gray-600 text-lg">{t.home.founder}</p>
                 
-                {/* Official Logo - Small, under fondatrice */}
+                {/* Official Logo - under fondatrice */}
                 <div className="mt-6">
                   <img
                     src="/images/contact/contact-hero.jpg"
                     alt="Theo Beans Official Logo"
-                    className="h-16 w-auto"
+                    className="h-28 w-auto"
                   />
                 </div>
               </div>
