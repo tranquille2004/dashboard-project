@@ -1328,68 +1328,50 @@ const SmeraldaApp = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form */}
             <div className="bg-white rounded-2xl p-6 sm:p-8 text-gray-900">
-              <form className="space-y-4" onSubmit={async (e) => {
+              <form className="space-y-4" onSubmit={(e) => {
                 e.preventDefault();
                 const form = e.target;
-                const submitBtn = form.querySelector('button[type="submit"]');
-                const originalText = submitBtn.innerText;
-                submitBtn.disabled = true;
-                submitBtn.innerText = 'Sending...';
+                const formData = new FormData(form);
                 
-                try {
-                  const formData = new FormData(form);
-                  const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/public/contact`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                      site: 'smeralda',
-                      name: formData.get('name'),
-                      email: formData.get('email'),
-                      phone: formData.get('phone'),
-                      message: formData.get('message') || '',
-                      arrival: formData.get('arrival'),
-                      departure: formData.get('departure'),
-                      apartment: formData.get('apartment'),
-                      persons: parseInt(formData.get('persons')) || null
-                    })
-                  });
-                  
-                  if (response.ok) {
-                    alert('Thank you! Your message has been sent successfully.');
-                    form.reset();
-                  } else {
-                    alert('Something went wrong. Please try again or contact us directly.');
-                  }
-                } catch (err) {
-                  alert('Network error. Please try again later.');
-                } finally {
-                  submitBtn.disabled = false;
-                  submitBtn.innerText = originalText;
-                }
+                // Build mailto link
+                const email = 'villasmeralda1980@gmail.com';
+                const subject = encodeURIComponent('Villa Smeralda - Reserveringsaanvraag');
+                const body = encodeURIComponent(
+                  `Naam: ${formData.get('name') || 'Niet opgegeven'}\n` +
+                  `Email: ${formData.get('email')}\n` +
+                  `Telefoon: ${formData.get('phone')}\n` +
+                  `Aankomst: ${formData.get('arrival') || 'Niet opgegeven'}\n` +
+                  `Vertrek: ${formData.get('departure') || 'Niet opgegeven'}\n` +
+                  `Appartement: ${formData.get('apartment') || 'Niet opgegeven'}\n` +
+                  `Personen: ${formData.get('persons') || 'Niet opgegeven'}\n\n` +
+                  `Bericht:\n${formData.get('message') || 'Geen bericht'}`
+                );
+                
+                window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
               }}>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <input name="name" type="text" placeholder={t.contact.form.name} required
+                  <input name="name" type="text" placeholder={t.contact.form.name}
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                   <input name="email" type="email" placeholder={t.contact.form.email} required
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                 </div>
-                <input name="phone" type="tel" placeholder={t.contact.form.phone}
+                <input name="phone" type="tel" placeholder={t.contact.form.phone} required
                   className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <input name="arrival" type="date" required
+                  <input name="arrival" type="date"
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
-                  <input name="departure" type="date" required
+                  <input name="departure" type="date"
                     className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
                 </div>
                 <div className="grid sm:grid-cols-2 gap-4">
-                  <select name="apartment" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
+                  <select name="apartment" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
                     <option value="">{t.contact.form.select}</option>
                     <option value="1bed">{t.contact.form.oneBed}</option>
                     <option value="2bed">{t.contact.form.twoBed}</option>
                     <option value="executive">{t.contact.form.execApt}</option>
                     <option value="mobilhome">{t.contact.form.mobHome}</option>
                   </select>
-                  <select name="persons" required className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
+                  <select name="persons" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
                     <option value="">{t.contact.form.persons}</option>
                     {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n} {n === 1 ? 'person' : 'persons'}</option>)}
                   </select>

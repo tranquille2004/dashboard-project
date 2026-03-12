@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Facebook } from 'lucide-react';
 import { siteData } from '../data/mock';
-import { useToast } from '../hooks/use-toast';
 import { useLanguage } from '../context/LanguageContext';
 
 const Contact = () => {
-  const { toast } = useToast();
   const { t } = useLanguage();
   const [formData, setFormData] = useState({
     firstName: '',
@@ -14,55 +12,22 @@ const Contact = () => {
     phone: '',
     message: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    setIsSubmitting(true);
-
-    try {
-      // Using Formspree for email sending
-      // User needs to create a Formspree form at https://formspree.io and get their own form ID
-      // Then replace the form ID below with their actual form ID
-      const response = await fetch('https://formspree.io/f/movqgpww', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        },
-        body: JSON.stringify({
-          name: `${formData.firstName} ${formData.lastName}`,
-          email: formData.email,
-          phone: formData.phone || 'Not provided',
-          message: formData.message,
-          _subject: `Nouveau message de ${formData.firstName} ${formData.lastName} - Theo Beans Export`
-        })
-      });
-
-      if (response.ok) {
-        toast({
-          title: t.contact.success,
-          description: t.contact.successDesc,
-        });
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          phone: '',
-          message: ''
-        });
-      } else {
-        throw new Error('Submission failed');
-      }
-    } catch (error) {
-      toast({
-        title: t.contact.error,
-        description: t.contact.errorDesc,
-        variant: "destructive"
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    
+    // Build mailto link - email sent via client's email
+    const toEmail = 'veroncia@theobeans-export.com';
+    const subject = encodeURIComponent(`Nouveau message de ${formData.firstName} ${formData.lastName} - Theo Beans Export`);
+    const body = encodeURIComponent(
+      `Prénom: ${formData.firstName || 'Non fourni'}\n` +
+      `Nom: ${formData.lastName || 'Non fourni'}\n` +
+      `Email: ${formData.email}\n` +
+      `Téléphone: ${formData.phone}\n\n` +
+      `Message:\n${formData.message || 'Pas de message'}`
+    );
+    
+    window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
   };
 
   const handleChange = (e) => {
@@ -106,12 +71,11 @@ const Contact = () => {
                   <div className="grid md:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t.contact.firstName} *
+                        {t.contact.firstName}
                       </label>
                       <input
                         type="text"
                         name="firstName"
-                        required
                         value={formData.firstName}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8999e] focus:border-transparent transition-all"
@@ -120,12 +84,11 @@ const Contact = () => {
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        {t.contact.lastName} *
+                        {t.contact.lastName}
                       </label>
                       <input
                         type="text"
                         name="lastName"
-                        required
                         value={formData.lastName}
                         onChange={handleChange}
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8999e] focus:border-transparent transition-all"
@@ -151,11 +114,12 @@ const Contact = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t.contact.phone}
+                      {t.contact.phone} *
                     </label>
                     <input
                       type="tel"
                       name="phone"
+                      required
                       value={formData.phone}
                       onChange={handleChange}
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8999e] focus:border-transparent transition-all"
@@ -165,11 +129,10 @@ const Contact = () => {
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      {t.contact.message} *
+                      {t.contact.message}
                     </label>
                     <textarea
                       name="message"
-                      required
                       value={formData.message}
                       onChange={handleChange}
                       rows={6}
@@ -180,11 +143,10 @@ const Contact = () => {
 
                   <button
                     type="submit"
-                    disabled={isSubmitting}
-                    className="w-full bg-[#b8999e] text-white py-3 rounded-lg hover:bg-[#a8898e] transition-colors font-light tracking-wide disabled:opacity-50 disabled:cursor-not-allowed shadow-md hover:shadow-lg"
+                    className="w-full bg-[#b8999e] text-white py-3 rounded-lg hover:bg-[#a8898e] transition-colors font-light tracking-wide shadow-md hover:shadow-lg"
                     data-testid="contact-submit-button"
                   >
-                    {isSubmitting ? t.contact.sending : t.contact.send}
+                    {t.contact.send}
                   </button>
                 </form>
               </div>
