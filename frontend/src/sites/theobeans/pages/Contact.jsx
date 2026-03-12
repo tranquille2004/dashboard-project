@@ -17,7 +17,7 @@ const Contact = () => {
     e.preventDefault();
     
     // Build mailto link - email sent via client's email
-    const toEmail = 'veroncia@theobeans-export.com';
+    const toEmail = 'valenciaveronica@live.be';
     const subject = encodeURIComponent(`Nouveau message de ${formData.firstName} ${formData.lastName} - Theo Beans Export`);
     const body = encodeURIComponent(
       `Prénom: ${formData.firstName || 'Non fourni'}\n` +

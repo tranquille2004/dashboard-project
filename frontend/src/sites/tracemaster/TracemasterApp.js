@@ -946,7 +946,7 @@ const ContactForm = () => {
     e.preventDefault();
     
     // Build mailto link - email sent via client's email
-    const toEmail = 'info@tracemaster.ec';
+    const toEmail = 'tranquille2004@gmail.com';
     const subject = encodeURIComponent(`Nuevo mensaje de contacto - Tracemaster - ${formData.asunto}`);
     const body = encodeURIComponent(
       `Nombre: ${formData.nombre || 'No proporcionado'}\n` +
