@@ -1326,63 +1326,18 @@ const SmeraldaApp = () => {
           </div>
 
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Contact Form */}
+            {/* Contact Form - JotForm */}
             <div className="bg-white rounded-2xl p-6 sm:p-8 text-gray-900">
-              <form className="space-y-4" onSubmit={(e) => {
-                e.preventDefault();
-                const form = e.target;
-                const formData = new FormData(form);
-                
-                // Build mailto link
-                const email = 'villasmeralda1980@gmail.com';
-                const subject = encodeURIComponent('Villa Smeralda - Reserveringsaanvraag');
-                const body = encodeURIComponent(
-                  `Naam: ${formData.get('name') || 'Niet opgegeven'}\n` +
-                  `Email: ${formData.get('email')}\n` +
-                  `Telefoon: ${formData.get('phone')}\n` +
-                  `Aankomst: ${formData.get('arrival') || 'Niet opgegeven'}\n` +
-                  `Vertrek: ${formData.get('departure') || 'Niet opgegeven'}\n` +
-                  `Appartement: ${formData.get('apartment') || 'Niet opgegeven'}\n` +
-                  `Personen: ${formData.get('persons') || 'Niet opgegeven'}\n\n` +
-                  `Bericht:\n${formData.get('message') || 'Geen bericht'}`
-                );
-                
-                window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-              }}>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <input name="name" type="text" placeholder={t.contact.form.name}
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
-                  <input name="email" type="email" placeholder={t.contact.form.email} required
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
-                </div>
-                <input name="phone" type="tel" placeholder={t.contact.form.phone} required
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <input name="arrival" type="date"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
-                  <input name="departure" type="date"
-                    className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
-                </div>
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <select name="apartment" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
-                    <option value="">{t.contact.form.select}</option>
-                    <option value="1bed">{t.contact.form.oneBed}</option>
-                    <option value="2bed">{t.contact.form.twoBed}</option>
-                    <option value="executive">{t.contact.form.execApt}</option>
-                    <option value="mobilhome">{t.contact.form.mobHome}</option>
-                  </select>
-                  <select name="persons" className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500">
-                    <option value="">{t.contact.form.persons}</option>
-                    {[1,2,3,4,5,6,7].map(n => <option key={n} value={n}>{n} {n === 1 ? 'person' : 'persons'}</option>)}
-                  </select>
-                </div>
-                <textarea name="message" rows={3} placeholder={t.contact.form.message}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-amber-500" />
-                <button type="submit"
-                  className="w-full bg-amber-600 hover:bg-amber-700 text-white py-4 rounded-lg font-semibold transition-colors">
-                  {t.contact.form.submit}
-                </button>
-              </form>
+              <iframe 
+                id="JotFormIFrame-81427604547358" 
+                title="Villa Smeralda Online Request Form" 
+                allowTransparency="true" 
+                allow="geolocation; microphone; camera; fullscreen; payment" 
+                src="https://form.jotform.com/81427604547358" 
+                frameBorder="0" 
+                style={{minWidth: '100%', maxWidth: '100%', height: '539px', border: 'none'}} 
+                scrolling="no"
+              />
             </div>
 
             {/* Contact Info */}
