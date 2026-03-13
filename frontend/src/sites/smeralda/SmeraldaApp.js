@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Bath, TreePine, Mountain } from 'lucide-react';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Bath, TreePine, Mountain, CheckCircle } from 'lucide-react';
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
 
@@ -703,7 +704,63 @@ const PRICES = {
   mobilhome: { low: 130, mid1: 165, high1: 219, peak: 259, mid2: 155, low2: 139 }
 };
 
-const SmeraldaApp = () => {
+// Confirmation Page Component
+const ConfirmationPage = () => {
+  const [lang] = useState('en');
+  const t = translations[lang];
+  
+  // Track confirmation page visit
+  useEffect(() => {
+    const API = process.env.REACT_APP_BACKEND_URL;
+    fetch(`${API}/api/public/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        site_slug: 'smeralda',
+        path: '/confirmation'
+      })
+    }).catch(() => {});
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-4">
+      <SEO 
+        title="Bedankt voor uw aanvraag | Villa Smeralda"
+        description="Uw reserveringsaanvraag is succesvol verzonden."
+        url="https://smeraldavacanze.it/confirmation"
+        siteName={SEO_CONFIG.siteName}
+      />
+      <div className="max-w-lg w-full bg-white rounded-2xl shadow-xl p-8 text-center">
+        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
+          <CheckCircle className="w-12 h-12 text-green-600" />
+        </div>
+        <h1 className="text-3xl font-bold text-gray-900 mb-4">
+          Grazie! / Bedankt!
+        </h1>
+        <p className="text-lg text-gray-600 mb-6">
+          La vostra richiesta è stata inviata con successo.<br/>
+          Uw aanvraag is succesvol verzonden.
+        </p>
+        <p className="text-gray-500 mb-8">
+          Vi risponderemo al più presto.<br/>
+          Wij nemen zo snel mogelijk contact met u op.
+        </p>
+        <a 
+          href="/"
+          className="inline-block bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-xl font-semibold transition-colors"
+        >
+          Torna alla Home / Terug naar Home
+        </a>
+        <div className="mt-8 pt-6 border-t">
+          <img src={IMAGES.logo} alt="Villa Smeralda" className="h-10 mx-auto opacity-50" />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// Main Homepage Content Component
+const SmeraldaHomePage = () => {
   const [lang, setLang] = useState('en');
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
@@ -713,13 +770,16 @@ const SmeraldaApp = () => {
   const [lightboxIndex, setLightboxIndex] = useState(0);
   const t = translations[lang];
 
-  // Track visitor
+  // Track visitor with path
   useEffect(() => {
     const API = process.env.REACT_APP_BACKEND_URL;
     fetch(`${API}/api/public/track-visit`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ site_slug: 'smeralda' })
+      body: JSON.stringify({ 
+        site_slug: 'smeralda',
+        path: window.location.pathname
+      })
     }).catch(() => {});
   }, []);
 
@@ -1335,8 +1395,7 @@ const SmeraldaApp = () => {
                 allow="geolocation; microphone; camera; fullscreen; payment" 
                 src="https://form.jotform.com/81427604547358" 
                 frameBorder="0" 
-                style={{width: '100%', minHeight: '700px', border: 'none'}} 
-                scrolling="yes"
+                style={{width: '100%', height: '450px', border: 'none', transform: 'scale(0.9)', transformOrigin: 'top left'}} 
               />
             </div>
 
@@ -1436,6 +1495,17 @@ const SmeraldaApp = () => {
       
       {/* Tawk.to Live Chat - loaded via script */}
     </div>
+  );
+};
+
+// Main App Component with Routes
+const SmeraldaApp = () => {
+  return (
+    <Routes>
+      <Route index element={<SmeraldaHomePage />} />
+      <Route path="confirmation" element={<ConfirmationPage />} />
+      <Route path="*" element={<SmeraldaHomePage />} />
+    </Routes>
   );
 };
 

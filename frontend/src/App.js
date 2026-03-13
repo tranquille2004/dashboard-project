@@ -52,9 +52,13 @@ function AdminRouter() {
     if (location.pathname.startsWith('/site/fworks')) {
       return <FWorksApp />;
     }
-    // Special handling for /site/smeralda
+    // Special handling for /site/smeralda - needs Routes for confirmation page
     if (location.pathname.startsWith('/site/smeralda')) {
-      return <SmeraldaApp />;
+      return (
+        <Routes>
+          <Route path="/site/smeralda/*" element={<SmeraldaApp />} />
+        </Routes>
+      );
     }
     return (
       <Routes>
@@ -125,8 +129,12 @@ function CustomDomainRouter({ slug }) {
         </SiteAdminProvider>
       );
     }
-    // Alle andere paden -> toon Smeralda website
-    return <SmeraldaApp />;
+    // Alle andere paden -> toon Smeralda website met routes
+    return (
+      <Routes>
+        <Route path="/*" element={<SmeraldaApp />} />
+      </Routes>
+    );
   }
   
   const isAdmin = location.pathname === '/admin' || location.pathname === '/admin/';
