@@ -1327,7 +1327,7 @@ const SmeraldaApp = () => {
 
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Form - JotForm */}
-            <div className="bg-white rounded-2xl p-6 sm:p-8 text-gray-900">
+            <div className="bg-white rounded-2xl p-2 sm:p-4 text-gray-900 overflow-hidden">
               <iframe 
                 id="JotFormIFrame-81427604547358" 
                 title="Villa Smeralda Online Request Form" 
@@ -1335,8 +1335,8 @@ const SmeraldaApp = () => {
                 allow="geolocation; microphone; camera; fullscreen; payment" 
                 src="https://form.jotform.com/81427604547358" 
                 frameBorder="0" 
-                style={{minWidth: '100%', maxWidth: '100%', height: '539px', border: 'none'}} 
-                scrolling="no"
+                style={{width: '100%', minHeight: '700px', border: 'none'}} 
+                scrolling="yes"
               />
             </div>
 
