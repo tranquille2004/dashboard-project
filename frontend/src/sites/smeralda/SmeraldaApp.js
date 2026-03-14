@@ -1400,7 +1400,7 @@ const SmeraldaHomePage = () => {
                 allow="geolocation; microphone; camera; fullscreen; payment" 
                 src="https://form.jotform.com/81427604547358" 
                 frameBorder="0" 
-                style={{width: '110%', height: '400px', border: 'none', transform: 'scale(0.75)', transformOrigin: 'top left'}} 
+                style={{width: '111%', height: '680px', border: 'none', transform: 'scale(0.9)', transformOrigin: 'top left'}} 
               />
             </div>
 
