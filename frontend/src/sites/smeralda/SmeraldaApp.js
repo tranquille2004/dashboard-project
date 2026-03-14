@@ -1477,7 +1477,7 @@ const SmeraldaHomePage = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-4">
-              <img src={IMAGES.logo} alt="Villa Smeralda" className="h-12 w-auto brightness-0 invert" />
+              <img src={IMAGES.logo} alt="Villa Smeralda" className="h-12 w-auto" />
               <div className="text-sm text-gray-400">
                 <p>Résidence Villa Smeralda</p>
                 <p>Telti, Sardegna - Italia</p>
