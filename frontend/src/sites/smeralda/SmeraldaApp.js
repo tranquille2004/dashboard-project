@@ -141,14 +141,14 @@ const translations = {
       },
       flights: {
         title: 'Flight Information',
-        desc: 'Olbia airport is only 10 minutes away. Airport transfer from Olbia available for €30. Transfer from Alghero (2 hours) is available for €80.',
+        desc: 'Olbia airport is only 15 minutes away. Airport transfer from Olbia available for €30. Transfer from Alghero (2 hours) is available for €80.',
         airlines: 'Popular airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Check Google Flights for the best deals!'
       }
     },
     location: {
       title: 'How to Find Us',
-      text: 'We are located only 5km from Olbia and 20 minutes from the beautiful beaches. Olbia Costa Smeralda airport is just 10 minutes by car.',
+      text: 'We are located only 5km from Olbia and 20 minutes from the beautiful beaches. Olbia Costa Smeralda airport is just 15 minutes by car.',
       directions: 'Search "Villa Smeralda Telti" on Google Maps'
     },
     footer: { rights: 'All rights reserved', webmaster: 'Website by' },
@@ -250,14 +250,14 @@ const translations = {
       },
       flights: {
         title: 'Vluchtinformatie',
-        desc: 'De luchthaven van Olbia is slechts 10 minuten rijden. Luchthaventransfer vanaf Olbia beschikbaar voor €30. Transfer vanaf Alghero (2 uur) is beschikbaar voor €80.',
+        desc: 'De luchthaven van Olbia is slechts 15 minuten rijden. Luchthaventransfer vanaf Olbia beschikbaar voor €30. Transfer vanaf Alghero (2 uur) is beschikbaar voor €80.',
         airlines: 'Populaire airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Check Google Flights voor de beste deals!'
       }
     },
     location: {
       title: 'Hoe Ons Te Vinden',
-      text: 'We liggen op slechts 5km van Olbia en 20 minuten van de prachtige stranden. Olbia Costa Smeralda luchthaven is slechts 10 minuten met de auto.',
+      text: 'We liggen op slechts 5km van Olbia en 20 minuten van de prachtige stranden. Olbia Costa Smeralda luchthaven is slechts 15 minuten met de auto.',
       directions: 'Zoek "Villa Smeralda Telti" op Google Maps'
     },
     footer: { rights: 'Alle rechten voorbehouden', webmaster: 'Website door' },
@@ -359,14 +359,14 @@ const translations = {
       },
       flights: {
         title: 'Informations Vol',
-        desc: 'L\'aéroport d\'Olbia est à seulement 10 minutes. Transfert depuis Olbia disponible pour €30. Transfert depuis Alghero (2 heures) disponible pour €80.',
+        desc: 'L\'aéroport d\'Olbia est à seulement 15 minutes. Transfert depuis Olbia disponible pour €30. Transfert depuis Alghero (2 heures) disponible pour €80.',
         airlines: 'Compagnies populaires: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Consultez Google Flights pour les meilleures offres!'
       }
     },
     location: {
       title: 'Comment Nous Trouver',
-      text: 'Nous sommes situés à seulement 5km d\'Olbia et 20 minutes des belles plages. L\'aéroport Olbia Costa Smeralda est à 10 minutes en voiture.',
+      text: 'Nous sommes situés à seulement 5km d\'Olbia et 20 minutes des belles plages. L\'aéroport Olbia Costa Smeralda est à 15 minutes en voiture.',
       directions: 'Cherchez "Villa Smeralda Telti" sur Google Maps'
     },
     footer: { rights: 'Tous droits réservés', webmaster: 'Site web par' },
@@ -468,14 +468,14 @@ const translations = {
       },
       flights: {
         title: 'Informazioni Volo',
-        desc: 'L\'aeroporto di Olbia è a soli 10 minuti. Transfer da Olbia disponibile a €30. Transfer da Alghero (2 ore) disponibile a €80.',
+        desc: 'L\'aeroporto di Olbia è a soli 15 minuti. Transfer da Olbia disponibile a €30. Transfer da Alghero (2 ore) disponibile a €80.',
         airlines: 'Compagnie popolari: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Controllate Google Flights per le migliori offerte!'
       }
     },
     location: {
       title: 'Come Trovarci',
-      text: 'Siamo situati a soli 5km da Olbia e 20 minuti dalle belle spiagge. L\'aeroporto Olbia Costa Smeralda è a 10 minuti in auto.',
+      text: 'Siamo situati a soli 5km da Olbia e 20 minuti dalle belle spiagge. L\'aeroporto Olbia Costa Smeralda è a 15 minuti in auto.',
       directions: 'Cerca "Villa Smeralda Telti" su Google Maps'
     },
     footer: { rights: 'Tutti i diritti riservati', webmaster: 'Sito web di' },
@@ -577,14 +577,14 @@ const translations = {
       },
       flights: {
         title: 'Información de Vuelos',
-        desc: 'El aeropuerto de Olbia está a solo 10 minutos. Transfer desde Olbia disponible por €30. Transfer desde Alghero (2 horas) disponible por €80.',
+        desc: 'El aeropuerto de Olbia está a solo 15 minutos. Transfer desde Olbia disponible por €30. Transfer desde Alghero (2 horas) disponible por €80.',
         airlines: 'Aerolíneas populares: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: '¡Consulte Google Flights para las mejores ofertas!'
       }
     },
     location: {
       title: 'Cómo Encontrarnos',
-      text: 'Estamos a solo 5km de Olbia y 20 minutos de las hermosas playas. El aeropuerto Olbia Costa Smeralda está a 10 minutos en coche.',
+      text: 'Estamos a solo 5km de Olbia y 20 minutos de las hermosas playas. El aeropuerto Olbia Costa Smeralda está a 15 minutos en coche.',
       directions: 'Busque "Villa Smeralda Telti" en Google Maps'
     },
     footer: { rights: 'Todos los derechos reservados', webmaster: 'Sitio web por' },
@@ -686,14 +686,14 @@ const translations = {
       },
       flights: {
         title: 'Fluginformationen',
-        desc: 'Der Flughafen Olbia ist nur 10 Minuten entfernt. Transfer ab Olbia verfügbar für €30. Transfer ab Alghero (2 Stunden) ist für €80 verfügbar.',
+        desc: 'Der Flughafen Olbia ist nur 15 Minuten entfernt. Transfer ab Olbia verfügbar für €30. Transfer ab Alghero (2 Stunden) ist für €80 verfügbar.',
         airlines: 'Beliebte Airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Prüfen Sie Google Flights für die besten Angebote!'
       }
     },
     location: {
       title: 'So Finden Sie Uns',
-      text: 'Wir befinden uns nur 5km von Olbia und 20 Minuten von den schönen Stränden entfernt. Der Flughafen Olbia Costa Smeralda ist 10 Minuten mit dem Auto.',
+      text: 'Wir befinden uns nur 5km von Olbia und 20 Minuten von den schönen Stränden entfernt. Der Flughafen Olbia Costa Smeralda ist 15 Minuten mit dem Auto.',
       directions: 'Suchen Sie "Villa Smeralda Telti" auf Google Maps'
     },
     footer: { rights: 'Alle Rechte vorbehalten', webmaster: 'Website von' },
