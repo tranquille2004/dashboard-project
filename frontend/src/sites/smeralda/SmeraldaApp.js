@@ -130,7 +130,7 @@ const translations = {
       carRental: {
         title: 'Car Rental',
         desc: 'The best way to discover our beautiful island is with a rental car. Book via us for the best prices - cheaper than airport or online! Basic insurance included.',
-        price: 'From €65 per day',
+        price: 'From €55 per day',
         cta: 'Ask a Quote',
         cars: ['Smart Forfour (automatic)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
       },
@@ -239,7 +239,7 @@ const translations = {
       carRental: {
         title: 'Autoverhuur',
         desc: 'De beste manier om ons prachtige eiland te ontdekken is met een huurauto. Boek via ons voor de beste prijzen - goedkoper dan op de luchthaven of online! Basisverzekering inbegrepen.',
-        price: 'Vanaf €65 per dag',
+        price: 'Vanaf €55 per dag',
         cta: 'Vraag een Offerte',
         cars: ['Smart Forfour (automaat)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
       },
@@ -348,7 +348,7 @@ const translations = {
       carRental: {
         title: 'Location de Voiture',
         desc: 'La meilleure façon de découvrir notre belle île est en voiture de location. Réservez via nous pour les meilleurs prix - moins cher qu\'à l\'aéroport ou en ligne! Assurance de base incluse.',
-        price: 'À partir de €65 par jour',
+        price: 'À partir de €55 par jour',
         cta: 'Demander un Devis',
         cars: ['Smart Forfour (automatique)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
       },
@@ -457,7 +457,7 @@ const translations = {
       carRental: {
         title: 'Noleggio Auto',
         desc: 'Il modo migliore per scoprire la nostra bella isola è con un\'auto a noleggio. Prenotate tramite noi per i migliori prezzi - più economico che in aeroporto o online! Assicurazione base inclusa.',
-        price: 'Da €65 al giorno',
+        price: 'Da €55 al giorno',
         cta: 'Richiedi Preventivo',
         cars: ['Smart Forfour (automatico)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
       },
@@ -566,7 +566,7 @@ const translations = {
       carRental: {
         title: 'Alquiler de Coches',
         desc: 'La mejor manera de descubrir nuestra hermosa isla es con un coche de alquiler. ¡Reserve a través de nosotros para los mejores precios - más barato que en el aeropuerto o en línea! Seguro básico incluido.',
-        price: 'Desde €65 por día',
+        price: 'Desde €55 por día',
         cta: 'Solicitar Presupuesto',
         cars: ['Smart Forfour (automático)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
       },
@@ -675,7 +675,7 @@ const translations = {
       carRental: {
         title: 'Mietwagen',
         desc: 'Der beste Weg, unsere schöne Insel zu entdecken, ist mit einem Mietwagen. Buchen Sie über uns für die besten Preise - günstiger als am Flughafen oder online! Basisversicherung inklusive.',
-        price: 'Ab €65 pro Tag',
+        price: 'Ab €55 pro Tag',
         cta: 'Angebot Anfragen',
         cars: ['Smart Forfour (Automatik)', 'Fiat Panda', 'Citroën C3', 'Toyota Yaris', 'Lancia Musa']
       },
