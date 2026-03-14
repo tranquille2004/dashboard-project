@@ -136,7 +136,7 @@ const translations = {
       },
       flights: {
         title: 'Flight Information',
-        desc: 'Olbia airport is only 10 minutes away. We offer free airport transfer from Olbia. Transfer from Alghero (2 hours) is available for €80.',
+        desc: 'Olbia airport is only 10 minutes away. Airport transfer from Olbia available for €30. Transfer from Alghero (2 hours) is available for €80.',
         airlines: 'Popular airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Check Google Flights for the best deals!'
       }
@@ -245,7 +245,7 @@ const translations = {
       },
       flights: {
         title: 'Vluchtinformatie',
-        desc: 'De luchthaven van Olbia is slechts 10 minuten rijden. We bieden gratis luchthaventransfer vanaf Olbia. Transfer vanaf Alghero (2 uur) is beschikbaar voor €80.',
+        desc: 'De luchthaven van Olbia is slechts 10 minuten rijden. Luchthaventransfer vanaf Olbia beschikbaar voor €30. Transfer vanaf Alghero (2 uur) is beschikbaar voor €80.',
         airlines: 'Populaire airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Check Google Flights voor de beste deals!'
       }
@@ -354,7 +354,7 @@ const translations = {
       },
       flights: {
         title: 'Informations Vol',
-        desc: 'L\'aéroport d\'Olbia est à seulement 10 minutes. Nous offrons un transfert gratuit depuis Olbia. Transfert depuis Alghero (2 heures) disponible pour €80.',
+        desc: 'L\'aéroport d\'Olbia est à seulement 10 minutes. Transfert depuis Olbia disponible pour €30. Transfert depuis Alghero (2 heures) disponible pour €80.',
         airlines: 'Compagnies populaires: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Consultez Google Flights pour les meilleures offres!'
       }
@@ -463,7 +463,7 @@ const translations = {
       },
       flights: {
         title: 'Informazioni Volo',
-        desc: 'L\'aeroporto di Olbia è a soli 10 minuti. Offriamo transfer gratuito da Olbia. Transfer da Alghero (2 ore) disponibile a €80.',
+        desc: 'L\'aeroporto di Olbia è a soli 10 minuti. Transfer da Olbia disponibile a €30. Transfer da Alghero (2 ore) disponibile a €80.',
         airlines: 'Compagnie popolari: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Controllate Google Flights per le migliori offerte!'
       }
@@ -572,7 +572,7 @@ const translations = {
       },
       flights: {
         title: 'Información de Vuelos',
-        desc: 'El aeropuerto de Olbia está a solo 10 minutos. Ofrecemos transfer gratuito desde Olbia. Transfer desde Alghero (2 horas) disponible por €80.',
+        desc: 'El aeropuerto de Olbia está a solo 10 minutos. Transfer desde Olbia disponible por €30. Transfer desde Alghero (2 horas) disponible por €80.',
         airlines: 'Aerolíneas populares: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: '¡Consulte Google Flights para las mejores ofertas!'
       }
@@ -681,7 +681,7 @@ const translations = {
       },
       flights: {
         title: 'Fluginformationen',
-        desc: 'Der Flughafen Olbia ist nur 10 Minuten entfernt. Wir bieten kostenlosen Transfer ab Olbia. Transfer ab Alghero (2 Stunden) ist für €80 verfügbar.',
+        desc: 'Der Flughafen Olbia ist nur 10 Minuten entfernt. Transfer ab Olbia verfügbar für €30. Transfer ab Alghero (2 Stunden) ist für €80 verfügbar.',
         airlines: 'Beliebte Airlines: Ryanair, EasyJet, TUIfly, Transavia, Vueling, Lufthansa, Eurowings',
         tip: 'Prüfen Sie Google Flights für die besten Angebote!'
       }
@@ -1395,7 +1395,7 @@ const SmeraldaHomePage = () => {
                 allow="geolocation; microphone; camera; fullscreen; payment" 
                 src="https://form.jotform.com/81427604547358" 
                 frameBorder="0" 
-                style={{width: '100%', height: '450px', border: 'none', transform: 'scale(0.9)', transformOrigin: 'top left'}} 
+                style={{width: '110%', height: '400px', border: 'none', transform: 'scale(0.75)', transformOrigin: 'top left'}} 
               />
             </div>
 
