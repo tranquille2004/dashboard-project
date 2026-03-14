@@ -28,6 +28,11 @@ const IMAGES = {
   standard: generateImages('std', 40), // Use first 40 of 71
   executive: generateImages('exec', 15),
   mobilhome: [
+    '/images/smeralda/mobilhome/bathroom.jpeg',
+    '/images/smeralda/mobilhome/kitchen.jpeg',
+    '/images/smeralda/mobilhome/living.jpeg',
+    '/images/smeralda/mobilhome/overview.jpeg',
+    '/images/smeralda/mobilhome/view.jpeg',
     '/images/smeralda/mobilhome-1.jpg',
     '/images/smeralda/mobilhome-6.jpg',
     '/images/smeralda/mobilhome-11.jpg',
