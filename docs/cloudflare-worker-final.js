@@ -1,5 +1,5 @@
 // Cloudflare Worker: site-proxy-new
-// FINAL VERSION - Met URL synchronisatie
+// FINAL VERSION - Met URL synchronisatie en API proxy
 const PREVIEW_URL = 'https://fworks-consolidate-1.emergent.host';
 
 const SITE_MAPPING = {
@@ -44,6 +44,35 @@ export default {
       return new Response('Site not found', { status: 404 });
     }
     
+    // API CALLS: Proxy directly to backend (for auth, etc.)
+    if (pathname.startsWith('/api/')) {
+      const apiUrl = PREVIEW_URL + pathname + url.search;
+      try {
+        const response = await fetch(apiUrl, {
+          method: request.method,
+          headers: {
+            'Content-Type': request.headers.get('Content-Type') || 'application/json',
+            'Host': hostname,
+            'Origin': request.headers.get('Origin') || '',
+            'Cookie': request.headers.get('Cookie') || ''
+          },
+          body: request.method !== 'GET' && request.method !== 'HEAD' ? await request.text() : undefined
+        });
+        
+        // Copy response headers and add CORS
+        const responseHeaders = new Headers(response.headers);
+        responseHeaders.set('Access-Control-Allow-Origin', request.headers.get('Origin') || '*');
+        responseHeaders.set('Access-Control-Allow-Credentials', 'true');
+        
+        return new Response(response.body, {
+          status: response.status,
+          headers: responseHeaders
+        });
+      } catch (e) {
+        return new Response('API Error: ' + e.message, { status: 500 });
+      }
+    }
+    
     // SEO FILES: Proxy directly to backend API
     if (pathname === '/robots.txt' || pathname === '/sitemap.xml') {
       const apiUrl = PREVIEW_URL + '/api' + pathname;
@@ -62,10 +91,22 @@ export default {
       }
     }
     
-    // FWorksBuilders.com /admin -> super admin dashboard
+    // FWorksBuilders.com /admin -> super admin dashboard (direct proxy, no iframe)
     if ((hostname === 'fworksbuilders.com' || hostname === 'www.fworksbuilders.com') && 
-        (pathname === '/admin' || pathname.startsWith('/admin/'))) {
-      return Response.redirect(PREVIEW_URL + pathname, 302);
+        (pathname === '/admin' || pathname.startsWith('/admin'))) {
+      const targetUrl = PREVIEW_URL + pathname + url.search + url.hash;
+      try {
+        const response = await fetch(targetUrl, {
+          method: request.method,
+          headers: request.headers
+        });
+        return new Response(response.body, {
+          status: response.status,
+          headers: response.headers
+        });
+      } catch (e) {
+        return new Response('Error loading admin: ' + e.message, { status: 500 });
+      }
     }
     
     // Restaurant /admin -> restaurant login
