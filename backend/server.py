@@ -377,7 +377,6 @@ async def check_reservation_activity():
 # Lifespan context manager for startup/shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup
     logging.info("Starting background monitoring scheduler...")
     scheduler.add_job(background_health_check, 'interval', minutes=5, id='health_check')
     scheduler.add_job(check_visitor_activity, 'interval', minutes=30, id='visitor_check')
@@ -385,9 +384,11 @@ async def lifespan(app: FastAPI):
     scheduler.start()
     logging.info("Background scheduler started - Health: 5min, Visitors: 30min, Reservations: 15min")
     
+    # Seed sites in background - don't block server startup
+    asyncio.create_task(seed_sites_on_startup())
+    
     yield
     
-    # Shutdown
     logging.info("Shutting down background scheduler...")
     scheduler.shutdown()
 
@@ -2213,7 +2214,6 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 # ============== AUTO-SEED ON STARTUP ==============
-@app.on_event("startup")
 async def seed_sites_on_startup():
     """Automatically seed all 7 sites when the app starts"""
     all_sites = [
