@@ -1,4 +1,4 @@
-from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends
+from fastapi import FastAPI, APIRouter, HTTPException, Request, Response, Depends, File, UploadFile
 from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 from starlette.middleware.cors import CORSMiddleware
@@ -8,6 +8,7 @@ import logging
 import httpx
 import asyncio
 import resend
+import requests
 from pathlib import Path
 from pydantic import BaseModel, Field, ConfigDict, EmailStr
 from typing import List, Optional, Dict, Any
@@ -21,6 +22,60 @@ load_dotenv(ROOT_DIR / '.env')
 
 # Resend configuration
 resend.api_key = os.environ.get('RESEND_API_KEY', '')
+
+# Emergent Object Storage configuration
+STORAGE_URL = "https://integrations.emergentagent.com/objstore/api/v1/storage"
+EMERGENT_KEY = os.environ.get("EMERGENT_LLM_KEY", "")
+APP_NAME = "fworks-sites"
+storage_key = None
+
+def init_storage():
+    """Initialize storage and get session key"""
+    global storage_key
+    if storage_key:
+        return storage_key
+    if not EMERGENT_KEY:
+        logging.warning("EMERGENT_LLM_KEY not set - storage disabled")
+        return None
+    try:
+        resp = requests.post(f"{STORAGE_URL}/init", json={"emergent_key": EMERGENT_KEY}, timeout=30)
+        resp.raise_for_status()
+        storage_key = resp.json()["storage_key"]
+        logging.info("Emergent Object Storage initialized successfully")
+        return storage_key
+    except Exception as e:
+        logging.error(f"Storage init failed: {e}")
+        return None
+
+def put_object(path: str, data: bytes, content_type: str) -> dict:
+    """Upload file to object storage"""
+    key = init_storage()
+    if not key:
+        raise Exception("Storage not initialized")
+    resp = requests.put(
+        f"{STORAGE_URL}/objects/{path}",
+        headers={"X-Storage-Key": key, "Content-Type": content_type},
+        data=data, timeout=120
+    )
+    resp.raise_for_status()
+    return resp.json()
+
+def get_object(path: str) -> tuple:
+    """Download file from object storage"""
+    key = init_storage()
+    if not key:
+        raise Exception("Storage not initialized")
+    resp = requests.get(
+        f"{STORAGE_URL}/objects/{path}",
+        headers={"X-Storage-Key": key}, timeout=60
+    )
+    resp.raise_for_status()
+    return resp.content, resp.headers.get("Content-Type", "application/octet-stream")
+
+MIME_TYPES = {
+    "jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png",
+    "gif": "image/gif", "webp": "image/webp", "pdf": "application/pdf"
+}
 
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
@@ -1496,6 +1551,143 @@ async def test_alert_email(request: Request):
         "alert_type": alert_type,
         "site_name": site_name
     }
+
+# ============== IMAGE MIGRATION ENDPOINTS ==============
+
+@api_router.get("/admin/migrate/status")
+async def get_migration_status():
+    """Get the current status of image migration"""
+    try:
+        # Count migrated images
+        migrated = await db.migrated_images.count_documents({})
+        
+        # Count local images
+        frontend_public = ROOT_DIR.parent / "frontend" / "public" / "images"
+        local_count = 0
+        if frontend_public.exists():
+            for ext in ['jpg', 'jpeg', 'png', 'gif', 'webp']:
+                local_count += len(list(frontend_public.rglob(f"*.{ext}")))
+        
+        return {
+            "migrated_count": migrated,
+            "local_count": local_count,
+            "storage_initialized": storage_key is not None
+        }
+    except Exception as e:
+        return {"error": str(e)}
+
+@api_router.post("/admin/migrate/start")
+async def start_image_migration(request: Request):
+    """Start migrating all local images to Emergent Object Storage"""
+    try:
+        # Initialize storage
+        key = init_storage()
+        if not key:
+            raise HTTPException(status_code=500, detail="Could not initialize storage. Check EMERGENT_LLM_KEY.")
+        
+        frontend_public = ROOT_DIR.parent / "frontend" / "public" / "images"
+        if not frontend_public.exists():
+            raise HTTPException(status_code=404, detail="Images folder not found")
+        
+        results = {
+            "success": 0,
+            "failed": 0,
+            "skipped": 0,
+            "errors": [],
+            "migrated_files": []
+        }
+        
+        # Find all images
+        image_files = []
+        for ext in ['jpg', 'jpeg', 'png', 'gif', 'webp']:
+            image_files.extend(frontend_public.rglob(f"*.{ext}"))
+        
+        logging.info(f"Starting migration of {len(image_files)} images")
+        
+        for img_path in image_files:
+            try:
+                # Get relative path from images folder
+                rel_path = img_path.relative_to(frontend_public)
+                storage_path = f"{APP_NAME}/images/{rel_path}"
+                
+                # Check if already migrated
+                existing = await db.migrated_images.find_one({"original_path": f"/images/{rel_path}"})
+                if existing:
+                    results["skipped"] += 1
+                    continue
+                
+                # Read file
+                with open(img_path, 'rb') as f:
+                    data = f.read()
+                
+                # Determine content type
+                ext = img_path.suffix.lower().replace('.', '')
+                content_type = MIME_TYPES.get(ext, 'application/octet-stream')
+                
+                # Upload to storage
+                upload_result = put_object(storage_path, data, content_type)
+                
+                # Save to database
+                await db.migrated_images.insert_one({
+                    "original_path": f"/images/{rel_path}",
+                    "storage_path": upload_result["path"],
+                    "content_type": content_type,
+                    "size": upload_result.get("size", len(data)),
+                    "migrated_at": datetime.now(timezone.utc).isoformat()
+                })
+                
+                results["success"] += 1
+                results["migrated_files"].append(str(rel_path))
+                
+                # Log progress every 50 files
+                if results["success"] % 50 == 0:
+                    logging.info(f"Migration progress: {results['success']} files uploaded")
+                    
+            except Exception as e:
+                results["failed"] += 1
+                results["errors"].append(f"{rel_path}: {str(e)}")
+                logging.error(f"Failed to migrate {rel_path}: {e}")
+        
+        logging.info(f"Migration complete: {results['success']} success, {results['failed']} failed, {results['skipped']} skipped")
+        
+        return results
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Migration error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/images/{path:path}")
+async def serve_image(path: str):
+    """Serve images from object storage or local fallback"""
+    try:
+        # First check if migrated
+        record = await db.migrated_images.find_one({"original_path": f"/images/{path}"})
+        
+        if record and record.get("storage_path"):
+            # Serve from object storage
+            try:
+                data, content_type = get_object(record["storage_path"])
+                return Response(content=data, media_type=record.get("content_type", content_type))
+            except Exception as e:
+                logging.warning(f"Failed to get from storage, falling back to local: {e}")
+        
+        # Fallback to local file
+        local_path = ROOT_DIR.parent / "frontend" / "public" / "images" / path
+        if local_path.exists():
+            ext = local_path.suffix.lower().replace('.', '')
+            content_type = MIME_TYPES.get(ext, 'application/octet-stream')
+            with open(local_path, 'rb') as f:
+                return Response(content=f.read(), media_type=content_type)
+        
+        raise HTTPException(status_code=404, detail="Image not found")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error serving image {path}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
 
 # ============== ONE-TIME SEED ENDPOINT ==============
 # Dit endpoint vult de database met alle 7 websites

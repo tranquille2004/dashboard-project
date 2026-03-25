@@ -73,6 +73,24 @@ export default {
       }
     }
     
+    // IMAGES: Proxy to backend API which serves from Object Storage
+    if (pathname.startsWith('/images/')) {
+      const apiUrl = PREVIEW_URL + '/api' + pathname;
+      try {
+        const response = await fetch(apiUrl);
+        return new Response(response.body, {
+          status: response.status,
+          headers: {
+            'Content-Type': response.headers.get('Content-Type') || 'image/jpeg',
+            'Cache-Control': 'public, max-age=31536000',
+            'Access-Control-Allow-Origin': '*'
+          }
+        });
+      } catch (e) {
+        return new Response('Image not found', { status: 404 });
+      }
+    }
+    
     // SEO FILES: Proxy directly to backend API
     if (pathname === '/robots.txt' || pathname === '/sitemap.xml') {
       const apiUrl = PREVIEW_URL + '/api' + pathname;
