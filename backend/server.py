@@ -1554,6 +1554,20 @@ async def test_alert_email(request: Request):
 
 # ============== IMAGE MIGRATION ENDPOINTS ==============
 
+def get_images_folder():
+    """Find the images folder - check multiple possible locations"""
+    possible_paths = [
+        ROOT_DIR.parent / "frontend" / "public" / "images",
+        ROOT_DIR.parent / "frontend" / "build" / "images",
+        Path("/app/frontend/public/images"),
+        Path("/app/frontend/build/images"),
+    ]
+    for p in possible_paths:
+        if p.exists():
+            logging.info(f"Found images folder at: {p}")
+            return p
+    return None
+
 @api_router.get("/admin/migrate/status")
 async def get_migration_status():
     """Get the current status of image migration"""
@@ -1561,17 +1575,21 @@ async def get_migration_status():
         # Count migrated images
         migrated = await db.migrated_images.count_documents({})
         
-        # Count local images
-        frontend_public = ROOT_DIR.parent / "frontend" / "public" / "images"
+        # Count local images - check multiple locations
+        images_folder = get_images_folder()
         local_count = 0
-        if frontend_public.exists():
+        folder_path = "not found"
+        
+        if images_folder and images_folder.exists():
+            folder_path = str(images_folder)
             for ext in ['jpg', 'jpeg', 'png', 'gif', 'webp']:
-                local_count += len(list(frontend_public.rglob(f"*.{ext}")))
+                local_count += len(list(images_folder.rglob(f"*.{ext}")))
         
         return {
             "migrated_count": migrated,
             "local_count": local_count,
-            "storage_initialized": storage_key is not None
+            "storage_initialized": storage_key is not None,
+            "images_folder": folder_path
         }
     except Exception as e:
         return {"error": str(e)}
@@ -1585,16 +1603,20 @@ async def start_image_migration(request: Request):
         if not key:
             raise HTTPException(status_code=500, detail="Could not initialize storage. Check EMERGENT_LLM_KEY.")
         
-        frontend_public = ROOT_DIR.parent / "frontend" / "public" / "images"
-        if not frontend_public.exists():
-            raise HTTPException(status_code=404, detail="Images folder not found")
+        # Find images folder
+        frontend_public = get_images_folder()
+        if not frontend_public or not frontend_public.exists():
+            raise HTTPException(status_code=404, detail="Images folder not found in any expected location")
+        
+        logging.info(f"Using images folder: {frontend_public}")
         
         results = {
             "success": 0,
             "failed": 0,
             "skipped": 0,
             "errors": [],
-            "migrated_files": []
+            "migrated_files": [],
+            "images_folder": str(frontend_public)
         }
         
         # Find all images
@@ -1602,7 +1624,7 @@ async def start_image_migration(request: Request):
         for ext in ['jpg', 'jpeg', 'png', 'gif', 'webp']:
             image_files.extend(frontend_public.rglob(f"*.{ext}"))
         
-        logging.info(f"Starting migration of {len(image_files)} images")
+        logging.info(f"Starting migration of {len(image_files)} images from {frontend_public}")
         
         for img_path in image_files:
             try:
@@ -1662,7 +1684,7 @@ async def start_image_migration(request: Request):
 async def serve_image(path: str):
     """Serve images from object storage or local fallback"""
     try:
-        # First check if migrated
+        # First check if migrated to object storage
         record = await db.migrated_images.find_one({"original_path": f"/images/{path}"})
         
         if record and record.get("storage_path"):
@@ -1673,13 +1695,15 @@ async def serve_image(path: str):
             except Exception as e:
                 logging.warning(f"Failed to get from storage, falling back to local: {e}")
         
-        # Fallback to local file
-        local_path = ROOT_DIR.parent / "frontend" / "public" / "images" / path
-        if local_path.exists():
-            ext = local_path.suffix.lower().replace('.', '')
-            content_type = MIME_TYPES.get(ext, 'application/octet-stream')
-            with open(local_path, 'rb') as f:
-                return Response(content=f.read(), media_type=content_type)
+        # Fallback to local file - check multiple locations
+        images_folder = get_images_folder()
+        if images_folder:
+            local_path = images_folder / path
+            if local_path.exists():
+                ext = local_path.suffix.lower().replace('.', '')
+                content_type = MIME_TYPES.get(ext, 'application/octet-stream')
+                with open(local_path, 'rb') as f:
+                    return Response(content=f.read(), media_type=content_type)
         
         raise HTTPException(status_code=404, detail="Image not found")
         
