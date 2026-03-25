@@ -179,7 +179,7 @@ async def background_health_check():
             if domains:
                 check_url = f"https://{domains[0]}"
             else:
-                check_url = f"{os.environ.get('REACT_APP_BACKEND_URL', 'https://ascoli-seasonal.preview.emergentagent.com')}/site/{slug}"
+                check_url = f"{os.environ.get('REACT_APP_BACKEND_URL', 'https://image-restore-21.preview.emergentagent.com')}/site/{slug}"
             
             try:
                 async with httpx.AsyncClient(timeout=15.0, verify=False) as client_http:
@@ -2076,7 +2076,7 @@ async def check_all_sites_health(user: User = Depends(get_current_user)):
                 domain = domains[0]
             else:
                 # Use preview URL for sites without custom domain
-                check_url = f"{os.environ.get('PREVIEW_URL', 'https://ascoli-seasonal.preview.emergentagent.com')}/site/{slug}"
+                check_url = f"{os.environ.get('PREVIEW_URL', 'https://image-restore-21.preview.emergentagent.com')}/site/{slug}"
                 domain = f"/site/{slug}"
             
             try:

@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-const BASE_URL = 'https://ascoli-seasonal.preview.emergentagent.com';
+const BASE_URL = 'https://image-restore-21.preview.emergentagent.com';
 
 test.describe('Announcement Banner - Restaurant Sites', () => {
   
