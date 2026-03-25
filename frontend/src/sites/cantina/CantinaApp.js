@@ -12,6 +12,7 @@ import { Clock, MapPin, Phone, Mail, Download, ChevronRight, Facebook } from 'lu
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
 import AnnouncementBanner from '@/components/AnnouncementBanner';
+import { IMG } from '@/utils/imageHelper';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 const API = `${BACKEND_URL}/api`;

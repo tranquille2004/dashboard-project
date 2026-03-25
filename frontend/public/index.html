@@ -41,6 +41,81 @@
         -->
         <title>fworksbuilders | Professionele Websites op Maat</title>
         <script>window.addEventListener("error",function(e){if(e.error instanceof DOMException&&e.error.name==="DataCloneError"&&e.message&&e.message.includes("PerformanceServerTiming")){e.stopImmediatePropagation();e.preventDefault()}},true);</script>
+        <script>
+            // Image path rewriter for production
+            // On .emergent.host, /images/ paths need to go through /api/images/
+            (function() {
+                var isProduction = window.location.hostname.includes('.emergent.host');
+                if (!isProduction) return;
+                
+                function rewritePath(path) {
+                    if (typeof path === 'string' && path.startsWith('/images/') && !path.startsWith('/api/images/')) {
+                        return '/api' + path;
+                    }
+                    return path;
+                }
+                
+                // Fix image elements
+                function fixImageSrc(img) {
+                    var src = img.getAttribute('src');
+                    var newSrc = rewritePath(src);
+                    if (src !== newSrc) {
+                        img.setAttribute('src', newSrc);
+                    }
+                }
+                
+                // Fix background-image styles
+                function fixBackgroundImages(element) {
+                    var style = element.getAttribute('style');
+                    if (style && style.includes('/images/') && !style.includes('/api/images/')) {
+                        element.setAttribute('style', style.replace(/url\(['"]?(\/images\/)/g, "url('/api/images/"));
+                    }
+                }
+                
+                document.addEventListener('DOMContentLoaded', function() {
+                    // Fix all existing images
+                    document.querySelectorAll('img').forEach(function(img) {
+                        fixImageSrc(img);
+                    });
+                    
+                    // Fix background images
+                    document.querySelectorAll('[style*="/images/"]').forEach(fixBackgroundImages);
+                    
+                    // Watch for changes
+                    var observer = new MutationObserver(function(mutations) {
+                        mutations.forEach(function(mutation) {
+                            // Handle added nodes
+                            mutation.addedNodes.forEach(function(node) {
+                                if (node.nodeType !== 1) return;
+                                if (node.nodeName === 'IMG') fixImageSrc(node);
+                                if (node.querySelectorAll) {
+                                    node.querySelectorAll('img').forEach(fixImageSrc);
+                                    node.querySelectorAll('[style*="/images/"]').forEach(fixBackgroundImages);
+                                }
+                                fixBackgroundImages(node);
+                            });
+                            
+                            // Handle attribute changes
+                            if (mutation.type === 'attributes') {
+                                if (mutation.attributeName === 'src' && mutation.target.nodeName === 'IMG') {
+                                    fixImageSrc(mutation.target);
+                                }
+                                if (mutation.attributeName === 'style') {
+                                    fixBackgroundImages(mutation.target);
+                                }
+                            }
+                        });
+                    });
+                    
+                    observer.observe(document.body, {
+                        childList: true,
+                        subtree: true,
+                        attributes: true,
+                        attributeFilter: ['src', 'style']
+                    });
+                });
+            })();
+        </script>
         <!--
         These two scripts have been added for the Visual Edits, please do not edit or remove them
         -->

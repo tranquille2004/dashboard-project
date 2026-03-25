@@ -4,6 +4,17 @@ import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Ca
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
 
+// Helper to get correct image path - on production (.emergent.host), use /api/images/
+const IMG = (path) => {
+  if (!path) return '';
+  if (path.startsWith('http')) return path;
+  const isProduction = window.location.hostname.includes('.emergent.host');
+  if (isProduction && path.startsWith('/images/')) {
+    return '/api' + path;
+  }
+  return path;
+};
+
 // SEO Configuration for Smeralda
 const SEO_CONFIG = {
   siteName: "Résidence Villa Smeralda",
@@ -15,30 +26,30 @@ const SEO_CONFIG = {
 };
 
 // fworks logo for footer
-const FWORKS_LOGO = '/images/fworksbuilders.png';
+const FWORKS_LOGO = IMG('/images/fworksbuilders.png');
 
 // Generate image arrays
 const generateImages = (prefix, count) => 
-  Array.from({ length: count }, (_, i) => `/images/smeralda/${prefix}-${i + 1}.jpg`);
+  Array.from({ length: count }, (_, i) => IMG(`/images/smeralda/${prefix}-${i + 1}.jpg`));
 
 // Images organized by type
 const IMAGES = {
-  logo: '/images/smeralda/logo-full.png',
-  heroMain: '/images/smeralda/hero-pool-main.jpg', // Single hero image - pool with palm trees
+  logo: IMG('/images/smeralda/logo-full.png'),
+  heroMain: IMG('/images/smeralda/hero-pool-main.jpg'), // Single hero image - pool with palm trees
   standard: generateImages('std', 40), // Use first 40 of 71
   executive: generateImages('exec', 15),
   mobilhome: [
-    '/images/smeralda/mobilhome/bathroom.jpeg',
-    '/images/smeralda/mobilhome/kitchen.jpeg',
-    '/images/smeralda/mobilhome/living.jpeg',
-    '/images/smeralda/mobilhome/overview.jpeg',
-    '/images/smeralda/mobilhome/view.jpeg',
-    '/images/smeralda/mobilhome-1.jpg',
-    '/images/smeralda/mobilhome-6.jpg',
-    '/images/smeralda/mobilhome-11.jpg',
-    '/images/smeralda/mobilhome-12.jpg',
-    '/images/smeralda/mobilhome-13.jpg',
-    '/images/smeralda/mobilhome-14.jpg',
+    IMG('/images/smeralda/mobilhome/bathroom.jpeg'),
+    IMG('/images/smeralda/mobilhome/kitchen.jpeg'),
+    IMG('/images/smeralda/mobilhome/living.jpeg'),
+    IMG('/images/smeralda/mobilhome/overview.jpeg'),
+    IMG('/images/smeralda/mobilhome/view.jpeg'),
+    IMG('/images/smeralda/mobilhome-1.jpg'),
+    IMG('/images/smeralda/mobilhome-6.jpg'),
+    IMG('/images/smeralda/mobilhome-11.jpg'),
+    IMG('/images/smeralda/mobilhome-12.jpg'),
+    IMG('/images/smeralda/mobilhome-13.jpg'),
+    IMG('/images/smeralda/mobilhome-14.jpg'),
   ],
   exterior: generateImages('ext', 30), // Use first 30 of 48
 };
