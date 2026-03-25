@@ -2569,6 +2569,44 @@ app.include_router(admin_router)
 app.include_router(public_router)
 app.include_router(site_admin_router)
 
+# Direct /images/ route (without /api prefix) for frontend compatibility
+@app.get("/images/{path:path}")
+async def serve_image_direct(path: str):
+    """
+    Serve images directly at /images/ path (without /api prefix).
+    This is needed because the frontend uses /images/... paths directly.
+    On production, static files can't be served, so we serve from Object Storage.
+    """
+    try:
+        # First check if migrated to object storage
+        record = await db.migrated_images.find_one({"original_path": f"/images/{path}"})
+        
+        if record and record.get("storage_path"):
+            # Serve from object storage
+            try:
+                data, content_type = get_object(record["storage_path"])
+                return Response(content=data, media_type=record.get("content_type", content_type))
+            except Exception as e:
+                logging.warning(f"Failed to get from storage: {e}")
+        
+        # Fallback to local file (works on preview)
+        images_folder = get_images_folder()
+        if images_folder:
+            local_path = images_folder / path
+            if local_path.exists():
+                ext = local_path.suffix.lower().replace('.', '')
+                content_type = MIME_TYPES.get(ext, 'application/octet-stream')
+                with open(local_path, 'rb') as f:
+                    return Response(content=f.read(), media_type=content_type)
+        
+        raise HTTPException(status_code=404, detail="Image not found")
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error serving image {path}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 app.add_middleware(
     CORSMiddleware,
     allow_credentials=True,
