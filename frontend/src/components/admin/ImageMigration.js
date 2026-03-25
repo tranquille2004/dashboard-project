@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, CheckCircle, AlertCircle, Loader2, Image, RefreshCw } from 'lucide-react';
+import { Upload, CheckCircle, AlertCircle, Loader2, Image, RefreshCw, Download, Database } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
+
+// Hardcoded records from preview - all 874 images that are in Object Storage
+const PREVIEW_RECORDS_URL = 'https://image-restore-21.preview.emergentagent.com/api/admin/migrate/export-records';
 
 const ImageMigration = () => {
   const [status, setStatus] = useState(null);
   const [migrating, setMigrating] = useState(false);
+  const [importing, setImporting] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
 
@@ -45,6 +49,48 @@ const ImageMigration = () => {
       setError('Netwerk fout: ' + e.message);
     } finally {
       setMigrating(false);
+    }
+  };
+
+  const importFromPreview = async () => {
+    setImporting(true);
+    setError(null);
+    setResult(null);
+    
+    try {
+      // First, fetch records from preview
+      const exportRes = await fetch(PREVIEW_RECORDS_URL);
+      if (!exportRes.ok) {
+        throw new Error('Kon records niet ophalen van preview');
+      }
+      const exportData = await exportRes.json();
+      
+      if (!exportData.records || exportData.records.length === 0) {
+        throw new Error('Geen records gevonden in preview');
+      }
+      
+      // Now import them to this environment
+      const importRes = await fetch(`${API}/admin/migrate/import-records`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ records: exportData.records })
+      });
+      
+      const importData = await importRes.json();
+      
+      if (importRes.ok) {
+        setResult({
+          ...importData,
+          source: 'preview import'
+        });
+        fetchStatus();
+      } else {
+        setError(importData.detail || 'Import mislukt');
+      }
+    } catch (e) {
+      setError('Import fout: ' + e.message);
+    } finally {
+      setImporting(false);
     }
   };
 
@@ -95,17 +141,17 @@ const ImageMigration = () => {
 
         {/* Migration Button */}
         <div className="bg-gray-800 rounded-xl p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">Start Migratie</h2>
+          <h2 className="text-xl font-semibold mb-4">Optie 1: Lokale Migratie</h2>
           <p className="text-gray-400 mb-4">
-            Klik op de knop hieronder om alle afbeeldingen te uploaden naar Emergent Object Storage.
-            Dit kan enkele minuten duren afhankelijk van het aantal afbeeldingen.
+            Upload afbeeldingen die lokaal op deze server staan naar Object Storage.
+            (Werkt alleen als er lokale afbeeldingen zijn)
           </p>
           
           <button
             onClick={startMigration}
-            disabled={migrating}
+            disabled={migrating || importing}
             className={`w-full py-4 rounded-lg font-semibold text-lg flex items-center justify-center gap-3 transition-colors ${
-              migrating
+              migrating || importing
                 ? 'bg-gray-600 cursor-not-allowed'
                 : 'bg-blue-600 hover:bg-blue-700'
             }`}
@@ -118,7 +164,41 @@ const ImageMigration = () => {
             ) : (
               <>
                 <Upload className="w-6 h-6" />
-                Start Migratie naar Object Storage
+                Start Lokale Migratie
+              </>
+            )}
+          </button>
+        </div>
+
+        {/* Import from Preview Button */}
+        <div className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 border border-purple-500 rounded-xl p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+            <Database className="w-6 h-6 text-purple-400" />
+            Optie 2: Importeer van Preview (AANBEVOLEN)
+          </h2>
+          <p className="text-gray-300 mb-4">
+            De 874 afbeeldingen zijn al geüpload naar Object Storage vanuit de preview omgeving.
+            Klik hieronder om de database records te importeren zodat productie weet waar de afbeeldingen staan.
+          </p>
+          
+          <button
+            onClick={importFromPreview}
+            disabled={migrating || importing}
+            className={`w-full py-4 rounded-lg font-semibold text-lg flex items-center justify-center gap-3 transition-colors ${
+              migrating || importing
+                ? 'bg-gray-600 cursor-not-allowed'
+                : 'bg-purple-600 hover:bg-purple-700'
+            }`}
+          >
+            {importing ? (
+              <>
+                <Loader2 className="w-6 h-6 animate-spin" />
+                Records importeren...
+              </>
+            ) : (
+              <>
+                <Download className="w-6 h-6" />
+                Importeer 874 Records van Preview
               </>
             )}
           </button>
@@ -140,23 +220,38 @@ const ImageMigration = () => {
           <div className="bg-gray-800 rounded-xl p-6">
             <div className="flex items-center gap-3 mb-4">
               <CheckCircle className="w-6 h-6 text-green-400" />
-              <h2 className="text-xl font-semibold">Migratie Resultaat</h2>
+              <h2 className="text-xl font-semibold">
+                {result.source === 'preview import' ? 'Import Resultaat' : 'Migratie Resultaat'}
+              </h2>
             </div>
             
-            <div className="grid grid-cols-3 gap-4 mb-4">
-              <div className="bg-green-900/30 border border-green-500 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-green-400">{result.success}</div>
-                <div className="text-sm text-gray-400">Gelukt</div>
+            {result.source === 'preview import' ? (
+              <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="bg-green-900/30 border border-green-500 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-green-400">{result.imported || 0}</div>
+                  <div className="text-sm text-gray-400">Geïmporteerd</div>
+                </div>
+                <div className="bg-yellow-900/30 border border-yellow-500 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-yellow-400">{result.skipped || 0}</div>
+                  <div className="text-sm text-gray-400">Al aanwezig</div>
+                </div>
               </div>
-              <div className="bg-yellow-900/30 border border-yellow-500 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-yellow-400">{result.skipped}</div>
-                <div className="text-sm text-gray-400">Overgeslagen</div>
+            ) : (
+              <div className="grid grid-cols-3 gap-4 mb-4">
+                <div className="bg-green-900/30 border border-green-500 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-green-400">{result.success || 0}</div>
+                  <div className="text-sm text-gray-400">Gelukt</div>
+                </div>
+                <div className="bg-yellow-900/30 border border-yellow-500 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-yellow-400">{result.skipped || 0}</div>
+                  <div className="text-sm text-gray-400">Overgeslagen</div>
+                </div>
+                <div className="bg-red-900/30 border border-red-500 rounded-lg p-4 text-center">
+                  <div className="text-2xl font-bold text-red-400">{result.failed || 0}</div>
+                  <div className="text-sm text-gray-400">Mislukt</div>
+                </div>
               </div>
-              <div className="bg-red-900/30 border border-red-500 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-red-400">{result.failed}</div>
-                <div className="text-sm text-gray-400">Mislukt</div>
-              </div>
-            </div>
+            )}
 
             {result.errors && result.errors.length > 0 && (
               <div className="mt-4">
@@ -168,6 +263,15 @@ const ImageMigration = () => {
                 </div>
               </div>
             )}
+            
+            {result.source === 'preview import' && result.imported > 0 && (
+              <div className="mt-4 p-4 bg-green-900/20 border border-green-500 rounded-lg">
+                <p className="text-green-300">
+                  ✅ Succes! De afbeeldingen worden nu geserveerd vanuit Object Storage.
+                  Ververs uw website om de foto's te zien.
+                </p>
+              </div>
+            )}
           </div>
         )}
 
@@ -175,10 +279,10 @@ const ImageMigration = () => {
         <div className="mt-8 bg-gray-800 rounded-xl p-6">
           <h2 className="text-xl font-semibold mb-4">Instructies</h2>
           <ol className="list-decimal list-inside space-y-2 text-gray-300">
-            <li>Controleer eerst of de Storage Actief status groen is (✓)</li>
-            <li>Klik op "Start Migratie" om alle afbeeldingen te uploaden</li>
-            <li>Wacht tot de migratie is voltooid (dit kan enkele minuten duren)</li>
-            <li>Na succesvolle migratie worden afbeeldingen automatisch vanuit Object Storage geserveerd</li>
+            <li><strong>Voor PRODUCTIE:</strong> Klik op "Importeer 874 Records van Preview" (paarse knop)</li>
+            <li>Dit haalt de database records op van de preview omgeving</li>
+            <li>De afbeeldingen staan al in Object Storage - alleen de records moeten worden gesynchroniseerd</li>
+            <li>Na succes worden alle afbeeldingen automatisch geladen op uw websites</li>
           </ol>
         </div>
       </div>

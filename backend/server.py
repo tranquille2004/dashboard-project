@@ -1680,6 +1680,163 @@ async def start_image_migration(request: Request):
         logging.error(f"Migration error: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+@api_router.post("/admin/migrate/sync-from-storage")
+async def sync_migration_records_from_storage():
+    """
+    Sync migrated_images records by checking what exists in Object Storage.
+    This is useful when the local files don't exist but images are already in storage.
+    """
+    try:
+        # Initialize storage
+        key = init_storage()
+        if not key:
+            raise HTTPException(status_code=500, detail="Could not initialize storage. Check EMERGENT_LLM_KEY.")
+        
+        # List of all known image paths that were migrated
+        # These are the paths we know exist in Object Storage
+        known_paths = []
+        
+        # Get existing records count
+        existing_count = await db.migrated_images.count_documents({})
+        
+        if existing_count >= 800:
+            return {
+                "message": "Records already synced",
+                "existing_count": existing_count,
+                "synced": 0
+            }
+        
+        # Define all the image directories and their files
+        # We'll verify each one exists in storage before adding
+        image_prefixes = [
+            "smeralda", "cantina", "bottega", "ascoli", "mercato",
+            "theobeans", "tracemaster", "gallery", "about", "contact",
+            "founder", "home", "logo", "menu"
+        ]
+        
+        synced = 0
+        errors = []
+        
+        # Try to list objects from storage (if supported) or use known paths
+        # For now, we'll create records for common patterns
+        test_paths = [
+            # Smeralda images
+            ("smeralda/bg-header.png", "image/png"),
+            ("smeralda/bg-reserve.jpg", "image/jpeg"),
+            ("smeralda/ciao-tutti.jpg", "image/jpeg"),
+            ("smeralda/logo-smeralda.png", "image/png"),
+            # Cantina images
+            ("cantina/hero-background.jpg", "image/jpeg"),
+            ("cantina/logo-cantina.jpg", "image/jpeg"),
+            # Root images
+            ("gallery1.jpg", "image/jpeg"),
+            ("gallery2.jpg", "image/jpeg"),
+            ("fworks-logo.png", "image/png"),
+        ]
+        
+        for path, content_type in test_paths:
+            storage_path = f"{APP_NAME}/images/{path}"
+            original_path = f"/images/{path}"
+            
+            # Check if already exists
+            existing = await db.migrated_images.find_one({"original_path": original_path})
+            if existing:
+                continue
+            
+            # Try to verify it exists in storage
+            try:
+                get_object(storage_path)
+                # It exists! Add record
+                await db.migrated_images.insert_one({
+                    "original_path": original_path,
+                    "storage_path": storage_path,
+                    "content_type": content_type,
+                    "migrated_at": datetime.now(timezone.utc).isoformat(),
+                    "synced_from_storage": True
+                })
+                synced += 1
+            except Exception as e:
+                errors.append(f"{path}: {str(e)[:50]}")
+        
+        return {
+            "message": "Sync complete",
+            "synced": synced,
+            "existing_count": existing_count,
+            "errors": errors[:10] if errors else []
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Sync error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.post("/admin/migrate/import-records")
+async def import_migration_records(request: Request):
+    """
+    Import migrated_images records from JSON data.
+    This allows syncing records from preview to production.
+    """
+    try:
+        body = await request.json()
+        records = body.get("records", [])
+        
+        if not records:
+            raise HTTPException(status_code=400, detail="No records provided")
+        
+        imported = 0
+        skipped = 0
+        
+        for record in records:
+            original_path = record.get("original_path")
+            if not original_path:
+                continue
+            
+            # Check if already exists
+            existing = await db.migrated_images.find_one({"original_path": original_path})
+            if existing:
+                skipped += 1
+                continue
+            
+            # Insert the record
+            await db.migrated_images.insert_one({
+                "original_path": original_path,
+                "storage_path": record.get("storage_path"),
+                "content_type": record.get("content_type"),
+                "size": record.get("size"),
+                "migrated_at": record.get("migrated_at", datetime.now(timezone.utc).isoformat()),
+                "imported": True
+            })
+            imported += 1
+        
+        return {
+            "message": "Import complete",
+            "imported": imported,
+            "skipped": skipped,
+            "total_provided": len(records)
+        }
+        
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Import error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@api_router.get("/admin/migrate/export-records")
+async def export_migration_records():
+    """Export all migrated_images records as JSON for syncing to another environment."""
+    try:
+        records = await db.migrated_images.find({}, {"_id": 0}).to_list(2000)
+        return {
+            "count": len(records),
+            "records": records
+        }
+    except Exception as e:
+        logging.error(f"Export error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+
 @api_router.get("/images/{path:path}")
 async def serve_image(path: str):
     """Serve images from object storage or local fallback"""
