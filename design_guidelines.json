@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "name": "Alberto Pantoja - La Voz del Campo",
+    "type": "political_campaign_website",
+    "domain": "Santo Domingo de los Tsáchilas, Ecuador",
+    "theme": "LIGHT",
+    "archetype": "Archetype 1 (Organic & Earthy)",
+    "rationale": "The political campaign is 'La Voz del Campo' (The Voice of the Countryside) representing rural workers and agriculture. The user explicitly requested 'green is common for RC5' alongside a rural theme. This perfectly aligns with Archetype 1 (Organic & Earthy). The design will use high-end agricultural imagery, rich forest greens, soil-inspired accents, and authoritative typography to convey leadership, trustworthiness, and approachability."
+  },
+  "design_system": {
+    "colors": {
+      "background": "#F6F7F2",
+      "surface": "#FFFFFF",
+      "primary": "#00A75D",
+      "primary_hover": "#008B4D",
+      "secondary": "#E8EAE0",
+      "accent": "#A95A32",
+      "text_primary": "#1A2B22",
+      "text_secondary": "#4A5D53",
+      "border": "#D5D9CE",
+      "dark_surface": "#1A2B22"
+    },
+    "typography": {
+      "heading_font": "Cabinet Grotesk",
+      "body_font": "Manrope",
+      "rules": [
+        "Use tracking-tight for all headings above 32px (text-4xl and up).",
+        "Never use Inter, Roboto, or generic sans-serif for headings.",
+        "Labels and overlines must be Uppercase + tracking-[0.2em] + text-xs.",
+        "Ensure fluid scaling for large hero text (max text-6xl)."
+      ]
+    },
+    "spacing_and_layout": {
+      "philosophy": "Generous spacing. Use p-12, p-16, and p-20 for sections. Containers with borders must have internal padding.",
+      "grid_system": "Use 'MODE A: THE TETRIS GRID' for the media gallery and 'La Voz del Campo' initiatives. Mix spans like col-span-8 and col-span-4 to create asymmetry.",
+      "surfaces": [
+        "Header: Glassmorphism with 'backdrop-blur-xl bg-white/80' and a subtle 1px border-b border-[#00A75D]/10.",
+        "Cards: Neumorphism (Tactile) variants. Flat background matching parent (or pure white) with sharp 1px border-black/5 and soft shadow."
+      ]
+    },
+    "motion": {
+      "hover_states": "Buttons must smoothly transition background and ensure text color remains high-contrast (e.g., hover:bg-[#008B4D] hover:text-white).",
+      "interactions": "Use Framer Motion for subtle fade-ups on scroll (especially the bento grids and media elements)."
+    }
+  },
+  "media": {
+    "hero_background": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/d9bb699b-4a81-4d6f-b624-bd86a4a2f156/images/45a73011f4004871c58392eeb4760a7d2d7ee81d4f8e0d68341a53fce88cc1b7.png",
+      "description": "Lush green agricultural fields in Santo Domingo. Use as full-screen or large block hero background with a bg-black/40 overlay for text contrast."
+    },
+    "soil_hands_growth": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/d9bb699b-4a81-4d6f-b624-bd86a4a2f156/images/670d47c90ee2dd5163b45a2d5984d40eb5837d0a349d7f431e99061782a7292d.png",
+      "description": "Hands holding soil with a sprout. Ideal for the 'About/Mission' section background or card."
+    },
+    "alberto_pantoja_portrait": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/d9bb699b-4a81-4d6f-b624-bd86a4a2f156/images/78f016405a0f27485c816efd9baf505cd8bd0b7c96a2606fdf2e63437b48ca0a.png",
+      "description": "Portrait of Alberto Pantoja. Use in the hero section overlaying the background, or in the dedicated About/Biography section."
+    },
+    "rc5_logo": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/d9bb699b-4a81-4d6f-b624-bd86a4a2f156/images/e9e5f873929494279211a2f6c2bffd0721b814dfe19b82931b66ea4d01950c5f.png",
+      "description": "RC5 Party Logo Placeholder. Use in header and footer."
+    },
+    "fworksbuilders_logo": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/d9bb699b-4a81-4d6f-b624-bd86a4a2f156/images/ef509f24dd55501bba52bbb435d2b845c6e6daf975c3729c0819981aa291b801.png",
+      "description": "Webmaster logo for the footer."
+    },
+    "rally_image": {
+      "url": "https://images.unsplash.com/photo-1752930216373-d450c2ace785?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwzfHxwb2xpdGljYWwlMjBsZWFkZXIlMjByYWxseSUyMHBlb3BsZXxlbnwwfHx8fDE3NzQ0ODAwMjh8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Crowd/political rally image. Use in the 'Political Position' section."
+    }
+  },
+  "components_and_sections": {
+    "header": "Sticky crystal glassmorphism header. Must include: RC5 Logo, Nav links (Home, Bio, Media, Contact), Language Switcher (ES | FR | EN as simple text buttons or Shadcn Select), and a primary 'Únete' CTA button.",
+    "hero": "Hero image (hero_background) with bg-black/40 overlay. Headline: 'La Voz del Campo' in text-5xl or text-6xl, tracking-tight, white text. Subheading: 'Alberto Pantoja - Consejal de Santo Domingo'. Place the alberto_pantoja_portrait overlapping the bottom of the hero or in a split asymmetrical layout.",
+    "about_bio": "Split layout. Use generous p-16 spacing. Left: The soil_hands_growth image or text block explaining his roots. Right: The bio detailing his role as Provincial Director of Revolución Ciudadana.",
+    "media_gallery": "Bento Grid layout (grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8). Embed YouTube and Facebook iframes directly. The iframes must be wrapped in an aspect-video container with rounded corners and overflow-hidden.",
+    "contact": "A dedicated section containing the JotForm. Use an <iframe> pointing to the JotForm URL (use a placeholder JotForm link if none provided, e.g., 'https://form.jotform.com/233251234567890'). Ensure the form container has a solid white background with a subtle shadow to pop against the #F6F7F2 page background.",
+    "footer": "Dark background (#1A2B22). Light text. Include social links (FB, TikTok, LinkedIn) using lucide-react icons. Include the fworksbuilders_logo at the bottom with text 'Site 9 / Multi-tenant Platform'."
+  },
+  "instructions_to_main_agent": [
+    "You are building a React + JavaScript application (NOT TypeScript). Do not use .tsx files. Use .js or .jsx.",
+    "Use pure HTML/Tailwind for structural marketing layouts. Heavily customize Shadcn components if you need interactive logic (like Select for Language switcher).",
+    "Install 'lucide-react' for all icons (Facebook, YouTube, TikTok, LinkedIn, MapPin, Mail, etc).",
+    "Ensure every interactive element (buttons, language switchers, form inputs, links) has a 'data-testid' attribute in kebab-case, e.g., 'data-testid=\"nav-contact-link\"'.",
+    "Implement the 'La Voz del Campo' vibe. Use the provided earthy off-white background and deep green colors. Avoid generic 'SaaS' looks.",
+    "For the multi-lingual setup, use a simple state-based dictionary or i18next if preferred. Make sure the ES | FR | EN switcher actively toggles the static text on the site.",
+    "In the media section, use raw HTML <iframe> elements for Facebook and YouTube videos. Keep them responsive using Tailwind's aspect-ratio classes ('aspect-video w-full').",
+    "JotForm MUST be embedded using an <iframe> tag within the Contact section."
+  ]
+}
