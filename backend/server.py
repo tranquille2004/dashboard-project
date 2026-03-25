@@ -2707,6 +2707,16 @@ async def seed_sites_on_startup():
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
             "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_albertopantoja",
+            "name": "Alberto Pantoja - La Voz del Campo",
+            "slug": "albertopantoja",
+            "domains": ["albertopantoja.com", "www.albertopantoja.com", "albertopantoja.ec", "www.albertopantoja.ec"],
+            "site_type": "political",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
         }
     ]
     

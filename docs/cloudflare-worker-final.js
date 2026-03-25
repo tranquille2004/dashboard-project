@@ -18,7 +18,11 @@ const SITE_MAPPING = {
   'fworksbuilders.com': '/site/fworks',
   'www.fworksbuilders.com': '/site/fworks',
   'smeraldavacanze.it': '/site/smeralda',
-  'www.smeraldavacanze.it': '/site/smeralda'
+  'www.smeraldavacanze.it': '/site/smeralda',
+  'albertopantoja.com': '/site/albertopantoja',
+  'www.albertopantoja.com': '/site/albertopantoja',
+  'albertopantoja.ec': '/site/albertopantoja',
+  'www.albertopantoja.ec': '/site/albertopantoja'
 };
 
 const SITE_TITLES = {
@@ -29,7 +33,8 @@ const SITE_TITLES = {
   '/site/tracemaster': 'Tracemaster GPS',
   '/site/theobeans': 'Theo Beans Export',
   '/site/fworks': 'fworksbuilders - Web Design',
-  '/site/smeralda': 'Résidence Villa Smeralda - Sardinia'
+  '/site/smeralda': 'Résidence Villa Smeralda - Sardinia',
+  '/site/albertopantoja': 'Alberto Pantoja - La Voz del Campo'
 };
 
 export default {

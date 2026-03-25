@@ -14,6 +14,7 @@ import SiteAdminLogin from '@/components/site-admin/SiteAdminLogin';
 import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
 import FWorksApp from '@/sites/fworks/FWorksApp';
 import SmeraldaApp from '@/sites/smeralda/SmeraldaApp';
+import AlbertoPantojaApp from '@/sites/albertopantoja/AlbertoPantojaApp';
 import './App.css';
 
 // Domain to site mapping - BELANGRIJKSTE CODE
@@ -33,7 +34,11 @@ const DOMAIN_MAPPING = {
   'fworksbuilders.com': 'fworks',
   'www.fworksbuilders.com': 'fworks',
   'smeraldavacanze.it': 'smeralda',
-  'www.smeraldavacanze.it': 'smeralda'
+  'www.smeraldavacanze.it': 'smeralda',
+  'albertopantoja.com': 'albertopantoja',
+  'www.albertopantoja.com': 'albertopantoja',
+  'albertopantoja.ec': 'albertopantoja',
+  'www.albertopantoja.ec': 'albertopantoja'
 };
 
 // Detecteer custom domain DIRECT bij laden
@@ -60,6 +65,10 @@ function AdminRouter() {
           <Route path="/site/smeralda/*" element={<SmeraldaApp />} />
         </Routes>
       );
+    }
+    // Special handling for /site/albertopantoja
+    if (location.pathname.startsWith('/site/albertopantoja')) {
+      return <AlbertoPantojaApp />;
     }
     return (
       <Routes>
@@ -139,6 +148,12 @@ function CustomDomainRouter({ slug }) {
         <Route path="/*" element={<SmeraldaApp />} />
       </Routes>
     );
+  }
+  
+  // Alberto Pantoja - Politieke website
+  if (slug === 'albertopantoja') {
+    // Geen admin nodig voor deze site, gewoon de website tonen
+    return <AlbertoPantojaApp />;
   }
   
   const isAdmin = location.pathname === '/admin' || location.pathname === '/admin/';
