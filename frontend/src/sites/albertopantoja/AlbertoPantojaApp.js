@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Youtube, Linkedin, MapPin, Mail, Phone, ChevronRight, Users, Leaf, Building } from 'lucide-react';
+import { Menu, X, Facebook, Youtube, Linkedin, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home } from 'lucide-react';
 
 // Helper for production image paths
 const IMG = (path) => {
@@ -12,37 +12,54 @@ const IMG = (path) => {
   return path;
 };
 
+// Color scheme: Blue (#1E3A8A), Red (#DC2626), White (#FFFFFF)
+// Based on Revolución Ciudadana party colors
+
 // Translations
 const translations = {
   es: {
-    nav: { home: 'Inicio', bio: 'Biografía', media: 'Medios', contact: 'Contacto', join: 'Únete' },
+    nav: { home: 'Inicio', bio: 'Biografía', work: 'Trabajo', media: 'Medios', contact: 'Contacto', join: 'Únete' },
     hero: {
-      subtitle: 'CONSEJAL DE SANTO DOMINGO',
-      title: 'La Voz del Campo',
-      description: 'Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas',
-      cta: 'Conoce Más'
+      subtitle: 'CONSEJAL RURAL DE SANTO DOMINGO',
+      title: 'Alberto Pantoja',
+      tagline: 'La Voz del Campo',
+      description: 'Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas. Trabajando por el desarrollo integral de nuestras comunidades.',
+      cta: 'Conoce Mi Trabajo'
     },
     about: {
       label: 'SOBRE ALBERTO',
-      title: 'Un líder del pueblo, para el pueblo',
-      description: 'Alberto Pantoja es Consejal del cantón Santo Domingo y Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con profundas raíces en el campo ecuatoriano, Alberto representa la voz de los trabajadores rurales, agricultores y comunidades campesinas.',
-      mission: 'Su misión es fortalecer el desarrollo rural, mejorar las condiciones de vida de las 7 parroquias rurales y garantizar que cada ciudadano tenga acceso a servicios básicos y oportunidades de crecimiento.',
+      title: 'Compromiso con el pueblo',
+      description: 'Alberto Pantoja es Consejal Rural del cantón Santo Domingo y Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
+      mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias rurales y todo el territorio rural de la provincia, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
       stats: {
         years: 'Años de servicio',
-        communities: 'Comunidades',
+        parishes: 'Parroquias rurales',
         projects: 'Proyectos'
       }
     },
+    work: {
+      label: 'ÁREAS DE TRABAJO',
+      title: 'Trabajando por el desarrollo',
+      subtitle: 'Por las 7 parroquias rurales y todo el territorio rural de Santo Domingo de los Tsáchilas',
+      areas: [
+        { title: 'Desarrollo Rural', desc: 'Mejorando la vida de las comunidades campesinas' },
+        { title: 'Infraestructura', desc: 'Vías, agua potable y servicios básicos' },
+        { title: 'Salud Pública', desc: 'Acceso a atención médica de calidad' },
+        { title: 'Educación', desc: 'Oportunidades para niños y jóvenes' },
+        { title: 'Economía Local', desc: 'Apoyo a emprendedores y pequeños negocios' },
+        { title: 'Comunidad', desc: 'Fortaleciendo el tejido social' }
+      ]
+    },
     position: {
-      label: 'POSICIÓN POLÍTICA',
-      title: 'Revolución Ciudadana',
-      subtitle: 'Por el desarrollo de nuestras 7 parroquias rurales',
-      description: 'Como parte de la Revolución Ciudadana, luchamos por un Ecuador más justo, con oportunidades para todos. Defendemos los derechos de los campesinos, la soberanía alimentaria y el desarrollo sostenible de nuestras comunidades.',
+      label: 'REVOLUCIÓN CIUDADANA',
+      title: 'RC5',
+      subtitle: 'Por un Ecuador más justo',
+      description: 'Como parte del movimiento Revolución Ciudadana, trabajamos por un Ecuador con oportunidades para todos, donde cada ciudadano tenga acceso a servicios básicos, educación de calidad, y la posibilidad de construir un futuro mejor para sus familias.',
       points: [
-        'Desarrollo rural integral',
-        'Apoyo a pequeños agricultores',
-        'Infraestructura para comunidades',
-        'Educación y salud para todos'
+        'Justicia social y equidad',
+        'Desarrollo sostenible',
+        'Participación ciudadana',
+        'Transparencia en la gestión pública'
       ]
     },
     media: {
@@ -57,40 +74,54 @@ const translations = {
       address: 'Santo Domingo de los Tsáchilas, Ecuador'
     },
     footer: {
-      slogan: 'La Voz del Campo - Por un Ecuador justo',
+      slogan: 'La Voz del Campo - Por un Santo Domingo mejor',
       rights: 'Todos los derechos reservados',
       webmaster: 'Sitio web creado por'
     }
   },
   fr: {
-    nav: { home: 'Accueil', bio: 'Biographie', media: 'Médias', contact: 'Contact', join: 'Rejoignez-nous' },
+    nav: { home: 'Accueil', bio: 'Biographie', work: 'Travail', media: 'Médias', contact: 'Contact', join: 'Rejoignez-nous' },
     hero: {
-      subtitle: 'CONSEILLER DE SANTO DOMINGO',
-      title: 'La Voix de la Campagne',
-      description: 'Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas',
-      cta: 'En Savoir Plus'
+      subtitle: 'CONSEILLER RURAL DE SANTO DOMINGO',
+      title: 'Alberto Pantoja',
+      tagline: 'La Voix de la Campagne',
+      description: 'Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas. Travaillant pour le développement intégral de nos communautés.',
+      cta: 'Découvrez Mon Travail'
     },
     about: {
       label: 'À PROPOS D\'ALBERTO',
-      title: 'Un leader du peuple, pour le peuple',
-      description: 'Alberto Pantoja est Conseiller du canton de Santo Domingo et Directeur Provincial de la Revolución Ciudadana (RC5) à Santo Domingo de los Tsáchilas. Avec de profondes racines dans la campagne équatorienne, Alberto représente la voix des travailleurs ruraux, des agriculteurs et des communautés paysannes.',
-      mission: 'Sa mission est de renforcer le développement rural, d\'améliorer les conditions de vie des 7 paroisses rurales et de garantir que chaque citoyen ait accès aux services de base et aux opportunités de croissance.',
+      title: 'Engagement envers le peuple',
+      description: 'Alberto Pantoja est Conseiller Rural du canton de Santo Domingo et Directeur Provincial de la Revolución Ciudadana (RC5) à Santo Domingo de los Tsáchilas. Avec une profonde vocation de service public, Alberto représente les intérêts des communautés rurales et urbaines de la province.',
+      mission: 'Son engagement couvre le développement intégral des 7 paroisses rurales et de tout le territoire rural de la province, en luttant pour de meilleures infrastructures, des services de santé, l\'éducation et des opportunités économiques pour tous les citoyens.',
       stats: {
         years: 'Années de service',
-        communities: 'Communautés',
+        parishes: 'Paroisses rurales',
         projects: 'Projets'
       }
     },
+    work: {
+      label: 'DOMAINES DE TRAVAIL',
+      title: 'Travailler pour le développement',
+      subtitle: 'Pour les 7 paroisses rurales et tout le territoire rural de Santo Domingo de los Tsáchilas',
+      areas: [
+        { title: 'Développement Rural', desc: 'Améliorer la vie des communautés paysannes' },
+        { title: 'Infrastructure', desc: 'Routes, eau potable et services de base' },
+        { title: 'Santé Publique', desc: 'Accès à des soins médicaux de qualité' },
+        { title: 'Éducation', desc: 'Opportunités pour les enfants et les jeunes' },
+        { title: 'Économie Locale', desc: 'Soutien aux entrepreneurs et petites entreprises' },
+        { title: 'Communauté', desc: 'Renforcer le tissu social' }
+      ]
+    },
     position: {
-      label: 'POSITION POLITIQUE',
-      title: 'Revolución Ciudadana',
-      subtitle: 'Pour le développement de nos 7 paroisses rurales',
-      description: 'En tant que membre de la Revolución Ciudadana, nous luttons pour un Équateur plus juste, avec des opportunités pour tous. Nous défendons les droits des paysans, la souveraineté alimentaire et le développement durable de nos communautés.',
+      label: 'REVOLUCIÓN CIUDADANA',
+      title: 'RC5',
+      subtitle: 'Pour un Équateur plus juste',
+      description: 'En tant que membre du mouvement Revolución Ciudadana, nous travaillons pour un Équateur avec des opportunités pour tous, où chaque citoyen a accès aux services de base, à une éducation de qualité et à la possibilité de construire un meilleur avenir pour sa famille.',
       points: [
-        'Développement rural intégral',
-        'Soutien aux petits agriculteurs',
-        'Infrastructure pour les communautés',
-        'Éducation et santé pour tous'
+        'Justice sociale et équité',
+        'Développement durable',
+        'Participation citoyenne',
+        'Transparence dans la gestion publique'
       ]
     },
     media: {
@@ -105,40 +136,54 @@ const translations = {
       address: 'Santo Domingo de los Tsáchilas, Équateur'
     },
     footer: {
-      slogan: 'La Voix de la Campagne - Pour un Équateur juste',
+      slogan: 'La Voix de la Campagne - Pour un meilleur Santo Domingo',
       rights: 'Tous droits réservés',
       webmaster: 'Site web créé par'
     }
   },
   en: {
-    nav: { home: 'Home', bio: 'Biography', media: 'Media', contact: 'Contact', join: 'Join Us' },
+    nav: { home: 'Home', bio: 'Biography', work: 'Work', media: 'Media', contact: 'Contact', join: 'Join Us' },
     hero: {
-      subtitle: 'COUNCILMAN OF SANTO DOMINGO',
-      title: 'The Voice of the Countryside',
-      description: 'Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas',
-      cta: 'Learn More'
+      subtitle: 'RURAL COUNCILMAN OF SANTO DOMINGO',
+      title: 'Alberto Pantoja',
+      tagline: 'The Voice of the Countryside',
+      description: 'Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas. Working for the integral development of our communities.',
+      cta: 'See My Work'
     },
     about: {
       label: 'ABOUT ALBERTO',
-      title: 'A leader of the people, for the people',
-      description: 'Alberto Pantoja is a Councilman of Santo Domingo canton and Provincial Director of Revolución Ciudadana (RC5) in Santo Domingo de los Tsáchilas. With deep roots in the Ecuadorian countryside, Alberto represents the voice of rural workers, farmers and peasant communities.',
-      mission: 'His mission is to strengthen rural development, improve living conditions in the 7 rural parishes and ensure that every citizen has access to basic services and growth opportunities.',
+      title: 'Commitment to the people',
+      description: 'Alberto Pantoja is Rural Councilman of Santo Domingo canton and Provincial Director of Revolución Ciudadana (RC5) in Santo Domingo de los Tsáchilas. With a deep vocation for public service, Alberto represents the interests of rural and urban communities in the province.',
+      mission: 'His commitment covers the integral development of the 7 rural parishes and the entire rural territory of the province, fighting for better infrastructure, health services, education, and economic opportunities for all citizens.',
       stats: {
         years: 'Years of service',
-        communities: 'Communities',
+        parishes: 'Rural parishes',
         projects: 'Projects'
       }
     },
+    work: {
+      label: 'WORK AREAS',
+      title: 'Working for development',
+      subtitle: 'For the 7 rural parishes and the entire rural territory of Santo Domingo de los Tsáchilas',
+      areas: [
+        { title: 'Rural Development', desc: 'Improving the lives of rural communities' },
+        { title: 'Infrastructure', desc: 'Roads, drinking water and basic services' },
+        { title: 'Public Health', desc: 'Access to quality medical care' },
+        { title: 'Education', desc: 'Opportunities for children and youth' },
+        { title: 'Local Economy', desc: 'Support for entrepreneurs and small businesses' },
+        { title: 'Community', desc: 'Strengthening the social fabric' }
+      ]
+    },
     position: {
-      label: 'POLITICAL POSITION',
-      title: 'Revolución Ciudadana',
-      subtitle: 'For the development of our 7 rural parishes',
-      description: 'As part of Revolución Ciudadana, we fight for a fairer Ecuador with opportunities for all. We defend the rights of peasants, food sovereignty and the sustainable development of our communities.',
+      label: 'REVOLUCIÓN CIUDADANA',
+      title: 'RC5',
+      subtitle: 'For a fairer Ecuador',
+      description: 'As part of the Revolución Ciudadana movement, we work for an Ecuador with opportunities for all, where every citizen has access to basic services, quality education, and the possibility to build a better future for their families.',
       points: [
-        'Integral rural development',
-        'Support for small farmers',
-        'Infrastructure for communities',
-        'Education and health for all'
+        'Social justice and equity',
+        'Sustainable development',
+        'Citizen participation',
+        'Transparency in public management'
       ]
     },
     media: {
@@ -153,7 +198,7 @@ const translations = {
       address: 'Santo Domingo de los Tsáchilas, Ecuador'
     },
     footer: {
-      slogan: 'The Voice of the Countryside - For a fair Ecuador',
+      slogan: 'The Voice of the Countryside - For a better Santo Domingo',
       rights: 'All rights reserved',
       webmaster: 'Website created by'
     }
@@ -220,7 +265,7 @@ const AlbertoPantojaApp = () => {
   // Scroll spy
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'bio', 'media', 'contact'];
+      const sections = ['home', 'bio', 'work', 'media', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -244,35 +289,38 @@ const AlbertoPantojaApp = () => {
     }
   };
 
+  // Work area icons
+  const workIcons = [Building, Home, Heart, GraduationCap, Briefcase, Users];
+
   return (
-    <div className="min-h-screen bg-[#F6F7F2]" style={{ fontFamily: "'Manrope', sans-serif" }}>
+    <div className="min-h-screen bg-white" style={{ fontFamily: "'Manrope', sans-serif" }}>
       {/* Google Fonts */}
       <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
       
-      {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/80 border-b border-[#00A75D]/10">
+      {/* Header - Blue theme */}
+      <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/90 border-b border-blue-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16 md:h-20">
             {/* Logo */}
             <div className="flex items-center gap-3" data-testid="header-logo">
-              <img src={IMAGES.logo} alt="Alberto Pantoja" className="h-10 md:h-12 w-auto rounded-full" />
+              <img src={IMAGES.logo} alt="Alberto Pantoja" className="h-10 md:h-12 w-auto rounded-full border-2 border-blue-600" />
               <div className="hidden sm:block">
-                <div className="text-[#1A2B22] font-bold text-sm md:text-base">Alberto Pantoja</div>
-                <div className="text-[#00A75D] text-xs">RC5 - La Voz del Campo</div>
+                <div className="text-blue-900 font-bold text-sm md:text-base">Alberto Pantoja</div>
+                <div className="text-red-600 text-xs font-semibold">RC5 - La Voz del Campo</div>
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
-              {['home', 'bio', 'media', 'contact'].map((section) => (
+              {['home', 'bio', 'work', 'media', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
                   data-testid={`nav-${section}-link`}
                   className={`text-sm font-medium transition-colors ${
                     activeSection === section
-                      ? 'text-[#00A75D]'
-                      : 'text-[#4A5D53] hover:text-[#00A75D]'
+                      ? 'text-red-600'
+                      : 'text-blue-900 hover:text-red-600'
                   }`}
                 >
                   {t.nav[section]}
@@ -291,8 +339,8 @@ const AlbertoPantojaApp = () => {
                     data-testid={`lang-${lang}-btn`}
                     className={`px-2 py-1 rounded transition-colors ${
                       language === lang
-                        ? 'bg-[#00A75D] text-white'
-                        : 'text-[#4A5D53] hover:bg-[#00A75D]/10'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-blue-900 hover:bg-blue-100'
                     }`}
                   >
                     {lang.toUpperCase()}
@@ -306,7 +354,7 @@ const AlbertoPantojaApp = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 data-testid="nav-join-btn"
-                className="hidden md:flex items-center gap-2 bg-[#00A75D] hover:bg-[#008B4D] text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors"
+                className="hidden md:flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-full text-sm font-semibold transition-colors"
               >
                 {t.nav.join}
                 <ChevronRight className="w-4 h-4" />
@@ -315,7 +363,7 @@ const AlbertoPantojaApp = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 text-[#1A2B22]"
+                className="md:hidden p-2 text-blue-900"
                 data-testid="mobile-menu-btn"
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -326,27 +374,27 @@ const AlbertoPantojaApp = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-t border-[#D5D9CE]">
+          <div className="md:hidden bg-white border-t border-blue-100">
             <div className="px-4 py-4 space-y-3">
-              {['home', 'bio', 'media', 'contact'].map((section) => (
+              {['home', 'bio', 'work', 'media', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
                   data-testid={`mobile-nav-${section}`}
-                  className="block w-full text-left px-3 py-2 text-[#1A2B22] hover:bg-[#00A75D]/10 rounded"
+                  className="block w-full text-left px-3 py-2 text-blue-900 hover:bg-blue-50 rounded"
                 >
                   {t.nav[section]}
                 </button>
               ))}
-              <div className="flex items-center gap-2 px-3 pt-2 border-t border-[#D5D9CE]">
+              <div className="flex items-center gap-2 px-3 pt-2 border-t border-blue-100">
                 {['es', 'fr', 'en'].map((lang) => (
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang)}
                     className={`px-3 py-1 rounded text-sm ${
                       language === lang
-                        ? 'bg-[#00A75D] text-white'
-                        : 'text-[#4A5D53] bg-[#E8EAE0]'
+                        ? 'bg-blue-600 text-white'
+                        : 'text-blue-900 bg-blue-50'
                     }`}
                   >
                     {lang.toUpperCase()}
@@ -358,18 +406,17 @@ const AlbertoPantojaApp = () => {
         )}
       </header>
 
-      {/* Hero Section */}
+      {/* Hero Section - Blue/Red/White */}
       <section
         id="home"
-        className="relative min-h-screen flex items-center justify-center pt-20"
+        className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900"
         data-testid="hero-section"
       >
-        {/* Background Image */}
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{ backgroundImage: `url(${IMAGES.heroBackground})` }}
-        >
-          <div className="absolute inset-0 bg-black/50" />
+        {/* Decorative elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-2 bg-red-600" />
+          <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-600/20 rounded-full blur-3xl" />
+          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl" />
         </div>
 
         {/* Content */}
@@ -377,20 +424,23 @@ const AlbertoPantojaApp = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
             <div className="text-center lg:text-left">
-              <p className="text-[#00A75D] text-xs md:text-sm font-semibold tracking-[0.2em] mb-4">
+              <p className="text-red-400 text-xs md:text-sm font-semibold tracking-[0.2em] mb-4">
                 {t.hero.subtitle}
               </p>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight mb-2">
                 {t.hero.title}
               </h1>
-              <p className="text-lg md:text-xl text-white/90 mb-8 max-w-xl mx-auto lg:mx-0">
+              <p className="text-2xl sm:text-3xl font-bold text-red-400 mb-6">
+                {t.hero.tagline}
+              </p>
+              <p className="text-lg md:text-xl text-blue-100 mb-8 max-w-xl mx-auto lg:mx-0">
                 {t.hero.description}
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
                 <button
-                  onClick={() => scrollToSection('bio')}
+                  onClick={() => scrollToSection('work')}
                   data-testid="hero-cta-btn"
-                  className="inline-flex items-center justify-center gap-2 bg-[#00A75D] hover:bg-[#008B4D] text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors"
+                  className="inline-flex items-center justify-center gap-2 bg-red-600 hover:bg-red-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors shadow-lg"
                 >
                   {t.hero.cta}
                   <ChevronRight className="w-5 h-5" />
@@ -411,14 +461,14 @@ const AlbertoPantojaApp = () => {
             {/* Profile Image */}
             <div className="flex justify-center lg:justify-end">
               <div className="relative">
-                <div className="absolute -inset-4 bg-[#00A75D]/20 rounded-full blur-2xl" />
+                <div className="absolute -inset-4 bg-red-600/30 rounded-full blur-2xl" />
                 <img
                   src={IMAGES.profileMain}
                   alt="Alberto Pantoja"
                   className="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-white shadow-2xl"
                   data-testid="hero-profile-img"
                 />
-                <div className="absolute -bottom-4 -right-4 bg-[#00A75D] text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                <div className="absolute -bottom-4 -right-4 bg-red-600 text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg">
                   RC5
                 </div>
               </div>
@@ -435,50 +485,50 @@ const AlbertoPantojaApp = () => {
       </section>
 
       {/* About/Bio Section */}
-      <section id="bio" className="py-20 md:py-32 bg-white" data-testid="bio-section">
+      <section id="bio" className="py-20 md:py-32 bg-gray-50" data-testid="bio-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Image */}
             <div className="relative">
               <img
-                src={IMAGES.soilHands}
-                alt="La Voz del Campo"
-                className="w-full rounded-2xl shadow-xl"
+                src={IMAGES.profileMain}
+                alt="Alberto Pantoja"
+                className="w-full max-w-md mx-auto rounded-2xl shadow-xl"
                 data-testid="bio-image"
               />
-              <div className="absolute -bottom-6 -right-6 bg-[#00A75D] text-white p-6 rounded-2xl shadow-lg">
-                <Leaf className="w-8 h-8" />
+              <div className="absolute -bottom-6 -right-6 bg-blue-600 text-white p-6 rounded-2xl shadow-lg">
+                <Users className="w-8 h-8" />
               </div>
             </div>
 
             {/* Content */}
             <div>
-              <p className="text-[#00A75D] text-xs font-semibold tracking-[0.2em] mb-4">
+              <p className="text-red-600 text-xs font-semibold tracking-[0.2em] mb-4">
                 {t.about.label}
               </p>
-              <h2 className="text-3xl md:text-4xl font-extrabold text-[#1A2B22] tracking-tight mb-6">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-6">
                 {t.about.title}
               </h2>
-              <p className="text-[#4A5D53] text-lg mb-6 leading-relaxed">
+              <p className="text-gray-600 text-lg mb-6 leading-relaxed">
                 {t.about.description}
               </p>
-              <p className="text-[#4A5D53] text-lg mb-8 leading-relaxed">
+              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
                 {t.about.mission}
               </p>
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-6">
-                <div className="text-center p-4 bg-[#F6F7F2] rounded-xl">
-                  <div className="text-3xl font-extrabold text-[#00A75D]">10+</div>
-                  <div className="text-sm text-[#4A5D53]">{t.about.stats.years}</div>
+                <div className="text-center p-4 bg-white rounded-xl shadow-md border-t-4 border-blue-600">
+                  <div className="text-3xl font-extrabold text-blue-600">10+</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.years}</div>
                 </div>
-                <div className="text-center p-4 bg-[#F6F7F2] rounded-xl">
-                  <div className="text-3xl font-extrabold text-[#00A75D]">7</div>
-                  <div className="text-sm text-[#4A5D53]">{t.about.stats.communities}</div>
+                <div className="text-center p-4 bg-white rounded-xl shadow-md border-t-4 border-red-600">
+                  <div className="text-3xl font-extrabold text-red-600">7</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.parishes}</div>
                 </div>
-                <div className="text-center p-4 bg-[#F6F7F2] rounded-xl">
-                  <div className="text-3xl font-extrabold text-[#00A75D]">50+</div>
-                  <div className="text-sm text-[#4A5D53]">{t.about.stats.projects}</div>
+                <div className="text-center p-4 bg-white rounded-xl shadow-md border-t-4 border-blue-600">
+                  <div className="text-3xl font-extrabold text-blue-600">50+</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.projects}</div>
                 </div>
               </div>
             </div>
@@ -486,25 +536,66 @@ const AlbertoPantojaApp = () => {
         </div>
       </section>
 
-      {/* Political Position Section */}
-      <section className="py-20 md:py-32 bg-[#1A2B22]" data-testid="position-section">
+      {/* Work Areas Section */}
+      <section id="work" className="py-20 md:py-32 bg-white" data-testid="work-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <p className="text-red-600 text-xs font-semibold tracking-[0.2em] mb-4">
+              {t.work.label}
+            </p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-4">
+              {t.work.title}
+            </h2>
+            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+              {t.work.subtitle}
+            </p>
+          </div>
+
+          {/* Work Areas Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {t.work.areas.map((area, index) => {
+              const Icon = workIcons[index];
+              return (
+                <div
+                  key={index}
+                  className="bg-gray-50 rounded-2xl p-8 hover:shadow-lg transition-shadow border-l-4 border-blue-600"
+                  data-testid={`work-area-${index}`}
+                >
+                  <div className="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mb-6">
+                    <Icon className="w-7 h-7 text-white" />
+                  </div>
+                  <h3 className="text-xl font-bold text-blue-900 mb-3">{area.title}</h3>
+                  <p className="text-gray-600">{area.desc}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Political Position Section - RC5 */}
+      <section className="py-20 md:py-32 bg-blue-900" data-testid="position-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             {/* Content */}
             <div>
-              <p className="text-[#00A75D] text-xs font-semibold tracking-[0.2em] mb-4">
+              <p className="text-red-400 text-xs font-semibold tracking-[0.2em] mb-4">
                 {t.position.label}
               </p>
               <div className="flex items-center gap-4 mb-6">
-                <img src={IMAGES.rc5Logo} alt="RC5" className="h-16 w-auto" />
+                {/* RC5 Logo placeholder - user needs to provide actual logo */}
+                <div className="bg-white rounded-xl p-3">
+                  <div className="text-3xl font-extrabold text-blue-900">RC<span className="text-red-600">5</span></div>
+                </div>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
                   {t.position.title}
                 </h2>
               </div>
-              <p className="text-2xl text-[#00A75D] font-semibold mb-6">
+              <p className="text-2xl text-red-400 font-semibold mb-6">
                 {t.position.subtitle}
               </p>
-              <p className="text-white/80 text-lg mb-8 leading-relaxed">
+              <p className="text-blue-100 text-lg mb-8 leading-relaxed">
                 {t.position.description}
               </p>
 
@@ -512,7 +603,7 @@ const AlbertoPantojaApp = () => {
               <ul className="space-y-4">
                 {t.position.points.map((point, index) => (
                   <li key={index} className="flex items-center gap-3 text-white">
-                    <div className="w-8 h-8 bg-[#00A75D] rounded-full flex items-center justify-center flex-shrink-0">
+                    <div className="w-8 h-8 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0">
                       <ChevronRight className="w-5 h-5" />
                     </div>
                     <span className="text-lg">{point}</span>
@@ -523,20 +614,20 @@ const AlbertoPantojaApp = () => {
 
             {/* Icon Grid */}
             <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center">
-                <Users className="w-12 h-12 text-[#00A75D] mx-auto mb-4" />
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center">
+                <Users className="w-12 h-12 text-red-400 mx-auto mb-4" />
                 <div className="text-white font-semibold">Comunidad</div>
               </div>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center">
-                <Leaf className="w-12 h-12 text-[#00A75D] mx-auto mb-4" />
-                <div className="text-white font-semibold">Agricultura</div>
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center">
+                <Heart className="w-12 h-12 text-red-400 mx-auto mb-4" />
+                <div className="text-white font-semibold">Salud</div>
               </div>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center">
-                <Building className="w-12 h-12 text-[#00A75D] mx-auto mb-4" />
-                <div className="text-white font-semibold">Infraestructura</div>
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center">
+                <GraduationCap className="w-12 h-12 text-red-400 mx-auto mb-4" />
+                <div className="text-white font-semibold">Educación</div>
               </div>
-              <div className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 text-center">
-                <MapPin className="w-12 h-12 text-[#00A75D] mx-auto mb-4" />
+              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center">
+                <MapPin className="w-12 h-12 text-red-400 mx-auto mb-4" />
                 <div className="text-white font-semibold">7 Parroquias</div>
               </div>
             </div>
@@ -545,17 +636,17 @@ const AlbertoPantojaApp = () => {
       </section>
 
       {/* Media/Videos Section */}
-      <section id="media" className="py-20 md:py-32 bg-[#F6F7F2]" data-testid="media-section">
+      <section id="media" className="py-20 md:py-32 bg-gray-50" data-testid="media-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-16">
-            <p className="text-[#00A75D] text-xs font-semibold tracking-[0.2em] mb-4">
+            <p className="text-red-600 text-xs font-semibold tracking-[0.2em] mb-4">
               {t.media.label}
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1A2B22] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-4">
               {t.media.title}
             </h2>
-            <p className="text-[#4A5D53] text-lg max-w-2xl mx-auto">
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               {t.media.subtitle}
             </p>
           </div>
@@ -596,11 +687,11 @@ const AlbertoPantojaApp = () => {
                     ) : (
                       <Facebook className="w-5 h-5 text-blue-600" />
                     )}
-                    <span className="text-xs text-[#4A5D53] uppercase">
+                    <span className="text-xs text-gray-500 uppercase">
                       {video.type === 'youtube' ? 'YouTube' : 'Facebook'}
                     </span>
                   </div>
-                  <h3 className="font-semibold text-[#1A2B22]">{video.title}</h3>
+                  <h3 className="font-semibold text-blue-900">{video.title}</h3>
                 </div>
               </div>
             ))}
@@ -608,7 +699,7 @@ const AlbertoPantojaApp = () => {
 
           {/* Social Links */}
           <div className="mt-12 text-center">
-            <p className="text-[#4A5D53] mb-4">Síguenos en redes sociales</p>
+            <p className="text-gray-600 mb-4">Síguenos en redes sociales</p>
             <div className="flex justify-center gap-4">
               <a
                 href={SOCIAL_LINKS.facebook}
@@ -649,34 +740,34 @@ const AlbertoPantojaApp = () => {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
-            <p className="text-[#00A75D] text-xs font-semibold tracking-[0.2em] mb-4">
+            <p className="text-red-600 text-xs font-semibold tracking-[0.2em] mb-4">
               {t.contact.label}
             </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-[#1A2B22] tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-4">
               {t.contact.title}
             </h2>
-            <p className="text-[#4A5D53] text-lg">
+            <p className="text-gray-600 text-lg">
               {t.contact.subtitle}
             </p>
           </div>
 
           {/* Contact Info */}
           <div className="flex flex-wrap justify-center gap-8 mb-12">
-            <div className="flex items-center gap-3 text-[#4A5D53]">
-              <MapPin className="w-5 h-5 text-[#00A75D]" />
+            <div className="flex items-center gap-3 text-gray-600">
+              <MapPin className="w-5 h-5 text-red-600" />
               <span>{t.contact.address}</span>
             </div>
           </div>
 
           {/* JotForm Embed Placeholder */}
-          <div className="bg-[#F6F7F2] rounded-2xl p-8 shadow-lg" data-testid="contact-form-container">
-            <div className="text-center text-[#4A5D53]">
-              <Mail className="w-12 h-12 mx-auto mb-4 text-[#00A75D]" />
-              <p className="text-lg font-semibold mb-2">Formulario de Contacto</p>
+          <div className="bg-gray-50 rounded-2xl p-8 shadow-lg border border-gray-200" data-testid="contact-form-container">
+            <div className="text-center text-gray-600">
+              <Mail className="w-12 h-12 mx-auto mb-4 text-blue-600" />
+              <p className="text-lg font-semibold text-blue-900 mb-2">Formulario de Contacto</p>
               <p className="text-sm mb-4">JotForm será integrado aquí</p>
               {/* JotForm iframe placeholder - replace with actual form ID */}
-              <div className="bg-white rounded-xl p-8 min-h-[400px] flex items-center justify-center border-2 border-dashed border-[#D5D9CE]">
-                <p className="text-[#4A5D53]">
+              <div className="bg-white rounded-xl p-8 min-h-[400px] flex items-center justify-center border-2 border-dashed border-gray-300">
+                <p className="text-gray-500">
                   Inserte el enlace de JotForm para activar el formulario de contacto
                 </p>
               </div>
@@ -686,16 +777,16 @@ const AlbertoPantojaApp = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-[#1A2B22] py-12" data-testid="footer">
+      <footer className="bg-blue-900 py-12" data-testid="footer">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             {/* Logo & Slogan */}
             <div className="text-center md:text-left">
               <div className="flex items-center justify-center md:justify-start gap-3 mb-2">
-                <img src={IMAGES.logo} alt="Alberto Pantoja" className="h-10 w-auto rounded-full" />
+                <img src={IMAGES.logo} alt="Alberto Pantoja" className="h-10 w-auto rounded-full border-2 border-white" />
                 <span className="text-white font-bold">Alberto Pantoja</span>
               </div>
-              <p className="text-white/60 text-sm">{t.footer.slogan}</p>
+              <p className="text-blue-200 text-sm">{t.footer.slogan}</p>
             </div>
 
             {/* Social Links */}
@@ -704,7 +795,7 @@ const AlbertoPantojaApp = () => {
                 href={SOCIAL_LINKS.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/60 hover:text-[#00A75D] transition-colors"
+                className="text-blue-200 hover:text-red-400 transition-colors"
               >
                 <Facebook className="w-6 h-6" />
               </a>
@@ -712,7 +803,7 @@ const AlbertoPantojaApp = () => {
                 href={SOCIAL_LINKS.linkedin}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/60 hover:text-[#00A75D] transition-colors"
+                className="text-blue-200 hover:text-red-400 transition-colors"
               >
                 <Linkedin className="w-6 h-6" />
               </a>
@@ -720,7 +811,7 @@ const AlbertoPantojaApp = () => {
 
             {/* Webmaster */}
             <div className="text-center md:text-right">
-              <p className="text-white/40 text-xs mb-2">{t.footer.webmaster}</p>
+              <p className="text-blue-300 text-xs mb-2">{t.footer.webmaster}</p>
               <a
                 href="https://fworksbuilders.com"
                 target="_blank"
@@ -733,7 +824,7 @@ const AlbertoPantojaApp = () => {
           </div>
 
           <div className="mt-8 pt-8 border-t border-white/10 text-center">
-            <p className="text-white/40 text-sm">
+            <p className="text-blue-300 text-sm">
               © {new Date().getFullYear()} Alberto Pantoja - La Voz del Campo. {t.footer.rights}.
             </p>
           </div>
