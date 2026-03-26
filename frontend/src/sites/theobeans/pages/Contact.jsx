@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Facebook } from 'lucide-react';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
+import { IMG } from '../utils/imageHelper';
 
 const Contact = () => {
   const { t } = useLanguage();
@@ -43,7 +44,7 @@ const Contact = () => {
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: 'linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(/images/contact/contact-hero.jpg)',
+          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/contact/contact-hero.jpg')})`,
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
@@ -159,7 +160,7 @@ const Contact = () => {
                 {siteData.contact.images.map((img, index) => (
                   <div key={index} className="rounded-lg overflow-hidden shadow-md aspect-square">
                     <img
-                      src={img}
+                      src={IMG(img)}
                       alt={`Contact ${index + 1}`}
                       className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
                       loading="lazy" style={{ opacity: 1 }}

@@ -1,6 +1,7 @@
 import React from 'react';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
+import { IMG } from '../utils/imageHelper';
 
 const Objectif = () => {
   const { t } = useLanguage();
@@ -11,7 +12,7 @@ const Objectif = () => {
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: 'linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(/images/gallery/photo6.jpg)',
+          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/gallery/photo6.jpg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}

@@ -2,6 +2,7 @@ import React from 'react';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
 import SEO from '@/components/SEO';
+import { IMG } from '../utils/imageHelper';
 
 const Home = () => {
   const { t } = useLanguage();
@@ -34,7 +35,7 @@ const Home = () => {
             <div className="order-2 md:order-1">
               <div className="rounded-lg overflow-hidden shadow-lg max-w-md mx-auto">
                 <img
-                  src={siteData.founder.image}
+                  src={IMG(siteData.founder.image)}
                   alt={siteData.founder.name}
                   className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
                   loading="eager"
@@ -57,7 +58,7 @@ const Home = () => {
                 {/* Official Logo - under fondatrice */}
                 <div className="mt-6">
                   <img
-                    src="/images/contact/contact-hero.jpg"
+                    src={IMG("/images/contact/contact-hero.jpg")}
                     alt="Theo Beans Official Logo"
                     className="h-28 w-auto"
                   />

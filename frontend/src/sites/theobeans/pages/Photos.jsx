@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
+import { IMG } from '../utils/imageHelper';
 
 const Photos = () => {
   const { t } = useLanguage();
@@ -50,7 +51,7 @@ const Photos = () => {
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: 'linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(/images/gallery/photo1.jpg)',
+          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/gallery/photo1.jpg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -73,7 +74,7 @@ const Photos = () => {
                 onClick={() => openLightbox(index)}
               >
                 <img
-                  src={photo}
+                  src={IMG(photo)}
                   alt={`Cacao ${index + 1}`}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   loading="lazy"
@@ -115,7 +116,7 @@ const Photos = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <img
-              src={selectedImage}
+              src={IMG(selectedImage)}
               alt={`Cacao ${currentIndex + 1}`}
               className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
             />

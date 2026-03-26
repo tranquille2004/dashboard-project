@@ -1,5 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
+import { IMG } from '../utils/imageHelper';
 
 const Qualite = () => {
   const { t } = useLanguage();
@@ -10,7 +11,7 @@ const Qualite = () => {
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: 'linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(/images/gallery/qualite-hero.jpg)',
+          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/gallery/qualite-hero.jpg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -48,7 +49,7 @@ const Qualite = () => {
           <div className="mt-16 grid md:grid-cols-2 gap-6">
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/gallery/photo10.jpg"
+                src={IMG("/images/gallery/photo10.jpg")}
                 alt="Cacao process"
                 className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
                 loading="lazy" style={{ opacity: 1 }}
@@ -56,7 +57,7 @@ const Qualite = () => {
             </div>
             <div className="rounded-lg overflow-hidden shadow-lg">
               <img
-                src="/images/gallery/photo12.jpg"
+                src={IMG("/images/gallery/photo12.jpg")}
                 alt="Cacao quality"
                 className="w-full h-64 object-cover hover:scale-105 transition-transform duration-500"
                 loading="lazy" style={{ opacity: 1 }}

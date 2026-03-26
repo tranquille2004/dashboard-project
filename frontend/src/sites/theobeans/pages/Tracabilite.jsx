@@ -1,6 +1,7 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
+import { IMG } from '../utils/imageHelper';
 
 const Tracabilite = () => {
   const { t } = useLanguage();
@@ -11,7 +12,7 @@ const Tracabilite = () => {
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: 'linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(/images/gallery/tracabilite-hero.jpg)',
+          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/gallery/tracabilite-hero.jpg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -59,7 +60,7 @@ const Tracabilite = () => {
           {/* Visual Element */}
           <div className="mt-12 rounded-lg overflow-hidden shadow-xl">
             <img
-              src="/images/gallery/photo14.jpg"
+              src={IMG("/images/gallery/photo14.jpg")}
               alt="Cacao traceability"
               className="w-full h-96 object-cover"
               loading="lazy" style={{ opacity: 1 }}

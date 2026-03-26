@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from '../context/BasePathContext';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
+import { IMG } from '../utils/imageHelper';
 
 const Footer = () => {
   const { t } = useLanguage();
@@ -47,7 +48,7 @@ const Footer = () => {
                 className="hover:opacity-80 transition-opacity"
               >
                 <img 
-                  src="/images/fworks-logo.png" 
+                  src={IMG("/images/fworks-logo.png")}
                   alt="f.works builders" 
                   className="h-12 w-auto"
                 />
