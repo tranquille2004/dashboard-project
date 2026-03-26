@@ -608,7 +608,7 @@ const portfolioItems = [
     features: ['E-commerce', 'WhatsApp', 'Producten']
   },
   {
-    name: 'Villa Smeralda',
+    name: 'Résidence Villa Smeralda',
     type: { nl: 'Vakantieverhuur', fr: 'Location de Vacances', en: 'Holiday Rental', es: 'Alquiler Vacacional', it: 'Affitto Vacanze' },
     location: 'Sardinië, Italië',
     url: 'https://smeraldavacanze.it',
