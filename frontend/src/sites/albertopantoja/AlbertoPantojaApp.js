@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Youtube, Linkedin, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home } from 'lucide-react';
+import { Menu, X, Facebook, Youtube, Linkedin, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy } from 'lucide-react';
 
 // Helper for production image paths
 const IMG = (path) => {
@@ -34,7 +34,7 @@ const translations = {
       description: 'Alberto Pantoja es Consejal Rural del cantón Santo Domingo y Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
       mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias rurales y el territorio rural del cantón, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
       stats: {
-        years: 'Años de servicio',
+        sessions: 'Sesiones del Concejo',
         parishes: 'Parroquias rurales',
         projects: 'Proyectos'
       }
@@ -49,7 +49,8 @@ const translations = {
         { title: 'Salud Pública', desc: 'Acceso a atención médica de calidad' },
         { title: 'Educación', desc: 'Oportunidades para niños y jóvenes' },
         { title: 'Economía Local', desc: 'Apoyo a emprendedores y pequeños negocios' },
-        { title: 'Comunidad', desc: 'Fortaleciendo el tejido social' }
+        { title: 'Comunidad', desc: 'Fortaleciendo el tejido social' },
+        { title: 'Deporte y Juventud', desc: 'Promoviendo el deporte y apoyando a los jóvenes de Santo Domingo con programas deportivos, canchas y eventos que fomentan valores y vida saludable' }
       ]
     },
     position: {
@@ -96,7 +97,7 @@ const translations = {
       description: 'Alberto Pantoja est Conseiller Rural du canton de Santo Domingo et Directeur Provincial de la Revolución Ciudadana (RC5) à Santo Domingo de los Tsáchilas. Avec une profonde vocation de service public, Alberto représente les intérêts des communautés rurales et urbaines de la province.',
       mission: 'Son engagement couvre le développement intégral des 7 paroisses rurales et de tout le territoire rural de la province, en luttant pour de meilleures infrastructures, des services de santé, l\'éducation et des opportunités économiques pour tous les citoyens.',
       stats: {
-        years: 'Années de service',
+        sessions: 'Sessions du Conseil',
         parishes: 'Paroisses rurales',
         projects: 'Projets'
       }
@@ -111,7 +112,8 @@ const translations = {
         { title: 'Santé Publique', desc: 'Accès à des soins médicaux de qualité' },
         { title: 'Éducation', desc: 'Opportunités pour les enfants et les jeunes' },
         { title: 'Économie Locale', desc: 'Soutien aux entrepreneurs et petites entreprises' },
-        { title: 'Communauté', desc: 'Renforcer le tissu social' }
+        { title: 'Communauté', desc: 'Renforcer le tissu social' },
+        { title: 'Sport et Jeunesse', desc: 'Promouvoir le sport et soutenir les jeunes de Santo Domingo avec des programmes sportifs, des terrains et des événements qui encouragent les valeurs et une vie saine' }
       ]
     },
     position: {
@@ -158,7 +160,7 @@ const translations = {
       description: 'Alberto Pantoja is Rural Councilman of Santo Domingo canton and Provincial Director of Revolución Ciudadana (RC5) in Santo Domingo de los Tsáchilas. With a deep vocation for public service, Alberto represents the interests of rural and urban communities in the province.',
       mission: 'His commitment covers the integral development of the 7 rural parishes and the entire rural territory of the province, fighting for better infrastructure, health services, education, and economic opportunities for all citizens.',
       stats: {
-        years: 'Years of service',
+        sessions: 'Council Sessions',
         parishes: 'Rural parishes',
         projects: 'Projects'
       }
@@ -173,7 +175,8 @@ const translations = {
         { title: 'Public Health', desc: 'Access to quality medical care' },
         { title: 'Education', desc: 'Opportunities for children and youth' },
         { title: 'Local Economy', desc: 'Support for entrepreneurs and small businesses' },
-        { title: 'Community', desc: 'Strengthening the social fabric' }
+        { title: 'Community', desc: 'Strengthening the social fabric' },
+        { title: 'Sports & Youth', desc: 'Promoting sports and supporting the youth of Santo Domingo with athletic programs, courts and events that foster values and healthy living' }
       ]
     },
     position: {
@@ -464,7 +467,7 @@ const AlbertoPantojaApp = () => {
   };
 
   // Work area icons
-  const workIcons = [Building, Home, Heart, GraduationCap, Briefcase, Users];
+  const workIcons = [Building, Home, Heart, GraduationCap, Briefcase, Users, Trophy];
 
   return (
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Manrope', sans-serif" }}>
@@ -693,8 +696,8 @@ const AlbertoPantojaApp = () => {
               {/* Stats */}
               <div className="grid grid-cols-3 gap-6">
                 <div className="text-center p-4 bg-white rounded-xl shadow-md border-t-4 border-blue-600">
-                  <div className="text-3xl font-extrabold text-blue-600">10+</div>
-                  <div className="text-sm text-gray-600">{t.about.stats.years}</div>
+                  <div className="text-3xl font-extrabold text-blue-600">100+</div>
+                  <div className="text-sm text-gray-600">{t.about.stats.sessions}</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl shadow-md border-t-4 border-red-600">
                   <div className="text-3xl font-extrabold text-red-600">7</div>
