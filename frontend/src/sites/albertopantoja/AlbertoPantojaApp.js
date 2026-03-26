@@ -32,7 +32,7 @@ const translations = {
       label: 'SOBRE ALBERTO',
       title: 'Compromiso con el pueblo',
       description: 'Alberto Pantoja es Consejal Rural del cantón Santo Domingo y Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
-      mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias rurales y todo el territorio rural de la provincia, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
+      mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias rurales y el territorio rural del cantón, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
       stats: {
         years: 'Años de servicio',
         parishes: 'Parroquias rurales',
