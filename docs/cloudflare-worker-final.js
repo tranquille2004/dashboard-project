@@ -1,6 +1,7 @@
 // Cloudflare Worker: site-proxy-new
 // FINAL VERSION - Met URL synchronisatie en API proxy
-const PREVIEW_URL = 'https://fworks-consolidate-1.emergent.host';
+// BELANGRIJK: Update deze URL naar de huidige Emergent preview URL na elke deployment!
+const PREVIEW_URL = 'https://image-restore-21.preview.emergentagent.com';
 
 const SITE_MAPPING = {
   'labottegaherent.com': '/site/bottega',

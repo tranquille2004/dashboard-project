@@ -1,7 +1,7 @@
 # F.Works Builders - Multi-Tenant Website Platform
 
 ## Project Overzicht
-Een multi-tenant applicatie die 8 websites consolideert in één beheerbare platform met super-admin en site-admin dashboards.
+Een multi-tenant applicatie die 9 websites consolideert in één beheerbare platform met super-admin en site-admin dashboards.
 
 ## ⚠️ KRITIEKE INFORMATIE - NOOIT VERGETEN ⚠️
 
@@ -11,12 +11,17 @@ Een multi-tenant applicatie die 8 websites consolideert in één beheerbare plat
 **Probleem:** Op Emergent productie (.emergent.host) kunnen statische /images/ paden NIET direct worden geserveerd. De React app vangt alle requests af en retourneert HTML.
 
 **Oplossing (3 onderdelen):**
-1. **Object Storage:** Alle 874 afbeeldingen staan in Emergent Object Storage
+1. **Object Storage:** Alle afbeeldingen staan in Emergent Object Storage
 2. **Backend API:** `/api/images/{path}` serveert afbeeldingen uit Object Storage
 3. **Frontend Rewriter:** JavaScript in `index.html` herschrijft `/images/` naar `/api/images/` op productie
 
+### 🔴 CSS OPACITY BUG (Opgelost 26 maart 2026)
+**Probleem:** Gallery images hadden computed opacity: 0 door onbekende CSS conflict.
+**Oplossing:** Inline style={{ opacity: 1 }} op img tags in gallery component.
+**Toepassing:** `/app/frontend/src/sites/albertopantoja/AlbertoPantojaApp.js`
+
 **Na deployment check:**
-- `curl https://[prod-url]/api/admin/migrate/status` → moet `migrated_count: 874` tonen
+- `curl https://[prod-url]/api/admin/migrate/status` → moet `migrated_count` tonen
 - Als 0: ga naar `/admin/migrate` en klik "Importeer van Preview"
 - Cloudflare cache legen indien nodig
 
@@ -52,7 +57,7 @@ const getBasePath = () => isOnCustomDomain() ? '' : '/site/[slug]';
 
 ---
 
-## Geconsolideerde Websites
+## Geconsolideerde Websites (9 totaal)
 1. **La Cantina Italiana** (lacantinaitaliana.net)
 2. **La Bottega Herent** (labottegaherent.com)
 3. **L'Ascoli Zaventem** (ascolizaventem.com)
@@ -61,6 +66,7 @@ const getBasePath = () => isOnCustomDomain() ? '' : '/site/[slug]';
 6. **Theo Beans Export** (theobeans-export.com)
 7. **fworksbuilders** (fworksbuilders.com)
 8. **Smeralda Vacanze** (smeraldavacanze.it)
+9. **Alberto Pantoja** (www.albertopantoja.com) **NIEUW - 26 maart 2026**
 
 ## Architectuur
 - **Frontend:** React met React Router
@@ -76,7 +82,7 @@ const getBasePath = () => isOnCustomDomain() ? '' : '/site/[slug]';
 - **Productie:** fworks-consolidate-1.emergent.host
 
 ## Features Geïmplementeerd
-- ✅ Multi-tenant website rendering
+- ✅ Multi-tenant website rendering (9 sites)
 - ✅ Super Admin Dashboard (Google OAuth login)
 - ✅ Site Admin Dashboard (per restaurant)
 - ✅ Speciale aankondigingen systeem
@@ -91,6 +97,16 @@ const getBasePath = () => isOnCustomDomain() ? '' : '/site/[slug]';
 - ✅ Health monitoring met email alerts
 - ✅ Image migration systeem
 
+## Alberto Pantoja Website (NIEUW - 26 maart 2026)
+- **URL:** www.albertopantoja.com (+ albertopantoja.ec)
+- **Type:** Politieke campagne website
+- **Talen:** Spaans, Frans, Engels
+- **Kleuren:** Blauw (#1E3A8A), Rood (#DC2626), Wit (#FFFFFF)
+- **Foto Galerij:** 166 campaign foto's met "Load more" functionaliteit
+- **Video's:** 1 YouTube, 5 Facebook embeds
+- **Secties:** Hero, Bio, Work Areas, RC5, Gallery, Media, Contact
+- **Fix:** Inline style={{ opacity: 1 }} op gallery images (CSS conflict oplossing)
+
 ## Database Schema
 - **sites**: name, hostnames, site_config_id
 - **site_configs**: closure_notice, special_announcement, special_announcement_active
@@ -98,7 +114,7 @@ const getBasePath = () => isOnCustomDomain() ? '' : '/site/[slug]';
 - **migrated_images**: original_path, storage_path, content_type, migrated_at (KRITIEK voor afbeeldingen!)
 
 ## Cloudflare Worker (site-proxy-new)
-Handelt routing af voor alle 8 sites via iframe methode.
+Handelt routing af voor alle 9 sites via iframe methode.
 **Productie URL:** fworks-consolidate-1.emergent.host
 
 ## Bekende Beperkingen
@@ -107,6 +123,9 @@ Handelt routing af voor alle 8 sites via iframe methode.
 - Na deployment: altijd checken of `migrated_count > 0`
 
 ## Laatste Updates (Maart 2026)
+- **26 maart 2026:** Alberto Pantoja website toegevoegd (9e site)
+- **26 maart 2026:** Gallery foto opacity bug gefixd met inline style={{ opacity: 1 }}
+- **26 maart 2026:** 166 campaign foto's toegevoegd met Load more functionaliteit
 - Cloudflare Worker bijgewerkt naar correcte preview URL: `fworks-promo.preview.emergentagent.com`
 - Navigatie links gerepareerd voor custom domains
 - /admin routing gefixd voor La Cantina (nu naar eigenaren dashboard)
@@ -138,28 +157,16 @@ Handelt routing af voor alle 8 sites via iframe methode.
 - **Talen:** Nederlands en Frans
 - **Features:** Klikbaar - leidt naar reserveringspagina
 
-## Sites Beheerd (8 totaal)
-1. La Cantina Italiana - lacantinaitaliana.net
-2. La Bottega Herent - labottegaherent.com
-3. L'Ascoli Zaventem - ascolizaventem.com
-4. Ristorante Mercato - ristorantemercato.be
-5. Tracemaster Rastreadores - tracemaster-rastreadores.com
-6. Theo Beans Export - theobeans-export.com
-7. F.Works Builders - fworksbuilders.com
-8. **Résidence Villa Smeralda** - smeraldavacanze.it (NIEUW)
-
 ## Smeralda Admin Login
 - Email: villasmeralda1980@gmail.com
 - Password: smeralda2024
 - URL: smeraldavacanze.it/admin
 
 ## Volgende Stappen (Prioriteit)
-1. ✅ ~~**P1:** Image carousel bug fixen - slideshow stopt niet bij handmatige interactie~~ (logica toegevoegd)
-2. ✅ ~~**P2:** Ontbrekende pagina's maken voor Smeralda~~ - Services sectie toegevoegd met Car Rental, Boat Tours, Flights
-3. ✅ ~~"Location" renamed to "How to Find Us" / "Bereikbaarheid"~~
-4. ✅ ~~**P0:** Paasmenu voor Ascoli toevoegen~~ (10 maart 2026)
-5. ✅ ~~**P1:** Email alerts voor site down en geen reservaties~~ (10 maart 2026)
-6. 🟡 **P3:** Cantina announcement bug onderzoeken en fixen
-7. 🟡 **P3:** Cloudflare Worker updaten voor smeraldavacanze.it domein
-8. 🔵 **P4:** Payment Gateway integratie (Stripe, Payconiq, Binance Pay) - wacht op API keys
-9. 🔵 **P4:** Image carousel Smeralda stopt niet bij handmatige interactie (P2)
+1. ✅ ~~**P0:** Alberto Pantoja gallery foto's niet zichtbaar~~ (26 maart 2026 - opacity fix)
+2. 🟡 **P1:** Super Admin Google Auth 520 error fixen
+3. 🟡 **P2:** Image carousel Smeralda stopt niet bij handmatige interactie
+4. 🟡 **P3:** Cantina announcement bug onderzoeken en fixen
+5. 🟡 **P3:** Cloudflare Worker updaten met albertopantoja.com mappings
+6. 🔵 **P4:** Payment Gateway integratie (Stripe, Payconiq, Binance Pay) - wacht op API keys
+7. 🔵 **P4:** Admin Gallery view refactoren voor Object Storage URLs
