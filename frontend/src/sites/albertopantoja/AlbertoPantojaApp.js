@@ -212,6 +212,7 @@ const translations = {
 
 // Working video embeds (Facebook and YouTube)
 const WORKING_VIDEOS = [
+  // === DESTACADOS ===
   {
     type: 'youtube',
     id: 'IZruu3cScWM',
@@ -241,6 +242,163 @@ const WORKING_VIDEOS = [
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/867916851242102/',
     title: 'Otonga café en Alluriquín'
+  },
+  // === REELS ===
+  {
+    type: 'facebook_reel',
+    url: 'https://www.facebook.com/reel/1723778411645487',
+    title: 'Reel 1'
+  },
+  {
+    type: 'facebook_reel',
+    url: 'https://www.facebook.com/reel/3651348605173595',
+    title: 'Reel 2'
+  },
+  {
+    type: 'facebook_reel',
+    url: 'https://www.facebook.com/reel/1309640917405315',
+    title: 'Reel 3'
+  },
+  {
+    type: 'facebook_reel',
+    url: 'https://www.facebook.com/reel/1906760859878505',
+    title: 'Reel 4'
+  },
+  {
+    type: 'facebook_reel',
+    url: 'https://www.facebook.com/reel/2432247437192051',
+    title: 'Reel 5'
+  },
+  // === RADIO INTERVIEWS & VIDEOS ===
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1650220352347310/',
+    title: 'Entrevista de Radio 1'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1228041888972734/',
+    title: 'Entrevista de Radio 2'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/548003865047574/',
+    title: 'Entrevista de Radio 3'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/981445697312455/',
+    title: 'Entrevista de Radio 4'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/4033530786918402/',
+    title: 'Entrevista de Radio 5'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/924349143138861/',
+    title: 'Entrevista de Radio 6'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1138102204635429/',
+    title: 'Entrevista de Radio 7'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1080722876785526/',
+    title: 'Entrevista de Radio 8'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/8532855593489653/',
+    title: 'Entrevista de Radio 9'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1092279462484874/',
+    title: 'Entrevista de Radio 10'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1045741537221599/',
+    title: 'Entrevista de Radio 11'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1241053807050768/',
+    title: 'Entrevista de Radio 12'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1834862773701060/',
+    title: 'Entrevista de Radio 13'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/302792619144362/',
+    title: 'Entrevista de Radio 14'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/690771369630619/',
+    title: 'Entrevista de Radio 15'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1527071004364779/',
+    title: 'Entrevista de Radio 16'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/845237860319262/',
+    title: 'Entrevista de Radio 17'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1343766912937091/',
+    title: 'Entrevista de Radio 18'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/226933876409335/',
+    title: 'Entrevista de Radio 19'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1290233991708293/',
+    title: 'Entrevista de Radio 20'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1066930528033779/',
+    title: 'Entrevista de Radio 21'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/971856117110721/',
+    title: 'Entrevista de Radio 22'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/698160765379748/',
+    title: 'Entrevista de Radio 23'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/891656541752078/',
+    title: 'Entrevista de Radio 24'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/810038443379775/',
+    title: 'Entrevista de Radio 25'
+  },
+  {
+    type: 'facebook',
+    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/498809408792915/',
+    title: 'Entrevista de Radio 26'
   }
 ];
 
@@ -436,6 +594,7 @@ const AlbertoPantojaApp = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [visiblePhotos, setVisiblePhotos] = useState(24);
+  const [visibleVideos, setVisibleVideos] = useState(6);
   const t = translations[language];
 
   // Scroll spy
@@ -889,7 +1048,7 @@ const AlbertoPantojaApp = () => {
 
           {/* Video Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {WORKING_VIDEOS.map((video, index) => (
+            {WORKING_VIDEOS.slice(0, visibleVideos).map((video, index) => (
               <div
                 key={index}
                 className="bg-white rounded-2xl overflow-hidden shadow-lg"
@@ -903,6 +1062,15 @@ const AlbertoPantojaApp = () => {
                       className="w-full h-full"
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
+                  ) : video.type === 'facebook_reel' ? (
+                    <iframe
+                      src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(video.url)}&show_text=0&width=560`}
+                      title={video.title}
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
                       allowFullScreen
                     />
                   ) : (
@@ -920,11 +1088,15 @@ const AlbertoPantojaApp = () => {
                   <div className="flex items-center gap-2 mb-2">
                     {video.type === 'youtube' ? (
                       <Youtube className="w-5 h-5 text-red-600" />
+                    ) : video.type === 'facebook_reel' ? (
+                      <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
+                      </svg>
                     ) : (
                       <Facebook className="w-5 h-5 text-blue-600" />
                     )}
                     <span className="text-xs text-gray-500 uppercase">
-                      {video.type === 'youtube' ? 'YouTube' : 'Facebook'}
+                      {video.type === 'youtube' ? 'YouTube' : video.type === 'facebook_reel' ? 'Reel' : 'Facebook'}
                     </span>
                   </div>
                   <h3 className="font-semibold text-blue-900">{video.title}</h3>
@@ -932,6 +1104,37 @@ const AlbertoPantojaApp = () => {
               </div>
             ))}
           </div>
+
+          {/* Load More Button & Counter */}
+          <div className="text-center mt-12 space-y-4">
+            {visibleVideos < WORKING_VIDEOS.length && (
+              <button
+                onClick={() => setVisibleVideos(prev => Math.min(prev + 6, WORKING_VIDEOS.length))}
+                data-testid="load-more-videos-btn"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors mr-4"
+              >
+                {language === 'es' ? `Cargar más videos (${WORKING_VIDEOS.length - visibleVideos} restantes)` : 
+                 language === 'fr' ? `Charger plus de vidéos (${WORKING_VIDEOS.length - visibleVideos} restantes)` :
+                 `Load more videos (${WORKING_VIDEOS.length - visibleVideos} remaining)`}
+              </button>
+            )}
+            <a
+              href={SOCIAL_LINKS.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-full text-lg font-semibold transition-colors"
+            >
+              <Facebook className="w-5 h-5" />
+              {language === 'es' ? 'Ver más en Facebook' : language === 'fr' ? 'Voir plus sur Facebook' : 'See more on Facebook'}
+            </a>
+          </div>
+          
+          {/* Video count indicator */}
+          <p className="text-center text-gray-500 mt-4 text-sm">
+            {language === 'es' ? `Mostrando ${visibleVideos} de ${WORKING_VIDEOS.length} videos` : 
+             language === 'fr' ? `Affichage de ${visibleVideos} sur ${WORKING_VIDEOS.length} vidéos` :
+             `Showing ${visibleVideos} of ${WORKING_VIDEOS.length} videos`}
+          </p>
 
           {/* Social Links */}
           <div className="mt-12 text-center">
