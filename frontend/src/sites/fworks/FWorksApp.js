@@ -606,6 +606,22 @@ const portfolioItems = [
     url: 'https://tracemaster-rastreadores.com',
     image: '/images/tracemaster/chargeur1_orig.jpg',
     features: ['E-commerce', 'WhatsApp', 'Producten']
+  },
+  {
+    name: 'Villa Smeralda',
+    type: { nl: 'Vakantieverhuur', fr: 'Location de Vacances', en: 'Holiday Rental', es: 'Alquiler Vacacional', it: 'Affitto Vacanze' },
+    location: 'Sardinië, Italië',
+    url: 'https://smeraldavacanze.it',
+    image: '/images/smeralda/bg-header.png',
+    features: ['Reservaties', 'Meertalig', 'Galerij']
+  },
+  {
+    name: 'Alberto Pantoja',
+    type: { nl: 'Politieke Campagne', fr: 'Campagne Politique', en: 'Political Campaign', es: 'Campaña Política', it: 'Campagna Politica' },
+    location: 'Santo Domingo, Ecuador',
+    url: 'https://www.albertopantoja.com',
+    image: '/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg',
+    features: ['Meertalig', 'Galerij', 'Video\'s']
   }
 ];
 
