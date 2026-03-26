@@ -414,7 +414,7 @@ const GALLERY_PHOTO_PATHS = [
 // Images
 const IMAGES = {
   logo: IMG('/images/albertopantoja/logo.jpg'),
-  profileMain: IMG('/images/albertopantoja/profile-main.jpg'),
+  profileMain: IMG('/images/albertopantoja/Alberto/478641831_653342143704312_3590459736061452532_n.jpg'),
   heroBackground: IMG('/images/albertopantoja/hero-background.png'),
   soilHands: IMG('/images/albertopantoja/soil-hands.png'),
   rc5Logo: IMG('/images/albertopantoja/rc5-logo.png'),
@@ -479,7 +479,7 @@ const AlbertoPantojaApp = () => {
               <img src={IMAGES.logo} alt="Alberto Pantoja" className="h-10 md:h-12 w-auto rounded-full border-2 border-blue-600" />
               <div className="hidden sm:block">
                 <div className="text-blue-900 font-bold text-sm md:text-base">Alberto Pantoja</div>
-                <div className="text-red-600 text-xs font-semibold">RC5 Santo Domingo</div>
+                <div className="text-red-600 text-xs font-semibold">Consejal de Santo Domingo</div>
               </div>
             </div>
 
