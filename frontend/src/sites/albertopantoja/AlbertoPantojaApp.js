@@ -241,7 +241,7 @@ const WORKING_VIDEOS = [
   }
 ];
 
-// Gallery photos - paths only, IMG() applied at render time
+// Gallery photos - all 166 photos
 const GALLERY_PHOTO_PATHS = [
   '/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg',
   '/images/albertopantoja/Alberto/478641831_653342143704312_3590459736061452532_n.jpg',
@@ -267,6 +267,148 @@ const GALLERY_PHOTO_PATHS = [
   '/images/albertopantoja/Alberto/480983630_663666932671833_6619852466579408832_n.jpg',
   '/images/albertopantoja/Alberto/480994438_663829629322230_3965225250880568579_n.jpg',
   '/images/albertopantoja/Alberto/480996918_663503959354797_8069443481933364202_n.jpg',
+  '/images/albertopantoja/Alberto/481038869_664566892581837_1463928018194383814_n.jpg',
+  '/images/albertopantoja/Alberto/481056153_661234552915071_3125541129122087690_n.jpg',
+  '/images/albertopantoja/Alberto/481072291_661226562915870_4083662330981547486_n.jpg',
+  '/images/albertopantoja/Alberto/481075383_664152362623290_3868101445272029663_n.jpg',
+  '/images/albertopantoja/Alberto/481075475_661240389581154_660570927459837005_n.jpg',
+  '/images/albertopantoja/Alberto/481100468_663814392657087_1099306298357626231_n.jpg',
+  '/images/albertopantoja/Alberto/481166447_664583795913480_2627893872316889168_n.jpg',
+  '/images/albertopantoja/Alberto/481216783_663677912670735_548603755530380773_n.jpg',
+  '/images/albertopantoja/Alberto/481221666_667363628968830_7668323349312129753_n.jpg',
+  '/images/albertopantoja/Alberto/481225149_667366038968589_5235784937216913062_n.jpg',
+  '/images/albertopantoja/Alberto/481234095_664310182607508_1784841354562135585_n.jpg',
+  '/images/albertopantoja/Alberto/481247423_663671496004710_26449426074329130_n.jpg',
+  '/images/albertopantoja/Alberto/481261388_667366232301903_1132387037546377867_n.jpg',
+  '/images/albertopantoja/Alberto/481261847_667351782303348_2186856538270519019_n.jpg',
+  '/images/albertopantoja/Alberto/481264580_666559779049215_5186556595470853376_n.jpg',
+  '/images/albertopantoja/Alberto/481264599_666687159036477_804141891372611639_n.jpg',
+  '/images/albertopantoja/Alberto/481266218_667366015635258_4778241687607143955_n.jpg',
+  '/images/albertopantoja/Alberto/481463321_667123788992814_6415081231996730129_n.jpg',
+  '/images/albertopantoja/Alberto/481465923_664560662582460_2173662479198137355_n.jpg',
+  '/images/albertopantoja/Alberto/481472877_666565199048673_888175185952217895_n.jpg',
+  '/images/albertopantoja/Alberto/481473713_664559525915907_2956917840563611724_n.jpg',
+  '/images/albertopantoja/Alberto/481654126_667353872303139_5683543493365606997_n.jpg',
+  '/images/albertopantoja/Alberto/481676856_664564485915411_3606854239573698285_n.jpg',
+  '/images/albertopantoja/Alberto/481703124_666680322370494_406427975700643675_n.jpg',
+  '/images/albertopantoja/Alberto/481703975_666558629049330_4161395890466585481_n.jpg',
+  '/images/albertopantoja/Alberto/481765390_663814359323757_2347120516523527437_n.jpg',
+  '/images/albertopantoja/Alberto/481766969_663675149337678_6424356835481615068_n.jpg',
+  '/images/albertopantoja/Alberto/481767233_667353878969805_2437074188030803324_n.jpg',
+  '/images/albertopantoja/Alberto/481801370_666686939036499_4200774667246636139_n.jpg',
+  '/images/albertopantoja/Alberto/481809920_667368358968357_6461573214910938135_n.jpg',
+  '/images/albertopantoja/Alberto/481908135_670475235324336_5612109026583249176_n.jpg',
+  '/images/albertopantoja/Alberto/481949391_667363588968834_2851109949595358660_n.jpg',
+  '/images/albertopantoja/Alberto/481950561_664572705914589_7320500258811969243_n.jpg',
+  '/images/albertopantoja/Alberto/481989676_670461411992385_4283589097890102084_n.jpg',
+  '/images/albertopantoja/Alberto/482020886_670183492020177_7225217704297194215_n.jpg',
+  '/images/albertopantoja/Alberto/482025304_667482042290322_3124445830902764341_n.jpg',
+  '/images/albertopantoja/Alberto/482077904_670190955352764_1917841792793064688_n.jpg',
+  '/images/albertopantoja/Alberto/482085517_670193085352551_565611859118537506_n.jpg',
+  '/images/albertopantoja/Alberto/482086172_670467908658402_7046386570360927872_n.jpg',
+  '/images/albertopantoja/Alberto/482096215_670860845285775_1915966688192786072_n.jpg',
+  '/images/albertopantoja/Alberto/482196269_670868551951671_6758116417102557468_n.jpg',
+  '/images/albertopantoja/Alberto/482207909_670191725352687_3297574042290275444_n.jpg',
+  '/images/albertopantoja/Alberto/482209877_667351795636680_3715128947390623690_n.jpg',
+  '/images/albertopantoja/Alberto/482224820_667357628969430_6291735405319965598_n.jpg',
+  '/images/albertopantoja/Alberto/482322398_666682282370298_542605208911398429_n.jpg',
+  '/images/albertopantoja/Alberto/485157326_677204104651449_847888452424601585_n.jpg',
+  '/images/albertopantoja/Alberto/486521206_3362637643867624_8639349669595908180_n.jpg',
+  '/images/albertopantoja/Alberto/486525576_3362632520534803_9201062829055005510_n.jpg',
+  '/images/albertopantoja/Alberto/486577839_3361743363957052_2074972252176003695_n.jpg',
+  '/images/albertopantoja/Alberto/486641854_3365411216923600_2712643860251458528_n.jpg',
+  '/images/albertopantoja/Alberto/486721255_3367016216763100_4058777480010809638_n.jpg',
+  '/images/albertopantoja/Alberto/487073190_3367004853430903_9197240439070243626_n.jpg',
+  '/images/albertopantoja/Alberto/487136987_3364931366971585_7614407715405862105_n.jpg',
+  '/images/albertopantoja/Alberto/487143206_3365808930217162_918358489122195366_n.jpg',
+  '/images/albertopantoja/Alberto/487185729_685332540505272_4918736397620921953_n.jpg',
+  '/images/albertopantoja/Alberto/487385117_3366249713506417_4837405225366516864_n.jpg',
+  '/images/albertopantoja/Alberto/487442896_3366249926839729_4788222070338726752_n.jpg',
+  '/images/albertopantoja/Alberto/488909464_691370659901460_6048303810801967280_n.jpg',
+  '/images/albertopantoja/Alberto/489073357_691372659901260_8894478628628242121_n.jpg',
+  '/images/albertopantoja/Alberto/489106689_691372296567963_6411382729397502853_n.jpg',
+  '/images/albertopantoja/Alberto/490373991_10161916053602772_8209487700055113804_n.jpg',
+  '/images/albertopantoja/Alberto/492074035_704230295282163_44943598446438052_n.jpg',
+  '/images/albertopantoja/Alberto/494383514_709319274773265_3340529442790566873_n.jpg',
+  '/images/albertopantoja/Alberto/494846407_709652784739914_7468717487528991415_n.jpg',
+  '/images/albertopantoja/Alberto/495307412_716559360715923_7822166491766794378_n.jpg',
+  '/images/albertopantoja/Alberto/495857759_716116494093543_194888487634115349_n.jpg',
+  '/images/albertopantoja/Alberto/496243497_716547274050465_3869242329580711119_n.jpg',
+  '/images/albertopantoja/Alberto/500393636_10162668089614803_5713977786309093269_n.jpg',
+  '/images/albertopantoja/Alberto/501307368_730531149318744_8488901729725034587_n.jpg',
+  '/images/albertopantoja/Alberto/502619798_733301982374994_8346105277180544597_n.jpg',
+  '/images/albertopantoja/Alberto/504690667_737083728663486_6002244764778823709_n.jpg',
+  '/images/albertopantoja/Alberto/505879572_10162157529422772_5477881364361899492_n.jpg',
+  '/images/albertopantoja/Alberto/508121084_10162165683607772_2029654061927947045_n.jpg',
+  '/images/albertopantoja/Alberto/510557733_750220624016463_5431077435499929176_n.jpg',
+  '/images/albertopantoja/Alberto/513863648_757017100003482_8711379241545039104_n.jpg',
+  '/images/albertopantoja/Alberto/516449286_761618296210029_6643411971385946292_n.jpg',
+  '/images/albertopantoja/Alberto/516926473_10162847807689803_1635027904074616235_n.jpg',
+  '/images/albertopantoja/Alberto/517035847_761618252876700_4954891899802421673_n.jpg',
+  '/images/albertopantoja/Alberto/517115297_10162874952239803_7096846969980499602_n.jpg',
+  '/images/albertopantoja/Alberto/517396262_763193852719140_232806100776752872_n.jpg',
+  '/images/albertopantoja/Alberto/517991074_10162861903679803_9018296962878372505_n.jpg',
+  '/images/albertopantoja/Alberto/518271458_10162878989949803_7918998050366768045_n.jpg',
+  '/images/albertopantoja/Alberto/518957037_764016382636887_1643133763717219090_n.jpg',
+  '/images/albertopantoja/Alberto/520129482_768479935523865_3485893699291640828_n.jpg',
+  '/images/albertopantoja/Alberto/520168261_767732742265251_7896378829678208541_n.jpg',
+  '/images/albertopantoja/Alberto/520589327_768479972190528_2273228086157321832_n.jpg',
+  '/images/albertopantoja/Alberto/520842663_769047775467081_5548212285928121053_n.jpg',
+  '/images/albertopantoja/Alberto/524219776_775035911534934_6542427783220016218_n.jpg',
+  '/images/albertopantoja/Alberto/524660300_774358568269335_5485827883027798037_n.jpg',
+  '/images/albertopantoja/Alberto/524921628_775877598117432_7512052764065408906_n.jpg',
+  '/images/albertopantoja/Alberto/525707914_10162966793944803_3147091270560848211_n.jpg',
+  '/images/albertopantoja/Alberto/526673244_779086567796535_6154688933797499534_n.jpg',
+  '/images/albertopantoja/Alberto/528242462_781439220894603_8852655452723440587_n.jpg',
+  '/images/albertopantoja/Alberto/528286579_782428614128997_4741396581217572575_n.jpg',
+  '/images/albertopantoja/Alberto/528303703_782428654128993_3421016760925008729_n.jpg',
+  '/images/albertopantoja/Alberto/528645878_781439587561233_2815269067441081620_n.jpg',
+  '/images/albertopantoja/Alberto/529430053_784755693896289_4489266015437964805_n.jpg',
+  '/images/albertopantoja/Alberto/529645730_784755533896305_3647364555133346790_n.jpg',
+  '/images/albertopantoja/Alberto/535094753_793492569689268_2042938304901107362_n.jpg',
+  '/images/albertopantoja/Alberto/536896783_795345852837273_7428180870427606865_n.jpg',
+  '/images/albertopantoja/Alberto/539464833_800907745614417_1604365765916956630_n.jpg',
+  '/images/albertopantoja/Alberto/541970056_10163108334514803_3214060883013226990_n.jpg',
+  '/images/albertopantoja/Alberto/542649945_10163100286954803_2324365682022305976_n.jpg',
+  '/images/albertopantoja/Alberto/549176340_817833340588524_2713958324565028929_n.jpg',
+  '/images/albertopantoja/Alberto/554468671_823542320017626_8923523889405969546_n.jpg',
+  '/images/albertopantoja/Alberto/555499841_825293036509221_7663194453545599609_n.jpg',
+  '/images/albertopantoja/Alberto/555732938_825293166509208_6261931247371465429_n.jpg',
+  '/images/albertopantoja/Alberto/556058503_827651009606757_6593560417374675054_n.jpg',
+  '/images/albertopantoja/Alberto/560927755_839170511788140_4456451950369688329_n.jpg',
+  '/images/albertopantoja/Alberto/561763808_842132851491906_8438156866146645935_n.jpg',
+  '/images/albertopantoja/Alberto/562381718_842138988157959_8184854978359410712_n.jpg',
+  '/images/albertopantoja/Alberto/563458270_842132818158576_5808345663101430577_n (1).jpg',
+  '/images/albertopantoja/Alberto/564588603_842132904825234_4272128383747926086_n.jpg',
+  '/images/albertopantoja/Alberto/565367811_842132938158564_8373778431897263421_n.jpg',
+  '/images/albertopantoja/Alberto/565624176_842133024825222_8251775728512714890_n.jpg',
+  '/images/albertopantoja/Alberto/566236011_842139271491264_1593291405472370259_n.jpg',
+  '/images/albertopantoja/Alberto/566364772_842139338157924_4113663319300709599_n.jpg',
+  '/images/albertopantoja/Alberto/566374591_844926177879240_3372152882620777594_n.jpg',
+  '/images/albertopantoja/Alberto/571168360_10163314696279803_3450548498500300037_n.jpg',
+  '/images/albertopantoja/Alberto/571419148_852802953758229_8883338641998596987_n.jpg',
+  '/images/albertopantoja/Alberto/578275613_861632199541971_3086833011310051514_n.jpg',
+  '/images/albertopantoja/Alberto/578779782_861632319541959_1170563477998267963_n.jpg',
+  '/images/albertopantoja/Alberto/578988260_861632252875299_7478494016679802367_n.jpg',
+  '/images/albertopantoja/Alberto/579199501_861632162875308_3964887128357665411_n.jpg',
+  '/images/albertopantoja/Alberto/586728560_10163445700299803_521490885492244063_n.jpg',
+  '/images/albertopantoja/Alberto/591771272_10163477924134803_2046674434233931868_n.jpg',
+  '/images/albertopantoja/Alberto/594829980_10163499267394803_2179917357638999117_n.jpg',
+  '/images/albertopantoja/Alberto/602006774_904758158562708_4499873530878446677_n.jpg',
+  '/images/albertopantoja/Alberto/611330332_904758291896028_4875099186624886461_n.jpg',
+  '/images/albertopantoja/Alberto/612418992_904758161896041_4345709090054600897_n.jpg',
+  '/images/albertopantoja/Alberto/616332892_909866671385190_5540965157346802957_n.jpg',
+  '/images/albertopantoja/Alberto/617721234_10163678145539803_7835709025842143226_n.jpg',
+  '/images/albertopantoja/Alberto/624570433_10163729829499803_6020772980040808805_n.jpg',
+  '/images/albertopantoja/Alberto/640183448_939224118449445_1214158205869289218_n.jpg',
+  '/images/albertopantoja/Alberto/643765039_10163851991904803_2808163826387162522_n.jpg',
+  '/images/albertopantoja/Alberto/649301508_10163917427914803_3297400095641035746_n.jpg',
+  '/images/albertopantoja/Alberto/653710743_10163959371539803_1145498374350872487_n.jpg',
+  '/images/albertopantoja/Alberto/655273108_10163978439924803_2179546742476058211_n.jpg',
+  '/images/albertopantoja/Alberto/657293400_10163992501119803_988835979914054785_n.jpg',
+  '/images/albertopantoja/Alberto/657805826_10163992505109803_8576605590987168046_n.jpg',
+  '/images/albertopantoja/Alberto/658198791_10163992500614803_3832256177700505877_n.jpg',
+  '/images/albertopantoja/Alberto/658776777_10163992498794803_3721073907376182728_n.jpg',
 ];
 
 // Images
@@ -290,6 +432,7 @@ const AlbertoPantojaApp = () => {
   const [language, setLanguage] = useState('es');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
+  const [visiblePhotos, setVisiblePhotos] = useState(24);
   const t = translations[language];
 
   // Scroll spy
@@ -685,7 +828,7 @@ const AlbertoPantojaApp = () => {
 
           {/* Photo Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {GALLERY_PHOTO_PATHS.slice(0, 24).map((photoPath, index) => (
+            {GALLERY_PHOTO_PATHS.slice(0, visiblePhotos).map((photoPath, index) => (
               <div
                 key={index}
                 className="relative aspect-square overflow-hidden rounded-xl group cursor-pointer"
@@ -695,6 +838,7 @@ const AlbertoPantojaApp = () => {
                   src={IMG(photoPath)}
                   alt={`Alberto Pantoja - Foto ${index + 1}`}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  style={{ opacity: 1 }}
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -702,18 +846,36 @@ const AlbertoPantojaApp = () => {
             ))}
           </div>
 
-          {/* View More Button */}
-          <div className="text-center mt-12">
+          {/* Load More / View More Buttons */}
+          <div className="text-center mt-12 space-y-4">
+            {visiblePhotos < GALLERY_PHOTO_PATHS.length && (
+              <button
+                onClick={() => setVisiblePhotos(prev => Math.min(prev + 24, GALLERY_PHOTO_PATHS.length))}
+                data-testid="load-more-photos-btn"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors mr-4"
+              >
+                {language === 'es' ? `Cargar más fotos (${GALLERY_PHOTO_PATHS.length - visiblePhotos} restantes)` : 
+                 language === 'fr' ? `Charger plus de photos (${GALLERY_PHOTO_PATHS.length - visiblePhotos} restantes)` :
+                 `Load more photos (${GALLERY_PHOTO_PATHS.length - visiblePhotos} remaining)`}
+              </button>
+            )}
             <a
               href={SOCIAL_LINKS.facebook}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors"
+              className="inline-flex items-center gap-2 bg-white border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-full text-lg font-semibold transition-colors"
             >
               <Facebook className="w-5 h-5" />
               {language === 'es' ? 'Ver más en Facebook' : language === 'fr' ? 'Voir plus sur Facebook' : 'See more on Facebook'}
             </a>
           </div>
+          
+          {/* Photo count indicator */}
+          <p className="text-center text-gray-500 mt-4 text-sm">
+            {language === 'es' ? `Mostrando ${visiblePhotos} de ${GALLERY_PHOTO_PATHS.length} fotos` : 
+             language === 'fr' ? `Affichage de ${visiblePhotos} sur ${GALLERY_PHOTO_PATHS.length} photos` :
+             `Showing ${visiblePhotos} of ${GALLERY_PHOTO_PATHS.length} photos`}
+          </p>
         </div>
       </section>
 
