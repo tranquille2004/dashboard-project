@@ -618,14 +618,14 @@ const AlbertoPantojaApp = () => {
           playsInline
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ filter: 'brightness(0.4)' }}
+          style={{ filter: 'brightness(0.5)' }}
           ref={(el) => { if (el) el.play().catch(() => {}); }}
         >
           <source src={IMG('/images/albertopantoja/hero-video.mp4')} type="video/mp4" />
         </video>
         
-        {/* Blue overlay gradient */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-blue-900/80" />
+        {/* Blue overlay gradient - more transparent */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-blue-800/50 to-blue-900/60" />
         
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
