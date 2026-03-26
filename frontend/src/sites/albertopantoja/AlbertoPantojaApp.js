@@ -525,7 +525,7 @@ const AlbertoPantojaApp = () => {
                 ))}
               </div>
 
-              {/* Social Links - Facebook & TikTok */}
+              {/* Social Links - Facebook, TikTok & Instagram */}
               <div className="hidden md:flex items-center gap-2">
                 <a
                   href={SOCIAL_LINKS.facebook}
@@ -546,6 +546,15 @@ const AlbertoPantojaApp = () => {
                   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
                   </svg>
+                </a>
+                <a
+                  href={SOCIAL_LINKS.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="nav-instagram-btn"
+                  className="flex items-center justify-center w-10 h-10 bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 hover:opacity-90 text-white rounded-full transition-opacity"
+                >
+                  <Instagram className="w-5 h-5" />
                 </a>
               </div>
 
@@ -634,16 +643,37 @@ const AlbertoPantojaApp = () => {
                   {t.hero.cta}
                   <ChevronRight className="w-5 h-5" />
                 </button>
-                <a
-                  href={SOCIAL_LINKS.facebook}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  data-testid="hero-facebook-btn"
-                  className="inline-flex items-center justify-center gap-2 bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors border border-white/30"
-                >
-                  <Facebook className="w-5 h-5" />
-                  Facebook
-                </a>
+                <div className="flex gap-3 justify-center lg:justify-start">
+                  <a
+                    href={SOCIAL_LINKS.facebook}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid="hero-facebook-btn"
+                    className="inline-flex items-center justify-center w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors border border-white/30"
+                  >
+                    <Facebook className="w-6 h-6" />
+                  </a>
+                  <a
+                    href={SOCIAL_LINKS.tiktok}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid="hero-tiktok-btn"
+                    className="inline-flex items-center justify-center w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors border border-white/30"
+                  >
+                    <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                    </svg>
+                  </a>
+                  <a
+                    href={SOCIAL_LINKS.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    data-testid="hero-instagram-btn"
+                    className="inline-flex items-center justify-center w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full transition-colors border border-white/30"
+                  >
+                    <Instagram className="w-6 h-6" />
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -1035,6 +1065,16 @@ const AlbertoPantojaApp = () => {
                 className="text-blue-200 hover:text-red-400 transition-colors"
               >
                 <Facebook className="w-6 h-6" />
+              </a>
+              <a
+                href={SOCIAL_LINKS.tiktok}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-200 hover:text-red-400 transition-colors"
+              >
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
+                </svg>
               </a>
               <a
                 href={SOCIAL_LINKS.instagram}
