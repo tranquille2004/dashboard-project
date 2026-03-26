@@ -35,7 +35,7 @@ const translations = {
       mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias urbanas de la ciudad y las 7 parroquias rurales del cantón, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
       stats: {
         sessions: 'Sesiones del Concejo',
-        parishes: 'Parroquias rurales',
+        parishes: 'Parroquias (7 urbanas + 7 rurales)',
         projects: 'Proyectos'
       }
     },
@@ -98,7 +98,7 @@ const translations = {
       mission: 'Son engagement couvre le développement intégral des 7 paroisses urbaines de la ville et des 7 paroisses rurales du canton, en luttant pour de meilleures infrastructures, des services de santé, l\'éducation et des opportunités économiques pour tous les citoyens.',
       stats: {
         sessions: 'Sessions du Conseil',
-        parishes: 'Paroisses rurales',
+        parishes: 'Paroisses (7 urbaines + 7 rurales)',
         projects: 'Projets'
       }
     },
@@ -161,7 +161,7 @@ const translations = {
       mission: 'His commitment covers the integral development of the 7 urban parishes of the city and the 7 rural parishes of the canton, fighting for better infrastructure, health services, education, and economic opportunities for all citizens.',
       stats: {
         sessions: 'Council Sessions',
-        parishes: 'Rural parishes',
+        parishes: 'Parishes (7 urban + 7 rural)',
         projects: 'Projects'
       }
     },
@@ -594,7 +594,7 @@ const AlbertoPantojaApp = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
   const [visiblePhotos, setVisiblePhotos] = useState(24);
-  const [visibleVideos, setVisibleVideos] = useState(6);
+  const [visibleVideos, setVisibleVideos] = useState(12);
   const t = translations[language];
 
   // Scroll spy
@@ -908,7 +908,7 @@ const AlbertoPantojaApp = () => {
                   <div className="text-sm text-gray-600">{t.about.stats.sessions}</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl shadow-md border-t-4 border-red-600">
-                  <div className="text-3xl font-extrabold text-red-600">7</div>
+                  <div className="text-3xl font-extrabold text-red-600">14</div>
                   <div className="text-sm text-gray-600">{t.about.stats.parishes}</div>
                 </div>
                 <div className="text-center p-4 bg-white rounded-xl shadow-md border-t-4 border-blue-600">
