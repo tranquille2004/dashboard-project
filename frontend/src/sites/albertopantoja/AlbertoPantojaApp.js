@@ -5,7 +5,9 @@ import { Menu, X, Facebook, Youtube, Linkedin, MapPin, Mail, Phone, ChevronRight
 const IMG = (path) => {
   if (!path) return '';
   if (path.startsWith('http')) return path;
-  const isProduction = typeof window !== 'undefined' && window.location.hostname.includes('.emergent.host');
+  // Check if window exists (server-side rendering check)
+  if (typeof window === 'undefined') return path;
+  const isProduction = window.location.hostname.includes('.emergent.host');
   if (isProduction && path.startsWith('/images/')) {
     return '/api' + path;
   }
@@ -239,6 +241,34 @@ const WORKING_VIDEOS = [
   }
 ];
 
+// Gallery photos - paths only, IMG() applied at render time
+const GALLERY_PHOTO_PATHS = [
+  '/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg',
+  '/images/albertopantoja/Alberto/478641831_653342143704312_3590459736061452532_n.jpg',
+  '/images/albertopantoja/Alberto/480204303_656629500042243_9125989698012357854_n.jpg',
+  '/images/albertopantoja/Alberto/480234149_655075170197676_3095455821364526613_n.jpg',
+  '/images/albertopantoja/Alberto/480307455_655548596817000_7185293510812986926_n.jpg',
+  '/images/albertopantoja/Alberto/480420139_656203370084856_4617900264739168853_n.jpg',
+  '/images/albertopantoja/Alberto/480421906_655550936816766_6945101436370099127_n.jpg',
+  '/images/albertopantoja/Alberto/480491262_655706246801235_7747192686795289121_n.jpg',
+  '/images/albertopantoja/Alberto/480507403_656621136709746_5365126592573174961_n.jpg',
+  '/images/albertopantoja/Alberto/480515354_655679926803867_5651133536485746327_n.jpg',
+  '/images/albertopantoja/Alberto/480597505_657290146642845_592043654360335281_n.jpg',
+  '/images/albertopantoja/Alberto/480707479_664558439249349_1595257261308133666_n.jpg',
+  '/images/albertopantoja/Alberto/480709251_663836895988170_3797412518251391390_n.jpg',
+  '/images/albertopantoja/Alberto/480711549_664567345915125_5958413020413343586_n.jpg',
+  '/images/albertopantoja/Alberto/480713334_664562685915591_5007164056289956623_n.jpg',
+  '/images/albertopantoja/Alberto/480774037_663522822686244_2715016025777416478_n.jpg',
+  '/images/albertopantoja/Alberto/480786370_659474339757759_5500208258288237982_n.jpg',
+  '/images/albertopantoja/Alberto/480791234_663504932688033_8187670340233454988_n.jpg',
+  '/images/albertopantoja/Alberto/480807994_661243509580842_7638301278192419863_n.jpg',
+  '/images/albertopantoja/Alberto/480826221_661238332914693_1950222681443014752_n.jpg',
+  '/images/albertopantoja/Alberto/480860472_657275016644358_1581221998482835370_n.jpg',
+  '/images/albertopantoja/Alberto/480983630_663666932671833_6619852466579408832_n.jpg',
+  '/images/albertopantoja/Alberto/480994438_663829629322230_3965225250880568579_n.jpg',
+  '/images/albertopantoja/Alberto/480996918_663503959354797_8069443481933364202_n.jpg',
+];
+
 // Images
 const IMAGES = {
   logo: IMG('/images/albertopantoja/logo.jpg'),
@@ -265,7 +295,7 @@ const AlbertoPantojaApp = () => {
   // Scroll spy
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'bio', 'work', 'media', 'contact'];
+      const sections = ['home', 'bio', 'work', 'gallery', 'media', 'contact'];
       for (const section of sections) {
         const el = document.getElementById(section);
         if (el) {
@@ -312,7 +342,7 @@ const AlbertoPantojaApp = () => {
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
-              {['home', 'bio', 'work', 'media', 'contact'].map((section) => (
+              {['home', 'bio', 'work', 'gallery', 'media', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -323,7 +353,7 @@ const AlbertoPantojaApp = () => {
                       : 'text-blue-900 hover:text-red-600'
                   }`}
                 >
-                  {t.nav[section]}
+                  {section === 'gallery' ? (language === 'es' ? 'Fotos' : language === 'fr' ? 'Photos' : 'Photos') : t.nav[section]}
                 </button>
               ))}
             </nav>
@@ -376,14 +406,14 @@ const AlbertoPantojaApp = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-blue-100">
             <div className="px-4 py-4 space-y-3">
-              {['home', 'bio', 'work', 'media', 'contact'].map((section) => (
+              {['home', 'bio', 'work', 'gallery', 'media', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
                   data-testid={`mobile-nav-${section}`}
                   className="block w-full text-left px-3 py-2 text-blue-900 hover:bg-blue-50 rounded"
                 >
-                  {t.nav[section]}
+                  {section === 'gallery' ? (language === 'es' ? 'Fotos' : language === 'fr' ? 'Photos' : 'Photos') : t.nav[section]}
                 </button>
               ))}
               <div className="flex items-center gap-2 px-3 pt-2 border-t border-blue-100">
@@ -631,6 +661,58 @@ const AlbertoPantojaApp = () => {
                 <div className="text-white font-semibold">7 Parroquias</div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Photo Gallery Section */}
+      <section id="gallery" className="py-20 md:py-32 bg-white" data-testid="gallery-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <p className="text-red-600 text-xs font-semibold tracking-[0.2em] mb-4">
+              {language === 'es' ? 'GALERÍA' : language === 'fr' ? 'GALERIE' : 'GALLERY'}
+            </p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-4">
+              {language === 'es' ? 'Momentos con la Comunidad' : language === 'fr' ? 'Moments avec la Communauté' : 'Moments with the Community'}
+            </h2>
+            <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+              {language === 'es' ? 'Imágenes de nuestro trabajo en las parroquias rurales de Santo Domingo de los Tsáchilas' : 
+               language === 'fr' ? 'Images de notre travail dans les paroisses rurales de Santo Domingo de los Tsáchilas' :
+               'Images from our work in the rural parishes of Santo Domingo de los Tsáchilas'}
+            </p>
+          </div>
+
+          {/* Photo Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {GALLERY_PHOTO_PATHS.slice(0, 24).map((photoPath, index) => (
+              <div
+                key={index}
+                className="relative aspect-square overflow-hidden rounded-xl group cursor-pointer"
+                data-testid={`gallery-photo-${index}`}
+              >
+                <img
+                  src={IMG(photoPath)}
+                  alt={`Alberto Pantoja - Foto ${index + 1}`}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  loading="lazy"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-blue-900/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              </div>
+            ))}
+          </div>
+
+          {/* View More Button */}
+          <div className="text-center mt-12">
+            <a
+              href={SOCIAL_LINKS.facebook}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors"
+            >
+              <Facebook className="w-5 h-5" />
+              {language === 'es' ? 'Ver más en Facebook' : language === 'fr' ? 'Voir plus sur Facebook' : 'See more on Facebook'}
+            </a>
           </div>
         </div>
       </section>
