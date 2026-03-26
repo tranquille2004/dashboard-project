@@ -74,7 +74,8 @@ def get_object(path: str) -> tuple:
 
 MIME_TYPES = {
     "jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png",
-    "gif": "image/gif", "webp": "image/webp", "pdf": "application/pdf"
+    "gif": "image/gif", "webp": "image/webp", "pdf": "application/pdf",
+    "mp4": "video/mp4", "webm": "video/webm", "mov": "video/quicktime"
 }
 
 # MongoDB connection

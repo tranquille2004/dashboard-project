@@ -616,8 +616,10 @@ const AlbertoPantojaApp = () => {
           loop
           muted
           playsInline
+          preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
           style={{ filter: 'brightness(0.4)' }}
+          ref={(el) => { if (el) el.play().catch(() => {}); }}
         >
           <source src={IMG('/images/albertopantoja/hero-video.mp4')} type="video/mp4" />
         </video>
