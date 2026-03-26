@@ -415,9 +415,10 @@ const GALLERY_PHOTO_PATHS = [
 const IMAGES = {
   logo: IMG('/images/albertopantoja/logo.jpg'),
   profileMain: IMG('/images/albertopantoja/Alberto/480420139_656203370084856_4617900264739168853_n.jpg'),
+  profileBio: IMG('/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg'),
   heroBackground: IMG('/images/albertopantoja/hero-background.png'),
   soilHands: IMG('/images/albertopantoja/soil-hands.png'),
-  rc5Logo: IMG('/images/albertopantoja/rc5-logo.png'),
+  rc5Logo: IMG('/images/albertopantoja/rc5-official.webp'),
   fworksLogo: IMG('/images/fworksbuilders.png')
 };
 
@@ -664,7 +665,7 @@ const AlbertoPantojaApp = () => {
             {/* Image */}
             <div className="relative">
               <img
-                src={IMAGES.profileMain}
+                src={IMAGES.profileBio}
                 alt="Alberto Pantoja"
                 className="w-full max-w-md mx-auto rounded-2xl shadow-xl"
                 data-testid="bio-image"
@@ -757,9 +758,9 @@ const AlbertoPantojaApp = () => {
                 {t.position.label}
               </p>
               <div className="flex items-center gap-4 mb-6">
-                {/* RC5 Logo placeholder - user needs to provide actual logo */}
-                <div className="bg-white rounded-xl p-3">
-                  <div className="text-3xl font-extrabold text-blue-900">RC<span className="text-red-600">5</span></div>
+                {/* Official RC5 Logo */}
+                <div className="bg-black rounded-xl p-3">
+                  <img src={IMAGES.rc5Logo} alt="RC5 Revolución Ciudadana" className="h-16 w-auto" />
                 </div>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
                   {t.position.title}
