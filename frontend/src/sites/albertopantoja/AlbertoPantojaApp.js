@@ -273,132 +273,132 @@ const WORKING_VIDEOS = [
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1650220352347310/',
-    title: 'Entrevista de Radio 1'
+    title: 'Video 1'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1228041888972734/',
-    title: 'Entrevista de Radio 2'
+    title: 'Video 2'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/548003865047574/',
-    title: 'Entrevista de Radio 3'
+    title: 'Video 3'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/981445697312455/',
-    title: 'Entrevista de Radio 4'
+    title: 'Video 4'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/4033530786918402/',
-    title: 'Entrevista de Radio 5'
+    title: 'Video 5'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/924349143138861/',
-    title: 'Entrevista de Radio 6'
+    title: 'Video 6'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1138102204635429/',
-    title: 'Entrevista de Radio 7'
+    title: 'Video 7'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1080722876785526/',
-    title: 'Entrevista de Radio 8'
+    title: 'Video 8'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/8532855593489653/',
-    title: 'Entrevista de Radio 9'
+    title: 'Video 9'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1092279462484874/',
-    title: 'Entrevista de Radio 10'
+    title: 'Video 10'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1045741537221599/',
-    title: 'Entrevista de Radio 11'
+    title: 'Video 11'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1241053807050768/',
-    title: 'Entrevista de Radio 12'
+    title: 'Video 12'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1834862773701060/',
-    title: 'Entrevista de Radio 13'
+    title: 'Video 13'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/302792619144362/',
-    title: 'Entrevista de Radio 14'
+    title: 'Video 14'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/690771369630619/',
-    title: 'Entrevista de Radio 15'
+    title: 'Video 15'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1527071004364779/',
-    title: 'Entrevista de Radio 16'
+    title: 'Video 16'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/845237860319262/',
-    title: 'Entrevista de Radio 17'
+    title: 'Video 17'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1343766912937091/',
-    title: 'Entrevista de Radio 18'
+    title: 'Video 18'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/226933876409335/',
-    title: 'Entrevista de Radio 19'
+    title: 'Video 19'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1290233991708293/',
-    title: 'Entrevista de Radio 20'
+    title: 'Video 20'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1066930528033779/',
-    title: 'Entrevista de Radio 21'
+    title: 'Video 21'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/971856117110721/',
-    title: 'Entrevista de Radio 22'
+    title: 'Video 22'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/698160765379748/',
-    title: 'Entrevista de Radio 23'
+    title: 'Video 23'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/891656541752078/',
-    title: 'Entrevista de Radio 24'
+    title: 'Video 24'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/810038443379775/',
-    title: 'Entrevista de Radio 25'
+    title: 'Video 25'
   },
   {
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/498809408792915/',
-    title: 'Entrevista de Radio 26'
+    title: 'Video 26'
   }
 ];
 
