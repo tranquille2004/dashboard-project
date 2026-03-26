@@ -414,7 +414,7 @@ const GALLERY_PHOTO_PATHS = [
 // Images
 const IMAGES = {
   logo: IMG('/images/albertopantoja/logo.jpg'),
-  profileMain: IMG('/images/albertopantoja/Alberto/478641831_653342143704312_3590459736061452532_n.jpg'),
+  profileMain: IMG('/images/albertopantoja/Alberto/480420139_656203370084856_4617900264739168853_n.jpg'),
   heroBackground: IMG('/images/albertopantoja/hero-background.png'),
   soilHands: IMG('/images/albertopantoja/soil-hands.png'),
   rc5Logo: IMG('/images/albertopantoja/rc5-logo.png'),
