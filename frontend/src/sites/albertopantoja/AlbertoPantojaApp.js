@@ -604,14 +604,29 @@ const AlbertoPantojaApp = () => {
         )}
       </header>
 
-      {/* Hero Section - Blue/Red/White */}
+      {/* Hero Section - Blue/Red/White with Video Background */}
       <section
         id="home"
-        className="relative min-h-screen flex items-center justify-center pt-20 bg-gradient-to-br from-blue-900 via-blue-800 to-blue-900"
+        className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
         data-testid="hero-section"
       >
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+          style={{ filter: 'brightness(0.4)' }}
+        >
+          <source src={IMG('/images/albertopantoja/hero-video.mp4')} type="video/mp4" />
+        </video>
+        
+        {/* Blue overlay gradient */}
+        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-blue-800/70 to-blue-900/80" />
+        
         {/* Decorative elements */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-0 left-0 w-full h-2 bg-red-600" />
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-red-600/20 rounded-full blur-3xl" />
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-400/20 rounded-full blur-3xl" />
