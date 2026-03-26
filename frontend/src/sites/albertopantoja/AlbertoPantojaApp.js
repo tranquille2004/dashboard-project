@@ -24,8 +24,8 @@ const translations = {
     hero: {
       subtitle: 'CONSEJAL RURAL DE SANTO DOMINGO',
       title: 'Alberto Pantoja',
-      tagline: 'La Voz del Campo',
-      description: 'Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas. Trabajando por el desarrollo integral de nuestras comunidades.',
+      tagline: 'RC5 Santo Domingo',
+      description: 'Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y Consejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
       cta: 'Conoce Mi Trabajo'
     },
     about: {
@@ -76,7 +76,7 @@ const translations = {
       address: 'Santo Domingo de los Tsáchilas, Ecuador'
     },
     footer: {
-      slogan: 'La Voz del Campo - Por un Santo Domingo mejor',
+      slogan: 'Por un Santo Domingo mejor',
       rights: 'Todos los derechos reservados',
       webmaster: 'Sitio web creado por'
     }
@@ -86,8 +86,8 @@ const translations = {
     hero: {
       subtitle: 'CONSEILLER RURAL DE SANTO DOMINGO',
       title: 'Alberto Pantoja',
-      tagline: 'La Voix de la Campagne',
-      description: 'Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas. Travaillant pour le développement intégral de nos communautés.',
+      tagline: 'RC5 Santo Domingo',
+      description: 'Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
       cta: 'Découvrez Mon Travail'
     },
     about: {
@@ -138,7 +138,7 @@ const translations = {
       address: 'Santo Domingo de los Tsáchilas, Équateur'
     },
     footer: {
-      slogan: 'La Voix de la Campagne - Pour un meilleur Santo Domingo',
+      slogan: 'Pour un meilleur Santo Domingo',
       rights: 'Tous droits réservés',
       webmaster: 'Site web créé par'
     }
@@ -148,8 +148,8 @@ const translations = {
     hero: {
       subtitle: 'RURAL COUNCILMAN OF SANTO DOMINGO',
       title: 'Alberto Pantoja',
-      tagline: 'The Voice of the Countryside',
-      description: 'Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas. Working for the integral development of our communities.',
+      tagline: 'RC5 Santo Domingo',
+      description: 'Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
       cta: 'See My Work'
     },
     about: {
@@ -200,7 +200,7 @@ const translations = {
       address: 'Santo Domingo de los Tsáchilas, Ecuador'
     },
     footer: {
-      slogan: 'The Voice of the Countryside - For a better Santo Domingo',
+      slogan: 'For a better Santo Domingo',
       rights: 'All rights reserved',
       webmaster: 'Website created by'
     }
@@ -479,7 +479,7 @@ const AlbertoPantojaApp = () => {
               <img src={IMAGES.logo} alt="Alberto Pantoja" className="h-10 md:h-12 w-auto rounded-full border-2 border-blue-600" />
               <div className="hidden sm:block">
                 <div className="text-blue-900 font-bold text-sm md:text-base">Alberto Pantoja</div>
-                <div className="text-red-600 text-xs font-semibold">RC5 - La Voz del Campo</div>
+                <div className="text-red-600 text-xs font-semibold">RC5 Santo Domingo</div>
               </div>
             </div>
 
@@ -1069,7 +1069,7 @@ const AlbertoPantojaApp = () => {
 
           <div className="mt-8 pt-8 border-t border-white/10 text-center">
             <p className="text-blue-300 text-sm">
-              © {new Date().getFullYear()} Alberto Pantoja - La Voz del Campo. {t.footer.rights}.
+              © {new Date().getFullYear()} Alberto Pantoja - RC5 Santo Domingo. {t.footer.rights}.
             </p>
           </div>
         </div>
