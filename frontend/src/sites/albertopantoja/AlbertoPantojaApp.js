@@ -1015,6 +1015,25 @@ const AlbertoPantojaApp = () => {
                 ))}
               </ul>
             </div>
+
+            {/* RC5 Correa Image */}
+            <div className="flex justify-center lg:justify-end">
+              <a 
+                href="https://revolucionciudadana.com.ec/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="relative group"
+              >
+                <div className="absolute -inset-4 bg-red-600/30 rounded-2xl blur-2xl group-hover:bg-red-600/40 transition-colors" />
+                <img
+                  src={IMG('/images/albertopantoja/rc5-correa.jpg')}
+                  alt="Revolución Ciudadana"
+                  className="relative rounded-2xl shadow-2xl max-w-md w-full border-4 border-white/20 group-hover:border-red-500/50 transition-colors"
+                  style={{ filter: 'saturate(0.8) contrast(1.1) brightness(1.05)', opacity: 1 }}
+                />
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-blue-900/40 to-transparent" />
+              </a>
+            </div>
           </div>
         </div>
       </section>
