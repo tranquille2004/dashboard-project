@@ -1177,9 +1177,9 @@ const AlbertoPantojaApp = () => {
       {/* Political Position Section - RC5 */}
       <section className="py-20 md:py-32 bg-blue-900" data-testid="position-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            {/* Content */}
-            <div>
+          <div className="grid lg:grid-cols-5 gap-12 items-center">
+            {/* Content - takes 2 columns */}
+            <div className="lg:col-span-2">
               <p className="text-red-400 text-xs font-semibold tracking-[0.2em] mb-4">
                 {t.position.label}
               </p>
@@ -1188,9 +1188,6 @@ const AlbertoPantojaApp = () => {
                 <a href="https://revolucionciudadana.com.ec/" target="_blank" rel="noopener noreferrer" className="bg-black rounded-xl p-3 hover:opacity-90 transition-opacity">
                   <img src={IMAGES.rc5Logo} alt="RC5 Revolución Ciudadana" className="h-16 w-auto" />
                 </a>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
-                  {t.position.title}
-                </h2>
               </div>
               <p className="text-2xl text-red-400 font-semibold mb-6">
                 {t.position.subtitle}
@@ -1212,8 +1209,8 @@ const AlbertoPantojaApp = () => {
               </ul>
             </div>
 
-            {/* RC5 Correa Image */}
-            <div className="flex justify-center lg:justify-end">
+            {/* RC5 Correa Image - takes 3 columns */}
+            <div className="lg:col-span-3 flex justify-center lg:justify-end">
               <a 
                 href="https://revolucionciudadana.com.ec/" 
                 target="_blank" 
@@ -1224,7 +1221,7 @@ const AlbertoPantojaApp = () => {
                 <img
                   src={IMG('/images/albertopantoja/rc5-correa.jpg')}
                   alt="Revolución Ciudadana"
-                  className="relative rounded-2xl shadow-2xl max-w-md w-full border-4 border-white/20 group-hover:border-red-500/50 transition-colors"
+                  className="relative rounded-2xl shadow-2xl w-full min-w-[400px] max-w-[600px] border-4 border-white/20 group-hover:border-red-500/50 transition-colors"
                   style={{ filter: 'saturate(0.8) contrast(1.1) brightness(1.05)', opacity: 1 }}
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-blue-900/40 to-transparent" />
