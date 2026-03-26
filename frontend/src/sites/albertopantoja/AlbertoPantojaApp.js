@@ -24,7 +24,7 @@ const translations = {
     hero: {
       subtitle: 'CONSEJAL RURAL DE SANTO DOMINGO',
       title: 'Alberto Pantoja',
-      tagline: 'RC5 Santo Domingo',
+      tagline: '',
       description: 'Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y Consejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
       cta: 'Conoce Mi Trabajo'
     },
@@ -87,7 +87,7 @@ const translations = {
     hero: {
       subtitle: 'CONSEILLER RURAL DE SANTO DOMINGO',
       title: 'Alberto Pantoja',
-      tagline: 'RC5 Santo Domingo',
+      tagline: '',
       description: 'Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
       cta: 'Découvrez Mon Travail'
     },
@@ -150,7 +150,7 @@ const translations = {
     hero: {
       subtitle: 'RURAL COUNCILMAN OF SANTO DOMINGO',
       title: 'Alberto Pantoja',
-      tagline: 'RC5 Santo Domingo',
+      tagline: '',
       description: 'Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
       cta: 'See My Work'
     },
@@ -637,17 +637,15 @@ const AlbertoPantojaApp = () => {
 
             {/* Profile Image */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative">
+              <div className="relative overflow-hidden rounded-full w-64 h-64 md:w-80 md:h-80 border-4 border-white shadow-2xl">
                 <div className="absolute -inset-4 bg-red-600/30 rounded-full blur-2xl" />
                 <img
                   src={IMAGES.profileMain}
                   alt="Alberto Pantoja"
-                  className="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-white shadow-2xl"
+                  className="absolute w-full h-full object-cover"
+                  style={{ objectPosition: '95% 15%', transform: 'scale(1.8)', transformOrigin: 'right top' }}
                   data-testid="hero-profile-img"
                 />
-                <div className="absolute -bottom-4 -right-4 bg-red-600 text-white px-6 py-3 rounded-full text-lg font-bold shadow-lg">
-                  RC5
-                </div>
               </div>
             </div>
           </div>
