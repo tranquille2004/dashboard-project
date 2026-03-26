@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Youtube, Linkedin, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy } from 'lucide-react';
+import { Menu, X, Facebook, Youtube, Instagram, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy } from 'lucide-react';
 
 // Helper for production image paths
 const IMG = (path) => {
@@ -42,7 +42,7 @@ const translations = {
     work: {
       label: 'ÁREAS DE TRABAJO',
       title: 'Trabajando por el desarrollo',
-      subtitle: 'Por las 7 parroquias rurales y todo el territorio rural de Santo Domingo de los Tsáchilas',
+      subtitle: 'Por las 7 parroquias rurales y el cantón de Santo Domingo',
       areas: [
         { title: 'Desarrollo Rural', desc: 'Mejorando la vida de las comunidades campesinas' },
         { title: 'Infraestructura', desc: 'Vías, agua potable y servicios básicos' },
@@ -105,7 +105,7 @@ const translations = {
     work: {
       label: 'DOMAINES DE TRAVAIL',
       title: 'Travailler pour le développement',
-      subtitle: 'Pour les 7 paroisses rurales et tout le territoire rural de Santo Domingo de los Tsáchilas',
+      subtitle: 'Pour les 7 paroisses rurales et le canton de Santo Domingo',
       areas: [
         { title: 'Développement Rural', desc: 'Améliorer la vie des communautés paysannes' },
         { title: 'Infrastructure', desc: 'Routes, eau potable et services de base' },
@@ -168,7 +168,7 @@ const translations = {
     work: {
       label: 'WORK AREAS',
       title: 'Working for development',
-      subtitle: 'For the 7 rural parishes and the entire rural territory of Santo Domingo de los Tsáchilas',
+      subtitle: 'For the 7 rural parishes and the canton of Santo Domingo',
       areas: [
         { title: 'Rural Development', desc: 'Improving the lives of rural communities' },
         { title: 'Infrastructure', desc: 'Roads, drinking water and basic services' },
@@ -429,7 +429,7 @@ const IMAGES = {
 const SOCIAL_LINKS = {
   facebook: 'https://www.facebook.com/AlbertoPantojaRC5/',
   tiktok: 'https://www.tiktok.com/@albertopantojasgb',
-  linkedin: 'https://ec.linkedin.com/in/alberto-pantoja-guzman-2b919bb0'
+  instagram: 'https://www.instagram.com/alberto_pantoja_/'
 };
 
 const AlbertoPantojaApp = () => {
@@ -761,10 +761,10 @@ const AlbertoPantojaApp = () => {
                 {t.position.label}
               </p>
               <div className="flex items-center gap-4 mb-6">
-                {/* Official RC5 Logo */}
-                <div className="bg-black rounded-xl p-3">
+                {/* Official RC5 Logo - clickable */}
+                <a href="https://revolucionciudadana.com.ec/" target="_blank" rel="noopener noreferrer" className="bg-black rounded-xl p-3 hover:opacity-90 transition-opacity">
                   <img src={IMAGES.rc5Logo} alt="RC5 Revolución Ciudadana" className="h-16 w-auto" />
-                </div>
+                </a>
                 <h2 className="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
                   {t.position.title}
                 </h2>
@@ -787,26 +787,6 @@ const AlbertoPantojaApp = () => {
                   </li>
                 ))}
               </ul>
-            </div>
-
-            {/* Icon Grid */}
-            <div className="grid grid-cols-2 gap-6">
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center">
-                <Users className="w-12 h-12 text-red-400 mx-auto mb-4" />
-                <div className="text-white font-semibold">Comunidad</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center">
-                <Heart className="w-12 h-12 text-red-400 mx-auto mb-4" />
-                <div className="text-white font-semibold">Salud</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center">
-                <GraduationCap className="w-12 h-12 text-red-400 mx-auto mb-4" />
-                <div className="text-white font-semibold">Educación</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-8 text-center">
-                <MapPin className="w-12 h-12 text-red-400 mx-auto mb-4" />
-                <div className="text-white font-semibold">7 Parroquias</div>
-              </div>
             </div>
           </div>
         </div>
@@ -970,13 +950,13 @@ const AlbertoPantojaApp = () => {
                 </svg>
               </a>
               <a
-                href={SOCIAL_LINKS.linkedin}
+                href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
-                data-testid="social-linkedin"
-                className="w-12 h-12 bg-blue-700 text-white rounded-full flex items-center justify-center hover:bg-blue-800 transition-colors"
+                data-testid="social-instagram"
+                className="w-12 h-12 bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 text-white rounded-full flex items-center justify-center hover:opacity-90 transition-opacity"
               >
-                <Linkedin className="w-6 h-6" />
+                <Instagram className="w-6 h-6" />
               </a>
             </div>
           </div>
@@ -1048,12 +1028,12 @@ const AlbertoPantojaApp = () => {
                 <Facebook className="w-6 h-6" />
               </a>
               <a
-                href={SOCIAL_LINKS.linkedin}
+                href={SOCIAL_LINKS.instagram}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-200 hover:text-red-400 transition-colors"
               >
-                <Linkedin className="w-6 h-6" />
+                <Instagram className="w-6 h-6" />
               </a>
             </div>
 
@@ -1073,7 +1053,7 @@ const AlbertoPantojaApp = () => {
 
           <div className="mt-8 pt-8 border-t border-white/10 text-center">
             <p className="text-blue-300 text-sm">
-              © {new Date().getFullYear()} Alberto Pantoja - RC5 Santo Domingo. {t.footer.rights}.
+              © {new Date().getFullYear()} Alberto Pantoja. {t.footer.rights}.
             </p>
           </div>
         </div>
