@@ -32,7 +32,7 @@ const translations = {
       label: 'SOBRE ALBERTO',
       title: 'Compromiso con el pueblo',
       description: 'Alberto Pantoja es Consejal Rural del cantón Santo Domingo y Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
-      mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias rurales y el territorio rural del cantón, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
+      mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias urbanas de la ciudad y las 7 parroquias rurales del cantón, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
       stats: {
         sessions: 'Sesiones del Concejo',
         parishes: 'Parroquias rurales',
@@ -42,7 +42,7 @@ const translations = {
     work: {
       label: 'ÁREAS DE TRABAJO',
       title: 'Trabajando por el desarrollo',
-      subtitle: 'Por las 7 parroquias rurales y el cantón de Santo Domingo',
+      subtitle: 'Por las 7 parroquias urbanas de la ciudad y las 7 parroquias rurales del cantón de Santo Domingo',
       areas: [
         { title: 'Desarrollo Rural', desc: 'Mejorando la vida de las comunidades campesinas' },
         { title: 'Infraestructura', desc: 'Vías, agua potable y servicios básicos' },
@@ -95,7 +95,7 @@ const translations = {
       label: 'À PROPOS D\'ALBERTO',
       title: 'Engagement envers le peuple',
       description: 'Alberto Pantoja est Conseiller Rural du canton de Santo Domingo et Directeur Provincial de la Revolución Ciudadana (RC5) à Santo Domingo de los Tsáchilas. Avec une profonde vocation de service public, Alberto représente les intérêts des communautés rurales et urbaines de la province.',
-      mission: 'Son engagement couvre le développement intégral des 7 paroisses rurales et de tout le territoire rural de la province, en luttant pour de meilleures infrastructures, des services de santé, l\'éducation et des opportunités économiques pour tous les citoyens.',
+      mission: 'Son engagement couvre le développement intégral des 7 paroisses urbaines de la ville et des 7 paroisses rurales du canton, en luttant pour de meilleures infrastructures, des services de santé, l\'éducation et des opportunités économiques pour tous les citoyens.',
       stats: {
         sessions: 'Sessions du Conseil',
         parishes: 'Paroisses rurales',
@@ -105,7 +105,7 @@ const translations = {
     work: {
       label: 'DOMAINES DE TRAVAIL',
       title: 'Travailler pour le développement',
-      subtitle: 'Pour les 7 paroisses rurales et le canton de Santo Domingo',
+      subtitle: 'Pour les 7 paroisses urbaines de la ville et les 7 paroisses rurales du canton de Santo Domingo',
       areas: [
         { title: 'Développement Rural', desc: 'Améliorer la vie des communautés paysannes' },
         { title: 'Infrastructure', desc: 'Routes, eau potable et services de base' },
@@ -158,7 +158,7 @@ const translations = {
       label: 'ABOUT ALBERTO',
       title: 'Commitment to the people',
       description: 'Alberto Pantoja is Rural Councilman of Santo Domingo canton and Provincial Director of Revolución Ciudadana (RC5) in Santo Domingo de los Tsáchilas. With a deep vocation for public service, Alberto represents the interests of rural and urban communities in the province.',
-      mission: 'His commitment covers the integral development of the 7 rural parishes and the entire rural territory of the province, fighting for better infrastructure, health services, education, and economic opportunities for all citizens.',
+      mission: 'His commitment covers the integral development of the 7 urban parishes of the city and the 7 rural parishes of the canton, fighting for better infrastructure, health services, education, and economic opportunities for all citizens.',
       stats: {
         sessions: 'Council Sessions',
         parishes: 'Rural parishes',
@@ -168,7 +168,7 @@ const translations = {
     work: {
       label: 'WORK AREAS',
       title: 'Working for development',
-      subtitle: 'For the 7 rural parishes and the canton of Santo Domingo',
+      subtitle: 'For the 7 urban parishes of the city and the 7 rural parishes of Santo Domingo canton',
       areas: [
         { title: 'Rural Development', desc: 'Improving the lives of rural communities' },
         { title: 'Infrastructure', desc: 'Roads, drinking water and basic services' },
@@ -708,12 +708,6 @@ const AlbertoPantojaApp = () => {
           </div>
         </div>
 
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-white/50 rounded-full flex justify-center pt-2">
-            <div className="w-1.5 h-3 bg-white/50 rounded-full" />
-          </div>
-        </div>
       </section>
 
       {/* About/Bio Section */}
