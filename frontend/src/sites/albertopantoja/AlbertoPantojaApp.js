@@ -637,13 +637,12 @@ const AlbertoPantojaApp = () => {
 
             {/* Profile Image */}
             <div className="flex justify-center lg:justify-end">
-              <div className="relative overflow-hidden rounded-full w-64 h-64 md:w-80 md:h-80 border-4 border-white shadow-2xl">
+              <div className="relative">
                 <div className="absolute -inset-4 bg-red-600/30 rounded-full blur-2xl" />
                 <img
                   src={IMAGES.profileMain}
                   alt="Alberto Pantoja"
-                  className="absolute w-full h-full object-cover"
-                  style={{ objectPosition: '95% 15%', transform: 'scale(1.8)', transformOrigin: 'right top' }}
+                  className="relative w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-white shadow-2xl"
                   data-testid="hero-profile-img"
                 />
               </div>
