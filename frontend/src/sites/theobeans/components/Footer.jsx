@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from '../context/BasePathContext';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
-import { IMG } from '../utils/imageHelper';
+import { IMG } from '@/utils/imageHelper';
 
 const Footer = () => {
   const { t } = useLanguage();

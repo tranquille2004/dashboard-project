@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLanguage } from '../context/LanguageContext';
-import { IMG } from '../utils/imageHelper';
+import { IMG } from '@/utils/imageHelper';
 
 const Varietes = () => {
   const { t } = useLanguage();

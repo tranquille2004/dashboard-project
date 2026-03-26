@@ -1,7 +1,7 @@
 import React from 'react';
 import { CheckCircle } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
-import { IMG } from '../utils/imageHelper';
+import { IMG } from '@/utils/imageHelper';
 
 const Tracabilite = () => {
   const { t } = useLanguage();

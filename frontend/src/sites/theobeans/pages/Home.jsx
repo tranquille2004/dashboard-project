@@ -2,7 +2,7 @@ import React from 'react';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
 import SEO from '@/components/SEO';
-import { IMG } from '../utils/imageHelper';
+import { IMG } from '@/utils/imageHelper';
 
 const Home = () => {
   const { t } = useLanguage();

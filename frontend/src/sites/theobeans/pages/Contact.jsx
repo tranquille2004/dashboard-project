@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Facebook } from 'lucide-react';
 import { siteData } from '../data/mock';
 import { useLanguage } from '../context/LanguageContext';
-import { IMG } from '../utils/imageHelper';
+import { IMG } from '@/utils/imageHelper';
 
 const Contact = () => {
   const { t } = useLanguage();
