@@ -54,12 +54,12 @@ const translations = {
       location: 'Ubicación Privilegiada',
       locationText: 'Fácil acceso a la cultura Tsáchila, Bombolí con vistas panorámicas, restaurantes, bares, shopping, y cascadas cercanas',
       whyUs: '¿Por Qué Elegirnos?',
-      reason1: 'Hotel de Negocios',
-      reason1Desc: 'Ideal para ejecutivos en viaje de trabajo con todas las facilidades corporativas',
+      reason1: 'Perfecto para Negocios y Turismo',
+      reason1Desc: 'Ideal tanto para ejecutivos en viaje de trabajo como para turistas que desean explorar la región',
       reason2: 'Ubicación Estratégica',
-      reason2Desc: 'En pleno centro de la ciudad, a minutos de los principales atractivos turísticos y comerciales',
-      reason3: 'Tranquilidad Garantizada',
-      reason3Desc: 'Interior muy tranquilo a pesar de la ubicación céntrica, ideal para el descanso'
+      reason2Desc: 'En el corazón de Santo Domingo, punto de conexión privilegiado entre la Costa y la Sierra ecuatoriana',
+      reason3: 'Servicios Completos',
+      reason3Desc: 'Restaurante, pastelería propia, centro de negocios y sala de conferencias en un solo lugar'
     },
     rooms: {
       title: 'Nuestras Habitaciones',
@@ -186,12 +186,12 @@ const translations = {
       location: 'Privileged Location',
       locationText: 'In the heart of the city, yet with the serenity of a private retreat',
       whyUs: 'Why Choose Us?',
-      reason1: 'Personalized Attention',
-      reason1Desc: 'Our team is dedicated to making your stay a memorable experience',
+      reason1: 'Perfect for Business & Tourism',
+      reason1Desc: 'Ideal for both business executives and tourists who want to explore the region',
       reason2: 'Strategic Location',
-      reason2Desc: 'Minutes from main tourist and commercial attractions',
-      reason3: 'Guaranteed Tranquility',
-      reason3Desc: 'An oasis of peace in the middle of the vibrant city'
+      reason2Desc: 'In the heart of Santo Domingo, a privileged connection point between the Coast and the Ecuadorian Highlands',
+      reason3: 'Complete Services',
+      reason3Desc: 'Restaurant, pastry shop, business center and conference room all in one place'
     },
     rooms: {
       title: 'Our Rooms',
