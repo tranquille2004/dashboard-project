@@ -585,7 +585,7 @@ const HomePage = ({ t }) => (
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
       >
-        <source src={IMG('/images/hoteldelpacifico/hotel-video.mp4')} type="video/mp4" />
+        <source src={IMG('/images/hoteldelpacifico/hotel-video-edited.mp4')} type="video/mp4" />
       </video>
       
       {/* Green Overlay Filter */}
