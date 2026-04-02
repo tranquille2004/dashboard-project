@@ -308,7 +308,8 @@ const translations = {
 const HOTEL_INFO = {
   name: 'Hotel del Pacífico',
   address: 'Av. 29 de Mayo entre Ibarra y Latacunga, Santo Domingo, Ecuador',
-  phone: '+593 0 000 0000',
+  phone: '+593 98 880 2941',
+  phone2: '+593 2 275 2806',
   email: 'info@hoteldelpacifico.com',
   website: 'www.hoteldelpacifico.com'
 };
@@ -482,6 +483,10 @@ const Footer = ({ t }) => (
               {HOTEL_INFO.phone}
             </p>
             <p className="flex items-center gap-3 text-emerald-200/70">
+              <Phone size={16} className="text-amber-400" />
+              {HOTEL_INFO.phone2}
+            </p>
+            <p className="flex items-center gap-3 text-emerald-200/70">
               <Mail size={16} className="text-amber-400" />
               {HOTEL_INFO.email}
             </p>
@@ -530,7 +535,7 @@ const HomePage = ({ t }) => (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950" />
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.03\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50" />
+      <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '32px 32px'}} />
       
       {/* Content */}
       <div className="relative z-10 text-center text-white px-6 max-w-4xl">
@@ -568,7 +573,7 @@ const HomePage = ({ t }) => (
 
     {/* Services Section */}
     <section className="py-24 bg-emerald-900 text-white relative overflow-hidden">
-      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.02\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
+      <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '32px 32px'}} />
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative">
         <div className="text-center mb-16">
           <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.home.features}</p>
@@ -935,6 +940,7 @@ const ContactPage = ({ t }) => (
                 <div>
                   <h3 className="font-medium text-emerald-900 mb-1">{t.contact.phone}</h3>
                   <p className="text-gray-600">{HOTEL_INFO.phone}</p>
+                  <p className="text-gray-600">{HOTEL_INFO.phone2}</p>
                 </div>
               </div>
               
