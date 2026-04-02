@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 const Menu = () => {
   const { currentLanguage } = useLanguage();
@@ -15,7 +16,7 @@ const Menu = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="/images/ascoli/gallery/img-5788_orig.jpg"
+        image={IMG("/images/ascoli/gallery/img-5788_orig.jpg")}
       />
 
       <section className="py-16 bg-gradient-to-b from-[#f2f1d5] to-[#e8e6c8]">

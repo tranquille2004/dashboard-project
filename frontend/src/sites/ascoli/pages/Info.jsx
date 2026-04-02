@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import { MapPin, Phone, Clock, Mail, Car } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 const Info = () => {
   const { currentLanguage } = useLanguage();
@@ -13,7 +14,7 @@ const Info = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="/images/ascoli/gallery/img-5714_1_orig.jpg"
+        image={IMG("/images/ascoli/gallery/img-5714_1_orig.jpg")}
       />
 
       <section className="py-24 bg-[#2a2a2a]">

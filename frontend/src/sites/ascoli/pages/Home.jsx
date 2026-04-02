@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 // SEO Configuration for L'Ascoli
 const SEO_CONFIG = {
@@ -54,17 +55,17 @@ const Home = () => {
     {
       title: t.italianQuality,
       description: t.italianQualityDesc,
-      image: '/images/ascoli/gallery/img-5801.jpg',
+      image: IMG('/images/ascoli/gallery/img-5801.jpg'),
     },
     {
       title: t.freshPreparation,
       description: t.freshPreparationDesc,
-      image: '/images/ascoli/gallery/img-5849.jpg',
+      image: IMG('/images/ascoli/gallery/img-5849.jpg'),
     },
     {
       title: t.elegantAmbiance,
       description: t.elegantAmbianceDesc,
-      image: '/images/ascoli/gallery/img-6046_1_orig.jpg',
+      image: IMG('/images/ascoli/gallery/img-6046_1_orig.jpg'),
     },
   ];
 
@@ -74,7 +75,7 @@ const Home = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="/images/ascoli/gallery/45280374-1885058464947804-146153777123033088-o_2_orig.jpg"
+        image={IMG("/images/ascoli/gallery/45280374-1885058464947804-146153777123033088-o_2_orig.jpg")}
         showButtons={true}
         buttonText1={t.reserve}
         buttonText2={t.viewMenu}
@@ -244,7 +245,7 @@ const Home = () => {
             {/* Image */}
             <div className="relative h-[500px] rounded-sm overflow-hidden">
               <img
-                src="/images/ascoli/gallery/333497-362660580479961-522768784-o.jpg"
+                src={IMG("/images/ascoli/gallery/333497-362660580479961-522768784-o.jpg")}
                 alt="Restaurant Interior"
                 className="w-full h-full object-cover"
               />
@@ -264,28 +265,28 @@ const Home = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             <div className="aspect-square overflow-hidden rounded-sm">
               <img
-                src="/images/ascoli/gallery/img-5788.jpg"
+                src={IMG("/images/ascoli/gallery/img-5788.jpg")}
                 alt="Dish 1"
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div className="aspect-square overflow-hidden rounded-sm">
               <img
-                src="/images/ascoli/gallery/img-5857.jpg"
+                src={IMG("/images/ascoli/gallery/img-5857.jpg")}
                 alt="Dish 2"
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div className="aspect-square overflow-hidden rounded-sm">
               <img
-                src="/images/ascoli/gallery/img-5879.jpg"
+                src={IMG("/images/ascoli/gallery/img-5879.jpg")}
                 alt="Dish 3"
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />
             </div>
             <div className="aspect-square overflow-hidden rounded-sm">
               <img
-                src="/images/ascoli/gallery/img-5889.jpg"
+                src={IMG("/images/ascoli/gallery/img-5889.jpg")}
                 alt="Dish 4"
                 className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
               />

@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import { X } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 const Gallery = () => {
   const [selectedImage, setSelectedImage] = useState(null);
@@ -173,7 +174,7 @@ const Gallery = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="/images/ascoli/gallery/img-5879_orig.jpg"
+        image={IMG("/images/ascoli/gallery/img-5879_orig.jpg")}
       />
 
       <section className="py-16 bg-[#2a2a2a]">
@@ -186,7 +187,7 @@ const Gallery = () => {
                 onClick={() => setSelectedImage(image)}
               >
                 <img
-                  src={image}
+                  src={IMG(image)}
                   alt={`Gallery ${index + 1}`}
                   className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                 />
@@ -209,7 +210,7 @@ const Gallery = () => {
             <X className="w-8 h-8" />
           </button>
           <img
-            src={selectedImage}
+            src={IMG(selectedImage)}
             alt="Selected"
             className="max-w-full max-h-full object-contain"
             onClick={(e) => e.stopPropagation()}

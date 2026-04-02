@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import Hero from '../components/Hero';
 import { useLanguage } from '../context/LanguageContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 const Reservations = () => {
   const { currentLanguage } = useLanguage();
@@ -33,7 +34,7 @@ const Reservations = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="/images/ascoli/gallery/img-5497_1_orig.jpg"
+        image={IMG("/images/ascoli/gallery/img-5497_1_orig.jpg")}
       />
 
       <section className="py-16 bg-[#1a1a1a]">

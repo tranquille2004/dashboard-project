@@ -5,6 +5,7 @@ import { Users, Wine } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 const GroupMenu = () => {
   const { currentLanguage } = useLanguage();
@@ -16,7 +17,7 @@ const GroupMenu = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="/images/ascoli/gallery/img-5714_1_orig.jpg"
+        image={IMG("/images/ascoli/gallery/img-5714_1_orig.jpg")}
       />
 
       <section className="py-16 bg-[#2a2a2a]">

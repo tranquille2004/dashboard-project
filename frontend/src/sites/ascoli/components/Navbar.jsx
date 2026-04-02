@@ -4,6 +4,7 @@ import { Menu, X, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useBasePath } from '../context/BasePathContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -61,7 +62,7 @@ const Navbar = () => {
             {/* Logo */}
             <Link to={homePath} className="flex items-center">
               <img
-                src="/images/ascoli/logo/ascoli.jpg"
+                src={IMG("/images/ascoli/logo/ascoli.jpg")}
                 alt="L'Ascoli"
                 className="h-12 w-auto"
                 style={{

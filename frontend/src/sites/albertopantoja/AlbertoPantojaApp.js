@@ -22,16 +22,16 @@ const translations = {
   es: {
     nav: { home: 'Inicio', bio: 'Biografía', work: 'Trabajo', media: 'Medios', contact: 'Contacto', join: 'Únete' },
     hero: {
-      subtitle: 'CONSEJAL RURAL DE SANTO DOMINGO',
+      subtitle: 'CONCEJAL RURAL DE SANTO DOMINGO',
       title: 'Alberto Pantoja',
       tagline: '',
-      description: 'Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y Consejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
+      description: 'Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y concejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
       cta: 'Conoce Mi Trabajo'
     },
     about: {
       label: 'SOBRE ALBERTO',
       title: 'Compromiso con el pueblo',
-      description: 'Alberto Pantoja es Consejal Rural del cantón Santo Domingo y Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
+      description: 'Alberto Pantoja es concejal Rural del cantón Santo Domingo y Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
       mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias urbanas de la ciudad y las 7 parroquias rurales del cantón, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
       stats: {
         sessions: 'Sesiones del Concejo',
@@ -584,7 +584,7 @@ const IMAGES = {
 
 // Social links
 const SOCIAL_LINKS = {
-  facebook: 'https://www.facebook.com/AlbertoPantojaRC5/',
+  facebook: 'https://www.facebook.com/alberto.p.guzman.7/',
   tiktok: 'https://www.tiktok.com/@albertopantojasgb',
   instagram: 'https://www.instagram.com/alberto_pantoja_/'
 };
@@ -641,7 +641,7 @@ const AlbertoPantojaApp = () => {
               <img src={IMAGES.logo} alt="Alberto Pantoja" className="h-10 md:h-12 w-auto rounded-full border-2 border-blue-600" />
               <div className="hidden sm:block">
                 <div className="text-blue-900 font-bold text-sm md:text-base">Alberto Pantoja</div>
-                <div className="text-red-600 text-xs font-semibold">Consejal de Santo Domingo</div>
+                <div className="text-red-600 text-xs font-semibold">concejal de Santo Domingo</div>
               </div>
             </div>
 
@@ -1221,7 +1221,7 @@ const AlbertoPantojaApp = () => {
                 <img
                   src={IMG('/images/albertopantoja/rc5-correa.jpg')}
                   alt="Revolución Ciudadana"
-                  className="relative rounded-2xl shadow-2xl w-full min-w-[400px] max-w-[600px] border-4 border-white/20 group-hover:border-red-500/50 transition-colors"
+                  className="relative rounded-2xl shadow-2xl w-full min-w-[500px] max-w-[700px] border-4 border-white/20 group-hover:border-red-500/50 transition-colors"
                   style={{ filter: 'saturate(0.8) contrast(1.1) brightness(1.05)', opacity: 1 }}
                 />
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-blue-900/40 to-transparent" />

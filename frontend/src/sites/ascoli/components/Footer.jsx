@@ -3,6 +3,7 @@ import { MapPin, Phone, Clock, Mail } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 const Footer = ({ basePath = '' }) => {
   const { currentLanguage } = useLanguage();
@@ -100,7 +101,7 @@ const Footer = ({ basePath = '' }) => {
             <p className="mb-3">{t.webmasterText}</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
               <img 
-                src="/images/fworksbuilders-logo.png" 
+                src={IMG("/images/fworksbuilders-logo.png")} 
                 alt="fworksbuilders" 
                 className="h-8 w-auto"
               />

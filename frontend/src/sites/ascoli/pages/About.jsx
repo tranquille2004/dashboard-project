@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import { Award, Users, Heart, Clock } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { allTranslations } from '../translations/allTranslations';
+import { IMG } from '@/utils/imageHelper';
 
 const About = () => {
   const { currentLanguage } = useLanguage();
@@ -36,7 +37,7 @@ const About = () => {
       <Hero
         title={t.title}
         subtitle={t.subtitle}
-        image="/images/ascoli/gallery/img-5497_1_orig.jpg"
+        image={IMG("/images/ascoli/gallery/img-5497_1_orig.jpg")}
       />
 
       {/* Story Section */}
