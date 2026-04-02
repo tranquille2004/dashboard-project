@@ -15,7 +15,7 @@ const pulseAnimation = `
   }
 `;
 
-const ConfirmationTakeaway = () => {
+const Confirmation2 = () => {
   const { language } = useLanguage();
   const basePath = useBasePath();
   const homePath = basePath || '/';
@@ -143,4 +143,4 @@ const ConfirmationTakeaway = () => {
   );
 };
 
-export default ConfirmationTakeaway;
+export default Confirmation2;
