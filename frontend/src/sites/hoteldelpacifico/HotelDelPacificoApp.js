@@ -115,7 +115,9 @@ const translations = {
       malecon: 'Malecón San Gabriel del Baba',
       maleconDesc: 'Disfrute de un paseo junto al río en este encantador malecón con áreas verdes, gastronomía local y espacios recreativos para toda la familia.',
       jelenTenka: 'Jelen Tenka',
-      jelenTenkaDesc: 'Centro turístico que ofrece una inmersión completa en las tradiciones Tsáchilas: rituales ancestrales, gastronomía típica y conexión con la naturaleza.'
+      jelenTenkaDesc: 'Centro turístico que ofrece una inmersión completa en las tradiciones Tsáchilas: rituales ancestrales, gastronomía típica y conexión con la naturaleza.',
+      bomboli: 'Bombolí',
+      bomboliDesc: 'Zona gastronómica en las alturas de Santo Domingo con restaurantes y bares que ofrecen vistas panorámicas espectaculares de la ciudad. El lugar perfecto para disfrutar de una cena romántica o celebrar con amigos.'
     },
     contact: {
       title: 'Contacto',
@@ -243,7 +245,9 @@ const translations = {
       malecon: 'San Gabriel del Baba Boardwalk',
       maleconDesc: 'Enjoy a riverside walk on this charming boardwalk with green areas, local gastronomy and recreational spaces for the whole family.',
       jelenTenka: 'Jelen Tenka',
-      jelenTenkaDesc: 'Tourist center offering a complete immersion in Tsáchila traditions: ancestral rituals, typical gastronomy and connection with nature.'
+      jelenTenkaDesc: 'Tourist center offering a complete immersion in Tsáchila traditions: ancestral rituals, typical gastronomy and connection with nature.',
+      bomboli: 'Bombolí',
+      bomboliDesc: 'Gastronomic zone in the heights of Santo Domingo with restaurants and bars offering spectacular panoramic views of the city. The perfect place for a romantic dinner or celebrating with friends.'
     },
     contact: {
       title: 'Contact',
@@ -991,6 +995,14 @@ const AttractionsPage = ({ t }) => (
               distance: '25 min',
               tip: 'Reservar con anticipación',
               highlights: ['Experiencia inmersiva', 'Comida típica', 'Naturaleza']
+            },
+            { 
+              title: t.attractions.bomboli, 
+              desc: t.attractions.bomboliDesc, 
+              icon: Utensils,
+              distance: '15 min',
+              tip: 'Ideal para atardecer y noche',
+              highlights: ['Restaurantes', 'Bares', 'Vista panorámica']
             }
           ].map((item, i) => (
             <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group overflow-hidden">
