@@ -582,12 +582,12 @@ const HomePage = ({ t }) => (
       <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '32px 32px'}} />
       
       {/* Content */}
-      <div className="relative z-10 text-center text-white px-6 max-w-4xl">
+      <div className="relative z-10 text-center text-white px-6 max-w-4xl pt-16">
         <p className="text-amber-300 text-sm tracking-[0.4em] uppercase mb-4 animate-fade-in">{t.hero.welcome}</p>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6 tracking-wide">{t.hero.title}</h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-3 tracking-wide">{t.hero.title}</h1>
         
         {/* Large Hotel Logo */}
-        <div className="flex justify-center my-8">
+        <div className="flex justify-center my-4">
           <img 
             src={IMG('/images/hoteldelpacifico/hotel-logo.png')} 
             alt="Hotel del Pacífico" 
