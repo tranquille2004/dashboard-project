@@ -586,11 +586,11 @@ const HomePage = ({ t }) => (
         className="absolute inset-0 w-full h-full object-cover object-center"
         style={{ objectPosition: '50% 30%' }}
       >
-        <source src={IMG('/images/hoteldelpacifico/hotel-v6.mp4')} type="video/mp4" />
+        <source src={IMG('/images/hoteldelpacifico/hotel-v7.mp4')} type="video/mp4" />
       </video>
       
       {/* Green Overlay Filter */}
-      <div className="absolute inset-0 bg-emerald-900/70" />
+      <div className="absolute inset-0 bg-emerald-900/80" />
       <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/50 via-transparent to-emerald-900/70" />
       
       {/* Content */}
