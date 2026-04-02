@@ -589,8 +589,8 @@ const HomePage = ({ t }) => (
         <source src={IMG('/images/hoteldelpacifico/hotel-video-edited.mp4')} type="video/mp4" />
       </video>
       
-      {/* Green Overlay Filter - lighter */}
-      <div className="absolute inset-0 bg-emerald-900/50" />
+      {/* Green Overlay Filter */}
+      <div className="absolute inset-0 bg-emerald-900/70" />
       <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/50 via-transparent to-emerald-900/70" />
       
       {/* Content */}
