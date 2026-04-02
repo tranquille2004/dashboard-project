@@ -15,6 +15,7 @@ import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
 import FWorksApp from '@/sites/fworks/FWorksApp';
 import SmeraldaApp from '@/sites/smeralda/SmeraldaApp';
 import AlbertoPantojaApp from '@/sites/albertopantoja/AlbertoPantojaApp';
+import HotelDelPacificoApp from '@/sites/hoteldelpacifico/HotelDelPacificoApp';
 import './App.css';
 
 // Domain to site mapping - BELANGRIJKSTE CODE
@@ -38,7 +39,9 @@ const DOMAIN_MAPPING = {
   'albertopantoja.com': 'albertopantoja',
   'www.albertopantoja.com': 'albertopantoja',
   'albertopantoja.ec': 'albertopantoja',
-  'www.albertopantoja.ec': 'albertopantoja'
+  'www.albertopantoja.ec': 'albertopantoja',
+  'hoteldelpacifico.com': 'hoteldelpacifico',
+  'www.hoteldelpacifico.com': 'hoteldelpacifico'
 };
 
 // Detecteer custom domain DIRECT bij laden
@@ -69,6 +72,14 @@ function AdminRouter() {
     // Special handling for /site/albertopantoja
     if (location.pathname.startsWith('/site/albertopantoja')) {
       return <AlbertoPantojaApp />;
+    }
+    // Special handling for /site/hoteldelpacifico
+    if (location.pathname.startsWith('/site/hoteldelpacifico')) {
+      return (
+        <Routes>
+          <Route path="/site/hoteldelpacifico/*" element={<HotelDelPacificoApp />} />
+        </Routes>
+      );
     }
     return (
       <Routes>
@@ -154,6 +165,15 @@ function CustomDomainRouter({ slug }) {
   if (slug === 'albertopantoja') {
     // Geen admin nodig voor deze site, gewoon de website tonen
     return <AlbertoPantojaApp />;
+  }
+  
+  // Hotel del Pacífico - Hotel website
+  if (slug === 'hoteldelpacifico') {
+    return (
+      <Routes>
+        <Route path="/*" element={<HotelDelPacificoApp />} />
+      </Routes>
+    );
   }
   
   const isAdmin = location.pathname === '/admin' || location.pathname === '/admin/';
