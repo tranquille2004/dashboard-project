@@ -493,10 +493,15 @@ const Footer = ({ t }) => (
         <div>
           <h4 className="text-amber-300 text-xs tracking-[0.2em] uppercase mb-6">{t.contact.title}</h4>
           <div className="space-y-4 text-sm">
-            <p className="flex items-start gap-3 text-emerald-100/70">
+            <a 
+              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(HOTEL_INFO.address)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-start gap-3 text-emerald-100/70 hover:text-amber-300 transition-colors cursor-pointer"
+            >
               <MapPin size={16} className="text-amber-300 mt-1 flex-shrink-0" />
-              <span>{HOTEL_INFO.address}</span>
-            </p>
+              <span className="hover:underline">{HOTEL_INFO.address}</span>
+            </a>
             <p className="flex items-center gap-3 text-emerald-100/70">
               <Phone size={16} className="text-amber-300" />
               {HOTEL_INFO.phone}
@@ -706,7 +711,14 @@ const HomePage = ({ t }) => (
         <MapPin className="w-12 h-12 mx-auto mb-6 text-amber-300" />
         <h2 className="text-3xl font-serif mb-4">{t.home.location}</h2>
         <p className="text-emerald-100/80 text-lg mb-2">{t.home.locationText}</p>
-        <p className="text-amber-200 text-sm tracking-wide mt-4">{HOTEL_INFO.address}</p>
+        <a 
+          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(HOTEL_INFO.address)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-amber-200 hover:text-amber-100 text-sm tracking-wide mt-4 inline-block hover:underline transition-colors"
+        >
+          {HOTEL_INFO.address}
+        </a>
       </div>
     </section>
   </div>
@@ -1140,7 +1152,14 @@ const ContactPage = ({ t }) => (
                 </div>
                 <div>
                   <h3 className="font-medium text-emerald-800 mb-1">{t.contact.address}</h3>
-                  <p className="text-gray-600">{HOTEL_INFO.address}</p>
+                  <a 
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(HOTEL_INFO.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-gray-600 hover:text-emerald-700 hover:underline transition-colors"
+                  >
+                    {HOTEL_INFO.address}
+                  </a>
                 </div>
               </div>
               
