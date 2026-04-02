@@ -12,6 +12,7 @@ import Takeaway from "@/pages/Takeaway";
 import Gallery from "@/pages/Gallery";
 import Info from "@/pages/Info";
 import Confirmation from "@/pages/Confirmation";
+import ConfirmationTakeaway from "@/pages/ConfirmationTakeaway";
 import GroupMenus from "@/pages/GroupMenus";
 
 function App() {
@@ -31,6 +32,8 @@ function App() {
             <Route path="/group-menus" element={<GroupMenus />} />
             <Route path="/confirmation" element={<Confirmation />} />
             <Route path="/confirmation.html" element={<Confirmation />} />
+            <Route path="/confirmation-takeaway" element={<ConfirmationTakeaway />} />
+            <Route path="/confirmation-afhalen" element={<ConfirmationTakeaway />} />
           </Routes>
           <Footer />
         </div>
