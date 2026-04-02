@@ -1,14 +1,72 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useRef } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
 import { translations } from '../data/translations';
 import { ShoppingBag, Clock, Phone, Info, ArrowRight } from 'lucide-react';
+import { IMG } from '@/utils/imageHelper';
 
 const Takeaway = () => {
   const { language } = useLanguage();
   const basePath = useBasePath();
+  const navigate = useNavigate();
   const t = translations;
+  const iframeRef = useRef(null);
+
+  // Listen for JotForm submission via postMessage
+  useEffect(() => {
+    const handleMessage = (event) => {
+      // JotForm sends messages from these origins
+      if (event.origin.includes('jotform.com')) {
+        try {
+          const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
+          
+          // Various ways JotForm signals completion
+          if (data) {
+            if (data.action === 'submission-completed' || 
+                data.action === 'formSubmitted' ||
+                data.submissionID ||
+                (data.type === 'form-submit-success')) {
+              navigate(`${basePath}/confirmation`);
+              return;
+            }
+          }
+        } catch (e) {
+          // If it's a string containing submission info
+          if (typeof event.data === 'string') {
+            const dataStr = event.data.toLowerCase();
+            if (dataStr.includes('submit') || dataStr.includes('thank') || dataStr.includes('success')) {
+              navigate(`${basePath}/confirmation`);
+            }
+          }
+        }
+      }
+    };
+
+    window.addEventListener('message', handleMessage);
+    
+    // Also load JotForm's embed handler for better detection
+    const script = document.createElement('script');
+    script.src = 'https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js';
+    script.async = true;
+    document.body.appendChild(script);
+    
+    script.onload = () => {
+      if (window.jotformEmbedHandler) {
+        window.jotformEmbedHandler(
+          'iframe[id="JotFormIFrame-201116780473653"]',
+          'https://form.jotform.com/'
+        );
+      }
+    };
+
+    return () => {
+      window.removeEventListener('message', handleMessage);
+      if (script.parentNode) {
+        document.body.removeChild(script);
+      }
+    };
+  }, [navigate, basePath]);
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
@@ -86,6 +144,8 @@ const Takeaway = () => {
         {/* Jotform Embed */}
         <div className="bg-gradient-to-br from-gray-900 to-black p-6 md:p-12 rounded-lg border border-gold/20 shadow-2xl">
           <iframe
+            ref={iframeRef}
+            id="JotFormIFrame-201116780473653"
             title="Afhalen Formulier"
             src="https://form.jotform.com/201116780473653"
             className="w-full"
@@ -97,17 +157,17 @@ const Takeaway = () => {
         {/* Food Images */}
         <div className="grid md:grid-cols-3 gap-6 mt-12">
           <img
-            src="/images/mercato/gallery/475539315-9097135276989113-4629240725372122729-n.jpg"
+            src={IMG("/images/mercato/gallery/475539315-9097135276989113-4629240725372122729-n.jpg")}
             alt="Italian Food"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="/images/mercato/gallery/478330133-1140135614790013-1825406155141421292-n.jpg"
+            src={IMG("/images/mercato/gallery/478330133-1140135614790013-1825406155141421292-n.jpg")}
             alt="Food 2"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="/images/mercato/gallery/481243795-9244475188921787-9185171556075761483-n.jpg"
+            src={IMG("/images/mercato/gallery/481243795-9244475188921787-9185171556075761483-n.jpg")}
             alt="Food 3"
             className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
