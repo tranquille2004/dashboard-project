@@ -1138,15 +1138,20 @@ async def site_admin_login(request: Request, response: Response):
     email = body.get("email")
     password = body.get("password")
     
+    logger.info(f"Site admin login attempt for: {email}")
+    
     if not email or not password:
         raise HTTPException(status_code=400, detail="Email and password required")
     
     password_hash = hashlib.sha256(password.encode()).hexdigest()
+    logger.info(f"Password hash: {password_hash[:20]}...")
     
     admin = await db.site_admins.find_one(
         {"email": email, "password_hash": password_hash, "is_active": True},
         {"_id": 0}
     )
+    
+    logger.info(f"Admin found: {admin is not None}")
     
     if not admin:
         raise HTTPException(status_code=401, detail="Invalid credentials")
@@ -1224,9 +1229,17 @@ async def update_own_site_config(request: Request, admin: dict = Depends(get_cur
     if permissions.get("closure_notice") and "closure_notice" in body:
         allowed_updates["closure_notice"] = body["closure_notice"]
     if permissions.get("contact_info"):
-        for field in ["phone", "email", "address"]:
+        for field in ["phone", "phone2", "email", "address"]:
             if field in body:
                 allowed_updates[field] = body[field]
+    
+    # Prices - if has prices permission
+    if permissions.get("prices") and "prices" in body:
+        allowed_updates["prices"] = body["prices"]
+    
+    # Restaurant hours - for hotels/restaurants
+    if permissions.get("opening_hours") and "restaurant_hours" in body:
+        allowed_updates["restaurant_hours"] = body["restaurant_hours"]
     
     # Special announcement - always allowed for site admins
     if "special_announcement" in body:
@@ -1240,7 +1253,7 @@ async def update_own_site_config(request: Request, admin: dict = Depends(get_cur
         raise HTTPException(status_code=403, detail="No permission to update these fields")
     
     allowed_updates["updated_at"] = datetime.now(timezone.utc).isoformat()
-    await db.site_configs.update_one({"site_id": admin["site_id"]}, {"$set": allowed_updates})
+    await db.site_configs.update_one({"site_id": admin["site_id"]}, {"$set": allowed_updates}, upsert=True)
     
     config = await db.site_configs.find_one({"site_id": admin["site_id"]}, {"_id": 0})
     return config
@@ -2715,6 +2728,16 @@ async def seed_sites_on_startup():
             "slug": "albertopantoja",
             "domains": ["albertopantoja.com", "www.albertopantoja.com", "albertopantoja.ec", "www.albertopantoja.ec"],
             "site_type": "political",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_hoteldelpacifico",
+            "name": "Hotel del Pacífico",
+            "slug": "hoteldelpacifico",
+            "domains": ["hoteldelpacifico.com", "www.hoteldelpacifico.com"],
+            "site_type": "hotel",
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
             "updated_at": datetime.now(timezone.utc).isoformat()

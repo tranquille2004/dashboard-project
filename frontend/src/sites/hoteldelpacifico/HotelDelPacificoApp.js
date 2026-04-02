@@ -510,6 +510,28 @@ const Footer = ({ t }) => (
         <p className="text-center text-emerald-200/50 text-xs tracking-wider">
           © {new Date().getFullYear()} Hotel del Pacífico. {t.footer.rights}.
         </p>
+        
+        {/* Webmaster Contact */}
+        <div className="mt-4 pt-4 border-t border-emerald-700/50 flex items-center justify-center gap-3 text-xs opacity-70 hover:opacity-100 transition-opacity">
+          <img 
+            src={IMG('/images/fworksbuilders-logo.png')}
+            alt="fworksbuilders logo" 
+            className="h-7 w-auto"
+          />
+          <div className="flex items-center gap-2 text-emerald-200/70">
+            <span>Webmaster:</span>
+            <a 
+              href="https://wa.me/32494516064" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-amber-300 hover:text-amber-200 transition-colors font-medium flex items-center gap-1"
+            >
+              fworksbuilders
+              <Phone size={12} className="inline" />
+              <span>+32 494 51 60 64</span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   </footer>
