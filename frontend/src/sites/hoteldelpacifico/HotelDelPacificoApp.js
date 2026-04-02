@@ -30,9 +30,12 @@ const translations = {
       explore: 'Descubrir Más'
     },
     home: {
-      experience: 'La Experiencia',
+      experience: 'Sobre Nosotros',
       experienceTitle: 'Una Excelente Opción de Alojamiento',
-      experienceText: 'El Hotel del Pacífico es una excelente opción de alojamiento en la ciudad de Santo Domingo, ideal tanto para viajeros de negocios como para turistas que desean descubrir la región. A pesar de su ubicación estratégica en pleno centro de la ciudad, el interior del hotel se caracteriza por ser muy tranquilo, proporcionando un ambiente ideal para el descanso.',
+      experienceText: 'El Hotel del Pacífico es una excelente opción de alojamiento en la ciudad de Santo Domingo, ideal tanto para viajeros de negocios como para turistas que desean descubrir la región.',
+      experienceText2: 'Pensado especialmente como un hotel de negocios, dispone de un moderno centro de negocios y una sala de conferencias equipada con tecnología audiovisual, perfecta para reuniones, capacitaciones y eventos corporativos.',
+      experienceText3: 'A pesar de su ubicación estratégica en pleno centro de la ciudad, el interior del hotel se caracteriza por ser muy tranquilo, proporcionando un ambiente ideal para el descanso.',
+      experienceText4: 'Gracias a su combinación de servicios, ubicación y comodidad, el Hotel del Pacífico se posiciona como un lugar ideal tanto para ejecutivos en viaje de trabajo como para turistas que desean explorar Santo Domingo y sus alrededores.',
       features: 'Nuestros Servicios Exclusivos',
       rooms36: '36 Habitaciones Confortables',
       roomsDesc: 'Habitaciones diseñadas para ofrecer descanso y funcionalidad en un ambiente acogedor',
@@ -577,8 +580,17 @@ const HomePage = ({ t }) => (
       <div className="relative z-10 text-center text-white px-6 max-w-4xl">
         <p className="text-amber-300 text-sm tracking-[0.4em] uppercase mb-4 animate-fade-in">{t.hero.welcome}</p>
         <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-6 tracking-wide">{t.hero.title}</h1>
-        <Divider />
-        <p className="text-lg md:text-xl text-emerald-100/80 mt-6 max-w-2xl mx-auto leading-relaxed font-light">{t.hero.subtitle}</p>
+        
+        {/* Large Hotel Logo */}
+        <div className="flex justify-center my-8">
+          <img 
+            src={IMG('/images/hoteldelpacifico/hotel-logo.png')} 
+            alt="Hotel del Pacífico" 
+            className="h-32 md:h-40 lg:h-48 w-auto"
+          />
+        </div>
+        
+        <p className="text-lg md:text-xl text-emerald-100/80 max-w-2xl mx-auto leading-relaxed font-light">{t.hero.subtitle}</p>
         <div className="flex flex-wrap justify-center gap-4 mt-10">
           <Link to="contacto" className="bg-amber-500 hover:bg-amber-600 text-emerald-950 px-10 py-4 text-sm tracking-widest uppercase font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30">
             {t.hero.cta}
@@ -595,14 +607,21 @@ const HomePage = ({ t }) => (
       </div>
     </section>
 
-    {/* Experience Section */}
+    {/* Experience Section - About Us */}
     <section className="py-24 lg:py-32 bg-gradient-to-b from-white to-amber-50/50">
-      <div className="max-w-6xl mx-auto px-6 lg:px-8">
-        <div className="text-center mb-16">
+      <div className="max-w-5xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-12">
           <p className="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4">{t.home.experience}</p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-emerald-800 mb-6">{t.home.experienceTitle}</h2>
           <Divider />
-          <p className="text-gray-600 text-lg max-w-3xl mx-auto mt-8 leading-relaxed">{t.home.experienceText}</p>
+        </div>
+        
+        {/* Full Description Text */}
+        <div className="space-y-6 text-gray-700 text-lg leading-relaxed">
+          <p>{t.home.experienceText}</p>
+          <p>{t.home.experienceText2}</p>
+          <p>{t.home.experienceText3}</p>
+          <p className="font-medium text-emerald-800">{t.home.experienceText4}</p>
         </div>
       </div>
     </section>
