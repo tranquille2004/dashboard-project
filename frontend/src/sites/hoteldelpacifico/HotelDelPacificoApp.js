@@ -586,7 +586,7 @@ const HomePage = ({ t }) => (
         className="absolute inset-0 w-full h-full object-cover object-center"
         style={{ objectPosition: '50% 30%' }}
       >
-        <source src={IMG('/images/hoteldelpacifico/hotel-v7.mp4')} type="video/mp4" />
+        <source src={IMG('/images/hoteldelpacifico/hotel-v8.mp4')} type="video/mp4" />
       </video>
       
       {/* Green Overlay Filter */}
