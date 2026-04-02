@@ -359,9 +359,12 @@ const Navigation = ({ language, setLanguage, t }) => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-24">
           {/* Logo */}
-          <Link to="" className="flex flex-col items-start">
-            <span className={`text-xs tracking-[0.3em] uppercase ${scrolled ? 'text-emerald-800' : 'text-amber-200'}`}>Hotel</span>
-            <span className={`text-2xl font-serif tracking-wide ${scrolled ? 'text-emerald-900' : 'text-white'}`}>del Pacífico</span>
+          <Link to="" className="flex items-center">
+            <img 
+              src={IMG('/images/hoteldelpacifico/hotel-logo.png')} 
+              alt="Hotel del Pacífico" 
+              className="h-16 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
@@ -453,8 +456,11 @@ const Footer = ({ t }) => (
         {/* Brand */}
         <div className="md:col-span-1">
           <div className="mb-6">
-            <span className="text-xs tracking-[0.3em] uppercase text-amber-300">Hotel</span>
-            <h3 className="text-2xl font-serif">del Pacífico</h3>
+            <img 
+              src={IMG('/images/hoteldelpacifico/hotel-logo.png')} 
+              alt="Hotel del Pacífico" 
+              className="h-20 w-auto"
+            />
           </div>
           <p className="text-emerald-100/70 text-sm leading-relaxed">{t.footer.slogan}</p>
           <div className="flex gap-4 mt-6">
@@ -890,6 +896,13 @@ const RestaurantPage = ({ t }) => (
   <div className="bg-amber-50/30 pt-24">
     <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
       <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.restaurant}</p>
+      <div className="flex justify-center mb-6">
+        <img 
+          src={IMG('/images/hoteldelpacifico/la-orquidea-logo.png')} 
+          alt="La Orquídea Café" 
+          className="h-32 w-auto"
+        />
+      </div>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.restaurant.title}</h1>
       <Divider />
       <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.restaurant.subtitle}</p>
