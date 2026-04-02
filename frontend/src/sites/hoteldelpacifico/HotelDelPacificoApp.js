@@ -575,11 +575,22 @@ const Divider = () => (
 // ============================================
 const HomePage = ({ t }) => (
   <div className="bg-amber-50/30">
-    {/* Hero Section */}
+    {/* Hero Section with Video Background */}
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background - softer green with cream tones */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-800" />
-      <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '32px 32px'}} />
+      {/* Video Background */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src={IMG('/images/hoteldelpacifico/hotel-video.mp4')} type="video/mp4" />
+      </video>
+      
+      {/* Green Overlay Filter */}
+      <div className="absolute inset-0 bg-emerald-900/70" />
+      <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/50 via-transparent to-emerald-900/70" />
       
       {/* Content */}
       <div className="relative z-10 text-center text-white px-6 max-w-4xl pt-16">
