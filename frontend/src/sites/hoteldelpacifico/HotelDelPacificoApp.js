@@ -438,22 +438,22 @@ const Navigation = ({ language, setLanguage, t }) => {
 // LUXURY FOOTER COMPONENT
 // ============================================
 const Footer = ({ t }) => (
-  <footer className="bg-emerald-950 text-white">
+  <footer className="bg-emerald-800 text-white">
     {/* Main Footer */}
     <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
       <div className="grid md:grid-cols-4 gap-12">
         {/* Brand */}
         <div className="md:col-span-1">
           <div className="mb-6">
-            <span className="text-xs tracking-[0.3em] uppercase text-amber-400">Hotel</span>
+            <span className="text-xs tracking-[0.3em] uppercase text-amber-300">Hotel</span>
             <h3 className="text-2xl font-serif">del Pacífico</h3>
           </div>
-          <p className="text-emerald-200/70 text-sm leading-relaxed">{t.footer.slogan}</p>
+          <p className="text-emerald-100/70 text-sm leading-relaxed">{t.footer.slogan}</p>
           <div className="flex gap-4 mt-6">
-            <a href="#" className="w-10 h-10 rounded-full border border-emerald-700 flex items-center justify-center text-emerald-300 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
+            <a href="#" className="w-10 h-10 rounded-full border border-emerald-600 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
               <Facebook size={18} />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full border border-emerald-700 flex items-center justify-center text-emerald-300 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
+            <a href="#" className="w-10 h-10 rounded-full border border-emerald-600 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
               <Instagram size={18} />
             </a>
           </div>
@@ -461,33 +461,33 @@ const Footer = ({ t }) => (
 
         {/* Quick Links */}
         <div>
-          <h4 className="text-amber-400 text-xs tracking-[0.2em] uppercase mb-6">Navegación</h4>
+          <h4 className="text-amber-300 text-xs tracking-[0.2em] uppercase mb-6">Navegación</h4>
           <div className="space-y-3">
-            <Link to="habitaciones" className="block text-emerald-200/70 hover:text-amber-400 transition-colors text-sm">{t.nav.rooms}</Link>
-            <Link to="restaurante" className="block text-emerald-200/70 hover:text-amber-400 transition-colors text-sm">{t.nav.restaurant}</Link>
-            <Link to="atractivos" className="block text-emerald-200/70 hover:text-amber-400 transition-colors text-sm">{t.nav.attractions}</Link>
-            <Link to="contacto" className="block text-emerald-200/70 hover:text-amber-400 transition-colors text-sm">{t.nav.contact}</Link>
+            <Link to="habitaciones" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.rooms}</Link>
+            <Link to="restaurante" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.restaurant}</Link>
+            <Link to="atractivos" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.attractions}</Link>
+            <Link to="contacto" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.contact}</Link>
           </div>
         </div>
 
         {/* Contact */}
         <div>
-          <h4 className="text-amber-400 text-xs tracking-[0.2em] uppercase mb-6">{t.contact.title}</h4>
+          <h4 className="text-amber-300 text-xs tracking-[0.2em] uppercase mb-6">{t.contact.title}</h4>
           <div className="space-y-4 text-sm">
-            <p className="flex items-start gap-3 text-emerald-200/70">
-              <MapPin size={16} className="text-amber-400 mt-1 flex-shrink-0" />
+            <p className="flex items-start gap-3 text-emerald-100/70">
+              <MapPin size={16} className="text-amber-300 mt-1 flex-shrink-0" />
               <span>{HOTEL_INFO.address}</span>
             </p>
-            <p className="flex items-center gap-3 text-emerald-200/70">
-              <Phone size={16} className="text-amber-400" />
+            <p className="flex items-center gap-3 text-emerald-100/70">
+              <Phone size={16} className="text-amber-300" />
               {HOTEL_INFO.phone}
             </p>
-            <p className="flex items-center gap-3 text-emerald-200/70">
-              <Phone size={16} className="text-amber-400" />
+            <p className="flex items-center gap-3 text-emerald-100/70">
+              <Phone size={16} className="text-amber-300" />
               {HOTEL_INFO.phone2}
             </p>
-            <p className="flex items-center gap-3 text-emerald-200/70">
-              <Mail size={16} className="text-amber-400" />
+            <p className="flex items-center gap-3 text-emerald-100/70">
+              <Mail size={16} className="text-amber-300" />
               {HOTEL_INFO.email}
             </p>
           </div>
@@ -495,9 +495,9 @@ const Footer = ({ t }) => (
 
         {/* Hours */}
         <div>
-          <h4 className="text-amber-400 text-xs tracking-[0.2em] uppercase mb-6">{t.contact.hours}</h4>
-          <div className="flex items-center gap-3 text-emerald-200/70 text-sm">
-            <Clock size={16} className="text-amber-400" />
+          <h4 className="text-amber-300 text-xs tracking-[0.2em] uppercase mb-6">{t.contact.hours}</h4>
+          <div className="flex items-center gap-3 text-emerald-100/70 text-sm">
+            <Clock size={16} className="text-amber-300" />
             <span>24/7</span>
           </div>
         </div>
@@ -505,9 +505,9 @@ const Footer = ({ t }) => (
     </div>
 
     {/* Bottom Bar */}
-    <div className="border-t border-emerald-900">
+    <div className="border-t border-emerald-700">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
-        <p className="text-center text-emerald-300/50 text-xs tracking-wider">
+        <p className="text-center text-emerald-200/50 text-xs tracking-wider">
           © {new Date().getFullYear()} Hotel del Pacífico. {t.footer.rights}.
         </p>
       </div>
@@ -530,11 +530,11 @@ const Divider = () => (
 // HOME PAGE - LUXURY VERSION
 // ============================================
 const HomePage = ({ t }) => (
-  <div className="bg-stone-50">
+  <div className="bg-amber-50/30">
     {/* Hero Section */}
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950" />
+      {/* Background - softer green with cream tones */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-800 via-emerald-700 to-emerald-800" />
       <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '32px 32px'}} />
       
       {/* Content */}
@@ -560,11 +560,11 @@ const HomePage = ({ t }) => (
     </section>
 
     {/* Experience Section */}
-    <section className="py-24 lg:py-32 bg-white">
+    <section className="py-24 lg:py-32 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4">{t.home.experience}</p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-emerald-900 mb-6">{t.home.experienceTitle}</h2>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-emerald-800 mb-6">{t.home.experienceTitle}</h2>
           <Divider />
           <p className="text-gray-600 text-lg max-w-3xl mx-auto mt-8 leading-relaxed">{t.home.experienceText}</p>
         </div>
@@ -572,7 +572,7 @@ const HomePage = ({ t }) => (
     </section>
 
     {/* Services Section */}
-    <section className="py-24 bg-emerald-900 text-white relative overflow-hidden">
+    <section className="py-24 bg-emerald-800 text-white relative overflow-hidden">
       <div className="absolute inset-0 opacity-10" style={{backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.15) 1px, transparent 0)', backgroundSize: '32px 32px'}} />
       <div className="max-w-6xl mx-auto px-6 lg:px-8 relative">
         <div className="text-center mb-16">
@@ -600,7 +600,7 @@ const HomePage = ({ t }) => (
     </section>
 
     {/* Amenities Strip */}
-    <section className="py-16 bg-stone-100 border-y border-stone-200">
+    <section className="py-16 bg-amber-50 border-y border-amber-200/50">
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="flex flex-wrap justify-center gap-8 md:gap-16">
           {[
@@ -624,7 +624,7 @@ const HomePage = ({ t }) => (
       <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
           <p className="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4">{t.home.whyUs}</p>
-          <h2 className="text-3xl md:text-4xl font-serif text-emerald-900">{t.home.whyUs}</h2>
+          <h2 className="text-3xl md:text-4xl font-serif text-emerald-800">{t.home.whyUs}</h2>
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
@@ -633,11 +633,11 @@ const HomePage = ({ t }) => (
             { icon: MapPin, title: t.home.reason2, desc: t.home.reason2Desc },
             { icon: Shield, title: t.home.reason3, desc: t.home.reason3Desc }
           ].map((item, i) => (
-            <div key={i} className="bg-stone-50 p-8 text-center hover:shadow-xl transition-shadow duration-500">
-              <div className="w-16 h-16 mx-auto mb-6 bg-emerald-900 rounded-full flex items-center justify-center">
-                <item.icon className="w-7 h-7 text-amber-400" />
+            <div key={i} className="bg-gradient-to-b from-amber-50/50 to-white border border-amber-100 p-8 text-center hover:shadow-xl transition-shadow duration-500">
+              <div className="w-16 h-16 mx-auto mb-6 bg-emerald-700 rounded-full flex items-center justify-center">
+                <item.icon className="w-7 h-7 text-amber-300" />
               </div>
-              <h3 className="text-xl font-serif text-emerald-900 mb-3">{item.title}</h3>
+              <h3 className="text-xl font-serif text-emerald-800 mb-3">{item.title}</h3>
               <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
             </div>
           ))}
@@ -646,12 +646,12 @@ const HomePage = ({ t }) => (
     </section>
 
     {/* Location Banner */}
-    <section className="py-20 bg-gradient-to-r from-emerald-800 to-emerald-900 text-white">
+    <section className="py-20 bg-gradient-to-r from-emerald-700 to-emerald-800 text-white">
       <div className="max-w-4xl mx-auto px-6 text-center">
-        <MapPin className="w-12 h-12 mx-auto mb-6 text-amber-400" />
+        <MapPin className="w-12 h-12 mx-auto mb-6 text-amber-300" />
         <h2 className="text-3xl font-serif mb-4">{t.home.location}</h2>
         <p className="text-emerald-100/80 text-lg mb-2">{t.home.locationText}</p>
-        <p className="text-amber-300 text-sm tracking-wide mt-4">{HOTEL_INFO.address}</p>
+        <p className="text-amber-200 text-sm tracking-wide mt-4">{HOTEL_INFO.address}</p>
       </div>
     </section>
   </div>
@@ -661,17 +661,17 @@ const HomePage = ({ t }) => (
 // ROOMS PAGE - LUXURY VERSION
 // ============================================
 const RoomsPage = ({ t }) => (
-  <div className="bg-stone-50 pt-24">
+  <div className="bg-amber-50/30 pt-24">
     {/* Hero */}
-    <section className="py-20 bg-emerald-900 text-white text-center">
-      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.rooms}</p>
+    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
+      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.rooms}</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.rooms.title}</h1>
       <Divider />
       <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.rooms.subtitle}</p>
     </section>
 
     {/* Room Cards */}
-    <section className="py-24">
+    <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6">
         <p className="text-center text-gray-600 mb-16 max-w-2xl mx-auto">{t.rooms.description}</p>
         
@@ -681,13 +681,13 @@ const RoomsPage = ({ t }) => (
             { name: t.rooms.double, desc: t.rooms.doubleDesc, price: '$0', featured: true },
             { name: t.rooms.suite, desc: t.rooms.suiteDesc, price: '$0' }
           ].map((room, i) => (
-            <div key={i} className={`bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 ${room.featured ? 'ring-2 ring-amber-400' : ''}`}>
-              <div className="h-56 bg-gradient-to-br from-emerald-700 to-emerald-900 flex items-center justify-center relative">
-                {room.featured && <div className="absolute top-4 right-4 bg-amber-500 text-emerald-950 px-3 py-1 text-xs tracking-wider uppercase">Popular</div>}
-                <Building className="w-16 h-16 text-white/20" />
+            <div key={i} className={`bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 border ${room.featured ? 'border-amber-400 ring-1 ring-amber-400' : 'border-amber-100'}`}>
+              <div className="h-56 bg-gradient-to-br from-amber-50 to-amber-100/50 flex items-center justify-center relative border-b border-amber-100">
+                {room.featured && <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 text-xs tracking-wider uppercase">Popular</div>}
+                <Building className="w-16 h-16 text-emerald-600/30" />
               </div>
               <div className="p-8">
-                <h3 className="text-2xl font-serif text-emerald-900 mb-2">{room.name}</h3>
+                <h3 className="text-2xl font-serif text-emerald-800 mb-2">{room.name}</h3>
                 <p className="text-gray-500 text-sm mb-6">{room.desc}</p>
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl font-serif text-amber-600">{room.price}</span>
@@ -699,8 +699,8 @@ const RoomsPage = ({ t }) => (
         </div>
 
         {/* Amenities */}
-        <div className="mt-20 bg-white p-10 shadow-lg">
-          <h3 className="text-2xl font-serif text-emerald-900 text-center mb-8">{t.rooms.allInclude}</h3>
+        <div className="mt-20 bg-white p-10 shadow-lg border border-amber-100">
+          <h3 className="text-2xl font-serif text-emerald-800 text-center mb-8">{t.rooms.allInclude}</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {t.rooms.features.map((feature, i) => (
               <div key={i} className="flex items-center gap-3">
@@ -719,32 +719,32 @@ const RoomsPage = ({ t }) => (
 // PRICES PAGE - LUXURY VERSION
 // ============================================
 const PricesPage = ({ t }) => (
-  <div className="bg-stone-50 pt-24">
-    <section className="py-20 bg-emerald-900 text-white text-center">
-      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.prices}</p>
+  <div className="bg-amber-50/30 pt-24">
+    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
+      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.prices}</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.prices.title}</h1>
       <Divider />
       <p className="text-emerald-100/70 mt-6">{t.prices.subtitle}</p>
     </section>
 
-    <section className="py-24">
+    <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-4xl mx-auto px-6">
-        <div className="bg-white shadow-xl overflow-hidden">
+        <div className="bg-white shadow-xl overflow-hidden border border-amber-100">
           <table className="w-full">
             <thead>
-              <tr className="bg-emerald-900 text-white">
+              <tr className="bg-emerald-700 text-white">
                 <th className="px-8 py-6 text-left font-serif text-lg">{t.nav.rooms}</th>
                 <th className="px-8 py-6 text-right font-serif text-lg">{t.prices.perNight}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-stone-100">
+            <tbody className="divide-y divide-amber-100">
               {[
                 { name: t.rooms.single, price: '$0' },
                 { name: t.rooms.double, price: '$0' },
                 { name: t.rooms.suite, price: '$0' }
               ].map((room, i) => (
-                <tr key={i} className="hover:bg-stone-50 transition-colors">
-                  <td className="px-8 py-6 font-medium text-emerald-900">{room.name}</td>
+                <tr key={i} className="hover:bg-amber-50/50 transition-colors">
+                  <td className="px-8 py-6 font-medium text-emerald-800">{room.name}</td>
                   <td className="px-8 py-6 text-right text-2xl font-serif text-amber-600">{room.price}</td>
                 </tr>
               ))}
@@ -753,7 +753,7 @@ const PricesPage = ({ t }) => (
         </div>
 
         <div className="mt-10 bg-amber-50 border border-amber-200 p-8">
-          <h3 className="font-serif text-emerald-900 text-lg mb-4">{t.prices.includes}</h3>
+          <h3 className="font-serif text-emerald-800 text-lg mb-4">{t.prices.includes}</h3>
           <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
             <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.breakfast}</div>
             <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.taxes}</div>
@@ -763,7 +763,7 @@ const PricesPage = ({ t }) => (
         </div>
 
         <div className="mt-10 text-center">
-          <Link to="contacto" className="inline-block bg-emerald-900 hover:bg-emerald-800 text-white px-12 py-4 text-sm tracking-widest uppercase transition-colors">
+          <Link to="contacto" className="inline-block bg-emerald-700 hover:bg-emerald-600 text-white px-12 py-4 text-sm tracking-widest uppercase transition-colors">
             {t.prices.contact}
           </Link>
         </div>
@@ -776,20 +776,20 @@ const PricesPage = ({ t }) => (
 // PHOTOS PAGE - LUXURY VERSION
 // ============================================
 const PhotosPage = ({ t }) => (
-  <div className="bg-stone-50 pt-24">
-    <section className="py-20 bg-emerald-900 text-white text-center">
-      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.photos}</p>
+  <div className="bg-amber-50/30 pt-24">
+    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
+      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.photos}</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.photos.title}</h1>
       <Divider />
       <p className="text-emerald-100/70 mt-6">{t.photos.subtitle}</p>
     </section>
 
-    <section className="py-24">
+    <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {[...Array(12)].map((_, i) => (
-            <div key={i} className="aspect-square bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center group cursor-pointer overflow-hidden">
-              <Camera className="w-10 h-10 text-emerald-400 group-hover:scale-110 transition-transform duration-500" />
+            <div key={i} className="aspect-square bg-gradient-to-br from-amber-50 to-amber-100/50 border border-amber-200/50 flex items-center justify-center group cursor-pointer overflow-hidden hover:shadow-lg transition-shadow">
+              <Camera className="w-10 h-10 text-amber-400/50 group-hover:scale-110 transition-transform duration-500" />
             </div>
           ))}
         </div>
@@ -803,9 +803,9 @@ const PhotosPage = ({ t }) => (
 // RESTAURANT PAGE - LUXURY VERSION
 // ============================================
 const RestaurantPage = ({ t }) => (
-  <div className="bg-stone-50 pt-24">
-    <section className="py-20 bg-emerald-900 text-white text-center">
-      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.restaurant}</p>
+  <div className="bg-amber-50/30 pt-24">
+    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
+      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.restaurant}</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.restaurant.title}</h1>
       <Divider />
       <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.restaurant.subtitle}</p>
@@ -818,7 +818,7 @@ const RestaurantPage = ({ t }) => (
     </section>
 
     {/* Meal Times */}
-    <section className="py-20 bg-stone-100">
+    <section className="py-20 bg-gradient-to-b from-amber-50 to-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-8">
           {[
@@ -826,11 +826,11 @@ const RestaurantPage = ({ t }) => (
             { icon: Utensils, title: t.restaurant.lunch, time: t.restaurant.lunchTime, desc: t.restaurant.lunchDesc },
             { icon: Sparkles, title: t.restaurant.dinner, time: t.restaurant.dinnerTime, desc: t.restaurant.dinnerDesc }
           ].map((meal, i) => (
-            <div key={i} className="bg-white p-10 text-center shadow-lg hover:shadow-xl transition-shadow">
-              <div className="w-16 h-16 mx-auto mb-6 bg-emerald-900 rounded-full flex items-center justify-center">
-                <meal.icon className="w-7 h-7 text-amber-400" />
+            <div key={i} className="bg-white p-10 text-center shadow-md border border-amber-100 hover:shadow-xl transition-shadow">
+              <div className="w-16 h-16 mx-auto mb-6 bg-emerald-700 rounded-full flex items-center justify-center">
+                <meal.icon className="w-7 h-7 text-amber-300" />
               </div>
-              <h3 className="text-xl font-serif text-emerald-900 mb-2">{meal.title}</h3>
+              <h3 className="text-xl font-serif text-emerald-800 mb-2">{meal.title}</h3>
               <p className="text-amber-600 text-sm mb-4">{meal.time}</p>
               <p className="text-gray-500 text-sm">{meal.desc}</p>
             </div>
@@ -844,11 +844,11 @@ const RestaurantPage = ({ t }) => (
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-12">
           <div className="bg-amber-50 p-10 border border-amber-200">
-            <h3 className="text-2xl font-serif text-emerald-900 mb-4">{t.restaurant.pastry}</h3>
+            <h3 className="text-2xl font-serif text-emerald-800 mb-4">{t.restaurant.pastry}</h3>
             <p className="text-gray-600 leading-relaxed">{t.restaurant.pastryDesc}</p>
           </div>
-          <div className="bg-emerald-50 p-10 border border-emerald-200">
-            <h3 className="text-2xl font-serif text-emerald-900 mb-4">{t.restaurant.banquet}</h3>
+          <div className="bg-gradient-to-br from-amber-50 to-white p-10 border border-amber-200">
+            <h3 className="text-2xl font-serif text-emerald-800 mb-4">{t.restaurant.banquet}</h3>
             <p className="text-gray-600 leading-relaxed">{t.restaurant.banquetDesc}</p>
           </div>
         </div>
@@ -861,9 +861,9 @@ const RestaurantPage = ({ t }) => (
 // ATTRACTIONS PAGE - LUXURY VERSION
 // ============================================
 const AttractionsPage = ({ t }) => (
-  <div className="bg-stone-50 pt-24">
-    <section className="py-20 bg-emerald-900 text-white text-center">
-      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.attractions}</p>
+  <div className="bg-amber-50/50 pt-24">
+    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-900 text-white text-center">
+      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.attractions}</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.attractions.title}</h1>
       <Divider />
       <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.attractions.subtitle}</p>
@@ -875,21 +875,23 @@ const AttractionsPage = ({ t }) => (
       </div>
     </section>
 
-    <section className="py-24 bg-stone-100">
+    <section className="py-24 bg-gradient-to-b from-amber-50 to-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-8">
           {[
-            { title: t.attractions.tsachilas, desc: t.attractions.tsachilasDesc, color: 'from-orange-600 to-red-700' },
-            { title: t.attractions.waterfalls, desc: t.attractions.waterfallsDesc, color: 'from-blue-500 to-cyan-600' },
-            { title: t.attractions.malecon, desc: t.attractions.maleconDesc, color: 'from-emerald-500 to-teal-600' },
-            { title: t.attractions.jelenTenka, desc: t.attractions.jelenTenkaDesc, color: 'from-purple-500 to-pink-600' }
+            { title: t.attractions.tsachilas, desc: t.attractions.tsachilasDesc, icon: Users },
+            { title: t.attractions.waterfalls, desc: t.attractions.waterfallsDesc, icon: Mountain },
+            { title: t.attractions.malecon, desc: t.attractions.maleconDesc, icon: MapPin },
+            { title: t.attractions.jelenTenka, desc: t.attractions.jelenTenkaDesc, icon: Star }
           ].map((item, i) => (
-            <div key={i} className="bg-white shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-500 group">
-              <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center`}>
-                <Mountain className="w-16 h-16 text-white/30 group-hover:scale-110 transition-transform duration-500" />
+            <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group">
+              <div className="h-48 bg-gradient-to-br from-amber-50 to-amber-100/50 flex items-center justify-center border-b border-amber-200/30">
+                <div className="w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <item.icon className="w-10 h-10 text-emerald-700" />
+                </div>
               </div>
               <div className="p-8">
-                <h3 className="text-xl font-serif text-emerald-900 mb-3">{item.title}</h3>
+                <h3 className="text-xl font-serif text-emerald-800 mb-3">{item.title}</h3>
                 <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
               </div>
             </div>
@@ -904,62 +906,62 @@ const AttractionsPage = ({ t }) => (
 // CONTACT PAGE - LUXURY VERSION
 // ============================================
 const ContactPage = ({ t }) => (
-  <div className="bg-stone-50 pt-24">
-    <section className="py-20 bg-emerald-900 text-white text-center">
-      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.contact}</p>
+  <div className="bg-amber-50/30 pt-24">
+    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
+      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.contact}</p>
       <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.contact.title}</h1>
       <Divider />
       <p className="text-emerald-100/70 mt-6">{t.contact.subtitle}</p>
     </section>
 
-    <section className="py-24">
+    <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Info */}
           <div>
             <div className="mb-4">
               <span className="text-xs tracking-[0.3em] uppercase text-amber-600">Hotel</span>
-              <h2 className="text-3xl font-serif text-emerald-900">del Pacífico</h2>
+              <h2 className="text-3xl font-serif text-emerald-800">del Pacífico</h2>
             </div>
             
             <div className="space-y-8 mt-10">
               <div className="flex items-start gap-5">
-                <div className="w-12 h-12 bg-emerald-900 rounded-full flex items-center justify-center flex-shrink-0">
-                  <MapPin className="w-5 h-5 text-amber-400" />
+                <div className="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-amber-300" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-emerald-900 mb-1">{t.contact.address}</h3>
+                  <h3 className="font-medium text-emerald-800 mb-1">{t.contact.address}</h3>
                   <p className="text-gray-600">{HOTEL_INFO.address}</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-5">
-                <div className="w-12 h-12 bg-emerald-900 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Phone className="w-5 h-5 text-amber-400" />
+                <div className="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-amber-300" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-emerald-900 mb-1">{t.contact.phone}</h3>
+                  <h3 className="font-medium text-emerald-800 mb-1">{t.contact.phone}</h3>
                   <p className="text-gray-600">{HOTEL_INFO.phone}</p>
                   <p className="text-gray-600">{HOTEL_INFO.phone2}</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-5">
-                <div className="w-12 h-12 bg-emerald-900 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-5 h-5 text-amber-400" />
+                <div className="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-amber-300" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-emerald-900 mb-1">{t.contact.email}</h3>
+                  <h3 className="font-medium text-emerald-800 mb-1">{t.contact.email}</h3>
                   <p className="text-gray-600">{HOTEL_INFO.email}</p>
                 </div>
               </div>
               
               <div className="flex items-start gap-5">
-                <div className="w-12 h-12 bg-emerald-900 rounded-full flex items-center justify-center flex-shrink-0">
-                  <Clock className="w-5 h-5 text-amber-400" />
+                <div className="w-12 h-12 bg-emerald-700 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-amber-300" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-emerald-900 mb-1">{t.contact.hours}</h3>
+                  <h3 className="font-medium text-emerald-800 mb-1">{t.contact.hours}</h3>
                   <p className="text-gray-600">24/7</p>
                 </div>
               </div>
@@ -967,28 +969,28 @@ const ContactPage = ({ t }) => (
           </div>
 
           {/* Contact Form */}
-          <div className="bg-white p-10 shadow-xl">
-            <h3 className="text-xl font-serif text-emerald-900 mb-8">{t.contact.formTitle}</h3>
+          <div className="bg-white p-10 shadow-xl border border-amber-100">
+            <h3 className="text-xl font-serif text-emerald-800 mb-8">{t.contact.formTitle}</h3>
             <form className="space-y-6">
               <div>
                 <label className="block text-sm text-gray-600 mb-2">{t.contact.form.name}</label>
-                <input type="text" className="w-full px-4 py-3 border border-stone-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors" />
+                <input type="text" className="w-full px-4 py-3 border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors bg-amber-50/30" />
               </div>
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm text-gray-600 mb-2">{t.contact.form.email}</label>
-                  <input type="email" className="w-full px-4 py-3 border border-stone-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors" />
+                  <input type="email" className="w-full px-4 py-3 border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors bg-amber-50/30" />
                 </div>
                 <div>
                   <label className="block text-sm text-gray-600 mb-2">{t.contact.form.phone}</label>
-                  <input type="tel" className="w-full px-4 py-3 border border-stone-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors" />
+                  <input type="tel" className="w-full px-4 py-3 border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors bg-amber-50/30" />
                 </div>
               </div>
               <div>
                 <label className="block text-sm text-gray-600 mb-2">{t.contact.form.message}</label>
-                <textarea rows={5} className="w-full px-4 py-3 border border-stone-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors resize-none" />
+                <textarea rows={5} className="w-full px-4 py-3 border border-amber-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors resize-none bg-amber-50/30" />
               </div>
-              <button type="submit" className="w-full bg-emerald-900 hover:bg-emerald-800 text-white py-4 text-sm tracking-widest uppercase transition-colors">
+              <button type="submit" className="w-full bg-emerald-700 hover:bg-emerald-600 text-white py-4 text-sm tracking-widest uppercase transition-colors">
                 {t.contact.form.send}
               </button>
             </form>
@@ -998,7 +1000,7 @@ const ContactPage = ({ t }) => (
     </section>
 
     {/* Map Placeholder */}
-    <section className="h-96 bg-stone-200 flex items-center justify-center">
+    <section className="h-96 bg-amber-100/50 flex items-center justify-center border-t border-amber-200">
       <div className="text-center text-gray-500">
         <MapPin className="w-12 h-12 mx-auto mb-4 text-emerald-600" />
         <p className="text-sm tracking-wider">Google Maps</p>
