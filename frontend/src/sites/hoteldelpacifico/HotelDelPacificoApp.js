@@ -1,121 +1,141 @@
 // Hotel del Pacifico - Santo Domingo, Ecuador
-// Main App Component with Multi-language Support
+// Luxury Hotel Website with Classic Design
 
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, Mail, MapPin, Clock, Wifi, Tv, Wind, Car, Coffee, Users, Building, ChevronDown, Facebook, Instagram, Globe, Star, Utensils, Camera, Home as HomeIcon, DollarSign, Mountain, MessageCircle } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, Clock, Wifi, Tv, Wind, Car, Coffee, Users, Building, ChevronDown, Facebook, Instagram, Globe, Star, Utensils, Camera, Home as HomeIcon, DollarSign, Mountain, MessageCircle, Sparkles, Shield, Heart } from 'lucide-react';
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
 import { IMG } from '@/utils/imageHelper';
 
 // ============================================
-// TRANSLATIONS
+// TRANSLATIONS (keeping the same structure)
 // ============================================
 const translations = {
   es: {
     nav: {
       home: 'Inicio',
       rooms: 'Habitaciones',
-      prices: 'Precios',
-      photos: 'Fotos',
+      prices: 'Tarifas',
+      photos: 'Galería',
       restaurant: 'Restaurante',
-      attractions: 'Atractivos',
+      attractions: 'Descubrir',
       contact: 'Contacto'
     },
     hero: {
+      welcome: 'Bienvenidos a',
       title: 'Hotel del Pacífico',
-      subtitle: 'Tu oasis de tranquilidad en el corazón de Santo Domingo',
+      subtitle: 'Un oasis de tranquilidad y elegancia en el corazón de Santo Domingo de los Tsáchilas',
       cta: 'Reservar Ahora',
-      explore: 'Explorar'
+      explore: 'Descubrir Más'
     },
     home: {
-      welcome: 'Bienvenidos',
-      welcomeText: 'Ubicado en el vibrante centro de Santo Domingo de los Tsáchilas, Hotel del Pacífico ofrece una experiencia única donde la comodidad moderna se encuentra con la calidez ecuatoriana. A pesar de nuestra ubicación céntrica, nuestros huéspedes disfrutan de un ambiente tranquilo y relajante.',
-      features: 'Nuestros Servicios',
-      rooms36: '36 Habitaciones',
-      roomsDesc: 'Amplias y confortables con todas las comodidades',
+      experience: 'La Experiencia',
+      experienceTitle: 'Donde el Confort se Encuentra con la Elegancia',
+      experienceText: 'Ubicado en el vibrante centro de Santo Domingo de los Tsáchilas, Hotel del Pacífico ofrece una experiencia única donde la comodidad moderna se encuentra con la calidez ecuatoriana. A pesar de nuestra ubicación céntrica, nuestros huéspedes disfrutan de un ambiente tranquilo y sofisticado, alejado del bullicio de la ciudad.',
+      features: 'Nuestros Servicios Exclusivos',
+      rooms36: '36 Habitaciones de Lujo',
+      roomsDesc: 'Espacios amplios y elegantes con todas las comodidades para una estadía perfecta',
       restaurant: 'Restaurante La Orquídea',
-      restaurantDesc: 'Desayuno, almuerzo y cena con cocina local e internacional',
-      businessCenter: 'Centro de Negocios',
-      businessDesc: 'Salón de banquetes con equipos audiovisuales',
-      pastry: 'Pastelería',
-      pastryDesc: 'Deliciosos pasteles y bocadillos caseros',
-      amenities: 'Comodidades',
-      wifi: 'WiFi Gratis',
-      ac: 'Aire Acondicionado',
+      restaurantDesc: 'Gastronomía excepcional con sabores locales e internacionales',
+      businessCenter: 'Centro de Convenciones',
+      businessDesc: 'Salones equipados con tecnología audiovisual de última generación',
+      pastry: 'Pastelería Artesanal',
+      pastryDesc: 'Delicias caseras preparadas diariamente por nuestros maestros pasteleros',
+      amenities: 'Comodidades Premium',
+      wifi: 'WiFi de Alta Velocidad',
+      ac: 'Climatización',
       tv: 'Smart TV',
-      parking: 'Parqueadero',
-      cleaning: 'Limpieza Diaria',
-      location: 'Ubicación Perfecta',
-      locationText: 'En el centro de la ciudad pero con la tranquilidad que necesitas'
+      parking: 'Estacionamiento Privado',
+      cleaning: 'Servicio de Habitación',
+      location: 'Ubicación Privilegiada',
+      locationText: 'En el corazón de la ciudad, pero con la serenidad de un refugio privado',
+      whyUs: '¿Por Qué Elegirnos?',
+      reason1: 'Atención Personalizada',
+      reason1Desc: 'Nuestro equipo está dedicado a hacer de su estadía una experiencia memorable',
+      reason2: 'Ubicación Estratégica',
+      reason2Desc: 'A minutos de los principales atractivos turísticos y comerciales',
+      reason3: 'Tranquilidad Garantizada',
+      reason3Desc: 'Un oasis de paz en medio de la vibrante ciudad'
     },
     rooms: {
       title: 'Nuestras Habitaciones',
-      subtitle: '36 habitaciones diseñadas para tu comodidad',
-      single: 'Habitación Simple',
-      double: 'Habitación Doble',
-      suite: 'Suite',
-      allInclude: 'Todas las habitaciones incluyen:',
-      features: ['Aire acondicionado', 'WiFi de alta velocidad', 'Smart TV', 'Baño privado', 'Limpieza diaria', 'Agua caliente 24h']
+      subtitle: 'Elegancia y confort en cada detalle',
+      description: '36 habitaciones diseñadas para brindarle el máximo confort durante su estadía',
+      single: 'Habitación Clásica',
+      singleDesc: 'Perfecta para viajeros individuales que buscan comodidad y tranquilidad',
+      double: 'Habitación Superior',
+      doubleDesc: 'Espaciosa y elegante, ideal para parejas o viajeros de negocios',
+      suite: 'Suite Ejecutiva',
+      suiteDesc: 'Nuestra opción más exclusiva con área de estar independiente',
+      allInclude: 'Todas nuestras habitaciones incluyen:',
+      features: ['Aire acondicionado silencioso', 'WiFi de alta velocidad', 'Smart TV con streaming', 'Baño privado de lujo', 'Servicio de limpieza diario', 'Agua caliente las 24 horas', 'Amenities premium', 'Caja de seguridad']
     },
     prices: {
       title: 'Tarifas',
-      subtitle: 'Precios competitivos para tu estadía perfecta',
+      subtitle: 'Inversión en su comodidad',
       perNight: 'por noche',
-      includes: 'Incluye:',
-      breakfast: 'Desayuno incluido',
-      taxes: 'Impuestos incluidos',
-      contact: 'Contáctenos para reservas'
+      includes: 'Todas las tarifas incluyen:',
+      breakfast: 'Desayuno buffet',
+      taxes: 'Impuestos',
+      wifi: 'WiFi ilimitado',
+      parking: 'Estacionamiento',
+      contact: 'Solicitar Reserva'
     },
     photos: {
       title: 'Galería',
-      subtitle: 'Descubre nuestras instalaciones'
+      subtitle: 'Descubra nuestros espacios'
     },
     restaurant: {
       title: 'Restaurante La Orquídea',
-      subtitle: 'Sabores que enamoran',
-      description: 'Nuestro restaurante ofrece una experiencia gastronómica única con platos de la cocina ecuatoriana e internacional. Disfruta de ingredientes frescos y locales preparados por nuestros expertos chefs.',
+      subtitle: 'Una experiencia gastronómica inolvidable',
+      description: 'Nuestro restaurante combina los mejores ingredientes locales con técnicas culinarias internacionales, creando una experiencia gastronómica que deleitará su paladar.',
       breakfast: 'Desayuno',
       breakfastTime: 'Horario próximamente',
+      breakfastDesc: 'Comience su día con nuestro variado buffet de desayuno',
       lunch: 'Almuerzo',
       lunchTime: 'Horario próximamente',
+      lunchDesc: 'Deléitese con nuestra selección de platos ejecutivos',
       dinner: 'Cena',
       dinnerTime: 'Horario próximamente',
-      pastry: 'Pastelería',
-      pastryDesc: 'Disfruta de nuestros deliciosos pasteles, tortas y bocadillos caseros preparados diariamente.',
-      banquet: 'Salón de Banquetes',
-      banquetDesc: 'Espacio ideal para eventos corporativos y celebraciones, equipado con tecnología audiovisual moderna.'
+      dinnerDesc: 'Una velada perfecta con nuestra carta gourmet',
+      pastry: 'Pastelería Artesanal',
+      pastryDesc: 'Disfrute de nuestras exquisitas creaciones: tortas, pasteles, postres y bocadillos preparados diariamente con ingredientes selectos.',
+      banquet: 'Salón de Eventos',
+      banquetDesc: 'Espacio versátil para eventos corporativos, conferencias y celebraciones especiales. Equipado con tecnología audiovisual de última generación y servicio de catering personalizado.'
     },
     attractions: {
-      title: 'Atractivos Turísticos',
-      subtitle: 'Descubre Santo Domingo de los Tsáchilas',
-      intro: 'Santo Domingo es la puerta de entrada a la costa ecuatoriana, rica en cultura, naturaleza y aventura.',
+      title: 'Descubra Santo Domingo',
+      subtitle: 'La puerta de entrada a la costa ecuatoriana',
+      intro: 'Santo Domingo de los Tsáchilas es una tierra de contrastes, donde la rica cultura indígena se mezcla con la exuberante naturaleza tropical. Permítanos guiarle hacia experiencias inolvidables.',
       tsachilas: 'Comunidad Tsáchila',
-      tsachilasDesc: 'Conoce la fascinante cultura de los Tsáchilas, conocidos como "Colorados" por su tradicional pintura de cabello con achiote. Una experiencia cultural única.',
-      waterfalls: 'Cascadas',
-      waterfallsDesc: 'La región cuenta con impresionantes cascadas rodeadas de exuberante vegetación tropical. Perfectas para el ecoturismo y la aventura.',
+      tsachilasDesc: 'Sumérjase en la fascinante cultura de los Tsáchilas, conocidos como "Colorados" por su tradicional pintura de cabello con achiote. Una experiencia cultural auténtica y enriquecedora.',
+      waterfalls: 'Cascadas Naturales',
+      waterfallsDesc: 'Descubra impresionantes cascadas escondidas entre la exuberante vegetación tropical. Aventura y naturaleza en estado puro.',
       malecon: 'Malecón San Gabriel del Baba',
-      maleconDesc: 'Un hermoso paseo junto al río con áreas verdes, restaurantes y espacios recreativos para toda la familia.',
+      maleconDesc: 'Disfrute de un paseo junto al río en este encantador malecón con áreas verdes, gastronomía local y espacios recreativos para toda la familia.',
       jelenTenka: 'Jelen Tenka',
-      jelenTenkaDesc: 'Centro turístico y cultural que ofrece una inmersión en las tradiciones Tsáchilas con rituales, gastronomía y naturaleza.'
+      jelenTenkaDesc: 'Centro turístico que ofrece una inmersión completa en las tradiciones Tsáchilas: rituales ancestrales, gastronomía típica y conexión con la naturaleza.'
     },
     contact: {
       title: 'Contacto',
-      subtitle: 'Estamos aquí para ayudarte',
+      subtitle: 'Estamos a su servicio',
       address: 'Dirección',
       phone: 'Teléfono',
       email: 'Correo Electrónico',
       hours: 'Recepción 24 horas',
+      formTitle: 'Envíenos un mensaje',
       form: {
-        name: 'Nombre',
-        email: 'Correo',
-        message: 'Mensaje',
+        name: 'Nombre completo',
+        email: 'Correo electrónico',
+        phone: 'Teléfono',
+        message: 'Su mensaje',
         send: 'Enviar Mensaje'
       }
     },
     footer: {
       rights: 'Todos los derechos reservados',
-      slogan: 'Tu hogar lejos de casa en Santo Domingo'
+      slogan: 'Su hogar lejos de casa en Santo Domingo'
     }
   },
   en: {
@@ -123,99 +143,119 @@ const translations = {
       home: 'Home',
       rooms: 'Rooms',
       prices: 'Rates',
-      photos: 'Photos',
-      restaurant: 'Restaurant',
-      attractions: 'Attractions',
+      photos: 'Gallery',
+      restaurant: 'Dining',
+      attractions: 'Explore',
       contact: 'Contact'
     },
     hero: {
+      welcome: 'Welcome to',
       title: 'Hotel del Pacífico',
-      subtitle: 'Your oasis of tranquility in the heart of Santo Domingo',
+      subtitle: 'An oasis of tranquility and elegance in the heart of Santo Domingo de los Tsáchilas',
       cta: 'Book Now',
-      explore: 'Explore'
+      explore: 'Discover More'
     },
     home: {
-      welcome: 'Welcome',
-      welcomeText: 'Located in the vibrant center of Santo Domingo de los Tsáchilas, Hotel del Pacífico offers a unique experience where modern comfort meets Ecuadorian warmth. Despite our central location, our guests enjoy a quiet and relaxing atmosphere.',
-      features: 'Our Services',
-      rooms36: '36 Rooms',
-      roomsDesc: 'Spacious and comfortable with all amenities',
+      experience: 'The Experience',
+      experienceTitle: 'Where Comfort Meets Elegance',
+      experienceText: 'Located in the vibrant center of Santo Domingo de los Tsáchilas, Hotel del Pacífico offers a unique experience where modern comfort meets Ecuadorian warmth. Despite our central location, our guests enjoy a quiet and sophisticated atmosphere, away from the city bustle.',
+      features: 'Our Exclusive Services',
+      rooms36: '36 Luxury Rooms',
+      roomsDesc: 'Spacious and elegant spaces with all amenities for a perfect stay',
       restaurant: 'La Orquídea Restaurant',
-      restaurantDesc: 'Breakfast, lunch and dinner with local and international cuisine',
-      businessCenter: 'Business Center',
-      businessDesc: 'Banquet hall with audiovisual equipment',
-      pastry: 'Pastry Shop',
-      pastryDesc: 'Delicious homemade cakes and snacks',
-      amenities: 'Amenities',
-      wifi: 'Free WiFi',
-      ac: 'Air Conditioning',
+      restaurantDesc: 'Exceptional gastronomy with local and international flavors',
+      businessCenter: 'Convention Center',
+      businessDesc: 'Halls equipped with state-of-the-art audiovisual technology',
+      pastry: 'Artisan Pastry Shop',
+      pastryDesc: 'Homemade delights prepared daily by our master pastry chefs',
+      amenities: 'Premium Amenities',
+      wifi: 'High-Speed WiFi',
+      ac: 'Climate Control',
       tv: 'Smart TV',
-      parking: 'Parking',
-      cleaning: 'Daily Cleaning',
-      location: 'Perfect Location',
-      locationText: 'In the city center but with the tranquility you need'
+      parking: 'Private Parking',
+      cleaning: 'Room Service',
+      location: 'Privileged Location',
+      locationText: 'In the heart of the city, yet with the serenity of a private retreat',
+      whyUs: 'Why Choose Us?',
+      reason1: 'Personalized Attention',
+      reason1Desc: 'Our team is dedicated to making your stay a memorable experience',
+      reason2: 'Strategic Location',
+      reason2Desc: 'Minutes from main tourist and commercial attractions',
+      reason3: 'Guaranteed Tranquility',
+      reason3Desc: 'An oasis of peace in the middle of the vibrant city'
     },
     rooms: {
       title: 'Our Rooms',
-      subtitle: '36 rooms designed for your comfort',
-      single: 'Single Room',
-      double: 'Double Room',
-      suite: 'Suite',
-      allInclude: 'All rooms include:',
-      features: ['Air conditioning', 'High-speed WiFi', 'Smart TV', 'Private bathroom', 'Daily cleaning', '24h hot water']
+      subtitle: 'Elegance and comfort in every detail',
+      description: '36 rooms designed to provide you maximum comfort during your stay',
+      single: 'Classic Room',
+      singleDesc: 'Perfect for individual travelers seeking comfort and tranquility',
+      double: 'Superior Room',
+      doubleDesc: 'Spacious and elegant, ideal for couples or business travelers',
+      suite: 'Executive Suite',
+      suiteDesc: 'Our most exclusive option with separate living area',
+      allInclude: 'All our rooms include:',
+      features: ['Silent air conditioning', 'High-speed WiFi', 'Smart TV with streaming', 'Luxury private bathroom', 'Daily cleaning service', '24-hour hot water', 'Premium amenities', 'Safety box']
     },
     prices: {
       title: 'Rates',
-      subtitle: 'Competitive prices for your perfect stay',
+      subtitle: 'Investment in your comfort',
       perNight: 'per night',
-      includes: 'Includes:',
-      breakfast: 'Breakfast included',
-      taxes: 'Taxes included',
-      contact: 'Contact us for reservations'
+      includes: 'All rates include:',
+      breakfast: 'Buffet breakfast',
+      taxes: 'Taxes',
+      wifi: 'Unlimited WiFi',
+      parking: 'Parking',
+      contact: 'Request Booking'
     },
     photos: {
       title: 'Gallery',
-      subtitle: 'Discover our facilities'
+      subtitle: 'Discover our spaces'
     },
     restaurant: {
       title: 'La Orquídea Restaurant',
-      subtitle: 'Flavors that captivate',
-      description: 'Our restaurant offers a unique gastronomic experience with dishes from Ecuadorian and international cuisine. Enjoy fresh, local ingredients prepared by our expert chefs.',
+      subtitle: 'An unforgettable gastronomic experience',
+      description: 'Our restaurant combines the best local ingredients with international culinary techniques, creating a gastronomic experience that will delight your palate.',
       breakfast: 'Breakfast',
       breakfastTime: 'Schedule coming soon',
+      breakfastDesc: 'Start your day with our varied breakfast buffet',
       lunch: 'Lunch',
       lunchTime: 'Schedule coming soon',
+      lunchDesc: 'Delight yourself with our selection of executive dishes',
       dinner: 'Dinner',
       dinnerTime: 'Schedule coming soon',
-      pastry: 'Pastry Shop',
-      pastryDesc: 'Enjoy our delicious homemade cakes, pies and snacks prepared daily.',
-      banquet: 'Banquet Hall',
-      banquetDesc: 'Ideal space for corporate events and celebrations, equipped with modern audiovisual technology.'
+      dinnerDesc: 'A perfect evening with our gourmet menu',
+      pastry: 'Artisan Pastry Shop',
+      pastryDesc: 'Enjoy our exquisite creations: cakes, pastries, desserts and snacks prepared daily with select ingredients.',
+      banquet: 'Event Hall',
+      banquetDesc: 'Versatile space for corporate events, conferences and special celebrations. Equipped with state-of-the-art audiovisual technology and personalized catering service.'
     },
     attractions: {
-      title: 'Tourist Attractions',
-      subtitle: 'Discover Santo Domingo de los Tsáchilas',
-      intro: 'Santo Domingo is the gateway to the Ecuadorian coast, rich in culture, nature and adventure.',
+      title: 'Discover Santo Domingo',
+      subtitle: 'The gateway to the Ecuadorian coast',
+      intro: 'Santo Domingo de los Tsáchilas is a land of contrasts, where rich indigenous culture blends with lush tropical nature. Let us guide you to unforgettable experiences.',
       tsachilas: 'Tsáchila Community',
-      tsachilasDesc: 'Learn about the fascinating Tsáchila culture, known as "Colorados" for their traditional achiote hair painting. A unique cultural experience.',
-      waterfalls: 'Waterfalls',
-      waterfallsDesc: 'The region has impressive waterfalls surrounded by lush tropical vegetation. Perfect for ecotourism and adventure.',
+      tsachilasDesc: 'Immerse yourself in the fascinating Tsáchila culture, known as "Colorados" for their traditional achiote hair painting. An authentic and enriching cultural experience.',
+      waterfalls: 'Natural Waterfalls',
+      waterfallsDesc: 'Discover impressive waterfalls hidden among lush tropical vegetation. Adventure and nature in its purest state.',
       malecon: 'San Gabriel del Baba Boardwalk',
-      maleconDesc: 'A beautiful riverside promenade with green areas, restaurants and recreational spaces for the whole family.',
+      maleconDesc: 'Enjoy a riverside walk on this charming boardwalk with green areas, local gastronomy and recreational spaces for the whole family.',
       jelenTenka: 'Jelen Tenka',
-      jelenTenkaDesc: 'Tourist and cultural center offering an immersion in Tsáchila traditions with rituals, gastronomy and nature.'
+      jelenTenkaDesc: 'Tourist center offering a complete immersion in Tsáchila traditions: ancestral rituals, typical gastronomy and connection with nature.'
     },
     contact: {
       title: 'Contact',
-      subtitle: 'We are here to help you',
+      subtitle: 'At your service',
       address: 'Address',
       phone: 'Phone',
       email: 'Email',
       hours: '24-hour reception',
+      formTitle: 'Send us a message',
       form: {
-        name: 'Name',
+        name: 'Full name',
         email: 'Email',
-        message: 'Message',
+        phone: 'Phone',
+        message: 'Your message',
         send: 'Send Message'
       }
     },
@@ -225,322 +265,40 @@ const translations = {
     }
   },
   fr: {
-    nav: {
-      home: 'Accueil',
-      rooms: 'Chambres',
-      prices: 'Tarifs',
-      photos: 'Photos',
-      restaurant: 'Restaurant',
-      attractions: 'Attractions',
-      contact: 'Contact'
-    },
-    hero: {
-      title: 'Hotel del Pacífico',
-      subtitle: 'Votre oasis de tranquillité au cœur de Santo Domingo',
-      cta: 'Réserver',
-      explore: 'Explorer'
-    },
-    home: {
-      welcome: 'Bienvenue',
-      welcomeText: 'Situé au cœur vibrant de Santo Domingo de los Tsáchilas, l\'Hotel del Pacífico offre une expérience unique où le confort moderne rencontre la chaleur équatorienne. Malgré notre emplacement central, nos clients profitent d\'une atmosphère calme et relaxante.',
-      features: 'Nos Services',
-      rooms36: '36 Chambres',
-      roomsDesc: 'Spacieuses et confortables avec toutes les commodités',
-      restaurant: 'Restaurant La Orquídea',
-      restaurantDesc: 'Petit-déjeuner, déjeuner et dîner avec cuisine locale et internationale',
-      businessCenter: 'Centre d\'Affaires',
-      businessDesc: 'Salle de banquet avec équipements audiovisuels',
-      pastry: 'Pâtisserie',
-      pastryDesc: 'Délicieux gâteaux et snacks faits maison',
-      amenities: 'Commodités',
-      wifi: 'WiFi Gratuit',
-      ac: 'Climatisation',
-      tv: 'Smart TV',
-      parking: 'Parking',
-      cleaning: 'Nettoyage Quotidien',
-      location: 'Emplacement Parfait',
-      locationText: 'Au centre-ville mais avec la tranquillité dont vous avez besoin'
-    },
-    rooms: {
-      title: 'Nos Chambres',
-      subtitle: '36 chambres conçues pour votre confort',
-      single: 'Chambre Simple',
-      double: 'Chambre Double',
-      suite: 'Suite',
-      allInclude: 'Toutes les chambres incluent:',
-      features: ['Climatisation', 'WiFi haut débit', 'Smart TV', 'Salle de bain privée', 'Nettoyage quotidien', 'Eau chaude 24h']
-    },
-    prices: {
-      title: 'Tarifs',
-      subtitle: 'Prix compétitifs pour un séjour parfait',
-      perNight: 'par nuit',
-      includes: 'Inclus:',
-      breakfast: 'Petit-déjeuner inclus',
-      taxes: 'Taxes incluses',
-      contact: 'Contactez-nous pour réserver'
-    },
-    photos: {
-      title: 'Galerie',
-      subtitle: 'Découvrez nos installations'
-    },
-    restaurant: {
-      title: 'Restaurant La Orquídea',
-      subtitle: 'Des saveurs qui séduisent',
-      description: 'Notre restaurant offre une expérience gastronomique unique avec des plats de la cuisine équatorienne et internationale. Profitez d\'ingrédients frais et locaux préparés par nos chefs experts.',
-      breakfast: 'Petit-déjeuner',
-      breakfastTime: 'Horaires à venir',
-      lunch: 'Déjeuner',
-      lunchTime: 'Horaires à venir',
-      dinner: 'Dîner',
-      dinnerTime: 'Horaires à venir',
-      pastry: 'Pâtisserie',
-      pastryDesc: 'Dégustez nos délicieux gâteaux, tartes et snacks faits maison préparés quotidiennement.',
-      banquet: 'Salle de Banquet',
-      banquetDesc: 'Espace idéal pour événements corporatifs et célébrations, équipé de technologie audiovisuelle moderne.'
-    },
-    attractions: {
-      title: 'Attractions Touristiques',
-      subtitle: 'Découvrez Santo Domingo de los Tsáchilas',
-      intro: 'Santo Domingo est la porte d\'entrée de la côte équatorienne, riche en culture, nature et aventure.',
-      tsachilas: 'Communauté Tsáchila',
-      tsachilasDesc: 'Découvrez la fascinante culture des Tsáchilas, connus comme "Colorados" pour leur peinture traditionnelle des cheveux à l\'achiote. Une expérience culturelle unique.',
-      waterfalls: 'Cascades',
-      waterfallsDesc: 'La région possède d\'impressionnantes cascades entourées d\'une végétation tropicale luxuriante. Parfait pour l\'écotourisme et l\'aventure.',
-      malecon: 'Malecón San Gabriel del Baba',
-      maleconDesc: 'Une belle promenade au bord de la rivière avec des espaces verts, des restaurants et des espaces récréatifs pour toute la famille.',
-      jelenTenka: 'Jelen Tenka',
-      jelenTenkaDesc: 'Centre touristique et culturel offrant une immersion dans les traditions Tsáchilas avec rituels, gastronomie et nature.'
-    },
-    contact: {
-      title: 'Contact',
-      subtitle: 'Nous sommes là pour vous aider',
-      address: 'Adresse',
-      phone: 'Téléphone',
-      email: 'Email',
-      hours: 'Réception 24h/24',
-      form: {
-        name: 'Nom',
-        email: 'Email',
-        message: 'Message',
-        send: 'Envoyer'
-      }
-    },
-    footer: {
-      rights: 'Tous droits réservés',
-      slogan: 'Votre chez-vous loin de chez vous à Santo Domingo'
-    }
+    nav: { home: 'Accueil', rooms: 'Chambres', prices: 'Tarifs', photos: 'Galerie', restaurant: 'Restaurant', attractions: 'Découvrir', contact: 'Contact' },
+    hero: { welcome: 'Bienvenue au', title: 'Hotel del Pacífico', subtitle: 'Une oasis de tranquillité et d\'élégance au cœur de Santo Domingo de los Tsáchilas', cta: 'Réserver', explore: 'Découvrir' },
+    home: { experience: 'L\'Expérience', experienceTitle: 'Où le Confort Rencontre l\'Élégance', experienceText: 'Situé au cœur vibrant de Santo Domingo de los Tsáchilas, l\'Hotel del Pacífico offre une expérience unique où le confort moderne rencontre la chaleur équatorienne.', features: 'Nos Services Exclusifs', rooms36: '36 Chambres de Luxe', roomsDesc: 'Espaces spacieux et élégants avec tout le confort', restaurant: 'Restaurant La Orquídea', restaurantDesc: 'Gastronomie exceptionnelle aux saveurs locales et internationales', businessCenter: 'Centre de Conférences', businessDesc: 'Salles équipées de technologie audiovisuelle', pastry: 'Pâtisserie Artisanale', pastryDesc: 'Délices maison préparés quotidiennement', amenities: 'Équipements Premium', wifi: 'WiFi Haut Débit', ac: 'Climatisation', tv: 'Smart TV', parking: 'Parking Privé', cleaning: 'Service de Chambre', location: 'Emplacement Privilégié', locationText: 'Au cœur de la ville, avec la sérénité d\'un refuge privé', whyUs: 'Pourquoi Nous Choisir?', reason1: 'Attention Personnalisée', reason1Desc: 'Notre équipe est dédiée à rendre votre séjour mémorable', reason2: 'Emplacement Stratégique', reason2Desc: 'À quelques minutes des principales attractions', reason3: 'Tranquillité Garantie', reason3Desc: 'Une oasis de paix au milieu de la ville' },
+    rooms: { title: 'Nos Chambres', subtitle: 'Élégance et confort dans chaque détail', description: '36 chambres conçues pour votre confort', single: 'Chambre Classique', singleDesc: 'Parfaite pour les voyageurs individuels', double: 'Chambre Supérieure', doubleDesc: 'Spacieuse et élégante', suite: 'Suite Exécutive', suiteDesc: 'Notre option la plus exclusive', allInclude: 'Toutes nos chambres incluent:', features: ['Climatisation silencieuse', 'WiFi haut débit', 'Smart TV', 'Salle de bain privée', 'Nettoyage quotidien', 'Eau chaude 24h', 'Amenities premium', 'Coffre-fort'] },
+    prices: { title: 'Tarifs', subtitle: 'Investissement dans votre confort', perNight: 'par nuit', includes: 'Tous les tarifs incluent:', breakfast: 'Petit-déjeuner buffet', taxes: 'Taxes', wifi: 'WiFi illimité', parking: 'Parking', contact: 'Demander une Réservation' },
+    photos: { title: 'Galerie', subtitle: 'Découvrez nos espaces' },
+    restaurant: { title: 'Restaurant La Orquídea', subtitle: 'Une expérience gastronomique inoubliable', description: 'Notre restaurant combine les meilleurs ingrédients locaux avec des techniques culinaires internationales.', breakfast: 'Petit-déjeuner', breakfastTime: 'Horaires à venir', breakfastDesc: 'Commencez votre journée avec notre buffet varié', lunch: 'Déjeuner', lunchTime: 'Horaires à venir', lunchDesc: 'Délectez-vous de notre sélection de plats', dinner: 'Dîner', dinnerTime: 'Horaires à venir', dinnerDesc: 'Une soirée parfaite avec notre menu gourmet', pastry: 'Pâtisserie Artisanale', pastryDesc: 'Profitez de nos créations exquises préparées quotidiennement.', banquet: 'Salle d\'Événements', banquetDesc: 'Espace polyvalent pour événements corporatifs et célébrations.' },
+    attractions: { title: 'Découvrez Santo Domingo', subtitle: 'La porte d\'entrée de la côte équatorienne', intro: 'Santo Domingo de los Tsáchilas est une terre de contrastes.', tsachilas: 'Communauté Tsáchila', tsachilasDesc: 'Plongez dans la fascinante culture des Tsáchilas.', waterfalls: 'Cascades Naturelles', waterfallsDesc: 'Découvrez des cascades impressionnantes.', malecon: 'Malecón San Gabriel del Baba', maleconDesc: 'Profitez d\'une promenade au bord de la rivière.', jelenTenka: 'Jelen Tenka', jelenTenkaDesc: 'Centre touristique offrant une immersion complète.' },
+    contact: { title: 'Contact', subtitle: 'À votre service', address: 'Adresse', phone: 'Téléphone', email: 'Email', hours: 'Réception 24h/24', formTitle: 'Envoyez-nous un message', form: { name: 'Nom complet', email: 'Email', phone: 'Téléphone', message: 'Votre message', send: 'Envoyer' } },
+    footer: { rights: 'Tous droits réservés', slogan: 'Votre chez-vous loin de chez vous' }
   },
   it: {
-    nav: {
-      home: 'Home',
-      rooms: 'Camere',
-      prices: 'Prezzi',
-      photos: 'Foto',
-      restaurant: 'Ristorante',
-      attractions: 'Attrazioni',
-      contact: 'Contatto'
-    },
-    hero: {
-      title: 'Hotel del Pacífico',
-      subtitle: 'La tua oasi di tranquillità nel cuore di Santo Domingo',
-      cta: 'Prenota Ora',
-      explore: 'Esplora'
-    },
-    home: {
-      welcome: 'Benvenuti',
-      welcomeText: 'Situato nel vivace centro di Santo Domingo de los Tsáchilas, l\'Hotel del Pacífico offre un\'esperienza unica dove il comfort moderno incontra il calore ecuadoriano. Nonostante la nostra posizione centrale, i nostri ospiti godono di un\'atmosfera tranquilla e rilassante.',
-      features: 'I Nostri Servizi',
-      rooms36: '36 Camere',
-      roomsDesc: 'Spaziose e confortevoli con tutti i comfort',
-      restaurant: 'Ristorante La Orquídea',
-      restaurantDesc: 'Colazione, pranzo e cena con cucina locale e internazionale',
-      businessCenter: 'Business Center',
-      businessDesc: 'Sala banchetti con attrezzature audiovisive',
-      pastry: 'Pasticceria',
-      pastryDesc: 'Deliziose torte e snack fatti in casa',
-      amenities: 'Comfort',
-      wifi: 'WiFi Gratuito',
-      ac: 'Aria Condizionata',
-      tv: 'Smart TV',
-      parking: 'Parcheggio',
-      cleaning: 'Pulizia Giornaliera',
-      location: 'Posizione Perfetta',
-      locationText: 'Nel centro città ma con la tranquillità di cui hai bisogno'
-    },
-    rooms: {
-      title: 'Le Nostre Camere',
-      subtitle: '36 camere progettate per il tuo comfort',
-      single: 'Camera Singola',
-      double: 'Camera Doppia',
-      suite: 'Suite',
-      allInclude: 'Tutte le camere includono:',
-      features: ['Aria condizionata', 'WiFi ad alta velocità', 'Smart TV', 'Bagno privato', 'Pulizia giornaliera', 'Acqua calda 24h']
-    },
-    prices: {
-      title: 'Tariffe',
-      subtitle: 'Prezzi competitivi per il tuo soggiorno perfetto',
-      perNight: 'per notte',
-      includes: 'Include:',
-      breakfast: 'Colazione inclusa',
-      taxes: 'Tasse incluse',
-      contact: 'Contattaci per prenotazioni'
-    },
-    photos: {
-      title: 'Galleria',
-      subtitle: 'Scopri le nostre strutture'
-    },
-    restaurant: {
-      title: 'Ristorante La Orquídea',
-      subtitle: 'Sapori che conquistano',
-      description: 'Il nostro ristorante offre un\'esperienza gastronomica unica con piatti della cucina ecuadoriana e internazionale. Goditi ingredienti freschi e locali preparati dai nostri chef esperti.',
-      breakfast: 'Colazione',
-      breakfastTime: 'Orario in arrivo',
-      lunch: 'Pranzo',
-      lunchTime: 'Orario in arrivo',
-      dinner: 'Cena',
-      dinnerTime: 'Orario in arrivo',
-      pastry: 'Pasticceria',
-      pastryDesc: 'Goditi le nostre deliziose torte, crostate e snack fatti in casa preparati quotidianamente.',
-      banquet: 'Sala Banchetti',
-      banquetDesc: 'Spazio ideale per eventi aziendali e celebrazioni, dotato di moderna tecnologia audiovisiva.'
-    },
-    attractions: {
-      title: 'Attrazioni Turistiche',
-      subtitle: 'Scopri Santo Domingo de los Tsáchilas',
-      intro: 'Santo Domingo è la porta d\'ingresso alla costa ecuadoriana, ricca di cultura, natura e avventura.',
-      tsachilas: 'Comunità Tsáchila',
-      tsachilasDesc: 'Scopri l\'affascinante cultura dei Tsáchila, conosciuti come "Colorados" per la loro tradizionale pittura dei capelli con achiote. Un\'esperienza culturale unica.',
-      waterfalls: 'Cascate',
-      waterfallsDesc: 'La regione vanta impressionanti cascate circondate da lussureggiante vegetazione tropicale. Perfette per l\'ecoturismo e l\'avventura.',
-      malecon: 'Lungofiume San Gabriel del Baba',
-      maleconDesc: 'Una bella passeggiata lungo il fiume con aree verdi, ristoranti e spazi ricreativi per tutta la famiglia.',
-      jelenTenka: 'Jelen Tenka',
-      jelenTenkaDesc: 'Centro turistico e culturale che offre un\'immersione nelle tradizioni Tsáchila con rituali, gastronomia e natura.'
-    },
-    contact: {
-      title: 'Contatto',
-      subtitle: 'Siamo qui per aiutarti',
-      address: 'Indirizzo',
-      phone: 'Telefono',
-      email: 'Email',
-      hours: 'Reception 24 ore',
-      form: {
-        name: 'Nome',
-        email: 'Email',
-        message: 'Messaggio',
-        send: 'Invia Messaggio'
-      }
-    },
-    footer: {
-      rights: 'Tutti i diritti riservati',
-      slogan: 'La tua casa lontano da casa a Santo Domingo'
-    }
+    nav: { home: 'Home', rooms: 'Camere', prices: 'Tariffe', photos: 'Galleria', restaurant: 'Ristorante', attractions: 'Scoprire', contact: 'Contatto' },
+    hero: { welcome: 'Benvenuti al', title: 'Hotel del Pacífico', subtitle: 'Un\'oasi di tranquillità ed eleganza nel cuore di Santo Domingo de los Tsáchilas', cta: 'Prenota Ora', explore: 'Scopri di Più' },
+    home: { experience: 'L\'Esperienza', experienceTitle: 'Dove il Comfort Incontra l\'Eleganza', experienceText: 'Situato nel vivace centro di Santo Domingo de los Tsáchilas, l\'Hotel del Pacífico offre un\'esperienza unica dove il comfort moderno incontra il calore ecuadoriano.', features: 'I Nostri Servizi Esclusivi', rooms36: '36 Camere di Lusso', roomsDesc: 'Spazi ampi ed eleganti con tutti i comfort', restaurant: 'Ristorante La Orquídea', restaurantDesc: 'Gastronomia eccezionale con sapori locali e internazionali', businessCenter: 'Centro Congressi', businessDesc: 'Sale attrezzate con tecnologia audiovisiva', pastry: 'Pasticceria Artigianale', pastryDesc: 'Delizie fatte in casa preparate quotidianamente', amenities: 'Comfort Premium', wifi: 'WiFi ad Alta Velocità', ac: 'Climatizzazione', tv: 'Smart TV', parking: 'Parcheggio Privato', cleaning: 'Servizio in Camera', location: 'Posizione Privilegiata', locationText: 'Nel cuore della città, con la serenità di un rifugio privato', whyUs: 'Perché Sceglierci?', reason1: 'Attenzione Personalizzata', reason1Desc: 'Il nostro team è dedicato a rendere il vostro soggiorno memorabile', reason2: 'Posizione Strategica', reason2Desc: 'A pochi minuti dalle principali attrazioni', reason3: 'Tranquillità Garantita', reason3Desc: 'Un\'oasi di pace nel mezzo della città' },
+    rooms: { title: 'Le Nostre Camere', subtitle: 'Eleganza e comfort in ogni dettaglio', description: '36 camere progettate per il massimo comfort', single: 'Camera Classica', singleDesc: 'Perfetta per viaggiatori individuali', double: 'Camera Superior', doubleDesc: 'Spaziosa ed elegante', suite: 'Suite Executive', suiteDesc: 'La nostra opzione più esclusiva', allInclude: 'Tutte le nostre camere includono:', features: ['Aria condizionata silenziosa', 'WiFi ad alta velocità', 'Smart TV', 'Bagno privato di lusso', 'Pulizia giornaliera', 'Acqua calda 24h', 'Amenities premium', 'Cassaforte'] },
+    prices: { title: 'Tariffe', subtitle: 'Investimento nel vostro comfort', perNight: 'per notte', includes: 'Tutte le tariffe includono:', breakfast: 'Colazione a buffet', taxes: 'Tasse', wifi: 'WiFi illimitato', parking: 'Parcheggio', contact: 'Richiedi Prenotazione' },
+    photos: { title: 'Galleria', subtitle: 'Scopri i nostri spazi' },
+    restaurant: { title: 'Ristorante La Orquídea', subtitle: 'Un\'esperienza gastronomica indimenticabile', description: 'Il nostro ristorante combina i migliori ingredienti locali con tecniche culinarie internazionali.', breakfast: 'Colazione', breakfastTime: 'Orari in arrivo', breakfastDesc: 'Inizia la giornata con il nostro buffet', lunch: 'Pranzo', lunchTime: 'Orari in arrivo', lunchDesc: 'Deliziati con la nostra selezione', dinner: 'Cena', dinnerTime: 'Orari in arrivo', dinnerDesc: 'Una serata perfetta con il nostro menu gourmet', pastry: 'Pasticceria Artigianale', pastryDesc: 'Goditi le nostre creazioni squisite preparate quotidianamente.', banquet: 'Sala Eventi', banquetDesc: 'Spazio versatile per eventi aziendali e celebrazioni.' },
+    attractions: { title: 'Scopri Santo Domingo', subtitle: 'La porta d\'ingresso alla costa ecuadoriana', intro: 'Santo Domingo de los Tsáchilas è una terra di contrasti.', tsachilas: 'Comunità Tsáchila', tsachilasDesc: 'Immergiti nell\'affascinante cultura dei Tsáchila.', waterfalls: 'Cascate Naturali', waterfallsDesc: 'Scopri cascate impressionanti.', malecon: 'Lungofiume San Gabriel del Baba', maleconDesc: 'Goditi una passeggiata lungo il fiume.', jelenTenka: 'Jelen Tenka', jelenTenkaDesc: 'Centro turistico con immersione completa nelle tradizioni.' },
+    contact: { title: 'Contatto', subtitle: 'Al vostro servizio', address: 'Indirizzo', phone: 'Telefono', email: 'Email', hours: 'Reception 24 ore', formTitle: 'Inviaci un messaggio', form: { name: 'Nome completo', email: 'Email', phone: 'Telefono', message: 'Il tuo messaggio', send: 'Invia Messaggio' } },
+    footer: { rights: 'Tutti i diritti riservati', slogan: 'La vostra casa lontano da casa' }
   },
   de: {
-    nav: {
-      home: 'Startseite',
-      rooms: 'Zimmer',
-      prices: 'Preise',
-      photos: 'Fotos',
-      restaurant: 'Restaurant',
-      attractions: 'Sehenswürdigkeiten',
-      contact: 'Kontakt'
-    },
-    hero: {
-      title: 'Hotel del Pacífico',
-      subtitle: 'Ihre Oase der Ruhe im Herzen von Santo Domingo',
-      cta: 'Jetzt Buchen',
-      explore: 'Entdecken'
-    },
-    home: {
-      welcome: 'Willkommen',
-      welcomeText: 'Im pulsierenden Zentrum von Santo Domingo de los Tsáchilas gelegen, bietet das Hotel del Pacífico ein einzigartiges Erlebnis, bei dem moderner Komfort auf ecuadorianische Herzlichkeit trifft. Trotz unserer zentralen Lage genießen unsere Gäste eine ruhige und entspannte Atmosphäre.',
-      features: 'Unsere Services',
-      rooms36: '36 Zimmer',
-      roomsDesc: 'Geräumig und komfortabel mit allen Annehmlichkeiten',
-      restaurant: 'Restaurant La Orquídea',
-      restaurantDesc: 'Frühstück, Mittag- und Abendessen mit lokaler und internationaler Küche',
-      businessCenter: 'Business Center',
-      businessDesc: 'Bankettsaal mit audiovisueller Ausstattung',
-      pastry: 'Konditorei',
-      pastryDesc: 'Köstliche hausgemachte Kuchen und Snacks',
-      amenities: 'Ausstattung',
-      wifi: 'Kostenloses WLAN',
-      ac: 'Klimaanlage',
-      tv: 'Smart TV',
-      parking: 'Parkplatz',
-      cleaning: 'Tägliche Reinigung',
-      location: 'Perfekte Lage',
-      locationText: 'Im Stadtzentrum, aber mit der Ruhe, die Sie brauchen'
-    },
-    rooms: {
-      title: 'Unsere Zimmer',
-      subtitle: '36 Zimmer für Ihren Komfort gestaltet',
-      single: 'Einzelzimmer',
-      double: 'Doppelzimmer',
-      suite: 'Suite',
-      allInclude: 'Alle Zimmer beinhalten:',
-      features: ['Klimaanlage', 'Highspeed-WLAN', 'Smart TV', 'Eigenes Bad', 'Tägliche Reinigung', '24h Warmwasser']
-    },
-    prices: {
-      title: 'Preise',
-      subtitle: 'Wettbewerbsfähige Preise für Ihren perfekten Aufenthalt',
-      perNight: 'pro Nacht',
-      includes: 'Inklusive:',
-      breakfast: 'Frühstück inklusive',
-      taxes: 'Steuern inklusive',
-      contact: 'Kontaktieren Sie uns für Reservierungen'
-    },
-    photos: {
-      title: 'Galerie',
-      subtitle: 'Entdecken Sie unsere Einrichtungen'
-    },
-    restaurant: {
-      title: 'Restaurant La Orquídea',
-      subtitle: 'Geschmack, der begeistert',
-      description: 'Unser Restaurant bietet ein einzigartiges gastronomisches Erlebnis mit Gerichten der ecuadorianischen und internationalen Küche. Genießen Sie frische, lokale Zutaten, zubereitet von unseren erfahrenen Köchen.',
-      breakfast: 'Frühstück',
-      breakfastTime: 'Zeiten folgen',
-      lunch: 'Mittagessen',
-      lunchTime: 'Zeiten folgen',
-      dinner: 'Abendessen',
-      dinnerTime: 'Zeiten folgen',
-      pastry: 'Konditorei',
-      pastryDesc: 'Genießen Sie unsere köstlichen hausgemachten Kuchen, Torten und Snacks, die täglich frisch zubereitet werden.',
-      banquet: 'Bankettsaal',
-      banquetDesc: 'Idealer Raum für Firmenveranstaltungen und Feiern, ausgestattet mit moderner audiovisueller Technik.'
-    },
-    attractions: {
-      title: 'Sehenswürdigkeiten',
-      subtitle: 'Entdecken Sie Santo Domingo de los Tsáchilas',
-      intro: 'Santo Domingo ist das Tor zur ecuadorianischen Küste, reich an Kultur, Natur und Abenteuer.',
-      tsachilas: 'Tsáchila-Gemeinschaft',
-      tsachilasDesc: 'Lernen Sie die faszinierende Kultur der Tsáchila kennen, die wegen ihrer traditionellen Haarbemalung mit Achiote als "Colorados" bekannt sind. Ein einzigartiges kulturelles Erlebnis.',
-      waterfalls: 'Wasserfälle',
-      waterfallsDesc: 'Die Region verfügt über beeindruckende Wasserfälle, umgeben von üppiger tropischer Vegetation. Perfekt für Ökotourismus und Abenteuer.',
-      malecon: 'Uferpromenade San Gabriel del Baba',
-      maleconDesc: 'Eine schöne Flusspromenade mit Grünflächen, Restaurants und Freizeitbereichen für die ganze Familie.',
-      jelenTenka: 'Jelen Tenka',
-      jelenTenkaDesc: 'Tourismus- und Kulturzentrum, das ein Eintauchen in die Tsáchila-Traditionen mit Ritualen, Gastronomie und Natur bietet.'
-    },
-    contact: {
-      title: 'Kontakt',
-      subtitle: 'Wir sind für Sie da',
-      address: 'Adresse',
-      phone: 'Telefon',
-      email: 'E-Mail',
-      hours: '24-Stunden-Rezeption',
-      form: {
-        name: 'Name',
-        email: 'E-Mail',
-        message: 'Nachricht',
-        send: 'Nachricht Senden'
-      }
-    },
-    footer: {
-      rights: 'Alle Rechte vorbehalten',
-      slogan: 'Ihr Zuhause fernab von Zuhause in Santo Domingo'
-    }
+    nav: { home: 'Startseite', rooms: 'Zimmer', prices: 'Preise', photos: 'Galerie', restaurant: 'Restaurant', attractions: 'Entdecken', contact: 'Kontakt' },
+    hero: { welcome: 'Willkommen im', title: 'Hotel del Pacífico', subtitle: 'Eine Oase der Ruhe und Eleganz im Herzen von Santo Domingo de los Tsáchilas', cta: 'Jetzt Buchen', explore: 'Mehr Entdecken' },
+    home: { experience: 'Das Erlebnis', experienceTitle: 'Wo Komfort auf Eleganz Trifft', experienceText: 'Im pulsierenden Zentrum von Santo Domingo de los Tsáchilas gelegen, bietet das Hotel del Pacífico ein einzigartiges Erlebnis, bei dem moderner Komfort auf ecuadorianische Herzlichkeit trifft.', features: 'Unsere Exklusiven Services', rooms36: '36 Luxuszimmer', roomsDesc: 'Geräumige und elegante Räume mit allem Komfort', restaurant: 'Restaurant La Orquídea', restaurantDesc: 'Außergewöhnliche Gastronomie mit lokalen und internationalen Aromen', businessCenter: 'Kongresszentrum', businessDesc: 'Säle mit modernster audiovisueller Technik', pastry: 'Handwerkliche Konditorei', pastryDesc: 'Täglich frisch zubereitete hausgemachte Köstlichkeiten', amenities: 'Premium Ausstattung', wifi: 'Highspeed-WLAN', ac: 'Klimatisierung', tv: 'Smart TV', parking: 'Privatparkplatz', cleaning: 'Zimmerservice', location: 'Privilegierte Lage', locationText: 'Im Herzen der Stadt, mit der Ruhe eines privaten Refugiums', whyUs: 'Warum Uns Wählen?', reason1: 'Persönliche Betreuung', reason1Desc: 'Unser Team ist engagiert, Ihren Aufenthalt unvergesslich zu machen', reason2: 'Strategische Lage', reason2Desc: 'Minuten von den Hauptattraktionen entfernt', reason3: 'Garantierte Ruhe', reason3Desc: 'Eine Oase des Friedens inmitten der Stadt' },
+    rooms: { title: 'Unsere Zimmer', subtitle: 'Eleganz und Komfort in jedem Detail', description: '36 Zimmer für maximalen Komfort', single: 'Klassisches Zimmer', singleDesc: 'Perfekt für Einzelreisende', double: 'Superior Zimmer', doubleDesc: 'Geräumig und elegant', suite: 'Executive Suite', suiteDesc: 'Unsere exklusivste Option', allInclude: 'Alle unsere Zimmer beinhalten:', features: ['Leise Klimaanlage', 'Highspeed-WLAN', 'Smart TV', 'Luxuriöses Privatbad', 'Tägliche Reinigung', '24h Warmwasser', 'Premium Amenities', 'Safe'] },
+    prices: { title: 'Preise', subtitle: 'Investition in Ihren Komfort', perNight: 'pro Nacht', includes: 'Alle Preise beinhalten:', breakfast: 'Frühstücksbuffet', taxes: 'Steuern', wifi: 'Unbegrenztes WLAN', parking: 'Parkplatz', contact: 'Buchung Anfragen' },
+    photos: { title: 'Galerie', subtitle: 'Entdecken Sie unsere Räume' },
+    restaurant: { title: 'Restaurant La Orquídea', subtitle: 'Ein unvergessliches gastronomisches Erlebnis', description: 'Unser Restaurant kombiniert die besten lokalen Zutaten mit internationalen Kochtechniken.', breakfast: 'Frühstück', breakfastTime: 'Zeiten folgen', breakfastDesc: 'Starten Sie mit unserem vielfältigen Buffet', lunch: 'Mittagessen', lunchTime: 'Zeiten folgen', lunchDesc: 'Genießen Sie unsere Auswahl', dinner: 'Abendessen', dinnerTime: 'Zeiten folgen', dinnerDesc: 'Ein perfekter Abend mit unserem Gourmet-Menü', pastry: 'Handwerkliche Konditorei', pastryDesc: 'Genießen Sie unsere täglich frisch zubereiteten Kreationen.', banquet: 'Veranstaltungssaal', banquetDesc: 'Vielseitiger Raum für Firmenveranstaltungen und Feiern.' },
+    attractions: { title: 'Entdecken Sie Santo Domingo', subtitle: 'Das Tor zur ecuadorianischen Küste', intro: 'Santo Domingo de los Tsáchilas ist ein Land der Kontraste.', tsachilas: 'Tsáchila-Gemeinschaft', tsachilasDesc: 'Tauchen Sie ein in die faszinierende Kultur der Tsáchila.', waterfalls: 'Natürliche Wasserfälle', waterfallsDesc: 'Entdecken Sie beeindruckende Wasserfälle.', malecon: 'Uferpromenade San Gabriel del Baba', maleconDesc: 'Genießen Sie einen Spaziergang am Fluss.', jelenTenka: 'Jelen Tenka', jelenTenkaDesc: 'Touristenzentrum mit vollständiger Immersion in die Traditionen.' },
+    contact: { title: 'Kontakt', subtitle: 'Zu Ihren Diensten', address: 'Adresse', phone: 'Telefon', email: 'E-Mail', hours: '24-Stunden-Rezeption', formTitle: 'Senden Sie uns eine Nachricht', form: { name: 'Vollständiger Name', email: 'E-Mail', phone: 'Telefon', message: 'Ihre Nachricht', send: 'Nachricht Senden' } },
+    footer: { rights: 'Alle Rechte vorbehalten', slogan: 'Ihr Zuhause fernab von Zuhause' }
   }
 };
 
@@ -556,7 +314,7 @@ const HOTEL_INFO = {
 };
 
 // ============================================
-// NAVIGATION COMPONENT
+// LUXURY NAVIGATION COMPONENT
 // ============================================
 const Navigation = ({ language, setLanguage, t }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -570,42 +328,41 @@ const Navigation = ({ language, setLanguage, t }) => {
   }, []);
 
   const navLinks = [
-    { path: '', label: t.nav.home, icon: HomeIcon },
-    { path: 'habitaciones', label: t.nav.rooms, icon: Building },
-    { path: 'precios', label: t.nav.prices, icon: DollarSign },
-    { path: 'fotos', label: t.nav.photos, icon: Camera },
-    { path: 'restaurante', label: t.nav.restaurant, icon: Utensils },
-    { path: 'atractivos', label: t.nav.attractions, icon: Mountain },
-    { path: 'contacto', label: t.nav.contact, icon: MessageCircle }
+    { path: '', label: t.nav.home },
+    { path: 'habitaciones', label: t.nav.rooms },
+    { path: 'precios', label: t.nav.prices },
+    { path: 'fotos', label: t.nav.photos },
+    { path: 'restaurante', label: t.nav.restaurant },
+    { path: 'atractivos', label: t.nav.attractions },
+    { path: 'contacto', label: t.nav.contact }
   ];
 
   const languages = [
-    { code: 'es', flag: '🇪🇨', name: 'ES' },
-    { code: 'en', flag: '🇺🇸', name: 'EN' },
-    { code: 'fr', flag: '🇫🇷', name: 'FR' },
-    { code: 'it', flag: '🇮🇹', name: 'IT' },
-    { code: 'de', flag: '🇩🇪', name: 'DE' }
+    { code: 'es', name: 'ES' },
+    { code: 'en', name: 'EN' },
+    { code: 'fr', name: 'FR' },
+    { code: 'it', name: 'IT' },
+    { code: 'de', name: 'DE' }
   ];
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-lg' : 'bg-transparent'}`}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-lg' : 'bg-gradient-to-b from-black/50 to-transparent'}`}>
+      <div className="max-w-7xl mx-auto px-6 lg:px-8">
+        <div className="flex justify-between items-center h-24">
           {/* Logo */}
-          <Link to="" className="flex items-center gap-3">
-            <div className={`text-2xl font-bold ${scrolled ? 'text-green-700' : 'text-white'}`}>
-              Hotel del Pacífico
-            </div>
+          <Link to="" className="flex flex-col items-start">
+            <span className={`text-xs tracking-[0.3em] uppercase ${scrolled ? 'text-emerald-800' : 'text-amber-200'}`}>Hotel</span>
+            <span className={`text-2xl font-serif tracking-wide ${scrolled ? 'text-emerald-900' : 'text-white'}`}>del Pacífico</span>
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden lg:flex items-center gap-6">
+          <div className="hidden lg:flex items-center gap-8">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`text-sm font-medium transition-colors hover:text-green-500 ${
-                  scrolled ? 'text-gray-700' : 'text-white'
+                className={`text-sm tracking-wider uppercase transition-all duration-300 hover:text-amber-500 ${
+                  scrolled ? 'text-gray-700' : 'text-white/90'
                 }`}
               >
                 {link.label}
@@ -614,26 +371,28 @@ const Navigation = ({ language, setLanguage, t }) => {
           </div>
 
           {/* Language Selector */}
-          <div className="hidden lg:flex items-center gap-2">
-            {languages.map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => setLanguage(lang.code)}
-                className={`px-2 py-1 text-sm rounded transition-colors ${
-                  language === lang.code
-                    ? 'bg-green-600 text-white'
-                    : scrolled ? 'text-gray-600 hover:bg-gray-100' : 'text-white hover:bg-white/20'
-                }`}
-              >
-                {lang.flag} {lang.name}
-              </button>
+          <div className="hidden lg:flex items-center gap-1 border-l border-white/20 pl-6 ml-6">
+            {languages.map((lang, i) => (
+              <React.Fragment key={lang.code}>
+                <button
+                  onClick={() => setLanguage(lang.code)}
+                  className={`px-2 py-1 text-xs tracking-wider transition-all duration-300 ${
+                    language === lang.code
+                      ? scrolled ? 'text-amber-600 font-semibold' : 'text-amber-300 font-semibold'
+                      : scrolled ? 'text-gray-500 hover:text-amber-600' : 'text-white/70 hover:text-white'
+                  }`}
+                >
+                  {lang.name}
+                </button>
+                {i < languages.length - 1 && <span className={scrolled ? 'text-gray-300' : 'text-white/30'}>|</span>}
+              </React.Fragment>
             ))}
           </div>
 
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden p-2 ${scrolled ? 'text-gray-700' : 'text-white'}`}
+            className={`lg:hidden p-2 ${scrolled ? 'text-emerald-900' : 'text-white'}`}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -642,29 +401,28 @@ const Navigation = ({ language, setLanguage, t }) => {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="lg:hidden bg-white border-t shadow-lg">
-          <div className="px-4 py-4 space-y-2">
+        <div className="lg:hidden bg-white border-t">
+          <div className="px-6 py-6 space-y-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-3 text-gray-700 hover:bg-green-50 hover:text-green-700 rounded-lg transition-colors"
+                className="block px-4 py-3 text-gray-700 hover:bg-emerald-50 hover:text-emerald-800 rounded-lg transition-colors text-sm tracking-wider uppercase"
               >
-                <link.icon size={20} />
                 {link.label}
               </Link>
             ))}
-            <div className="flex gap-2 px-4 pt-4 border-t">
+            <div className="flex gap-2 px-4 pt-4 border-t mt-4">
               {languages.map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => { setLanguage(lang.code); setIsOpen(false); }}
-                  className={`px-3 py-2 text-sm rounded ${
-                    language === lang.code ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700'
+                  className={`px-3 py-2 text-xs rounded ${
+                    language === lang.code ? 'bg-emerald-800 text-white' : 'bg-gray-100 text-gray-700'
                   }`}
                 >
-                  {lang.flag}
+                  {lang.name}
                 </button>
               ))}
             </div>
@@ -676,224 +434,273 @@ const Navigation = ({ language, setLanguage, t }) => {
 };
 
 // ============================================
-// FOOTER COMPONENT
+// LUXURY FOOTER COMPONENT
 // ============================================
 const Footer = ({ t }) => (
-  <footer className="bg-gray-900 text-white">
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <div className="grid md:grid-cols-3 gap-8">
-        {/* Hotel Info */}
-        <div>
-          <h3 className="text-2xl font-bold text-green-400 mb-4">Hotel del Pacífico</h3>
-          <p className="text-gray-400 mb-4">{t.footer.slogan}</p>
-          <div className="flex gap-4">
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">
-              <Facebook size={24} />
-            </a>
-            <a href="#" className="text-gray-400 hover:text-green-400 transition-colors">
-              <Instagram size={24} />
-            </a>
+  <footer className="bg-emerald-950 text-white">
+    {/* Main Footer */}
+    <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+      <div className="grid md:grid-cols-4 gap-12">
+        {/* Brand */}
+        <div className="md:col-span-1">
+          <div className="mb-6">
+            <span className="text-xs tracking-[0.3em] uppercase text-amber-400">Hotel</span>
+            <h3 className="text-2xl font-serif">del Pacífico</h3>
           </div>
-        </div>
-
-        {/* Contact */}
-        <div>
-          <h4 className="text-lg font-semibold mb-4">{t.contact.title}</h4>
-          <div className="space-y-2 text-gray-400">
-            <p className="flex items-center gap-2">
-              <MapPin size={16} className="text-green-400" />
-              {HOTEL_INFO.address}
-            </p>
-            <p className="flex items-center gap-2">
-              <Phone size={16} className="text-green-400" />
-              {HOTEL_INFO.phone}
-            </p>
-            <p className="flex items-center gap-2">
-              <Mail size={16} className="text-green-400" />
-              {HOTEL_INFO.email}
-            </p>
+          <p className="text-emerald-200/70 text-sm leading-relaxed">{t.footer.slogan}</p>
+          <div className="flex gap-4 mt-6">
+            <a href="#" className="w-10 h-10 rounded-full border border-emerald-700 flex items-center justify-center text-emerald-300 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
+              <Facebook size={18} />
+            </a>
+            <a href="#" className="w-10 h-10 rounded-full border border-emerald-700 flex items-center justify-center text-emerald-300 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
+              <Instagram size={18} />
+            </a>
           </div>
         </div>
 
         {/* Quick Links */}
         <div>
-          <h4 className="text-lg font-semibold mb-4">{t.nav.home}</h4>
-          <div className="space-y-2">
-            <Link to="habitaciones" className="block text-gray-400 hover:text-green-400 transition-colors">{t.nav.rooms}</Link>
-            <Link to="restaurante" className="block text-gray-400 hover:text-green-400 transition-colors">{t.nav.restaurant}</Link>
-            <Link to="atractivos" className="block text-gray-400 hover:text-green-400 transition-colors">{t.nav.attractions}</Link>
-            <Link to="contacto" className="block text-gray-400 hover:text-green-400 transition-colors">{t.nav.contact}</Link>
+          <h4 className="text-amber-400 text-xs tracking-[0.2em] uppercase mb-6">Navegación</h4>
+          <div className="space-y-3">
+            <Link to="habitaciones" className="block text-emerald-200/70 hover:text-amber-400 transition-colors text-sm">{t.nav.rooms}</Link>
+            <Link to="restaurante" className="block text-emerald-200/70 hover:text-amber-400 transition-colors text-sm">{t.nav.restaurant}</Link>
+            <Link to="atractivos" className="block text-emerald-200/70 hover:text-amber-400 transition-colors text-sm">{t.nav.attractions}</Link>
+            <Link to="contacto" className="block text-emerald-200/70 hover:text-amber-400 transition-colors text-sm">{t.nav.contact}</Link>
+          </div>
+        </div>
+
+        {/* Contact */}
+        <div>
+          <h4 className="text-amber-400 text-xs tracking-[0.2em] uppercase mb-6">{t.contact.title}</h4>
+          <div className="space-y-4 text-sm">
+            <p className="flex items-start gap-3 text-emerald-200/70">
+              <MapPin size={16} className="text-amber-400 mt-1 flex-shrink-0" />
+              <span>{HOTEL_INFO.address}</span>
+            </p>
+            <p className="flex items-center gap-3 text-emerald-200/70">
+              <Phone size={16} className="text-amber-400" />
+              {HOTEL_INFO.phone}
+            </p>
+            <p className="flex items-center gap-3 text-emerald-200/70">
+              <Mail size={16} className="text-amber-400" />
+              {HOTEL_INFO.email}
+            </p>
+          </div>
+        </div>
+
+        {/* Hours */}
+        <div>
+          <h4 className="text-amber-400 text-xs tracking-[0.2em] uppercase mb-6">{t.contact.hours}</h4>
+          <div className="flex items-center gap-3 text-emerald-200/70 text-sm">
+            <Clock size={16} className="text-amber-400" />
+            <span>24/7</span>
           </div>
         </div>
       </div>
+    </div>
 
-      <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500">
-        <p>© {new Date().getFullYear()} Hotel del Pacífico. {t.footer.rights}.</p>
+    {/* Bottom Bar */}
+    <div className="border-t border-emerald-900">
+      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6">
+        <p className="text-center text-emerald-300/50 text-xs tracking-wider">
+          © {new Date().getFullYear()} Hotel del Pacífico. {t.footer.rights}.
+        </p>
       </div>
     </div>
   </footer>
 );
 
 // ============================================
-// HOME PAGE
+// DECORATIVE DIVIDER
+// ============================================
+const Divider = () => (
+  <div className="flex items-center justify-center gap-4 py-2">
+    <div className="w-16 h-px bg-gradient-to-r from-transparent to-amber-400" />
+    <Sparkles className="w-4 h-4 text-amber-400" />
+    <div className="w-16 h-px bg-gradient-to-l from-transparent to-amber-400" />
+  </div>
+);
+
+// ============================================
+// HOME PAGE - LUXURY VERSION
 // ============================================
 const HomePage = ({ t }) => (
-  <div>
+  <div className="bg-stone-50">
     {/* Hero Section */}
-    <section className="relative h-screen flex items-center justify-center bg-gradient-to-br from-green-900 via-green-800 to-black">
-      <div className="absolute inset-0 bg-black/40" />
-      <div className="relative z-10 text-center text-white px-4 max-w-4xl">
-        <h1 className="text-5xl md:text-7xl font-bold mb-6">{t.hero.title}</h1>
-        <p className="text-xl md:text-2xl mb-8 text-gray-200">{t.hero.subtitle}</p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link to="contacto" className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors">
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 via-emerald-800 to-emerald-950" />
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.03\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50" />
+      
+      {/* Content */}
+      <div className="relative z-10 text-center text-white px-6 max-w-4xl">
+        <p className="text-amber-300 text-sm tracking-[0.4em] uppercase mb-4 animate-fade-in">{t.hero.welcome}</p>
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-6 tracking-wide">{t.hero.title}</h1>
+        <Divider />
+        <p className="text-lg md:text-xl text-emerald-100/80 mt-6 max-w-2xl mx-auto leading-relaxed font-light">{t.hero.subtitle}</p>
+        <div className="flex flex-wrap justify-center gap-4 mt-10">
+          <Link to="contacto" className="bg-amber-500 hover:bg-amber-600 text-emerald-950 px-10 py-4 text-sm tracking-widest uppercase font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30">
             {t.hero.cta}
           </Link>
-          <Link to="habitaciones" className="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors border border-white/30">
+          <Link to="habitaciones" className="border border-white/30 hover:border-amber-400 hover:text-amber-300 text-white px-10 py-4 text-sm tracking-widest uppercase font-light transition-all duration-300">
             {t.hero.explore}
           </Link>
         </div>
       </div>
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ChevronDown size={32} className="text-white/70" />
+
+      {/* Scroll Indicator */}
+      <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/50">
+        <div className="w-px h-16 bg-gradient-to-b from-amber-400 to-transparent animate-pulse" />
       </div>
     </section>
 
-    {/* Welcome Section */}
-    <section className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
+    {/* Experience Section */}
+    <section className="py-24 lg:py-32 bg-white">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">{t.home.welcome}</h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">{t.home.welcomeText}</p>
+          <p className="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4">{t.home.experience}</p>
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-serif text-emerald-900 mb-6">{t.home.experienceTitle}</h2>
+          <Divider />
+          <p className="text-gray-600 text-lg max-w-3xl mx-auto mt-8 leading-relaxed">{t.home.experienceText}</p>
+        </div>
+      </div>
+    </section>
+
+    {/* Services Section */}
+    <section className="py-24 bg-emerald-900 text-white relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.02\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]" />
+      <div className="max-w-6xl mx-auto px-6 lg:px-8 relative">
+        <div className="text-center mb-16">
+          <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.home.features}</p>
+          <h2 className="text-3xl md:text-4xl font-serif">{t.home.features}</h2>
         </div>
 
-        {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-          <div className="text-center p-6 bg-green-50 rounded-xl">
-            <Building className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">{t.home.rooms36}</h3>
-            <p className="text-gray-600">{t.home.roomsDesc}</p>
-          </div>
-          <div className="text-center p-6 bg-green-50 rounded-xl">
-            <Utensils className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">{t.home.restaurant}</h3>
-            <p className="text-gray-600">{t.home.restaurantDesc}</p>
-          </div>
-          <div className="text-center p-6 bg-green-50 rounded-xl">
-            <Users className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">{t.home.businessCenter}</h3>
-            <p className="text-gray-600">{t.home.businessDesc}</p>
-          </div>
-          <div className="text-center p-6 bg-green-50 rounded-xl">
-            <Coffee className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">{t.home.pastry}</h3>
-            <p className="text-gray-600">{t.home.pastryDesc}</p>
-          </div>
+          {[
+            { icon: Building, title: t.home.rooms36, desc: t.home.roomsDesc },
+            { icon: Utensils, title: t.home.restaurant, desc: t.home.restaurantDesc },
+            { icon: Users, title: t.home.businessCenter, desc: t.home.businessDesc },
+            { icon: Coffee, title: t.home.pastry, desc: t.home.pastryDesc }
+          ].map((item, i) => (
+            <div key={i} className="text-center group">
+              <div className="w-20 h-20 mx-auto mb-6 border border-amber-400/30 rounded-full flex items-center justify-center group-hover:bg-amber-500 group-hover:border-amber-500 transition-all duration-500">
+                <item.icon className="w-8 h-8 text-amber-400 group-hover:text-emerald-950 transition-colors duration-500" />
+              </div>
+              <h3 className="text-lg font-serif mb-3">{item.title}</h3>
+              <p className="text-emerald-200/70 text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
-    {/* Amenities Section */}
-    <section className="py-20 bg-gray-900 text-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center mb-12">{t.home.amenities}</h2>
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-8">
-          <div className="text-center">
-            <Wifi className="w-10 h-10 text-green-400 mx-auto mb-3" />
-            <p>{t.home.wifi}</p>
-          </div>
-          <div className="text-center">
-            <Wind className="w-10 h-10 text-green-400 mx-auto mb-3" />
-            <p>{t.home.ac}</p>
-          </div>
-          <div className="text-center">
-            <Tv className="w-10 h-10 text-green-400 mx-auto mb-3" />
-            <p>{t.home.tv}</p>
-          </div>
-          <div className="text-center">
-            <Car className="w-10 h-10 text-green-400 mx-auto mb-3" />
-            <p>{t.home.parking}</p>
-          </div>
-          <div className="text-center">
-            <Star className="w-10 h-10 text-green-400 mx-auto mb-3" />
-            <p>{t.home.cleaning}</p>
-          </div>
+    {/* Amenities Strip */}
+    <section className="py-16 bg-stone-100 border-y border-stone-200">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="flex flex-wrap justify-center gap-8 md:gap-16">
+          {[
+            { icon: Wifi, label: t.home.wifi },
+            { icon: Wind, label: t.home.ac },
+            { icon: Tv, label: t.home.tv },
+            { icon: Car, label: t.home.parking },
+            { icon: Star, label: t.home.cleaning }
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-3 text-emerald-800">
+              <item.icon className="w-5 h-5 text-amber-600" />
+              <span className="text-sm tracking-wide">{item.label}</span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
-    {/* Location Section */}
-    <section className="py-20 bg-green-700 text-white">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <MapPin className="w-16 h-16 mx-auto mb-6" />
-        <h2 className="text-3xl font-bold mb-4">{t.home.location}</h2>
-        <p className="text-xl text-green-100">{t.home.locationText}</p>
-        <p className="mt-4 text-green-200">{HOTEL_INFO.address}</p>
+    {/* Why Choose Us */}
+    <section className="py-24 bg-white">
+      <div className="max-w-6xl mx-auto px-6 lg:px-8">
+        <div className="text-center mb-16">
+          <p className="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4">{t.home.whyUs}</p>
+          <h2 className="text-3xl md:text-4xl font-serif text-emerald-900">{t.home.whyUs}</h2>
+        </div>
+
+        <div className="grid md:grid-cols-3 gap-8">
+          {[
+            { icon: Heart, title: t.home.reason1, desc: t.home.reason1Desc },
+            { icon: MapPin, title: t.home.reason2, desc: t.home.reason2Desc },
+            { icon: Shield, title: t.home.reason3, desc: t.home.reason3Desc }
+          ].map((item, i) => (
+            <div key={i} className="bg-stone-50 p-8 text-center hover:shadow-xl transition-shadow duration-500">
+              <div className="w-16 h-16 mx-auto mb-6 bg-emerald-900 rounded-full flex items-center justify-center">
+                <item.icon className="w-7 h-7 text-amber-400" />
+              </div>
+              <h3 className="text-xl font-serif text-emerald-900 mb-3">{item.title}</h3>
+              <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* Location Banner */}
+    <section className="py-20 bg-gradient-to-r from-emerald-800 to-emerald-900 text-white">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <MapPin className="w-12 h-12 mx-auto mb-6 text-amber-400" />
+        <h2 className="text-3xl font-serif mb-4">{t.home.location}</h2>
+        <p className="text-emerald-100/80 text-lg mb-2">{t.home.locationText}</p>
+        <p className="text-amber-300 text-sm tracking-wide mt-4">{HOTEL_INFO.address}</p>
       </div>
     </section>
   </div>
 );
 
 // ============================================
-// ROOMS PAGE
+// ROOMS PAGE - LUXURY VERSION
 // ============================================
 const RoomsPage = ({ t }) => (
-  <div className="pt-20">
+  <div className="bg-stone-50 pt-24">
     {/* Hero */}
-    <section className="bg-gradient-to-br from-green-800 to-green-900 text-white py-20">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.rooms.title}</h1>
-        <p className="text-xl text-green-200">{t.rooms.subtitle}</p>
-      </div>
+    <section className="py-20 bg-emerald-900 text-white text-center">
+      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.rooms}</p>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.rooms.title}</h1>
+      <Divider />
+      <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.rooms.subtitle}</p>
     </section>
 
-    {/* Room Types */}
-    <section className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
+    {/* Room Cards */}
+    <section className="py-24">
+      <div className="max-w-6xl mx-auto px-6">
+        <p className="text-center text-gray-600 mb-16 max-w-2xl mx-auto">{t.rooms.description}</p>
+        
         <div className="grid md:grid-cols-3 gap-8">
-          {/* Single Room */}
-          <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg">
-            <div className="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
-              <Building className="w-20 h-20 text-white/50" />
+          {[
+            { name: t.rooms.single, desc: t.rooms.singleDesc, price: '$0' },
+            { name: t.rooms.double, desc: t.rooms.doubleDesc, price: '$0', featured: true },
+            { name: t.rooms.suite, desc: t.rooms.suiteDesc, price: '$0' }
+          ].map((room, i) => (
+            <div key={i} className={`bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 ${room.featured ? 'ring-2 ring-amber-400' : ''}`}>
+              <div className="h-56 bg-gradient-to-br from-emerald-700 to-emerald-900 flex items-center justify-center relative">
+                {room.featured && <div className="absolute top-4 right-4 bg-amber-500 text-emerald-950 px-3 py-1 text-xs tracking-wider uppercase">Popular</div>}
+                <Building className="w-16 h-16 text-white/20" />
+              </div>
+              <div className="p-8">
+                <h3 className="text-2xl font-serif text-emerald-900 mb-2">{room.name}</h3>
+                <p className="text-gray-500 text-sm mb-6">{room.desc}</p>
+                <div className="flex items-baseline gap-2">
+                  <span className="text-3xl font-serif text-amber-600">{room.price}</span>
+                  <span className="text-gray-400 text-sm">/ {t.prices.perNight}</span>
+                </div>
+              </div>
             </div>
-            <div className="p-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">{t.rooms.single}</h3>
-              <p className="text-3xl font-bold text-green-600 mb-4">$0 <span className="text-sm font-normal text-gray-500">{t.prices.perNight}</span></p>
-            </div>
-          </div>
-
-          {/* Double Room */}
-          <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg border-2 border-green-500">
-            <div className="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
-              <Building className="w-20 h-20 text-white/50" />
-            </div>
-            <div className="p-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">{t.rooms.double}</h3>
-              <p className="text-3xl font-bold text-green-600 mb-4">$0 <span className="text-sm font-normal text-gray-500">{t.prices.perNight}</span></p>
-            </div>
-          </div>
-
-          {/* Suite */}
-          <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg">
-            <div className="h-48 bg-gradient-to-br from-green-600 to-green-800 flex items-center justify-center">
-              <Building className="w-20 h-20 text-white/50" />
-            </div>
-            <div className="p-6">
-              <h3 className="text-2xl font-bold text-gray-900 mb-2">{t.rooms.suite}</h3>
-              <p className="text-3xl font-bold text-green-600 mb-4">$0 <span className="text-sm font-normal text-gray-500">{t.prices.perNight}</span></p>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* All rooms include */}
-        <div className="mt-16 bg-green-50 rounded-2xl p-8">
-          <h3 className="text-2xl font-bold text-gray-900 mb-6 text-center">{t.rooms.allInclude}</h3>
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {t.rooms.features.map((feature, index) => (
-              <div key={index} className="flex items-center gap-3">
-                <div className="w-2 h-2 bg-green-500 rounded-full" />
-                <span className="text-gray-700">{feature}</span>
+        {/* Amenities */}
+        <div className="mt-20 bg-white p-10 shadow-lg">
+          <h3 className="text-2xl font-serif text-emerald-900 text-center mb-8">{t.rooms.allInclude}</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {t.rooms.features.map((feature, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <div className="w-2 h-2 bg-amber-500 rounded-full" />
+                <span className="text-gray-700 text-sm">{feature}</span>
               </div>
             ))}
           </div>
@@ -904,60 +711,54 @@ const RoomsPage = ({ t }) => (
 );
 
 // ============================================
-// PRICES PAGE
+// PRICES PAGE - LUXURY VERSION
 // ============================================
 const PricesPage = ({ t }) => (
-  <div className="pt-20">
-    {/* Hero */}
-    <section className="bg-gradient-to-br from-green-800 to-green-900 text-white py-20">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.prices.title}</h1>
-        <p className="text-xl text-green-200">{t.prices.subtitle}</p>
-      </div>
+  <div className="bg-stone-50 pt-24">
+    <section className="py-20 bg-emerald-900 text-white text-center">
+      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.prices}</p>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.prices.title}</h1>
+      <Divider />
+      <p className="text-emerald-100/70 mt-6">{t.prices.subtitle}</p>
     </section>
 
-    {/* Price Table */}
-    <section className="py-20 bg-white">
-      <div className="max-w-4xl mx-auto px-4">
-        <div className="bg-gray-50 rounded-2xl overflow-hidden shadow-lg">
+    <section className="py-24">
+      <div className="max-w-4xl mx-auto px-6">
+        <div className="bg-white shadow-xl overflow-hidden">
           <table className="w-full">
-            <thead className="bg-green-700 text-white">
-              <tr>
-                <th className="px-6 py-4 text-left">{t.nav.rooms}</th>
-                <th className="px-6 py-4 text-right">{t.prices.perNight}</th>
+            <thead>
+              <tr className="bg-emerald-900 text-white">
+                <th className="px-8 py-6 text-left font-serif text-lg">{t.nav.rooms}</th>
+                <th className="px-8 py-6 text-right font-serif text-lg">{t.prices.perNight}</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
-              <tr className="hover:bg-green-50">
-                <td className="px-6 py-4 font-medium">{t.rooms.single}</td>
-                <td className="px-6 py-4 text-right text-2xl font-bold text-green-600">$0</td>
-              </tr>
-              <tr className="hover:bg-green-50">
-                <td className="px-6 py-4 font-medium">{t.rooms.double}</td>
-                <td className="px-6 py-4 text-right text-2xl font-bold text-green-600">$0</td>
-              </tr>
-              <tr className="hover:bg-green-50">
-                <td className="px-6 py-4 font-medium">{t.rooms.suite}</td>
-                <td className="px-6 py-4 text-right text-2xl font-bold text-green-600">$0</td>
-              </tr>
+            <tbody className="divide-y divide-stone-100">
+              {[
+                { name: t.rooms.single, price: '$0' },
+                { name: t.rooms.double, price: '$0' },
+                { name: t.rooms.suite, price: '$0' }
+              ].map((room, i) => (
+                <tr key={i} className="hover:bg-stone-50 transition-colors">
+                  <td className="px-8 py-6 font-medium text-emerald-900">{room.name}</td>
+                  <td className="px-8 py-6 text-right text-2xl font-serif text-amber-600">{room.price}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
 
-        <div className="mt-8 bg-green-100 rounded-xl p-6">
-          <h3 className="font-semibold text-green-800 mb-3">{t.prices.includes}</h3>
-          <ul className="space-y-2 text-green-700">
-            <li className="flex items-center gap-2">
-              <Star className="w-4 h-4" /> {t.prices.breakfast}
-            </li>
-            <li className="flex items-center gap-2">
-              <Star className="w-4 h-4" /> {t.prices.taxes}
-            </li>
-          </ul>
+        <div className="mt-10 bg-amber-50 border border-amber-200 p-8">
+          <h3 className="font-serif text-emerald-900 text-lg mb-4">{t.prices.includes}</h3>
+          <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
+            <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.breakfast}</div>
+            <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.taxes}</div>
+            <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.wifi}</div>
+            <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.parking}</div>
+          </div>
         </div>
 
-        <div className="mt-8 text-center">
-          <Link to="contacto" className="inline-block bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors">
+        <div className="mt-10 text-center">
+          <Link to="contacto" className="inline-block bg-emerald-900 hover:bg-emerald-800 text-white px-12 py-4 text-sm tracking-widest uppercase transition-colors">
             {t.prices.contact}
           </Link>
         </div>
@@ -967,88 +768,83 @@ const PricesPage = ({ t }) => (
 );
 
 // ============================================
-// PHOTOS PAGE
+// PHOTOS PAGE - LUXURY VERSION
 // ============================================
 const PhotosPage = ({ t }) => (
-  <div className="pt-20">
-    {/* Hero */}
-    <section className="bg-gradient-to-br from-green-800 to-green-900 text-white py-20">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.photos.title}</h1>
-        <p className="text-xl text-green-200">{t.photos.subtitle}</p>
-      </div>
+  <div className="bg-stone-50 pt-24">
+    <section className="py-20 bg-emerald-900 text-white text-center">
+      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.photos}</p>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.photos.title}</h1>
+      <Divider />
+      <p className="text-emerald-100/70 mt-6">{t.photos.subtitle}</p>
     </section>
 
-    {/* Photo Grid Placeholder */}
-    <section className="py-20 bg-gray-100">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="py-24">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {[...Array(12)].map((_, i) => (
-            <div key={i} className="aspect-square bg-gradient-to-br from-green-200 to-green-300 rounded-lg flex items-center justify-center">
-              <Camera className="w-12 h-12 text-green-600/50" />
+            <div key={i} className="aspect-square bg-gradient-to-br from-emerald-100 to-emerald-200 flex items-center justify-center group cursor-pointer overflow-hidden">
+              <Camera className="w-10 h-10 text-emerald-400 group-hover:scale-110 transition-transform duration-500" />
             </div>
           ))}
         </div>
-        <p className="text-center text-gray-500 mt-8">Fotos próximamente / Photos coming soon</p>
+        <p className="text-center text-gray-400 mt-12 text-sm tracking-wider">Fotos próximamente / Photos coming soon</p>
       </div>
     </section>
   </div>
 );
 
 // ============================================
-// RESTAURANT PAGE
+// RESTAURANT PAGE - LUXURY VERSION
 // ============================================
 const RestaurantPage = ({ t }) => (
-  <div className="pt-20">
-    {/* Hero */}
-    <section className="bg-gradient-to-br from-green-800 to-green-900 text-white py-20">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.restaurant.title}</h1>
-        <p className="text-xl text-green-200">{t.restaurant.subtitle}</p>
-      </div>
+  <div className="bg-stone-50 pt-24">
+    <section className="py-20 bg-emerald-900 text-white text-center">
+      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.restaurant}</p>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.restaurant.title}</h1>
+      <Divider />
+      <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.restaurant.subtitle}</p>
     </section>
 
-    {/* Description */}
-    <section className="py-16 bg-white">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <p className="text-lg text-gray-600">{t.restaurant.description}</p>
+    <section className="py-24 bg-white">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <p className="text-gray-600 text-lg leading-relaxed">{t.restaurant.description}</p>
       </div>
     </section>
 
     {/* Meal Times */}
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="py-20 bg-stone-100">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-3 gap-8">
-          <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-            <Coffee className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-gray-900 mb-2">{t.restaurant.breakfast}</h3>
-            <p className="text-gray-500">{t.restaurant.breakfastTime}</p>
-          </div>
-          <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-            <Utensils className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-gray-900 mb-2">{t.restaurant.lunch}</h3>
-            <p className="text-gray-500">{t.restaurant.lunchTime}</p>
-          </div>
-          <div className="bg-white rounded-xl p-8 shadow-lg text-center">
-            <Utensils className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 className="text-xl font-bold text-gray-900 mb-2">{t.restaurant.dinner}</h3>
-            <p className="text-gray-500">{t.restaurant.dinnerTime}</p>
-          </div>
+          {[
+            { icon: Coffee, title: t.restaurant.breakfast, time: t.restaurant.breakfastTime, desc: t.restaurant.breakfastDesc },
+            { icon: Utensils, title: t.restaurant.lunch, time: t.restaurant.lunchTime, desc: t.restaurant.lunchDesc },
+            { icon: Sparkles, title: t.restaurant.dinner, time: t.restaurant.dinnerTime, desc: t.restaurant.dinnerDesc }
+          ].map((meal, i) => (
+            <div key={i} className="bg-white p-10 text-center shadow-lg hover:shadow-xl transition-shadow">
+              <div className="w-16 h-16 mx-auto mb-6 bg-emerald-900 rounded-full flex items-center justify-center">
+                <meal.icon className="w-7 h-7 text-amber-400" />
+              </div>
+              <h3 className="text-xl font-serif text-emerald-900 mb-2">{meal.title}</h3>
+              <p className="text-amber-600 text-sm mb-4">{meal.time}</p>
+              <p className="text-gray-500 text-sm">{meal.desc}</p>
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
     {/* Pastry & Banquet */}
-    <section className="py-16 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-8">
-          <div className="bg-green-50 rounded-xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">{t.restaurant.pastry}</h3>
-            <p className="text-gray-600">{t.restaurant.pastryDesc}</p>
+    <section className="py-24 bg-white">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid md:grid-cols-2 gap-12">
+          <div className="bg-amber-50 p-10 border border-amber-200">
+            <h3 className="text-2xl font-serif text-emerald-900 mb-4">{t.restaurant.pastry}</h3>
+            <p className="text-gray-600 leading-relaxed">{t.restaurant.pastryDesc}</p>
           </div>
-          <div className="bg-green-50 rounded-xl p-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">{t.restaurant.banquet}</h3>
-            <p className="text-gray-600">{t.restaurant.banquetDesc}</p>
+          <div className="bg-emerald-50 p-10 border border-emerald-200">
+            <h3 className="text-2xl font-serif text-emerald-900 mb-4">{t.restaurant.banquet}</h3>
+            <p className="text-gray-600 leading-relaxed">{t.restaurant.banquetDesc}</p>
           </div>
         </div>
       </div>
@@ -1057,72 +853,42 @@ const RestaurantPage = ({ t }) => (
 );
 
 // ============================================
-// ATTRACTIONS PAGE
+// ATTRACTIONS PAGE - LUXURY VERSION
 // ============================================
 const AttractionsPage = ({ t }) => (
-  <div className="pt-20">
-    {/* Hero */}
-    <section className="bg-gradient-to-br from-green-800 to-green-900 text-white py-20">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.attractions.title}</h1>
-        <p className="text-xl text-green-200">{t.attractions.subtitle}</p>
+  <div className="bg-stone-50 pt-24">
+    <section className="py-20 bg-emerald-900 text-white text-center">
+      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.attractions}</p>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.attractions.title}</h1>
+      <Divider />
+      <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.attractions.subtitle}</p>
+    </section>
+
+    <section className="py-16 bg-white">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <p className="text-gray-600 text-lg leading-relaxed">{t.attractions.intro}</p>
       </div>
     </section>
 
-    {/* Intro */}
-    <section className="py-12 bg-white">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <p className="text-lg text-gray-600">{t.attractions.intro}</p>
-      </div>
-    </section>
-
-    {/* Attractions Grid */}
-    <section className="py-16 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
+    <section className="py-24 bg-stone-100">
+      <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-8">
-          {/* Tsáchilas */}
-          <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-            <div className="h-48 bg-gradient-to-br from-orange-500 to-red-600 flex items-center justify-center">
-              <Users className="w-20 h-20 text-white/50" />
+          {[
+            { title: t.attractions.tsachilas, desc: t.attractions.tsachilasDesc, color: 'from-orange-600 to-red-700' },
+            { title: t.attractions.waterfalls, desc: t.attractions.waterfallsDesc, color: 'from-blue-500 to-cyan-600' },
+            { title: t.attractions.malecon, desc: t.attractions.maleconDesc, color: 'from-emerald-500 to-teal-600' },
+            { title: t.attractions.jelenTenka, desc: t.attractions.jelenTenkaDesc, color: 'from-purple-500 to-pink-600' }
+          ].map((item, i) => (
+            <div key={i} className="bg-white shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-500 group">
+              <div className={`h-48 bg-gradient-to-br ${item.color} flex items-center justify-center`}>
+                <Mountain className="w-16 h-16 text-white/30 group-hover:scale-110 transition-transform duration-500" />
+              </div>
+              <div className="p-8">
+                <h3 className="text-xl font-serif text-emerald-900 mb-3">{item.title}</h3>
+                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+              </div>
             </div>
-            <div className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{t.attractions.tsachilas}</h3>
-              <p className="text-gray-600">{t.attractions.tsachilasDesc}</p>
-            </div>
-          </div>
-
-          {/* Waterfalls */}
-          <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-            <div className="h-48 bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center">
-              <Mountain className="w-20 h-20 text-white/50" />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{t.attractions.waterfalls}</h3>
-              <p className="text-gray-600">{t.attractions.waterfallsDesc}</p>
-            </div>
-          </div>
-
-          {/* Malecón */}
-          <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-            <div className="h-48 bg-gradient-to-br from-green-500 to-teal-600 flex items-center justify-center">
-              <MapPin className="w-20 h-20 text-white/50" />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{t.attractions.malecon}</h3>
-              <p className="text-gray-600">{t.attractions.maleconDesc}</p>
-            </div>
-          </div>
-
-          {/* Jelen Tenka */}
-          <div className="bg-white rounded-xl overflow-hidden shadow-lg">
-            <div className="h-48 bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center">
-              <Globe className="w-20 h-20 text-white/50" />
-            </div>
-            <div className="p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-2">{t.attractions.jelenTenka}</h3>
-              <p className="text-gray-600">{t.attractions.jelenTenkaDesc}</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </section>
@@ -1130,72 +896,93 @@ const AttractionsPage = ({ t }) => (
 );
 
 // ============================================
-// CONTACT PAGE
+// CONTACT PAGE - LUXURY VERSION
 // ============================================
 const ContactPage = ({ t }) => (
-  <div className="pt-20">
-    {/* Hero */}
-    <section className="bg-gradient-to-br from-green-800 to-green-900 text-white py-20">
-      <div className="max-w-4xl mx-auto px-4 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">{t.contact.title}</h1>
-        <p className="text-xl text-green-200">{t.contact.subtitle}</p>
-      </div>
+  <div className="bg-stone-50 pt-24">
+    <section className="py-20 bg-emerald-900 text-white text-center">
+      <p className="text-amber-400 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.contact}</p>
+      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.contact.title}</h1>
+      <Divider />
+      <p className="text-emerald-100/70 mt-6">{t.contact.subtitle}</p>
     </section>
 
-    {/* Contact Info & Form */}
-    <section className="py-20 bg-white">
-      <div className="max-w-6xl mx-auto px-4">
-        <div className="grid md:grid-cols-2 gap-12">
+    <section className="py-24">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="grid lg:grid-cols-2 gap-16">
           {/* Contact Info */}
           <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">Hotel del Pacífico</h2>
-            <div className="space-y-6">
-              <div className="flex items-start gap-4">
-                <MapPin className="w-6 h-6 text-green-600 mt-1" />
+            <div className="mb-4">
+              <span className="text-xs tracking-[0.3em] uppercase text-amber-600">Hotel</span>
+              <h2 className="text-3xl font-serif text-emerald-900">del Pacífico</h2>
+            </div>
+            
+            <div className="space-y-8 mt-10">
+              <div className="flex items-start gap-5">
+                <div className="w-12 h-12 bg-emerald-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <MapPin className="w-5 h-5 text-amber-400" />
+                </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{t.contact.address}</h3>
+                  <h3 className="font-medium text-emerald-900 mb-1">{t.contact.address}</h3>
                   <p className="text-gray-600">{HOTEL_INFO.address}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <Phone className="w-6 h-6 text-green-600 mt-1" />
+              
+              <div className="flex items-start gap-5">
+                <div className="w-12 h-12 bg-emerald-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Phone className="w-5 h-5 text-amber-400" />
+                </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{t.contact.phone}</h3>
+                  <h3 className="font-medium text-emerald-900 mb-1">{t.contact.phone}</h3>
                   <p className="text-gray-600">{HOTEL_INFO.phone}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <Mail className="w-6 h-6 text-green-600 mt-1" />
+              
+              <div className="flex items-start gap-5">
+                <div className="w-12 h-12 bg-emerald-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-5 h-5 text-amber-400" />
+                </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{t.contact.email}</h3>
+                  <h3 className="font-medium text-emerald-900 mb-1">{t.contact.email}</h3>
                   <p className="text-gray-600">{HOTEL_INFO.email}</p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <Clock className="w-6 h-6 text-green-600 mt-1" />
+              
+              <div className="flex items-start gap-5">
+                <div className="w-12 h-12 bg-emerald-900 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Clock className="w-5 h-5 text-amber-400" />
+                </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">{t.contact.hours}</h3>
+                  <h3 className="font-medium text-emerald-900 mb-1">{t.contact.hours}</h3>
+                  <p className="text-gray-600">24/7</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Contact Form */}
-          <div className="bg-gray-50 rounded-xl p-8">
+          <div className="bg-white p-10 shadow-xl">
+            <h3 className="text-xl font-serif text-emerald-900 mb-8">{t.contact.formTitle}</h3>
             <form className="space-y-6">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t.contact.form.name}</label>
-                <input type="text" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                <label className="block text-sm text-gray-600 mb-2">{t.contact.form.name}</label>
+                <input type="text" className="w-full px-4 py-3 border border-stone-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors" />
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm text-gray-600 mb-2">{t.contact.form.email}</label>
+                  <input type="email" className="w-full px-4 py-3 border border-stone-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors" />
+                </div>
+                <div>
+                  <label className="block text-sm text-gray-600 mb-2">{t.contact.form.phone}</label>
+                  <input type="tel" className="w-full px-4 py-3 border border-stone-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors" />
+                </div>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t.contact.form.email}</label>
-                <input type="email" className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" />
+                <label className="block text-sm text-gray-600 mb-2">{t.contact.form.message}</label>
+                <textarea rows={5} className="w-full px-4 py-3 border border-stone-200 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 outline-none transition-colors resize-none" />
               </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">{t.contact.form.message}</label>
-                <textarea rows={4} className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent" />
-              </div>
-              <button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
+              <button type="submit" className="w-full bg-emerald-900 hover:bg-emerald-800 text-white py-4 text-sm tracking-widest uppercase transition-colors">
                 {t.contact.form.send}
               </button>
             </form>
@@ -1205,10 +992,11 @@ const ContactPage = ({ t }) => (
     </section>
 
     {/* Map Placeholder */}
-    <section className="h-96 bg-gray-200 flex items-center justify-center">
+    <section className="h-96 bg-stone-200 flex items-center justify-center">
       <div className="text-center text-gray-500">
-        <MapPin className="w-16 h-16 mx-auto mb-4" />
-        <p>Google Maps - {HOTEL_INFO.address}</p>
+        <MapPin className="w-12 h-12 mx-auto mb-4 text-emerald-600" />
+        <p className="text-sm tracking-wider">Google Maps</p>
+        <p className="text-xs mt-1">{HOTEL_INFO.address}</p>
       </div>
     </section>
   </div>
@@ -1222,11 +1010,11 @@ const HotelDelPacificoApp = () => {
   const t = translations[language];
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       <SEO 
-        title="Hotel del Pacífico - Santo Domingo, Ecuador"
-        description="Hotel del Pacífico: Tu oasis de tranquilidad en Santo Domingo de los Tsáchilas. 36 habitaciones, restaurante La Orquídea, business center, WiFi gratis, parking."
-        keywords="hotel santo domingo, hotel ecuador, hotel del pacifico, alojamiento santo domingo, hotel tsachilas, la orquidea restaurante"
+        title="Hotel del Pacífico - Santo Domingo, Ecuador | Hotel de Lujo"
+        description="Hotel del Pacífico: Su oasis de tranquilidad y elegancia en Santo Domingo de los Tsáchilas. 36 habitaciones de lujo, restaurante La Orquídea, centro de convenciones. Reservas: info@hoteldelpacifico.com"
+        keywords="hotel santo domingo, hotel ecuador, hotel del pacifico, hotel de lujo ecuador, alojamiento santo domingo, hotel tsachilas, la orquidea restaurante, hotel centro santo domingo"
         image="https://www.hoteldelpacifico.com/images/hotel/hero.jpg"
         url="https://www.hoteldelpacifico.com"
         siteName="Hotel del Pacífico"
