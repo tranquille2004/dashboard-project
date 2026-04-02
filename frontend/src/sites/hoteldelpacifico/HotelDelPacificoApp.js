@@ -458,10 +458,10 @@ const Footer = ({ t }) => (
           </div>
           <p className="text-emerald-100/70 text-sm leading-relaxed">{t.footer.slogan}</p>
           <div className="flex gap-4 mt-6">
-            <a href="#" className="w-10 h-10 rounded-full border border-emerald-600 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
+            <a href="https://www.facebook.com/hoteldelpacifico.sd" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-emerald-600 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
               <Facebook size={18} />
             </a>
-            <a href="#" className="w-10 h-10 rounded-full border border-emerald-600 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
+            <a href="https://www.instagram.com/hoteldelpacifico.sd" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-emerald-600 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300">
               <Instagram size={18} />
             </a>
           </div>
