@@ -752,44 +752,100 @@ const PricesPage = ({ t }) => (
     </section>
 
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
-      <div className="max-w-4xl mx-auto px-6">
-        <div className="bg-white shadow-xl overflow-hidden border border-amber-100">
-          <table className="w-full">
-            <thead>
-              <tr className="bg-emerald-700 text-white">
-                <th className="px-8 py-6 text-left font-serif text-lg">{t.nav.rooms}</th>
-                <th className="px-8 py-6 text-right font-serif text-lg">{t.prices.perNight}</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-amber-100">
-              {[
-                { name: t.rooms.single, price: '$0' },
-                { name: t.rooms.double, price: '$0' },
-                { name: t.rooms.suite, price: '$0' }
-              ].map((room, i) => (
-                <tr key={i} className="hover:bg-amber-50/50 transition-colors">
-                  <td className="px-8 py-6 font-medium text-emerald-800">{room.name}</td>
-                  <td className="px-8 py-6 text-right text-2xl font-serif text-amber-600">{room.price}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Price Cards */}
+        <div className="grid md:grid-cols-3 gap-8 mb-16">
+          {[
+            { 
+              name: t.rooms.single, 
+              price: '$0', 
+              desc: t.rooms.singleDesc,
+              features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast]
+            },
+            { 
+              name: t.rooms.double, 
+              price: '$0', 
+              desc: t.rooms.doubleDesc,
+              featured: true,
+              features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar']
+            },
+            { 
+              name: t.rooms.suite, 
+              price: '$0', 
+              desc: t.rooms.suiteDesc,
+              features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar', 'Jacuzzi']
+            }
+          ].map((room, i) => (
+            <div key={i} className={`relative bg-white overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 ${room.featured ? 'ring-2 ring-amber-400 scale-105' : 'border border-amber-100'}`}>
+              {room.featured && (
+                <div className="absolute top-0 left-0 right-0 bg-amber-500 text-white text-center py-2 text-xs tracking-widest uppercase">
+                  Popular
+                </div>
+              )}
+              <div className={`p-8 ${room.featured ? 'pt-14' : ''}`}>
+                <h3 className="text-2xl font-serif text-emerald-800 mb-2">{room.name}</h3>
+                <p className="text-gray-500 text-sm mb-6">{room.desc}</p>
+                
+                <div className="border-t border-b border-amber-100 py-6 my-6">
+                  <div className="text-center">
+                    <span className="text-4xl font-serif text-amber-600">{room.price}</span>
+                    <span className="text-gray-400 text-sm ml-2">/ {t.prices.perNight}</span>
+                  </div>
+                  <p className="text-center text-xs text-gray-400 mt-2 italic">Precio próximamente</p>
+                </div>
+                
+                <ul className="space-y-3">
+                  {room.features.map((feature, j) => (
+                    <li key={j} className="flex items-center gap-3 text-sm text-gray-600">
+                      <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center">
+                        <Star className="w-3 h-3 text-emerald-600" />
+                      </div>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+                
+                <Link 
+                  to="contacto" 
+                  className={`block mt-8 text-center py-3 text-sm tracking-widest uppercase transition-colors ${
+                    room.featured 
+                      ? 'bg-amber-500 hover:bg-amber-600 text-white' 
+                      : 'bg-emerald-700 hover:bg-emerald-600 text-white'
+                  }`}
+                >
+                  {t.prices.contact}
+                </Link>
+              </div>
+            </div>
+          ))}
         </div>
 
-        <div className="mt-10 bg-amber-50 border border-amber-200 p-8">
-          <h3 className="font-serif text-emerald-800 text-lg mb-4">{t.prices.includes}</h3>
-          <div className="grid grid-cols-2 gap-4 text-sm text-gray-700">
-            <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.breakfast}</div>
-            <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.taxes}</div>
-            <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.wifi}</div>
-            <div className="flex items-center gap-2"><Star className="w-4 h-4 text-amber-500" /> {t.prices.parking}</div>
+        {/* What's Included */}
+        <div className="bg-white border border-amber-100 shadow-lg p-10">
+          <h3 className="font-serif text-emerald-800 text-2xl text-center mb-8">{t.prices.includes}</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {[
+              { icon: Coffee, label: t.prices.breakfast },
+              { icon: Wifi, label: t.prices.wifi },
+              { icon: Car, label: t.prices.parking },
+              { icon: Star, label: t.prices.taxes }
+            ].map((item, i) => (
+              <div key={i} className="flex flex-col items-center text-center p-4">
+                <div className="w-14 h-14 rounded-full bg-amber-50 flex items-center justify-center mb-3">
+                  <item.icon className="w-6 h-6 text-emerald-700" />
+                </div>
+                <span className="text-sm text-gray-700">{item.label}</span>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-10 text-center">
-          <Link to="contacto" className="inline-block bg-emerald-700 hover:bg-emerald-600 text-white px-12 py-4 text-sm tracking-widest uppercase transition-colors">
-            {t.prices.contact}
-          </Link>
+        {/* Special Notice */}
+        <div className="mt-10 bg-emerald-50 border border-emerald-200 p-6 text-center">
+          <p className="text-emerald-800 text-sm">
+            <span className="font-medium">Nota:</span> Los precios serán actualizados próximamente. 
+            Para consultas inmediatas, contáctenos directamente.
+          </p>
         </div>
       </div>
     </section>
@@ -899,28 +955,111 @@ const AttractionsPage = ({ t }) => (
       </div>
     </section>
 
+    {/* Main Attractions */}
     <section className="py-24 bg-gradient-to-b from-amber-50 to-white">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid md:grid-cols-2 gap-8">
           {[
-            { title: t.attractions.tsachilas, desc: t.attractions.tsachilasDesc, icon: Users },
-            { title: t.attractions.waterfalls, desc: t.attractions.waterfallsDesc, icon: Mountain },
-            { title: t.attractions.malecon, desc: t.attractions.maleconDesc, icon: MapPin },
-            { title: t.attractions.jelenTenka, desc: t.attractions.jelenTenkaDesc, icon: Star }
+            { 
+              title: t.attractions.tsachilas, 
+              desc: t.attractions.tsachilasDesc, 
+              icon: Users,
+              distance: '15-30 min',
+              tip: 'Visita guiada recomendada',
+              highlights: ['Cultura ancestral', 'Rituales tradicionales', 'Artesanías']
+            },
+            { 
+              title: t.attractions.waterfalls, 
+              desc: t.attractions.waterfallsDesc, 
+              icon: Mountain,
+              distance: '20-45 min',
+              tip: 'Llevar ropa cómoda',
+              highlights: ['Cascada del Diablo', 'Cascada Napac', 'Senderos naturales']
+            },
+            { 
+              title: t.attractions.malecon, 
+              desc: t.attractions.maleconDesc, 
+              icon: MapPin,
+              distance: '10 min',
+              tip: 'Ideal para paseo al atardecer',
+              highlights: ['Gastronomía local', 'Vista al río', 'Área recreativa']
+            },
+            { 
+              title: t.attractions.jelenTenka, 
+              desc: t.attractions.jelenTenkaDesc, 
+              icon: Star,
+              distance: '25 min',
+              tip: 'Reservar con anticipación',
+              highlights: ['Experiencia inmersiva', 'Comida típica', 'Naturaleza']
+            }
           ].map((item, i) => (
-            <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group">
-              <div className="h-48 bg-gradient-to-br from-amber-50 to-amber-100/50 flex items-center justify-center border-b border-amber-200/30">
-                <div className="w-20 h-20 rounded-full bg-white shadow-md flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <item.icon className="w-10 h-10 text-emerald-700" />
+            <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group overflow-hidden">
+              <div className="h-48 bg-gradient-to-br from-emerald-700 to-emerald-800 flex items-center justify-center relative">
+                <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
+                  <item.icon className="w-10 h-10 text-white" />
+                </div>
+                {/* Distance Badge */}
+                <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 text-xs tracking-wider">
+                  {item.distance}
                 </div>
               </div>
               <div className="p-8">
                 <h3 className="text-xl font-serif text-emerald-800 mb-3">{item.title}</h3>
-                <p className="text-gray-600 text-sm leading-relaxed">{item.desc}</p>
+                <p className="text-gray-600 text-sm leading-relaxed mb-4">{item.desc}</p>
+                
+                {/* Highlights */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {item.highlights.map((h, j) => (
+                    <span key={j} className="bg-amber-50 text-amber-700 px-3 py-1 text-xs rounded-full border border-amber-200">
+                      {h}
+                    </span>
+                  ))}
+                </div>
+                
+                {/* Tip */}
+                <div className="flex items-center gap-2 text-emerald-700 text-xs mt-4 pt-4 border-t border-amber-100">
+                  <Star className="w-4 h-4 text-amber-500" />
+                  <span className="italic">{item.tip}</span>
+                </div>
               </div>
             </div>
           ))}
         </div>
+      </div>
+    </section>
+
+    {/* Travel Tips Section */}
+    <section className="py-16 bg-emerald-800 text-white">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <h3 className="text-2xl font-serif mb-6">Consejos para su Visita</h3>
+        <div className="grid md:grid-cols-3 gap-8">
+          <div className="p-4">
+            <Clock className="w-8 h-8 mx-auto mb-3 text-amber-300" />
+            <p className="text-sm text-emerald-100">Mejor época: Todo el año. Clima tropical durante todo el año.</p>
+          </div>
+          <div className="p-4">
+            <Car className="w-8 h-8 mx-auto mb-3 text-amber-300" />
+            <p className="text-sm text-emerald-100">Transporte: Podemos coordinar tours y transporte privado.</p>
+          </div>
+          <div className="p-4">
+            <MessageCircle className="w-8 h-8 mx-auto mb-3 text-amber-300" />
+            <p className="text-sm text-emerald-100">Consulte en recepción para información y reservas de tours.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    {/* CTA Section */}
+    <section className="py-16 bg-amber-50">
+      <div className="max-w-4xl mx-auto px-6 text-center">
+        <h3 className="text-2xl font-serif text-emerald-800 mb-4">¿Listo para Explorar?</h3>
+        <p className="text-gray-600 mb-8">Nuestro equipo puede ayudarle a planificar sus excursiones</p>
+        <Link 
+          to="contacto" 
+          className="inline-block bg-emerald-700 hover:bg-emerald-600 text-white px-10 py-4 text-sm tracking-widest uppercase transition-colors"
+        >
+          Contáctenos
+        </Link>
       </div>
     </section>
   </div>
