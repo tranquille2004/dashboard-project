@@ -579,14 +579,14 @@ const HomePage = ({ t }) => (
       {/* Content */}
       <div className="relative z-10 text-center text-white px-6 max-w-4xl">
         <p className="text-amber-300 text-sm tracking-[0.4em] uppercase mb-4 animate-fade-in">{t.hero.welcome}</p>
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-6 tracking-wide">{t.hero.title}</h1>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6 tracking-wide">{t.hero.title}</h1>
         
         {/* Large Hotel Logo */}
         <div className="flex justify-center my-8">
           <img 
             src={IMG('/images/hoteldelpacifico/hotel-logo.png')} 
             alt="Hotel del Pacífico" 
-            className="h-32 md:h-40 lg:h-48 w-auto"
+            className="h-40 md:h-52 lg:h-64 w-auto"
           />
         </div>
         
