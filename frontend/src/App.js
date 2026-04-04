@@ -41,7 +41,9 @@ const DOMAIN_MAPPING = {
   'albertopantoja.ec': 'albertopantoja',
   'www.albertopantoja.ec': 'albertopantoja',
   'hoteldelpacifico.com': 'hoteldelpacifico',
-  'www.hoteldelpacifico.com': 'hoteldelpacifico'
+  'www.hoteldelpacifico.com': 'hoteldelpacifico',
+  'hoteldelpacifico.net': 'hoteldelpacifico',
+  'www.hoteldelpacifico.net': 'hoteldelpacifico'
 };
 
 // Detecteer custom domain DIRECT bij laden

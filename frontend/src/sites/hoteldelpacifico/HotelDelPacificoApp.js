@@ -1281,11 +1281,231 @@ const ContactPage = ({ t }) => (
 );
 
 // ============================================
+// UNDER CONSTRUCTION PAGE
+// ============================================
+const UnderConstructionPage = ({ t, language, setLanguage }) => {
+  const languages = [
+    { code: 'es', name: 'ES' },
+    { code: 'en', name: 'EN' },
+    { code: 'fr', name: 'FR' },
+    { code: 'it', name: 'IT' },
+    { code: 'de', name: 'DE' }
+  ];
+
+  const underConstructionText = {
+    es: {
+      title: 'Próximamente',
+      subtitle: 'Estamos trabajando en algo especial para usted',
+      contact: 'Mientras tanto, puede contactarnos:',
+      followUs: 'Síguenos en redes sociales'
+    },
+    en: {
+      title: 'Coming Soon',
+      subtitle: 'We are working on something special for you',
+      contact: 'In the meantime, you can contact us:',
+      followUs: 'Follow us on social media'
+    },
+    fr: {
+      title: 'Bientôt Disponible',
+      subtitle: 'Nous travaillons sur quelque chose de spécial pour vous',
+      contact: 'En attendant, vous pouvez nous contacter:',
+      followUs: 'Suivez-nous sur les réseaux sociaux'
+    },
+    it: {
+      title: 'Prossimamente',
+      subtitle: 'Stiamo lavorando a qualcosa di speciale per voi',
+      contact: 'Nel frattempo, potete contattarci:',
+      followUs: 'Seguici sui social media'
+    },
+    de: {
+      title: 'Demnächst Verfügbar',
+      subtitle: 'Wir arbeiten an etwas Besonderem für Sie',
+      contact: 'In der Zwischenzeit können Sie uns kontaktieren:',
+      followUs: 'Folgen Sie uns in den sozialen Medien'
+    }
+  };
+
+  const ucText = underConstructionText[language] || underConstructionText.es;
+
+  return (
+    <div className="min-h-screen relative overflow-hidden">
+      {/* Video Background */}
+      <video 
+        autoPlay 
+        loop 
+        muted 
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover object-center"
+        style={{ objectPosition: '50% 30%' }}
+      >
+        <source src={IMG('/images/hoteldelpacifico/hotel-v8.mp4')} type="video/mp4" />
+      </video>
+      
+      {/* Green Overlay Filter */}
+      <div className="absolute inset-0 bg-emerald-900/85" />
+      <div className="absolute inset-0 bg-gradient-to-b from-emerald-900/50 via-transparent to-emerald-900/80" />
+      
+      {/* Content */}
+      <div className="relative z-10 min-h-screen flex flex-col items-center justify-center text-white px-6">
+        {/* Language Selector - Top Right */}
+        <div className="absolute top-6 right-6 flex items-center gap-1 bg-black/20 backdrop-blur-sm rounded-full px-4 py-2">
+          {languages.map((lang, i) => (
+            <React.Fragment key={lang.code}>
+              <button
+                onClick={() => setLanguage(lang.code)}
+                className={`px-2 py-1 text-xs tracking-wider transition-all duration-300 ${
+                  language === lang.code
+                    ? 'text-amber-300 font-semibold'
+                    : 'text-white/70 hover:text-white'
+                }`}
+              >
+                {lang.name}
+              </button>
+              {i < languages.length - 1 && <span className="text-white/30">|</span>}
+            </React.Fragment>
+          ))}
+        </div>
+
+        {/* Main Content */}
+        <div className="text-center max-w-2xl">
+          {/* Logo */}
+          <img 
+            src={IMG('/images/hoteldelpacifico/hotel-logo.png')} 
+            alt="Hotel del Pacífico" 
+            className="h-48 md:h-64 lg:h-72 w-auto mx-auto mb-8"
+          />
+          
+          {/* Under Construction Badge */}
+          <div className="inline-flex items-center gap-2 bg-amber-500/90 text-emerald-950 px-6 py-2 rounded-full mb-8">
+            <Sparkles className="w-4 h-4" />
+            <span className="text-sm font-medium tracking-wider uppercase">{ucText.title}</span>
+            <Sparkles className="w-4 h-4" />
+          </div>
+          
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-serif mb-4">Hotel del Pacífico</h1>
+          <p className="text-emerald-100/80 text-lg md:text-xl mb-12">{ucText.subtitle}</p>
+          
+          {/* Contact Info */}
+          <div className="bg-black/20 backdrop-blur-sm rounded-2xl p-8 mb-8">
+            <p className="text-amber-300 text-sm tracking-wider uppercase mb-6">{ucText.contact}</p>
+            <div className="space-y-4">
+              <a 
+                href={`tel:${HOTEL_INFO.phone}`}
+                className="flex items-center justify-center gap-3 text-white hover:text-amber-300 transition-colors"
+              >
+                <Phone size={18} className="text-amber-400" />
+                <span>{HOTEL_INFO.phone}</span>
+              </a>
+              <a 
+                href={`tel:${HOTEL_INFO.phone2}`}
+                className="flex items-center justify-center gap-3 text-white hover:text-amber-300 transition-colors"
+              >
+                <Phone size={18} className="text-amber-400" />
+                <span>{HOTEL_INFO.phone2}</span>
+              </a>
+              <a 
+                href={`mailto:${HOTEL_INFO.email}`}
+                className="flex items-center justify-center gap-3 text-white hover:text-amber-300 transition-colors"
+              >
+                <Mail size={18} className="text-amber-400" />
+                <span>{HOTEL_INFO.email}</span>
+              </a>
+              <a 
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(HOTEL_INFO.address)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-3 text-white hover:text-amber-300 transition-colors"
+              >
+                <MapPin size={18} className="text-amber-400" />
+                <span className="text-sm">{HOTEL_INFO.address}</span>
+              </a>
+            </div>
+          </div>
+          
+          {/* Social Media */}
+          <div className="text-center">
+            <p className="text-emerald-200/50 text-xs tracking-wider uppercase mb-4">{ucText.followUs}</p>
+            <div className="flex justify-center gap-4">
+              <a 
+                href="https://www.facebook.com/hoteldelpacifico.sd" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-12 h-12 rounded-full border border-emerald-400/30 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300"
+              >
+                <Facebook size={20} />
+              </a>
+              <a 
+                href="https://www.instagram.com/hoteldelpacifico.sd" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-12 h-12 rounded-full border border-emerald-400/30 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300"
+              >
+                <Instagram size={20} />
+              </a>
+              <a 
+                href={`https://wa.me/${HOTEL_INFO.phone.replace(/[^0-9]/g, '')}`}
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-12 h-12 rounded-full border border-emerald-400/30 flex items-center justify-center text-emerald-200 hover:bg-amber-500 hover:border-amber-500 hover:text-white transition-all duration-300"
+              >
+                <MessageCircle size={20} />
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        {/* Webmaster Footer */}
+        <div className="absolute bottom-6 left-0 right-0 flex items-center justify-center gap-3 text-xs opacity-70 hover:opacity-100 transition-opacity">
+          <a 
+            href="https://wa.me/593989013622" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-3"
+          >
+            <img 
+              src={IMG('/images/fworksbuilders-logo.png')}
+              alt="fworksbuilders logo" 
+              className="h-6 w-auto hover:opacity-80 transition-opacity"
+            />
+            <span className="text-emerald-200/70">Webmaster:</span>
+            <span className="text-amber-300 hover:text-amber-200 transition-colors font-medium">
+              fworksbuilders
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+// ============================================
 // MAIN APP COMPONENT
 // ============================================
+// Set to true to show only the Under Construction page
+const UNDER_CONSTRUCTION_MODE = true;
+
 const HotelDelPacificoApp = () => {
   const [language, setLanguage] = useState('es');
   const t = translations[language];
+
+  // Show Under Construction page when enabled
+  if (UNDER_CONSTRUCTION_MODE) {
+    return (
+      <div className="min-h-screen">
+        <SEO 
+          title="Hotel del Pacífico - Próximamente | Santo Domingo, Ecuador"
+          description="Hotel del Pacífico: Su oasis de tranquilidad y elegancia en Santo Domingo de los Tsáchilas. Nuevo sitio web próximamente. Contáctenos: +593 98 880 2941"
+          keywords="hotel santo domingo, hotel ecuador, hotel del pacifico, hotel de lujo ecuador, alojamiento santo domingo"
+          image="https://www.hoteldelpacifico.net/images/hotel/hero.jpg"
+          url="https://www.hoteldelpacifico.net"
+          siteName="Hotel del Pacífico"
+          locale="es_EC"
+        />
+        <URLSync />
+        <UnderConstructionPage t={t} language={language} setLanguage={setLanguage} />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen">
