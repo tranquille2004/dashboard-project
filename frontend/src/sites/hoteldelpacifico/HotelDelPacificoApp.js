@@ -1297,31 +1297,36 @@ const UnderConstructionPage = ({ t, language, setLanguage }) => {
       title: 'Próximamente',
       subtitle: 'Estamos trabajando en algo especial para usted',
       contact: 'Mientras tanto, puede contactarnos:',
-      followUs: 'Síguenos en redes sociales'
+      followUs: 'Síguenos en redes sociales',
+      builtBy: 'Sitio web actualmente en construcción por:'
     },
     en: {
       title: 'Coming Soon',
       subtitle: 'We are working on something special for you',
       contact: 'In the meantime, you can contact us:',
-      followUs: 'Follow us on social media'
+      followUs: 'Follow us on social media',
+      builtBy: 'Website currently being built by:'
     },
     fr: {
       title: 'Bientôt Disponible',
       subtitle: 'Nous travaillons sur quelque chose de spécial pour vous',
       contact: 'En attendant, vous pouvez nous contacter:',
-      followUs: 'Suivez-nous sur les réseaux sociaux'
+      followUs: 'Suivez-nous sur les réseaux sociaux',
+      builtBy: 'Site web actuellement en construction par:'
     },
     it: {
       title: 'Prossimamente',
       subtitle: 'Stiamo lavorando a qualcosa di speciale per voi',
       contact: 'Nel frattempo, potete contattarci:',
-      followUs: 'Seguici sui social media'
+      followUs: 'Seguici sui social media',
+      builtBy: 'Sito web attualmente in costruzione da:'
     },
     de: {
       title: 'Demnächst Verfügbar',
       subtitle: 'Wir arbeiten an etwas Besonderem für Sie',
       contact: 'In der Zwischenzeit können Sie uns kontaktieren:',
-      followUs: 'Folgen Sie uns in den sozialen Medien'
+      followUs: 'Folgen Sie uns in den sozialen Medien',
+      builtBy: 'Webseite wird derzeit erstellt von:'
     }
   };
 
@@ -1423,7 +1428,7 @@ const UnderConstructionPage = ({ t, language, setLanguage }) => {
           </div>
           
           {/* Social Media */}
-          <div className="text-center">
+          <div className="text-center mb-10">
             <p className="text-emerald-200/50 text-xs tracking-wider uppercase mb-4">{ucText.followUs}</p>
             <div className="flex justify-center gap-4">
               <a 
@@ -1452,26 +1457,26 @@ const UnderConstructionPage = ({ t, language, setLanguage }) => {
               </a>
             </div>
           </div>
-        </div>
-        
-        {/* Webmaster Footer */}
-        <div className="absolute bottom-6 left-0 right-0 flex items-center justify-center gap-3 text-xs opacity-70 hover:opacity-100 transition-opacity">
-          <a 
-            href="https://wa.me/593989013622" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-3"
-          >
-            <img 
-              src={IMG('/images/fworksbuilders-logo.png')}
-              alt="fworksbuilders logo" 
-              className="h-6 w-auto hover:opacity-80 transition-opacity"
-            />
-            <span className="text-emerald-200/70">Webmaster:</span>
-            <span className="text-amber-300 hover:text-amber-200 transition-colors font-medium">
-              fworksbuilders
-            </span>
-          </a>
+
+          {/* Built By Section - Prominent */}
+          <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-amber-400/30">
+            <p className="text-amber-300 text-sm tracking-wider uppercase mb-4">{ucText.builtBy}</p>
+            <a 
+              href="https://wa.me/593989013622" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex flex-col items-center gap-3 group"
+            >
+              <img 
+                src={IMG('/images/fworksbuilders-logo.png')}
+                alt="fworksbuilders" 
+                className="h-14 md:h-16 w-auto group-hover:scale-105 transition-transform duration-300"
+              />
+              <span className="text-white text-lg font-medium group-hover:text-amber-300 transition-colors">
+                fworksbuilders
+              </span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
