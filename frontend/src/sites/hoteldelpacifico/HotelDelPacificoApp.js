@@ -1489,22 +1489,111 @@ const UnderConstructionPage = ({ t, language, setLanguage }) => {
 // Set to true to show only the Under Construction page
 const UNDER_CONSTRUCTION_MODE = true;
 
+// Complete Hotel SEO Data for Google Rich Results
+const HOTEL_SEO_DATA = {
+  name: 'Hotel del Pacífico',
+  stars: '3',
+  priceRange: '$$',
+  numberOfRooms: 36,
+  phone: '+593 98 880 2941',
+  email: 'hotel.delpacifico@hotmail.com',
+  logo: 'https://www.hoteldelpacifico.net/images/hoteldelpacifico/hotel-logo.png',
+  streetAddress: 'Av. 29 de Mayo entre Ibarra y Latacunga',
+  city: 'Santo Domingo',
+  region: 'Santo Domingo de los Tsáchilas',
+  postalCode: '230101',
+  country: 'EC',
+  latitude: -0.2531,
+  longitude: -79.1719,
+  geoRegion: 'EC-SD',
+  geoPlacename: 'Santo Domingo de los Tsáchilas',
+  geoPosition: '-0.2531;-79.1719',
+  themeColor: '#065f46',
+  checkinTime: '14:00',
+  checkoutTime: '12:00',
+  petsAllowed: false,
+  languages: ['Spanish', 'English', 'French', 'Italian', 'German'],
+  paymentAccepted: ['Cash', 'Credit Card', 'Debit Card'],
+  currencies: 'USD',
+  mapUrl: 'https://www.google.com/maps/search/?api=1&query=Hotel+del+Pacifico+Santo+Domingo+Ecuador',
+  amenities: [
+    'Free WiFi',
+    'Air conditioning',
+    'Smart TV',
+    'Private parking',
+    'Restaurant',
+    'Room service',
+    'Business center',
+    'Conference room',
+    '24-hour front desk',
+    'Hot water',
+    'Laundry service',
+    'Safe deposit box'
+  ],
+  socialMedia: [
+    'https://www.facebook.com/hoteldelpacifico.sd',
+    'https://www.instagram.com/hoteldelpacifico.sd'
+  ],
+  breadcrumbs: [
+    { name: 'Ecuador', url: 'https://www.hoteldelpacifico.net' },
+    { name: 'Santo Domingo', url: 'https://www.hoteldelpacifico.net' },
+    { name: 'Hotel del Pacífico', url: 'https://www.hoteldelpacifico.net' }
+  ]
+};
+
+// Alternate language URLs for hreflang tags
+const ALTERNATE_LANGUAGES = {
+  'es': 'https://www.hoteldelpacifico.net',
+  'en': 'https://www.hoteldelpacifico.net',
+  'fr': 'https://www.hoteldelpacifico.net',
+  'it': 'https://www.hoteldelpacifico.net',
+  'de': 'https://www.hoteldelpacifico.net'
+};
+
 const HotelDelPacificoApp = () => {
   const [language, setLanguage] = useState('es');
   const t = translations[language];
+
+  // Language-specific SEO descriptions
+  const seoDescriptions = {
+    es: 'Hotel del Pacífico: Su oasis de tranquilidad y elegancia en Santo Domingo de los Tsáchilas, Ecuador. 36 habitaciones confortables, restaurante La Orquídea, centro de negocios y sala de conferencias. Ideal para viajeros de negocios y turistas. Reservas: +593 98 880 2941',
+    en: 'Hotel del Pacífico: Your oasis of tranquility and elegance in Santo Domingo de los Tsáchilas, Ecuador. 36 comfortable rooms, La Orquídea restaurant, business center and conference room. Ideal for business travelers and tourists. Reservations: +593 98 880 2941',
+    fr: 'Hotel del Pacífico: Votre oasis de tranquillité et d\'élégance à Santo Domingo de los Tsáchilas, Équateur. 36 chambres confortables, restaurant La Orquídea, centre d\'affaires. Réservations: +593 98 880 2941',
+    it: 'Hotel del Pacífico: La vostra oasi di tranquillità ed eleganza a Santo Domingo de los Tsáchilas, Ecuador. 36 camere confortevoli, ristorante La Orquídea, centro business. Prenotazioni: +593 98 880 2941',
+    de: 'Hotel del Pacífico: Ihre Oase der Ruhe und Eleganz in Santo Domingo de los Tsáchilas, Ecuador. 36 komfortable Zimmer, Restaurant La Orquídea, Business Center. Reservierungen: +593 98 880 2941'
+  };
+
+  const seoKeywords = {
+    es: 'hotel santo domingo ecuador, hotel del pacifico, alojamiento santo domingo, hotel negocios ecuador, hotel tsachilas, la orquidea restaurante, hotel centro santo domingo, hospedaje ecuador, hotel 3 estrellas santo domingo, reservas hotel ecuador',
+    en: 'hotel santo domingo ecuador, hotel del pacifico, accommodation santo domingo, business hotel ecuador, hotel tsachilas, la orquidea restaurant, hotel downtown santo domingo, lodging ecuador, 3 star hotel santo domingo, hotel reservations ecuador',
+    fr: 'hôtel santo domingo equateur, hotel del pacifico, hébergement santo domingo, hôtel affaires equateur, hotel tsachilas, restaurant la orquidea, hôtel centre santo domingo, logement equateur',
+    it: 'hotel santo domingo ecuador, hotel del pacifico, alloggio santo domingo, hotel business ecuador, hotel tsachilas, ristorante la orquidea, hotel centro santo domingo, albergo ecuador',
+    de: 'hotel santo domingo ecuador, hotel del pacifico, unterkunft santo domingo, business hotel ecuador, hotel tsachilas, restaurant la orquidea, hotel zentrum santo domingo, übernachtung ecuador'
+  };
+
+  const seoTitles = {
+    es: 'Hotel del Pacífico | Hotel 3 Estrellas en Santo Domingo, Ecuador',
+    en: 'Hotel del Pacífico | 3-Star Hotel in Santo Domingo, Ecuador',
+    fr: 'Hotel del Pacífico | Hôtel 3 Étoiles à Santo Domingo, Équateur',
+    it: 'Hotel del Pacífico | Hotel 3 Stelle a Santo Domingo, Ecuador',
+    de: 'Hotel del Pacífico | 3-Sterne-Hotel in Santo Domingo, Ecuador'
+  };
 
   // Show Under Construction page when enabled
   if (UNDER_CONSTRUCTION_MODE) {
     return (
       <div className="min-h-screen">
         <SEO 
-          title="Hotel del Pacífico - Próximamente | Santo Domingo, Ecuador"
-          description="Hotel del Pacífico: Su oasis de tranquilidad y elegancia en Santo Domingo de los Tsáchilas. Nuevo sitio web próximamente. Contáctenos: +593 98 880 2941"
-          keywords="hotel santo domingo, hotel ecuador, hotel del pacifico, hotel de lujo ecuador, alojamiento santo domingo"
-          image="https://www.hoteldelpacifico.net/images/hotel/hero.jpg"
+          title={`${seoTitles[language]} - Próximamente`}
+          description={seoDescriptions[language]}
+          keywords={seoKeywords[language]}
+          image="https://www.hoteldelpacifico.net/images/hoteldelpacifico/hotel-logo.png"
           url="https://www.hoteldelpacifico.net"
           siteName="Hotel del Pacífico"
-          locale="es_EC"
+          locale={language === 'es' ? 'es_EC' : language}
+          type="hotel"
+          hotelData={HOTEL_SEO_DATA}
+          alternateLanguages={ALTERNATE_LANGUAGES}
         />
         <URLSync />
         <UnderConstructionPage t={t} language={language} setLanguage={setLanguage} />
@@ -1515,13 +1604,16 @@ const HotelDelPacificoApp = () => {
   return (
     <div className="min-h-screen">
       <SEO 
-        title="Hotel del Pacífico - Santo Domingo, Ecuador | Hotel de Lujo"
-        description="Hotel del Pacífico: Su oasis de tranquilidad y elegancia en Santo Domingo de los Tsáchilas. 36 habitaciones de lujo, restaurante La Orquídea, centro de convenciones. Reservas: info@hoteldelpacifico.com"
-        keywords="hotel santo domingo, hotel ecuador, hotel del pacifico, hotel de lujo ecuador, alojamiento santo domingo, hotel tsachilas, la orquidea restaurante, hotel centro santo domingo"
-        image="https://www.hoteldelpacifico.com/images/hotel/hero.jpg"
-        url="https://www.hoteldelpacifico.com"
+        title={seoTitles[language]}
+        description={seoDescriptions[language]}
+        keywords={seoKeywords[language]}
+        image="https://www.hoteldelpacifico.net/images/hoteldelpacifico/hotel-logo.png"
+        url="https://www.hoteldelpacifico.net"
         siteName="Hotel del Pacífico"
-        locale="es_EC"
+        locale={language === 'es' ? 'es_EC' : language}
+        type="hotel"
+        hotelData={HOTEL_SEO_DATA}
+        alternateLanguages={ALTERNATE_LANGUAGES}
       />
       <URLSync />
       

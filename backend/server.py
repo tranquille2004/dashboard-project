@@ -1427,6 +1427,10 @@ DOMAIN_SLUG_MAP = {
     'www.ristorantemercato.be': 'mercato',
     'smeraldavacanze.it': 'smeralda',
     'www.smeraldavacanze.it': 'smeralda',
+    'hoteldelpacifico.net': 'hoteldelpacifico',
+    'www.hoteldelpacifico.net': 'hoteldelpacifico',
+    'hoteldelpacifico.com': 'hoteldelpacifico',
+    'www.hoteldelpacifico.com': 'hoteldelpacifico',
 }
 
 # SEO data per site
@@ -1486,6 +1490,13 @@ SITE_SEO_DATA = {
         'description': 'Vakantieappartementen in Sardinië, Italië. Prachtige ligging nabij strand en natuur.',
         'keywords': 'vakantie Sardinië, appartement Sardinia, Villa Smeralda, Italië vakantie',
         'pages': ['/', '/apartments', '/gallery', '/prices', '/contact']
+    },
+    'hoteldelpacifico': {
+        'domain': 'www.hoteldelpacifico.net',
+        'name': 'Hotel del Pacífico - Santo Domingo, Ecuador',
+        'description': 'Hotel del Pacífico: Su oasis de tranquilidad y elegancia en Santo Domingo de los Tsáchilas, Ecuador. 36 habitaciones confortables, restaurante La Orquídea, centro de negocios y sala de conferencias. Ideal para viajeros de negocios y turistas.',
+        'keywords': 'hotel santo domingo ecuador, hotel del pacifico, alojamiento santo domingo, hotel negocios ecuador, hotel tsachilas, la orquidea restaurante, hotel 3 estrellas ecuador, hospedaje santo domingo',
+        'pages': ['/', '/habitaciones', '/precios', '/fotos', '/restaurante', '/atractivos', '/contacto']
     }
 }
 
