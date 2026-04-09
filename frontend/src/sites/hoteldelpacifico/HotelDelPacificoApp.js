@@ -1146,7 +1146,7 @@ const RestaurantPage = ({ t }) => (
       {/* Background Image with Green Filter */}
       <div className="absolute inset-0">
         <img 
-          src={IMG('/images/hoteldelpacifico/patisserie/DSC00041.jpeg')} 
+          src={IMG('/images/hoteldelpacifico/patisserie/DSC00436.jpeg')} 
           alt="" 
           className="w-full h-full object-cover"
         />
