@@ -1150,7 +1150,7 @@ const RestaurantPage = ({ t }) => (
           alt="" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-emerald-800/90" />
+        <div className="absolute inset-0 bg-emerald-800/70" />
       </div>
       
       {/* Content */}
@@ -1159,10 +1159,10 @@ const RestaurantPage = ({ t }) => (
         <img 
           src={IMG('/images/hoteldelpacifico/la-orquidea-logo.png')} 
           alt="La Orquídea Café" 
-          className="h-52 md:h-60 lg:h-64 w-auto mx-auto"
+          className="h-[400px] md:h-[450px] lg:h-[500px] w-auto mx-auto -my-8"
         />
         <Divider />
-        <p className="text-emerald-100/70 max-w-xl mx-auto text-sm">{t.restaurant.subtitle}</p>
+        <p className="text-emerald-100/80 max-w-xl mx-auto text-sm">{t.restaurant.subtitle}</p>
       </div>
     </section>
 
