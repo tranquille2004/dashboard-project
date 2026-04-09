@@ -1146,11 +1146,11 @@ const RestaurantPage = ({ t }) => (
       {/* Background Image with Green Filter */}
       <div className="absolute inset-0">
         <img 
-          src={IMG('/images/hoteldelpacifico/patisserie/DSC00436.jpeg')} 
+          src={IMG('/images/hoteldelpacifico/patisserie/DSC00087.jpeg')} 
           alt="" 
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-emerald-800/70" />
+        <div className="absolute inset-0 bg-emerald-800/60" />
       </div>
       
       {/* Content */}
