@@ -1462,7 +1462,7 @@ const UnderConstructionPage = ({ t, language, setLanguage }) => {
           <div className="bg-black/30 backdrop-blur-sm rounded-2xl p-6 border border-amber-400/30">
             <p className="text-amber-300 text-sm tracking-wider uppercase mb-4">{ucText.builtBy}</p>
             <a 
-              href="https://wa.me/593989013622" 
+              href="https://www.fworksbuilders.com" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex flex-col items-center gap-3 group"
