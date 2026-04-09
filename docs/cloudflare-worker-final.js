@@ -116,17 +116,33 @@ export default {
     }
     
     // FWorksBuilders.com /admin -> super admin dashboard (direct proxy, no iframe)
+    // Also proxy /static/ assets when on admin pages
     if ((hostname === 'fworksbuilders.com' || hostname === 'www.fworksbuilders.com') && 
-        (pathname === '/admin' || pathname.startsWith('/admin'))) {
-      const targetUrl = PREVIEW_URL + pathname + url.search + url.hash;
+        (pathname === '/admin' || pathname.startsWith('/admin') || pathname.startsWith('/static/'))) {
+      const targetUrl = PREVIEW_URL + pathname + url.search;
       try {
         const response = await fetch(targetUrl, {
           method: request.method,
-          headers: request.headers
+          headers: {
+            'Accept': request.headers.get('Accept') || '*/*',
+            'Accept-Encoding': request.headers.get('Accept-Encoding') || 'gzip, deflate, br',
+            'User-Agent': request.headers.get('User-Agent') || 'Mozilla/5.0'
+          }
         });
+        
+        // Clone headers and set appropriate content-type
+        const newHeaders = new Headers(response.headers);
+        
+        // Ensure correct content-type for JS/CSS files
+        if (pathname.endsWith('.js')) {
+          newHeaders.set('Content-Type', 'application/javascript');
+        } else if (pathname.endsWith('.css')) {
+          newHeaders.set('Content-Type', 'text/css');
+        }
+        
         return new Response(response.body, {
           status: response.status,
-          headers: response.headers
+          headers: newHeaders
         });
       } catch (e) {
         return new Response('Error loading admin: ' + e.message, { status: 500 });
