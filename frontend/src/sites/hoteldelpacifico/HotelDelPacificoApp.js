@@ -104,6 +104,8 @@ const translations = {
       dinnerDesc: 'Una velada perfecta con nuestra carta variada',
       pastry: 'Pastelería Propia',
       pastryDesc: 'El hotel cuenta con una pastelería propia donde se elaboran tartas y bocadillos caseros, perfectos para disfrutar en cualquier momento del día.',
+      pastryGalleryTitle: 'Nuestra Especialidad',
+      pastryGallerySubtitle: 'Descubra nuestra exquisita selección de postres y creaciones artesanales, elaborados diariamente con los mejores ingredientes.',
       banquet: 'Salón de Conferencias',
       banquetDesc: 'Sala de conferencias equipada con tecnología audiovisual, perfecta para reuniones, capacitaciones y eventos corporativos.'
     },
@@ -236,6 +238,8 @@ const translations = {
       dinnerDesc: 'A perfect evening with our gourmet menu',
       pastry: 'Artisan Pastry Shop',
       pastryDesc: 'Enjoy our exquisite creations: cakes, pastries, desserts and snacks prepared daily with select ingredients.',
+      pastryGalleryTitle: 'Our Specialty',
+      pastryGallerySubtitle: 'Discover our exquisite selection of desserts and artisan creations, made daily with the finest ingredients.',
       banquet: 'Event Hall',
       banquetDesc: 'Versatile space for corporate events, conferences and special celebrations. Equipped with state-of-the-art audiovisual technology and personalized catering service.'
     },
@@ -937,6 +941,205 @@ const PhotosPage = ({ t }) => (
 // ============================================
 // RESTAURANT PAGE - LUXURY VERSION
 // ============================================
+// ============================================
+// PATISSERIE GALLERY COMPONENT
+// ============================================
+const PATISSERIE_IMAGES = [
+  'DSC00017.jpeg', 'DSC00018.jpeg', 'DSC00019.jpeg', 'DSC00021.jpeg', 'DSC00022.jpeg',
+  'DSC00025.jpeg', 'DSC00029.jpeg', 'DSC00030.jpeg', 'DSC00031.jpeg', 'DSC00032.jpeg',
+  'DSC00033.jpeg', 'DSC00041.jpeg', 'DSC00045.jpeg', 'DSC00048.jpeg', 'DSC00054.jpeg',
+  'DSC00057.jpeg', 'DSC00060.jpeg', 'DSC00078.jpeg', 'DSC00081.jpeg', 'DSC00087.jpeg',
+  'DSC00112.jpeg', 'DSC00113.jpeg', 'DSC00114.jpeg', 'DSC00115.jpeg', 'DSC00120.jpeg',
+  'DSC00135.jpeg', 'DSC00141.jpeg', 'DSC00144.jpeg', 'DSC00148.jpeg', 'DSC00149.jpeg',
+  'DSC00150.jpeg', 'DSC00167.jpeg', 'DSC00171.jpeg', 'DSC00191.jpeg', 'DSC00200.jpeg',
+  'DSC00216.jpeg', 'DSC00218.jpeg', 'DSC00230.jpeg', 'DSC00236.jpeg', 'DSC00239.jpeg',
+  'DSC00255.jpeg', 'DSC00281.jpeg', 'DSC00313.jpeg', 'DSC00353.jpeg', 'DSC00364.jpeg',
+  'DSC00365.jpeg', 'DSC00382.jpeg', 'DSC00384.jpeg', 'DSC00393.jpeg', 'DSC00395.jpeg',
+  'DSC00410.jpeg', 'DSC00429.jpeg', 'DSC00432.jpeg', 'DSC00436.jpeg'
+];
+
+const PatisserieGallery = ({ t }) => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const autoPlayRef = React.useRef(null);
+
+  // Auto-play logic
+  useEffect(() => {
+    if (isAutoPlaying && !selectedImage) {
+      autoPlayRef.current = setInterval(() => {
+        setCurrentIndex((prev) => (prev + 1) % PATISSERIE_IMAGES.length);
+      }, 3000);
+    }
+    
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [isAutoPlaying, selectedImage]);
+
+  // Stop auto-play on user interaction
+  const handleUserInteraction = () => {
+    setIsAutoPlaying(false);
+  };
+
+  // Navigate to specific image
+  const goToImage = (index) => {
+    handleUserInteraction();
+    setCurrentIndex(index);
+  };
+
+  // Navigate prev/next
+  const goToPrev = () => {
+    handleUserInteraction();
+    setCurrentIndex((prev) => (prev - 1 + PATISSERIE_IMAGES.length) % PATISSERIE_IMAGES.length);
+  };
+
+  const goToNext = () => {
+    handleUserInteraction();
+    setCurrentIndex((prev) => (prev + 1) % PATISSERIE_IMAGES.length);
+  };
+
+  // Open lightbox
+  const openLightbox = (index) => {
+    handleUserInteraction();
+    setSelectedImage(index);
+  };
+
+  // Close lightbox
+  const closeLightbox = () => {
+    setSelectedImage(null);
+  };
+
+  // Get visible thumbnails (show 6 at a time on desktop)
+  const getVisibleThumbnails = () => {
+    const visible = [];
+    for (let i = 0; i < 6; i++) {
+      const index = (currentIndex + i) % PATISSERIE_IMAGES.length;
+      visible.push({ index, image: PATISSERIE_IMAGES[index] });
+    }
+    return visible;
+  };
+
+  return (
+    <div className="relative">
+      {/* Main Gallery Display */}
+      <div className="relative aspect-[16/9] max-h-[500px] overflow-hidden rounded-lg shadow-xl mb-6">
+        <img
+          src={IMG(`/images/hoteldelpacifico/patisserie/${PATISSERIE_IMAGES[currentIndex]}`)}
+          alt={`Patisserie ${currentIndex + 1}`}
+          className="w-full h-full object-cover transition-opacity duration-500"
+          onClick={() => openLightbox(currentIndex)}
+        />
+        
+        {/* Navigation Arrows */}
+        <button
+          onClick={goToPrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all"
+        >
+          <ChevronDown className="w-6 h-6 rotate-90" />
+        </button>
+        <button
+          onClick={goToNext}
+          className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-black/50 hover:bg-black/70 text-white rounded-full flex items-center justify-center transition-all"
+        >
+          <ChevronDown className="w-6 h-6 -rotate-90" />
+        </button>
+        
+        {/* Image Counter */}
+        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full text-sm">
+          {currentIndex + 1} / {PATISSERIE_IMAGES.length}
+        </div>
+        
+        {/* Auto-play indicator */}
+        {isAutoPlaying && (
+          <div className="absolute top-4 right-4 bg-amber-500/80 text-white px-3 py-1 rounded-full text-xs flex items-center gap-2">
+            <span className="w-2 h-2 bg-white rounded-full animate-pulse" />
+            Auto
+          </div>
+        )}
+        
+        {/* Click to enlarge hint */}
+        <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1 rounded-full text-xs">
+          Click para ampliar
+        </div>
+      </div>
+
+      {/* Thumbnail Strip */}
+      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        {PATISSERIE_IMAGES.map((image, index) => (
+          <button
+            key={index}
+            onClick={() => goToImage(index)}
+            className={`flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden transition-all ${
+              index === currentIndex 
+                ? 'ring-2 ring-amber-500 scale-105' 
+                : 'opacity-60 hover:opacity-100'
+            }`}
+          >
+            <img
+              src={IMG(`/images/hoteldelpacifico/patisserie/${image}`)}
+              alt={`Thumbnail ${index + 1}`}
+              className="w-full h-full object-cover"
+            />
+          </button>
+        ))}
+      </div>
+
+      {/* Resume Auto-play Button */}
+      {!isAutoPlaying && (
+        <button
+          onClick={() => setIsAutoPlaying(true)}
+          className="mt-4 mx-auto block bg-emerald-700 hover:bg-emerald-600 text-white px-6 py-2 rounded-full text-sm transition-colors"
+        >
+          ▶ Reanudar presentación automática
+        </button>
+      )}
+
+      {/* Lightbox Modal */}
+      {selectedImage !== null && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center p-4"
+          onClick={closeLightbox}
+        >
+          <button
+            onClick={closeLightbox}
+            className="absolute top-4 right-4 w-12 h-12 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center z-50"
+          >
+            <X className="w-6 h-6" />
+          </button>
+          
+          <button
+            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev - 1 + PATISSERIE_IMAGES.length) % PATISSERIE_IMAGES.length); }}
+            className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center"
+          >
+            <ChevronDown className="w-8 h-8 rotate-90" />
+          </button>
+          
+          <img
+            src={IMG(`/images/hoteldelpacifico/patisserie/${PATISSERIE_IMAGES[selectedImage]}`)}
+            alt={`Patisserie ${selectedImage + 1}`}
+            className="max-w-full max-h-[90vh] object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+          
+          <button
+            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev + 1) % PATISSERIE_IMAGES.length); }}
+            className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center"
+          >
+            <ChevronDown className="w-8 h-8 -rotate-90" />
+          </button>
+          
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm">
+            {selectedImage + 1} / {PATISSERIE_IMAGES.length}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
 const RestaurantPage = ({ t }) => (
   <div className="bg-amber-50/30 pt-24">
     <section className="py-12 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
@@ -993,6 +1196,22 @@ const RestaurantPage = ({ t }) => (
             <p className="text-gray-600 leading-relaxed">{t.restaurant.banquetDesc}</p>
           </div>
         </div>
+      </div>
+    </section>
+
+    {/* Patisserie Gallery Section */}
+    <section className="py-24 bg-gradient-to-b from-amber-50 to-white">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="text-center mb-12">
+          <p className="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4">{t.restaurant.pastryGalleryTitle || 'Nuestra Especialidad'}</p>
+          <h2 className="text-3xl md:text-4xl font-serif text-emerald-800 mb-4">{t.restaurant.pastry}</h2>
+          <Divider />
+          <p className="text-gray-600 mt-6 max-w-2xl mx-auto">
+            {t.restaurant.pastryGallerySubtitle || 'Descubra nuestra exquisita selección de postres y creaciones artesanales, elaborados diariamente con los mejores ingredientes.'}
+          </p>
+        </div>
+        
+        <PatisserieGallery t={t} />
       </div>
     </section>
   </div>
