@@ -1584,7 +1584,7 @@ const HotelDelPacificoApp = () => {
     return (
       <div className="min-h-screen">
         <SEO 
-          title={`${seoTitles[language]} - Próximamente`}
+          title={seoTitles[language]}
           description={seoDescriptions[language]}
           keywords={seoKeywords[language]}
           image="https://www.hoteldelpacifico.net/images/hoteldelpacifico/hotel-logo.png"
