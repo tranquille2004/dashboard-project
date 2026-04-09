@@ -1798,8 +1798,12 @@ const HotelDelPacificoApp = () => {
     de: 'Hotel del Pacífico | 3-Sterne-Hotel in Santo Domingo, Ecuador'
   };
 
-  // Show Under Construction page when enabled
-  if (UNDER_CONSTRUCTION_MODE) {
+  // Show Under Construction page only on production (hoteldelpacifico.net)
+  // Preview shows full site for development
+  const isProduction = window.location.hostname.includes('hoteldelpacifico.net') || 
+                       window.location.hostname.includes('hoteldelpacifico.com');
+  
+  if (UNDER_CONSTRUCTION_MODE && isProduction) {
     return (
       <div className="min-h-screen">
         <SEO 
