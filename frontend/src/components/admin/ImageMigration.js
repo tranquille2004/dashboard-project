@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Upload, CheckCircle, AlertCircle, Loader2, Image, RefreshCw, Download, Database } from 'lucide-react';
 
-const API = process.env.REACT_APP_BACKEND_URL + '/api';
+// Use current origin for API calls - works on both preview and production
+const API = window.location.origin + '/api';
 
 // Hardcoded records from preview - all 874 images that are in Object Storage
 const PREVIEW_RECORDS_URL = 'https://image-restore-21.preview.emergentagent.com/api/admin/migrate/export-records';
@@ -177,7 +178,7 @@ const ImageMigration = () => {
             Optie 2: Importeer van Preview (AANBEVOLEN)
           </h2>
           <p className="text-gray-300 mb-4">
-            De 874 afbeeldingen zijn al geüpload naar Object Storage vanuit de preview omgeving.
+            De afbeeldingen zijn al geüpload naar Object Storage vanuit de preview omgeving.
             Klik hieronder om de database records te importeren zodat productie weet waar de afbeeldingen staan.
           </p>
           
@@ -198,7 +199,7 @@ const ImageMigration = () => {
             ) : (
               <>
                 <Download className="w-6 h-6" />
-                Importeer 874 Records van Preview
+                Importeer Records van Preview
               </>
             )}
           </button>
