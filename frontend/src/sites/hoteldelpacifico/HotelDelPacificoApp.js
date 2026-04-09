@@ -1141,18 +1141,18 @@ const PatisserieGallery = ({ t }) => {
 };
 
 const RestaurantPage = ({ t }) => (
-  <div className="bg-amber-50/30 pt-24">
-    <section className="py-6 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
-      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-1">{t.nav.restaurant}</p>
-      <div className="flex justify-center mb-1">
+  <div className="bg-amber-50/30 pt-20">
+    <section className="py-4 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
+      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase">{t.nav.restaurant}</p>
+      <div className="flex justify-center">
         <img 
           src={IMG('/images/hoteldelpacifico/la-orquidea-logo.png')} 
           alt="La Orquídea Café" 
-          className="h-72 md:h-80 lg:h-96 w-auto"
+          className="h-48 md:h-56 lg:h-64 w-auto"
         />
       </div>
       <Divider />
-      <p className="text-emerald-100/70 mt-1 max-w-xl mx-auto">{t.restaurant.subtitle}</p>
+      <p className="text-emerald-100/70 max-w-xl mx-auto text-sm">{t.restaurant.subtitle}</p>
     </section>
 
     <section className="py-24 bg-white">
