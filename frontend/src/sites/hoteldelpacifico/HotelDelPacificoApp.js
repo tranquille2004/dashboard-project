@@ -1142,17 +1142,28 @@ const PatisserieGallery = ({ t }) => {
 
 const RestaurantPage = ({ t }) => (
   <div className="bg-amber-50/30 pt-20">
-    <section className="py-2 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
-      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase">{t.nav.restaurant}</p>
-      <div className="flex justify-center -my-2">
+    <section className="relative py-6 text-white text-center overflow-hidden">
+      {/* Background Image with Green Filter */}
+      <div className="absolute inset-0">
+        <img 
+          src={IMG('/images/hoteldelpacifico/patisserie/DSC00041.jpeg')} 
+          alt="" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-emerald-800/90" />
+      </div>
+      
+      {/* Content */}
+      <div className="relative z-10">
+        <p className="text-amber-300 text-xs tracking-[0.3em] uppercase">{t.nav.restaurant}</p>
         <img 
           src={IMG('/images/hoteldelpacifico/la-orquidea-logo.png')} 
           alt="La Orquídea Café" 
-          className="h-64 md:h-72 lg:h-80 w-auto"
+          className="h-52 md:h-60 lg:h-64 w-auto mx-auto"
         />
+        <Divider />
+        <p className="text-emerald-100/70 max-w-xl mx-auto text-sm">{t.restaurant.subtitle}</p>
       </div>
-      <Divider />
-      <p className="text-emerald-100/70 max-w-xl mx-auto text-sm pb-2">{t.restaurant.subtitle}</p>
     </section>
 
     <section className="py-24 bg-white">
