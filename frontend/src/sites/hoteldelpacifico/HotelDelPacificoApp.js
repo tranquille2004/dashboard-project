@@ -1333,7 +1333,7 @@ const AttractionsPage = ({ t }) => (
             },
             { 
               title: 'Parques Acuáticos - Julio Moreno',
-              desc: 'En la parroquia Julio Moreno, a lo largo de la Vía Aventura, encontrará decenas de parques acuáticos para disfrutar en familia. Toboganes, piscinas y diversión garantizada.',
+              desc: 'En la comuna Julio Moreno, a lo largo de la Vía Aventura, encontrará decenas de parques acuáticos para disfrutar en familia. Toboganes, piscinas y diversión garantizada.',
               icon: Star,
               image: IMG('/images/hoteldelpacifico/attractions/aquapark.jpg'),
               distance: '30-45 min',
