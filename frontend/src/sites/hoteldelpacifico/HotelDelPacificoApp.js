@@ -1255,7 +1255,7 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.tsachilas, 
               desc: t.attractions.tsachilasDesc, 
               icon: Users,
-              image: IMG('/images/hoteldelpacifico/attractions/jelen-tenka.jpg'),
+              image: IMG('/images/hoteldelpacifico/attractions/tsachila.jpg'),
               distance: '15-30 min',
               tip: 'Visita guiada recomendada',
               highlights: ['Cultura ancestral', 'Rituales tradicionales', 'Artesanías']
@@ -1264,7 +1264,7 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.waterfalls, 
               desc: t.attractions.waterfallsDesc, 
               icon: Mountain,
-              image: 'https://images.unsplash.com/photo-1590367628204-bde83a38f515?w=800&q=80',
+              image: IMG('/images/hoteldelpacifico/attractions/cascadas.jpg'),
               distance: '20-45 min',
               tip: 'Llevar ropa cómoda',
               highlights: ['Cascada del Diablo', 'Cascada Napac', 'Senderos naturales']
