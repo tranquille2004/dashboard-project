@@ -1313,7 +1313,7 @@ const AttractionsPage = ({ t }) => (
             },
             { 
               title: 'La Cuadra',
-              desc: 'Zona gastronómica y de entretenimiento con una amplia variedad de restaurantes, bares y discotecas. El lugar ideal para disfrutar de la vida nocturna.',
+              desc: 'Zona gastronómica y de entretenimiento con una amplia variedad de restaurantes, bares y tiendas. El lugar ideal para disfrutar de la vida nocturna.',
               icon: Utensils,
               image: IMG('/images/hoteldelpacifico/attractions/cuadra.jpg'),
               distance: '10 min',
