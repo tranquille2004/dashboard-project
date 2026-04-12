@@ -749,7 +749,7 @@ const RoomsPage = ({ t }) => (
     <section className="relative py-20 text-white text-center overflow-hidden">
       <div className="absolute inset-0">
         <img 
-          src={IMG('/images/hoteldelpacifico/patisserie/DSC00167.jpeg')} 
+          src={IMG('/images/hoteldelpacifico/backgrounds/habitaciones-bed.jpg')} 
           alt="" 
           className="w-full h-full object-cover"
         />
@@ -816,7 +816,7 @@ const PricesPage = ({ t }) => (
     <section className="relative py-20 text-white text-center overflow-hidden">
       <div className="absolute inset-0">
         <img 
-          src={IMG('/images/hoteldelpacifico/patisserie/DSC00200.jpeg')} 
+          src={IMG('/images/hoteldelpacifico/backgrounds/tarifas-reception.jpg')} 
           alt="" 
           className="w-full h-full object-cover"
         />

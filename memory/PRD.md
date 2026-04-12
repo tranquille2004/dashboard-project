@@ -31,17 +31,20 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 
 ## What's Been Implemented
 
-### April 4, 2026
-- ✅ Added `hoteldelpacifico.net` and `www.hoteldelpacifico.net` to domain mapping
-- ✅ Implemented Under Construction page with:
-  - Video background with green overlay
-  - Hotel logo prominently displayed
-  - "Próximamente" badge
-  - Contact info (phone, email, address)
-  - Social media links (Facebook, Instagram, WhatsApp)
-  - Language selector (5 languages)
-  - No navigation menu (hidden)
-  - fworksbuilders webmaster footer
+### April 12, 2026
+- ✅ Habitaciones page: background photo changed to tropical hotel room with bed (unsplash)
+- ✅ Tarifas page: background photo changed to elegant hotel reception desk (unsplash)
+- Both with emerald green filter overlay, matching site design
+
+### April 4-11, 2026
+- ✅ Under Construction page for production domain
+- ✅ SEO: Meta tags, OpenGraph, Twitter Cards, JSON-LD Schema
+- ✅ Patisserie Gallery: 54 photos, interactive slider, lightbox, multi-language
+- ✅ Attractions (Descubrir): 8 real photos, new locations added
+- ✅ Navigation fix: absolute routes
+- ✅ Green-filtered background images on all major pages
+- ✅ Image Migration fix: dynamic origin in ImageMigration.js
+- ✅ Cloudflare Worker updated for new domain + static routing
 
 ### Previous Sessions
 - ✅ Complete Hotel del Pacífico website with all 7 pages
