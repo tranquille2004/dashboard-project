@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, Mail, MapPin, Clock, Wifi, Tv, Wind, Car, Coffee, Users, Building, ChevronDown, Facebook, Instagram, Globe, Star, Utensils, Camera, Home as HomeIcon, DollarSign, Mountain, MessageCircle, Sparkles, Shield, Heart, Navigation as NavigationIcon } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, Clock, Wifi, Tv, Wind, Car, Coffee, Users, Building, ChevronDown, Facebook, Instagram, Globe, Star, Utensils, Camera, Home as HomeIcon, DollarSign, Mountain, MessageCircle, Sparkles, Shield, Heart, Navigation as NavigationIcon, ShoppingBag } from 'lucide-react';
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
 import { IMG } from '@/utils/imageHelper';
@@ -1255,6 +1255,7 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.tsachilas, 
               desc: t.attractions.tsachilasDesc, 
               icon: Users,
+              image: 'https://images.unsplash.com/photo-1774490433881-0aa2b92ee006?w=800&q=80',
               distance: '15-30 min',
               tip: 'Visita guiada recomendada',
               highlights: ['Cultura ancestral', 'Rituales tradicionales', 'Artesanías']
@@ -1263,6 +1264,7 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.waterfalls, 
               desc: t.attractions.waterfallsDesc, 
               icon: Mountain,
+              image: 'https://images.unsplash.com/photo-1590367628204-bde83a38f515?w=800&q=80',
               distance: '20-45 min',
               tip: 'Llevar ropa cómoda',
               highlights: ['Cascada del Diablo', 'Cascada Napac', 'Senderos naturales']
@@ -1271,6 +1273,7 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.malecon, 
               desc: t.attractions.maleconDesc, 
               icon: MapPin,
+              image: 'https://images.pexels.com/photos/32520595/pexels-photo-32520595.jpeg?auto=compress&w=800',
               distance: '10 min',
               tip: 'Ideal para paseo al atardecer',
               highlights: ['Gastronomía local', 'Vista al río', 'Área recreativa']
@@ -1279,23 +1282,49 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.jelenTenka, 
               desc: t.attractions.jelenTenkaDesc, 
               icon: Star,
+              image: 'https://images.unsplash.com/photo-1641973240690-9c90ca32cfd4?w=800&q=80',
               distance: '25 min',
               tip: 'Reservar con anticipación',
               highlights: ['Experiencia inmersiva', 'Comida típica', 'Naturaleza']
             },
             { 
-              title: t.attractions.bomboli, 
-              desc: t.attractions.bomboliDesc, 
+              title: t.attractions.bomboli || 'Bombolí',
+              desc: t.attractions.bomboliDesc || 'Sector conocido por sus vistas panorámicas, restaurantes y bares con ambiente nocturno.',
               icon: Utensils,
+              image: 'https://images.unsplash.com/photo-1773429884525-32eba97d4f23?w=800&q=80',
               distance: '15 min',
               tip: 'Ideal para atardecer y noche',
               highlights: ['Restaurantes', 'Bares', 'Vista panorámica']
+            },
+            { 
+              title: 'Bombolí Shopping',
+              desc: 'El centro comercial más moderno de Santo Domingo. Tiendas de marca, cine, patio de comidas y entretenimiento para toda la familia.',
+              icon: ShoppingBag,
+              image: 'https://images.unsplash.com/photo-1758448501002-8c7bb7a7d9ff?w=800&q=80',
+              distance: '15 min',
+              tip: 'Abierto todos los días',
+              highlights: ['Tiendas', 'Cine', 'Patio de comidas']
+            },
+            { 
+              title: 'La Cuadra',
+              desc: 'Zona gastronómica y de entretenimiento con una amplia variedad de restaurantes, bares y discotecas. El lugar ideal para disfrutar de la vida nocturna.',
+              icon: Utensils,
+              image: 'https://images.unsplash.com/photo-1759866614095-d867221143f7?w=800&q=80',
+              distance: '10 min',
+              tip: 'Mejor experiencia de noche',
+              highlights: ['Restaurantes', 'Bares', 'Vida nocturna']
             }
           ].map((item, i) => (
             <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group overflow-hidden">
-              <div className="h-48 bg-gradient-to-br from-emerald-700 to-emerald-800 flex items-center justify-center relative">
-                <div className="w-20 h-20 rounded-full bg-white/10 backdrop-blur flex items-center justify-center group-hover:scale-110 transition-transform duration-500">
-                  <item.icon className="w-10 h-10 text-white" />
+              <div className="h-48 relative overflow-hidden">
+                <img 
+                  src={item.image} 
+                  alt={item.title}
+                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent" />
+                <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
+                  <item.icon className="w-6 h-6 text-white" />
                 </div>
                 {/* Distance Badge */}
                 <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 text-xs tracking-wider">
