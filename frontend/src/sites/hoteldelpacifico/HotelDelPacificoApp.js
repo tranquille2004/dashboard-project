@@ -1258,7 +1258,8 @@ const AttractionsPage = ({ t }) => (
               image: IMG('/images/hoteldelpacifico/attractions/tsachila.jpg'),
               distance: '15-30 min',
               tip: 'Visita guiada recomendada',
-              highlights: ['Cultura ancestral', 'Rituales tradicionales', 'Artesanías']
+              highlights: ['Cultura ancestral', 'Rituales tradicionales', 'Artesanías'],
+              imageStyle: 'object-cover'
             },
             { 
               title: t.attractions.waterfalls, 
@@ -1267,7 +1268,8 @@ const AttractionsPage = ({ t }) => (
               image: IMG('/images/hoteldelpacifico/attractions/cascadas.jpg'),
               distance: '20-45 min',
               tip: 'Llevar ropa cómoda',
-              highlights: ['Cascada del Diablo', 'Cascada Napac', 'Senderos naturales']
+              highlights: ['Cascada del Diablo', 'Cascada Napac', 'Senderos naturales'],
+              imageStyle: 'object-cover scale-75'
             },
             { 
               title: t.attractions.malecon, 
@@ -1276,7 +1278,8 @@ const AttractionsPage = ({ t }) => (
               image: IMG('/images/hoteldelpacifico/attractions/sangabriel.jpg'),
               distance: '10 min',
               tip: 'Ideal para paseo al atardecer',
-              highlights: ['Gastronomía local', 'Vista al río', 'Área recreativa']
+              highlights: ['Gastronomía local', 'Vista al río', 'Área recreativa'],
+              imageStyle: 'object-cover'
             },
             { 
               title: t.attractions.jelenTenka, 
@@ -1285,7 +1288,8 @@ const AttractionsPage = ({ t }) => (
               image: IMG('/images/hoteldelpacifico/attractions/jelen-tenka.jpg'),
               distance: '25 min',
               tip: 'Reservar con anticipación',
-              highlights: ['Experiencia inmersiva', 'Comida típica', 'Naturaleza']
+              highlights: ['Experiencia inmersiva', 'Comida típica', 'Naturaleza'],
+              imageStyle: 'object-cover'
             },
             { 
               title: t.attractions.bomboli || 'Bombolí',
@@ -1294,7 +1298,8 @@ const AttractionsPage = ({ t }) => (
               image: IMG('/images/hoteldelpacifico/attractions/bomboli.webp'),
               distance: '15 min',
               tip: 'Ideal para atardecer',
-              highlights: ['Vista panorámica', 'Fotografía', 'Mirador']
+              highlights: ['Vista panorámica', 'Fotografía', 'Mirador'],
+              imageStyle: 'object-contain bg-emerald-800'
             },
             { 
               title: 'Bombolí Shopping',
@@ -1303,7 +1308,8 @@ const AttractionsPage = ({ t }) => (
               image: IMG('/images/hoteldelpacifico/attractions/bomboli-shopping.jpg'),
               distance: '15 min',
               tip: 'Abierto todos los días',
-              highlights: ['Tiendas', 'Cine', 'Patio de comidas']
+              highlights: ['Tiendas', 'Cine', 'Patio de comidas'],
+              imageStyle: 'object-cover'
             },
             { 
               title: 'La Cuadra',
@@ -1312,7 +1318,8 @@ const AttractionsPage = ({ t }) => (
               image: IMG('/images/hoteldelpacifico/attractions/cuadra.jpg'),
               distance: '10 min',
               tip: 'Mejor experiencia de noche',
-              highlights: ['Restaurantes', 'Bares', 'Vida nocturna']
+              highlights: ['Restaurantes', 'Bares', 'Vida nocturna'],
+              imageStyle: 'object-cover'
             }
           ].map((item, i) => (
             <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group overflow-hidden">
@@ -1320,7 +1327,7 @@ const AttractionsPage = ({ t }) => (
                 <img 
                   src={item.image} 
                   alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  className={`w-full h-full ${item.imageStyle} group-hover:scale-110 transition-transform duration-700`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
