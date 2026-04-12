@@ -1330,6 +1330,16 @@ const AttractionsPage = ({ t }) => (
               tip: 'Ideal para actividades al aire libre',
               highlights: ['Ciclismo', 'Senderismo', 'Parques acuáticos', 'Gastronomía'],
               imagePosition: 'center'
+            },
+            { 
+              title: 'Parques Acuáticos - Julio Moreno',
+              desc: 'En la parroquia Julio Moreno, a lo largo de la Vía Aventura, encontrará decenas de parques acuáticos para disfrutar en familia. Toboganes, piscinas y diversión garantizada.',
+              icon: Star,
+              image: IMG('/images/hoteldelpacifico/attractions/aquapark.jpg'),
+              distance: '30-45 min',
+              tip: 'Llevar ropa de baño y protector solar',
+              highlights: ['Toboganes', 'Piscinas', 'Familia', 'Diversión'],
+              imagePosition: 'center'
             }
           ].map((item, i) => (
             <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group overflow-hidden">
