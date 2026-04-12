@@ -1255,7 +1255,7 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.tsachilas, 
               desc: t.attractions.tsachilasDesc, 
               icon: Users,
-              image: 'https://images.unsplash.com/photo-1774490433881-0aa2b92ee006?w=800&q=80',
+              image: IMG('/images/hoteldelpacifico/attractions/jelen-tenka.jpg'),
               distance: '15-30 min',
               tip: 'Visita guiada recomendada',
               highlights: ['Cultura ancestral', 'Rituales tradicionales', 'Artesanías']
@@ -1273,7 +1273,7 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.malecon, 
               desc: t.attractions.maleconDesc, 
               icon: MapPin,
-              image: 'https://images.pexels.com/photos/32520595/pexels-photo-32520595.jpeg?auto=compress&w=800',
+              image: IMG('/images/hoteldelpacifico/attractions/sangabriel.jpg'),
               distance: '10 min',
               tip: 'Ideal para paseo al atardecer',
               highlights: ['Gastronomía local', 'Vista al río', 'Área recreativa']
@@ -1282,25 +1282,25 @@ const AttractionsPage = ({ t }) => (
               title: t.attractions.jelenTenka, 
               desc: t.attractions.jelenTenkaDesc, 
               icon: Star,
-              image: 'https://images.unsplash.com/photo-1641973240690-9c90ca32cfd4?w=800&q=80',
+              image: IMG('/images/hoteldelpacifico/attractions/jelen-tenka.jpg'),
               distance: '25 min',
               tip: 'Reservar con anticipación',
               highlights: ['Experiencia inmersiva', 'Comida típica', 'Naturaleza']
             },
             { 
               title: t.attractions.bomboli || 'Bombolí',
-              desc: t.attractions.bomboliDesc || 'Sector conocido por sus vistas panorámicas, restaurantes y bares con ambiente nocturno.',
-              icon: Utensils,
-              image: 'https://images.unsplash.com/photo-1773429884525-32eba97d4f23?w=800&q=80',
+              desc: t.attractions.bomboliDesc || 'Mirador icónico de Santo Domingo con vista panorámica de toda la ciudad. El lugar perfecto para fotos y disfrutar del atardecer.',
+              icon: Mountain,
+              image: IMG('/images/hoteldelpacifico/attractions/bomboli.webp'),
               distance: '15 min',
-              tip: 'Ideal para atardecer y noche',
-              highlights: ['Restaurantes', 'Bares', 'Vista panorámica']
+              tip: 'Ideal para atardecer',
+              highlights: ['Vista panorámica', 'Fotografía', 'Mirador']
             },
             { 
               title: 'Bombolí Shopping',
               desc: 'El centro comercial más moderno de Santo Domingo. Tiendas de marca, cine, patio de comidas y entretenimiento para toda la familia.',
               icon: ShoppingBag,
-              image: 'https://images.unsplash.com/photo-1758448501002-8c7bb7a7d9ff?w=800&q=80',
+              image: IMG('/images/hoteldelpacifico/attractions/bomboli-shopping.jpg'),
               distance: '15 min',
               tip: 'Abierto todos los días',
               highlights: ['Tiendas', 'Cine', 'Patio de comidas']
@@ -1309,7 +1309,7 @@ const AttractionsPage = ({ t }) => (
               title: 'La Cuadra',
               desc: 'Zona gastronómica y de entretenimiento con una amplia variedad de restaurantes, bares y discotecas. El lugar ideal para disfrutar de la vida nocturna.',
               icon: Utensils,
-              image: 'https://images.unsplash.com/photo-1759866614095-d867221143f7?w=800&q=80',
+              image: IMG('/images/hoteldelpacifico/attractions/cuadra.jpg'),
               distance: '10 min',
               tip: 'Mejor experiencia de noche',
               highlights: ['Restaurantes', 'Bares', 'Vida nocturna']
