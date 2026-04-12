@@ -1320,6 +1320,16 @@ const AttractionsPage = ({ t }) => (
               tip: 'Mejor experiencia de noche',
               highlights: ['Restaurantes', 'Bares', 'Vida nocturna'],
               imagePosition: 'center'
+            },
+            { 
+              title: 'Vía Aventura',
+              desc: 'Ruta escénica perfecta para ciclismo y senderismo. A lo largo del camino encontrará empanadas típicas, parques acuáticos, restaurantes y diversas actividades al aire libre.',
+              icon: Mountain,
+              image: IMG('/images/hoteldelpacifico/attractions/via-aventura.jpg'),
+              distance: '20-40 min',
+              tip: 'Ideal para actividades al aire libre',
+              highlights: ['Ciclismo', 'Senderismo', 'Parques acuáticos', 'Gastronomía'],
+              imagePosition: 'center'
             }
           ].map((item, i) => (
             <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group overflow-hidden">
