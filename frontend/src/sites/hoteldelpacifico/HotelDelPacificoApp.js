@@ -745,12 +745,22 @@ const HomePage = ({ t }) => (
 // ============================================
 const RoomsPage = ({ t }) => (
   <div className="bg-amber-50/30 pt-24">
-    {/* Hero */}
-    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
-      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.rooms}</p>
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.rooms.title}</h1>
-      <Divider />
-      <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.rooms.subtitle}</p>
+    {/* Hero with Background */}
+    <section className="relative py-20 text-white text-center overflow-hidden">
+      <div className="absolute inset-0">
+        <img 
+          src={IMG('/images/hoteldelpacifico/patisserie/DSC00167.jpeg')} 
+          alt="" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-emerald-800/80" />
+      </div>
+      <div className="relative z-10">
+        <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.rooms}</p>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.rooms.title}</h1>
+        <Divider />
+        <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.rooms.subtitle}</p>
+      </div>
     </section>
 
     {/* Room Cards */}
@@ -803,11 +813,21 @@ const RoomsPage = ({ t }) => (
 // ============================================
 const PricesPage = ({ t }) => (
   <div className="bg-amber-50/30 pt-24">
-    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
-      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.prices}</p>
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.prices.title}</h1>
-      <Divider />
-      <p className="text-emerald-100/70 mt-6">{t.prices.subtitle}</p>
+    <section className="relative py-20 text-white text-center overflow-hidden">
+      <div className="absolute inset-0">
+        <img 
+          src={IMG('/images/hoteldelpacifico/patisserie/DSC00200.jpeg')} 
+          alt="" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-emerald-800/80" />
+      </div>
+      <div className="relative z-10">
+        <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.prices}</p>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.prices.title}</h1>
+        <Divider />
+        <p className="text-emerald-100/70 mt-6">{t.prices.subtitle}</p>
+      </div>
     </section>
 
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
@@ -916,11 +936,21 @@ const PricesPage = ({ t }) => (
 // ============================================
 const PhotosPage = ({ t }) => (
   <div className="bg-amber-50/30 pt-24">
-    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
-      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.photos}</p>
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.photos.title}</h1>
-      <Divider />
-      <p className="text-emerald-100/70 mt-6">{t.photos.subtitle}</p>
+    <section className="relative py-20 text-white text-center overflow-hidden">
+      <div className="absolute inset-0">
+        <img 
+          src={IMG('/images/hoteldelpacifico/attractions/sangabriel.jpg')} 
+          alt="" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-emerald-800/80" />
+      </div>
+      <div className="relative z-10">
+        <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.photos}</p>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.photos.title}</h1>
+        <Divider />
+        <p className="text-emerald-100/70 mt-6">{t.photos.subtitle}</p>
+      </div>
     </section>
 
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
@@ -1233,11 +1263,21 @@ const RestaurantPage = ({ t }) => (
 // ============================================
 const AttractionsPage = ({ t }) => (
   <div className="bg-amber-50/50 pt-24">
-    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-900 text-white text-center">
-      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.attractions}</p>
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.attractions.title}</h1>
-      <Divider />
-      <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.attractions.subtitle}</p>
+    <section className="relative py-20 text-white text-center overflow-hidden">
+      <div className="absolute inset-0">
+        <img 
+          src={IMG('/images/hoteldelpacifico/attractions/jelen-tenka.jpg')} 
+          alt="" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-emerald-800/80" />
+      </div>
+      <div className="relative z-10">
+        <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.attractions}</p>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.attractions.title}</h1>
+        <Divider />
+        <p className="text-emerald-100/70 mt-6 max-w-xl mx-auto">{t.attractions.subtitle}</p>
+      </div>
     </section>
 
     <section className="py-16 bg-white">
@@ -1426,11 +1466,22 @@ const AttractionsPage = ({ t }) => (
 // ============================================
 const ContactPage = ({ t }) => (
   <div className="bg-amber-50/30 pt-24">
-    <section className="py-20 bg-gradient-to-b from-emerald-800 to-emerald-700 text-white text-center">
-      <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.contact}</p>
-      <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.contact.title}</h1>
-      <Divider />
-      <p className="text-emerald-100/70 mt-6">{t.contact.subtitle}</p>
+    <section className="relative py-20 text-white text-center overflow-hidden">
+      <div className="absolute inset-0">
+        <img 
+          src={IMG('/images/hoteldelpacifico/attractions/bomboli.webp')} 
+          alt="" 
+          className="w-full h-full object-cover"
+          style={{ objectPosition: 'bottom' }}
+        />
+        <div className="absolute inset-0 bg-emerald-800/80" />
+      </div>
+      <div className="relative z-10">
+        <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.contact}</p>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.contact.title}</h1>
+        <Divider />
+        <p className="text-emerald-100/70 mt-6">{t.contact.subtitle}</p>
+      </div>
     </section>
 
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
