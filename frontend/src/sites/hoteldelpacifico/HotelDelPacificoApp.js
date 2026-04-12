@@ -542,7 +542,7 @@ const Footer = ({ t }) => (
         {/* Webmaster Contact */}
         <div className="mt-4 pt-4 border-t border-emerald-700/50 flex items-center justify-center gap-3 text-xs opacity-70 hover:opacity-100 transition-opacity">
           <a 
-            href="https://wa.me/593989013622" 
+            href="https://www.fworksbuilders.com" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center gap-3"
