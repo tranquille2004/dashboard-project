@@ -346,13 +346,13 @@ const Navigation = ({ language, setLanguage, t }) => {
   }, []);
 
   const navLinks = [
-    { path: '', label: t.nav.home },
-    { path: 'habitaciones', label: t.nav.rooms },
-    { path: 'precios', label: t.nav.prices },
-    { path: 'fotos', label: t.nav.photos },
-    { path: 'restaurante', label: t.nav.restaurant },
-    { path: 'atractivos', label: t.nav.attractions },
-    { path: 'contacto', label: t.nav.contact }
+    { path: '/site/hoteldelpacifico', label: t.nav.home },
+    { path: '/site/hoteldelpacifico/habitaciones', label: t.nav.rooms },
+    { path: '/site/hoteldelpacifico/precios', label: t.nav.prices },
+    { path: '/site/hoteldelpacifico/fotos', label: t.nav.photos },
+    { path: '/site/hoteldelpacifico/restaurante', label: t.nav.restaurant },
+    { path: '/site/hoteldelpacifico/atractivos', label: t.nav.attractions },
+    { path: '/site/hoteldelpacifico/contacto', label: t.nav.contact }
   ];
 
   const languages = [
@@ -368,7 +368,7 @@ const Navigation = ({ language, setLanguage, t }) => {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex justify-between items-center h-24">
           {/* Logo */}
-          <Link to="" className="flex items-center">
+          <Link to="/site/hoteldelpacifico" className="flex items-center">
             <img 
               src={IMG('/images/hoteldelpacifico/hotel-logo.png')} 
               alt="Hotel del Pacífico" 
@@ -486,10 +486,10 @@ const Footer = ({ t }) => (
         <div>
           <h4 className="text-amber-300 text-xs tracking-[0.2em] uppercase mb-6">Navegación</h4>
           <div className="space-y-3">
-            <Link to="habitaciones" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.rooms}</Link>
-            <Link to="restaurante" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.restaurant}</Link>
-            <Link to="atractivos" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.attractions}</Link>
-            <Link to="contacto" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.contact}</Link>
+            <Link to="/site/hoteldelpacifico/habitaciones" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.rooms}</Link>
+            <Link to="/site/hoteldelpacifico/restaurante" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.restaurant}</Link>
+            <Link to="/site/hoteldelpacifico/atractivos" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.attractions}</Link>
+            <Link to="/site/hoteldelpacifico/contacto" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.contact}</Link>
           </div>
         </div>
 
@@ -613,10 +613,10 @@ const HomePage = ({ t }) => (
         
         <p className="text-lg md:text-xl text-emerald-100/80 max-w-2xl mx-auto leading-relaxed font-light">{t.hero.subtitle}</p>
         <div className="flex flex-wrap justify-center gap-4 mt-10">
-          <Link to="contacto" className="bg-amber-500 hover:bg-amber-600 text-emerald-950 px-10 py-4 text-sm tracking-widest uppercase font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30">
+          <Link to="/site/hoteldelpacifico/contacto" className="bg-amber-500 hover:bg-amber-600 text-emerald-950 px-10 py-4 text-sm tracking-widest uppercase font-medium transition-all duration-300 hover:shadow-lg hover:shadow-amber-500/30">
             {t.hero.cta}
           </Link>
-          <Link to="habitaciones" className="border border-white/30 hover:border-amber-400 hover:text-amber-300 text-white px-10 py-4 text-sm tracking-widest uppercase font-light transition-all duration-300">
+          <Link to="/site/hoteldelpacifico/habitaciones" className="border border-white/30 hover:border-amber-400 hover:text-amber-300 text-white px-10 py-4 text-sm tracking-widest uppercase font-light transition-all duration-300">
             {t.hero.explore}
           </Link>
         </div>
@@ -865,7 +865,7 @@ const PricesPage = ({ t }) => (
                 </ul>
                 
                 <Link 
-                  to="contacto" 
+                  to="/site/hoteldelpacifico/contacto" 
                   className={`block mt-8 text-center py-3 text-sm tracking-widest uppercase transition-colors ${
                     room.featured 
                       ? 'bg-amber-500 hover:bg-amber-600 text-white' 
@@ -1354,7 +1354,7 @@ const AttractionsPage = ({ t }) => (
         <h3 className="text-2xl font-serif text-emerald-800 mb-4">¿Listo para Explorar?</h3>
         <p className="text-gray-600 mb-8">Nuestro equipo puede ayudarle a planificar sus excursiones</p>
         <Link 
-          to="contacto" 
+          to="/site/hoteldelpacifico/contacto" 
           className="inline-block bg-emerald-700 hover:bg-emerald-600 text-white px-10 py-4 text-sm tracking-widest uppercase transition-colors"
         >
           Contáctenos
