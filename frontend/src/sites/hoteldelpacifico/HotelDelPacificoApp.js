@@ -1259,7 +1259,7 @@ const AttractionsPage = ({ t }) => (
               distance: '15-30 min',
               tip: 'Visita guiada recomendada',
               highlights: ['Cultura ancestral', 'Rituales tradicionales', 'Artesanías'],
-              imageHeight: 'h-48'
+              imagePosition: 'center'
             },
             { 
               title: t.attractions.waterfalls, 
@@ -1269,7 +1269,7 @@ const AttractionsPage = ({ t }) => (
               distance: '20-45 min',
               tip: 'Llevar ropa cómoda',
               highlights: ['Cascada del Diablo', 'Cascada Napac', 'Senderos naturales'],
-              imageHeight: 'h-64'
+              imagePosition: 'top'
             },
             { 
               title: t.attractions.malecon, 
@@ -1279,7 +1279,7 @@ const AttractionsPage = ({ t }) => (
               distance: '10 min',
               tip: 'Ideal para paseo al atardecer',
               highlights: ['Gastronomía local', 'Vista al río', 'Área recreativa'],
-              imageHeight: 'h-48'
+              imagePosition: 'center'
             },
             { 
               title: t.attractions.jelenTenka, 
@@ -1289,7 +1289,7 @@ const AttractionsPage = ({ t }) => (
               distance: '25 min',
               tip: 'Reservar con anticipación',
               highlights: ['Experiencia inmersiva', 'Comida típica', 'Naturaleza'],
-              imageHeight: 'h-48'
+              imagePosition: 'center'
             },
             { 
               title: t.attractions.bomboli || 'Bombolí',
@@ -1299,7 +1299,7 @@ const AttractionsPage = ({ t }) => (
               distance: '15 min',
               tip: 'Ideal para atardecer',
               highlights: ['Vista panorámica', 'Fotografía', 'Mirador'],
-              imageHeight: 'h-64'
+              imagePosition: 'bottom'
             },
             { 
               title: 'Bombolí Shopping',
@@ -1309,7 +1309,7 @@ const AttractionsPage = ({ t }) => (
               distance: '15 min',
               tip: 'Abierto todos los días',
               highlights: ['Tiendas', 'Cine', 'Patio de comidas'],
-              imageHeight: 'h-48'
+              imagePosition: 'center'
             },
             { 
               title: 'La Cuadra',
@@ -1319,15 +1319,16 @@ const AttractionsPage = ({ t }) => (
               distance: '10 min',
               tip: 'Mejor experiencia de noche',
               highlights: ['Restaurantes', 'Bares', 'Vida nocturna'],
-              imageHeight: 'h-48'
+              imagePosition: 'center'
             }
           ].map((item, i) => (
             <div key={i} className="bg-white border border-amber-200/50 shadow-md hover:shadow-xl transition-all duration-500 group overflow-hidden">
-              <div className={`${item.imageHeight} relative overflow-hidden`}>
+              <div className="h-48 relative overflow-hidden">
                 <img 
                   src={item.image} 
                   alt={item.title}
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                  style={{ objectPosition: item.imagePosition }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/60 to-transparent" />
                 <div className="absolute bottom-4 left-4 w-12 h-12 rounded-full bg-white/20 backdrop-blur flex items-center justify-center">
