@@ -558,6 +558,28 @@ const translations = {
 };
 
 // Portfolio data
+// Feature translations for portfolio items
+const featureTranslations = {
+  'Reservaties': { nl: 'Reservaties', fr: 'Réservations', en: 'Reservations', es: 'Reservas', it: 'Prenotazioni' },
+  'Meertalig': { nl: 'Meertalig', fr: 'Multilingue', en: 'Multilingual', es: 'Multilingüe', it: 'Multilingue' },
+  'Menu': { nl: 'Menu', fr: 'Menu', en: 'Menu', es: 'Menú', it: 'Menu' },
+  'Afhalen': { nl: 'Afhalen', fr: 'À emporter', en: 'Takeaway', es: 'Para llevar', it: 'Da asporto' },
+  'Groepsmenu\'s': { nl: 'Groepsmenu\'s', fr: 'Menus de groupe', en: 'Group Menus', es: 'Menús de grupo', it: 'Menu di gruppo' },
+  'Galerij': { nl: 'Galerij', fr: 'Galerie', en: 'Gallery', es: 'Galería', it: 'Galleria' },
+  'Evenementen': { nl: 'Evenementen', fr: 'Événements', en: 'Events', es: 'Eventos', it: 'Eventi' },
+  'Contact': { nl: 'Contact', fr: 'Contact', en: 'Contact', es: 'Contacto', it: 'Contatto' },
+  'E-commerce': { nl: 'E-commerce', fr: 'E-commerce', en: 'E-commerce', es: 'E-commerce', it: 'E-commerce' },
+  'WhatsApp': { nl: 'WhatsApp', fr: 'WhatsApp', en: 'WhatsApp', es: 'WhatsApp', it: 'WhatsApp' },
+  'Producten': { nl: 'Producten', fr: 'Produits', en: 'Products', es: 'Productos', it: 'Prodotti' },
+  'Video\'s': { nl: 'Video\'s', fr: 'Vidéos', en: 'Videos', es: 'Videos', it: 'Video' },
+  'Dashboard': { nl: 'Dashboard', fr: 'Tableau de bord', en: 'Dashboard', es: 'Panel', it: 'Pannello' },
+};
+
+const translateFeature = (feature, lang) => {
+  const t = featureTranslations[feature];
+  return t ? (t[lang] || t.en || feature) : feature;
+};
+
 const portfolioItems = [
   {
     name: 'La Cantina Italiana',
@@ -996,7 +1018,7 @@ const PortfolioSection = ({ t, lang }) => (
             <div className="p-6">
               <h3 className="text-xl font-semibold text-white mb-1">{item.name}</h3>
               <p className="text-amber-400 text-sm mb-3">{item.type[lang] || item.type.en} • {item.location}</p>
-              <div className="flex flex-wrap gap-2 mb-4">{item.features.map((f, i) => <span key={i} className="text-xs bg-amber-500/10 text-amber-400 px-2 py-1 rounded">{f}</span>)}</div>
+              <div className="flex flex-wrap gap-2 mb-4">{item.features.map((f, i) => <span key={i} className="text-xs bg-amber-500/10 text-amber-400 px-2 py-1 rounded">{translateFeature(f, lang)}</span>)}</div>
               <a href={item.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center space-x-2 text-amber-400 hover:text-amber-300 font-medium"><span>{t.portfolio.viewSite}</span><ExternalLink className="w-4 h-4" /></a>
             </div>
           </div>
