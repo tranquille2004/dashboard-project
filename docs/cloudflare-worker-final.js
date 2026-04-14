@@ -84,16 +84,19 @@ export default {
       const apiUrl = PREVIEW_URL + '/api' + pathname;
       try {
         const response = await fetch(apiUrl);
+        const cacheControl = response.ok 
+          ? 'public, max-age=31536000' 
+          : 'no-cache, no-store, must-revalidate';
         return new Response(response.body, {
           status: response.status,
           headers: {
             'Content-Type': response.headers.get('Content-Type') || 'image/jpeg',
-            'Cache-Control': 'public, max-age=31536000',
+            'Cache-Control': cacheControl,
             'Access-Control-Allow-Origin': '*'
           }
         });
       } catch (e) {
-        return new Response('Image not found', { status: 404 });
+        return new Response('Image not found', { status: 404, headers: { 'Cache-Control': 'no-cache' } });
       }
     }
     
