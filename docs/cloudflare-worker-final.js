@@ -1,7 +1,6 @@
 // Cloudflare Worker: site-proxy-new
 // FINAL VERSION - Met URL synchronisatie en API proxy
-// BELANGRIJK: Update deze URL naar de huidige Emergent preview URL na elke deployment!
-const PREVIEW_URL = 'https://image-restore-21.preview.emergentagent.com';
+const PREVIEW_URL = 'https://fworks-consolidate-1.emergent.host';
 
 const SITE_MAPPING = {
   'labottegaherent.com': '/site/bottega',
@@ -23,7 +22,9 @@ const SITE_MAPPING = {
   'albertopantoja.com': '/site/albertopantoja',
   'www.albertopantoja.com': '/site/albertopantoja',
   'albertopantoja.ec': '/site/albertopantoja',
-  'www.albertopantoja.ec': '/site/albertopantoja'
+  'www.albertopantoja.ec': '/site/albertopantoja',
+  'hoteldelpacifico.net': '/site/hoteldelpacifico',
+  'www.hoteldelpacifico.net': '/site/hoteldelpacifico'
 };
 
 const SITE_TITLES = {
@@ -35,7 +36,8 @@ const SITE_TITLES = {
   '/site/theobeans': 'Theo Beans Export',
   '/site/fworks': 'fworksbuilders - Web Design',
   '/site/smeralda': 'Résidence Villa Smeralda - Sardinia',
-  '/site/albertopantoja': 'Alberto Pantoja - La Voz del Campo'
+  '/site/albertopantoja': 'Alberto Pantoja - Consejal de Santo Domingo',
+  '/site/hoteldelpacifico': 'Hotel del Pacífico - Santo Domingo, Ecuador'
 };
 
 export default {
@@ -50,7 +52,7 @@ export default {
       return new Response('Site not found', { status: 404 });
     }
     
-    // API CALLS: Proxy directly to backend (for auth, etc.)
+    // API CALLS: Proxy directly to backend
     if (pathname.startsWith('/api/')) {
       const apiUrl = PREVIEW_URL + pathname + url.search;
       try {
@@ -65,7 +67,6 @@ export default {
           body: request.method !== 'GET' && request.method !== 'HEAD' ? await request.text() : undefined
         });
         
-        // Copy response headers and add CORS
         const responseHeaders = new Headers(response.headers);
         responseHeaders.set('Access-Control-Allow-Origin', request.headers.get('Origin') || '*');
         responseHeaders.set('Access-Control-Allow-Credentials', 'true');
@@ -79,13 +80,14 @@ export default {
       }
     }
     
-    // IMAGES: Proxy to backend API which serves from Object Storage
+    // IMAGES: Proxy /images/ to /api/images/
+    // FIX: Alleen 200 responses cachen, 404s NIET cachen
     if (pathname.startsWith('/images/')) {
       const apiUrl = PREVIEW_URL + '/api' + pathname;
       try {
         const response = await fetch(apiUrl);
-        const cacheControl = response.ok 
-          ? 'public, max-age=31536000' 
+        const cacheControl = response.ok
+          ? 'public, max-age=31536000'
           : 'no-cache, no-store, must-revalidate';
         return new Response(response.body, {
           status: response.status,
@@ -100,7 +102,7 @@ export default {
       }
     }
     
-    // SEO FILES: Proxy directly to backend API
+    // SEO FILES
     if (pathname === '/robots.txt' || pathname === '/sitemap.xml') {
       const apiUrl = PREVIEW_URL + '/api' + pathname;
       try {
@@ -118,8 +120,7 @@ export default {
       }
     }
     
-    // FWorksBuilders.com /admin -> super admin dashboard (direct proxy, no iframe)
-    // Also proxy /static/ assets when on admin pages
+    // FWorksBuilders.com /admin + /static -> super admin dashboard (direct proxy, no iframe)
     if ((hostname === 'fworksbuilders.com' || hostname === 'www.fworksbuilders.com') && 
         (pathname === '/admin' || pathname.startsWith('/admin') || pathname.startsWith('/static/'))) {
       const targetUrl = PREVIEW_URL + pathname + url.search;
@@ -133,10 +134,7 @@ export default {
           }
         });
         
-        // Clone headers and set appropriate content-type
         const newHeaders = new Headers(response.headers);
-        
-        // Ensure correct content-type for JS/CSS files
         if (pathname.endsWith('.js')) {
           newHeaders.set('Content-Type', 'application/javascript');
         } else if (pathname.endsWith('.css')) {
@@ -158,7 +156,7 @@ export default {
       return Response.redirect(PREVIEW_URL + '/restaurant-login?site=' + siteSlug, 302);
     }
     
-    // Build iframe URL - include the pathname from the request
+    // Build iframe for site
     let iframeSrc = PREVIEW_URL + sitePath;
     if (pathname !== '/' && pathname !== '') {
       iframeSrc = iframeSrc + pathname;
@@ -167,11 +165,9 @@ export default {
       iframeSrc = iframeSrc + url.search;
     }
     
-    // Get the correct title for this site
     const siteTitle = SITE_TITLES[sitePath] || 'Laden...';
     const siteSlug = sitePath.replace('/site/', '');
     
-    // Return iframe HTML with URL sync script
     const html = `<!DOCTYPE html>
 <html lang="nl">
 <head>
@@ -187,32 +183,24 @@ export default {
 <body>
   <iframe id="site-frame" src="${iframeSrc}" allowfullscreen></iframe>
   <script>
-    // URL Synchronization Script
     const iframe = document.getElementById('site-frame');
     const sitePrefix = '/site/${siteSlug}';
     
-    // Listen for navigation messages from the iframe
     window.addEventListener('message', function(event) {
-      // Only accept messages from our app
       if (event.origin !== '${PREVIEW_URL}') return;
-      
       if (event.data && event.data.type === 'navigation') {
         let newPath = event.data.path || '/';
-        // Remove the site prefix to get the clean path
         if (newPath.startsWith(sitePrefix)) {
           newPath = newPath.substring(sitePrefix.length) || '/';
         }
-        // Update browser URL without reload
         if (newPath !== window.location.pathname) {
           window.history.pushState({}, '', newPath);
         }
       }
     });
     
-    // Handle browser back/forward buttons
     window.addEventListener('popstate', function() {
-      const newPath = window.location.pathname;
-      iframe.src = '${PREVIEW_URL}' + sitePrefix + newPath;
+      iframe.src = '${PREVIEW_URL}' + sitePrefix + window.location.pathname;
     });
   </script>
 </body>
