@@ -34,7 +34,10 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 ### April 12, 2026
 - ✅ Habitaciones page: background photo changed to tropical hotel room with bed (unsplash)
 - ✅ Tarifas page: background photo changed to elegant hotel reception desk (unsplash)
-- Both with emerald green filter overlay, matching site design
+- ✅ Kamerprijzen-editor: hotel admin can now edit room prices, names, descriptions, features via dashboard
+- ✅ Dynamic prices: Habitaciones and Tarifas pages load prices from database (no more hardcoded $0)
+- ✅ Hotel del Pacífico added to fworksbuilders portfolio page
+- All with emerald green filter overlay, matching site design
 
 ### April 4-11, 2026
 - ✅ Under Construction page for production domain
@@ -76,6 +79,9 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 ## Prioritized Backlog
 
 ### P0 (Critical)
+- [x] Kamerprijzen-editor for hotel dashboard
+- [x] Dynamic room prices on hotel website
+- [x] Hotel del Pacifico in fworksbuilders portfolio
 - [ ] Cloudflare DNS propagation for hoteldelpacifico.net
 - [ ] Test production deployment after DNS setup
 
