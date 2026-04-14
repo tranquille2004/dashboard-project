@@ -171,6 +171,25 @@ function CustomDomainRouter({ slug }) {
   
   // Hotel del Pacífico - Hotel website
   if (slug === 'hoteldelpacifico') {
+    // /admin gaat naar klant admin login
+    if (location.pathname === '/admin' || location.pathname === '/admin/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/admin" element={<SiteAdminLogin preSelectedSite={slug} />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    if (location.pathname === '/mijn-site' || location.pathname === '/mijn-site/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/mijn-site" element={<SiteAdminDashboard />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
     return (
       <Routes>
         <Route path="/*" element={<HotelDelPacificoApp />} />

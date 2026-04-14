@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import { 
   LogOut, Menu, Clock, Image, Save, Plus, Trash2, 
-  Check, X, AlertCircle, Settings, DollarSign, Star, Bed
+  Check, X, AlertCircle, Settings, DollarSign, Star, Bed, Eye
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -485,6 +485,7 @@ const SiteAdminDashboard = () => {
 
 // Room Prices Tab Component for Hotels
 const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
+  const [showPreview, setShowPreview] = useState(false);
   const roomPrices = config?.room_prices || [
     { id: 'single', name_es: 'Habitación Clásica', name_en: 'Classic Room', description_es: '', price: 0, features: ['WiFi', 'Smart TV', 'A/C'], is_featured: false },
     { id: 'double', name_es: 'Habitación Superior', name_en: 'Superior Room', description_es: '', price: 0, features: ['WiFi', 'Smart TV', 'A/C', 'Mini Bar'], is_featured: true },
@@ -536,6 +537,14 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
         <h2 className="text-xl font-semibold" data-testid="room-prices-title">Kamerprijzen</h2>
         <div className="flex gap-3">
           <button
+            onClick={() => setShowPreview(!showPreview)}
+            className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${showPreview ? 'bg-amber-500 text-white' : 'bg-amber-100 text-amber-700 hover:bg-amber-200'}`}
+            data-testid="preview-room-prices-btn"
+          >
+            <Eye className="w-4 h-4" />
+            <span>{showPreview ? 'Verberg Voorbeeld' : 'Voorbeeld'}</span>
+          </button>
+          <button
             onClick={addRoom}
             className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
             data-testid="add-room-btn"
@@ -559,6 +568,47 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
         Stel hier de kamerprijzen in. Deze worden automatisch getoond op de website.
         Zet de prijs op 0 om "Precio próximamente" te tonen.
       </p>
+
+      {/* Live Preview Panel */}
+      {showPreview && (
+        <div className="bg-emerald-900 rounded-xl p-8 text-white" data-testid="room-prices-preview">
+          <div className="text-center mb-6">
+            <p className="text-amber-400 text-xs tracking-widest uppercase mb-2">Voorbeeld - Zo ziet het eruit op de website</p>
+            <h3 className="text-2xl font-serif">Tarifas</h3>
+          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            {roomPrices.map((room, i) => (
+              <div key={room.id || i} className={`bg-white text-gray-800 rounded-lg overflow-hidden shadow-lg ${room.is_featured ? 'ring-2 ring-amber-400 scale-105' : ''}`}>
+                {room.is_featured && (
+                  <div className="bg-amber-500 text-white text-center py-1.5 text-xs tracking-widest uppercase">Popular</div>
+                )}
+                <div className="p-5">
+                  <h4 className="text-lg font-serif text-emerald-800 mb-1">{room.name_es || 'Nombre'}</h4>
+                  <p className="text-gray-400 text-xs mb-3">{room.description_es || 'Sin descripción'}</p>
+                  <div className="border-t border-b border-gray-100 py-3 my-3 text-center">
+                    {room.price > 0 ? (
+                      <>
+                        <span className="text-2xl font-serif text-amber-600">${room.price}</span>
+                        <span className="text-gray-400 text-xs ml-1">/ por noche</span>
+                      </>
+                    ) : (
+                      <span className="text-sm text-gray-400 italic">Precio próximamente</span>
+                    )}
+                  </div>
+                  <ul className="space-y-1.5">
+                    {(room.features || []).map((f, j) => (
+                      <li key={j} className="flex items-center gap-2 text-xs text-gray-600">
+                        <Star className="w-3 h-3 text-emerald-500" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
 
       {roomPrices.map((room, index) => (
         <div key={room.id || index} className={`border rounded-lg p-6 space-y-4 ${room.is_featured ? 'border-amber-400 bg-amber-50/50' : 'border-gray-200'}`}

@@ -628,7 +628,7 @@ const portfolioItems = [
     type: { nl: 'Hotel & Restaurant', fr: 'Hôtel & Restaurant', en: 'Hotel & Restaurant', es: 'Hotel y Restaurante', it: 'Hotel e Ristorante' },
     location: 'Santo Domingo, Ecuador',
     url: 'https://www.hoteldelpacifico.net',
-    image: '/images/hoteldelpacifico/backgrounds/habitaciones-bed.jpg',
+    image: '/images/hoteldelpacifico/backgrounds/hotel-entrance.jpg',
     features: ['Meertalig', 'Galerij', 'Dashboard']
   }
 ];

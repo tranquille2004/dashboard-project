@@ -31,13 +31,14 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 
 ## What's Been Implemented
 
-### April 12, 2026
-- ✅ Habitaciones page: background photo changed to tropical hotel room with bed (unsplash)
-- ✅ Tarifas page: background photo changed to elegant hotel reception desk (unsplash)
-- ✅ Kamerprijzen-editor: hotel admin can now edit room prices, names, descriptions, features via dashboard
-- ✅ Dynamic prices: Habitaciones and Tarifas pages load prices from database (no more hardcoded $0)
+### April 12-14, 2026
+- ✅ Habitaciones & Tarifas: background photos replaced with video screenshots (hotel entrance & social scene)
+- ✅ Kamerprijzen-editor: hotel admin can edit room prices, names, descriptions, features via dashboard
+- ✅ Preview button: live preview panel showing how prices look on the website
+- ✅ Dynamic prices: Habitaciones and Tarifas pages load prices from database
 - ✅ Hotel del Pacífico added to fworksbuilders portfolio page
-- All with emerald green filter overlay, matching site design
+- ✅ /admin route enabled for hotel domain (client login via /admin)
+- ✅ Stock photos removed, replaced with actual hotel video screenshots
 
 ### April 4-11, 2026
 - ✅ Under Construction page for production domain
