@@ -622,6 +622,14 @@ const portfolioItems = [
     url: 'https://www.albertopantoja.com',
     image: '/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg',
     features: ['Meertalig', 'Galerij', 'Video\'s']
+  },
+  {
+    name: 'Hotel del Pacífico',
+    type: { nl: 'Hotel & Restaurant', fr: 'Hôtel & Restaurant', en: 'Hotel & Restaurant', es: 'Hotel y Restaurante', it: 'Hotel e Ristorante' },
+    location: 'Santo Domingo, Ecuador',
+    url: 'https://www.hoteldelpacifico.net',
+    image: '/images/hoteldelpacifico/backgrounds/habitaciones-bed.jpg',
+    features: ['Meertalig', 'Galerij', 'Dashboard']
   }
 ];
 

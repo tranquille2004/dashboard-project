@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import { 
   LogOut, Menu, Clock, Image, Save, Plus, Trash2, 
-  Check, X, AlertCircle, Settings
+  Check, X, AlertCircle, Settings, DollarSign, Star, Bed
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -139,12 +139,19 @@ const SiteAdminDashboard = () => {
 
   const permissions = admin.permissions || {};
 
+  const isHotel = site?.site_type === 'hotel';
+
   const tabs = [
     { id: 'overview', label: 'Overzicht', icon: Settings, always: true },
+    { id: 'room_prices', label: isHotel ? 'Kamerprijzen' : null, icon: DollarSign, permission: 'prices', hotelOnly: true },
     { id: 'hours', label: 'Openingstijden', icon: Clock, permission: 'opening_hours' },
     { id: 'menu', label: 'Menu', icon: Menu, permission: 'menu_items' },
     { id: 'gallery', label: 'Foto\'s', icon: Image, permission: 'gallery' },
-  ].filter(tab => tab.always || permissions[tab.permission]);
+  ].filter(tab => {
+    if (tab.hotelOnly && !isHotel) return false;
+    if (!tab.label) return false;
+    return tab.always || permissions[tab.permission];
+  });
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -422,6 +429,11 @@ const SiteAdminDashboard = () => {
                 </div>
               )}
 
+              {/* Room Prices Tab - Hotel only */}
+              {activeTab === 'room_prices' && isHotel && permissions.prices && (
+                <RoomPricesTab config={config} setConfig={setConfig} saveConfig={saveConfig} saving={saving} />
+              )}
+
               {/* Gallery Tab */}
               {activeTab === 'gallery' && permissions.gallery && (
                 <div className="space-y-6">
@@ -467,6 +479,188 @@ const SiteAdminDashboard = () => {
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+// Room Prices Tab Component for Hotels
+const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
+  const roomPrices = config?.room_prices || [
+    { id: 'single', name_es: 'Habitación Clásica', name_en: 'Classic Room', description_es: '', price: 0, features: ['WiFi', 'Smart TV', 'A/C'], is_featured: false },
+    { id: 'double', name_es: 'Habitación Superior', name_en: 'Superior Room', description_es: '', price: 0, features: ['WiFi', 'Smart TV', 'A/C', 'Mini Bar'], is_featured: true },
+    { id: 'suite', name_es: 'Suite Ejecutiva', name_en: 'Executive Suite', description_es: '', price: 0, features: ['WiFi', 'Smart TV', 'A/C', 'Mini Bar', 'Jacuzzi'], is_featured: false }
+  ];
+
+  const updateRoom = (index, field, value) => {
+    const updated = [...roomPrices];
+    updated[index] = { ...updated[index], [field]: value };
+    setConfig({ ...config, room_prices: updated });
+  };
+
+  const addFeature = (index) => {
+    const feature = prompt('Nieuwe voorziening (bijv. WiFi, Jacuzzi, Mini Bar):');
+    if (!feature) return;
+    const updated = [...roomPrices];
+    updated[index] = { ...updated[index], features: [...(updated[index].features || []), feature] };
+    setConfig({ ...config, room_prices: updated });
+  };
+
+  const removeFeature = (roomIndex, featureIndex) => {
+    const updated = [...roomPrices];
+    updated[roomIndex] = { ...updated[roomIndex], features: updated[roomIndex].features.filter((_, i) => i !== featureIndex) };
+    setConfig({ ...config, room_prices: updated });
+  };
+
+  const addRoom = () => {
+    const newRoom = {
+      id: `room_${Date.now()}`,
+      name_es: 'Nueva Habitación',
+      name_en: 'New Room',
+      description_es: '',
+      price: 0,
+      features: ['WiFi'],
+      is_featured: false
+    };
+    setConfig({ ...config, room_prices: [...roomPrices, newRoom] });
+  };
+
+  const removeRoom = (index) => {
+    if (!window.confirm('Weet je zeker dat je dit kamertype wilt verwijderen?')) return;
+    const updated = roomPrices.filter((_, i) => i !== index);
+    setConfig({ ...config, room_prices: updated });
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between border-b pb-4">
+        <h2 className="text-xl font-semibold" data-testid="room-prices-title">Kamerprijzen</h2>
+        <div className="flex gap-3">
+          <button
+            onClick={addRoom}
+            className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
+            data-testid="add-room-btn"
+          >
+            <Plus className="w-4 h-4" />
+            <span>Kamertype Toevoegen</span>
+          </button>
+          <button
+            onClick={saveConfig}
+            disabled={saving}
+            className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            data-testid="save-room-prices-btn"
+          >
+            <Save className="w-4 h-4" />
+            <span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+          </button>
+        </div>
+      </div>
+
+      <p className="text-sm text-gray-500">
+        Stel hier de kamerprijzen in. Deze worden automatisch getoond op de website.
+        Zet de prijs op 0 om "Precio próximamente" te tonen.
+      </p>
+
+      {roomPrices.map((room, index) => (
+        <div key={room.id || index} className={`border rounded-lg p-6 space-y-4 ${room.is_featured ? 'border-amber-400 bg-amber-50/50' : 'border-gray-200'}`}
+             data-testid={`room-card-${index}`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <Bed className="w-5 h-5 text-emerald-600" />
+              <span className="font-semibold text-lg">{room.name_es || 'Nieuw kamertype'}</span>
+              {room.is_featured && <span className="px-2 py-0.5 bg-amber-500 text-white text-xs rounded">Popular</span>}
+            </div>
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={room.is_featured || false}
+                  onChange={(e) => updateRoom(index, 'is_featured', e.target.checked)}
+                  className="w-4 h-4 rounded border-gray-300 text-amber-500"
+                />
+                Popular
+              </label>
+              <button onClick={() => removeRoom(index)} className="p-1.5 text-red-500 hover:bg-red-50 rounded" data-testid={`remove-room-${index}`}>
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Naam (Spaans)</label>
+              <input
+                type="text"
+                value={room.name_es || ''}
+                onChange={(e) => updateRoom(index, 'name_es', e.target.value)}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white"
+                placeholder="Habitación Clásica"
+                data-testid={`room-name-es-${index}`}
+              />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Naam (Engels)</label>
+              <input
+                type="text"
+                value={room.name_en || ''}
+                onChange={(e) => updateRoom(index, 'name_en', e.target.value)}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white"
+                placeholder="Classic Room"
+                data-testid={`room-name-en-${index}`}
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">Beschrijving (Spaans)</label>
+            <textarea
+              value={room.description_es || ''}
+              onChange={(e) => updateRoom(index, 'description_es', e.target.value)}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-16"
+              placeholder="Perfecta para viajeros individuales..."
+              data-testid={`room-desc-${index}`}
+            />
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Prijs per nacht ($)</label>
+              <input
+                type="number"
+                step="0.50"
+                min="0"
+                value={room.price || 0}
+                onChange={(e) => updateRoom(index, 'price', parseFloat(e.target.value) || 0)}
+                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white"
+                data-testid={`room-price-${index}`}
+              />
+              {room.price === 0 && <p className="text-xs text-amber-600 mt-1">Prijs 0 = "Precio próximamente" op website</p>}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs text-gray-500 mb-2">Voorzieningen</label>
+            <div className="flex flex-wrap gap-2">
+              {(room.features || []).map((feature, fi) => (
+                <span key={fi} className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-sm rounded-full border border-emerald-200">
+                  <Star className="w-3 h-3" />
+                  {feature}
+                  <button onClick={() => removeFeature(index, fi)} className="ml-1 text-red-400 hover:text-red-600">
+                    <X className="w-3 h-3" />
+                  </button>
+                </span>
+              ))}
+              <button
+                onClick={() => addFeature(index)}
+                className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full border border-gray-200 hover:bg-gray-200"
+                data-testid={`add-feature-${index}`}
+              >
+                <Plus className="w-3 h-3" />
+                Toevoegen
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
     </div>
   );
 };

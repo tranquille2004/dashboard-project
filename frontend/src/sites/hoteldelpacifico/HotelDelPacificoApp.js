@@ -743,7 +743,22 @@ const HomePage = ({ t }) => (
 // ============================================
 // ROOMS PAGE - LUXURY VERSION
 // ============================================
-const RoomsPage = ({ t }) => (
+const RoomsPage = ({ t, roomPrices }) => {
+  const defaultRooms = [
+    { name: t.rooms.single, desc: t.rooms.singleDesc, price: '$0' },
+    { name: t.rooms.double, desc: t.rooms.doubleDesc, price: '$0', featured: true },
+    { name: t.rooms.suite, desc: t.rooms.suiteDesc, price: '$0' }
+  ];
+
+  const rooms = roomPrices ? roomPrices.map((rp, i) => ({
+    name: rp.name_es || defaultRooms[i]?.name || rp.name_en,
+    desc: rp.description_es || defaultRooms[i]?.desc || '',
+    price: rp.price > 0 ? `$${rp.price}` : '$0',
+    featured: rp.is_featured || false,
+    features: rp.features || []
+  })) : defaultRooms;
+
+  return (
   <div className="bg-amber-50/30 pt-24">
     {/* Hero with Background */}
     <section className="relative py-20 text-white text-center overflow-hidden">
@@ -769,12 +784,8 @@ const RoomsPage = ({ t }) => (
         <p className="text-center text-gray-600 mb-16 max-w-2xl mx-auto">{t.rooms.description}</p>
         
         <div className="grid md:grid-cols-3 gap-8">
-          {[
-            { name: t.rooms.single, desc: t.rooms.singleDesc, price: '$0' },
-            { name: t.rooms.double, desc: t.rooms.doubleDesc, price: '$0', featured: true },
-            { name: t.rooms.suite, desc: t.rooms.suiteDesc, price: '$0' }
-          ].map((room, i) => (
-            <div key={i} className={`bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 border ${room.featured ? 'border-amber-400 ring-1 ring-amber-400' : 'border-amber-100'}`}>
+          {rooms.map((room, i) => (
+            <div key={i} className={`bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 border ${room.featured ? 'border-amber-400 ring-1 ring-amber-400' : 'border-amber-100'}`} data-testid={`room-card-${i}`}>
               <div className="h-56 bg-gradient-to-br from-amber-50 to-amber-100/50 flex items-center justify-center relative border-b border-amber-100">
                 {room.featured && <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 text-xs tracking-wider uppercase">Popular</div>}
                 <Building className="w-16 h-16 text-emerald-600/30" />
@@ -783,8 +794,14 @@ const RoomsPage = ({ t }) => (
                 <h3 className="text-2xl font-serif text-emerald-800 mb-2">{room.name}</h3>
                 <p className="text-gray-500 text-sm mb-6">{room.desc}</p>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-serif text-amber-600">{room.price}</span>
-                  <span className="text-gray-400 text-sm">/ {t.prices.perNight}</span>
+                  {room.price === '$0' ? (
+                    <span className="text-lg text-gray-400 italic">Precio próximamente</span>
+                  ) : (
+                    <>
+                      <span className="text-3xl font-serif text-amber-600">{room.price}</span>
+                      <span className="text-gray-400 text-sm">/ {t.prices.perNight}</span>
+                    </>
+                  )}
                 </div>
               </div>
             </div>
@@ -806,12 +823,27 @@ const RoomsPage = ({ t }) => (
       </div>
     </section>
   </div>
-);
+)};
 
 // ============================================
 // PRICES PAGE - LUXURY VERSION
 // ============================================
-const PricesPage = ({ t }) => (
+const PricesPage = ({ t, roomPrices }) => {
+  const defaultRooms = [
+    { name: t.rooms.single, price: '$0', desc: t.rooms.singleDesc, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast] },
+    { name: t.rooms.double, price: '$0', desc: t.rooms.doubleDesc, featured: true, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar'] },
+    { name: t.rooms.suite, price: '$0', desc: t.rooms.suiteDesc, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar', 'Jacuzzi'] }
+  ];
+
+  const rooms = roomPrices ? roomPrices.map((rp, i) => ({
+    name: rp.name_es || defaultRooms[i]?.name || rp.name_en,
+    desc: rp.description_es || defaultRooms[i]?.desc || '',
+    price: rp.price > 0 ? `$${rp.price}` : '$0',
+    featured: rp.is_featured || false,
+    features: rp.features || defaultRooms[i]?.features || []
+  })) : defaultRooms;
+
+  return (
   <div className="bg-amber-50/30 pt-24">
     <section className="relative py-20 text-white text-center overflow-hidden">
       <div className="absolute inset-0">
@@ -834,28 +866,8 @@ const PricesPage = ({ t }) => (
       <div className="max-w-6xl mx-auto px-6">
         {/* Price Cards */}
         <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {[
-            { 
-              name: t.rooms.single, 
-              price: '$0', 
-              desc: t.rooms.singleDesc,
-              features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast]
-            },
-            { 
-              name: t.rooms.double, 
-              price: '$0', 
-              desc: t.rooms.doubleDesc,
-              featured: true,
-              features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar']
-            },
-            { 
-              name: t.rooms.suite, 
-              price: '$0', 
-              desc: t.rooms.suiteDesc,
-              features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar', 'Jacuzzi']
-            }
-          ].map((room, i) => (
-            <div key={i} className={`relative bg-white overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 ${room.featured ? 'ring-2 ring-amber-400 scale-105' : 'border border-amber-100'}`}>
+          {rooms.map((room, i) => (
+            <div key={i} className={`relative bg-white overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 ${room.featured ? 'ring-2 ring-amber-400 scale-105' : 'border border-amber-100'}`} data-testid={`price-card-${i}`}>
               {room.featured && (
                 <div className="absolute top-0 left-0 right-0 bg-amber-500 text-white text-center py-2 text-xs tracking-widest uppercase">
                   Popular
@@ -866,11 +878,16 @@ const PricesPage = ({ t }) => (
                 <p className="text-gray-500 text-sm mb-6">{room.desc}</p>
                 
                 <div className="border-t border-b border-amber-100 py-6 my-6">
-                  <div className="text-center">
-                    <span className="text-4xl font-serif text-amber-600">{room.price}</span>
-                    <span className="text-gray-400 text-sm ml-2">/ {t.prices.perNight}</span>
-                  </div>
-                  <p className="text-center text-xs text-gray-400 mt-2 italic">Precio próximamente</p>
+                  {room.price === '$0' ? (
+                    <div className="text-center">
+                      <p className="text-lg text-gray-400 italic">Precio próximamente</p>
+                    </div>
+                  ) : (
+                    <div className="text-center">
+                      <span className="text-4xl font-serif text-amber-600">{room.price}</span>
+                      <span className="text-gray-400 text-sm ml-2">/ {t.prices.perNight}</span>
+                    </div>
+                  )}
                 </div>
                 
                 <ul className="space-y-3">
@@ -929,7 +946,7 @@ const PricesPage = ({ t }) => (
       </div>
     </section>
   </div>
-);
+)};
 
 // ============================================
 // PHOTOS PAGE - LUXURY VERSION
@@ -1890,7 +1907,21 @@ const ALTERNATE_LANGUAGES = {
 
 const HotelDelPacificoApp = () => {
   const [language, setLanguage] = useState('es');
+  const [roomPrices, setRoomPrices] = useState(null);
   const t = translations[language];
+
+  // Fetch room prices from API
+  useEffect(() => {
+    const API = process.env.REACT_APP_BACKEND_URL + '/api';
+    fetch(`${API}/public/site/hoteldelpacifico`)
+      .then(res => res.json())
+      .then(data => {
+        if (data?.config?.room_prices) {
+          setRoomPrices(data.config.room_prices);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Language-specific SEO descriptions
   const seoDescriptions = {
@@ -1963,8 +1994,8 @@ const HotelDelPacificoApp = () => {
       
       <Routes>
         <Route index element={<HomePage t={t} />} />
-        <Route path="habitaciones" element={<RoomsPage t={t} />} />
-        <Route path="precios" element={<PricesPage t={t} />} />
+        <Route path="habitaciones" element={<RoomsPage t={t} roomPrices={roomPrices} />} />
+        <Route path="precios" element={<PricesPage t={t} roomPrices={roomPrices} />} />
         <Route path="fotos" element={<PhotosPage t={t} />} />
         <Route path="restaurante" element={<RestaurantPage t={t} />} />
         <Route path="atractivos" element={<AttractionsPage t={t} />} />
