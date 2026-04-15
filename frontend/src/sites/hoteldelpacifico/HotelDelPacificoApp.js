@@ -743,6 +743,12 @@ const HomePage = ({ t }) => (
 // ============================================
 // ROOMS PAGE - LUXURY VERSION
 // ============================================
+const ROOM_IMAGES = [
+  '/images/hoteldelpacifico/rooms/DSC08245.jpg',
+  '/images/hoteldelpacifico/rooms/DSC08298.jpg',
+  '/images/hoteldelpacifico/rooms/DSC08309.jpg'
+];
+
 const RoomsPage = ({ t, roomPrices }) => {
   const defaultRooms = [
     { name: t.rooms.single, desc: t.rooms.singleDesc, price: '$0' },
@@ -786,9 +792,9 @@ const RoomsPage = ({ t, roomPrices }) => {
         <div className="grid md:grid-cols-3 gap-8">
           {rooms.map((room, i) => (
             <div key={i} className={`bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 border ${room.featured ? 'border-amber-400 ring-1 ring-amber-400' : 'border-amber-100'}`} data-testid={`room-card-${i}`}>
-              <div className="h-56 bg-gradient-to-br from-amber-50 to-amber-100/50 flex items-center justify-center relative border-b border-amber-100">
-                {room.featured && <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 text-xs tracking-wider uppercase">Popular</div>}
-                <Building className="w-16 h-16 text-emerald-600/30" />
+              <div className="h-56 relative overflow-hidden border-b border-amber-100">
+                <img src={IMG(ROOM_IMAGES[i] || ROOM_IMAGES[0])} alt={room.name} className="w-full h-full object-cover" />
+                {room.featured && <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 text-xs tracking-wider uppercase z-10">Popular</div>}
               </div>
               <div className="p-8">
                 <h3 className="text-2xl font-serif text-emerald-800 mb-2">{room.name}</h3>
@@ -951,12 +957,27 @@ const PricesPage = ({ t, roomPrices }) => {
 // ============================================
 // PHOTOS PAGE - LUXURY VERSION
 // ============================================
-const PhotosPage = ({ t }) => (
+const GALLERY_ROOM_IMAGES = [
+  'DSC08245.jpg', 'DSC08247.jpg', 'DSC08249.jpg', 'DSC08251.jpg',
+  'DSC08254.jpg', 'DSC08257.jpg', 'DSC08259.jpg', 'DSC08261.jpg',
+  'DSC08263.jpg', 'DSC08270.jpg', 'DSC08273.jpg', 'DSC08275.jpg',
+  'DSC08278.jpg', 'DSC08280.jpg', 'DSC08282.jpg', 'DSC08286.jpg',
+  'DSC08288.jpg', 'DSC08292.jpg', 'DSC08296.jpg', 'DSC08298.jpg',
+  'DSC08301.jpg', 'DSC08303.jpg', 'DSC08309.jpg', 'DSC08311.jpg',
+  'DSC08315.jpg', 'DSC08316.jpg', 'DSC08317.jpg', 'DSC08320.jpg',
+  'DSC08322.jpg', 'DSC08326.jpg', 'DSC08328.jpg', 'DSC08330.jpg',
+  'DSC08332.jpg', 'DSC08334.jpg', 'DSC08336.jpg'
+];
+
+const PhotosPage = ({ t }) => {
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+
+  return (
   <div className="bg-amber-50/30 pt-24">
     <section className="relative py-20 text-white text-center overflow-hidden">
       <div className="absolute inset-0">
         <img 
-          src={IMG('/images/hoteldelpacifico/attractions/sangabriel.jpg')} 
+          src={IMG('/images/hoteldelpacifico/rooms/DSC08298.jpg')} 
           alt="" 
           className="w-full h-full object-cover"
         />
@@ -973,17 +994,62 @@ const PhotosPage = ({ t }) => (
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {[...Array(12)].map((_, i) => (
-            <div key={i} className="aspect-square bg-gradient-to-br from-amber-50 to-amber-100/50 border border-amber-200/50 flex items-center justify-center group cursor-pointer overflow-hidden hover:shadow-lg transition-shadow">
-              <Camera className="w-10 h-10 text-amber-400/50 group-hover:scale-110 transition-transform duration-500" />
+          {GALLERY_ROOM_IMAGES.map((img, i) => (
+            <div 
+              key={i} 
+              className="aspect-square overflow-hidden cursor-pointer group hover:shadow-lg transition-shadow border border-amber-200/50"
+              onClick={() => setSelectedPhoto(i)}
+              data-testid={`gallery-photo-${i}`}
+            >
+              <img 
+                src={IMG(`/images/hoteldelpacifico/rooms/${img}`)} 
+                alt={`Hotel foto ${i + 1}`} 
+                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                style={{ opacity: 1 }}
+              />
             </div>
           ))}
         </div>
-        <p className="text-center text-gray-400 mt-12 text-sm tracking-wider">Fotos próximamente / Photos coming soon</p>
       </div>
     </section>
+
+    {/* Lightbox */}
+    {selectedPhoto !== null && (
+      <div 
+        className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+        onClick={() => setSelectedPhoto(null)}
+      >
+        <button 
+          className="absolute top-6 right-6 text-white/70 hover:text-white z-50"
+          onClick={() => setSelectedPhoto(null)}
+        >
+          <X className="w-8 h-8" />
+        </button>
+        <button 
+          className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full z-50"
+          onClick={(e) => { e.stopPropagation(); setSelectedPhoto((prev) => (prev - 1 + GALLERY_ROOM_IMAGES.length) % GALLERY_ROOM_IMAGES.length); }}
+        >
+          &#8249;
+        </button>
+        <img 
+          src={IMG(`/images/hoteldelpacifico/rooms/${GALLERY_ROOM_IMAGES[selectedPhoto]}`)} 
+          alt="" 
+          className="max-w-full max-h-[85vh] object-contain"
+          onClick={(e) => e.stopPropagation()}
+        />
+        <button 
+          className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full z-50"
+          onClick={(e) => { e.stopPropagation(); setSelectedPhoto((prev) => (prev + 1) % GALLERY_ROOM_IMAGES.length); }}
+        >
+          &#8250;
+        </button>
+        <div className="absolute bottom-6 text-white/60 text-sm">
+          {selectedPhoto + 1} / {GALLERY_ROOM_IMAGES.length}
+        </div>
+      </div>
+    )}
   </div>
-);
+)};
 
 // ============================================
 // RESTAURANT PAGE - LUXURY VERSION
