@@ -991,18 +991,20 @@ const PhotosPage = ({ t }) => (
 // ============================================
 // PATISSERIE GALLERY COMPONENT
 // ============================================
-const PATISSERIE_IMAGES = [
-  'DSC00017.jpeg', 'DSC00018.jpeg', 'DSC00019.jpeg', 'DSC00021.jpeg', 'DSC00022.jpeg',
-  'DSC00025.jpeg', 'DSC00029.jpeg', 'DSC00030.jpeg', 'DSC00031.jpeg', 'DSC00032.jpeg',
-  'DSC00033.jpeg', 'DSC00041.jpeg', 'DSC00045.jpeg', 'DSC00048.jpeg', 'DSC00054.jpeg',
-  'DSC00057.jpeg', 'DSC00060.jpeg', 'DSC00078.jpeg', 'DSC00081.jpeg', 'DSC00087.jpeg',
-  'DSC00112.jpeg', 'DSC00113.jpeg', 'DSC00114.jpeg', 'DSC00115.jpeg', 'DSC00120.jpeg',
-  'DSC00135.jpeg', 'DSC00141.jpeg', 'DSC00144.jpeg', 'DSC00148.jpeg', 'DSC00149.jpeg',
-  'DSC00150.jpeg', 'DSC00167.jpeg', 'DSC00171.jpeg', 'DSC00191.jpeg', 'DSC00200.jpeg',
-  'DSC00216.jpeg', 'DSC00218.jpeg', 'DSC00230.jpeg', 'DSC00236.jpeg', 'DSC00239.jpeg',
-  'DSC00255.jpeg', 'DSC00281.jpeg', 'DSC00313.jpeg', 'DSC00353.jpeg', 'DSC00364.jpeg',
-  'DSC00365.jpeg', 'DSC00382.jpeg', 'DSC00384.jpeg', 'DSC00393.jpeg', 'DSC00395.jpeg',
-  'DSC00410.jpeg', 'DSC00429.jpeg', 'DSC00432.jpeg', 'DSC00436.jpeg'
+const RESTAURANT_IMAGES = [
+  'DSC00017.jpeg', 'DSC07834.jpg', 'DSC00019.jpeg', 'DSC07843.jpg',
+  'DSC00022.jpeg', 'DSC07853.jpg', 'DSC00029.jpeg', 'DSC07867.jpg',
+  'DSC00031.jpeg', 'DSC07879.jpg', 'DSC00033.jpeg', 'DSC07890.jpg',
+  'DSC00045.jpeg', 'DSC07904.jpg', 'DSC00054.jpeg', 'DSC07909.jpg',
+  'DSC00060.jpeg', 'DSC07919.jpg', 'DSC00081.jpeg', 'DSC07933.jpg',
+  'DSC00112.jpeg', 'DSC07942.jpg', 'DSC00114.jpeg', 'DSC07952.jpg',
+  'DSC00120.jpeg', 'DSC07963.jpg', 'DSC00141.jpeg', 'DSC07973.jpg',
+  'DSC00148.jpeg', 'DSC07980.jpg', 'DSC00150.jpeg', 'DSC07993.jpg',
+  'DSC00171.jpeg', 'DSC08002.jpg', 'DSC00200.jpeg', 'DSC08009.jpg',
+  'DSC00218.jpeg', 'DSC08016.jpg', 'DSC00236.jpeg', 'DSC08028.jpg',
+  'DSC08045.jpg', 'DSC08053.jpg', 'DSC08062.jpg', 'DSC08070.jpg',
+  'DSC08077.jpg', 'DSC08092.jpg', 'DSC08108.jpg', 'DSC08114.jpg',
+  'DSC08133.jpg', 'DSC08145.jpg'
 ];
 
 const PatisserieGallery = ({ t }) => {
@@ -1015,7 +1017,7 @@ const PatisserieGallery = ({ t }) => {
   useEffect(() => {
     if (isAutoPlaying && !selectedImage) {
       autoPlayRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % PATISSERIE_IMAGES.length);
+        setCurrentIndex((prev) => (prev + 1) % RESTAURANT_IMAGES.length);
       }, 3000);
     }
     
@@ -1040,12 +1042,12 @@ const PatisserieGallery = ({ t }) => {
   // Navigate prev/next
   const goToPrev = () => {
     handleUserInteraction();
-    setCurrentIndex((prev) => (prev - 1 + PATISSERIE_IMAGES.length) % PATISSERIE_IMAGES.length);
+    setCurrentIndex((prev) => (prev - 1 + RESTAURANT_IMAGES.length) % RESTAURANT_IMAGES.length);
   };
 
   const goToNext = () => {
     handleUserInteraction();
-    setCurrentIndex((prev) => (prev + 1) % PATISSERIE_IMAGES.length);
+    setCurrentIndex((prev) => (prev + 1) % RESTAURANT_IMAGES.length);
   };
 
   // Open lightbox
@@ -1063,8 +1065,8 @@ const PatisserieGallery = ({ t }) => {
   const getVisibleThumbnails = () => {
     const visible = [];
     for (let i = 0; i < 6; i++) {
-      const index = (currentIndex + i) % PATISSERIE_IMAGES.length;
-      visible.push({ index, image: PATISSERIE_IMAGES[index] });
+      const index = (currentIndex + i) % RESTAURANT_IMAGES.length;
+      visible.push({ index, image: RESTAURANT_IMAGES[index] });
     }
     return visible;
   };
@@ -1074,7 +1076,7 @@ const PatisserieGallery = ({ t }) => {
       {/* Main Gallery Display */}
       <div className="relative aspect-[16/9] max-h-[500px] overflow-hidden rounded-lg shadow-xl mb-6">
         <img
-          src={IMG(`/images/hoteldelpacifico/patisserie/${PATISSERIE_IMAGES[currentIndex]}`)}
+          src={IMG(`/images/hoteldelpacifico/restaurant/${RESTAURANT_IMAGES[currentIndex]}`)}
           alt={`Patisserie ${currentIndex + 1}`}
           className="w-full h-full object-cover transition-opacity duration-500"
           onClick={() => openLightbox(currentIndex)}
@@ -1096,7 +1098,7 @@ const PatisserieGallery = ({ t }) => {
         
         {/* Image Counter */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full text-sm">
-          {currentIndex + 1} / {PATISSERIE_IMAGES.length}
+          {currentIndex + 1} / {RESTAURANT_IMAGES.length}
         </div>
         
         {/* Auto-play indicator */}
@@ -1115,7 +1117,7 @@ const PatisserieGallery = ({ t }) => {
 
       {/* Thumbnail Strip */}
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-        {PATISSERIE_IMAGES.map((image, index) => (
+        {RESTAURANT_IMAGES.map((image, index) => (
           <button
             key={index}
             onClick={() => goToImage(index)}
@@ -1126,7 +1128,7 @@ const PatisserieGallery = ({ t }) => {
             }`}
           >
             <img
-              src={IMG(`/images/hoteldelpacifico/patisserie/${image}`)}
+              src={IMG(`/images/hoteldelpacifico/restaurant/${image}`)}
               alt={`Thumbnail ${index + 1}`}
               className="w-full h-full object-cover"
             />
@@ -1158,28 +1160,28 @@ const PatisserieGallery = ({ t }) => {
           </button>
           
           <button
-            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev - 1 + PATISSERIE_IMAGES.length) % PATISSERIE_IMAGES.length); }}
+            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev - 1 + RESTAURANT_IMAGES.length) % RESTAURANT_IMAGES.length); }}
             className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center"
           >
             <ChevronDown className="w-8 h-8 rotate-90" />
           </button>
           
           <img
-            src={IMG(`/images/hoteldelpacifico/patisserie/${PATISSERIE_IMAGES[selectedImage]}`)}
+            src={IMG(`/images/hoteldelpacifico/restaurant/${RESTAURANT_IMAGES[selectedImage]}`)}
             alt={`Patisserie ${selectedImage + 1}`}
             className="max-w-full max-h-[90vh] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
           
           <button
-            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev + 1) % PATISSERIE_IMAGES.length); }}
+            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev + 1) % RESTAURANT_IMAGES.length); }}
             className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center"
           >
             <ChevronDown className="w-8 h-8 -rotate-90" />
           </button>
           
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm">
-            {selectedImage + 1} / {PATISSERIE_IMAGES.length}
+            {selectedImage + 1} / {RESTAURANT_IMAGES.length}
           </div>
         </div>
       )}
@@ -1193,7 +1195,7 @@ const RestaurantPage = ({ t }) => (
       {/* Background Image with Green Filter */}
       <div className="absolute inset-0 overflow-hidden">
         <img 
-          src={IMG('/images/hoteldelpacifico/patisserie/DSC00087.jpeg')} 
+          src={IMG('/images/hoteldelpacifico/restaurant/DSC07834.jpg')} 
           alt="" 
           className="w-[200%] h-[200%] object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
         />

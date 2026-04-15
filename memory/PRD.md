@@ -39,6 +39,7 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - ✅ Hotel del Pacífico added to fworksbuilders portfolio page
 - ✅ /admin route enabled for hotel domain (client login via /admin)
 - ✅ Stock photos removed, replaced with actual hotel video screenshots
+- ✅ Restaurant gallery: 50 photos (20 patisserie + 30 new restaurant), optimized from 1.3GB to 8.9MB
 - ✅ Portfolio feature keywords translated for all 5 languages (NL/FR/EN/ES/IT)
 
 ### April 4-11, 2026
