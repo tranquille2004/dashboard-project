@@ -2016,10 +2016,14 @@ const HotelDelPacificoApp = () => {
     de: 'Hotel del Pacífico | 3-Sterne-Hotel in Santo Domingo, Ecuador'
   };
 
-  // Show Under Construction page only on production (hoteldelpacifico.net)
-  // Preview shows full site for development
-  const isProduction = window.location.hostname.includes('hoteldelpacifico.net') || 
-                       window.location.hostname.includes('hoteldelpacifico.com');
+  // Show Under Construction page on ALL domains EXCEPT the Emergent preview URL
+  // On production: emergent.host serves the iframe content, hoteldelpacifico.net is the parent
+  // Only show full site when directly on preview.emergentagent.com with /site/hoteldelpacifico path
+  const currentHost = window.location.hostname;
+  const currentPath = window.location.pathname;
+  const isPreviewDev = currentHost.includes('preview.emergentagent.com') && currentPath.includes('/site/hoteldelpacifico');
+  const isLocalhost = currentHost === 'localhost' || currentHost === '127.0.0.1';
+  const isProduction = !isPreviewDev && !isLocalhost;
   
   if (UNDER_CONSTRUCTION_MODE && isProduction) {
     return (
