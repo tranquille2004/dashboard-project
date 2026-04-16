@@ -8,6 +8,12 @@ import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
 import { IMG } from '@/utils/imageHelper';
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+};
+
 // ============================================
 // TRANSLATIONS (keeping the same structure)
 // ============================================
@@ -1984,6 +1990,7 @@ const HotelDelPacificoApp = () => {
       
       <Navigation language={language} setLanguage={setLanguage} t={t} />
       
+      <ScrollToTop />
       <Routes>
         <Route index element={<HomePage t={t} />} />
         <Route path="habitaciones" element={<RoomsPage t={t} roomPrices={roomPrices} />} />
