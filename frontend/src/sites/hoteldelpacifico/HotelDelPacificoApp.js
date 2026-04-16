@@ -1790,6 +1790,18 @@ const ContactPage = ({ t }) => (
                 </div>
               </div>
             </div>
+
+            {/* WhatsApp Direct Contact Button */}
+            <a
+              href={`https://wa.me/593988802941?text=${encodeURIComponent('Hola, me gustaría hacer una reservación en Hotel del Pacífico.')}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-10 flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#1ebe57] text-white py-5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
+              data-testid="whatsapp-contact-btn"
+            >
+              <MessageCircle className="w-7 h-7 group-hover:scale-110 transition-transform" />
+              <span className="text-lg font-semibold tracking-wide">WhatsApp: +593 98 880 2941</span>
+            </a>
           </div>
 
           {/* Contact Form */}
