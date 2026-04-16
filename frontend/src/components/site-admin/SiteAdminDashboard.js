@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import { 
   LogOut, Menu, Clock, Image, Save, Plus, Trash2, 
-  Check, X, AlertCircle, Settings, DollarSign, Star, Bed, Eye, Calendar
+  Check, X, AlertCircle, Settings, DollarSign, Star, Bed, Eye, Calendar, Upload
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -722,21 +722,59 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
 };
 
 // Events Tab Component for Hotels
+// Image Upload Helper
+const ImageUploader = ({ currentImage, onUploaded, folder }) => {
+  const [uploading, setUploading] = useState(false);
+
+  const handleUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('folder', folder);
+      const res = await axios.post(`${API}/site-admin/upload`, formData, {
+        withCredentials: true,
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      if (res.data?.path) onUploaded(res.data.path);
+    } catch (err) {
+      alert('Upload mislukt: ' + (err.response?.data?.detail || err.message));
+    }
+    setUploading(false);
+  };
+
+  return (
+    <div className="space-y-2">
+      {currentImage && (
+        <div className="w-full h-40 bg-gray-100 rounded-lg overflow-hidden">
+          <img src={`${API}/images${currentImage.replace('/images', '')}`} alt="" className="w-full h-full object-cover" />
+        </div>
+      )}
+      <label className={`flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${uploading ? 'border-gray-300 bg-gray-50' : 'border-emerald-300 hover:border-emerald-500 hover:bg-emerald-50'}`}>
+        <Upload className="w-4 h-4" />
+        <span className="text-sm">{uploading ? 'Uploaden...' : currentImage ? 'Andere foto kiezen' : 'Foto uploaden'}</span>
+        <input type="file" accept="image/*" onChange={handleUpload} disabled={uploading} className="hidden" />
+      </label>
+    </div>
+  );
+};
+
 const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
   const events = config?.events || [];
 
   const addEvent = () => {
     const newEvent = {
       id: `event_${Date.now()}`,
-      title: 'Nuevo Evento',
+      title: '',
       description: '',
-      includes: [],
-      note: '',
       date: new Date().toISOString().split('T')[0],
       date_display: '',
       time: '',
       location: 'Hotel del Pacífico',
-      price: '$0',
+      price: '',
+      info: '',
       image: '',
       is_active: true
     };
@@ -754,20 +792,6 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
     setConfig({ ...config, events: events.filter((_, i) => i !== index) });
   };
 
-  const addInclude = (index) => {
-    const item = prompt('Wat is er inbegrepen? (bijv. Materiales completos):');
-    if (!item) return;
-    const updated = [...events];
-    updated[index] = { ...updated[index], includes: [...(updated[index].includes || []), item] };
-    setConfig({ ...config, events: updated });
-  };
-
-  const removeInclude = (eventIndex, includeIndex) => {
-    const updated = [...events];
-    updated[eventIndex] = { ...updated[eventIndex], includes: updated[eventIndex].includes.filter((_, i) => i !== includeIndex) };
-    setConfig({ ...config, events: updated });
-  };
-
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between border-b pb-4">
@@ -782,7 +806,7 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
         </div>
       </div>
 
-      <p className="text-sm text-gray-500">Beheer hier de speciale evenementen. Actieve events worden getoond op de Eventos pagina van de website.</p>
+      <p className="text-sm text-gray-500">Beheer hier de speciale evenementen. Actieve events worden getoond op de website.</p>
 
       {events.length === 0 ? (
         <div className="text-center py-12 text-gray-500">
@@ -795,72 +819,66 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
             <span className="font-semibold text-lg">{event.title || 'Nieuw event'}</span>
             <div className="flex items-center gap-3">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
-                <input type="checkbox" checked={event.is_active || false} onChange={(e) => updateEvent(index, 'is_active', e.target.checked)} className="w-4 h-4 rounded border-gray-300 text-emerald-500" />
+                <input type="checkbox" checked={event.is_active || false} onChange={(e) => updateEvent(index, 'is_active', e.target.checked)} className="w-4 h-4 rounded" />
                 Actief
               </label>
               <button onClick={() => removeEvent(index)} className="p-1.5 text-red-500 hover:bg-red-50 rounded"><Trash2 className="w-4 h-4" /></button>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Titel</label>
-              <input type="text" value={event.title || ''} onChange={(e) => updateEvent(index, 'title', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Prijs</label>
-              <input type="text" value={event.price || ''} onChange={(e) => updateEvent(index, 'price', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="$20" />
-            </div>
-          </div>
+          <div className="grid md:grid-cols-3 gap-4">
+            {/* Left: Form Fields */}
+            <div className="md:col-span-2 space-y-4">
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Titel</label>
+                <input type="text" value={event.title || ''} onChange={(e) => updateEvent(index, 'title', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder='Taller "Pinta tu Mascota"' />
+              </div>
 
-          <div>
-            <label className="block text-xs text-gray-500 mb-1">Beschrijving</label>
-            <textarea value={event.description || ''} onChange={(e) => updateEvent(index, 'description', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" />
-          </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Beschrijving</label>
+                <textarea value={event.description || ''} onChange={(e) => updateEvent(index, 'description', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" placeholder="Beschrijf het event..." />
+              </div>
 
-          <div className="grid grid-cols-3 gap-4">
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Datum (YYYY-MM-DD)</label>
-              <input type="date" value={event.date || ''} onChange={(e) => updateEvent(index, 'date', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Datum tekst (weergave)</label>
-              <input type="text" value={event.date_display || ''} onChange={(e) => updateEvent(index, 'date_display', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Domingo 26 de Abril" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Tijd</label>
-              <input type="text" value={event.time || ''} onChange={(e) => updateEvent(index, 'time', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="9:00 a 13:00" />
-            </div>
-          </div>
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Datum</label>
+                  <input type="date" value={event.date || ''} onChange={(e) => updateEvent(index, 'date', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Weergave datum</label>
+                  <input type="text" value={event.date_display || ''} onChange={(e) => updateEvent(index, 'date_display', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Domingo 26 de Abril" />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Tijd</label>
+                  <input type="text" value={event.time || ''} onChange={(e) => updateEvent(index, 'time', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="9:00 a 13:00" />
+                </div>
+              </div>
 
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Locatie</label>
-              <input type="text" value={event.location || ''} onChange={(e) => updateEvent(index, 'location', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
-            </div>
-            <div>
-              <label className="block text-xs text-gray-500 mb-1">Afbeelding pad (bijv. /images/hoteldelpacifico/events/foto.jpg)</label>
-              <input type="text" value={event.image || ''} onChange={(e) => updateEvent(index, 'image', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
-            </div>
-          </div>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Locatie / Adres</label>
+                  <input type="text" value={event.location || ''} onChange={(e) => updateEvent(index, 'location', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Prijs</label>
+                  <input type="text" value={event.price || ''} onChange={(e) => updateEvent(index, 'price', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="$20" />
+                </div>
+              </div>
 
-          <div>
-            <label className="block text-xs text-gray-500 mb-1">Extra opmerking</label>
-            <input type="text" value={event.note || ''} onChange={(e) => updateEvent(index, 'note', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Solo necesitas enviarnos una foto..." />
-          </div>
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Extra info (wat is inbegrepen, opmerkingen, etc.)</label>
+                <textarea value={event.info || ''} onChange={(e) => updateEvent(index, 'info', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" placeholder="Materialen inbegrepen, Copa de Vino y Bocaditos, ..." />
+              </div>
+            </div>
 
-          <div>
-            <label className="block text-xs text-gray-500 mb-2">Inbegrepen</label>
-            <div className="flex flex-wrap gap-2">
-              {(event.includes || []).map((item, ii) => (
-                <span key={ii} className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-sm rounded-full border border-emerald-200">
-                  {item}
-                  <button onClick={() => removeInclude(index, ii)} className="ml-1 text-red-400 hover:text-red-600"><X className="w-3 h-3" /></button>
-                </span>
-              ))}
-              <button onClick={() => addInclude(index)} className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full border border-gray-200 hover:bg-gray-200">
-                <Plus className="w-3 h-3" /> Toevoegen
-              </button>
+            {/* Right: Photo Upload */}
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Event foto</label>
+              <ImageUploader 
+                currentImage={event.image} 
+                onUploaded={(path) => updateEvent(index, 'image', path)} 
+                folder="events" 
+              />
             </div>
           </div>
         </div>

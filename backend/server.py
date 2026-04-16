@@ -1266,6 +1266,67 @@ async def update_own_site_config(request: Request, admin: dict = Depends(get_cur
     config = await db.site_configs.find_one({"site_id": admin["site_id"]}, {"_id": 0})
     return config
 
+@site_admin_router.post("/upload")
+async def upload_site_image(file: UploadFile = File(...), folder: str = "gallery", admin: dict = Depends(get_current_site_admin)):
+    """Upload image directly to Object Storage - no deploy/migrate needed"""
+    if not admin.get("permissions", {}).get("gallery"):
+        raise HTTPException(status_code=403, detail="No permission to upload images")
+    
+    # Validate file type
+    allowed_types = ["image/jpeg", "image/png", "image/webp", "image/gif"]
+    if file.content_type not in allowed_types:
+        raise HTTPException(status_code=400, detail=f"File type {file.content_type} not allowed")
+    
+    # Read file data (max 10MB)
+    data = await file.read()
+    if len(data) > 10 * 1024 * 1024:
+        raise HTTPException(status_code=400, detail="File too large (max 10MB)")
+    
+    # Build storage path
+    site_slug = admin["site_id"].replace("site_", "")
+    ext = file.filename.rsplit(".", 1)[-1] if "." in file.filename else "jpg"
+    import time
+    filename = f"{int(time.time())}_{file.filename}"
+    storage_path = f"images/{site_slug}/{folder}/{filename}"
+    
+    try:
+        result = put_object(storage_path, data, file.content_type)
+        # Store record in migrated_images so the image API can find it
+        await db.migrated_images.update_one(
+            {"original_path": f"/{storage_path}"},
+            {"$set": {
+                "original_path": f"/{storage_path}",
+                "storage_path": storage_path,
+                "content_type": file.content_type,
+                "size": len(data),
+                "migrated_at": datetime.now(timezone.utc).isoformat()
+            }},
+            upsert=True
+        )
+        return {
+            "success": True,
+            "path": f"/{storage_path}",
+            "filename": filename,
+            "size": len(data)
+        }
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Upload failed: {str(e)}")
+
+@site_admin_router.delete("/upload")
+async def delete_site_image(request: Request, admin: dict = Depends(get_current_site_admin)):
+    """Delete image from Object Storage"""
+    if not admin.get("permissions", {}).get("gallery"):
+        raise HTTPException(status_code=403, detail="No permission to delete images")
+    
+    body = await request.json()
+    path = body.get("path", "")
+    if not path:
+        raise HTTPException(status_code=400, detail="Path required")
+    
+    # Remove from migrated_images
+    await db.migrated_images.delete_one({"original_path": path})
+    return {"success": True, "deleted": path}
+
 @site_admin_router.get("/menu")
 async def get_own_menu(admin: dict = Depends(get_current_site_admin)):
     """Get own menu items"""

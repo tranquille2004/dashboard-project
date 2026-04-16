@@ -43,6 +43,8 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - ✅ Hotel gallery (Galería): 35 room photos with grid layout, lightbox and navigation
 - ✅ Room type cards: real room photos, Suite Ejecutiva removed (2 types now)
 - ✅ Events page: Eventos Especiales with flyer, WhatsApp booking, admin dashboard management
+- ✅ Image upload API: Direct to Object Storage, no deploy/migrate needed for client
+- ✅ Simplified Events editor: title, description, date, time, location, price, info, photo upload
 - ✅ "Caja de seguridad" removed from all languages
 - ✅ Portfolio feature keywords translated for all 5 languages (NL/FR/EN/ES/IT)
 
