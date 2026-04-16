@@ -2837,16 +2837,16 @@ async def seed_sites_on_startup():
     else:
         logger.info("Auto-seed: All sites already present")
     
-    # Auto-seed hotel admin if not exists
+    # Auto-seed hotel admin - always ensure correct credentials
     hotel_admin = await db.site_admins.find_one({"site_id": "site_hoteldelpacifico"})
+    hotel_password_hash = hashlib.sha256("hotel123".encode()).hexdigest()
     if not hotel_admin:
-        import bcrypt
         admin_dict = {
             "admin_id": f"admin_{uuid.uuid4().hex[:12]}",
             "site_id": "site_hoteldelpacifico",
             "email": "admin@hoteldelpacifico.net",
             "name": "Hotel del Pacífico Admin",
-            "password_hash": bcrypt.hashpw("hotel123".encode(), bcrypt.gensalt()).decode(),
+            "password_hash": hotel_password_hash,
             "is_active": True,
             "permissions": {"opening_hours": True, "menu_items": True, "gallery": True, "prices": True, "contact_info": True},
             "created_at": datetime.now(timezone.utc).isoformat(),
@@ -2854,12 +2854,12 @@ async def seed_sites_on_startup():
         }
         await db.site_admins.insert_one(admin_dict)
         logger.info("Auto-seeded hotel admin: admin@hoteldelpacifico.net")
-    elif hotel_admin.get("email") != "admin@hoteldelpacifico.net":
+    else:
         await db.site_admins.update_one(
             {"site_id": "site_hoteldelpacifico"},
-            {"$set": {"email": "admin@hoteldelpacifico.net"}}
+            {"$set": {"email": "admin@hoteldelpacifico.net", "password_hash": hotel_password_hash}}
         )
-        logger.info("Updated hotel admin email to admin@hoteldelpacifico.net")
+        logger.info("Updated hotel admin credentials")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
