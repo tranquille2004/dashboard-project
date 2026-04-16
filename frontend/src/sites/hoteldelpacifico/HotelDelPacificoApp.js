@@ -20,7 +20,8 @@ const translations = {
       photos: 'Galería',
       restaurant: 'Restaurante',
       attractions: 'Descubrir',
-      contact: 'Contacto'
+      contact: 'Contacto',
+      events: 'Eventos'
     },
     hero: {
       welcome: 'Bienvenidos a',
@@ -72,7 +73,7 @@ const translations = {
       suite: 'Suite Ejecutiva',
       suiteDesc: 'Nuestra opción más exclusiva con área de estar independiente',
       allInclude: 'Todas nuestras habitaciones incluyen:',
-      features: ['Aire acondicionado', 'WiFi de alta velocidad', 'Smart TV', 'Baño privado', 'Servicio de limpieza diario', 'Agua caliente 24 horas', 'Amenities', 'Caja de seguridad']
+      features: ['Aire acondicionado', 'WiFi de alta velocidad', 'Smart TV', 'Baño privado', 'Servicio de limpieza diario', 'Agua caliente 24 horas', 'Amenities']
     },
     prices: {
       title: 'Tarifas',
@@ -144,6 +145,19 @@ const translations = {
         send: 'Enviar Mensaje'
       }
     },
+    events: {
+      title: 'Eventos Especiales',
+      subtitle: 'Experiencias únicas en Hotel del Pacífico',
+      upcoming: 'Próximos Eventos',
+      past: 'Eventos Pasados',
+      noEvents: 'No hay eventos programados en este momento. ¡Vuelve pronto!',
+      date: 'Fecha',
+      time: 'Hora',
+      location: 'Lugar',
+      price: 'Valor',
+      reserve: 'Reservar Lugar',
+      limitedSpots: 'Cupos limitados'
+    },
     footer: {
       rights: 'Todos los derechos reservados',
       slogan: 'Su hogar lejos de casa en Santo Domingo'
@@ -157,7 +171,8 @@ const translations = {
       photos: 'Gallery',
       restaurant: 'Dining',
       attractions: 'Explore',
-      contact: 'Contact'
+      contact: 'Contact',
+      events: 'Events'
     },
     hero: {
       welcome: 'Welcome to',
@@ -206,7 +221,7 @@ const translations = {
       suite: 'Executive Suite',
       suiteDesc: 'Our most exclusive option with separate living area',
       allInclude: 'All our rooms include:',
-      features: ['Silent air conditioning', 'High-speed WiFi', 'Smart TV with streaming', 'Luxury private bathroom', 'Daily cleaning service', '24-hour hot water', 'Premium amenities', 'Safety box']
+      features: ['Silent air conditioning', 'High-speed WiFi', 'Smart TV with streaming', 'Luxury private bathroom', 'Daily cleaning service', '24-hour hot water', 'Premium amenities']
     },
     prices: {
       title: 'Rates',
@@ -276,46 +291,62 @@ const translations = {
         send: 'Send Message'
       }
     },
+    events: {
+      title: 'Special Events',
+      subtitle: 'Unique experiences at Hotel del Pacífico',
+      upcoming: 'Upcoming Events',
+      past: 'Past Events',
+      noEvents: 'No events scheduled at this time. Check back soon!',
+      date: 'Date',
+      time: 'Time',
+      location: 'Location',
+      price: 'Price',
+      reserve: 'Reserve Your Spot',
+      limitedSpots: 'Limited spots'
+    },
     footer: {
       rights: 'All rights reserved',
       slogan: 'Your home away from home in Santo Domingo'
     }
   },
   fr: {
-    nav: { home: 'Accueil', rooms: 'Chambres', prices: 'Tarifs', photos: 'Galerie', restaurant: 'Restaurant', attractions: 'Découvrir', contact: 'Contact' },
+    nav: { home: 'Accueil', rooms: 'Chambres', prices: 'Tarifs', photos: 'Galerie', restaurant: 'Restaurant', attractions: 'Découvrir', contact: 'Contact', events: 'Événements' },
     hero: { welcome: 'Bienvenue au', title: 'Hotel del Pacífico', subtitle: 'Une oasis de tranquillité et d\'élégance au cœur de Santo Domingo de los Tsáchilas', cta: 'Réserver', explore: 'Découvrir' },
     home: { experience: 'L\'Expérience', experienceTitle: 'Où le Confort Rencontre l\'Élégance', experienceText: 'Situé au cœur vibrant de Santo Domingo de los Tsáchilas, l\'Hotel del Pacífico offre une expérience unique où le confort moderne rencontre la chaleur équatorienne.', features: 'Nos Services Exclusifs', rooms36: '36 Chambres de Luxe', roomsDesc: 'Espaces spacieux et élégants avec tout le confort', restaurant: 'Restaurant La Orquídea', restaurantDesc: 'Gastronomie exceptionnelle aux saveurs locales et internationales', businessCenter: 'Centre de Conférences', businessDesc: 'Salles équipées de technologie audiovisuelle', pastry: 'Pâtisserie Artisanale', pastryDesc: 'Délices maison préparés quotidiennement', amenities: 'Équipements Premium', wifi: 'WiFi Haut Débit', ac: 'Climatisation', tv: 'Smart TV', parking: 'Parking Privé', cleaning: 'Service de Chambre', location: 'Emplacement Privilégié', locationText: 'Au cœur de la ville, avec la sérénité d\'un refuge privé', whyUs: 'Pourquoi Nous Choisir?', reason1: 'Attention Personnalisée', reason1Desc: 'Notre équipe est dédiée à rendre votre séjour mémorable', reason2: 'Emplacement Stratégique', reason2Desc: 'À quelques minutes des principales attractions', reason3: 'Tranquillité Garantie', reason3Desc: 'Une oasis de paix au milieu de la ville' },
-    rooms: { title: 'Nos Chambres', subtitle: 'Élégance et confort dans chaque détail', description: '36 chambres conçues pour votre confort', single: 'Chambre Classique', singleDesc: 'Parfaite pour les voyageurs individuels', double: 'Chambre Supérieure', doubleDesc: 'Spacieuse et élégante', suite: 'Suite Exécutive', suiteDesc: 'Notre option la plus exclusive', allInclude: 'Toutes nos chambres incluent:', features: ['Climatisation silencieuse', 'WiFi haut débit', 'Smart TV', 'Salle de bain privée', 'Nettoyage quotidien', 'Eau chaude 24h', 'Amenities premium', 'Coffre-fort'] },
+    rooms: { title: 'Nos Chambres', subtitle: 'Élégance et confort dans chaque détail', description: '36 chambres conçues pour votre confort', single: 'Chambre Classique', singleDesc: 'Parfaite pour les voyageurs individuels', double: 'Chambre Supérieure', doubleDesc: 'Spacieuse et élégante', suite: 'Suite Exécutive', suiteDesc: 'Notre option la plus exclusive', allInclude: 'Toutes nos chambres incluent:', features: ['Climatisation silencieuse', 'WiFi haut débit', 'Smart TV', 'Salle de bain privée', 'Nettoyage quotidien', 'Eau chaude 24h', 'Amenities premium'] },
     prices: { title: 'Tarifs', subtitle: 'Investissement dans votre confort', perNight: 'par nuit', includes: 'Tous les tarifs incluent:', breakfast: 'Petit-déjeuner buffet', taxes: 'Taxes', wifi: 'WiFi illimité', parking: 'Parking', contact: 'Demander une Réservation' },
     photos: { title: 'Galerie', subtitle: 'Découvrez nos espaces' },
     restaurant: { title: 'Restaurant La Orquídea', subtitle: 'Une expérience gastronomique inoubliable', description: 'Notre restaurant combine les meilleurs ingrédients locaux avec des techniques culinaires internationales.', breakfast: 'Petit-déjeuner', breakfastTime: 'Horaires à venir', breakfastDesc: 'Commencez votre journée avec notre buffet varié', lunch: 'Déjeuner', lunchTime: 'Horaires à venir', lunchDesc: 'Délectez-vous de notre sélection de plats', dinner: 'Dîner', dinnerTime: 'Horaires à venir', dinnerDesc: 'Une soirée parfaite avec notre menu gourmet', pastry: 'Pâtisserie Artisanale', pastryDesc: 'Profitez de nos créations exquises préparées quotidiennement.', banquet: 'Salle d\'Événements', banquetDesc: 'Espace polyvalent pour événements corporatifs et célébrations.' },
     attractions: { title: 'Découvrez Santo Domingo', subtitle: 'La porte d\'entrée de la côte équatorienne', intro: 'Santo Domingo de los Tsáchilas est une terre de contrastes.', tsachilas: 'Communauté Tsáchila', tsachilasDesc: 'Plongez dans la fascinante culture des Tsáchilas.', waterfalls: 'Cascades Naturelles', waterfallsDesc: 'Découvrez des cascades impressionnantes.', malecon: 'Malecón San Gabriel del Baba', maleconDesc: 'Profitez d\'une promenade au bord de la rivière.', jelenTenka: 'Jelen Tenka', jelenTenkaDesc: 'Centre touristique offrant une immersion complète.' },
     contact: { title: 'Contact', subtitle: 'À votre service', address: 'Adresse', phone: 'Téléphone', email: 'Email', hours: 'Réception 24h/24', formTitle: 'Envoyez-nous un message', getDirections: 'Itinéraire', viewOnMap: 'Voir sur Google Maps', form: { name: 'Nom complet', email: 'Email', phone: 'Téléphone', message: 'Votre message', send: 'Envoyer' } },
-    footer: { rights: 'Tous droits réservés', slogan: 'Votre chez-vous loin de chez vous' }
+    footer: { rights: 'Tous droits réservés', slogan: 'Votre chez-vous loin de chez vous' },
+    events: { title: 'Événements Spéciaux', subtitle: 'Expériences uniques à l\'Hotel del Pacífico', upcoming: 'Événements à Venir', past: 'Événements Passés', noEvents: 'Aucun événement programmé pour le moment.', date: 'Date', time: 'Heure', location: 'Lieu', price: 'Prix', reserve: 'Réserver', limitedSpots: 'Places limitées' }
   },
   it: {
-    nav: { home: 'Home', rooms: 'Camere', prices: 'Tariffe', photos: 'Galleria', restaurant: 'Ristorante', attractions: 'Scoprire', contact: 'Contatto' },
+    nav: { home: 'Home', rooms: 'Camere', prices: 'Tariffe', photos: 'Galleria', restaurant: 'Ristorante', attractions: 'Scoprire', contact: 'Contatto', events: 'Eventi' },
     hero: { welcome: 'Benvenuti al', title: 'Hotel del Pacífico', subtitle: 'Un\'oasi di tranquillità ed eleganza nel cuore di Santo Domingo de los Tsáchilas', cta: 'Prenota Ora', explore: 'Scopri di Più' },
     home: { experience: 'L\'Esperienza', experienceTitle: 'Dove il Comfort Incontra l\'Eleganza', experienceText: 'Situato nel vivace centro di Santo Domingo de los Tsáchilas, l\'Hotel del Pacífico offre un\'esperienza unica dove il comfort moderno incontra il calore ecuadoriano.', features: 'I Nostri Servizi Esclusivi', rooms36: '36 Camere di Lusso', roomsDesc: 'Spazi ampi ed eleganti con tutti i comfort', restaurant: 'Ristorante La Orquídea', restaurantDesc: 'Gastronomia eccezionale con sapori locali e internazionali', businessCenter: 'Centro Congressi', businessDesc: 'Sale attrezzate con tecnologia audiovisiva', pastry: 'Pasticceria Artigianale', pastryDesc: 'Delizie fatte in casa preparate quotidianamente', amenities: 'Comfort Premium', wifi: 'WiFi ad Alta Velocità', ac: 'Climatizzazione', tv: 'Smart TV', parking: 'Parcheggio Privato', cleaning: 'Servizio in Camera', location: 'Posizione Privilegiata', locationText: 'Nel cuore della città, con la serenità di un rifugio privato', whyUs: 'Perché Sceglierci?', reason1: 'Attenzione Personalizzata', reason1Desc: 'Il nostro team è dedicato a rendere il vostro soggiorno memorabile', reason2: 'Posizione Strategica', reason2Desc: 'A pochi minuti dalle principali attrazioni', reason3: 'Tranquillità Garantita', reason3Desc: 'Un\'oasi di pace nel mezzo della città' },
-    rooms: { title: 'Le Nostre Camere', subtitle: 'Eleganza e comfort in ogni dettaglio', description: '36 camere progettate per il massimo comfort', single: 'Camera Classica', singleDesc: 'Perfetta per viaggiatori individuali', double: 'Camera Superior', doubleDesc: 'Spaziosa ed elegante', suite: 'Suite Executive', suiteDesc: 'La nostra opzione più esclusiva', allInclude: 'Tutte le nostre camere includono:', features: ['Aria condizionata silenziosa', 'WiFi ad alta velocità', 'Smart TV', 'Bagno privato di lusso', 'Pulizia giornaliera', 'Acqua calda 24h', 'Amenities premium', 'Cassaforte'] },
+    rooms: { title: 'Le Nostre Camere', subtitle: 'Eleganza e comfort in ogni dettaglio', description: '36 camere progettate per il massimo comfort', single: 'Camera Classica', singleDesc: 'Perfetta per viaggiatori individuali', double: 'Camera Superior', doubleDesc: 'Spaziosa ed elegante', suite: 'Suite Executive', suiteDesc: 'La nostra opzione più esclusiva', allInclude: 'Tutte le nostre camere includono:', features: ['Aria condizionata silenziosa', 'WiFi ad alta velocità', 'Smart TV', 'Bagno privato di lusso', 'Pulizia giornaliera', 'Acqua calda 24h', 'Amenities premium'] },
     prices: { title: 'Tariffe', subtitle: 'Investimento nel vostro comfort', perNight: 'per notte', includes: 'Tutte le tariffe includono:', breakfast: 'Colazione a buffet', taxes: 'Tasse', wifi: 'WiFi illimitato', parking: 'Parcheggio', contact: 'Richiedi Prenotazione' },
     photos: { title: 'Galleria', subtitle: 'Scopri i nostri spazi' },
     restaurant: { title: 'Ristorante La Orquídea', subtitle: 'Un\'esperienza gastronomica indimenticabile', description: 'Il nostro ristorante combina i migliori ingredienti locali con tecniche culinarie internazionali.', breakfast: 'Colazione', breakfastTime: 'Orari in arrivo', breakfastDesc: 'Inizia la giornata con il nostro buffet', lunch: 'Pranzo', lunchTime: 'Orari in arrivo', lunchDesc: 'Deliziati con la nostra selezione', dinner: 'Cena', dinnerTime: 'Orari in arrivo', dinnerDesc: 'Una serata perfetta con il nostro menu gourmet', pastry: 'Pasticceria Artigianale', pastryDesc: 'Goditi le nostre creazioni squisite preparate quotidianamente.', banquet: 'Sala Eventi', banquetDesc: 'Spazio versatile per eventi aziendali e celebrazioni.' },
     attractions: { title: 'Scopri Santo Domingo', subtitle: 'La porta d\'ingresso alla costa ecuadoriana', intro: 'Santo Domingo de los Tsáchilas è una terra di contrasti.', tsachilas: 'Comunità Tsáchila', tsachilasDesc: 'Immergiti nell\'affascinante cultura dei Tsáchila.', waterfalls: 'Cascate Naturali', waterfallsDesc: 'Scopri cascate impressionanti.', malecon: 'Lungofiume San Gabriel del Baba', maleconDesc: 'Goditi una passeggiata lungo il fiume.', jelenTenka: 'Jelen Tenka', jelenTenkaDesc: 'Centro turistico con immersione completa nelle tradizioni.' },
     contact: { title: 'Contatto', subtitle: 'Al vostro servizio', address: 'Indirizzo', phone: 'Telefono', email: 'Email', hours: 'Reception 24 ore', formTitle: 'Inviaci un messaggio', getDirections: 'Indicazioni', viewOnMap: 'Vedi su Google Maps', form: { name: 'Nome completo', email: 'Email', phone: 'Telefono', message: 'Il tuo messaggio', send: 'Invia Messaggio' } },
-    footer: { rights: 'Tutti i diritti riservati', slogan: 'La vostra casa lontano da casa' }
+    footer: { rights: 'Tutti i diritti riservati', slogan: 'La vostra casa lontano da casa' },
+    events: { title: 'Eventi Speciali', subtitle: 'Esperienze uniche all\'Hotel del Pacífico', upcoming: 'Prossimi Eventi', past: 'Eventi Passati', noEvents: 'Nessun evento in programma al momento.', date: 'Data', time: 'Ora', location: 'Luogo', price: 'Prezzo', reserve: 'Prenota', limitedSpots: 'Posti limitati' }
   },
   de: {
-    nav: { home: 'Startseite', rooms: 'Zimmer', prices: 'Preise', photos: 'Galerie', restaurant: 'Restaurant', attractions: 'Entdecken', contact: 'Kontakt' },
+    nav: { home: 'Startseite', rooms: 'Zimmer', prices: 'Preise', photos: 'Galerie', restaurant: 'Restaurant', attractions: 'Entdecken', contact: 'Kontakt', events: 'Events' },
     hero: { welcome: 'Willkommen im', title: 'Hotel del Pacífico', subtitle: 'Eine Oase der Ruhe und Eleganz im Herzen von Santo Domingo de los Tsáchilas', cta: 'Jetzt Buchen', explore: 'Mehr Entdecken' },
     home: { experience: 'Das Erlebnis', experienceTitle: 'Wo Komfort auf Eleganz Trifft', experienceText: 'Im pulsierenden Zentrum von Santo Domingo de los Tsáchilas gelegen, bietet das Hotel del Pacífico ein einzigartiges Erlebnis, bei dem moderner Komfort auf ecuadorianische Herzlichkeit trifft.', features: 'Unsere Exklusiven Services', rooms36: '36 Luxuszimmer', roomsDesc: 'Geräumige und elegante Räume mit allem Komfort', restaurant: 'Restaurant La Orquídea', restaurantDesc: 'Außergewöhnliche Gastronomie mit lokalen und internationalen Aromen', businessCenter: 'Kongresszentrum', businessDesc: 'Säle mit modernster audiovisueller Technik', pastry: 'Handwerkliche Konditorei', pastryDesc: 'Täglich frisch zubereitete hausgemachte Köstlichkeiten', amenities: 'Premium Ausstattung', wifi: 'Highspeed-WLAN', ac: 'Klimatisierung', tv: 'Smart TV', parking: 'Privatparkplatz', cleaning: 'Zimmerservice', location: 'Privilegierte Lage', locationText: 'Im Herzen der Stadt, mit der Ruhe eines privaten Refugiums', whyUs: 'Warum Uns Wählen?', reason1: 'Persönliche Betreuung', reason1Desc: 'Unser Team ist engagiert, Ihren Aufenthalt unvergesslich zu machen', reason2: 'Strategische Lage', reason2Desc: 'Minuten von den Hauptattraktionen entfernt', reason3: 'Garantierte Ruhe', reason3Desc: 'Eine Oase des Friedens inmitten der Stadt' },
-    rooms: { title: 'Unsere Zimmer', subtitle: 'Eleganz und Komfort in jedem Detail', description: '36 Zimmer für maximalen Komfort', single: 'Klassisches Zimmer', singleDesc: 'Perfekt für Einzelreisende', double: 'Superior Zimmer', doubleDesc: 'Geräumig und elegant', suite: 'Executive Suite', suiteDesc: 'Unsere exklusivste Option', allInclude: 'Alle unsere Zimmer beinhalten:', features: ['Leise Klimaanlage', 'Highspeed-WLAN', 'Smart TV', 'Luxuriöses Privatbad', 'Tägliche Reinigung', '24h Warmwasser', 'Premium Amenities', 'Safe'] },
+    rooms: { title: 'Unsere Zimmer', subtitle: 'Eleganz und Komfort in jedem Detail', description: '36 Zimmer für maximalen Komfort', single: 'Klassisches Zimmer', singleDesc: 'Perfekt für Einzelreisende', double: 'Superior Zimmer', doubleDesc: 'Geräumig und elegant', suite: 'Executive Suite', suiteDesc: 'Unsere exklusivste Option', allInclude: 'Alle unsere Zimmer beinhalten:', features: ['Leise Klimaanlage', 'Highspeed-WLAN', 'Smart TV', 'Luxuriöses Privatbad', 'Tägliche Reinigung', '24h Warmwasser', 'Premium Amenities'] },
     prices: { title: 'Preise', subtitle: 'Investition in Ihren Komfort', perNight: 'pro Nacht', includes: 'Alle Preise beinhalten:', breakfast: 'Frühstücksbuffet', taxes: 'Steuern', wifi: 'Unbegrenztes WLAN', parking: 'Parkplatz', contact: 'Buchung Anfragen' },
     photos: { title: 'Galerie', subtitle: 'Entdecken Sie unsere Räume' },
     restaurant: { title: 'Restaurant La Orquídea', subtitle: 'Ein unvergessliches gastronomisches Erlebnis', description: 'Unser Restaurant kombiniert die besten lokalen Zutaten mit internationalen Kochtechniken.', breakfast: 'Frühstück', breakfastTime: 'Zeiten folgen', breakfastDesc: 'Starten Sie mit unserem vielfältigen Buffet', lunch: 'Mittagessen', lunchTime: 'Zeiten folgen', lunchDesc: 'Genießen Sie unsere Auswahl', dinner: 'Abendessen', dinnerTime: 'Zeiten folgen', dinnerDesc: 'Ein perfekter Abend mit unserem Gourmet-Menü', pastry: 'Handwerkliche Konditorei', pastryDesc: 'Genießen Sie unsere täglich frisch zubereiteten Kreationen.', banquet: 'Veranstaltungssaal', banquetDesc: 'Vielseitiger Raum für Firmenveranstaltungen und Feiern.' },
     attractions: { title: 'Entdecken Sie Santo Domingo', subtitle: 'Das Tor zur ecuadorianischen Küste', intro: 'Santo Domingo de los Tsáchilas ist ein Land der Kontraste.', tsachilas: 'Tsáchila-Gemeinschaft', tsachilasDesc: 'Tauchen Sie ein in die faszinierende Kultur der Tsáchila.', waterfalls: 'Natürliche Wasserfälle', waterfallsDesc: 'Entdecken Sie beeindruckende Wasserfälle.', malecon: 'Uferpromenade San Gabriel del Baba', maleconDesc: 'Genießen Sie einen Spaziergang am Fluss.', jelenTenka: 'Jelen Tenka', jelenTenkaDesc: 'Touristenzentrum mit vollständiger Immersion in die Traditionen.' },
     contact: { title: 'Kontakt', subtitle: 'Zu Ihren Diensten', address: 'Adresse', phone: 'Telefon', email: 'E-Mail', hours: '24-Stunden-Rezeption', formTitle: 'Senden Sie uns eine Nachricht', getDirections: 'Wegbeschreibung', viewOnMap: 'Auf Google Maps ansehen', form: { name: 'Vollständiger Name', email: 'E-Mail', phone: 'Telefon', message: 'Ihre Nachricht', send: 'Nachricht Senden' } },
-    footer: { rights: 'Alle Rechte vorbehalten', slogan: 'Ihr Zuhause fernab von Zuhause' }
+    footer: { rights: 'Alle Rechte vorbehalten', slogan: 'Ihr Zuhause fernab von Zuhause' },
+    events: { title: 'Besondere Events', subtitle: 'Einzigartige Erlebnisse im Hotel del Pacífico', upcoming: 'Kommende Events', past: 'Vergangene Events', noEvents: 'Derzeit keine Events geplant.', date: 'Datum', time: 'Zeit', location: 'Ort', price: 'Preis', reserve: 'Reservieren', limitedSpots: 'Begrenzte Plätze' }
   }
 };
 
@@ -352,7 +383,8 @@ const Navigation = ({ language, setLanguage, t }) => {
     { path: '/site/hoteldelpacifico/fotos', label: t.nav.photos },
     { path: '/site/hoteldelpacifico/restaurante', label: t.nav.restaurant },
     { path: '/site/hoteldelpacifico/atractivos', label: t.nav.attractions },
-    { path: '/site/hoteldelpacifico/contacto', label: t.nav.contact }
+    { path: '/site/hoteldelpacifico/contacto', label: t.nav.contact },
+    { path: '/site/hoteldelpacifico/eventos', label: t.nav.events }
   ];
 
   const languages = [
@@ -490,6 +522,7 @@ const Footer = ({ t }) => (
             <Link to="/site/hoteldelpacifico/restaurante" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.restaurant}</Link>
             <Link to="/site/hoteldelpacifico/atractivos" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.attractions}</Link>
             <Link to="/site/hoteldelpacifico/contacto" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.contact}</Link>
+            <Link to="/site/hoteldelpacifico/eventos" className="block text-emerald-100/70 hover:text-amber-300 transition-colors text-sm">{t.nav.events}</Link>
           </div>
         </div>
 
@@ -1544,6 +1577,138 @@ const AttractionsPage = ({ t }) => (
 );
 
 // ============================================
+// EVENTS PAGE - SPECIAL EVENTS
+// ============================================
+const DEFAULT_EVENTS = [
+  {
+    id: 'pinta-mascota-2026',
+    title: 'Taller "Pinta tu Mascota"',
+    description: '¿Te imaginas transformar a tu mascota en una obra de arte única? Te invito a vivir una experiencia creativa y especial donde podrás pintar a tu peludito paso a paso, aunque no tengas experiencia previa.',
+    includes: [
+      'Guía personalizada durante todo el proceso',
+      'Materiales completos para pintar',
+      'Un espacio relajado y divertido',
+      'Copa de Vino y Bocaditos',
+      '¡Tu propia obra lista para llevar a casa!'
+    ],
+    note: 'Solo necesitas enviarnos una foto clara de tu mascota',
+    date: '2026-04-26',
+    date_display: 'Domingo 26 de Abril',
+    time: '9:00 a 13:00',
+    location: 'Hotel del Pacífico',
+    price: '$20',
+    image: '/images/hoteldelpacifico/events/pinta-mascota.jpg',
+    is_active: true
+  }
+];
+
+const EventsPage = ({ t, siteEvents }) => {
+  const events = siteEvents && siteEvents.length > 0 ? siteEvents : DEFAULT_EVENTS;
+  const now = new Date();
+  const upcoming = events.filter(e => e.is_active && new Date(e.date) >= new Date(now.toDateString()));
+  const past = events.filter(e => !e.is_active || new Date(e.date) < new Date(now.toDateString()));
+
+  return (
+  <div className="bg-amber-50/30 pt-24">
+    <section className="relative py-20 text-white text-center overflow-hidden">
+      <div className="absolute inset-0">
+        <img 
+          src={IMG('/images/hoteldelpacifico/events/pinta-mascota.jpg')} 
+          alt="" 
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-emerald-800/80" />
+      </div>
+      <div className="relative z-10">
+        <p className="text-amber-300 text-xs tracking-[0.3em] uppercase mb-4">{t.nav.events}</p>
+        <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-4">{t.events.title}</h1>
+        <Divider />
+        <p className="text-emerald-100/70 mt-6">{t.events.subtitle}</p>
+      </div>
+    </section>
+
+    <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
+      <div className="max-w-5xl mx-auto px-6">
+        {upcoming.length > 0 && (
+          <>
+            <h2 className="text-2xl font-serif text-emerald-800 mb-10 text-center">{t.events.upcoming}</h2>
+            {upcoming.map((event, i) => (
+              <div key={event.id || i} className="bg-white shadow-xl border border-amber-100 overflow-hidden mb-10" data-testid={`event-card-${i}`}>
+                <div className="md:flex">
+                  {event.image && (
+                    <div className="md:w-2/5 h-72 md:h-auto relative overflow-hidden">
+                      <img src={IMG(event.image)} alt={event.title} className="w-full h-full object-cover" style={{ opacity: 1 }} />
+                    </div>
+                  )}
+                  <div className="md:w-3/5 p-8 md:p-10">
+                    <h3 className="text-2xl md:text-3xl font-serif text-emerald-800 mb-4">{event.title}</h3>
+                    <p className="text-gray-600 mb-6">{event.description}</p>
+                    
+                    {event.includes && event.includes.length > 0 && (
+                      <div className="mb-6">
+                        <p className="text-sm font-semibold text-emerald-700 mb-2">Incluye:</p>
+                        <ul className="space-y-1.5">
+                          {event.includes.map((item, j) => (
+                            <li key={j} className="flex items-start gap-2 text-sm text-gray-600">
+                              <Star className="w-3 h-3 text-amber-500 mt-1 flex-shrink-0" />
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+
+                    {event.note && (
+                      <p className="text-sm text-amber-700 bg-amber-50 px-4 py-2 rounded mb-6">{event.note}</p>
+                    )}
+
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <Clock className="w-4 h-4 text-emerald-600" />
+                        <div>
+                          <p className="font-medium">{event.date_display}</p>
+                          <p className="text-gray-400">{event.time}</p>
+                        </div>
+                      </div>
+                      <div className="flex items-center gap-2 text-sm text-gray-700">
+                        <MapPin className="w-4 h-4 text-emerald-600" />
+                        <p>{event.location}</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-4 border-t border-amber-100">
+                      <div>
+                        <span className="text-3xl font-serif text-amber-600">{event.price}</span>
+                        <p className="text-xs text-gray-400 mt-1">{t.events.limitedSpots}</p>
+                      </div>
+                      <a 
+                        href={`https://wa.me/593988802941?text=${encodeURIComponent(`Hola, quiero reservar para el evento: ${event.title}`)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="bg-amber-500 hover:bg-amber-600 text-white px-8 py-3 text-sm tracking-widest uppercase font-medium transition-colors"
+                      >
+                        {t.events.reserve}
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </>
+        )}
+
+        {upcoming.length === 0 && (
+          <div className="text-center py-16">
+            <Sparkles className="w-12 h-12 text-amber-400 mx-auto mb-4" />
+            <p className="text-gray-500 text-lg">{t.events.noEvents}</p>
+          </div>
+        )}
+      </div>
+    </section>
+  </div>
+)};
+
+// ============================================
 // CONTACT PAGE - LUXURY VERSION
 // ============================================
 const ContactPage = ({ t }) => (
@@ -1947,8 +2112,7 @@ const HOTEL_SEO_DATA = {
     'Conference room',
     '24-hour front desk',
     'Hot water',
-    'Laundry service',
-    'Safe deposit box'
+    'Laundry service'
   ],
   socialMedia: [
     'https://www.facebook.com/hoteldelpacifico.sd',
@@ -1973,9 +2137,10 @@ const ALTERNATE_LANGUAGES = {
 const HotelDelPacificoApp = () => {
   const [language, setLanguage] = useState('es');
   const [roomPrices, setRoomPrices] = useState(null);
+  const [siteEvents, setSiteEvents] = useState(null);
   const t = translations[language];
 
-  // Fetch room prices from API
+  // Fetch room prices and events from API
   useEffect(() => {
     const API = process.env.REACT_APP_BACKEND_URL + '/api';
     fetch(`${API}/public/site/hoteldelpacifico`)
@@ -1983,6 +2148,9 @@ const HotelDelPacificoApp = () => {
       .then(data => {
         if (data?.config?.room_prices) {
           setRoomPrices(data.config.room_prices);
+        }
+        if (data?.config?.events) {
+          setSiteEvents(data.config.events);
         }
       })
       .catch(() => {});
@@ -2069,6 +2237,7 @@ const HotelDelPacificoApp = () => {
         <Route path="restaurante" element={<RestaurantPage t={t} />} />
         <Route path="atractivos" element={<AttractionsPage t={t} />} />
         <Route path="contacto" element={<ContactPage t={t} />} />
+        <Route path="eventos" element={<EventsPage t={t} siteEvents={siteEvents} />} />
         <Route path="*" element={<HomePage t={t} />} />
       </Routes>
       

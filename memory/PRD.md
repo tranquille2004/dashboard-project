@@ -41,7 +41,9 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - ✅ Stock photos removed, replaced with actual hotel video screenshots
 - ✅ Restaurant gallery: 50 photos (20 patisserie + 30 new restaurant), optimized from 1.3GB to 8.9MB
 - ✅ Hotel gallery (Galería): 35 room photos with grid layout, lightbox and navigation
-- ✅ Room type cards: real room photos replacing Building icon placeholders
+- ✅ Room type cards: real room photos, Suite Ejecutiva removed (2 types now)
+- ✅ Events page: Eventos Especiales with flyer, WhatsApp booking, admin dashboard management
+- ✅ "Caja de seguridad" removed from all languages
 - ✅ Portfolio feature keywords translated for all 5 languages (NL/FR/EN/ES/IT)
 
 ### April 4-11, 2026

@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import { 
   LogOut, Menu, Clock, Image, Save, Plus, Trash2, 
-  Check, X, AlertCircle, Settings, DollarSign, Star, Bed, Eye
+  Check, X, AlertCircle, Settings, DollarSign, Star, Bed, Eye, Calendar
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -144,6 +144,7 @@ const SiteAdminDashboard = () => {
   const tabs = [
     { id: 'overview', label: 'Overzicht', icon: Settings, always: true },
     { id: 'room_prices', label: isHotel ? 'Kamerprijzen' : null, icon: DollarSign, permission: 'prices', hotelOnly: true },
+    { id: 'events', label: isHotel ? 'Eventos' : null, icon: Calendar, permission: 'prices', hotelOnly: true },
     { id: 'hours', label: 'Openingstijden', icon: Clock, permission: 'opening_hours' },
     { id: 'menu', label: 'Menu', icon: Menu, permission: 'menu_items' },
     { id: 'gallery', label: 'Foto\'s', icon: Image, permission: 'gallery' },
@@ -434,6 +435,11 @@ const SiteAdminDashboard = () => {
                 <RoomPricesTab config={config} setConfig={setConfig} saveConfig={saveConfig} saving={saving} />
               )}
 
+              {/* Events Tab - Hotel only */}
+              {activeTab === 'events' && isHotel && permissions.prices && (
+                <EventsTab config={config} setConfig={setConfig} saveConfig={saveConfig} saving={saving} />
+              )}
+
               {/* Gallery Tab */}
               {activeTab === 'gallery' && permissions.gallery && (
                 <div className="space-y-6">
@@ -706,6 +712,154 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
               >
                 <Plus className="w-3 h-3" />
                 Toevoegen
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+// Events Tab Component for Hotels
+const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
+  const events = config?.events || [];
+
+  const addEvent = () => {
+    const newEvent = {
+      id: `event_${Date.now()}`,
+      title: 'Nuevo Evento',
+      description: '',
+      includes: [],
+      note: '',
+      date: new Date().toISOString().split('T')[0],
+      date_display: '',
+      time: '',
+      location: 'Hotel del Pacífico',
+      price: '$0',
+      image: '',
+      is_active: true
+    };
+    setConfig({ ...config, events: [...events, newEvent] });
+  };
+
+  const updateEvent = (index, field, value) => {
+    const updated = [...events];
+    updated[index] = { ...updated[index], [field]: value };
+    setConfig({ ...config, events: updated });
+  };
+
+  const removeEvent = (index) => {
+    if (!window.confirm('Weet je zeker dat je dit event wilt verwijderen?')) return;
+    setConfig({ ...config, events: events.filter((_, i) => i !== index) });
+  };
+
+  const addInclude = (index) => {
+    const item = prompt('Wat is er inbegrepen? (bijv. Materiales completos):');
+    if (!item) return;
+    const updated = [...events];
+    updated[index] = { ...updated[index], includes: [...(updated[index].includes || []), item] };
+    setConfig({ ...config, events: updated });
+  };
+
+  const removeInclude = (eventIndex, includeIndex) => {
+    const updated = [...events];
+    updated[eventIndex] = { ...updated[eventIndex], includes: updated[eventIndex].includes.filter((_, i) => i !== includeIndex) };
+    setConfig({ ...config, events: updated });
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between border-b pb-4">
+        <h2 className="text-xl font-semibold" data-testid="events-title">Eventos Especiales</h2>
+        <div className="flex gap-3">
+          <button onClick={addEvent} className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700" data-testid="add-event-btn">
+            <Plus className="w-4 h-4" /><span>Event Toevoegen</span>
+          </button>
+          <button onClick={saveConfig} disabled={saving} className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50" data-testid="save-events-btn">
+            <Save className="w-4 h-4" /><span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+          </button>
+        </div>
+      </div>
+
+      <p className="text-sm text-gray-500">Beheer hier de speciale evenementen. Actieve events worden getoond op de Eventos pagina van de website.</p>
+
+      {events.length === 0 ? (
+        <div className="text-center py-12 text-gray-500">
+          <Calendar className="w-12 h-12 mx-auto mb-4 opacity-50" />
+          <p>Nog geen events. Klik op "Event Toevoegen" om te beginnen.</p>
+        </div>
+      ) : events.map((event, index) => (
+        <div key={event.id || index} className={`border rounded-lg p-6 space-y-4 ${event.is_active ? 'border-emerald-400 bg-emerald-50/30' : 'border-gray-200 bg-gray-50'}`} data-testid={`event-card-${index}`}>
+          <div className="flex items-center justify-between">
+            <span className="font-semibold text-lg">{event.title || 'Nieuw event'}</span>
+            <div className="flex items-center gap-3">
+              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                <input type="checkbox" checked={event.is_active || false} onChange={(e) => updateEvent(index, 'is_active', e.target.checked)} className="w-4 h-4 rounded border-gray-300 text-emerald-500" />
+                Actief
+              </label>
+              <button onClick={() => removeEvent(index)} className="p-1.5 text-red-500 hover:bg-red-50 rounded"><Trash2 className="w-4 h-4" /></button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Titel</label>
+              <input type="text" value={event.title || ''} onChange={(e) => updateEvent(index, 'title', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Prijs</label>
+              <input type="text" value={event.price || ''} onChange={(e) => updateEvent(index, 'price', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="$20" />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">Beschrijving</label>
+            <textarea value={event.description || ''} onChange={(e) => updateEvent(index, 'description', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" />
+          </div>
+
+          <div className="grid grid-cols-3 gap-4">
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Datum (YYYY-MM-DD)</label>
+              <input type="date" value={event.date || ''} onChange={(e) => updateEvent(index, 'date', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Datum tekst (weergave)</label>
+              <input type="text" value={event.date_display || ''} onChange={(e) => updateEvent(index, 'date_display', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Domingo 26 de Abril" />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Tijd</label>
+              <input type="text" value={event.time || ''} onChange={(e) => updateEvent(index, 'time', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="9:00 a 13:00" />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Locatie</label>
+              <input type="text" value={event.location || ''} onChange={(e) => updateEvent(index, 'location', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
+            </div>
+            <div>
+              <label className="block text-xs text-gray-500 mb-1">Afbeelding pad (bijv. /images/hoteldelpacifico/events/foto.jpg)</label>
+              <input type="text" value={event.image || ''} onChange={(e) => updateEvent(index, 'image', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-xs text-gray-500 mb-1">Extra opmerking</label>
+            <input type="text" value={event.note || ''} onChange={(e) => updateEvent(index, 'note', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Solo necesitas enviarnos una foto..." />
+          </div>
+
+          <div>
+            <label className="block text-xs text-gray-500 mb-2">Inbegrepen</label>
+            <div className="flex flex-wrap gap-2">
+              {(event.includes || []).map((item, ii) => (
+                <span key={ii} className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-sm rounded-full border border-emerald-200">
+                  {item}
+                  <button onClick={() => removeInclude(index, ii)} className="ml-1 text-red-400 hover:text-red-600"><X className="w-3 h-3" /></button>
+                </span>
+              ))}
+              <button onClick={() => addInclude(index)} className="inline-flex items-center gap-1 px-3 py-1 bg-gray-100 text-gray-600 text-sm rounded-full border border-gray-200 hover:bg-gray-200">
+                <Plus className="w-3 h-3" /> Toevoegen
               </button>
             </div>
           </div>
