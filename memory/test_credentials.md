@@ -1,10 +1,10 @@
 # Test Credentials
 
 ## Hotel del Pacifico - Site Admin
-- Email: hotel@hoteldelpacifico.com
+- Email: admin@hoteldelpacifico.net
 - Password: hotel123
-- Login URL: /restaurant-login?site=hoteldelpacifico
+- Login URL: /admin (on hotel domain) or /restaurant-login?site=hoteldelpacifico
 
 ## Super Admin
-- URL: /admin
+- URL: /admin (on fworksbuilders.com)
 - Auth: Google Auth (Emergent-managed)
