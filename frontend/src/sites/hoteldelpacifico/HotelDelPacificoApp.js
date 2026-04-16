@@ -864,10 +864,17 @@ const RoomsPage = ({ t, roomPrices }) => {
         
         {/* Room Photos */}
         <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20">
-          {ROOM_IMAGES.map((img, i) => (
+          {[
+            { img: ROOM_IMAGES[0], name: 'Habitación Clásica', nameEn: 'Classic Room' },
+            { img: ROOM_IMAGES[1], name: 'Habitación Superior', nameEn: 'Superior Room' }
+          ].map((room, i) => (
             <div key={i} className="overflow-hidden shadow-lg border border-amber-100">
               <div className="h-64 relative overflow-hidden">
-                <img src={IMG(img)} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+                <img src={IMG(room.img)} alt={room.name} className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              </div>
+              <div className="bg-white p-4 text-center">
+                <h3 className="text-xl font-serif text-emerald-800">{room.name}</h3>
+                <p className="text-gray-400 text-xs tracking-wider mt-1">{room.nameEn}</p>
               </div>
             </div>
           ))}
