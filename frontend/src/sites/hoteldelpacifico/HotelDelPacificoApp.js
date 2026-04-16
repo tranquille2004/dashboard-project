@@ -1793,7 +1793,7 @@ const ContactPage = ({ t }) => (
 
             {/* WhatsApp Direct Contact Button */}
             <a
-              href={`https://wa.me/593988802941?text=${encodeURIComponent('Hola, me gustaría hacer una reservación en Hotel del Pacífico.')}`}
+              href={`https://wa.me/593988802941?text=${encodeURIComponent('Hola, me gustaría recibir información o hacer una reservación en Hotel del Pacífico.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-10 flex items-center justify-center gap-3 w-full bg-[#25D366] hover:bg-[#1ebe57] text-white py-5 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 group"
