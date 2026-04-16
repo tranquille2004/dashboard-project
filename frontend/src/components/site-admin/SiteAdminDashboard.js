@@ -71,12 +71,12 @@ const SiteAdminDashboard = () => {
     try {
       const response = await axios.post(`${API}/site-admin/menu`, {
         category: 'main',
-        name_nl: 'Nieuw Item',
+        name_nl: 'Nuevo Elemento',
         price: 0,
         sort_order: menuItems.length
       }, { withCredentials: true });
       setMenuItems([...menuItems, response.data]);
-      showMessage('Item toegevoegd!');
+      showMessage('Elemento agregado!');
     } catch (error) {
       showMessage(error.response?.data?.detail || 'Fout bij toevoegen', 'error');
     }
@@ -92,18 +92,18 @@ const SiteAdminDashboard = () => {
   };
 
   const deleteMenuItem = async (itemId) => {
-    if (!window.confirm('Weet je zeker dat je dit item wilt verwijderen?')) return;
+    if (!window.confirm('¿Está seguro que desea eliminar este elemento?')) return;
     try {
       await axios.delete(`${API}/site-admin/menu/${itemId}`, { withCredentials: true });
       setMenuItems(menuItems.filter(item => item.item_id !== itemId));
-      showMessage('Item verwijderd!');
+      showMessage('Elemento eliminado!');
     } catch (error) {
       showMessage(error.response?.data?.detail || 'Fout bij verwijderen', 'error');
     }
   };
 
   const addGalleryImage = async () => {
-    const url = prompt('Voer de URL van de afbeelding in:');
+    const url = prompt('Ingrese la URL de la imagen:');
     if (!url) return;
     try {
       const response = await axios.post(`${API}/site-admin/gallery`, { 
@@ -111,7 +111,7 @@ const SiteAdminDashboard = () => {
         sort_order: gallery.length 
       }, { withCredentials: true });
       setGallery([...gallery, response.data]);
-      showMessage('Foto toegevoegd!');
+      showMessage('Foto agregada!');
     } catch (error) {
       showMessage(error.response?.data?.detail || 'Fout bij toevoegen', 'error');
     }
@@ -121,7 +121,7 @@ const SiteAdminDashboard = () => {
     try {
       await axios.delete(`${API}/site-admin/gallery/${imageId}`, { withCredentials: true });
       setGallery(gallery.filter(img => img.image_id !== imageId));
-      showMessage('Foto verwijderd!');
+      showMessage('Foto eliminada!');
     } catch (error) {
       showMessage(error.response?.data?.detail || 'Fout bij verwijderen', 'error');
     }
@@ -142,12 +142,14 @@ const SiteAdminDashboard = () => {
   const isHotel = site?.site_type === 'hotel';
 
   const tabs = [
-    { id: 'overview', label: 'Overzicht', icon: Settings, always: true },
-    { id: 'room_prices', label: isHotel ? 'Kamerprijzen' : null, icon: DollarSign, permission: 'prices', hotelOnly: true },
+    { id: 'overview', label: 'Resumen', icon: Settings, always: true },
+    { id: 'room_prices', label: isHotel ? 'Tarifas' : null, icon: DollarSign, permission: 'prices', hotelOnly: true },
     { id: 'events', label: isHotel ? 'Eventos' : null, icon: Calendar, permission: 'prices', hotelOnly: true },
-    { id: 'hours', label: 'Openingstijden', icon: Clock, permission: 'opening_hours' },
-    { id: 'menu', label: 'Menu', icon: Menu, permission: 'menu_items' },
-    { id: 'gallery', label: 'Foto\'s', icon: Image, permission: 'gallery' },
+    { id: 'hours', label: 'Horarios', icon: Clock, permission: 'opening_hours' },
+    { id: 'menu', label: 'Menú', icon: Menu, permission: 'menu_items' },
+    { id: 'gallery_hotel', label: isHotel ? 'Fotos Hotel' : null, icon: Image, permission: 'gallery', hotelOnly: true },
+    { id: 'gallery_restaurant', label: isHotel ? 'Fotos Restaurante' : null, icon: Image, permission: 'gallery', hotelOnly: true },
+    { id: 'gallery', label: !isHotel ? 'Fotos' : null, icon: Image, permission: 'gallery' },
   ].filter(tab => {
     if (tab.hotelOnly && !isHotel) return false;
     if (!tab.label) return false;
@@ -172,7 +174,7 @@ const SiteAdminDashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-bold text-gray-900">{site?.name}</h1>
-              <p className="text-gray-500 text-sm">Welkom, {admin.name}</p>
+              <p className="text-gray-500 text-sm">Bienvenido, {admin.name}</p>
             </div>
             <button
               onClick={logout}
@@ -180,7 +182,7 @@ const SiteAdminDashboard = () => {
               data-testid="site-admin-logout-btn"
             >
               <LogOut className="w-5 h-5" />
-              <span>Uitloggen</span>
+              <span>Cerrar Sesión</span>
             </button>
           </div>
         </div>
@@ -209,14 +211,14 @@ const SiteAdminDashboard = () => {
 
             {/* Permissions Info */}
             <div className="mt-4 bg-blue-50 rounded-lg p-4">
-              <h4 className="font-medium text-blue-900 mb-2">Jouw Rechten</h4>
+              <h4 className="font-medium text-blue-900 mb-2">Tus Permisos</h4>
               <ul className="text-sm text-blue-700 space-y-1">
-                {permissions.menu_items && <li>✓ Menu items</li>}
-                {permissions.menu_prices && <li>✓ Prijzen aanpassen</li>}
-                {permissions.opening_hours && <li>✓ Openingstijden</li>}
-                {permissions.closure_notice && <li>✓ Sluitingsbericht</li>}
-                {permissions.gallery && <li>✓ Foto's</li>}
-                {permissions.contact_info && <li>✓ Contact info</li>}
+                {permissions.menu_items && <li>✓ Menú</li>}
+                {permissions.menu_prices && <li>✓ Precios</li>}
+                {permissions.opening_hours && <li>✓ Horarios</li>}
+                {permissions.closure_notice && <li>✓ Avisos de cierre</li>}
+                {permissions.gallery && <li>✓ Fotos</li>}
+                {permissions.contact_info && <li>✓ Contacto</li>}
               </ul>
             </div>
           </div>
@@ -227,15 +229,15 @@ const SiteAdminDashboard = () => {
               {/* Overview Tab */}
               {activeTab === 'overview' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold border-b pb-4">Overzicht</h2>
+                  <h2 className="text-xl font-semibold border-b pb-4">Resumen</h2>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="bg-gray-50 rounded-lg p-6">
-                      <h3 className="font-medium text-gray-700 mb-2">Website</h3>
+                      <h3 className="font-medium text-gray-700 mb-2">Sitio Web</h3>
                       <p className="text-2xl font-bold text-gray-900">{site?.name}</p>
                       <p className="text-gray-500">{site?.domains?.[0] || site?.slug}</p>
                     </div>
                     <div className="bg-gray-50 rounded-lg p-6">
-                      <h3 className="font-medium text-gray-700 mb-2">Menu Items</h3>
+                      <h3 className="font-medium text-gray-700 mb-2">Elementos del Menú</h3>
                       <p className="text-2xl font-bold text-gray-900">{menuItems.length}</p>
                     </div>
                   </div>
@@ -244,7 +246,7 @@ const SiteAdminDashboard = () => {
                   <div className="border-2 border-orange-200 bg-orange-50 rounded-lg p-6">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-lg font-semibold text-orange-800">
-                        📢 Speciale Aankondiging
+                        Anuncio Especial
                       </h3>
                       <label className="flex items-center space-x-2 cursor-pointer">
                         <input
@@ -253,30 +255,30 @@ const SiteAdminDashboard = () => {
                           onChange={(e) => setConfig({ ...config, special_announcement_active: e.target.checked })}
                           className="w-5 h-5 rounded border-gray-300 text-orange-600 focus:ring-orange-500"
                         />
-                        <span className="text-sm font-medium text-gray-700">Actief op website</span>
+                        <span className="text-sm font-medium text-gray-700">Activo en sitio web</span>
                       </label>
                     </div>
                     <p className="text-sm text-orange-700 mb-3">
-                      Dit bericht wordt getoond op de homepage en reserveringspagina's. 
-                      Gebruik voor bijzondere evenementen zoals kerst, nieuwjaar, sluitingsdagen, etc.
+                      Este mensaje se muestra en la página principal. 
+                      Úselo para eventos especiales, cierres, etc.
                     </p>
                     <div className="mb-3">
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Type bericht</label>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de mensaje</label>
                       <select
                         value={config?.special_announcement_type || 'info'}
                         onChange={(e) => setConfig({ ...config, special_announcement_type: e.target.value })}
                         className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 bg-white"
                       >
-                        <option value="info">ℹ️ Informatie (blauw)</option>
-                        <option value="warning">⚠️ Waarschuwing (oranje)</option>
-                        <option value="success">✅ Goed nieuws (groen)</option>
+                        <option value="info">Información (azul)</option>
+                        <option value="warning">Advertencia (naranja)</option>
+                        <option value="success">Buenas noticias (verde)</option>
                       </select>
                     </div>
                     <textarea
                       value={config?.special_announcement || ''}
                       onChange={(e) => setConfig({ ...config, special_announcement: e.target.value })}
                       className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white h-32"
-                      placeholder="Bijv: 🎄 Kerst Menu beschikbaar! Reserveer nu voor 24 & 25 december. Speciaal 4-gangen menu voor €55 p.p."
+                      placeholder="Ej: Menú especial de Navidad disponible. ¡Reserve ahora!"
                     />
                     <button
                       onClick={saveConfig}
@@ -284,20 +286,20 @@ const SiteAdminDashboard = () => {
                       className="mt-3 flex items-center space-x-2 px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 disabled:opacity-50"
                     >
                       <Save className="w-4 h-4" />
-                      <span>{saving ? 'Opslaan...' : 'Aankondiging Opslaan'}</span>
+                      <span>{saving ? 'Guardando...' : 'Guardar Anuncio'}</span>
                     </button>
                   </div>
 
                   {permissions.closure_notice && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Sluitingsbericht (zichtbaar op de website)
+                        Aviso de cierre (visible en el sitio web)
                       </label>
                       <textarea
                         value={config?.closure_notice || ''}
                         onChange={(e) => setConfig({ ...config, closure_notice: e.target.value })}
                         className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white h-24"
-                        placeholder="Bijv: Wij zijn gesloten van 24-26 december..."
+                        placeholder="Ej: Estaremos cerrados del 24 al 26 de diciembre..."
                       />
                       <button
                         onClick={saveConfig}
@@ -305,7 +307,7 @@ const SiteAdminDashboard = () => {
                         className="mt-3 flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                       >
                         <Save className="w-4 h-4" />
-                        <span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+                        <span>{saving ? 'Guardando...' : 'Guardar'}</span>
                       </button>
                     </div>
                   )}
@@ -316,20 +318,20 @@ const SiteAdminDashboard = () => {
               {activeTab === 'hours' && permissions.opening_hours && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between border-b pb-4">
-                    <h2 className="text-xl font-semibold">Openingstijden</h2>
+                    <h2 className="text-xl font-semibold">Horarios</h2>
                     <button
                       onClick={saveConfig}
                       disabled={saving}
                       className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                     >
                       <Save className="w-4 h-4" />
-                      <span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+                      <span>{saving ? 'Guardando...' : 'Guardar'}</span>
                     </button>
                   </div>
                   
                   <div>
                     <p className="text-gray-600 mb-4">
-                      Voer je openingstijden in als JSON formaat. Bijvoorbeeld:
+                      Ingrese sus horarios en formato JSON. Por ejemplo:
                     </p>
                     <pre className="bg-gray-100 p-4 rounded-lg text-sm mb-4">
 {`{
@@ -363,14 +365,14 @@ const SiteAdminDashboard = () => {
                       className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
                     >
                       <Plus className="w-5 h-5" />
-                      <span>Item Toevoegen</span>
+                      <span>Agregar Elemento</span>
                     </button>
                   </div>
                   
                   {menuItems.length === 0 ? (
                     <div className="text-center py-12 text-gray-500">
                       <Menu className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                      <p>Nog geen menu items. Klik op "Item Toevoegen" om te beginnen.</p>
+                      <p>No hay elementos en el menú. Haga clic en "Agregar Elemento" para comenzar.</p>
                     </div>
                   ) : (
                     <div className="space-y-4">
@@ -394,7 +396,7 @@ const SiteAdminDashboard = () => {
                               </select>
                             </div>
                             <div className="col-span-2">
-                              <label className="block text-xs text-gray-500 mb-1">Naam</label>
+                              <label className="block text-xs text-gray-500 mb-1">Nombre</label>
                               <input
                                 type="text"
                                 value={item.name_nl}
@@ -404,7 +406,7 @@ const SiteAdminDashboard = () => {
                             </div>
                             <div className="flex items-end space-x-2">
                               <div className="flex-1">
-                                <label className="block text-xs text-gray-500 mb-1">Prijs (€)</label>
+                                <label className="block text-xs text-gray-500 mb-1">Precio ($)</label>
                                 <input
                                   type="number"
                                   step="0.50"
@@ -417,7 +419,7 @@ const SiteAdminDashboard = () => {
                               <button
                                 onClick={() => deleteMenuItem(item.item_id)}
                                 className="p-2 text-red-500 hover:bg-red-50 rounded"
-                                title="Verwijderen"
+                                title="Eliminar"
                               >
                                 <Trash2 className="w-4 h-4" />
                               </button>
@@ -440,39 +442,26 @@ const SiteAdminDashboard = () => {
                 <EventsTab config={config} setConfig={setConfig} saveConfig={saveConfig} saving={saving} />
               )}
 
-              {/* Gallery Tab */}
-              {activeTab === 'gallery' && permissions.gallery && (
+              {/* Gallery Tab - non-hotel */}
+              {activeTab === 'gallery' && !isHotel && permissions.gallery && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between border-b pb-4">
-                    <h2 className="text-xl font-semibold">Foto's</h2>
-                    <button
-                      onClick={addGalleryImage}
-                      className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700"
-                    >
-                      <Plus className="w-5 h-5" />
-                      <span>Foto Toevoegen</span>
+                    <h2 className="text-xl font-semibold">Fotos</h2>
+                    <button onClick={addGalleryImage} className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
+                      <Plus className="w-5 h-5" /><span>Agregar Foto</span>
                     </button>
                   </div>
-                  
                   {gallery.length === 0 ? (
                     <div className="text-center py-12 text-gray-500">
                       <Image className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                      <p>Nog geen foto's. Klik op "Foto Toevoegen" om te beginnen.</p>
+                      <p>No hay fotos. Haga clic en "Agregar Foto" para comenzar.</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-4 gap-4">
                       {gallery.map(img => (
                         <div key={img.image_id} className="relative group">
-                          <img
-                            src={img.url}
-                            alt="Gallery"
-                            className="w-full h-32 object-cover rounded-lg"
-                          />
-                          <button
-                            onClick={() => deleteGalleryImage(img.image_id)}
-                            className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity"
-                            title="Verwijderen"
-                          >
+                          <img src={img.url} alt="" className="w-full h-32 object-cover rounded-lg" />
+                          <button onClick={() => deleteGalleryImage(img.image_id)} className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity" title="Eliminar">
                             <Trash2 className="w-4 h-4" />
                           </button>
                         </div>
@@ -480,6 +469,16 @@ const SiteAdminDashboard = () => {
                     </div>
                   )}
                 </div>
+              )}
+
+              {/* Hotel Gallery Tab */}
+              {activeTab === 'gallery_hotel' && isHotel && permissions.gallery && (
+                <GalleryManager title="Galería del Hotel" folder="rooms" config={config} setConfig={setConfig} saveConfig={saveConfig} saving={saving} configKey="hotel_gallery" />
+              )}
+
+              {/* Restaurant Gallery Tab */}
+              {activeTab === 'gallery_restaurant' && isHotel && permissions.gallery && (
+                <GalleryManager title="Galería del Restaurante" folder="restaurant" config={config} setConfig={setConfig} saveConfig={saveConfig} saving={saving} configKey="restaurant_gallery" />
               )}
             </div>
           </div>
@@ -505,7 +504,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
   };
 
   const addFeature = (index) => {
-    const feature = prompt('Nieuwe voorziening (bijv. WiFi, Jacuzzi, Mini Bar):');
+    const feature = prompt('Nueva característica (ej. WiFi, Jacuzzi, Mini Bar):');
     if (!feature) return;
     const updated = [...roomPrices];
     updated[index] = { ...updated[index], features: [...(updated[index].features || []), feature] };
@@ -532,7 +531,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
   };
 
   const removeRoom = (index) => {
-    if (!window.confirm('Weet je zeker dat je dit kamertype wilt verwijderen?')) return;
+    if (!window.confirm('¿Está seguro que desea eliminar este tipo de habitación?')) return;
     const updated = roomPrices.filter((_, i) => i !== index);
     setConfig({ ...config, room_prices: updated });
   };
@@ -540,7 +539,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between border-b pb-4">
-        <h2 className="text-xl font-semibold" data-testid="room-prices-title">Kamerprijzen</h2>
+        <h2 className="text-xl font-semibold" data-testid="room-prices-title">Tarifas</h2>
         <div className="flex gap-3">
           <button
             onClick={() => setShowPreview(!showPreview)}
@@ -548,7 +547,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
             data-testid="preview-room-prices-btn"
           >
             <Eye className="w-4 h-4" />
-            <span>{showPreview ? 'Verberg Voorbeeld' : 'Voorbeeld'}</span>
+            <span>{showPreview ? 'Ocultar Vista Previa' : 'Vista Previa'}</span>
           </button>
           <button
             onClick={addRoom}
@@ -556,7 +555,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
             data-testid="add-room-btn"
           >
             <Plus className="w-4 h-4" />
-            <span>Kamertype Toevoegen</span>
+            <span>Agregar Tipo</span>
           </button>
           <button
             onClick={saveConfig}
@@ -565,21 +564,21 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
             data-testid="save-room-prices-btn"
           >
             <Save className="w-4 h-4" />
-            <span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+            <span>{saving ? 'Guardando...' : 'Guardar'}</span>
           </button>
         </div>
       </div>
 
       <p className="text-sm text-gray-500">
-        Stel hier de kamerprijzen in. Deze worden automatisch getoond op de website.
-        Zet de prijs op 0 om "Precio próximamente" te tonen.
+        Configure aquí las tarifas. Se actualizan automáticamente en el sitio web.
+        Ponga el precio en 0 para mostrar "Precio próximamente".
       </p>
 
       {/* Live Preview Panel */}
       {showPreview && (
         <div className="bg-emerald-900 rounded-xl p-8 text-white" data-testid="room-prices-preview">
           <div className="text-center mb-6">
-            <p className="text-amber-400 text-xs tracking-widest uppercase mb-2">Voorbeeld - Zo ziet het eruit op de website</p>
+            <p className="text-amber-400 text-xs tracking-widest uppercase mb-2">Vista previa - Así se ve en el sitio web</p>
             <h3 className="text-2xl font-serif">Tarifas</h3>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
@@ -622,7 +621,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <Bed className="w-5 h-5 text-emerald-600" />
-              <span className="font-semibold text-lg">{room.name_es || 'Nieuw kamertype'}</span>
+              <span className="font-semibold text-lg">{room.name_es || 'Nuevo tipo'}</span>
               {room.is_featured && <span className="px-2 py-0.5 bg-amber-500 text-white text-xs rounded">Popular</span>}
             </div>
             <div className="flex items-center gap-3">
@@ -643,7 +642,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Naam (Spaans)</label>
+              <label className="block text-xs text-gray-500 mb-1">Nombre (Español)</label>
               <input
                 type="text"
                 value={room.name_es || ''}
@@ -654,7 +653,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
               />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Naam (Engels)</label>
+              <label className="block text-xs text-gray-500 mb-1">Nombre (Inglés)</label>
               <input
                 type="text"
                 value={room.name_en || ''}
@@ -679,7 +678,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-gray-500 mb-1">Prijs per nacht ($)</label>
+              <label className="block text-xs text-gray-500 mb-1">Precio por noche ($)</label>
               <input
                 type="number"
                 step="0.50"
@@ -689,12 +688,12 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white"
                 data-testid={`room-price-${index}`}
               />
-              {room.price === 0 && <p className="text-xs text-amber-600 mt-1">Prijs 0 = "Precio próximamente" op website</p>}
+              {room.price === 0 && <p className="text-xs text-amber-600 mt-1">Precio 0 = "Precio próximamente" en el sitio web</p>}
             </div>
           </div>
 
           <div>
-            <label className="block text-xs text-gray-500 mb-2">Voorzieningen</label>
+            <label className="block text-xs text-gray-500 mb-2">Características</label>
             <div className="flex flex-wrap gap-2">
               {(room.features || []).map((feature, fi) => (
                 <span key={fi} className="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-700 text-sm rounded-full border border-emerald-200">
@@ -711,7 +710,7 @@ const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
                 data-testid={`add-feature-${index}`}
               >
                 <Plus className="w-3 h-3" />
-                Toevoegen
+                Agregar
               </button>
             </div>
           </div>
@@ -740,7 +739,7 @@ const ImageUploader = ({ currentImage, onUploaded, folder }) => {
       });
       if (res.data?.path) onUploaded(res.data.path);
     } catch (err) {
-      alert('Upload mislukt: ' + (err.response?.data?.detail || err.message));
+      alert('Error al subir: ' + (err.response?.data?.detail || err.message));
     }
     setUploading(false);
   };
@@ -754,7 +753,7 @@ const ImageUploader = ({ currentImage, onUploaded, folder }) => {
       )}
       <label className={`flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${uploading ? 'border-gray-300 bg-gray-50' : 'border-emerald-300 hover:border-emerald-500 hover:bg-emerald-50'}`}>
         <Upload className="w-4 h-4" />
-        <span className="text-sm">{uploading ? 'Uploaden...' : currentImage ? 'Andere foto kiezen' : 'Foto uploaden'}</span>
+        <span className="text-sm">{uploading ? 'Subiendo...' : currentImage ? 'Cambiar foto' : 'Subir foto'}</span>
         <input type="file" accept="image/*" onChange={handleUpload} disabled={uploading} className="hidden" />
       </label>
     </div>
@@ -788,7 +787,7 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
   };
 
   const removeEvent = (index) => {
-    if (!window.confirm('Weet je zeker dat je dit event wilt verwijderen?')) return;
+    if (!window.confirm('¿Está seguro que desea eliminar este evento?')) return;
     setConfig({ ...config, events: events.filter((_, i) => i !== index) });
   };
 
@@ -798,15 +797,15 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
         <h2 className="text-xl font-semibold" data-testid="events-title">Eventos Especiales</h2>
         <div className="flex gap-3">
           <button onClick={addEvent} className="flex items-center space-x-2 px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700" data-testid="add-event-btn">
-            <Plus className="w-4 h-4" /><span>Event Toevoegen</span>
+            <Plus className="w-4 h-4" /><span>Agregar Evento</span>
           </button>
           <button onClick={saveConfig} disabled={saving} className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50" data-testid="save-events-btn">
-            <Save className="w-4 h-4" /><span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
+            <Save className="w-4 h-4" /><span>{saving ? 'Guardando...' : 'Guardar'}</span>
           </button>
         </div>
       </div>
 
-      <p className="text-sm text-gray-500">Beheer hier de speciale evenementen. Actieve events worden getoond op de website.</p>
+      <p className="text-sm text-gray-500">Administre aquí los eventos especiales. Los eventos activos se muestran en el sitio web.</p>
 
       {events.length === 0 ? (
         <div className="text-center py-12 text-gray-500">
@@ -816,11 +815,11 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
       ) : events.map((event, index) => (
         <div key={event.id || index} className={`border rounded-lg p-6 space-y-4 ${event.is_active ? 'border-emerald-400 bg-emerald-50/30' : 'border-gray-200 bg-gray-50'}`} data-testid={`event-card-${index}`}>
           <div className="flex items-center justify-between">
-            <span className="font-semibold text-lg">{event.title || 'Nieuw event'}</span>
+            <span className="font-semibold text-lg">{event.title || 'Nuevo evento'}</span>
             <div className="flex items-center gap-3">
               <label className="flex items-center gap-2 text-sm cursor-pointer">
                 <input type="checkbox" checked={event.is_active || false} onChange={(e) => updateEvent(index, 'is_active', e.target.checked)} className="w-4 h-4 rounded" />
-                Actief
+                Activo
               </label>
               <button onClick={() => removeEvent(index)} className="p-1.5 text-red-500 hover:bg-red-50 rounded"><Trash2 className="w-4 h-4" /></button>
             </div>
@@ -830,44 +829,44 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
             {/* Left: Form Fields */}
             <div className="md:col-span-2 space-y-4">
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Titel</label>
+                <label className="block text-xs text-gray-500 mb-1">Título</label>
                 <input type="text" value={event.title || ''} onChange={(e) => updateEvent(index, 'title', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder='Taller "Pinta tu Mascota"' />
               </div>
 
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Beschrijving</label>
-                <textarea value={event.description || ''} onChange={(e) => updateEvent(index, 'description', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" placeholder="Beschrijf het event..." />
+                <label className="block text-xs text-gray-500 mb-1">Descripción</label>
+                <textarea value={event.description || ''} onChange={(e) => updateEvent(index, 'description', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" placeholder="Describa el evento..." />
               </div>
 
               <div className="grid grid-cols-3 gap-3">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Datum</label>
+                  <label className="block text-xs text-gray-500 mb-1">Fecha</label>
                   <input type="date" value={event.date || ''} onChange={(e) => updateEvent(index, 'date', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Weergave datum</label>
+                  <label className="block text-xs text-gray-500 mb-1">Fecha para mostrar</label>
                   <input type="text" value={event.date_display || ''} onChange={(e) => updateEvent(index, 'date_display', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Domingo 26 de Abril" />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Tijd</label>
+                  <label className="block text-xs text-gray-500 mb-1">Hora</label>
                   <input type="text" value={event.time || ''} onChange={(e) => updateEvent(index, 'time', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="9:00 a 13:00" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Locatie / Adres</label>
+                  <label className="block text-xs text-gray-500 mb-1">Ubicación / Dirección</label>
                   <input type="text" value={event.location || ''} onChange={(e) => updateEvent(index, 'location', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Prijs</label>
+                  <label className="block text-xs text-gray-500 mb-1">Precio</label>
                   <input type="text" value={event.price || ''} onChange={(e) => updateEvent(index, 'price', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="$20" />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Extra info (wat is inbegrepen, opmerkingen, etc.)</label>
-                <textarea value={event.info || ''} onChange={(e) => updateEvent(index, 'info', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" placeholder="Materialen inbegrepen, Copa de Vino y Bocaditos, ..." />
+                <label className="block text-xs text-gray-500 mb-1">Información adicional (incluye, notas, etc.)</label>
+                <textarea value={event.info || ''} onChange={(e) => updateEvent(index, 'info', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" placeholder="Materiales incluidos, Copa de Vino y Bocaditos, ..." />
               </div>
             </div>
 
@@ -883,6 +882,90 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
           </div>
         </div>
       ))}
+    </div>
+  );
+};
+
+// Gallery Manager Component for Hotels (Hotel + Restaurant galleries)
+const GalleryManager = ({ title, folder, config, setConfig, saveConfig, saving, configKey }) => {
+  const [uploading, setUploading] = useState(false);
+  const images = config?.[configKey] || [];
+
+  const handleUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    setUploading(true);
+    const newImages = [...images];
+    for (const file of files) {
+      try {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('folder', folder);
+        const res = await axios.post(`${API}/site-admin/upload`, formData, {
+          withCredentials: true,
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        if (res.data?.path) newImages.push(res.data.path);
+      } catch (err) {
+        alert('Error: ' + (err.response?.data?.detail || err.message));
+      }
+    }
+    setConfig({ ...config, [configKey]: newImages });
+    setUploading(false);
+  };
+
+  const removeImage = (index) => {
+    if (!window.confirm('¿Eliminar esta foto?')) return;
+    const updated = images.filter((_, i) => i !== index);
+    setConfig({ ...config, [configKey]: updated });
+  };
+
+  return (
+    <div className="space-y-6">
+      <div className="flex items-center justify-between border-b pb-4">
+        <h2 className="text-xl font-semibold">{title}</h2>
+        <div className="flex gap-3">
+          <label className={`flex items-center space-x-2 px-4 py-2 rounded-lg cursor-pointer transition-colors ${uploading ? 'bg-gray-400 text-white' : 'bg-green-600 text-white hover:bg-green-700'}`}>
+            <Upload className="w-4 h-4" />
+            <span>{uploading ? 'Subiendo...' : 'Subir Fotos'}</span>
+            <input type="file" accept="image/*" multiple onChange={handleUpload} disabled={uploading} className="hidden" />
+          </label>
+          <button onClick={saveConfig} disabled={saving} className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50">
+            <Save className="w-4 h-4" />
+            <span>{saving ? 'Guardando...' : 'Guardar'}</span>
+          </button>
+        </div>
+      </div>
+
+      <p className="text-sm text-gray-500">
+        {images.length} foto(s). Suba nuevas fotos o elimine las existentes. Los cambios se guardan al hacer clic en "Guardar".
+      </p>
+
+      {images.length === 0 ? (
+        <div className="text-center py-12 text-gray-500">
+          <Image className="w-12 h-12 mx-auto mb-4 opacity-50" />
+          <p>No hay fotos. Use el botón "Subir Fotos" para agregar.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-4">
+          {images.map((img, i) => (
+            <div key={i} className="relative group rounded-lg overflow-hidden border border-gray-200">
+              <img 
+                src={img.startsWith('http') ? img : `${API}/images${img.replace('/images', '')}`} 
+                alt="" 
+                className="w-full h-32 object-cover" 
+              />
+              <button 
+                onClick={() => removeImage(i)} 
+                className="absolute top-2 right-2 p-1.5 bg-red-500 text-white rounded opacity-0 group-hover:opacity-100 transition-opacity"
+                title="Eliminar"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
