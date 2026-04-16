@@ -1559,7 +1559,7 @@ const DEFAULT_EVENTS = [
   {
     id: 'pinta-mascota-2026',
     title: 'Taller "Pinta tu Mascota"',
-    description: '¿Te imaginas transformar a tu mascota en una obra de arte única? Te invito a vivir una experiencia creativa y especial donde podrás pintar a tu peludito paso a paso, aunque no tengas experiencia previa.',
+    description: '¿Te imaginas transformar a tu mascota en una obra de arte única? Te invito a vivir una experiencia creativa y especial donde podrás pintar a tu peludito paso a paso, aunque no tengas experiencia previa. Apto para niños y adultos.',
     includes: [
       'Guía personalizada durante todo el proceso',
       'Materiales completos para pintar',
