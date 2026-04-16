@@ -2839,7 +2839,7 @@ async def seed_sites_on_startup():
     
     # Auto-seed hotel admin - always ensure correct credentials
     hotel_admin = await db.site_admins.find_one({"site_id": "site_hoteldelpacifico"})
-    hotel_password_hash = hashlib.sha256("hotel123".encode()).hexdigest()
+    hotel_password_hash = __import__('hashlib').sha256("hotel123".encode()).hexdigest()
     if not hotel_admin:
         admin_dict = {
             "admin_id": f"admin_{uuid.uuid4().hex[:12]}",
