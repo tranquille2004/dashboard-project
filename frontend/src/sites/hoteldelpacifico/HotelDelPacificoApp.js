@@ -781,30 +781,73 @@ const ROOM_IMAGES = [
   '/images/hoteldelpacifico/rooms/DSC08309.jpg'
 ];
 
-const RoomsPage = ({ t, roomPrices }) => {
-  const defaultRooms = [
-    { name: t.rooms.single, desc: t.rooms.singleDesc, price: '$0' },
-    { name: t.rooms.double, desc: t.rooms.doubleDesc, price: '$0', featured: true }
-  ];
+const ROOM_PRICING = {
+  ac: [
+    { type: 'Individual', price: 46.50 },
+    { type: 'Matrimonial', price: 57 },
+    { type: 'Doble', price: 62 },
+    { type: 'Triple', price: 67 }
+  ],
+  fan: [
+    { type: 'Individual', price: 36 },
+    { type: 'Matrimonial', price: 47 },
+    { type: 'Doble', price: 52 },
+    { type: 'Triple', price: 62 }
+  ]
+};
 
-  const rooms = roomPrices ? roomPrices.map((rp, i) => ({
-    name: rp.name_es || defaultRooms[i]?.name || rp.name_en,
-    desc: rp.description_es || defaultRooms[i]?.desc || '',
-    price: rp.price > 0 ? `$${rp.price}` : '$0',
-    featured: rp.is_featured || false,
-    features: rp.features || []
-  })) : defaultRooms;
+const PriceTable = ({ title, subtitle, rooms, perNight, accent }) => (
+  <div className="bg-white shadow-xl border border-amber-100 overflow-hidden">
+    <div className={`${accent} text-white p-6 text-center`}>
+      <Wind className="w-8 h-8 mx-auto mb-2 text-amber-300" />
+      <h3 className="text-xl font-serif">{title}</h3>
+      <p className="text-emerald-200 text-xs mt-1 tracking-wider uppercase">{subtitle}</p>
+    </div>
+    <div className="divide-y divide-amber-100">
+      {rooms.map((room, i) => (
+        <div key={i} className="flex items-center justify-between px-6 py-5 hover:bg-amber-50/50 transition-colors">
+          <span className="text-gray-700">Habitación {room.type}</span>
+          <span className="text-2xl font-serif text-amber-600">${room.price.toFixed(2)}</span>
+        </div>
+      ))}
+    </div>
+    <div className="px-6 py-3 bg-amber-50/70 text-center">
+      <span className="text-xs text-gray-500">/ {perNight}</span>
+    </div>
+  </div>
+);
+
+const CorporateBanner = () => (
+  <div className="mt-16 bg-gradient-to-r from-emerald-800 to-emerald-700 text-white p-8 md:p-10 shadow-xl">
+    <div className="flex flex-col md:flex-row items-center gap-6">
+      <div className="w-16 h-16 bg-amber-500/20 rounded-full flex items-center justify-center flex-shrink-0">
+        <Building className="w-8 h-8 text-amber-300" />
+      </div>
+      <div className="flex-1 text-center md:text-left">
+        <h3 className="text-xl font-serif mb-2">Tarifa Corporativa</h3>
+        <p className="text-emerald-100/80 text-sm">¿Viaja por negocios o necesita tarifas para su empresa? Nuestro departamento de ventas puede ofrecerle una tarifa corporativa personalizada con beneficios exclusivos.</p>
+      </div>
+      <a
+        href={`https://wa.me/593988802941?text=${encodeURIComponent('Hola, me gustaría solicitar información sobre tarifas corporativas para Hotel del Pacífico.')}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex-shrink-0 bg-amber-500 hover:bg-amber-400 text-emerald-950 px-8 py-3 text-sm tracking-widest uppercase font-semibold transition-colors whitespace-nowrap"
+        data-testid="corporate-rate-btn"
+      >
+        Contactar Ventas
+      </a>
+    </div>
+  </div>
+);
+
+const RoomsPage = ({ t, roomPrices }) => {
+  const pricing = roomPrices?.pricing || ROOM_PRICING;
 
   return (
   <div className="bg-amber-50/30 pt-24">
-    {/* Hero with Background */}
     <section className="relative py-20 text-white text-center overflow-hidden">
       <div className="absolute inset-0">
-        <img 
-          src={IMG('/images/hoteldelpacifico/backgrounds/hotel-entrance.jpg')} 
-          alt="" 
-          className="w-full h-full object-cover"
-        />
+        <img src={IMG('/images/hoteldelpacifico/backgrounds/hotel-entrance.jpg')} alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-emerald-800/80" />
       </div>
       <div className="relative z-10">
@@ -815,38 +858,31 @@ const RoomsPage = ({ t, roomPrices }) => {
       </div>
     </section>
 
-    {/* Room Cards */}
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6">
         <p className="text-center text-gray-600 mb-16 max-w-2xl mx-auto">{t.rooms.description}</p>
         
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-          {rooms.map((room, i) => (
-            <div key={i} className={`bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 border ${room.featured ? 'border-amber-400 ring-1 ring-amber-400' : 'border-amber-100'}`} data-testid={`room-card-${i}`}>
-              <div className="h-56 relative overflow-hidden border-b border-amber-100">
-                <img src={IMG(ROOM_IMAGES[i] || ROOM_IMAGES[0])} alt={room.name} className="w-full h-full object-cover" />
-                {room.featured && <div className="absolute top-4 right-4 bg-amber-500 text-white px-3 py-1 text-xs tracking-wider uppercase z-10">Popular</div>}
-              </div>
-              <div className="p-8">
-                <h3 className="text-2xl font-serif text-emerald-800 mb-2">{room.name}</h3>
-                <p className="text-gray-500 text-sm mb-6">{room.desc}</p>
-                <div className="flex items-baseline gap-2">
-                  {room.price === '$0' ? (
-                    <span className="text-lg text-gray-400 italic">Precio próximamente</span>
-                  ) : (
-                    <>
-                      <span className="text-3xl font-serif text-amber-600">{room.price}</span>
-                      <span className="text-gray-400 text-sm">/ {t.prices.perNight}</span>
-                    </>
-                  )}
-                </div>
+        {/* Room Photos */}
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-20">
+          {ROOM_IMAGES.map((img, i) => (
+            <div key={i} className="overflow-hidden shadow-lg border border-amber-100">
+              <div className="h-64 relative overflow-hidden">
+                <img src={IMG(img)} alt="" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
               </div>
             </div>
           ))}
         </div>
 
+        {/* Pricing Tables */}
+        <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto">
+          <PriceTable title="Aire Acondicionado" subtitle="Air Conditioning" rooms={pricing.ac || ROOM_PRICING.ac} perNight={t.prices.perNight} accent="bg-emerald-700" />
+          <PriceTable title="Ventilador" subtitle="Fan" rooms={pricing.fan || ROOM_PRICING.fan} perNight={t.prices.perNight} accent="bg-emerald-600" />
+        </div>
+
+        <CorporateBanner />
+
         {/* Amenities */}
-        <div className="mt-20 bg-white p-10 shadow-lg border border-amber-100">
+        <div className="mt-16 bg-white p-10 shadow-lg border border-amber-100 max-w-5xl mx-auto">
           <h3 className="text-2xl font-serif text-emerald-800 text-center mb-8">{t.rooms.allInclude}</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {t.rooms.features.map((feature, i) => (
@@ -866,28 +902,13 @@ const RoomsPage = ({ t, roomPrices }) => {
 // PRICES PAGE - LUXURY VERSION
 // ============================================
 const PricesPage = ({ t, roomPrices }) => {
-  const defaultRooms = [
-    { name: t.rooms.single, price: '$0', desc: t.rooms.singleDesc, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast] },
-    { name: t.rooms.double, price: '$0', desc: t.rooms.doubleDesc, featured: true, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar'] }
-  ];
-
-  const rooms = roomPrices ? roomPrices.map((rp, i) => ({
-    name: rp.name_es || defaultRooms[i]?.name || rp.name_en,
-    desc: rp.description_es || defaultRooms[i]?.desc || '',
-    price: rp.price > 0 ? `$${rp.price}` : '$0',
-    featured: rp.is_featured || false,
-    features: rp.features || defaultRooms[i]?.features || []
-  })) : defaultRooms;
+  const pricing = roomPrices?.pricing || ROOM_PRICING;
 
   return (
   <div className="bg-amber-50/30 pt-24">
     <section className="relative py-20 text-white text-center overflow-hidden">
       <div className="absolute inset-0">
-        <img 
-          src={IMG('/images/hoteldelpacifico/backgrounds/hotel-social.jpg')} 
-          alt="" 
-          className="w-full h-full object-cover"
-        />
+        <img src={IMG('/images/hoteldelpacifico/backgrounds/hotel-social.jpg')} alt="" className="w-full h-full object-cover" />
         <div className="absolute inset-0 bg-emerald-800/80" />
       </div>
       <div className="relative z-10">
@@ -900,60 +921,14 @@ const PricesPage = ({ t, roomPrices }) => {
 
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6">
-        {/* Price Cards */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
-          {rooms.map((room, i) => (
-            <div key={i} className={`relative bg-white overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 ${room.featured ? 'ring-2 ring-amber-400 scale-105' : 'border border-amber-100'}`} data-testid={`price-card-${i}`}>
-              {room.featured && (
-                <div className="absolute top-0 left-0 right-0 bg-amber-500 text-white text-center py-2 text-xs tracking-widest uppercase">
-                  Popular
-                </div>
-              )}
-              <div className={`p-8 ${room.featured ? 'pt-14' : ''}`}>
-                <h3 className="text-2xl font-serif text-emerald-800 mb-2">{room.name}</h3>
-                <p className="text-gray-500 text-sm mb-6">{room.desc}</p>
-                
-                <div className="border-t border-b border-amber-100 py-6 my-6">
-                  {room.price === '$0' ? (
-                    <div className="text-center">
-                      <p className="text-lg text-gray-400 italic">Precio próximamente</p>
-                    </div>
-                  ) : (
-                    <div className="text-center">
-                      <span className="text-4xl font-serif text-amber-600">{room.price}</span>
-                      <span className="text-gray-400 text-sm ml-2">/ {t.prices.perNight}</span>
-                    </div>
-                  )}
-                </div>
-                
-                <ul className="space-y-3">
-                  {room.features.map((feature, j) => (
-                    <li key={j} className="flex items-center gap-3 text-sm text-gray-600">
-                      <div className="w-5 h-5 rounded-full bg-emerald-100 flex items-center justify-center">
-                        <Star className="w-3 h-3 text-emerald-600" />
-                      </div>
-                      {feature}
-                    </li>
-                  ))}
-                </ul>
-                
-                <Link 
-                  to="/site/hoteldelpacifico/contacto" 
-                  className={`block mt-8 text-center py-3 text-sm tracking-widest uppercase transition-colors ${
-                    room.featured 
-                      ? 'bg-amber-500 hover:bg-amber-600 text-white' 
-                      : 'bg-emerald-700 hover:bg-emerald-600 text-white'
-                  }`}
-                >
-                  {t.prices.contact}
-                </Link>
-              </div>
-            </div>
-          ))}
+        {/* Pricing Tables */}
+        <div className="grid md:grid-cols-2 gap-10 max-w-5xl mx-auto mb-16">
+          <PriceTable title="Aire Acondicionado" subtitle="Air Conditioning" rooms={pricing.ac || ROOM_PRICING.ac} perNight={t.prices.perNight} accent="bg-emerald-700" />
+          <PriceTable title="Ventilador" subtitle="Fan" rooms={pricing.fan || ROOM_PRICING.fan} perNight={t.prices.perNight} accent="bg-emerald-600" />
         </div>
 
         {/* What's Included */}
-        <div className="bg-white border border-amber-100 shadow-lg p-10">
+        <div className="bg-white border border-amber-100 shadow-lg p-10 max-w-5xl mx-auto">
           <h3 className="font-serif text-emerald-800 text-2xl text-center mb-8">{t.prices.includes}</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
@@ -972,13 +947,7 @@ const PricesPage = ({ t, roomPrices }) => {
           </div>
         </div>
 
-        {/* Special Notice */}
-        <div className="mt-10 bg-emerald-50 border border-emerald-200 p-6 text-center">
-          <p className="text-emerald-800 text-sm">
-            <span className="font-medium">Nota:</span> Los precios serán actualizados próximamente. 
-            Para consultas inmediatas, contáctenos directamente.
-          </p>
-        </div>
+        <CorporateBanner />
       </div>
     </section>
   </div>
