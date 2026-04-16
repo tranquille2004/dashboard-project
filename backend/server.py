@@ -1245,6 +1245,12 @@ async def update_own_site_config(request: Request, admin: dict = Depends(get_cur
     if permissions.get("prices") and "events" in body:
         allowed_updates["events"] = body["events"]
     
+    # Gallery - for hotels (hotel + restaurant galleries)
+    if permissions.get("gallery") and "hotel_gallery" in body:
+        allowed_updates["hotel_gallery"] = body["hotel_gallery"]
+    if permissions.get("gallery") and "restaurant_gallery" in body:
+        allowed_updates["restaurant_gallery"] = body["restaurant_gallery"]
+    
     # Restaurant hours - for hotels/restaurants
     if permissions.get("opening_hours") and "restaurant_hours" in body:
         allowed_updates["restaurant_hours"] = body["restaurant_hours"]

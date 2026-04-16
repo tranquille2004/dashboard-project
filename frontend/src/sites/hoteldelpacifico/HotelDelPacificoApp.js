@@ -969,7 +969,7 @@ const PricesPage = ({ t, roomPrices }) => {
 // ============================================
 // PHOTOS PAGE - LUXURY VERSION
 // ============================================
-const GALLERY_ROOM_IMAGES = [
+const DEFAULT_HOTEL_GALLERY = [
   'DSC08245.jpg', 'DSC08247.jpg', 'DSC08249.jpg', 'DSC08251.jpg',
   'DSC08254.jpg', 'DSC08257.jpg', 'DSC08259.jpg', 'DSC08261.jpg',
   'DSC08263.jpg', 'DSC08270.jpg', 'DSC08273.jpg', 'DSC08275.jpg',
@@ -979,9 +979,10 @@ const GALLERY_ROOM_IMAGES = [
   'DSC08315.jpg', 'DSC08316.jpg', 'DSC08317.jpg', 'DSC08320.jpg',
   'DSC08322.jpg', 'DSC08326.jpg', 'DSC08328.jpg', 'DSC08330.jpg',
   'DSC08332.jpg', 'DSC08334.jpg', 'DSC08336.jpg'
-];
+].map(f => `/images/hoteldelpacifico/rooms/${f}`);
 
-const PhotosPage = ({ t }) => {
+const PhotosPage = ({ t, hotelGallery }) => {
+  const images = hotelGallery || DEFAULT_HOTEL_GALLERY;
   const [selectedPhoto, setSelectedPhoto] = useState(null);
 
   return (
@@ -1006,7 +1007,7 @@ const PhotosPage = ({ t }) => {
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-          {GALLERY_ROOM_IMAGES.map((img, i) => (
+          {images.map((img, i) => (
             <div 
               key={i} 
               className="aspect-square overflow-hidden cursor-pointer group hover:shadow-lg transition-shadow border border-amber-200/50"
@@ -1014,7 +1015,7 @@ const PhotosPage = ({ t }) => {
               data-testid={`gallery-photo-${i}`}
             >
               <img 
-                src={IMG(`/images/hoteldelpacifico/rooms/${img}`)} 
+                src={IMG(img)} 
                 alt={`Hotel foto ${i + 1}`} 
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                 style={{ opacity: 1 }}
@@ -1039,24 +1040,24 @@ const PhotosPage = ({ t }) => {
         </button>
         <button 
           className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full z-50"
-          onClick={(e) => { e.stopPropagation(); setSelectedPhoto((prev) => (prev - 1 + GALLERY_ROOM_IMAGES.length) % GALLERY_ROOM_IMAGES.length); }}
+          onClick={(e) => { e.stopPropagation(); setSelectedPhoto((prev) => (prev - 1 + images.length) % images.length); }}
         >
           &#8249;
         </button>
         <img 
-          src={IMG(`/images/hoteldelpacifico/rooms/${GALLERY_ROOM_IMAGES[selectedPhoto]}`)} 
+          src={IMG(images[selectedPhoto])} 
           alt="" 
           className="max-w-full max-h-[85vh] object-contain"
           onClick={(e) => e.stopPropagation()}
         />
         <button 
           className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-3 rounded-full z-50"
-          onClick={(e) => { e.stopPropagation(); setSelectedPhoto((prev) => (prev + 1) % GALLERY_ROOM_IMAGES.length); }}
+          onClick={(e) => { e.stopPropagation(); setSelectedPhoto((prev) => (prev + 1) % images.length); }}
         >
           &#8250;
         </button>
         <div className="absolute bottom-6 text-white/60 text-sm">
-          {selectedPhoto + 1} / {GALLERY_ROOM_IMAGES.length}
+          {selectedPhoto + 1} / {images.length}
         </div>
       </div>
     )}
@@ -1069,7 +1070,7 @@ const PhotosPage = ({ t }) => {
 // ============================================
 // PATISSERIE GALLERY COMPONENT
 // ============================================
-const RESTAURANT_IMAGES = [
+const DEFAULT_RESTAURANT_GALLERY = [
   'DSC00017.jpeg', 'DSC07834.jpg', 'DSC00019.jpeg', 'DSC07843.jpg',
   'DSC00022.jpeg', 'DSC07853.jpg', 'DSC00029.jpeg', 'DSC07867.jpg',
   'DSC00031.jpeg', 'DSC07879.jpg', 'DSC00033.jpeg', 'DSC07890.jpg',
@@ -1083,9 +1084,10 @@ const RESTAURANT_IMAGES = [
   'DSC08045.jpg', 'DSC08053.jpg', 'DSC08062.jpg', 'DSC08070.jpg',
   'DSC08077.jpg', 'DSC08092.jpg', 'DSC08108.jpg', 'DSC08114.jpg',
   'DSC08133.jpg', 'DSC08145.jpg'
-];
+].map(f => `/images/hoteldelpacifico/restaurant/${f}`);
 
-const PatisserieGallery = ({ t }) => {
+const PatisserieGallery = ({ t, galleryImages }) => {
+  const GALLERY = galleryImages || DEFAULT_RESTAURANT_GALLERY;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const [selectedImage, setSelectedImage] = useState(null);
@@ -1095,7 +1097,7 @@ const PatisserieGallery = ({ t }) => {
   useEffect(() => {
     if (isAutoPlaying && !selectedImage) {
       autoPlayRef.current = setInterval(() => {
-        setCurrentIndex((prev) => (prev + 1) % RESTAURANT_IMAGES.length);
+        setCurrentIndex((prev) => (prev + 1) % GALLERY.length);
       }, 3000);
     }
     
@@ -1120,12 +1122,12 @@ const PatisserieGallery = ({ t }) => {
   // Navigate prev/next
   const goToPrev = () => {
     handleUserInteraction();
-    setCurrentIndex((prev) => (prev - 1 + RESTAURANT_IMAGES.length) % RESTAURANT_IMAGES.length);
+    setCurrentIndex((prev) => (prev - 1 + GALLERY.length) % GALLERY.length);
   };
 
   const goToNext = () => {
     handleUserInteraction();
-    setCurrentIndex((prev) => (prev + 1) % RESTAURANT_IMAGES.length);
+    setCurrentIndex((prev) => (prev + 1) % GALLERY.length);
   };
 
   // Open lightbox
@@ -1143,8 +1145,8 @@ const PatisserieGallery = ({ t }) => {
   const getVisibleThumbnails = () => {
     const visible = [];
     for (let i = 0; i < 6; i++) {
-      const index = (currentIndex + i) % RESTAURANT_IMAGES.length;
-      visible.push({ index, image: RESTAURANT_IMAGES[index] });
+      const index = (currentIndex + i) % GALLERY.length;
+      visible.push({ index, image: GALLERY[index] });
     }
     return visible;
   };
@@ -1154,7 +1156,7 @@ const PatisserieGallery = ({ t }) => {
       {/* Main Gallery Display */}
       <div className="relative aspect-[16/9] max-h-[500px] overflow-hidden rounded-lg shadow-xl mb-6">
         <img
-          src={IMG(`/images/hoteldelpacifico/restaurant/${RESTAURANT_IMAGES[currentIndex]}`)}
+          src={IMG(GALLERY[currentIndex])}
           alt={`Patisserie ${currentIndex + 1}`}
           className="w-full h-full object-cover transition-opacity duration-500"
           onClick={() => openLightbox(currentIndex)}
@@ -1176,7 +1178,7 @@ const PatisserieGallery = ({ t }) => {
         
         {/* Image Counter */}
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-black/60 text-white px-4 py-2 rounded-full text-sm">
-          {currentIndex + 1} / {RESTAURANT_IMAGES.length}
+          {currentIndex + 1} / {GALLERY.length}
         </div>
         
         {/* Auto-play indicator */}
@@ -1195,7 +1197,7 @@ const PatisserieGallery = ({ t }) => {
 
       {/* Thumbnail Strip */}
       <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-        {RESTAURANT_IMAGES.map((image, index) => (
+        {GALLERY.map((image, index) => (
           <button
             key={index}
             onClick={() => goToImage(index)}
@@ -1206,7 +1208,7 @@ const PatisserieGallery = ({ t }) => {
             }`}
           >
             <img
-              src={IMG(`/images/hoteldelpacifico/restaurant/${image}`)}
+              src={IMG(image)}
               alt={`Thumbnail ${index + 1}`}
               className="w-full h-full object-cover"
             />
@@ -1238,28 +1240,28 @@ const PatisserieGallery = ({ t }) => {
           </button>
           
           <button
-            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev - 1 + RESTAURANT_IMAGES.length) % RESTAURANT_IMAGES.length); }}
+            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev - 1 + GALLERY.length) % GALLERY.length); }}
             className="absolute left-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center"
           >
             <ChevronDown className="w-8 h-8 rotate-90" />
           </button>
           
           <img
-            src={IMG(`/images/hoteldelpacifico/restaurant/${RESTAURANT_IMAGES[selectedImage]}`)}
+            src={IMG(GALLERY[selectedImage])}
             alt={`Patisserie ${selectedImage + 1}`}
             className="max-w-full max-h-[90vh] object-contain"
             onClick={(e) => e.stopPropagation()}
           />
           
           <button
-            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev + 1) % RESTAURANT_IMAGES.length); }}
+            onClick={(e) => { e.stopPropagation(); setSelectedImage((prev) => (prev + 1) % GALLERY.length); }}
             className="absolute right-4 top-1/2 -translate-y-1/2 w-14 h-14 bg-white/10 hover:bg-white/20 text-white rounded-full flex items-center justify-center"
           >
             <ChevronDown className="w-8 h-8 -rotate-90" />
           </button>
           
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white text-sm">
-            {selectedImage + 1} / {RESTAURANT_IMAGES.length}
+            {selectedImage + 1} / {GALLERY.length}
           </div>
         </div>
       )}
@@ -1267,7 +1269,7 @@ const PatisserieGallery = ({ t }) => {
   );
 };
 
-const RestaurantPage = ({ t }) => (
+const RestaurantPage = ({ t, restaurantGallery }) => (
   <div className="bg-amber-50/30 pt-20">
     <section className="relative py-6 text-white text-center overflow-hidden">
       {/* Background Image with Green Filter */}
@@ -1349,7 +1351,7 @@ const RestaurantPage = ({ t }) => (
           </p>
         </div>
         
-        <PatisserieGallery t={t} />
+        <PatisserieGallery t={t} galleryImages={restaurantGallery} />
       </div>
     </section>
   </div>
@@ -1928,20 +1930,20 @@ const HotelDelPacificoApp = () => {
   const [language, setLanguage] = useState('es');
   const [roomPrices, setRoomPrices] = useState(null);
   const [siteEvents, setSiteEvents] = useState(null);
+  const [hotelGallery, setHotelGallery] = useState(null);
+  const [restaurantGallery, setRestaurantGallery] = useState(null);
   const t = translations[language];
 
-  // Fetch room prices and events from API
+  // Fetch room prices, events and galleries from API
   useEffect(() => {
     const API = process.env.REACT_APP_BACKEND_URL + '/api';
     fetch(`${API}/public/site/hoteldelpacifico`)
       .then(res => res.json())
       .then(data => {
-        if (data?.config?.room_prices) {
-          setRoomPrices(data.config.room_prices);
-        }
-        if (data?.config?.events) {
-          setSiteEvents(data.config.events);
-        }
+        if (data?.config?.room_prices) setRoomPrices(data.config.room_prices);
+        if (data?.config?.events) setSiteEvents(data.config.events);
+        if (data?.config?.hotel_gallery) setHotelGallery(data.config.hotel_gallery);
+        if (data?.config?.restaurant_gallery) setRestaurantGallery(data.config.restaurant_gallery);
       })
       .catch(() => {});
   }, []);
@@ -1995,8 +1997,8 @@ const HotelDelPacificoApp = () => {
         <Route index element={<HomePage t={t} />} />
         <Route path="habitaciones" element={<RoomsPage t={t} roomPrices={roomPrices} />} />
         <Route path="precios" element={<PricesPage t={t} roomPrices={roomPrices} />} />
-        <Route path="fotos" element={<PhotosPage t={t} />} />
-        <Route path="restaurante" element={<RestaurantPage t={t} />} />
+        <Route path="fotos" element={<PhotosPage t={t} hotelGallery={hotelGallery} />} />
+        <Route path="restaurante" element={<RestaurantPage t={t} restaurantGallery={restaurantGallery} />} />
         <Route path="atractivos" element={<AttractionsPage t={t} />} />
         <Route path="contacto" element={<ContactPage t={t} />} />
         <Route path="eventos" element={<EventsPage t={t} siteEvents={siteEvents} />} />
