@@ -744,7 +744,6 @@ const HomePage = ({ t }) => (
 // ROOMS PAGE - LUXURY VERSION
 // ============================================
 const ROOM_IMAGES = [
-  '/images/hoteldelpacifico/rooms/DSC08245.jpg',
   '/images/hoteldelpacifico/rooms/DSC08298.jpg',
   '/images/hoteldelpacifico/rooms/DSC08309.jpg'
 ];
@@ -752,8 +751,7 @@ const ROOM_IMAGES = [
 const RoomsPage = ({ t, roomPrices }) => {
   const defaultRooms = [
     { name: t.rooms.single, desc: t.rooms.singleDesc, price: '$0' },
-    { name: t.rooms.double, desc: t.rooms.doubleDesc, price: '$0', featured: true },
-    { name: t.rooms.suite, desc: t.rooms.suiteDesc, price: '$0' }
+    { name: t.rooms.double, desc: t.rooms.doubleDesc, price: '$0', featured: true }
   ];
 
   const rooms = roomPrices ? roomPrices.map((rp, i) => ({
@@ -789,7 +787,7 @@ const RoomsPage = ({ t, roomPrices }) => {
       <div className="max-w-6xl mx-auto px-6">
         <p className="text-center text-gray-600 mb-16 max-w-2xl mx-auto">{t.rooms.description}</p>
         
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
           {rooms.map((room, i) => (
             <div key={i} className={`bg-white overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-500 border ${room.featured ? 'border-amber-400 ring-1 ring-amber-400' : 'border-amber-100'}`} data-testid={`room-card-${i}`}>
               <div className="h-56 relative overflow-hidden border-b border-amber-100">
@@ -837,8 +835,7 @@ const RoomsPage = ({ t, roomPrices }) => {
 const PricesPage = ({ t, roomPrices }) => {
   const defaultRooms = [
     { name: t.rooms.single, price: '$0', desc: t.rooms.singleDesc, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast] },
-    { name: t.rooms.double, price: '$0', desc: t.rooms.doubleDesc, featured: true, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar'] },
-    { name: t.rooms.suite, price: '$0', desc: t.rooms.suiteDesc, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar', 'Jacuzzi'] }
+    { name: t.rooms.double, price: '$0', desc: t.rooms.doubleDesc, featured: true, features: ['WiFi', 'Smart TV', 'A/C', t.prices.breakfast, 'Mini Bar'] }
   ];
 
   const rooms = roomPrices ? roomPrices.map((rp, i) => ({
@@ -871,7 +868,7 @@ const PricesPage = ({ t, roomPrices }) => {
     <section className="py-24 bg-gradient-to-b from-white to-amber-50/50">
       <div className="max-w-6xl mx-auto px-6">
         {/* Price Cards */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 gap-8 mb-16 max-w-4xl mx-auto">
           {rooms.map((room, i) => (
             <div key={i} className={`relative bg-white overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 ${room.featured ? 'ring-2 ring-amber-400 scale-105' : 'border border-amber-100'}`} data-testid={`price-card-${i}`}>
               {room.featured && (
