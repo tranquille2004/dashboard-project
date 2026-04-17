@@ -40,8 +40,8 @@ const DOMAIN_MAPPING = {
   'www.albertopantoja.com': 'albertopantoja',
   'albertopantoja.ec': 'albertopantoja',
   'www.albertopantoja.ec': 'albertopantoja',
-  'hoteldelpacifico.com': 'hoteldelpacifico',
-  'www.hoteldelpacifico.com': 'hoteldelpacifico',
+  'hoteldelpacifico.net': 'hoteldelpacifico',
+  'www.hoteldelpacifico.net': 'hoteldelpacifico',
   'hoteldelpacifico.net': 'hoteldelpacifico',
   'www.hoteldelpacifico.net': 'hoteldelpacifico'
 };

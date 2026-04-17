@@ -365,7 +365,7 @@ const HOTEL_INFO = {
   phone: '+593 98 880 2941',
   phone2: '+593 2 275 2806',
   email: 'hotel.delpacifico@hotmail.com',
-  website: 'www.hoteldelpacifico.com'
+  website: 'www.hoteldelpacifico.net'
 };
 
 // ============================================

@@ -1504,8 +1504,8 @@ DOMAIN_SLUG_MAP = {
     'www.smeraldavacanze.it': 'smeralda',
     'hoteldelpacifico.net': 'hoteldelpacifico',
     'www.hoteldelpacifico.net': 'hoteldelpacifico',
-    'hoteldelpacifico.com': 'hoteldelpacifico',
-    'www.hoteldelpacifico.com': 'hoteldelpacifico',
+    'hoteldelpacifico.net': 'hoteldelpacifico',
+    'www.hoteldelpacifico.net': 'hoteldelpacifico',
 }
 
 # SEO data per site
