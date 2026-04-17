@@ -2866,6 +2866,29 @@ async def seed_sites_on_startup():
             {"$set": {"email": "admin@hoteldelpacifico.net", "password_hash": hotel_password_hash}}
         )
         logger.info("Updated hotel admin credentials")
+    
+    # Ensure hotel config exists with galleries
+    hotel_config = await db.site_configs.find_one({"site_id": "site_hoteldelpacifico"})
+    if not hotel_config:
+        await db.site_configs.insert_one({
+            "site_id": "site_hoteldelpacifico",
+            "hotel_gallery": [f"/images/hoteldelpacifico/rooms/{f}" for f in ['DSC08245.jpg','DSC08247.jpg','DSC08249.jpg','DSC08251.jpg','DSC08254.jpg','DSC08257.jpg','DSC08259.jpg','DSC08261.jpg','DSC08263.jpg','DSC08270.jpg','DSC08273.jpg','DSC08275.jpg','DSC08278.jpg','DSC08280.jpg','DSC08282.jpg','DSC08286.jpg','DSC08288.jpg','DSC08292.jpg','DSC08296.jpg','DSC08298.jpg','DSC08301.jpg','DSC08303.jpg','DSC08309.jpg','DSC08311.jpg','DSC08315.jpg','DSC08316.jpg','DSC08317.jpg','DSC08320.jpg','DSC08322.jpg','DSC08326.jpg','DSC08328.jpg','DSC08330.jpg','DSC08332.jpg','DSC08334.jpg','DSC08336.jpg']],
+            "restaurant_gallery": [f"/images/hoteldelpacifico/restaurant/{f}" for f in ['DSC00017.jpeg','DSC07834.jpg','DSC00019.jpeg','DSC07843.jpg','DSC00022.jpeg','DSC07853.jpg','DSC00029.jpeg','DSC07867.jpg','DSC00031.jpeg','DSC07879.jpg','DSC00033.jpeg','DSC07890.jpg','DSC00045.jpeg','DSC07904.jpg','DSC00054.jpeg','DSC07909.jpg','DSC00060.jpeg','DSC07919.jpg','DSC00081.jpeg','DSC07933.jpg','DSC00112.jpeg','DSC07942.jpg','DSC00114.jpeg','DSC07952.jpg','DSC00120.jpeg','DSC07963.jpg','DSC00141.jpeg','DSC07973.jpg','DSC00148.jpeg','DSC07980.jpg','DSC00150.jpeg','DSC07993.jpg','DSC00171.jpeg','DSC08002.jpg','DSC00200.jpeg','DSC08009.jpg','DSC00218.jpeg','DSC08016.jpg','DSC00236.jpeg','DSC08028.jpg','DSC08045.jpg','DSC08053.jpg','DSC08062.jpg','DSC08070.jpg','DSC08077.jpg','DSC08092.jpg','DSC08108.jpg','DSC08114.jpg','DSC08133.jpg','DSC08145.jpg']],
+            "room_prices": {"pricing": {"ac": [{"type":"Individual","price":46.5},{"type":"Matrimonial","price":57},{"type":"Doble","price":62},{"type":"Triple","price":67}],"fan": [{"type":"Individual","price":36},{"type":"Matrimonial","price":47},{"type":"Doble","price":52},{"type":"Triple","price":62}]}},
+            "events": [{"id":"pinta-mascota-2026","title":"Taller \"Pinta tu Mascota\"","description":"¿Te imaginas transformar a tu mascota en una obra de arte única? Te invito a vivir una experiencia creativa y especial donde podrás pintar a tu peludito paso a paso, aunque no tengas experiencia previa. Apto para niños y adultos.","includes":["Guía personalizada durante todo el proceso","Materiales completos para pintar","Un espacio relajado y divertido","Copa de Vino y Bocaditos","¡Tu propia obra lista para llevar a casa!"],"note":"Solo necesitas enviarnos una foto clara de tu mascota","date":"2026-04-26","date_display":"Domingo 26 de Abril","time":"9:00 a 13:00","location":"Hotel del Pacífico","price":"$20","image":"/images/hoteldelpacifico/events/pinta-mascota.jpg","is_active":True}],
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        })
+        logger.info("Auto-seeded hotel config with galleries, prices and events")
+    elif not hotel_config.get("hotel_gallery"):
+        await db.site_configs.update_one(
+            {"site_id": "site_hoteldelpacifico"},
+            {"$set": {
+                "hotel_gallery": [f"/images/hoteldelpacifico/rooms/{f}" for f in ['DSC08245.jpg','DSC08247.jpg','DSC08249.jpg','DSC08251.jpg','DSC08254.jpg','DSC08257.jpg','DSC08259.jpg','DSC08261.jpg','DSC08263.jpg','DSC08270.jpg','DSC08273.jpg','DSC08275.jpg','DSC08278.jpg','DSC08280.jpg','DSC08282.jpg','DSC08286.jpg','DSC08288.jpg','DSC08292.jpg','DSC08296.jpg','DSC08298.jpg','DSC08301.jpg','DSC08303.jpg','DSC08309.jpg','DSC08311.jpg','DSC08315.jpg','DSC08316.jpg','DSC08317.jpg','DSC08320.jpg','DSC08322.jpg','DSC08326.jpg','DSC08328.jpg','DSC08330.jpg','DSC08332.jpg','DSC08334.jpg','DSC08336.jpg']],
+                "restaurant_gallery": [f"/images/hoteldelpacifico/restaurant/{f}" for f in ['DSC00017.jpeg','DSC07834.jpg','DSC00019.jpeg','DSC07843.jpg','DSC00022.jpeg','DSC07853.jpg','DSC00029.jpeg','DSC07867.jpg','DSC00031.jpeg','DSC07879.jpg','DSC00033.jpeg','DSC07890.jpg','DSC00045.jpeg','DSC07904.jpg','DSC00054.jpeg','DSC07909.jpg','DSC00060.jpeg','DSC07919.jpg','DSC00081.jpeg','DSC07933.jpg','DSC00112.jpeg','DSC07942.jpg','DSC00114.jpeg','DSC07952.jpg','DSC00120.jpeg','DSC07963.jpg','DSC00141.jpeg','DSC07973.jpg','DSC00148.jpeg','DSC07980.jpg','DSC00150.jpeg','DSC07993.jpg','DSC00171.jpeg','DSC08002.jpg','DSC00200.jpeg','DSC08009.jpg','DSC00218.jpeg','DSC08016.jpg','DSC00236.jpeg','DSC08028.jpg','DSC08045.jpg','DSC08053.jpg','DSC08062.jpg','DSC08070.jpg','DSC08077.jpg','DSC08092.jpg','DSC08108.jpg','DSC08114.jpg','DSC08133.jpg','DSC08145.jpg']]
+            }}
+        )
+        logger.info("Added galleries to existing hotel config")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

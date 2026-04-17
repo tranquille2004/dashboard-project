@@ -20,22 +20,23 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
       await login(email, password);
       navigate('/mijn-site');
     } catch (err) {
-      setError(err.response?.data?.detail || 'Inloggen mislukt. Controleer je gegevens.');
+      setError(err.response?.data?.detail || 'Error al iniciar sesión. Verifique sus datos.');
     } finally {
       setLoading(false);
     }
   };
 
-  // Site name for display
   const siteNames = {
     'cantina': 'La Cantina Italiana',
     'bottega': 'La Bottega Herent',
     'ascoli': "L'Ascoli Zaventem",
     'mercato': 'Ristorante Mercato',
     'tracemaster': 'Tracemaster',
-    'theobeans': 'Theo Beans Export'
+    'theobeans': 'Theo Beans Export',
+    'hoteldelpacifico': 'Hotel del Pacífico'
   };
   const siteName = preSelectedSite ? siteNames[preSelectedSite] || preSelectedSite : null;
+  const isHotel = preSelectedSite === 'hoteldelpacifico';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">
@@ -45,12 +46,12 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
             {siteName ? (
               <>
                 <h1 className="text-2xl font-bold text-gray-900">{siteName}</h1>
-                <p className="text-gray-600 mt-2">Eigenaar Login</p>
+                <p className="text-gray-600 mt-2">{isHotel ? 'Administración' : 'Administración'}</p>
               </>
             ) : (
               <>
-                <h1 className="text-2xl font-bold text-gray-900">Restaurant Login</h1>
-                <p className="text-gray-600 mt-2">Log in om je website te beheren</p>
+                <h1 className="text-2xl font-bold text-gray-900">Iniciar Sesión</h1>
+                <p className="text-gray-600 mt-2">Inicie sesión para administrar su sitio web</p>
               </>
             )}
           </div>
@@ -64,7 +65,7 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
 
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Correo electrónico</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
@@ -72,7 +73,7 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                  placeholder="jouw@email.be"
+                  placeholder="admin@ejemplo.com"
                   required
                   data-testid="site-admin-email"
                 />
@@ -80,7 +81,7 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Wachtwoord</label>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <input
@@ -101,12 +102,12 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
               className="w-full py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
               data-testid="site-admin-login-btn"
             >
-              {loading ? 'Bezig met inloggen...' : 'Inloggen'}
+              {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </button>
           </form>
 
           <div className="mt-6 text-center text-sm text-gray-500">
-            <p>Nog geen account? Neem contact op met de platformbeheerder.</p>
+            <p>¿Problemas para acceder? Contacte al administrador.</p>
           </div>
         </div>
       </div>
