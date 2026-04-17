@@ -586,7 +586,7 @@ const ImageUploader = ({ currentImage, onUploaded, folder }) => {
     <div className="space-y-2">
       {currentImage && (
         <div className="w-full h-40 bg-gray-100 rounded-lg overflow-hidden">
-          <img src={`${API.replace('/api', '')}${currentImage}`} alt="" className="w-full h-full object-cover" />
+          <img src={currentImage} alt="" className="w-full h-full object-cover" />
         </div>
       )}
       <label className={`flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${uploading ? 'border-gray-300 bg-gray-50' : 'border-emerald-300 hover:border-emerald-500 hover:bg-emerald-50'}`}>
@@ -789,7 +789,7 @@ const GalleryManager = ({ title, folder, config, setConfig, saveConfig, saving, 
           {images.map((img, i) => (
             <div key={i} className="relative group rounded-lg overflow-hidden border border-gray-200">
               <img 
-                src={img.startsWith('http') ? img : `${API.replace('/api', '')}${img}`} 
+                src={img} 
                 alt="" 
                 className="w-full h-32 object-cover" 
               />
