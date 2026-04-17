@@ -616,10 +616,23 @@ const Divider = () => (
 // ============================================
 // HOME PAGE - LUXURY VERSION
 // ============================================
-const HomePage = ({ t }) => (
+const ANNOUNCEMENT_COLORS = {
+  info: 'bg-blue-600',
+  warning: 'bg-amber-500',
+  success: 'bg-emerald-600'
+};
+
+const HomePage = ({ t, announcement }) => (
   <div className="bg-amber-50/30">
+    {/* Announcement Banner */}
+    {announcement && (
+      <div className={`${ANNOUNCEMENT_COLORS[announcement.type] || 'bg-blue-600'} text-white text-center py-3 px-6 text-sm fixed top-0 left-0 right-0 z-50`}>
+        {announcement.text}
+      </div>
+    )}
+
     {/* Hero Section with Video Background */}
-    <section className="relative h-screen flex items-center justify-center overflow-hidden">
+    <section className={`relative h-screen flex items-center justify-center overflow-hidden ${announcement ? 'pt-10' : ''}`}>
       {/* Video Background */}
       <video 
         autoPlay 
@@ -1932,6 +1945,7 @@ const HotelDelPacificoApp = () => {
   const [siteEvents, setSiteEvents] = useState(null);
   const [hotelGallery, setHotelGallery] = useState(null);
   const [restaurantGallery, setRestaurantGallery] = useState(null);
+  const [announcement, setAnnouncement] = useState(null);
   const t = translations[language];
 
   // Fetch room prices, events and galleries from API
@@ -1944,6 +1958,12 @@ const HotelDelPacificoApp = () => {
         if (data?.config?.events) setSiteEvents(data.config.events);
         if (data?.config?.hotel_gallery) setHotelGallery(data.config.hotel_gallery);
         if (data?.config?.restaurant_gallery) setRestaurantGallery(data.config.restaurant_gallery);
+        if (data?.config?.special_announcement_active && data?.config?.special_announcement) {
+          setAnnouncement({
+            text: data.config.special_announcement,
+            type: data.config.special_announcement_type || 'info'
+          });
+        }
       })
       .catch(() => {});
   }, []);
@@ -1994,7 +2014,7 @@ const HotelDelPacificoApp = () => {
       
       <ScrollToTop />
       <Routes>
-        <Route index element={<HomePage t={t} />} />
+        <Route index element={<HomePage t={t} announcement={announcement} />} />
         <Route path="habitaciones" element={<RoomsPage t={t} roomPrices={roomPrices} />} />
         <Route path="precios" element={<PricesPage t={t} roomPrices={roomPrices} />} />
         <Route path="fotos" element={<PhotosPage t={t} hotelGallery={hotelGallery} />} />
