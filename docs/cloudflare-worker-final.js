@@ -120,9 +120,15 @@ export default {
       }
     }
     
-    // FWorksBuilders.com /admin + /static -> super admin dashboard (direct proxy, no iframe)
+    // FWorksBuilders.com /admin -> redirect to emergent.host admin (auth cookies only work there)
     if ((hostname === 'fworksbuilders.com' || hostname === 'www.fworksbuilders.com') && 
-        (pathname === '/admin' || pathname.startsWith('/admin') || pathname.startsWith('/static/'))) {
+        (pathname === '/admin' || pathname.startsWith('/admin/'))) {
+      return Response.redirect(PREVIEW_URL + pathname + url.search, 302);
+    }
+    
+    // FWorksBuilders.com /static -> proxy for admin assets
+    if ((hostname === 'fworksbuilders.com' || hostname === 'www.fworksbuilders.com') && 
+        pathname.startsWith('/static/')) {
       const targetUrl = PREVIEW_URL + pathname + url.search;
       try {
         const response = await fetch(targetUrl, {
