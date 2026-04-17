@@ -145,7 +145,7 @@ const SiteAdminDashboard = () => {
     { id: 'overview', label: 'Resumen', icon: Settings, always: true },
     { id: 'room_prices', label: isHotel ? 'Tarifas' : null, icon: DollarSign, permission: 'prices', hotelOnly: true },
     { id: 'events', label: isHotel ? 'Eventos' : null, icon: Calendar, permission: 'prices', hotelOnly: true },
-    { id: 'hours', label: 'Horarios', icon: Clock, permission: 'opening_hours' },
+    { id: 'hours', label: !isHotel ? 'Horarios' : null, icon: Clock, permission: 'opening_hours' },
     { id: 'menu', label: 'Menú', icon: Menu, permission: 'menu_items' },
     { id: 'gallery_hotel', label: isHotel ? 'Fotos Hotel' : null, icon: Image, permission: 'gallery', hotelOnly: true },
     { id: 'gallery_restaurant', label: isHotel ? 'Fotos Restaurante' : null, icon: Image, permission: 'gallery', hotelOnly: true },
@@ -213,12 +213,13 @@ const SiteAdminDashboard = () => {
             <div className="mt-4 bg-blue-50 rounded-lg p-4">
               <h4 className="font-medium text-blue-900 mb-2">Tus Permisos</h4>
               <ul className="text-sm text-blue-700 space-y-1">
+                {permissions.prices && <li>✓ Tarifas</li>}
+                {permissions.prices && <li>✓ Eventos</li>}
                 {permissions.menu_items && <li>✓ Menú</li>}
-                {permissions.menu_prices && <li>✓ Precios</li>}
-                {permissions.opening_hours && <li>✓ Horarios</li>}
-                {permissions.closure_notice && <li>✓ Avisos de cierre</li>}
-                {permissions.gallery && <li>✓ Fotos</li>}
+                {permissions.gallery && <li>✓ Fotos Hotel</li>}
+                {permissions.gallery && <li>✓ Fotos Restaurante</li>}
                 {permissions.contact_info && <li>✓ Contacto</li>}
+                {permissions.opening_hours && !isHotel && <li>✓ Horarios</li>}
               </ul>
             </div>
           </div>
@@ -491,11 +492,7 @@ const SiteAdminDashboard = () => {
 // Room Prices Tab Component for Hotels
 const RoomPricesTab = ({ config, setConfig, saveConfig, saving }) => {
   const [showPreview, setShowPreview] = useState(false);
-  const roomPrices = config?.room_prices || [
-    { id: 'single', name_es: 'Habitación Clásica', name_en: 'Classic Room', description_es: '', price: 0, features: ['WiFi', 'Smart TV', 'A/C'], is_featured: false },
-    { id: 'double', name_es: 'Habitación Superior', name_en: 'Superior Room', description_es: '', price: 0, features: ['WiFi', 'Smart TV', 'A/C', 'Mini Bar'], is_featured: true },
-    { id: 'suite', name_es: 'Suite Ejecutiva', name_en: 'Executive Suite', description_es: '', price: 0, features: ['WiFi', 'Smart TV', 'A/C', 'Mini Bar', 'Jacuzzi'], is_featured: false }
-  ];
+  const roomPrices = config?.room_prices || [];
 
   const updateRoom = (index, field, value) => {
     const updated = [...roomPrices];
@@ -748,7 +745,7 @@ const ImageUploader = ({ currentImage, onUploaded, folder }) => {
     <div className="space-y-2">
       {currentImage && (
         <div className="w-full h-40 bg-gray-100 rounded-lg overflow-hidden">
-          <img src={`${API}/images${currentImage.replace('/images', '')}`} alt="" className="w-full h-full object-cover" />
+          <img src={`${API.replace('/api', '')}${currentImage}`} alt="" className="w-full h-full object-cover" />
         </div>
       )}
       <label className={`flex items-center justify-center gap-2 px-4 py-3 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${uploading ? 'border-gray-300 bg-gray-50' : 'border-emerald-300 hover:border-emerald-500 hover:bg-emerald-50'}`}>
@@ -951,7 +948,7 @@ const GalleryManager = ({ title, folder, config, setConfig, saveConfig, saving, 
           {images.map((img, i) => (
             <div key={i} className="relative group rounded-lg overflow-hidden border border-gray-200">
               <img 
-                src={img.startsWith('http') ? img : `${API}/images${img.replace('/images', '')}`} 
+                src={img.startsWith('http') ? img : `${API.replace('/api', '')}${img}`} 
                 alt="" 
                 className="w-full h-32 object-cover" 
               />

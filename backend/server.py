@@ -2822,7 +2822,7 @@ async def seed_sites_on_startup():
             "site_id": "site_hoteldelpacifico",
             "name": "Hotel del Pacífico",
             "slug": "hoteldelpacifico",
-            "domains": ["hoteldelpacifico.com", "www.hoteldelpacifico.com"],
+            "domains": ["hoteldelpacifico.net", "www.hoteldelpacifico.net"],
             "site_type": "hotel",
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
