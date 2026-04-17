@@ -2867,6 +2867,12 @@ async def seed_sites_on_startup():
         )
         logger.info("Updated hotel admin credentials")
     
+    # Fix domains to .net
+    await db.sites.update_one(
+        {"slug": "hoteldelpacifico"},
+        {"$set": {"domains": ["hoteldelpacifico.net", "www.hoteldelpacifico.net"]}}
+    )
+    
     # Ensure hotel config exists with galleries
     hotel_config = await db.site_configs.find_one({"site_id": "site_hoteldelpacifico"})
     if not hotel_config:

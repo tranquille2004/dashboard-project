@@ -142,7 +142,7 @@ const SiteAdminDashboard = () => {
   const isHotel = site?.site_type === 'hotel';
 
   const tabs = [
-    { id: 'overview', label: 'Resumen', icon: Settings, always: true },
+    { id: 'overview', label: 'Anuncio Especial', icon: Settings, always: true },
     { id: 'room_prices', label: isHotel ? 'Tarifas' : null, icon: DollarSign, permission: 'prices', hotelOnly: true },
     { id: 'events', label: isHotel ? 'Eventos' : null, icon: Calendar, permission: 'prices', hotelOnly: true },
     { id: 'hours', label: !isHotel ? 'Horarios' : null, icon: Clock, permission: 'opening_hours' },
@@ -230,12 +230,12 @@ const SiteAdminDashboard = () => {
               {/* Overview Tab */}
               {activeTab === 'overview' && (
                 <div className="space-y-6">
-                  <h2 className="text-xl font-semibold border-b pb-4">Resumen</h2>
+                  <h2 className="text-xl font-semibold border-b pb-4">Anuncio Especial</h2>
                   <div className="grid grid-cols-2 gap-6">
                     <div className="bg-gray-50 rounded-lg p-6">
                       <h3 className="font-medium text-gray-700 mb-2">Sitio Web</h3>
                       <p className="text-2xl font-bold text-gray-900">{site?.name}</p>
-                      <p className="text-gray-500">{site?.domains?.[0] || site?.slug}</p>
+                      <p className="text-gray-500">hoteldelpacifico.net</p>
                     </div>
                     <div className="bg-gray-50 rounded-lg p-6">
                       <h3 className="font-medium text-gray-700 mb-2">Elementos del Menú</h3>
