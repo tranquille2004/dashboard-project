@@ -1970,6 +1970,112 @@ async def serve_image(path: str):
         logging.error(f"Error serving image {path}: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
+# ============== ANALYTICS ==============
+@api_router.post("/analytics/track")
+async def track_visit(request: Request):
+    """Track a page visit - called from frontend"""
+    try:
+        body = await request.json()
+        site_id = body.get("site_id", "")
+        page = body.get("page", "/")
+        
+        # Get IP and country
+        ip = request.headers.get("x-forwarded-for", request.headers.get("x-real-ip", "unknown"))
+        if "," in ip:
+            ip = ip.split(",")[0].strip()
+        
+        # Get country from free API (cached per IP)
+        country = "Desconocido"
+        try:
+            cached = await db.ip_countries.find_one({"ip": ip}, {"_id": 0})
+            if cached:
+                country = cached["country"]
+            else:
+                resp = requests.get(f"http://ip-api.com/json/{ip}?fields=country,countryCode", timeout=2)
+                if resp.status_code == 200:
+                    data = resp.json()
+                    country = data.get("country", "Desconocido")
+                    await db.ip_countries.update_one({"ip": ip}, {"$set": {"ip": ip, "country": country, "code": data.get("countryCode", "")}}, upsert=True)
+        except:
+            pass
+        
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        
+        await db.analytics.insert_one({
+            "site_id": site_id,
+            "page": page,
+            "ip": ip,
+            "country": country,
+            "date": today,
+            "timestamp": datetime.now(timezone.utc).isoformat()
+        })
+        return {"ok": True}
+    except:
+        return {"ok": True}
+
+@site_admin_router.get("/analytics")
+async def get_analytics(admin: dict = Depends(get_current_site_admin)):
+    """Get analytics for the admin's site"""
+    site_id = admin["site_id"]
+    now = datetime.now(timezone.utc)
+    today = now.strftime("%Y-%m-%d")
+    week_ago = (now - timedelta(days=7)).strftime("%Y-%m-%d")
+    month_ago = (now - timedelta(days=30)).strftime("%Y-%m-%d")
+    
+    # Today
+    today_count = await db.analytics.count_documents({"site_id": site_id, "date": today})
+    
+    # This week
+    week_count = await db.analytics.count_documents({"site_id": site_id, "date": {"$gte": week_ago}})
+    
+    # This month
+    month_count = await db.analytics.count_documents({"site_id": site_id, "date": {"$gte": month_ago}})
+    
+    # Total
+    total_count = await db.analytics.count_documents({"site_id": site_id})
+    
+    # Per day (last 30 days)
+    pipeline_days = [
+        {"$match": {"site_id": site_id, "date": {"$gte": month_ago}}},
+        {"$group": {"_id": "$date", "count": {"$sum": 1}}},
+        {"$sort": {"_id": 1}}
+    ]
+    daily = []
+    async for doc in db.analytics.aggregate(pipeline_days):
+        daily.append({"date": doc["_id"], "visits": doc["count"]})
+    
+    # Per country (all time)
+    pipeline_countries = [
+        {"$match": {"site_id": site_id}},
+        {"$group": {"_id": "$country", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+        {"$limit": 20}
+    ]
+    countries = []
+    async for doc in db.analytics.aggregate(pipeline_countries):
+        countries.append({"country": doc["_id"], "visits": doc["count"]})
+    
+    # Top pages
+    pipeline_pages = [
+        {"$match": {"site_id": site_id}},
+        {"$group": {"_id": "$page", "count": {"$sum": 1}}},
+        {"$sort": {"count": -1}},
+        {"$limit": 10}
+    ]
+    pages = []
+    async for doc in db.analytics.aggregate(pipeline_pages):
+        pages.append({"page": doc["_id"], "visits": doc["count"]})
+    
+    return {
+        "today": today_count,
+        "week": week_count,
+        "month": month_count,
+        "total": total_count,
+        "daily": daily,
+        "countries": countries,
+        "pages": pages
+    }
+
 # ============== ONE-TIME SEED ENDPOINT ==============
 # Dit endpoint vult de database met alle 7 websites
 # Na uitvoeren wordt het veilig uitgeschakeld (returned already seeded)

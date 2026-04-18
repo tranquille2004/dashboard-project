@@ -14,6 +14,20 @@ const ScrollToTop = () => {
   return null;
 };
 
+// Track page visits
+const PageTracker = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const API = process.env.REACT_APP_BACKEND_URL + '/api';
+    fetch(`${API}/analytics/track`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ site_id: 'site_hoteldelpacifico', page: pathname })
+    }).catch(() => {});
+  }, [pathname]);
+  return null;
+};
+
 // ============================================
 // TRANSLATIONS (keeping the same structure)
 // ============================================
@@ -2013,6 +2027,7 @@ const HotelDelPacificoApp = () => {
       <Navigation language={language} setLanguage={setLanguage} t={t} />
       
       <ScrollToTop />
+      <PageTracker />
       <Routes>
         <Route index element={<HomePage t={t} announcement={announcement} />} />
         <Route path="habitaciones" element={<RoomsPage t={t} roomPrices={roomPrices} />} />

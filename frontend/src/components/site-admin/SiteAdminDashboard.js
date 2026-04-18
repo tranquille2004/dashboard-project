@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import { 
   LogOut, Menu, Clock, Image, Save, Plus, Trash2, 
-  Check, X, AlertCircle, Settings, DollarSign, Star, Bed, Eye, Calendar, Upload
+  Check, X, AlertCircle, Settings, DollarSign, Star, Bed, Eye, Calendar, Upload, BarChart3
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -143,6 +143,7 @@ const SiteAdminDashboard = () => {
 
   const tabs = [
     { id: 'overview', label: 'Anuncio Especial', icon: Settings, always: true },
+    { id: 'stats', label: isHotel ? 'Estadísticas' : null, icon: BarChart3, permission: 'prices', hotelOnly: true },
     { id: 'room_prices', label: isHotel ? 'Tarifas' : null, icon: DollarSign, permission: 'prices', hotelOnly: true },
     { id: 'events', label: isHotel ? 'Eventos' : null, icon: Calendar, permission: 'prices', hotelOnly: true },
     { id: 'hours', label: !isHotel ? 'Horarios' : null, icon: Clock, permission: 'opening_hours' },
@@ -433,6 +434,11 @@ const SiteAdminDashboard = () => {
                 </div>
               )}
 
+              {/* Stats Tab - Hotel only */}
+              {activeTab === 'stats' && isHotel && (
+                <StatsTab />
+              )}
+
               {/* Room Prices Tab - Hotel only */}
               {activeTab === 'room_prices' && isHotel && permissions.prices && (
                 <RoomPricesTab config={config} setConfig={setConfig} saveConfig={saveConfig} saving={saving} />
@@ -720,6 +726,112 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
           </div>
         </div>
       ))}
+    </div>
+  );
+};
+
+// Stats Tab Component
+const StatsTab = () => {
+  const [stats, setStats] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await axios.get(`${API}/site-admin/analytics`, { withCredentials: true });
+        setStats(res.data);
+      } catch (err) {
+        console.error('Stats load error:', err);
+      }
+      setLoading(false);
+    };
+    load();
+  }, []);
+
+  if (loading) return <div className="text-center py-12 text-gray-500">Cargando estadísticas...</div>;
+  if (!stats) return <div className="text-center py-12 text-gray-500">No se pudieron cargar las estadísticas.</div>;
+
+  const maxDaily = Math.max(...(stats.daily || []).map(d => d.visits), 1);
+
+  return (
+    <div className="space-y-6">
+      <h2 className="text-xl font-semibold border-b pb-4">Estadísticas de Visitantes</h2>
+
+      {/* Summary Cards */}
+      <div className="grid grid-cols-4 gap-4">
+        {[
+          { label: 'Hoy', value: stats.today, color: 'bg-blue-50 text-blue-700' },
+          { label: 'Esta Semana', value: stats.week, color: 'bg-emerald-50 text-emerald-700' },
+          { label: 'Este Mes', value: stats.month, color: 'bg-amber-50 text-amber-700' },
+          { label: 'Total', value: stats.total, color: 'bg-purple-50 text-purple-700' }
+        ].map((card, i) => (
+          <div key={i} className={`${card.color} rounded-lg p-5 text-center`}>
+            <p className="text-3xl font-bold">{card.value}</p>
+            <p className="text-sm mt-1 opacity-75">{card.label}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Daily Chart */}
+      {stats.daily && stats.daily.length > 0 && (
+        <div className="bg-white border rounded-lg p-6">
+          <h3 className="font-medium text-gray-700 mb-4">Visitas por Día (últimos 30 días)</h3>
+          <div className="flex items-end gap-1 h-40">
+            {stats.daily.map((day, i) => (
+              <div key={i} className="flex-1 flex flex-col items-center gap-1 group relative">
+                <div className="absolute -top-8 bg-gray-800 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 whitespace-nowrap z-10">
+                  {day.date}: {day.visits} visitas
+                </div>
+                <div
+                  className="w-full bg-emerald-500 rounded-t hover:bg-emerald-600 transition-colors min-h-[2px]"
+                  style={{ height: `${(day.visits / maxDaily) * 100}%` }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      <div className="grid md:grid-cols-2 gap-6">
+        {/* Countries */}
+        <div className="bg-white border rounded-lg p-6">
+          <h3 className="font-medium text-gray-700 mb-4">Visitantes por País</h3>
+          {stats.countries && stats.countries.length > 0 ? (
+            <div className="space-y-2">
+              {stats.countries.map((c, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <span className="text-sm text-gray-700">{c.country}</span>
+                  <div className="flex items-center gap-2">
+                    <div className="w-24 bg-gray-100 rounded-full h-2">
+                      <div className="bg-emerald-500 h-2 rounded-full" style={{ width: `${(c.visits / stats.countries[0].visits) * 100}%` }} />
+                    </div>
+                    <span className="text-sm font-medium text-gray-600 w-10 text-right">{c.visits}</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-400">Aún no hay datos de países.</p>
+          )}
+        </div>
+
+        {/* Top Pages */}
+        <div className="bg-white border rounded-lg p-6">
+          <h3 className="font-medium text-gray-700 mb-4">Páginas Más Visitadas</h3>
+          {stats.pages && stats.pages.length > 0 ? (
+            <div className="space-y-2">
+              {stats.pages.map((p, i) => (
+                <div key={i} className="flex items-center justify-between">
+                  <span className="text-sm text-gray-700">{p.page === '/' ? 'Inicio' : p.page.split('/').pop() || p.page}</span>
+                  <span className="text-sm font-medium text-gray-600">{p.visits}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p className="text-sm text-gray-400">Aún no hay datos de páginas.</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
