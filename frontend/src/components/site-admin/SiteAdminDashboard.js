@@ -755,7 +755,7 @@ const StatsTab = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold border-b pb-4">Estadísticas de Visitantes</h2>
+      <h2 className="text-xl font-semibold border-b pb-4">Visitantes Únicos</h2>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-4 gap-4">
@@ -775,7 +775,7 @@ const StatsTab = () => {
       {/* Daily Chart */}
       {stats.daily && stats.daily.length > 0 && (
         <div className="bg-white border rounded-lg p-6">
-          <h3 className="font-medium text-gray-700 mb-4">Visitas por Día (últimos 30 días)</h3>
+          <h3 className="font-medium text-gray-700 mb-4">Visitantes Únicos por Día (últimos 30 días)</h3>
           <div className="flex items-end gap-1 h-40">
             {stats.daily.map((day, i) => (
               <div key={i} className="flex-1 flex flex-col items-center gap-1 group relative">

@@ -1973,18 +1973,24 @@ async def serve_image(path: str):
 # ============== ANALYTICS ==============
 @api_router.post("/analytics/track")
 async def track_visit(request: Request):
-    """Track a page visit - called from frontend"""
+    """Track a unique page visit - one per IP per day"""
     try:
         body = await request.json()
         site_id = body.get("site_id", "")
         page = body.get("page", "/")
         
-        # Get IP and country
         ip = request.headers.get("x-forwarded-for", request.headers.get("x-real-ip", "unknown"))
         if "," in ip:
             ip = ip.split(",")[0].strip()
         
-        # Get country from free API (cached per IP)
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        
+        # Only count unique visitors: 1 per IP per day per site
+        existing = await db.analytics.find_one({"site_id": site_id, "ip": ip, "date": today})
+        if existing:
+            return {"ok": True}
+        
+        # Get country from free API
         country = "Desconocido"
         try:
             cached = await db.ip_countries.find_one({"ip": ip}, {"_id": 0})
@@ -1998,8 +2004,6 @@ async def track_visit(request: Request):
                     await db.ip_countries.update_one({"ip": ip}, {"$set": {"ip": ip, "country": country, "code": data.get("countryCode", "")}}, upsert=True)
         except:
             pass
-        
-        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         
         await db.analytics.insert_one({
             "site_id": site_id,
