@@ -174,9 +174,7 @@ const SiteAdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <div className="w-10 h-10 bg-amber-500/20 rounded-full flex items-center justify-center">
-                <span className="text-amber-300 font-serif text-lg font-bold">HP</span>
-              </div>
+              <img src="/images/hoteldelpacifico/hotel-logo.png" alt="Hotel del Pacífico" className="h-10" />
               <div>
                 <h1 className="text-xl font-serif text-white">{site?.name || 'Hotel del Pacífico'}</h1>
                 <p className="text-emerald-300 text-xs tracking-wider">Panel de Administración</p>
@@ -812,11 +810,12 @@ const StatsTab = () => {
           {stats.pages && stats.pages.length > 0 ? (
             <div className="space-y-2">
               {stats.pages.map((p, i) => {
+                const clean = p.page.replace('/site/hoteldelpacifico', '').replace(/^\/+/, '/') || '/';
                 const pageNames = { '/': 'Inicio', '/habitaciones': 'Habitaciones', '/precios': 'Tarifas', '/fotos': 'Galería', '/restaurante': 'Restaurante', '/descubrir': 'Descubrir', '/contacto': 'Contacto', '/eventos': 'Eventos' };
-                const name = pageNames[p.page] || p.page;
+                const name = pageNames[clean] || clean;
                 return (
                   <div key={i} className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700">{name}</span>
+                    <span className="text-sm text-gray-700">hoteldelpacifico.net{clean === '/' ? '' : clean}</span>
                     <span className="text-sm font-medium text-gray-600">{p.visits}</span>
                   </div>
                 );
