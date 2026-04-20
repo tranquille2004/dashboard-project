@@ -820,12 +820,16 @@ const StatsTab = () => {
           <h3 className="font-medium text-gray-700 mb-4">Páginas Más Visitadas</h3>
           {stats.pages && stats.pages.length > 0 ? (
             <div className="space-y-2">
-              {stats.pages.map((p, i) => (
-                <div key={i} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-700">{p.page === '/' ? 'Inicio' : p.page.split('/').pop() || p.page}</span>
-                  <span className="text-sm font-medium text-gray-600">{p.visits}</span>
-                </div>
-              ))}
+              {stats.pages.map((p, i) => {
+                const pageNames = { '/': 'Inicio', '/habitaciones': 'Habitaciones', '/precios': 'Tarifas', '/fotos': 'Galería', '/restaurante': 'Restaurante', '/descubrir': 'Descubrir', '/contacto': 'Contacto', '/eventos': 'Eventos' };
+                const name = pageNames[p.page] || p.page;
+                return (
+                  <div key={i} className="flex items-center justify-between">
+                    <span className="text-sm text-gray-700">{name}</span>
+                    <span className="text-sm font-medium text-gray-600">{p.visits}</span>
+                  </div>
+                );
+              })}
             </div>
           ) : (
             <p className="text-sm text-gray-400">Aún no hay datos de páginas.</p>

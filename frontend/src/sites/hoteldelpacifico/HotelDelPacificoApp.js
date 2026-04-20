@@ -19,10 +19,12 @@ const PageTracker = () => {
   const { pathname } = useLocation();
   useEffect(() => {
     const API = process.env.REACT_APP_BACKEND_URL + '/api';
+    // Strip /site/hoteldelpacifico prefix, keep clean page name
+    const page = pathname.replace('/site/hoteldelpacifico', '') || '/';
     fetch(`${API}/analytics/track`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ site_id: 'site_hoteldelpacifico', page: pathname })
+      body: JSON.stringify({ site_id: 'site_hoteldelpacifico', page })
     }).catch(() => {});
   }, [pathname]);
   return null;
