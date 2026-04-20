@@ -158,11 +158,11 @@ const SiteAdminDashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50/30">
       {/* Message Toast */}
       {message && (
-        <div className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-lg shadow-lg flex items-center space-x-2 ${
-          message.type === 'error' ? 'bg-red-500 text-white' : 'bg-green-500 text-white'
+        <div className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2 backdrop-blur ${
+          message.type === 'error' ? 'bg-red-500/90 text-white' : 'bg-emerald-500/90 text-white'
         }`}>
           {message.type === 'error' ? <AlertCircle className="w-5 h-5" /> : <Check className="w-5 h-5" />}
           <span>{message.text}</span>
@@ -170,64 +170,55 @@ const SiteAdminDashboard = () => {
       )}
 
       {/* Header */}
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <header className="bg-gradient-to-r from-emerald-800 to-emerald-900 shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">{site?.name}</h1>
-              <p className="text-gray-500 text-sm">Bienvenido, {admin.name}</p>
+            <div className="flex items-center gap-4">
+              <div className="w-10 h-10 bg-amber-500/20 rounded-full flex items-center justify-center">
+                <span className="text-amber-300 font-serif text-lg font-bold">HP</span>
+              </div>
+              <div>
+                <h1 className="text-xl font-serif text-white">{site?.name || 'Hotel del Pacífico'}</h1>
+                <p className="text-emerald-300 text-xs tracking-wider">Panel de Administración</p>
+              </div>
             </div>
             <button
               onClick={logout}
-              className="flex items-center space-x-2 text-gray-600 hover:text-gray-900"
+              className="flex items-center space-x-2 text-emerald-200 hover:text-white transition-colors bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg"
               data-testid="site-admin-logout-btn"
             >
-              <LogOut className="w-5 h-5" />
-              <span>Cerrar Sesión</span>
+              <LogOut className="w-4 h-4" />
+              <span className="text-sm">Cerrar Sesión</span>
             </button>
           </div>
         </div>
       </header>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex gap-8">
+        <div className="flex gap-6">
           {/* Sidebar */}
-          <div className="w-64 flex-shrink-0">
-            <nav className="bg-white rounded-lg shadow p-4 space-y-1">
-              {tabs.map(tab => (
+          <div className="w-60 flex-shrink-0">
+            <nav className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+              {tabs.map((tab, i) => (
                 <button
                   key={tab.id}
                   onClick={() => setActiveTab(tab.id)}
-                  className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-colors ${
+                  className={`w-full flex items-center space-x-3 px-5 py-3.5 transition-all text-sm ${
                     activeTab === tab.id
-                      ? 'bg-blue-50 text-blue-700'
-                      : 'text-gray-600 hover:bg-gray-50'
-                  }`}
+                      ? 'bg-emerald-700 text-white font-medium'
+                      : 'text-gray-600 hover:bg-emerald-50 hover:text-emerald-700'
+                  } ${i > 0 ? 'border-t border-gray-50' : ''}`}
                 >
-                  <tab.icon className="w-5 h-5" />
+                  <tab.icon className="w-4 h-4" />
                   <span>{tab.label}</span>
                 </button>
               ))}
             </nav>
-
-            {/* Permissions Info */}
-            <div className="mt-4 bg-blue-50 rounded-lg p-4">
-              <h4 className="font-medium text-blue-900 mb-2">Tus Permisos</h4>
-              <ul className="text-sm text-blue-700 space-y-1">
-                {permissions.prices && <li>✓ Tarifas</li>}
-                {permissions.prices && <li>✓ Eventos</li>}
-                {permissions.menu_items && <li>✓ Menú</li>}
-                {permissions.gallery && <li>✓ Fotos Hotel</li>}
-                {permissions.gallery && <li>✓ Fotos Restaurante</li>}
-                {permissions.contact_info && <li>✓ Contacto</li>}
-                {permissions.opening_hours && !isHotel && <li>✓ Horarios</li>}
-              </ul>
-            </div>
           </div>
 
           {/* Content */}
           <div className="flex-1">
-            <div className="bg-white rounded-lg shadow p-6">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
               {/* Overview Tab */}
               {activeTab === 'overview' && (
                 <div className="space-y-6">
