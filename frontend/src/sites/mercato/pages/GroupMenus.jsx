@@ -204,7 +204,11 @@ const GroupMenus = () => {
                       ))}
                     </div>
                     {courseIdx < menu.items.length - 1 && (
-                      <div className="text-center text-gold/60 text-lg my-4">--o--</div>
+                      <div className="flex items-center justify-center gap-3 my-5">
+                        <div className="w-8 h-px bg-amber-500/40" />
+                        <div className="w-2 h-2 rotate-45 bg-amber-500/60" />
+                        <div className="w-8 h-px bg-amber-500/40" />
+                      </div>
                     )}
                   </div>
                 ))}
