@@ -198,7 +198,7 @@ const GroupMenus = () => {
                             {dish}
                           </p>
                           {dishIdx < course.dishes.length - 1 && course.dishes.length > 1 && (
-                            <div className="text-center text-gold/40 text-xs my-2">OF / OU / OR</div>
+                            <div className="text-center text-amber-500/60 text-xs my-2 tracking-widest">OF / OU / OR</div>
                           )}
                         </div>
                       ))}
