@@ -642,13 +642,13 @@ const HomePage = ({ t, announcement }) => (
   <div className="bg-amber-50/30">
     {/* Announcement Banner */}
     {announcement && (
-      <div className={`${ANNOUNCEMENT_COLORS[announcement.type] || 'bg-blue-600'} text-white text-center py-3 px-6 text-sm fixed top-0 left-0 right-0 z-50`}>
+      <div className={`${ANNOUNCEMENT_COLORS[announcement.type] || 'bg-blue-600'} text-white text-center py-3 px-6 text-sm`}>
         {announcement.text}
       </div>
     )}
 
     {/* Hero Section with Video Background */}
-    <section className={`relative h-screen flex items-center justify-center overflow-hidden ${announcement ? 'pt-10' : ''}`}>
+    <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Video Background */}
       <video 
         autoPlay 
