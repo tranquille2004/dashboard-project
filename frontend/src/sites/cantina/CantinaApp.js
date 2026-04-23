@@ -325,15 +325,13 @@ function KaartPage({ t }) {
         <div className="title-divider"></div>
       </div>
 
-      {/* Menu Kaart - Direct Zichtbaar via Google Docs Viewer */}
-      <div className="menu-pdf-container">
-        <iframe
-          src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + '/images/cantina/menu-pdf.pdf')}&embedded=true`}
-          title="Menu La Cantina Italiana"
-          className="menu-pdf-frame"
-        >
-          <p>Uw browser ondersteunt geen PDF weergave. <a href="/images/cantina/menu-pdf.pdf" target="_blank" rel="noopener noreferrer">Klik hier om de PDF te downloaden</a>.</p>
-        </iframe>
+      {/* Menu Kaart - Direct Zichtbaar als Afbeelding */}
+      <div className="menu-pdf-container" style={{ display: 'flex', justifyContent: 'center', padding: '2rem 1rem' }}>
+        <img
+          src="/images/cantina/menu-cantina-2026.jpg"
+          alt="Menu La Cantina Italiana"
+          style={{ maxWidth: '100%', width: '900px', height: 'auto', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', borderRadius: '4px' }}
+        />
       </div>
 
       {/* PDF Download Sectie */}
@@ -343,10 +341,11 @@ function KaartPage({ t }) {
           <h3>{t.menu.downloadTitle}</h3>
           <p>{t.menu.downloadText}</p>
           <a 
-            href="/images/cantina/menu-pdf.pdf" 
+            href="/images/cantina/menu-cantina-2026.jpg" 
             target="_blank" 
             rel="noopener noreferrer"
             className="btn-primary"
+            download
           >
             <Download className="btn-icon" />
             {t.menu.downloadButton}
