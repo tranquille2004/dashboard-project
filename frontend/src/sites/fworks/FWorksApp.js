@@ -112,7 +112,7 @@ const translations = {
         'Meertalige ondersteuning'
       ],
       cta: 'Start Vandaag',
-      note: 'Eenmalige opzet: vanaf €50 (afhankelijk van het werk)',
+      note: 'Eenmalige opzet: vanaf €/$50 (afhankelijk van het werk)',
       speed: 'Standaard website klaar in 48 uur!'
     },
     contact: {
@@ -215,7 +215,7 @@ const translations = {
         'Support multilingue'
       ],
       cta: 'Commencer Aujourd\'hui',
-      note: 'Frais de création: à partir de €50 (selon le travail)',
+      note: 'Frais de création: à partir de €/$50 (selon le travail)',
       speed: 'Site standard prêt en 48 heures!'
     },
     contact: {
@@ -318,7 +318,7 @@ const translations = {
         'Multilingual support'
       ],
       cta: 'Start Today',
-      note: 'One-time setup: from €50 (depending on work)',
+      note: 'One-time setup: from €/$50 (depending on work)',
       speed: 'Standard website ready in 48 hours!'
     },
     contact: {
@@ -421,7 +421,7 @@ const translations = {
         'Soporte multilingüe'
       ],
       cta: 'Empezar Hoy',
-      note: 'Configuración única: desde €50 (según el trabajo)',
+      note: 'Configuración única: desde €/$50 (según el trabajo)',
       speed: '¡Sitio web estándar listo en 48 horas!'
     },
     contact: {
@@ -1046,7 +1046,7 @@ const PricingSection = ({ t }) => {
           <div className="p-8 md:p-12">
             <div className="text-center mb-10">
               <div className="flex items-baseline justify-center space-x-2">
-                <span className="text-2xl text-amber-400">€</span>
+                <span className="text-2xl text-amber-400">€/$</span>
                 <span className="text-7xl font-bold text-white">{t.pricing.price}</span>
                 <span className="text-xl text-amber-400">/{t.pricing.period}</span>
               </div>
@@ -1186,7 +1186,7 @@ const Footer = ({ t }) => (
       <div className="border-t border-gray-800 pt-6 text-center">
         <p className="text-xs text-gray-600 flex items-center justify-center space-x-2">
           <img src="/images/fworks-logo.png" alt="fworksbuilders" className="h-4 w-auto opacity-60" />
-          <span>fworksbuilders • RUC: 17598849900001 • Via Aventura, Santo Domingo, Ecuador</span>
+          <span>fworksbuilders • RUC: 1759884990001 • Via Aventura, Santo Domingo, Ecuador</span>
         </p>
         <p className="text-xs text-gray-700 mt-2">© {new Date().getFullYear()} fworksbuilders. All rights reserved.</p>
       </div>
