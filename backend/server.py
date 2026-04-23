@@ -1941,18 +1941,25 @@ async def export_migration_records():
 async def serve_image(path: str):
     """Serve images from object storage or local fallback"""
     try:
-        # First check if migrated to object storage
+        # First check if migrated to object storage via DB record
         record = await db.migrated_images.find_one({"original_path": f"/images/{path}"})
         
         if record and record.get("storage_path"):
-            # Serve from object storage
             try:
                 data, content_type = get_object(record["storage_path"])
                 return Response(content=data, media_type=record.get("content_type", content_type))
             except Exception as e:
-                logging.warning(f"Failed to get from storage, falling back to local: {e}")
+                logging.warning(f"Failed to get from storage via record, trying direct: {e}")
         
-        # Fallback to local file - check multiple locations
+        # Try Object Storage directly (for when DB records don't exist on this server)
+        try:
+            storage_path = f"{APP_NAME}/images/{path}"
+            data, content_type = get_object(storage_path)
+            return Response(content=data, media_type=content_type)
+        except:
+            pass
+        
+        # Fallback to local file
         images_folder = get_images_folder()
         if images_folder:
             local_path = images_folder / path

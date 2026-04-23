@@ -328,7 +328,7 @@ function KaartPage({ t }) {
       {/* Menu Kaart - Direct Zichtbaar als Afbeelding */}
       <div className="menu-pdf-container" style={{ display: 'flex', justifyContent: 'center', padding: '2rem 1rem' }}>
         <img
-          src="/images/cantina/menu-cantina-2026.jpg"
+          src="/api/images/cantina/menu-cantina-2026.jpg"
           alt="Menu La Cantina Italiana"
           style={{ maxWidth: '100%', width: '900px', height: 'auto', boxShadow: '0 4px 20px rgba(0,0,0,0.3)', borderRadius: '4px' }}
         />
@@ -341,7 +341,7 @@ function KaartPage({ t }) {
           <h3>{t.menu.downloadTitle}</h3>
           <p>{t.menu.downloadText}</p>
           <a 
-            href="/images/cantina/menu-cantina-2026.jpg" 
+            href="/api/images/cantina/menu-cantina-2026.jpg" 
             target="_blank" 
             rel="noopener noreferrer"
             className="btn-primary"

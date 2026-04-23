@@ -8,7 +8,7 @@ const Menu = () => {
   const t = translations.menu;
 
   // PDF URL for embedded viewer
-  const menuImageUrl = '/images/mercato/menu-mercato-2026.jpg';
+  const menuImageUrl = '/api/images/mercato/menu-mercato-2026.jpg';
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
