@@ -8,7 +8,7 @@ const Menu = () => {
   const t = translations.menu;
 
   // PDF URL for embedded viewer
-  const pdfUrl = '/images/mercato/gallery/ss-mains_mercato_09_24__1_.pdf';
+  const menuImageUrl = '/images/mercato/menu-mercato-2026.jpg';
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
@@ -22,27 +22,20 @@ const Menu = () => {
           <div className="w-24 h-1 bg-gold mx-auto mt-6"></div>
         </div>
 
-        {/* Embedded PDF Menu - Direct zichtbaar */}
+        {/* Menu Image - Direct zichtbaar */}
         <div className="mb-12 animate-fade-in">
-          <div className="bg-gradient-to-br from-gray-900 to-black p-4 rounded-lg border-2 border-gold/30 shadow-2xl">
-            <iframe
-              src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + pdfUrl)}&embedded=true`}
-              title="Menu Ristorante Mercato"
+          <div className="bg-gradient-to-br from-gray-900 to-black p-4 rounded-lg border-2 border-gold/30 shadow-2xl flex justify-center">
+            <img
+              src={menuImageUrl}
+              alt="Menu Ristorante Mercato"
               className="w-full rounded-lg"
-              style={{ height: '800px', border: 'none' }}
-              data-testid="menu-pdf-viewer"
-            >
-              <p className="text-gray-300">
-                Uw browser ondersteunt geen PDF weergave. 
-                <a href={pdfUrl} target="_blank" rel="noopener noreferrer" className="text-gold hover:underline ml-1">
-                  Klik hier om de PDF te downloaden
-                </a>.
-              </p>
-            </iframe>
+              style={{ maxWidth: '900px', height: 'auto' }}
+              data-testid="menu-image-viewer"
+            />
           </div>
         </div>
 
-        {/* PDF Download Card */}
+        {/* Download Card */}
         <div className="max-w-2xl mx-auto bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border-2 border-gold/30 shadow-2xl text-center animate-fade-in mb-12">
           <Download size={48} className="text-gold mx-auto mb-4" />
           <h2 className="text-2xl font-bold text-white mb-3">
@@ -50,17 +43,17 @@ const Menu = () => {
           </h2>
           <p className="text-gray-300 mb-6">
             {{
-              nl: 'Download onze menukaart als PDF bestand',
-              fr: 'Téléchargez notre carte en fichier PDF',
-              en: 'Download our menu as a PDF file',
-              es: 'Descargue nuestro menú como archivo PDF',
-              de: 'Laden Sie unsere Speisekarte als PDF herunter',
-              it: 'Scarica il nostro menu come file PDF'
+              nl: 'Download onze menukaart',
+              fr: 'Téléchargez notre carte',
+              en: 'Download our menu',
+              es: 'Descargue nuestro menú',
+              de: 'Laden Sie unsere Speisekarte herunter',
+              it: 'Scarica il nostro menu'
             }[language]}
           </p>
           <a
-            href={pdfUrl}
-            download="menukaart-mercato.pdf"
+            href={menuImageUrl}
+            download="menukaart-mercato.jpg"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
