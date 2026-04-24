@@ -78,21 +78,29 @@ const Footer = () => {
           <p>© {new Date().getFullYear()} Ristorante Pizzeria Mercato. BTW: BE0553506051</p>
           
           {/* Webmaster Contact */}
-          <div className="mt-6 pt-4 border-t border-gold/5 flex items-center justify-center gap-3 text-xs opacity-70 hover:opacity-100 transition-opacity">
+          <div className="mt-6 pt-4 border-t border-gold/5 flex items-center justify-center gap-3 text-xs opacity-70 hover:opacity-100 transition-opacity flex-wrap">
             <img 
               src="/images/fworksbuilders-logo.png" 
               alt="fworksbuilders logo" 
               className="h-8 w-auto"
             />
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap justify-center">
               <span>Webmaster:</span>
+              <a 
+                href="https://www.fworksbuilders.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gold hover:text-gold/80 transition-colors font-medium"
+              >
+                fworksbuilders
+              </a>
+              <span className="text-gray-500">—</span>
               <a 
                 href="https://wa.me/32494516064" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-gold hover:text-gold/80 transition-colors font-medium flex items-center gap-1"
               >
-                fworksbuilders
                 <Phone size={12} className="inline" />
                 <span>+32 494 51 60 64 (WhatsApp)</span>
               </a>

@@ -923,7 +923,7 @@ function Footer({ t, language }) {
         </p>
         <div className="webmaster-info">
           <img src="/images/fworksbuilders.png" alt="fworksbuilders" className="webmaster-logo" />
-          <span className="webmaster-text">Webmaster: <strong>fworksbuilders</strong> - <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="whatsapp-link">+32 494 51 60 64 (WhatsApp)</a></span>
+          <span className="webmaster-text">Webmaster: <a href="https://www.fworksbuilders.com" target="_blank" rel="noopener noreferrer" className="webmaster-link"><strong>fworksbuilders</strong></a> - <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="whatsapp-link">+32 494 51 60 64 (WhatsApp)</a></span>
         </div>
       </div>
     </footer>

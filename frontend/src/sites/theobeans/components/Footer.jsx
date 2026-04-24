@@ -42,7 +42,7 @@ const Footer = () => {
             </p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
               <a 
-                href="https://wa.me/32494516064" 
+                href="https://www.fworksbuilders.com" 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="hover:opacity-80 transition-opacity"
@@ -54,7 +54,16 @@ const Footer = () => {
                 />
               </a>
               <span className="text-xs text-white/70">
-                {t.footer.webmaster}: fworksbuilders •{' '}
+                {t.footer.webmaster}:{' '}
+                <a 
+                  href="https://www.fworksbuilders.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors font-medium underline"
+                >
+                  fworksbuilders
+                </a>
+                {' '}•{' '}
                 <a 
                   href="https://wa.me/32494516064" 
                   target="_blank" 

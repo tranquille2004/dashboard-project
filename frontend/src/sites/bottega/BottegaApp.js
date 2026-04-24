@@ -128,9 +128,18 @@ function Footer() {
           </div>
           
           {/* Webmaster Contact */}
-          <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+          <div className="flex items-center justify-center gap-2 text-xs text-gray-500 flex-wrap">
             <img src="/images/fworksbuilders-logo.png" alt="f.works" className="h-5" />
-            <span>Webmaster: fworksbuilders bv. </span>
+            <span>Webmaster:</span>
+            <a
+              href="https://www.fworksbuilders.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white transition-colors font-medium"
+            >
+              fworksbuilders bv.
+            </a>
+            <span>—</span>
             <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
               +32 494 51 60 64 (WhatsApp)
             </a>
@@ -595,9 +604,18 @@ function HomePage() {
             </div>
             
             {/* Webmaster Contact */}
-            <div className="flex items-center justify-center gap-2 text-xs text-gray-500">
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-500 flex-wrap">
               <img src="/images/fworksbuilders-logo.png" alt="f.works" className="h-5" />
-              <span>Webmaster: fworksbuilders bv. </span>
+              <span>Webmaster:</span>
+              <a
+                href="https://www.fworksbuilders.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-400 hover:text-white transition-colors font-medium"
+              >
+                fworksbuilders bv.
+              </a>
+              <span>—</span>
               <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
                 +32 494 51 60 64 (WhatsApp)
               </a>

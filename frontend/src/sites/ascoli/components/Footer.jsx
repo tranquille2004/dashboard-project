@@ -106,7 +106,14 @@ const Footer = ({ basePath = '' }) => {
                 className="h-8 w-auto"
               />
               <span className="text-gray-400">{t.webmaster}</span>
-              <span className="text-gray-300">fworksbuilders</span>
+              <a
+                href="https://www.fworksbuilders.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-300 hover:text-white transition-colors font-medium"
+              >
+                fworksbuilders
+              </a>
               <span className="text-gray-400">|</span>
               <a 
                 href="https://wa.me/32494516064" 

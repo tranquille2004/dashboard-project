@@ -236,7 +236,7 @@ const Footer = () => (
           />
           <div className="text-left">
             <span className="text-gray-400 text-xs">Webmaster: </span>
-            <a href="https://wa.me/593989013622" className="text-gray-400 hover:text-red-500 text-xs transition-colors">
+            <a href="https://www.fworksbuilders.com" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-red-500 text-xs transition-colors font-medium">
               fworksbuilders
             </a>
           </div>
