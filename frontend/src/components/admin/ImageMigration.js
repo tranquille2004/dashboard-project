@@ -60,10 +60,23 @@ const ImageMigration = () => {
     
     try {
       // First, fetch records from preview
-      const exportRes = await fetch(PREVIEW_RECORDS_URL);
-      if (!exportRes.ok) {
-        throw new Error('Kon records niet ophalen van preview');
+      let exportRes;
+      try {
+        exportRes = await fetch(PREVIEW_RECORDS_URL);
+      } catch (fetchErr) {
+        throw new Error(`Kon preview niet bereiken: ${fetchErr.message}`);
       }
+      
+      if (!exportRes.ok) {
+        throw new Error(`Preview gaf HTTP ${exportRes.status}`);
+      }
+      
+      const contentType = exportRes.headers.get('content-type') || '';
+      if (!contentType.includes('application/json')) {
+        const text = await exportRes.text();
+        throw new Error(`Preview gaf geen JSON terug (${contentType}). Eerste 80 chars: ${text.substring(0, 80)}`);
+      }
+      
       const exportData = await exportRes.json();
       
       if (!exportData.records || exportData.records.length === 0) {
@@ -77,17 +90,24 @@ const ImageMigration = () => {
         body: JSON.stringify({ records: exportData.records })
       });
       
-      const importData = await importRes.json();
-      
-      if (importRes.ok) {
-        setResult({
-          ...importData,
-          source: 'preview import'
-        });
-        fetchStatus();
-      } else {
-        setError(importData.detail || 'Import mislukt');
+      if (!importRes.ok) {
+        const errText = await importRes.text();
+        throw new Error(`Import gaf HTTP ${importRes.status}: ${errText.substring(0, 120)}`);
       }
+      
+      const importCT = importRes.headers.get('content-type') || '';
+      if (!importCT.includes('application/json')) {
+        const text = await importRes.text();
+        throw new Error(`Import gaf geen JSON terug (${importCT}). Eerste 80 chars: ${text.substring(0, 80)}`);
+      }
+      
+      const importData = await importRes.json();
+      setResult({
+        ...importData,
+        total_from_preview: exportData.records.length,
+        source: 'preview import'
+      });
+      fetchStatus();
     } catch (e) {
       setError('Import fout: ' + e.message);
     } finally {
