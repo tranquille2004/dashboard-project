@@ -594,8 +594,7 @@ const ServicesPage = ({ t }) => {
               return (
                 <div
                   key={`${filter}-${i}`}
-                  className="group relative bg-white p-8 rounded-2xl border border-gray-100 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-500 hover:-translate-y-1 overflow-hidden fade-in-up"
-                  style={{ animationDelay: `${i * 0.05}s` }}
+                  className="group relative bg-white p-8 rounded-2xl border border-gray-100 hover:border-emerald-300 hover:shadow-xl hover:shadow-emerald-500/5 transition-all duration-500 hover:-translate-y-1 overflow-hidden"
                   data-testid={`service-card-${i}`}
                 >
                   <div className="absolute top-0 right-0 text-[8px] tracking-widest uppercase px-3 py-1 bg-emerald-50 text-emerald-700 rounded-bl-lg">
@@ -670,14 +669,14 @@ const GalleryPage = ({ t }) => {
               <button
                 key={src}
                 onClick={() => setLightbox(i)}
-                className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100 fade-in-up"
-                style={{ animationDelay: `${(i % 12) * 0.03}s` }}
+                className="group relative aspect-square overflow-hidden rounded-xl bg-gray-100"
                 data-testid={`gallery-photo-${i}`}
               >
                 <img
                   src={IMG(src)}
                   alt={`RCCB ${i + 1}`}
                   loading="lazy"
+                  style={{ opacity: 1 }}
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -926,7 +925,7 @@ export default function RccbApp() {
   const [lang, setLang, t] = useLanguage();
 
   return (
-    <div className="min-h-screen bg-white font-sans">
+    <div className="min-h-screen bg-white font-sans" data-site="rccb">
       <ScrollToTop />
       <PageTracker />
       <Navigation lang={lang} setLang={setLang} t={t} />

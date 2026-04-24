@@ -168,3 +168,10 @@ html {
 .fade-in-up {
   animation: rccbFadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
+
+/* RCCB image visibility override
+   Tracemaster's global "img[loading] { opacity: 0 }" rule was hiding our gallery images.
+   Force opacity:1 on all images inside the RCCB app. */
+[data-site="rccb"] img {
+  opacity: 1 !important;
+}
