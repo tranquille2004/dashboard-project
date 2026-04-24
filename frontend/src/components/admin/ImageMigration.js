@@ -83,28 +83,53 @@ const ImageMigration = () => {
         throw new Error('Geen records gevonden in preview');
       }
       
-      // Now import them to this environment
-      const importRes = await fetch(`${API}/admin/migrate/import-records`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ records: exportData.records })
-      });
+      // Import in batches of 200 to avoid Cloudflare 520 / timeout
+      const BATCH_SIZE = 200;
+      const records = exportData.records;
+      let totalImported = 0;
+      let totalSkipped = 0;
+      const batches = Math.ceil(records.length / BATCH_SIZE);
       
-      if (!importRes.ok) {
-        const errText = await importRes.text();
-        throw new Error(`Import gaf HTTP ${importRes.status}: ${errText.substring(0, 120)}`);
+      for (let i = 0; i < batches; i++) {
+        const batch = records.slice(i * BATCH_SIZE, (i + 1) * BATCH_SIZE);
+        
+        const importRes = await fetch(`${API}/admin/migrate/import-records`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ records: batch })
+        });
+        
+        if (!importRes.ok) {
+          const errText = await importRes.text();
+          throw new Error(`Batch ${i + 1}/${batches} faalde (HTTP ${importRes.status}): ${errText.substring(0, 120)}`);
+        }
+        
+        const importCT = importRes.headers.get('content-type') || '';
+        if (!importCT.includes('application/json')) {
+          const text = await importRes.text();
+          throw new Error(`Batch ${i + 1}/${batches} gaf geen JSON (${importCT}). Eerste 80 chars: ${text.substring(0, 80)}`);
+        }
+        
+        const importData = await importRes.json();
+        totalImported += importData.imported || 0;
+        totalSkipped += importData.skipped || 0;
+        
+        // Update progress
+        setResult({
+          message: `Bezig... batch ${i + 1} van ${batches} voltooid`,
+          imported: totalImported,
+          skipped: totalSkipped,
+          total_from_preview: records.length,
+          source: 'preview import',
+          progress: true
+        });
       }
       
-      const importCT = importRes.headers.get('content-type') || '';
-      if (!importCT.includes('application/json')) {
-        const text = await importRes.text();
-        throw new Error(`Import gaf geen JSON terug (${importCT}). Eerste 80 chars: ${text.substring(0, 80)}`);
-      }
-      
-      const importData = await importRes.json();
       setResult({
-        ...importData,
-        total_from_preview: exportData.records.length,
+        message: 'Import complete',
+        imported: totalImported,
+        skipped: totalSkipped,
+        total_from_preview: records.length,
         source: 'preview import'
       });
       fetchStatus();
