@@ -88,7 +88,7 @@ const Navigation = ({ lang, setLang, t }) => {
     { to: `${prefix}/contact`, label: t.nav.contact }
   ];
 
-  const langFlags = { nl: '🇧🇪', fr: '🇧🇪', en: '🇬🇧', de: '🇩🇪' };
+  const langFlags = { nl: '🇧🇪', fr: '🇧🇪', en: '🇬🇧', de: '🇧🇪' };
 
   return (
     <header
