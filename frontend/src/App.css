@@ -158,3 +158,13 @@ html {
   transform: translateY(-4px);
   box-shadow: 0 12px 24px rgba(0,0,0,0.15);
 }
+
+
+/* RCCB entry animations */
+@keyframes rccbFadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up {
+  animation: rccbFadeInUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}

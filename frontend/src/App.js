@@ -16,6 +16,7 @@ import FWorksApp from '@/sites/fworks/FWorksApp';
 import SmeraldaApp from '@/sites/smeralda/SmeraldaApp';
 import AlbertoPantojaApp from '@/sites/albertopantoja/AlbertoPantojaApp';
 import HotelDelPacificoApp from '@/sites/hoteldelpacifico/HotelDelPacificoApp';
+import RccbApp from '@/sites/rccb/RccbApp';
 import './App.css';
 
 // Domain to site mapping - BELANGRIJKSTE CODE
@@ -42,8 +43,8 @@ const DOMAIN_MAPPING = {
   'www.albertopantoja.ec': 'albertopantoja',
   'hoteldelpacifico.net': 'hoteldelpacifico',
   'www.hoteldelpacifico.net': 'hoteldelpacifico',
-  'hoteldelpacifico.net': 'hoteldelpacifico',
-  'www.hoteldelpacifico.net': 'hoteldelpacifico'
+  'rccbgroup.be': 'rccb',
+  'www.rccbgroup.be': 'rccb'
 };
 
 // Detecteer custom domain DIRECT bij laden
@@ -80,6 +81,14 @@ function AdminRouter() {
       return (
         <Routes>
           <Route path="/site/hoteldelpacifico/*" element={<HotelDelPacificoApp />} />
+        </Routes>
+      );
+    }
+    // Special handling for /site/rccb
+    if (location.pathname.startsWith('/site/rccb')) {
+      return (
+        <Routes>
+          <Route path="/site/rccb/*" element={<RccbApp />} />
         </Routes>
       );
     }
@@ -193,6 +202,34 @@ function CustomDomainRouter({ slug }) {
     return (
       <Routes>
         <Route path="/*" element={<HotelDelPacificoApp />} />
+      </Routes>
+    );
+  }
+  
+  // RCCB - Retail Cleaning Care Belgium
+  if (slug === 'rccb') {
+    // /admin goes to client admin login
+    if (location.pathname === '/admin' || location.pathname === '/admin/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/admin" element={<SiteAdminLogin preSelectedSite={slug} />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    if (location.pathname === '/mijn-site' || location.pathname === '/mijn-site/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/mijn-site" element={<SiteAdminDashboard />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    return (
+      <Routes>
+        <Route path="/*" element={<RccbApp />} />
       </Routes>
     );
   }

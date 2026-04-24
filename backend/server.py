@@ -577,7 +577,8 @@ class SiteAlert(BaseModel):
 
 # Contact Form Email Models
 class ContactFormRequest(BaseModel):
-    site: str  # Which site the form is from (smeralda, fworks, etc.)
+    site: Optional[str] = None  # Which site the form is from (smeralda, fworks, rccb, etc.)
+    site_id: Optional[str] = None  # Alternative field name
     name: str
     email: str
     phone: Optional[str] = None
@@ -587,6 +588,9 @@ class ContactFormRequest(BaseModel):
     departure: Optional[str] = None
     apartment: Optional[str] = None
     persons: Optional[int] = None
+    # Optional fields for B2B contact forms (RCCB)
+    company: Optional[str] = None
+    service: Optional[str] = None
 
 class SiteAdmin(BaseModel):
     """Site-level admin (restaurant owner)"""
@@ -669,13 +673,27 @@ SITE_EMAIL_CONFIG = {
         'to': 'fworks@mail.be',
         'subject_prefix': 'FWorks Builders Contact',
         'from_name': 'FWorks Builders Website'
+    },
+    'rccb': {
+        'to': 'info@rccbgroup.be',
+        'subject_prefix': 'RCCB — Nouvelle demande / New request',
+        'from_name': 'RCCB Website'
+    },
+    'site_rccb': {
+        'to': 'info@rccbgroup.be',
+        'subject_prefix': 'RCCB — Nouvelle demande / New request',
+        'from_name': 'RCCB Website'
     }
 }
 
 @public_router.post("/contact")
 async def send_contact_form(form: ContactFormRequest):
     """Send contact form email via Resend"""
-    config = SITE_EMAIL_CONFIG.get(form.site, SITE_EMAIL_CONFIG['fworks'])
+    # Resolve site key from either 'site' or 'site_id' (strip 'site_' prefix if present)
+    site_key = form.site or form.site_id or 'fworks'
+    if site_key.startswith('site_'):
+        site_key = site_key[5:]
+    config = SITE_EMAIL_CONFIG.get(site_key, SITE_EMAIL_CONFIG.get('fworks'))
     
     # Build email HTML
     html_content = f"""
@@ -697,6 +715,22 @@ async def send_contact_form(form: ContactFormRequest):
                 <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.phone or 'Not provided'}</td>
             </tr>
     """
+    
+    # Add B2B fields (RCCB)
+    if form.company:
+        html_content += f"""
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Company:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.company}</td>
+            </tr>
+        """
+    if form.service:
+        html_content += f"""
+            <tr>
+                <td style="padding: 10px; border-bottom: 1px solid #eee; font-weight: bold;">Service:</td>
+                <td style="padding: 10px; border-bottom: 1px solid #eee;">{form.service}</td>
+            </tr>
+        """
     
     # Add reservation fields if present
     if form.arrival:
@@ -742,11 +776,13 @@ async def send_contact_form(form: ContactFormRequest):
     
     # Save to database as backup
     await db.contact_submissions.insert_one({
-        "site": form.site,
+        "site": site_key,
         "name": form.name,
         "email": form.email,
         "phone": form.phone,
         "message": form.message,
+        "company": form.company,
+        "service": form.service,
         "arrival": form.arrival,
         "departure": form.departure,
         "apartment": form.apartment,
@@ -1504,8 +1540,8 @@ DOMAIN_SLUG_MAP = {
     'www.smeraldavacanze.it': 'smeralda',
     'hoteldelpacifico.net': 'hoteldelpacifico',
     'www.hoteldelpacifico.net': 'hoteldelpacifico',
-    'hoteldelpacifico.net': 'hoteldelpacifico',
-    'www.hoteldelpacifico.net': 'hoteldelpacifico',
+    'rccbgroup.be': 'rccb',
+    'www.rccbgroup.be': 'rccb',
 }
 
 # SEO data per site
@@ -1572,6 +1608,13 @@ SITE_SEO_DATA = {
         'description': 'Hotel del Pacífico: Su oasis de tranquilidad y elegancia en Santo Domingo de los Tsáchilas, Ecuador. 36 habitaciones confortables, restaurante La Orquídea, centro de negocios y sala de conferencias. Ideal para viajeros de negocios y turistas.',
         'keywords': 'hotel santo domingo ecuador, hotel del pacifico, alojamiento santo domingo, hotel negocios ecuador, hotel tsachilas, la orquidea restaurante, hotel 3 estrellas ecuador, hospedaje santo domingo',
         'pages': ['/', '/habitaciones', '/precios', '/fotos', '/restaurante', '/atractivos', '/contacto']
+    },
+    'rccb': {
+        'domain': 'www.rccbgroup.be',
+        'name': 'RCCB - Retail Cleaning Care Belgium',
+        'description': 'Retail Cleaning Care Belgium (RCCB) — professioneel schoonmaakbedrijf in België. Kantoren, retail, syndic, glasbewassing, desinfectie en meer. Betrouwbaar en efficiënt.',
+        'keywords': 'schoonmaakbedrijf België, nettoyage Belgique, cleaning company Belgium, RCCB, Retail Cleaning Care Belgium, kantoorschoonmaak, nettoyage bureaux, Zaventem, glasbewassing, desinfectie',
+        'pages': ['/', '/services', '/gallery', '/contact']
     }
 }
 

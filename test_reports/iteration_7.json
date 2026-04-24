@@ -1,0 +1,33 @@
+{
+  "summary": "RCCB multilingual site (/site/rccb) tested end-to-end on preview URL. All 13 feature areas from the review request pass on desktop and mobile. Home hero renders with the exact English headline 'Impeccable spaces, every single day.', 3 videos + 3 dots cycling, CTA buttons present and functional. Header turns solid white on scroll (bg-white class applied when scrollY>40). Language switcher works correctly: NL -> nav 'Home/Diensten/Galerij/Contact', hero 'Onberispelijke ruimtes, elke dag opnieuw.'; FR -> 'Accueil/Services/Galerie/Contact', hero 'Des espaces impeccables, jour apres jour.'; EN back to default. Stats (4), service teaser (6), why points (4), final CTA all render on home. Services page shows 12 cards (6 B2B + 6 Specialist filters verified). Gallery shows 18 photos initially, load-more reveals 36, lightbox opens on photo click. Contact form renders all fields and POST /api/public/contact returns 200 with {success:true}, success UI 'Thank you! We'll get back to you within 24h.' is shown. Footer contains Excelsiorlaan 36-38 1930 Zaventem address, VAT BE 0793.291.833, webmaster link -> https://www.fworksbuilders.com. Floating WhatsApp button present with href https://wa.me/32472700402. Mobile hamburger opens side menu with nav + language buttons.",
+  "backend_issues": {"critical": [], "minor": []},
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Gallery lightbox", "issues": ["Escape key does not close the lightbox (only backdrop click / X button). Consider adding window keydown Escape handler for better UX and testability."]},
+      {"screen": "Services page filter bar", "issues": ["Filter bar is sticky with 'top-[72px]'. When browser is at y=0 the transparent header is 'py-4' (~88px tall) so the filter bar visually overlaps the header area on initial scroll. Minor; not blocking."]}
+    ]
+  },
+  "test_report_links": [],
+  "action_items": [
+    "Optional: add window Escape key handler in GalleryPage to close the lightbox (improves UX and makes automated UI tests more deterministic).",
+    "Optional: the console showed a 404 on one request ('Failed to load resource 404' + 'Error loading site: AxiosError') during home load — appears to come from a site-config/analytics fetch but did not affect rendering. Investigate and silence if it is a stale endpoint.",
+    "Optional: sticky services filter bar top offset (72px) could be aligned with the actual header heights in scrolled vs unscrolled states."
+  ],
+  "critical_code_review_comments": [
+    "RccbApp.js is 941 lines in a single file — consider splitting Navigation, Footer, HomePage, ServicesPage, GalleryPage, ContactPage into separate files for maintainability (limit <700 lines/file).",
+    "nav-link data-testid uses label.toLowerCase() which changes per language (nav-link-home/nav-link-diensten/nav-link-accueil). This is brittle for automated tests — prefer stable keys (nav-link-home/services/gallery/contact) mapped from the link key, independent of language.",
+    "Analytics fetch in PageTracker swallows all errors with .catch(() => {}) — OK for prod but hides genuine misconfigurations during dev.",
+    "hero-video-{i} data-testid prefix overlaps hero-video-dot-{i} when using selector '[data-testid^=hero-video-]' — tests selecting all videos must subtract dots or use a distinct prefix.",
+    "ContactPage form state uses a single 'error' status with no field-level validation feedback beyond HTML5 required."
+  ],
+  "updated_files": [],
+  "success_rate": {"backend": "N/A (skipped per request; smoke-tested POST /api/public/contact -> 200)", "frontend": "100%"},
+  "test_credentials": "N/A",
+  "seed_data_creation": "Submitted one TEST contact form entry via /api/public/contact (name='TEST Automation', email='test_auto@example.com').",
+  "retest_needed": false,
+  "main_agent_can_self_test": true,
+  "context_for_next_testing_agent": "Preview URL: https://image-restore-21.preview.emergentagent.com. RCCB routes at /site/rccb, /site/rccb/services, /site/rccb/gallery, /site/rccb/contact. All data-testids used are defined in /app/frontend/src/sites/rccb/RccbApp.js and VideoHero.js. Use page.wait_for_selector (not networkidle) because the hero video keeps the network active. Default language is auto-detected from navigator.language; Playwright defaults to en-US so pages render in English by default. When testing the lightbox, close it via backdrop click (position 10,10) or the X button — Escape keypress does NOT close it.",
+  "rca_of_the_issue": "N/A - fresh build, all critical flows pass."
+}
