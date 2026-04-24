@@ -1540,6 +1540,7 @@ DOMAIN_SLUG_MAP = {
     'www.smeraldavacanze.it': 'smeralda',
     'hoteldelpacifico.net': 'hoteldelpacifico',
     'www.hoteldelpacifico.net': 'hoteldelpacifico',
+    'rccb.fworksbuilders.com': 'rccb',
     'rccbgroup.be': 'rccb',
     'www.rccbgroup.be': 'rccb',
 }

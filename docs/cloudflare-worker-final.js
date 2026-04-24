@@ -24,7 +24,10 @@ const SITE_MAPPING = {
   'albertopantoja.ec': '/site/albertopantoja',
   'www.albertopantoja.ec': '/site/albertopantoja',
   'hoteldelpacifico.net': '/site/hoteldelpacifico',
-  'www.hoteldelpacifico.net': '/site/hoteldelpacifico'
+  'www.hoteldelpacifico.net': '/site/hoteldelpacifico',
+  'rccb.fworksbuilders.com': '/site/rccb',
+  'rccbgroup.be': '/site/rccb',
+  'www.rccbgroup.be': '/site/rccb'
 };
 
 const SITE_TITLES = {
