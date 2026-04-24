@@ -112,7 +112,7 @@ const translations = {
         'Meertalige ondersteuning'
       ],
       cta: 'Start Vandaag',
-      note: 'Eenmalige opzet: vanaf €/$50 (afhankelijk van het werk)',
+      note: 'Eenmalige opzet: €/$50 (voor standaard sites — complexere projecten op aanvraag)',
       speed: 'Standaard website klaar in 48 uur!'
     },
     contact: {
@@ -237,7 +237,7 @@ const translations = {
         'Support multilingue'
       ],
       cta: 'Commencer Aujourd\'hui',
-      note: 'Frais de création: à partir de €/$50 (selon le travail)',
+      note: 'Frais de création: €/$50 (pour les sites standards — projets complexes sur devis)',
       speed: 'Site standard prêt en 48 heures!'
     },
     contact: {
@@ -362,7 +362,7 @@ const translations = {
         'Multilingual support'
       ],
       cta: 'Start Today',
-      note: 'One-time setup: from €/$50 (depending on work)',
+      note: 'One-time setup: €/$50 (for standard sites — complex projects on request)',
       speed: 'Standard website ready in 48 hours!'
     },
     contact: {
@@ -487,7 +487,7 @@ const translations = {
         'Soporte multilingüe'
       ],
       cta: 'Empezar Hoy',
-      note: 'Configuración única: desde €/$50 (según el trabajo)',
+      note: 'Configuración única: €/$50 (para sitios estándar — proyectos complejos bajo presupuesto)',
       speed: '¡Sitio web estándar listo en 48 horas!'
     },
     contact: {
@@ -612,7 +612,7 @@ const translations = {
         'Supporto multilingue'
       ],
       cta: 'Inizia Oggi',
-      note: 'Setup una tantum: da €50 (a seconda del lavoro)',
+      note: 'Setup una tantum: €50 (per siti standard — progetti complessi su preventivo)',
       speed: 'Sito web standard pronto in 48 ore!'
     },
     contact: {
@@ -1318,7 +1318,12 @@ const ContactSection = ({ t }) => {
                 <a href="mailto:fworks@mail.be" className="flex items-center space-x-4 text-gray-300 hover:text-amber-400 transition-colors"><Mail className="w-5 h-5" /><span>{t.contact.info.email}</span></a>
                 <a href="https://wa.me/32494516064" target="_blank" rel="noopener noreferrer" className="flex items-center space-x-4 text-gray-300 hover:text-green-400 transition-colors">
                   <MessageCircle className="w-5 h-5" />
-                  <div><span className="block">{t.contact.info.phone}</span><span className="text-xs text-gray-500">WhatsApp</span></div>
+                  <div>
+                    <span className="block">{t.contact.info.phone}</span>
+                    <span className="inline-block mt-1 px-2 py-0.5 text-[10px] tracking-wider uppercase bg-green-500/20 text-green-400 rounded-full font-medium border border-green-500/30">
+                      {t.contact.whatsappOnly || 'WhatsApp only'}
+                    </span>
+                  </div>
                 </a>
               </div>
             </div>
@@ -1327,6 +1332,9 @@ const ContactSection = ({ t }) => {
               <h3 className="text-xl font-semibold text-white mb-2">{t.contact.whatsapp}</h3>
               <p className="text-green-100">+32 494 51 60 64</p>
               <p className="text-green-200 text-sm mt-1">+593 98 901 3622</p>
+              <p className="mt-3 text-xs tracking-[0.2em] uppercase text-white/90 font-semibold">
+                {t.contact.whatsappOnly || 'WhatsApp only'}
+              </p>
             </a>
           </div>
         </div>
