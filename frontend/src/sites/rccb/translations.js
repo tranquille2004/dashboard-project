@@ -319,6 +319,112 @@ export const translations = {
       legal: 'All rights reserved.',
       webmaster: 'Webmaster: fworksbuilders'
     }
+  },
+  de: {
+    nav: {
+      home: 'Startseite',
+      services: 'Leistungen',
+      gallery: 'Galerie',
+      contact: 'Kontakt'
+    },
+    hero: {
+      tagline: 'Professionelle Reinigung • Belgien',
+      title: 'Makellose Räume,',
+      titleAccent: 'Tag für Tag.',
+      subtitle: 'Retail Cleaning Care Belgium — zuverlässiger, effizienter und diskreter Reinigungsservice für Unternehmen und Privatpersonen.',
+      ctaPrimary: 'Angebot anfordern',
+      ctaSecondary: 'Unsere Leistungen',
+      scroll: 'Entdecken'
+    },
+    story: {
+      kicker: 'Unsere Geschichte',
+      title: 'Eine klare Geschichte, makellose Ergebnisse.',
+      p1: 'Retail Cleaning Care Belgium (RCCB) ist ein auf professionelle Reinigung spezialisiertes Unternehmen in Belgien. Dank unserer Erfahrung bieten wir zuverlässige und effiziente Dienstleistungen für Unternehmen und Privatpersonen.',
+      p2: 'Seit unserer Gründung sind wir mit einem klaren Ziel gewachsen: zuverlässige und effiziente Reinigungsdienstleistungen für Büros, Einzelhandelsgeschäfte und gewerbliche Räume anzubieten — stets mit Sorgfalt und Professionalität.',
+      p3: 'Unsere Mission: saubere, gesunde und makellose Räume garantieren.',
+      mission: 'Unsere Mission',
+      missionText: 'Saubere, gesunde und makellose Räume garantieren — Tag für Tag.'
+    },
+    stats: {
+      years: 'Jahre Erfahrung',
+      clients: 'Zufriedene Kunden',
+      team: 'Motiviertes Team',
+      area: 'Aktive Region'
+    },
+    services: {
+      kicker: 'Was wir tun',
+      title: 'Maßgeschneiderte Lösungen für jeden Raum',
+      subtitle: 'Von der täglichen Pflege bis zur Spezialreinigung — unser erfahrenes Team arbeitet mit professioneller Ausrüstung und echtem Auge fürs Detail.',
+      categories: {
+        b2b: 'Gewerbe & Unternehmen',
+        specialist: 'Spezialreinigung'
+      },
+      list: [
+        { icon: 'Building2', title: 'Büroreinigung', desc: 'Tägliche oder wöchentliche Reinigung Ihrer Büros, diskret und detailgenau.', category: 'b2b' },
+        { icon: 'ShoppingBag', title: 'Einzelhandel & Geschäfte', desc: 'Für Modegeschäfte, Supermärkte und Boutiquen — ein sauberes Geschäft zieht Kunden an.', category: 'b2b' },
+        { icon: 'HomeIcon', title: 'Mehrfamilienhäuser', desc: 'Pflege der Gemeinschaftsbereiche: Treppenhäuser, Flure, Fenster und mehr.', category: 'b2b' },
+        { icon: 'Dumbbell', title: 'Fitness & Wellness', desc: 'Erstklassige Hygiene für Fitnessstudios, Sportvereine und Wellnesszentren.', category: 'b2b' },
+        { icon: 'Briefcase', title: 'Co-Working & Business Center', desc: 'Flexible Reinigung, angepasst an dynamische Arbeitsumgebungen.', category: 'b2b' },
+        { icon: 'Hotel', title: 'Hotels & Gastronomie', desc: 'Hohe Hygienestandards für das Gastgewerbe, unter Beachtung Ihrer Öffnungszeiten.', category: 'b2b' },
+        { icon: 'Sparkles', title: 'Fensterreinigung', desc: 'Kristallklare Fenster innen und außen, in jeder Etage.', category: 'specialist' },
+        { icon: 'Square', title: 'Teppich & Polster', desc: 'Tiefenreinigung von Teppichen, Sofas und Textilien mit professioneller Ausrüstung.', category: 'specialist' },
+        { icon: 'HardHat', title: 'Bauendreinigung', desc: 'Gründliche Reinigung nach Renovierung oder Neubau — bereit zur Übergabe.', category: 'specialist' },
+        { icon: 'ShieldCheck', title: 'Desinfektion', desc: 'Professionelle Oberflächendesinfektion für eine gesunde Umgebung.', category: 'specialist' },
+        { icon: 'Droplets', title: 'Fassaden- & Hochdruckreinigung', desc: 'Für Fassaden, Terrassen und Parkplätze — Ihr Gebäude strahlt wieder.', category: 'specialist' },
+        { icon: 'Leaf', title: 'Umweltfreundliche Produkte', desc: 'Auf Anfrage arbeiten wir mit zertifizierten umweltfreundlichen Produkten.', category: 'specialist' }
+      ],
+      ctaTitle: 'Besondere Anforderungen?',
+      ctaText: 'Jedes Gebäude ist einzigartig. Kontaktieren Sie uns für eine maßgeschneiderte Lösung.',
+      ctaBtn: 'Kostenloses Angebot anfordern'
+    },
+    why: {
+      kicker: 'Warum RCCB',
+      title: 'Was uns besonders macht',
+      points: [
+        { title: 'Qualität & Präzision', desc: 'Professionelle Ausrüstung, geschultes Team und Detailgenauigkeit bei jedem Einsatz.' },
+        { title: 'Zuverlässigkeit', desc: 'Vereinbarungen werden eingehalten. Diskretion und Pünktlichkeit stehen im Mittelpunkt.' },
+        { title: 'Flexibilität', desc: 'Maßgeschneiderte Lösungen — Tag, Nacht, Wochenende oder saisonal.' },
+        { title: 'Vertrauensbasis', desc: 'Wir setzen auf langfristige Beziehungen, die auf Kommunikation und Ergebnissen basieren.' }
+      ]
+    },
+    gallery: {
+      kicker: 'Unsere Arbeit',
+      title: 'Galerie',
+      subtitle: 'Ein Einblick in unsere Einsätze — Ergebnisse, die für sich sprechen.',
+      loadMore: 'Weitere Fotos anzeigen'
+    },
+    contact: {
+      kicker: 'Kontakt aufnehmen',
+      title: 'Lassen Sie uns zusammenarbeiten',
+      subtitle: 'Erzählen Sie uns von Ihrem Raum, und wir senden Ihnen ein kostenloses, maßgeschneidertes Angebot.',
+      formName: 'Name',
+      formCompany: 'Unternehmen (optional)',
+      formEmail: 'E-Mail-Adresse',
+      formPhone: 'Telefon',
+      formService: 'Art der Dienstleistung',
+      formMessage: 'Ihre Nachricht',
+      formSubmit: 'Anfrage senden',
+      formSubmitting: 'Senden...',
+      formSuccess: 'Vielen Dank! Wir melden uns innerhalb von 24 Stunden.',
+      formError: 'Etwas ist schiefgelaufen. Versuchen Sie es erneut oder kontaktieren Sie uns über WhatsApp.',
+      selectService: 'Dienstleistung auswählen',
+      infoTitle: 'Erreichbar',
+      address: 'Excelsiorlaan 36-38, 1930 Zaventem',
+      vat: 'BE 0793.291.833',
+      whatsapp: 'Chat auf WhatsApp',
+      hoursTitle: 'Öffnungszeiten',
+      hoursWeek: 'Mo – Fr: 8:00 – 18:00',
+      hoursSat: 'Sa: nach Vereinbarung',
+      hoursSun: 'So: geschlossen'
+    },
+    footer: {
+      tagline: 'Professionelle Reinigungsdienstleistungen für Unternehmen und Privatpersonen in ganz Belgien.',
+      navTitle: 'Navigation',
+      servicesTitle: 'Leistungen',
+      contactTitle: 'Kontakt',
+      legal: 'Alle Rechte vorbehalten.',
+      webmaster: 'Webmaster: fworksbuilders'
+    }
   }
 };
 

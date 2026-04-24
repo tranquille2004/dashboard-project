@@ -88,7 +88,7 @@ const Navigation = ({ lang, setLang, t }) => {
     { to: `${prefix}/contact`, label: t.nav.contact }
   ];
 
-  const langFlags = { nl: '🇳🇱', fr: '🇫🇷', en: '🇬🇧' };
+  const langFlags = { nl: '🇧🇪', fr: '🇧🇪', en: '🇬🇧', de: '🇩🇪' };
 
   return (
     <header
@@ -113,7 +113,7 @@ const Navigation = ({ lang, setLang, t }) => {
           </span>
         </Link>
 
-        {/* Desktop Nav */}
+        {/* Desktop Nav links */}
         <nav className="hidden lg:flex items-center gap-1">
           {links.map((l) => (
             <NavLink
@@ -139,9 +139,12 @@ const Navigation = ({ lang, setLang, t }) => {
               )}
             </NavLink>
           ))}
+        </nav>
 
-          {/* Language switcher */}
-          <div className="relative ml-4">
+        {/* Right side: Language switcher (always visible) + CTA (desktop) + Hamburger (mobile) */}
+        <div className="flex items-center gap-2">
+          {/* Language switcher - ALWAYS visible (desktop + mobile) */}
+          <div className="relative">
             <button
               onClick={() => setLangOpen(!langOpen)}
               className={`flex items-center gap-1.5 px-3 py-2 text-sm rounded-full border transition-all ${
@@ -158,8 +161,8 @@ const Navigation = ({ lang, setLang, t }) => {
             {langOpen && (
               <>
                 <div className="fixed inset-0 z-10" onClick={() => setLangOpen(false)} />
-                <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-xl py-2 min-w-[140px] z-20 border border-gray-100">
-                  {['nl', 'fr', 'en'].map((l) => (
+                <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-xl py-2 min-w-[160px] z-20 border border-gray-100">
+                  {['nl', 'fr', 'en', 'de'].map((l) => (
                     <button
                       key={l}
                       onClick={() => { setLang(l); setLangOpen(false); }}
@@ -169,7 +172,7 @@ const Navigation = ({ lang, setLang, t }) => {
                       data-testid={`lang-option-${l}`}
                     >
                       <span>{langFlags[l]}</span>
-                      {{ nl: 'Nederlands', fr: 'Français', en: 'English' }[l]}
+                      {{ nl: 'Nederlands', fr: 'Français', en: 'English', de: 'Deutsch' }[l]}
                     </button>
                   ))}
                 </div>
@@ -177,27 +180,28 @@ const Navigation = ({ lang, setLang, t }) => {
             )}
           </div>
 
+          {/* Desktop CTA */}
           <Link
             to={`${prefix}/contact`}
-            className="ml-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/30 flex items-center gap-2"
+            className="hidden lg:inline-flex ml-2 px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-emerald-500/30 items-center gap-2"
             data-testid="nav-cta-quote"
           >
             {t.hero.ctaPrimary}
             <ArrowRight className="w-4 h-4" />
           </Link>
-        </nav>
 
-        {/* Mobile hamburger */}
-        <button
-          className={`lg:hidden p-2 ${scrolled ? 'text-emerald-900' : 'text-white'}`}
-          onClick={() => setIsOpen(!isOpen)}
-          data-testid="mobile-menu-btn"
-        >
-          {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-        </button>
+          {/* Mobile hamburger */}
+          <button
+            className={`lg:hidden p-2 ${scrolled ? 'text-emerald-900' : 'text-white'}`}
+            onClick={() => setIsOpen(!isOpen)}
+            data-testid="mobile-menu-btn"
+          >
+            {isOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile menu (language switcher is NOT here anymore — it's always visible in header) */}
       {isOpen && (
         <div className="lg:hidden bg-white shadow-xl border-t border-gray-100" data-testid="mobile-menu">
           <div className="px-5 py-4 flex flex-col gap-1">
@@ -216,21 +220,6 @@ const Navigation = ({ lang, setLang, t }) => {
                 {l.label}
               </NavLink>
             ))}
-            <div className="flex items-center gap-2 mt-3 px-4 py-2 border-t border-gray-100">
-              {['nl', 'fr', 'en'].map((l) => (
-                <button
-                  key={l}
-                  onClick={() => setLang(l)}
-                  className={`px-3 py-1.5 text-xs rounded-full border ${
-                    lang === l
-                      ? 'bg-emerald-600 text-white border-emerald-600'
-                      : 'border-gray-200 text-gray-600'
-                  }`}
-                >
-                  {langFlags[l]} {l.toUpperCase()}
-                </button>
-              ))}
-            </div>
             <Link
               to={`${prefix}/contact`}
               onClick={() => setIsOpen(false)}

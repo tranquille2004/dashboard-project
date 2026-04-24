@@ -445,13 +445,13 @@ const Navigation = ({ language, setLanguage, t }) => {
             ))}
           </div>
 
-          {/* Language Selector */}
-          <div className="hidden lg:flex items-center gap-1 border-l border-white/20 pl-6 ml-6">
+          {/* Language Selector - ALWAYS visible (desktop + mobile) */}
+          <div className="flex items-center gap-1 lg:border-l lg:border-white/20 lg:pl-6 lg:ml-6">
             {languages.map((lang, i) => (
               <React.Fragment key={lang.code}>
                 <button
                   onClick={() => setLanguage(lang.code)}
-                  className={`px-2 py-1 text-xs tracking-wider transition-all duration-300 ${
+                  className={`px-1.5 lg:px-2 py-1 text-[11px] lg:text-xs tracking-wider transition-all duration-300 ${
                     language === lang.code
                       ? scrolled ? 'text-amber-600 font-semibold' : 'text-amber-300 font-semibold'
                       : scrolled ? 'text-gray-500 hover:text-amber-600' : 'text-white/70 hover:text-white'
@@ -459,7 +459,7 @@ const Navigation = ({ language, setLanguage, t }) => {
                 >
                   {lang.name}
                 </button>
-                {i < languages.length - 1 && <span className={scrolled ? 'text-gray-300' : 'text-white/30'}>|</span>}
+                {i < languages.length - 1 && <span className={`${scrolled ? 'text-gray-300' : 'text-white/30'} text-[10px] lg:text-xs`}>|</span>}
               </React.Fragment>
             ))}
           </div>
@@ -467,14 +467,14 @@ const Navigation = ({ language, setLanguage, t }) => {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className={`lg:hidden p-2 ${scrolled ? 'text-emerald-900' : 'text-white'}`}
+            className={`lg:hidden p-2 ml-2 ${scrolled ? 'text-emerald-900' : 'text-white'}`}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu (no language switcher here anymore — it's always visible in header) */}
       {isOpen && (
         <div className="lg:hidden bg-white border-t">
           <div className="px-6 py-6 space-y-1">
@@ -488,19 +488,6 @@ const Navigation = ({ language, setLanguage, t }) => {
                 {link.label}
               </Link>
             ))}
-            <div className="flex gap-2 px-4 pt-4 border-t mt-4">
-              {languages.map((lang) => (
-                <button
-                  key={lang.code}
-                  onClick={() => { setLanguage(lang.code); setIsOpen(false); }}
-                  className={`px-3 py-2 text-xs rounded ${
-                    language === lang.code ? 'bg-emerald-800 text-white' : 'bg-gray-100 text-gray-700'
-                  }`}
-                >
-                  {lang.name}
-                </button>
-              ))}
-            </div>
           </div>
         </div>
       )}
