@@ -638,6 +638,18 @@ const GalleryPage = ({ t }) => {
 
   const showMore = () => setVisible((v) => Math.min(v + 18, PHOTOS.length));
 
+  // Close lightbox on Escape; navigate with arrows
+  useEffect(() => {
+    if (lightbox === null) return;
+    const onKey = (e) => {
+      if (e.key === 'Escape') setLightbox(null);
+      else if (e.key === 'ArrowRight') setLightbox((i) => (i + 1) % PHOTOS.length);
+      else if (e.key === 'ArrowLeft') setLightbox((i) => (i - 1 + PHOTOS.length) % PHOTOS.length);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [lightbox]);
+
   return (
     <>
       <SEO title={`${t.gallery.title} — RCCB`} description={t.gallery.subtitle} />

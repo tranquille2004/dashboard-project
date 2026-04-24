@@ -9,6 +9,25 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - Hotel website (Hotel del Pacífico)
 
 ## User Personas
+- **RCCB - Retail Cleaning Care Belgium** (NEW — Feb 2026) — professioneel schoonmaakbedrijf in België
+
+## Changelog
+### Feb 2026 — RCCB Website MVP
+- Built complete new modern multilingual cleaning company website
+- Files: `/app/frontend/src/sites/rccb/RccbApp.js`, `VideoHero.js`, `translations.js`
+- Pages: Home (Notre histoire), Services (12 diensten, B2B + Specialist filters), Gallery (113 foto's + lightbox), Contact (form + WhatsApp)
+- Multi-language: NL / FR / EN with localStorage persistence + browser language detection
+- Hero video compilation: 3 videos cycling with emerald overlay filter (like Hotel del Pacifico)
+- Floating WhatsApp button → `+32472700402`
+- Modern animations (fade-in-up, hover states, backdrop blur nav, emerald gradient sections)
+- Fixed global `main { padding-top: 90px }` leak from cantina/App.css via inline style override
+- Backend: added 'rccb' entry to SITE_EMAIL_CONFIG (info@rccbgroup.be), added company/service optional fields to ContactFormRequest
+- Routing: `/site/rccb` (preview) + domain mapping `rccbgroup.be` / `www.rccbgroup.be` ready
+- Testing: 100% frontend pass (13/13 features) — iteration_7.json
+- Assets: 113 unique photos + 3 unique videos stored in `/app/frontend/public/images/rccb/`
+- Webmaster credit: fworksbuilders (footer link)
+- Address: Excelsiorlaan 36-38, 1930 Zaventem | VAT BE 0793.291.833
+
 - **Super Admin**: Manages all sites via `/admin` dashboard
 - **Site Admins**: Restaurant/business owners managing their own content via `/restaurant-login`
 - **End Users**: Website visitors
