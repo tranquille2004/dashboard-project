@@ -13,7 +13,7 @@ import SEO from '@/components/SEO';
 import { IMG } from '@/utils/imageHelper';
 import VideoHero from './VideoHero';
 import {
-  translations, WHATSAPP_NUMBER, WHATSAPP_LINK, EMAIL, PHONE, ADDRESS, VAT, PHOTOS
+  translations, WHATSAPP_NUMBER, WHATSAPP_LINK, EMAIL, PHONE, ADDRESS, VAT, PHOTOS, PARTNERS
 } from './translations';
 
 const BASE = '/site/rccb';
@@ -555,6 +555,48 @@ const HomePage = ({ t }) => {
                   <h3 className="text-xl font-medium mb-2">{p.title}</h3>
                   <p className="text-emerald-100/70 leading-relaxed">{p.desc}</p>
                 </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* PARTNERS MARQUEE */}
+      <section className="py-20 lg:py-24 bg-gradient-to-b from-emerald-50/30 to-white overflow-hidden" data-testid="partners-section">
+        <div className="max-w-6xl mx-auto px-5 lg:px-8 mb-12">
+          <div className="text-center">
+            <p className="text-emerald-600 text-xs tracking-[0.3em] uppercase mb-4 font-medium">
+              {t.partners?.kicker || 'Trusted by'}
+            </p>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-emerald-950 leading-tight mb-4">
+              {t.partners?.title || 'Some of our clients'}
+            </h2>
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+              {t.partners?.subtitle || ''}
+            </p>
+          </div>
+        </div>
+
+        {/* Marquee (two copies for seamless loop) */}
+        <div className="relative w-full" data-testid="partners-marquee">
+          {/* Fade edges */}
+          <div className="absolute left-0 top-0 bottom-0 w-20 lg:w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+          <div className="absolute right-0 top-0 bottom-0 w-20 lg:w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
+
+          <div className="flex rccb-marquee-track" style={{ width: 'max-content' }}>
+            {[...PARTNERS, ...PARTNERS].map((partner, i) => (
+              <div
+                key={`${partner.name}-${i}`}
+                className="flex-shrink-0 mx-6 lg:mx-10 flex items-center justify-center"
+                style={{ height: '100px', width: '180px' }}
+              >
+                <img
+                  src={IMG(partner.src)}
+                  alt={partner.name}
+                  title={partner.name}
+                  loading="lazy"
+                  className="max-h-[70px] max-w-[160px] object-contain grayscale opacity-60 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+                />
               </div>
             ))}
           </div>

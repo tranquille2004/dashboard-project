@@ -110,6 +110,11 @@ export const translations = {
         { code: 'VCA', label: 'Veiligheid, Gezondheid, Milieu — checklist aannemers' }
       ]
     },
+    partners: {
+      kicker: 'Zij vertrouwen ons',
+      title: 'Enkele van onze klanten',
+      subtitle: 'We werken voor ondernemingen van alle groottes — van lokale winkels tot internationale merken.'
+    },
     footer: {
       tagline: 'Professionele schoonmaak voor bedrijven en particulieren in heel België.',
       navTitle: 'Navigatie',
@@ -226,6 +231,11 @@ export const translations = {
         { code: 'ISO 14001', label: 'Management environnemental' },
         { code: 'VCA', label: 'Sécurité, Santé, Environnement — checklist entrepreneurs' }
       ]
+    },
+    partners: {
+      kicker: 'Ils nous font confiance',
+      title: 'Quelques-uns de nos clients',
+      subtitle: 'Nous travaillons pour des entreprises de toutes tailles — du commerce local aux marques internationales.'
     },
     footer: {
       tagline: 'Nettoyage professionnel pour entreprises et particuliers dans toute la Belgique.',
@@ -344,6 +354,11 @@ export const translations = {
         { code: 'VCA', label: 'Safety, Health, Environment — contractor checklist' }
       ]
     },
+    partners: {
+      kicker: 'They trust us',
+      title: 'Some of our clients',
+      subtitle: 'We work with companies of all sizes — from local shops to international brands.'
+    },
     footer: {
       tagline: 'Professional cleaning services for businesses and individuals across Belgium.',
       navTitle: 'Navigation',
@@ -461,6 +476,11 @@ export const translations = {
         { code: 'VCA', label: 'Sicherheit, Gesundheit, Umwelt — Auftragnehmer-Checkliste' }
       ]
     },
+    partners: {
+      kicker: 'Sie vertrauen uns',
+      title: 'Einige unserer Kunden',
+      subtitle: 'Wir arbeiten für Unternehmen jeder Größe — von lokalen Geschäften bis zu internationalen Marken.'
+    },
     footer: {
       tagline: 'Professionelle Reinigungsdienstleistungen für Unternehmen und Privatpersonen in ganz Belgien.',
       navTitle: 'Navigation',
@@ -481,6 +501,21 @@ export const VAT = 'BE 0793.291.833';
 
 // Photo catalog (113 unique photos)
 export const PHOTOS = Array.from({ length: 113 }, (_, i) => `/images/rccb/photos/photo-${String(i + 1).padStart(2, '0')}.jpg`);
+
+// Partner logos
+export const PARTNERS = [
+  { name: 'Carrefour', src: '/images/rccb/partners/carrefour.png' },
+  { name: 'Delhaize', src: '/images/rccb/partners/delhaize.png' },
+  { name: 'Decathlon', src: '/images/rccb/partners/decathlon.png' },
+  { name: 'MediaMarkt', src: '/images/rccb/partners/mediamarkt.png' },
+  { name: 'GlaxoSmithKline', src: '/images/rccb/partners/glaxosmithkline.png' },
+  { name: 'Sodexo', src: '/images/rccb/partners/sodexo.png' },
+  { name: 'Optical Center', src: '/images/rccb/partners/opticalcenter.png' },
+  { name: 'Poltrone & Sofà', src: '/images/rccb/partners/poltronesofa.png' },
+  { name: 'Pairi Daiza', src: '/images/rccb/partners/paizadaiza.png' },
+  { name: 'EPFC', src: '/images/rccb/partners/epfc.png' },
+  { name: 'La Caserne', src: '/images/rccb/partners/caserne.png' }
+];
 
 // Video compilation for hero
 export const VIDEOS = [

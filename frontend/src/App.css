@@ -175,3 +175,19 @@ html {
 [data-site="rccb"] img {
   opacity: 1 !important;
 }
+
+/* RCCB partners marquee - infinite seamless scroll */
+@keyframes rccbMarquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+[data-site="rccb"] .rccb-marquee-track {
+  animation: rccbMarquee 40s linear infinite;
+  will-change: transform;
+}
+[data-site="rccb"] .rccb-marquee-track:hover {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-site="rccb"] .rccb-marquee-track { animation: none; }
+}
