@@ -179,11 +179,26 @@ export default {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light only">
+  <meta name="supported-color-schemes" content="light">
+  <meta name="theme-color" content="#ffffff">
   <title>${siteTitle}</title>
   <style>
+    :root { color-scheme: light only; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; overflow: hidden; }
-    iframe { width: 100%; height: 100%; border: none; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #ffffff;
+      color-scheme: light only;
+      -webkit-text-size-adjust: 100%;
+      forced-color-adjust: none;
+    }
+    iframe { width: 100%; height: 100%; border: none; color-scheme: light only; }
+    @media (prefers-color-scheme: dark) {
+      html, body { background: #ffffff !important; }
+    }
   </style>
 </head>
 <body>
