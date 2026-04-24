@@ -99,6 +99,17 @@ export const translations = {
       hoursSat: 'Za: op afspraak',
       hoursSun: 'Zon: gesloten'
     },
+    certifications: {
+      kicker: 'Gecertificeerd',
+      title: 'Gewerkt volgens internationale normen',
+      subtitle: 'RCCB werkt conform erkende normen voor kwaliteit, veiligheid en milieu.',
+      list: [
+        { code: 'ISO 9001', label: 'Kwaliteitsmanagement' },
+        { code: 'ISO 45001', label: 'Veiligheid & welzijn op het werk' },
+        { code: 'ISO 14001', label: 'Milieubeheer' },
+        { code: 'VCA', label: 'Veiligheid, Gezondheid, Milieu — checklist aannemers' }
+      ]
+    },
     footer: {
       tagline: 'Professionele schoonmaak voor bedrijven en particulieren in heel België.',
       navTitle: 'Navigatie',
@@ -204,6 +215,17 @@ export const translations = {
       hoursWeek: 'Lun – Ven : 8h00 – 18h00',
       hoursSat: 'Sam : sur rendez-vous',
       hoursSun: 'Dim : fermé'
+    },
+    certifications: {
+      kicker: 'Certifié',
+      title: 'Conformité aux normes internationales',
+      subtitle: 'RCCB travaille selon des normes reconnues en matière de qualité, sécurité et environnement.',
+      list: [
+        { code: 'ISO 9001', label: 'Management de la qualité' },
+        { code: 'ISO 45001', label: 'Santé & sécurité au travail' },
+        { code: 'ISO 14001', label: 'Management environnemental' },
+        { code: 'VCA', label: 'Sécurité, Santé, Environnement — checklist entrepreneurs' }
+      ]
     },
     footer: {
       tagline: 'Nettoyage professionnel pour entreprises et particuliers dans toute la Belgique.',
@@ -311,6 +333,17 @@ export const translations = {
       hoursSat: 'Sat: by appointment',
       hoursSun: 'Sun: closed'
     },
+    certifications: {
+      kicker: 'Certified',
+      title: 'Working to international standards',
+      subtitle: 'RCCB operates according to recognized standards for quality, safety and environment.',
+      list: [
+        { code: 'ISO 9001', label: 'Quality management' },
+        { code: 'ISO 45001', label: 'Occupational health & safety' },
+        { code: 'ISO 14001', label: 'Environmental management' },
+        { code: 'VCA', label: 'Safety, Health, Environment — contractor checklist' }
+      ]
+    },
     footer: {
       tagline: 'Professional cleaning services for businesses and individuals across Belgium.',
       navTitle: 'Navigation',
@@ -416,6 +449,17 @@ export const translations = {
       hoursWeek: 'Mo – Fr: 8:00 – 18:00',
       hoursSat: 'Sa: nach Vereinbarung',
       hoursSun: 'So: geschlossen'
+    },
+    certifications: {
+      kicker: 'Zertifiziert',
+      title: 'Arbeit nach internationalen Standards',
+      subtitle: 'RCCB arbeitet nach anerkannten Normen für Qualität, Sicherheit und Umwelt.',
+      list: [
+        { code: 'ISO 9001', label: 'Qualitätsmanagement' },
+        { code: 'ISO 45001', label: 'Arbeitsschutz & Gesundheit' },
+        { code: 'ISO 14001', label: 'Umweltmanagement' },
+        { code: 'VCA', label: 'Sicherheit, Gesundheit, Umwelt — Auftragnehmer-Checkliste' }
+      ]
     },
     footer: {
       tagline: 'Professionelle Reinigungsdienstleistungen für Unternehmen und Privatpersonen in ganz Belgien.',

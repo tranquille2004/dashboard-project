@@ -7,7 +7,7 @@ import {
   Menu, X, Phone, Mail, MapPin, Clock, ChevronRight, ChevronDown,
   Building2, ShoppingBag, Home as HomeIcon, Dumbbell, Briefcase, Hotel,
   Sparkles, Square, HardHat, ShieldCheck, Droplets, Leaf,
-  MessageCircle, CheckCircle2, ArrowRight, Globe, Send, Star
+  MessageCircle, CheckCircle2, ArrowRight, Globe, Send, Star, Award
 } from 'lucide-react';
 import SEO from '@/components/SEO';
 import { IMG } from '@/utils/imageHelper';
@@ -313,6 +313,27 @@ const Footer = ({ t }) => {
         </div>
       </div>
 
+      {/* Certifications strip */}
+      <div className="border-t border-emerald-900 bg-emerald-950/50">
+        <div className="max-w-7xl mx-auto px-5 lg:px-8 py-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-3 text-xs">
+          <span className="flex items-center gap-2 text-emerald-300/80">
+            <Award className="w-4 h-4" />
+            <span className="tracking-widest uppercase font-semibold">
+              {t.certifications?.kicker || 'Certified'}:
+            </span>
+          </span>
+          {(t.certifications?.list || []).map((cert) => (
+            <span
+              key={cert.code}
+              className="px-3 py-1 rounded-full border border-emerald-700/50 bg-emerald-900/40 text-emerald-200 font-semibold tracking-wide"
+              data-testid={`footer-cert-${cert.code.toLowerCase().replace(/[^a-z0-9]/g,'-')}`}
+            >
+              {cert.code}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <div className="border-t border-emerald-900">
         <div className="max-w-7xl mx-auto px-5 lg:px-8 py-5 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-emerald-300/60">
           <div>© {new Date().getFullYear()} Retail Cleaning Care Belgium. {t.footer.legal}</div>
@@ -417,6 +438,57 @@ const HomePage = ({ t }) => {
               <div className="text-xs md:text-sm text-emerald-100/70 tracking-widest uppercase">{s.label}</div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* CERTIFICATIONS */}
+      <section className="py-20 lg:py-24 bg-white relative overflow-hidden" data-testid="certifications-section">
+        <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-emerald-50 rounded-full blur-3xl opacity-60" aria-hidden />
+        <div className="max-w-6xl mx-auto px-5 lg:px-8 relative">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 mb-4 rounded-full border border-emerald-200 bg-emerald-50">
+              <Award className="w-4 h-4 text-emerald-600" />
+              <span className="text-xs tracking-[0.3em] uppercase text-emerald-700 font-semibold">
+                {t.certifications?.kicker || 'Certified'}
+              </span>
+            </div>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-emerald-950 leading-tight mb-4">
+              {t.certifications?.title || 'International standards'}
+            </h2>
+            <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+              {t.certifications?.subtitle || ''}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6">
+            {(t.certifications?.list || []).map((cert, i) => (
+              <div
+                key={cert.code}
+                className="group relative bg-white border-2 border-emerald-100 hover:border-emerald-500 rounded-2xl p-6 lg:p-8 text-center transition-all duration-500 hover:-translate-y-1 hover:shadow-2xl hover:shadow-emerald-500/10"
+                data-testid={`cert-${cert.code.toLowerCase().replace(/[^a-z0-9]/g,'-')}`}
+              >
+                {/* Top badge icon */}
+                <div className="w-14 h-14 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-500 to-emerald-700 flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform duration-500">
+                  <Award className="w-7 h-7 text-white" />
+                </div>
+
+                {/* Certification code - big and bold */}
+                <div className="text-xl lg:text-2xl font-bold text-emerald-950 tracking-tight mb-2">
+                  {cert.code}
+                </div>
+
+                {/* Description */}
+                <div className="text-xs lg:text-sm text-gray-600 leading-relaxed">
+                  {cert.label}
+                </div>
+
+                {/* Corner checkmark */}
+                <div className="absolute top-3 right-3 w-6 h-6 rounded-full bg-emerald-500 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <CheckCircle2 className="w-4 h-4 text-white" />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
