@@ -141,6 +141,28 @@ const translations = {
     footer: {
       tagline: 'Professionele websites die resultaat opleveren',
       rights: 'Alle rechten voorbehouden'
+    },
+    process: {
+      kicker: 'Onze werkwijze',
+      title: 'In 3 stappen naar uw website',
+      subtitle: 'Een helder proces, van eerste gesprek tot oplevering — zonder verrassingen.',
+      steps: [
+        {
+          number: '01',
+          title: 'Kennismaking (gratis)',
+          desc: 'We beginnen met een persoonlijk gesprek of videocall. Samen brengen we uw wensen, doelen en merk in kaart zodat we een plan bouwen dat echt bij u past.'
+        },
+        {
+          number: '02',
+          title: 'Ontwerp & prototype',
+          desc: 'Voor er één regel code geschreven wordt, maken we een visueel prototype. Zo ziet u hoe uw site of app eruit zal zien — en kunt u stijl en functies bijsturen voordat we écht beginnen.'
+        },
+        {
+          number: '03',
+          title: 'Bouw & livegang',
+          desc: 'Onze developers bouwen het prototype om tot een snelle, betrouwbare en toekomstbestendige website. Elke regel code wordt geschreven met oog voor prestaties, veiligheid en groei.'
+        }
+      ]
     }
   },
   fr: {
@@ -244,6 +266,28 @@ const translations = {
     footer: {
       tagline: 'Sites web professionnels qui génèrent des résultats',
       rights: 'Tous droits réservés'
+    },
+    process: {
+      kicker: 'Notre méthode',
+      title: 'Votre site en 3 étapes',
+      subtitle: 'Un processus clair, de la première rencontre à la mise en ligne — sans mauvaises surprises.',
+      steps: [
+        {
+          number: '01',
+          title: 'Rencontre gratuite',
+          desc: 'Tout commence par un échange — en personne ou en visio. Nous prenons le temps de comprendre votre univers, vos objectifs et vos contraintes pour construire un plan qui vous ressemble.'
+        },
+        {
+          number: '02',
+          title: 'Maquette & prototype',
+          desc: 'Avant de coder la moindre ligne, nous créons une maquette visuelle de votre site ou application. Vous validez le style et les fonctionnalités avant que le développement ne démarre.'
+        },
+        {
+          number: '03',
+          title: 'Développement & mise en ligne',
+          desc: 'Nos développeurs transforment la maquette en solution performante, robuste et évolutive. Chaque ligne de code vise la rapidité, la fiabilité et la pérennité de votre projet.'
+        }
+      ]
     }
   },
   en: {
@@ -347,6 +391,28 @@ const translations = {
     footer: {
       tagline: 'Professional websites that deliver results',
       rights: 'All rights reserved'
+    },
+    process: {
+      kicker: 'How we work',
+      title: 'Your website in 3 steps',
+      subtitle: 'A clear process, from first call to going live — no surprises.',
+      steps: [
+        {
+          number: '01',
+          title: 'Free intro call',
+          desc: 'Every project starts with a real conversation — in person or online. We take the time to understand your goals, your brand and your constraints to shape a plan that fits you.'
+        },
+        {
+          number: '02',
+          title: 'Design & prototype',
+          desc: 'Before writing a single line of code, we build a visual prototype of your site or app. You can review the look and the features, and fine-tune everything before development begins.'
+        },
+        {
+          number: '03',
+          title: 'Build & launch',
+          desc: 'Our developers turn the prototype into a fast, reliable and future-proof solution. Every line of code is written with performance, security and long-term growth in mind.'
+        }
+      ]
     }
   },
   es: {
@@ -450,6 +516,28 @@ const translations = {
     footer: {
       tagline: 'Sitios web profesionales que generan resultados',
       rights: 'Todos los derechos reservados'
+    },
+    process: {
+      kicker: 'Nuestro método',
+      title: 'Tu sitio web en 3 pasos',
+      subtitle: 'Un proceso claro, desde la primera reunión hasta la publicación — sin sorpresas.',
+      steps: [
+        {
+          number: '01',
+          title: 'Primera reunión gratuita',
+          desc: 'Todo comienza con una conversación — en persona o por videollamada. Nos tomamos el tiempo de entender tus objetivos, tu marca y tus necesidades para diseñar un plan hecho a tu medida.'
+        },
+        {
+          number: '02',
+          title: 'Diseño y prototipo',
+          desc: 'Antes de escribir una sola línea de código, creamos un prototipo visual de tu sitio o aplicación. Podrás validar el estilo y las funciones antes de que comience el desarrollo.'
+        },
+        {
+          number: '03',
+          title: 'Desarrollo y publicación',
+          desc: 'Nuestros desarrolladores convierten el prototipo en una solución rápida, fiable y escalable. Cada línea de código está pensada para rendimiento, seguridad y crecimiento a largo plazo.'
+        }
+      ]
     }
   },
   it: {
@@ -553,6 +641,28 @@ const translations = {
     footer: {
       tagline: 'Siti web professionali che generano risultati',
       rights: 'Tutti i diritti riservati'
+    },
+    process: {
+      kicker: 'Il nostro metodo',
+      title: 'Il tuo sito in 3 passi',
+      subtitle: 'Un percorso chiaro, dal primo contatto al lancio — senza sorprese.',
+      steps: [
+        {
+          number: '01',
+          title: 'Primo incontro gratuito',
+          desc: 'Tutto inizia con una conversazione — di persona o in videochiamata. Ci prendiamo il tempo di capire i tuoi obiettivi, il tuo brand e le tue esigenze per costruire un piano su misura.'
+        },
+        {
+          number: '02',
+          title: 'Design e prototipo',
+          desc: "Prima di scrivere una riga di codice, creiamo un prototipo visivo del tuo sito o della tua app. Potrai validare lo stile e le funzionalità prima dell'inizio dello sviluppo."
+        },
+        {
+          number: '03',
+          title: 'Sviluppo e pubblicazione',
+          desc: 'I nostri sviluppatori trasformano il prototipo in una soluzione veloce, affidabile e scalabile. Ogni riga di codice è pensata per performance, sicurezza e crescita nel tempo.'
+        }
+      ]
     }
   }
 };
@@ -998,6 +1108,60 @@ const FeaturesSection = ({ t }) => {
   );
 };
 
+// Process Section - Our 3-step approach
+const ProcessSection = ({ t }) => (
+  <section id="process" className="py-24 bg-gray-900 relative overflow-hidden">
+    {/* Background accents */}
+    <div className="absolute top-0 left-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl" aria-hidden />
+    <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/5 rounded-full blur-3xl" aria-hidden />
+
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Section header */}
+      <div className="text-center mb-16">
+        <div className="inline-block px-4 py-1.5 mb-4 rounded-full border border-amber-500/30 bg-amber-500/5">
+          <span className="text-xs tracking-[0.3em] uppercase text-amber-400 font-medium">
+            {t.process?.kicker || 'Our method'}
+          </span>
+        </div>
+        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-light text-white mb-4 leading-tight">
+          {t.process?.title || 'Your website in 3 steps'}
+        </h2>
+        <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+          {t.process?.subtitle || ''}
+        </p>
+      </div>
+
+      {/* Steps */}
+      <div className="grid md:grid-cols-3 gap-6 lg:gap-8">
+        {(t.process?.steps || []).map((step, i) => (
+          <div
+            key={i}
+            className="group relative bg-gray-800/50 backdrop-blur-sm border border-gray-700/50 rounded-2xl p-8 hover:border-amber-500/50 transition-all duration-500 hover:-translate-y-1"
+            data-testid={`fworks-process-step-${i}`}
+          >
+            {/* Connector line (desktop) */}
+            {i < 2 && (
+              <div className="hidden md:block absolute top-12 -right-4 lg:-right-5 w-8 lg:w-10 h-px bg-gradient-to-r from-amber-500/50 to-transparent z-10" />
+            )}
+
+            {/* Big number */}
+            <div className="text-6xl lg:text-7xl font-light bg-gradient-to-br from-amber-400 to-amber-600 bg-clip-text text-transparent mb-4 leading-none">
+              {step.number}
+            </div>
+
+            <h3 className="text-xl font-semibold text-white mb-3 group-hover:text-amber-300 transition-colors">
+              {step.title}
+            </h3>
+            <p className="text-gray-400 leading-relaxed text-sm lg:text-base">
+              {step.desc}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+);
+
 // Portfolio Section
 const PortfolioSection = ({ t, lang }) => (
   <section id="portfolio" className="py-24 bg-gray-800 relative overflow-hidden">
@@ -1329,6 +1493,7 @@ function FWorksApp() {
         <Navigation t={t} lang={lang} setLang={setLang} />
         <HeroSection t={t} />
         <FeaturesSection t={t} />
+        <ProcessSection t={t} />
         <PortfolioSection t={t} lang={lang} />
         <PricingSection t={t} />
         <ContactSection t={t} />
