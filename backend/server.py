@@ -2023,8 +2023,8 @@ async def serve_image(path: str):
 
 # ============== ANALYTICS ==============
 @api_router.post("/analytics/track")
-async def track_visit(request: Request):
-    """Track a unique page visit - one per IP per day"""
+async def track_visit_analytics(request: Request):
+    """Track a unique page visit - one per IP per day. Writes to BOTH analytics tables for consistency."""
     try:
         body = await request.json()
         site_id = body.get("site_id", "")
@@ -2036,6 +2036,10 @@ async def track_visit(request: Request):
         
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         
+        # Map site_id to site_slug for the legacy site_visits table
+        # site_id = "site_hoteldelpacifico" -> site_slug = "hoteldelpacifico"
+        site_slug = site_id.replace("site_", "") if site_id.startswith("site_") else site_id
+        
         # Only count unique visitors: 1 per IP per day per site
         existing = await db.analytics.find_one({"site_id": site_id, "ip": ip, "date": today})
         if existing:
@@ -2043,29 +2047,54 @@ async def track_visit(request: Request):
         
         # Get country from free API
         country = "Desconocido"
+        country_code = ""
         try:
             cached = await db.ip_countries.find_one({"ip": ip}, {"_id": 0})
             if cached:
                 country = cached["country"]
+                country_code = cached.get("code", "")
             else:
                 resp = requests.get(f"http://ip-api.com/json/{ip}?fields=country,countryCode", timeout=2)
                 if resp.status_code == 200:
                     data = resp.json()
                     country = data.get("country", "Desconocido")
-                    await db.ip_countries.update_one({"ip": ip}, {"$set": {"ip": ip, "country": country, "code": data.get("countryCode", "")}}, upsert=True)
-        except:
+                    country_code = data.get("countryCode", "")
+                    await db.ip_countries.update_one({"ip": ip}, {"$set": {"ip": ip, "country": country, "code": country_code}}, upsert=True)
+        except Exception:
             pass
         
+        timestamp = datetime.now(timezone.utc).isoformat()
+        
+        # Write to db.analytics (used by client/site admin dashboard)
         await db.analytics.insert_one({
             "site_id": site_id,
             "page": page,
             "ip": ip,
             "country": country,
             "date": today,
-            "timestamp": datetime.now(timezone.utc).isoformat()
+            "timestamp": timestamp
         })
+        
+        # ALSO write to db.site_visits (used by super-admin / fworksbuilders dashboard)
+        # Use same IP+date+page deduplication as legacy /track-visit endpoint
+        visitor_id = f"{ip}_{today}_{page}"
+        existing_sv = await db.site_visits.find_one({"site_slug": site_slug, "visitor_id": visitor_id})
+        if not existing_sv:
+            await db.site_visits.insert_one({
+                "site_slug": site_slug,
+                "visitor_id": visitor_id,
+                "visitor_ip": ip,
+                "path": page,
+                "timestamp": timestamp,
+                "date": today,
+                "country": country,
+                "country_code": country_code,
+                "user_agent": request.headers.get("user-agent", ""),
+                "referer": request.headers.get("referer", "")
+            })
+        
         return {"ok": True}
-    except:
+    except Exception:
         return {"ok": True}
 
 @site_admin_router.get("/analytics")
@@ -2324,6 +2353,49 @@ async def track_visit(request: Request):
     
     await db.site_visits.insert_one(visit)
     return {"status": "tracked", "path": page_path}
+
+@admin_router.post("/backfill-analytics")
+async def backfill_analytics(user: User = Depends(get_current_user)):
+    """Migrate visit data from db.analytics into db.site_visits so super dashboard shows everything.
+    
+    Run once after we deployed the dual-write fix. Idempotent: safe to run multiple times.
+    """
+    migrated = 0
+    skipped = 0
+    
+    async for entry in db.analytics.find({}):
+        site_id = entry.get("site_id", "")
+        site_slug = site_id.replace("site_", "") if site_id.startswith("site_") else site_id
+        ip = entry.get("ip", "")
+        date = entry.get("date", "")
+        page = entry.get("page", "/")
+        
+        if not site_slug or not ip or not date:
+            skipped += 1
+            continue
+        
+        visitor_id = f"{ip}_{date}_{page}"
+        existing = await db.site_visits.find_one({"site_slug": site_slug, "visitor_id": visitor_id})
+        if existing:
+            skipped += 1
+            continue
+        
+        await db.site_visits.insert_one({
+            "site_slug": site_slug,
+            "visitor_id": visitor_id,
+            "visitor_ip": ip,
+            "path": page,
+            "timestamp": entry.get("timestamp", date + "T00:00:00+00:00"),
+            "date": date,
+            "country": entry.get("country", ""),
+            "country_code": "",
+            "user_agent": "",
+            "referer": ""
+        })
+        migrated += 1
+    
+    return {"migrated": migrated, "skipped_already_present": skipped}
+
 
 @admin_router.get("/sites/{site_id}/stats")
 async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
