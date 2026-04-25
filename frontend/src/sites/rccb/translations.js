@@ -517,9 +517,8 @@ export const PARTNERS = [
   { name: 'La Caserne', src: '/images/rccb/partners/caserne.png' }
 ];
 
-// Video compilation for hero
+// Video compilation for hero (two distinct stable segments from the same source)
 export const VIDEOS = [
-  '/images/rccb/video-1.mp4',
-  '/images/rccb/video-2.mp4',
-  '/images/rccb/video-3.mp4'
+  '/images/rccb/hero-1.mp4',
+  '/images/rccb/hero-2.mp4'
 ];
