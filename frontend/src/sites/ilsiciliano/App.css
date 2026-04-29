@@ -1,9 +1,14 @@
-/* Il Siciliano Custom Styles - Black & Dark Gold Theme */
+/* Il Siciliano Custom Styles - Italian Tricolor Theme (green, white, red, black) */
 
 :root {
-  --gold: #A67C52;
-  --gold-light: #C8A882;
-  --gold-dark: #8B5E3C;
+  /* Primary accent: Italian red (replaces former "gold") */
+  --gold: #C62828;
+  --gold-light: #E53935;
+  --gold-dark: #8E1616;
+  /* Secondary accent: Italian green */
+  --italian-green: #2E7D32;
+  --italian-green-light: #43A047;
+  --italian-green-dark: #1B5E20;
   --black: #000000;
   --gray-900: #0f0f10;
 }
@@ -18,25 +23,41 @@ body {
   color: white;
 }
 
-/* Custom Gold Color */
-.text-gold {
-  color: var(--gold) !important;
+/* Primary accent (red) */
+.text-gold { color: var(--gold) !important; }
+.bg-gold { background-color: var(--gold) !important; }
+.border-gold { border-color: var(--gold) !important; }
+.hover\:text-gold:hover { color: var(--gold) !important; }
+.hover\:bg-gold:hover { background-color: var(--gold) !important; }
+
+/* Secondary accent (green) - utility classes for manual accents */
+.text-italian-green { color: var(--italian-green) !important; }
+.bg-italian-green { background-color: var(--italian-green) !important; }
+.border-italian-green { border-color: var(--italian-green) !important; }
+
+/* Italian tricolor strip - usable as decorative element */
+.italian-tricolor {
+  background: linear-gradient(
+    to right,
+    var(--italian-green) 0%,
+    var(--italian-green) 33.33%,
+    #ffffff 33.33%,
+    #ffffff 66.66%,
+    var(--gold) 66.66%,
+    var(--gold) 100%
+  );
 }
 
-.bg-gold {
-  background-color: var(--gold) !important;
-}
-
-.border-gold {
-  border-color: var(--gold) !important;
-}
-
-.hover\:text-gold:hover {
-  color: var(--gold) !important;
-}
-
-.hover\:bg-gold:hover {
-  background-color: var(--gold) !important;
+.italian-tricolor-vertical {
+  background: linear-gradient(
+    to bottom,
+    var(--italian-green) 0%,
+    var(--italian-green) 33.33%,
+    #ffffff 33.33%,
+    #ffffff 66.66%,
+    var(--gold) 66.66%,
+    var(--gold) 100%
+  );
 }
 
 /* Animations */
