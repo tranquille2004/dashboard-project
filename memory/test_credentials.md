@@ -3,8 +3,13 @@
 ## Hotel del Pacifico - Site Admin
 - Email: admin@hoteldelpacifico.net
 - Password: hotel123
-- Login URL: /admin (on hotel domain) or /restaurant-login?site=hoteldelpacifico
 
-## Super Admin
-- URL: /admin (on fworksbuilders.com)
-- Auth: Google Auth (Emergent-managed)
+## Il Siciliano - Site Admin (Santo Domingo, Ecuador)
+- Email: admin@ilsiciliano.ec
+- Password: siciliano123
+
+## RCCB - Site Admin
+- (not created yet)
+
+## Super Admin / fworksbuilders
+- (configured via environment)

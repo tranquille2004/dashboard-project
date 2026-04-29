@@ -27,7 +27,10 @@ const SITE_MAPPING = {
   'www.hoteldelpacifico.net': '/site/hoteldelpacifico',
   'rccb.fworksbuilders.com': '/site/rccb',
   'rccbgroup.be': '/site/rccb',
-  'www.rccbgroup.be': '/site/rccb'
+  'www.rccbgroup.be': '/site/rccb',
+  'ilsiciliano.fworksbuilders.com': '/site/ilsiciliano',
+  'ilsiciliano.ec': '/site/ilsiciliano',
+  'www.ilsiciliano.ec': '/site/ilsiciliano'
 };
 
 const SITE_TITLES = {
@@ -40,7 +43,9 @@ const SITE_TITLES = {
   '/site/fworks': 'fworksbuilders - Web Design',
   '/site/smeralda': 'Résidence Villa Smeralda - Sardinia',
   '/site/albertopantoja': 'Alberto Pantoja - Consejal de Santo Domingo',
-  '/site/hoteldelpacifico': 'Hotel del Pacífico - Santo Domingo, Ecuador'
+  '/site/hoteldelpacifico': 'Hotel del Pacífico - Santo Domingo, Ecuador',
+  '/site/rccb': 'RCCB - Retail Cleaning Care Belgium',
+  '/site/ilsiciliano': 'Il Siciliano — Trattoria Pizzería — Santo Domingo, Ecuador'
 };
 
 export default {

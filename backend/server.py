@@ -683,6 +683,11 @@ SITE_EMAIL_CONFIG = {
         'to': 'info@rccbgroup.be',
         'subject_prefix': 'RCCB — Nouvelle demande / New request',
         'from_name': 'RCCB Website'
+    },
+    'ilsiciliano': {
+        'to': 'info@ilsiciliano.ec',
+        'subject_prefix': 'Il Siciliano — Nueva consulta',
+        'from_name': 'Il Siciliano Website'
     }
 }
 
@@ -1543,6 +1548,9 @@ DOMAIN_SLUG_MAP = {
     'rccb.fworksbuilders.com': 'rccb',
     'rccbgroup.be': 'rccb',
     'www.rccbgroup.be': 'rccb',
+    'ilsiciliano.fworksbuilders.com': 'ilsiciliano',
+    'ilsiciliano.ec': 'ilsiciliano',
+    'www.ilsiciliano.ec': 'ilsiciliano',
 }
 
 # SEO data per site
@@ -1616,6 +1624,13 @@ SITE_SEO_DATA = {
         'description': 'Retail Cleaning Care Belgium (RCCB) — professioneel schoonmaakbedrijf in België. Kantoren, retail, syndic, glasbewassing, desinfectie en meer. Betrouwbaar en efficiënt.',
         'keywords': 'schoonmaakbedrijf België, nettoyage Belgique, cleaning company Belgium, RCCB, Retail Cleaning Care Belgium, kantoorschoonmaak, nettoyage bureaux, Zaventem, glasbewassing, desinfectie',
         'pages': ['/', '/services', '/gallery', '/contact']
+    },
+    'ilsiciliano': {
+        'domain': 'ilsiciliano.fworksbuilders.com',
+        'name': 'Il Siciliano — Trattoria Pizzería — Santo Domingo, Ecuador',
+        'description': 'Il Siciliano — auténtica cocina siciliana en Santo Domingo de los Tsáchilas. Pasta fresca, pizza de horno de leña, especialidades de Sicilia. Reserva tu mesa.',
+        'keywords': 'restaurante italiano Santo Domingo, pizzería Ecuador, cocina siciliana, Il Siciliano, trattoria, pizza horno de leña, restaurante Tsáchilas',
+        'pages': ['/', '/menu', '/reserve', '/takeaway', '/gallery', '/info', '/about']
     }
 }
 

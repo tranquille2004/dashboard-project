@@ -17,6 +17,7 @@ import SmeraldaApp from '@/sites/smeralda/SmeraldaApp';
 import AlbertoPantojaApp from '@/sites/albertopantoja/AlbertoPantojaApp';
 import HotelDelPacificoApp from '@/sites/hoteldelpacifico/HotelDelPacificoApp';
 import RccbApp from '@/sites/rccb/RccbApp';
+import IlSicilianoApp from '@/sites/ilsiciliano/IlSicilianoApp';
 import './App.css';
 
 // Domain to site mapping - BELANGRIJKSTE CODE
@@ -45,7 +46,10 @@ const DOMAIN_MAPPING = {
   'www.hoteldelpacifico.net': 'hoteldelpacifico',
   'rccb.fworksbuilders.com': 'rccb',
   'rccbgroup.be': 'rccb',
-  'www.rccbgroup.be': 'rccb'
+  'www.rccbgroup.be': 'rccb',
+  'ilsiciliano.fworksbuilders.com': 'ilsiciliano',
+  'ilsiciliano.ec': 'ilsiciliano',
+  'www.ilsiciliano.ec': 'ilsiciliano'
 };
 
 // Detecteer custom domain DIRECT bij laden
@@ -90,6 +94,14 @@ function AdminRouter() {
       return (
         <Routes>
           <Route path="/site/rccb/*" element={<RccbApp />} />
+        </Routes>
+      );
+    }
+    // Special handling for /site/ilsiciliano
+    if (location.pathname.startsWith('/site/ilsiciliano')) {
+      return (
+        <Routes>
+          <Route path="/site/ilsiciliano/*" element={<IlSicilianoApp />} />
         </Routes>
       );
     }
@@ -231,6 +243,33 @@ function CustomDomainRouter({ slug }) {
     return (
       <Routes>
         <Route path="/*" element={<RccbApp />} />
+      </Routes>
+    );
+  }
+
+  // Il Siciliano - Trattoria Pizzería Santo Domingo Ecuador
+  if (slug === 'ilsiciliano') {
+    if (location.pathname === '/admin' || location.pathname === '/admin/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/admin" element={<SiteAdminLogin preSelectedSite={slug} />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    if (location.pathname === '/mi-sitio' || location.pathname === '/mi-sitio/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/mi-sitio" element={<SiteAdminDashboard />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    return (
+      <Routes>
+        <Route path="/*" element={<IlSicilianoApp />} />
       </Routes>
     );
   }
