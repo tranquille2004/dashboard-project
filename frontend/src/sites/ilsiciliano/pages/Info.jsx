@@ -142,8 +142,8 @@ const Info = () => {
           <div className="animate-slide-in-right">
             <div className="bg-gradient-to-br from-gray-900 to-black p-4 rounded-lg border border-gold/20 h-full">
               <iframe
-                title="Google Maps"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2517.7241234567!2d4.467890315674!3d50.883333379533!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c3dda8e8e8e8e8%3A0x8e8e8e8e8e8e8e8!2sStationsstraat%2035%2C%201930%20Santo Domingo!5e0!3m2!1sen!2sbe!4v1234567890123!5m2!1sen!2sbe"
+                title="Il Siciliano en Google Maps"
+                src="https://www.google.com/maps?q=Il+Siciliano+Santo+Domingo+Ecuador&output=embed"
                 width="100%"
                 height="100%"
                 style={{ border: 0, minHeight: '500px', borderRadius: '8px' }}
@@ -152,6 +152,76 @@ const Info = () => {
                 referrerPolicy="no-referrer-when-downgrade"
               />
             </div>
+          </div>
+        </div>
+
+        {/* How to find us - Google Maps embed */}
+        <div className="bg-gradient-to-br from-gray-900 to-black rounded-lg border border-gold/20 overflow-hidden mb-12">
+          <div className="p-8 pb-0">
+            <h2 className="text-3xl font-bold text-gold mb-2 flex items-center gap-3">
+              <MapPin size={28} />
+              {{
+                nl: 'Hoe te komen',
+                fr: 'Comment venir',
+                en: 'How to find us',
+                es: 'Cómo llegar',
+                de: 'So finden Sie uns',
+                it: 'Come arrivare'
+              }[language]}
+            </h2>
+            <p className="text-gray-300 mb-6">
+              {{
+                nl: 'Wij liggen in het hart van Santo Domingo, goed bereikbaar met auto en taxi. Gratis parkeren in de omgeving.',
+                fr: 'Nous sommes situés au cœur de Santo Domingo, facilement accessible en voiture ou en taxi. Stationnement gratuit à proximité.',
+                en: 'We are located in the heart of Santo Domingo, easily reached by car or taxi. Free parking nearby.',
+                es: 'Estamos ubicados en el corazón de Santo Domingo, de fácil acceso en auto o taxi. Parqueo gratuito en los alrededores.',
+                de: 'Wir befinden uns im Herzen von Santo Domingo, gut erreichbar mit Auto oder Taxi. Kostenlose Parkplätze in der Nähe.',
+                it: 'Siamo nel cuore di Santo Domingo, facilmente raggiungibile in auto o taxi. Parcheggio gratuito nelle vicinanze.'
+              }[language]}
+            </p>
+          </div>
+          <div className="relative w-full" style={{ paddingBottom: '50%' }}>
+            <iframe
+              title="Il Siciliano en Google Maps"
+              src="https://www.google.com/maps?q=Il+Siciliano+Santo+Domingo+Ecuador&output=embed"
+              className="absolute inset-0 w-full h-full border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+          <div className="p-6 bg-black/60 border-t border-gold/10 flex flex-wrap gap-3 items-center justify-center">
+            <a
+              href="https://www.google.com/maps/dir/?api=1&destination=Il+Siciliano+Santo+Domingo+Ecuador"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 bg-gold hover:bg-gold/90 text-black font-semibold px-6 py-3 rounded-md transition-all shadow-lg"
+            >
+              <MapPin size={18} />
+              {{
+                nl: 'Route berekenen',
+                fr: "Calculer l'itinéraire",
+                en: 'Get directions',
+                es: 'Cómo llegar (ruta)',
+                de: 'Route berechnen',
+                it: 'Calcola il percorso'
+              }[language]}
+            </a>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Il+Siciliano+Santo+Domingo+Ecuador"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 border-2 border-gold text-gold hover:bg-gold/10 font-semibold px-6 py-3 rounded-md transition-all"
+            >
+              {{
+                nl: 'Open in Google Maps',
+                fr: 'Ouvrir dans Google Maps',
+                en: 'Open in Google Maps',
+                es: 'Abrir en Google Maps',
+                de: 'In Google Maps öffnen',
+                it: 'Apri in Google Maps'
+              }[language]}
+            </a>
           </div>
         </div>
 

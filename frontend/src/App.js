@@ -18,6 +18,7 @@ import AlbertoPantojaApp from '@/sites/albertopantoja/AlbertoPantojaApp';
 import HotelDelPacificoApp from '@/sites/hoteldelpacifico/HotelDelPacificoApp';
 import RccbApp from '@/sites/rccb/RccbApp';
 import IlSicilianoApp from '@/sites/ilsiciliano/IlSicilianoApp';
+import IlSicilianoAdminDashboard from '@/sites/ilsiciliano/admin/IlSicilianoAdminDashboard';
 import './App.css';
 
 // Domain to site mapping - BELANGRIJKSTE CODE
@@ -262,7 +263,7 @@ function CustomDomainRouter({ slug }) {
       return (
         <SiteAdminProvider>
           <Routes>
-            <Route path="/mi-sitio" element={<SiteAdminDashboard />} />
+            <Route path="/mi-sitio" element={<IlSicilianoAdminDashboard />} />
           </Routes>
         </SiteAdminProvider>
       );

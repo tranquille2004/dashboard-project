@@ -18,7 +18,9 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
 
     try {
       await login(email, password);
-      navigate('/mijn-site');
+      // Route to the right dashboard path per site
+      const dashboardPath = preSelectedSite === 'ilsiciliano' ? '/mi-sitio' : '/mijn-site';
+      navigate(dashboardPath);
     } catch (err) {
       setError(err.response?.data?.detail || 'Error al iniciar sesión. Verifique sus datos.');
     } finally {
@@ -33,7 +35,8 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
     'mercato': 'Ristorante Mercato',
     'tracemaster': 'Tracemaster',
     'theobeans': 'Theo Beans Export',
-    'hoteldelpacifico': 'Hotel del Pacífico'
+    'hoteldelpacifico': 'Hotel del Pacífico',
+    'ilsiciliano': 'Il Siciliano'
   };
   const siteName = preSelectedSite ? siteNames[preSelectedSite] || preSelectedSite : null;
   const isHotel = preSelectedSite === 'hoteldelpacifico';
