@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
 import { translations } from '../data/translations';
-import { ChevronRight, UtensilsCrossed } from 'lucide-react';
+import { ChevronRight } from 'lucide-react';
 
 // SEO Configuration for Il Siciliano
 const SEO_CONFIG = {
@@ -83,8 +83,12 @@ const Home = () => {
 
         {/* Hero Content */}
         <div className="relative z-10 text-center px-4 animate-fade-in">
-          <div className="mb-8">
-            <UtensilsCrossed size={64} className="text-gold mx-auto mb-6 animate-pulse" />
+          <div className="mb-8 flex justify-center">
+            <img
+              src="/images/ilsiciliano/logo/ilsiciliano-logo.png"
+              alt="Il Siciliano"
+              className="h-48 md:h-64 lg:h-72 w-auto drop-shadow-[0_10px_40px_rgba(0,0,0,0.7)]"
+            />
           </div>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-wide">
             {t.home.welcome[language]}

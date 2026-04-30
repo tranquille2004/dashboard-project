@@ -9,9 +9,9 @@
   --italian-green: #43A047;
   --italian-green-light: #66BB6A;
   --italian-green-dark: #2E7D32;
-  /* Warm dark base instead of pure black */
-  --black: #14100d;
-  --gray-900: #1f1a16;
+  /* Pure black - matches the logo oval so the logo blends seamlessly */
+  --black: #000000;
+  --gray-900: #0a0a0a;
 }
 
 /* Smooth Scrolling */
@@ -195,23 +195,23 @@ a:focus {
 }
 
 
-/* --- Il Siciliano scoped overrides: warm dark instead of pure black --- */
+/* --- Il Siciliano scoped overrides: pure black matches the logo --- */
 .App.bg-black,
 .App .bg-black {
-  background-color: #14100d !important;
+  background-color: #000000 !important;
 }
 
 /* Replace harsh gradient-to-b from black -> gray-900 -> black with warmer variant */
 .App .bg-gradient-to-b.from-black.via-gray-900.to-black,
 .App .bg-gradient-to-b.from-black.to-gray-900,
 .App .bg-gradient-to-b.from-gray-900.to-black {
-  background: linear-gradient(to bottom, #14100d 0%, #1f1a16 50%, #14100d 100%) !important;
+  background: linear-gradient(to bottom, #000000 0%, #0a0a0a 50%, #000000 100%) !important;
 }
 
-/* Navigation bar remains dark but warmer */
-.App .bg-black\/95 { background-color: rgba(20, 16, 13, 0.95) !important; }
-.App .bg-black\/98 { background-color: rgba(20, 16, 13, 0.98) !important; }
-.App .bg-black\/90 { background-color: rgba(20, 16, 13, 0.9)  !important; }
+/* Navigation bar remains dark */
+.App .bg-black\/95 { background-color: rgba(0, 0, 0, 0.95) !important; }
+.App .bg-black\/98 { background-color: rgba(0, 0, 0, 0.98) !important; }
+.App .bg-black\/90 { background-color: rgba(0, 0, 0, 0.90) !important; }
 
 /* Subtle green glow on primary (red) buttons to hint at Italian palette */
 .App a.bg-gold,

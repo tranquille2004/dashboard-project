@@ -24,7 +24,7 @@ const About = () => {
             <img
               src="/images/ilsiciliano/about/emanuele.jpg"
               alt="Emanuele — Chef & propietario"
-              className="w-full h-96 object-cover rounded-lg shadow-2xl border border-gold/20"
+              className="w-full max-h-[560px] object-contain rounded-lg shadow-2xl border border-gold/20 bg-black"
             />
           </div>
           

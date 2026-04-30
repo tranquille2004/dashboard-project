@@ -44,13 +44,11 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link to={homePath} className="flex items-center space-x-3">
-            <div className="relative p-1.5 rounded-full bg-gradient-to-br from-white/95 to-white/80 shadow-[0_6px_20px_rgba(255,255,255,0.15)] ring-1 ring-white/40">
-              <img 
-                src="/images/ilsiciliano/logo/ilsiciliano-logo.png" 
-                alt="Il Siciliano - Trattoria Pizzería" 
-                className="h-14 w-auto"
-              />
-            </div>
+            <img 
+              src="/images/ilsiciliano/logo/ilsiciliano-logo.png" 
+              alt="Il Siciliano - Trattoria Pizzería" 
+              className="h-16 w-auto"
+            />
           </Link>
 
           {/* Desktop Navigation */}
