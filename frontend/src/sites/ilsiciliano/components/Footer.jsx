@@ -11,6 +11,16 @@ const Footer = () => {
   return (
     <footer className="bg-black border-t border-gold/20 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* Logo Header */}
+        <div className="flex justify-center mb-10">
+          <div className="p-3 rounded-full bg-gradient-to-br from-white/95 to-white/85 shadow-[0_10px_30px_rgba(255,255,255,0.12)] ring-1 ring-white/30">
+            <img
+              src="/images/ilsiciliano/logo/ilsiciliano-logo.png"
+              alt="Il Siciliano - Trattoria Pizzería"
+              className="h-24 md:h-28 w-auto"
+            />
+          </div>
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Contact Info */}
           <div>
