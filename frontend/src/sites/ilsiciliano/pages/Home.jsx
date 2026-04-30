@@ -59,20 +59,27 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Warm, vivid Italian-themed backdrop (until real photos are provided) */}
+        {/* Real photo backdrop: Trinacria neon — Sicilian branding */}
         <div
           className="absolute inset-0 z-0"
-          style={{
-            transform: `translateY(${scrollY * 0.4}px)`,
-            background:
-              'radial-gradient(80% 60% at 18% 22%, rgba(67,160,71,0.55) 0%, transparent 60%),' +
-              'radial-gradient(70% 55% at 82% 20%, rgba(229,57,53,0.55) 0%, transparent 60%),' +
-              'radial-gradient(120% 80% at 50% 110%, rgba(255,179,0,0.35) 0%, transparent 60%),' +
-              'linear-gradient(160deg, #3a1d10 0%, #241208 45%, #14100d 100%)'
-          }}
-        />
-        {/* Soft vignette for text readability - kept light */}
-        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
+          style={{ transform: `translateY(${scrollY * 0.4}px)` }}
+        >
+          <img
+            src="/images/ilsiciliano/home/hero-background.jpg"
+            alt="Il Siciliano — Trinacria"
+            className="w-full h-full object-cover"
+          />
+          {/* Warm Italian-tinted overlay for readability - light */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'radial-gradient(70% 55% at 18% 22%, rgba(0,146,70,0.22) 0%, transparent 60%),' +
+                'radial-gradient(60% 50% at 82% 20%, rgba(206,43,55,0.22) 0%, transparent 60%),' +
+                'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.10) 35%, rgba(0,0,0,0.55) 100%)'
+            }}
+          />
+        </div>
 
         {/* Hero Content */}
         <div className="relative z-10 text-center px-4 animate-fade-in">

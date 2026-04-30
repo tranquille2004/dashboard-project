@@ -22,8 +22,8 @@ const About = () => {
         <div className="grid md:grid-cols-2 gap-12 mb-16">
           <div className="space-y-6">
             <img
-              src="/images/ilsiciliano/about/lorenzo.jpg"
-              alt="Lorenzo Di Siervi"
+              src="/images/ilsiciliano/about/emanuele.jpg"
+              alt="Emanuele — Chef & propietario"
               className="w-full h-96 object-cover rounded-lg shadow-2xl border border-gold/20"
             />
           </div>
@@ -74,14 +74,14 @@ const About = () => {
         {/* Additional Images */}
         <div className="grid md:grid-cols-2 gap-8 mt-16">
           <img
-            src="/images/ilsiciliano/about/restaurant-interior.jpg"
-            alt="Restaurant Interior"
-            className="w-full h-72 object-contain rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500 bg-gray-900"
+            src="/images/ilsiciliano/about/emanuele-pasta.jpg"
+            alt="Emanuele — la pasta es pasión"
+            className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />
           <img
-            src="/images/ilsiciliano/about/dining.jpeg"
-            alt="Italian Dining"
+            src="/images/ilsiciliano/about/emanuele-cocina.jpg"
+            alt="En la cocina siciliana"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
             loading="lazy"
           />

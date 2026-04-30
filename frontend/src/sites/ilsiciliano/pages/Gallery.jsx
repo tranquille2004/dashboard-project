@@ -8,14 +8,11 @@ const Gallery = () => {
   const t = translations.gallery;
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // All images hosted locally for 100% reliability
-  // Foto 49 en 53 verwijderd op verzoek
-  const images = Array.from({ length: 54 }, (_, i) => {
+  // 28 photos from Il Siciliano (food + interior + chef)
+  const images = Array.from({ length: 28 }, (_, i) => {
     const num = (i + 1).toString().padStart(2, '0');
-    const ext = [1,2,3,4,5,6,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,46].includes(i+1) ? 'jpg' : 
-                [7,30,31,32,33,34,35,36,37,38,39,40,41].includes(i+1) ? 'jpeg' : 'webp';
-    return `/images/ilsiciliano/gallery/gallery-${num}.${ext}`;
-  }).filter((_, index) => index !== 48 && index !== 52); // Verwijder foto 49 en 53
+    return `/images/ilsiciliano/gallery/gallery-${num}.jpg`;
+  });
 
   const openLightbox = (index) => {
     setSelectedImage(index);
