@@ -58,6 +58,12 @@ function IlSicilianoAppInner({ siteConfig }) {
       <ScrollToTop />
       <URLSync />
       <Navigation />
+      {/* Bright horizontal Italian tricolor strip under navigation */}
+      <div className="ilsiciliano-tricolor-bar fixed top-20 left-0 right-0 z-40" aria-hidden="true">
+        <span className="tc-green" />
+        <span className="tc-white" />
+        <span className="tc-red" />
+      </div>
       <AnnouncementBanner
         message={siteConfig?.special_announcement}
         type={siteConfig?.special_announcement_type || 'info'}
@@ -103,7 +109,18 @@ function IlSicilianoApp() {
   return (
     <LanguageProvider>
       <BasePathProvider basePath={basePath}>
-        <div className="App bg-black min-h-screen">
+        <div className="App bg-black min-h-screen relative">
+          {/* Bright Italian tricolor edge strips (left + right) */}
+          <div className="ilsiciliano-edge-strip left" aria-hidden="true">
+            <span className="stripe-green" />
+            <span className="stripe-white" />
+            <span className="stripe-red" />
+          </div>
+          <div className="ilsiciliano-edge-strip right" aria-hidden="true">
+            <span className="stripe-green" />
+            <span className="stripe-white" />
+            <span className="stripe-red" />
+          </div>
           <SEO
             title={SEO_CONFIG.title}
             description={SEO_CONFIG.description}

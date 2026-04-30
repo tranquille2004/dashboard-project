@@ -1,16 +1,17 @@
 /* Il Siciliano Custom Styles - Italian Tricolor Theme (green, white, red, black) */
 
 :root {
-  /* Primary accent: Italian red (replaces former "gold") */
-  --gold: #C62828;
-  --gold-light: #E53935;
-  --gold-dark: #8E1616;
-  /* Secondary accent: Italian green */
-  --italian-green: #2E7D32;
-  --italian-green-light: #43A047;
-  --italian-green-dark: #1B5E20;
-  --black: #000000;
-  --gray-900: #0f0f10;
+  /* Primary accent: Italian red (replaces former "gold") - brighter */
+  --gold: #E53935;
+  --gold-light: #EF5350;
+  --gold-dark: #B71C1C;
+  /* Secondary accent: Italian green - brighter, more vivid */
+  --italian-green: #43A047;
+  --italian-green-light: #66BB6A;
+  --italian-green-dark: #2E7D32;
+  /* Warm dark base instead of pure black */
+  --black: #14100d;
+  --gray-900: #1f1a16;
 }
 
 /* Smooth Scrolling */
@@ -21,6 +22,28 @@ html {
 body {
   background-color: var(--black);
   color: white;
+}
+
+/* Bright fixed Italian tricolor strips on both edges of the viewport */
+.ilsiciliano-edge-strip {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 12px;
+  z-index: 60;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+}
+.ilsiciliano-edge-strip.left { left: 0; }
+.ilsiciliano-edge-strip.right { right: 0; }
+.ilsiciliano-edge-strip > span { flex: 1; display: block; }
+.ilsiciliano-edge-strip .stripe-green { background: #009246; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); } /* Italian flag green */
+.ilsiciliano-edge-strip .stripe-white { background: #ffffff; }
+.ilsiciliano-edge-strip .stripe-red   { background: #CE2B37; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); } /* Italian flag red */
+
+@media (max-width: 640px) {
+  .ilsiciliano-edge-strip { width: 8px; }
 }
 
 /* Primary accent (red) */
@@ -39,24 +62,24 @@ body {
 .italian-tricolor {
   background: linear-gradient(
     to right,
-    var(--italian-green) 0%,
-    var(--italian-green) 33.33%,
+    #009246 0%,
+    #009246 33.33%,
     #ffffff 33.33%,
     #ffffff 66.66%,
-    var(--gold) 66.66%,
-    var(--gold) 100%
+    #CE2B37 66.66%,
+    #CE2B37 100%
   );
 }
 
 .italian-tricolor-vertical {
   background: linear-gradient(
     to bottom,
-    var(--italian-green) 0%,
-    var(--italian-green) 33.33%,
+    #009246 0%,
+    #009246 33.33%,
     #ffffff 33.33%,
     #ffffff 66.66%,
-    var(--gold) 66.66%,
-    var(--gold) 100%
+    #CE2B37 66.66%,
+    #CE2B37 100%
   );
 }
 
@@ -170,3 +193,44 @@ a:focus {
     backdrop-filter: blur(10px);
   }
 }
+
+
+/* --- Il Siciliano scoped overrides: warm dark instead of pure black --- */
+.App.bg-black,
+.App .bg-black {
+  background-color: #14100d !important;
+}
+
+/* Replace harsh gradient-to-b from black -> gray-900 -> black with warmer variant */
+.App .bg-gradient-to-b.from-black.via-gray-900.to-black,
+.App .bg-gradient-to-b.from-black.to-gray-900,
+.App .bg-gradient-to-b.from-gray-900.to-black {
+  background: linear-gradient(to bottom, #14100d 0%, #1f1a16 50%, #14100d 100%) !important;
+}
+
+/* Navigation bar remains dark but warmer */
+.App .bg-black\/95 { background-color: rgba(20, 16, 13, 0.95) !important; }
+.App .bg-black\/98 { background-color: rgba(20, 16, 13, 0.98) !important; }
+.App .bg-black\/90 { background-color: rgba(20, 16, 13, 0.9)  !important; }
+
+/* Subtle green glow on primary (red) buttons to hint at Italian palette */
+.App a.bg-gold,
+.App button.bg-gold {
+  box-shadow: 0 6px 18px rgba(229, 57, 53, 0.25), 0 0 0 2px rgba(67, 160, 71, 0.0);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+.App a.bg-gold:hover,
+.App button.bg-gold:hover {
+  box-shadow: 0 10px 28px rgba(229, 57, 53, 0.45), 0 0 0 3px rgba(67, 160, 71, 0.35);
+}
+
+/* Decorative horizontal tricolor divider */
+.ilsiciliano-tricolor-bar {
+  display: flex;
+  width: 100%;
+  height: 8px;
+}
+.ilsiciliano-tricolor-bar > span { flex: 1; display: block; }
+.ilsiciliano-tricolor-bar .tc-green { background: #009246; }
+.ilsiciliano-tricolor-bar .tc-white { background: #ffffff; }
+.ilsiciliano-tricolor-bar .tc-red   { background: #CE2B37; }

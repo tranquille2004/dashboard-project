@@ -22,7 +22,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center space-x-3">
                 <Phone size={20} className="text-gold flex-shrink-0" />
-                <a href="tel:+593989013622" className="hover:text-gold transition-colors">
+                <a href="tel:+593984110781" className="hover:text-gold transition-colors">
                   {t.contact.phone}
                 </a>
               </div>

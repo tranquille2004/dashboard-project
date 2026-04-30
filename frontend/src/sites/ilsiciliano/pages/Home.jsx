@@ -59,20 +59,20 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Parallax */}
-        <div 
+        {/* Warm, vivid Italian-themed backdrop (until real photos are provided) */}
+        <div
           className="absolute inset-0 z-0"
           style={{
-            transform: `translateY(${scrollY * 0.5}px)`
+            transform: `translateY(${scrollY * 0.4}px)`,
+            background:
+              'radial-gradient(80% 60% at 18% 22%, rgba(67,160,71,0.55) 0%, transparent 60%),' +
+              'radial-gradient(70% 55% at 82% 20%, rgba(229,57,53,0.55) 0%, transparent 60%),' +
+              'radial-gradient(120% 80% at 50% 110%, rgba(255,179,0,0.35) 0%, transparent 60%),' +
+              'linear-gradient(160deg, #3a1d10 0%, #241208 45%, #14100d 100%)'
           }}
-        >
-          <img
-            src="/images/ilsiciliano/home/hero-background.jpg"
-            alt="Il Siciliano"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black/70"></div>
-        </div>
+        />
+        {/* Soft vignette for text readability - kept light */}
+        <div className="absolute inset-0 z-0 bg-gradient-to-b from-black/10 via-transparent to-black/40" />
 
         {/* Hero Content */}
         <div className="relative z-10 text-center px-4 animate-fade-in">
@@ -117,6 +117,10 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6 animate-slide-in-left">
+              <div className="flex items-center gap-3">
+                <span className="inline-block w-12 h-1 bg-italian-green rounded-full"></span>
+                <span className="text-italian-green font-semibold tracking-wider uppercase text-sm">Il Siciliano</span>
+              </div>
               <h2 className="text-4xl md:text-5xl font-bold text-gold">
                 {{
                   nl: 'Experiencia Siciliana Auténtica',
@@ -205,7 +209,12 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-24 bg-black border-t border-gold/20">
+      <section className="py-24 bg-black border-t-4 border-italian-green">
+        <div className="ilsiciliano-tricolor-bar absolute left-0 right-0 -mt-24" aria-hidden="true">
+          <span className="tc-green" />
+          <span className="tc-white" />
+          <span className="tc-red" />
+        </div>
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
             {{

@@ -47,7 +47,7 @@ export const translations = {
   },
   contact: {
     address: 'Av. Quito y Tulcán, Santo Domingo, Ecuador',
-    phone: '+593 98 901 3622',
+    phone: '+593 98 411 0781',
     email: 'info@ilsiciliano.ec',
     emailNote: _(
       '(email solo para información, reservas a través de este sitio web)',

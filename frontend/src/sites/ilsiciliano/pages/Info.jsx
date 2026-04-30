@@ -67,7 +67,7 @@ const Info = () => {
                   <Phone size={24} className="text-gold mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="text-white font-semibold mb-1">Telefoon / Téléphone</h3>
-                    <a href="tel:+593989013622" className="text-gray-300 hover:text-gold transition-colors text-lg">
+                    <a href="tel:+593984110781" className="text-gray-300 hover:text-gold transition-colors text-lg">
                       {t.contact.phone}
                     </a>
                   </div>

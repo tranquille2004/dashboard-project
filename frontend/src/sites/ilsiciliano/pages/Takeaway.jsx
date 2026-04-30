@@ -109,7 +109,7 @@ const Takeaway = () => {
           <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gold/20 text-center hover:border-gold/40 transition-all">
             <Phone size={40} className="text-gold mx-auto mb-3" />
             <h3 className="text-white font-bold mb-2">Telefoon</h3>
-            <a href="tel:+593989013622" className="text-gold hover:text-gold/80 transition-colors text-lg">
+            <a href="tel:+593984110781" className="text-gold hover:text-gold/80 transition-colors text-lg">
               {t.contact.phone}
             </a>
           </div>
