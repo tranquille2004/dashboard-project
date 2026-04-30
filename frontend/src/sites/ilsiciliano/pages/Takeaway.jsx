@@ -102,7 +102,7 @@ const Takeaway = () => {
           <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gold/20 text-center hover:border-gold/40 transition-all">
             <Clock size={40} className="text-gold mx-auto mb-3" />
             <h3 className="text-white font-bold mb-2">{t.hours.title[language]}</h3>
-            <p className="text-gray-300 text-sm">{t.hours.lunch}</p>
+            <p className="text-gray-300 text-sm">{t.hours.lunch[language]}</p>
             <p className="text-gray-300 text-sm">{t.hours.dinner}</p>
             <p className="text-gray-400 text-xs mt-3">{t.hours.closed[language]}</p>
           </div>

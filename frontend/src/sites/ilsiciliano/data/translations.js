@@ -36,13 +36,13 @@ export const translations = {
   },
   hours: {
     title: _('Horario', 'Opening Hours', 'Orari di Apertura', 'Horaires'),
-    lunch: '12:00 - 15:00',
-    dinner: '18:30 - 22:30',
+    lunch: _('Lunes a Sábado', 'Monday – Saturday', 'Lunedì – Sabato', 'Lundi – Samedi'),
+    dinner: '16:00 - 23:30',
     closed: _(
-      'Lunes cerrado todo el día',
-      'Closed all day Monday',
-      'Chiuso tutto il lunedì',
-      'Fermé toute la journée lundi'
+      'Domingo cerrado todo el día',
+      'Closed all day Sunday',
+      'Chiuso tutta la domenica',
+      'Fermé toute la journée dimanche'
     )
   },
   contact: {

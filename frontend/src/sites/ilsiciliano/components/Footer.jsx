@@ -52,7 +52,7 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold text-gold mb-4">{t.hours.title[language]}</h3>
             <div className="space-y-2 text-gray-300">
-              <p>{t.hours.lunch}</p>
+              <p>{t.hours.lunch[language]}</p>
               <p>{t.hours.dinner}</p>
               <p className="text-sm text-gray-400 mt-3">{t.hours.closed[language]}</p>
             </div>

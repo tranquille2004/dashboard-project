@@ -110,26 +110,8 @@ const Info = () => {
               
               <div className="space-y-4">
                 <div>
-                  <h3 className="text-white font-semibold mb-2">{{
-                    nl: 'Lunch',
-                    fr: 'Déjeuner',
-                    en: 'Lunch',
-                    es: 'Almuerzo',
-                    de: 'Mittagessen',
-                    it: 'Pranzo'
-                  }[language]}</h3>
-                  <p className="text-gray-300 text-xl">{t.hours.lunch}</p>
-                </div>
-                <div>
-                  <h3 className="text-white font-semibold mb-2">{{
-                    nl: 'Diner',
-                    fr: 'Dîner',
-                    en: 'Dinner',
-                    es: 'Cena',
-                    de: 'Abendessen',
-                    it: 'Cena'
-                  }[language]}</h3>
-                  <p className="text-gray-300 text-xl">{t.hours.dinner}</p>
+                  <h3 className="text-white font-semibold mb-2">{t.hours.lunch[language]}</h3>
+                  <p className="text-gold text-2xl font-bold">{t.hours.dinner}</p>
                 </div>
                 <div className="pt-4 border-t border-gold/20">
                   <p className="text-gray-400">{t.hours.closed[language]}</p>
