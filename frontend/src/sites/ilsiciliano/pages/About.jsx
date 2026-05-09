@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
-import { Award, Users, Heart } from 'lucide-react';
+import { ChefHat, Users, Heart } from 'lucide-react';
 
 const About = () => {
   const { language } = useLanguage();
@@ -48,25 +48,57 @@ const About = () => {
         <div className="grid md:grid-cols-3 gap-8 animate-fade-in">
           {[
             {
-              icon: Award,
-              title: { nl: 'Ervaring', fr: 'Expérience' },
-              desc: { nl: 'Meer dan 40 jaar ervaring in de horeca', fr: 'Plus de 40 ans d’expérience dans la restauration' }
+              icon: ChefHat,
+              title: {
+                es: 'Tradición Siciliana',
+                en: 'Sicilian Tradition',
+                it: 'Tradizione Siciliana',
+                fr: 'Tradition Sicilienne'
+              },
+              desc: {
+                es: 'Recetas familiares transmitidas de generación en generación, con la verdadera alma de la cocina del sur de Italia.',
+                en: 'Family recipes passed down from generation to generation, with the true soul of Southern Italian cuisine.',
+                it: 'Ricette di famiglia tramandate di generazione in generazione, con la vera anima della cucina del sud Italia.',
+                fr: 'Des recettes familiales transmises de génération en génération, avec la véritable âme de la cuisine du sud de l\'Italie.'
+              }
             },
             {
               icon: Heart,
-              title: { nl: 'Passie', fr: 'Passion' },
-              desc: { nl: 'Amor por la auténtica cocina siciliana', fr: 'Amour pour la cuisine italienne authentique' }
+              title: {
+                es: 'Pasión Auténtica',
+                en: 'Authentic Passion',
+                it: 'Passione Autentica',
+                fr: 'Passion Authentique'
+              },
+              desc: {
+                es: 'Cada plato preparado con cuidado y dedicación — pasta amasada a mano, pizza al horno de leña, ingredientes seleccionados.',
+                en: 'Every dish prepared with care and dedication — hand-kneaded pasta, wood-fired pizza, hand-picked ingredients.',
+                it: 'Ogni piatto preparato con cura e dedizione — pasta impastata a mano, pizza al forno a legna, ingredienti selezionati.',
+                fr: 'Chaque plat préparé avec soin et dévouement — pâtes pétries à la main, pizza au four à bois, ingrédients sélectionnés.'
+              }
             },
             {
               icon: Users,
-              title: { nl: 'Gastvrijheid', fr: 'Hospitalité' },
-              desc: { nl: 'Warme ontvangst en persoonlijke service', fr: 'Accueil chaleureux et service personnalisé' }
+              title: {
+                es: 'Hospitalidad Italiana',
+                en: 'Italian Hospitality',
+                it: 'Ospitalità Italiana',
+                fr: 'Hospitalité Italienne'
+              },
+              desc: {
+                es: 'Una bienvenida cálida, atención personal y un ambiente familiar — como en una verdadera trattoria de Sicilia.',
+                en: 'A warm welcome, personal attention and a family atmosphere — just like a true Sicilian trattoria.',
+                it: 'Un\'accoglienza calorosa, attenzione personale e un\'atmosfera familiare — come in una vera trattoria siciliana.',
+                fr: 'Un accueil chaleureux, une attention personnelle et une atmosphère familiale — comme dans une vraie trattoria sicilienne.'
+              }
             }
           ].map((value, idx) => (
-            <div key={idx} className="text-center p-8 bg-gradient-to-b from-gray-900 to-black rounded-lg border border-gold/20 hover:border-gold/40 transition-all duration-300 hover:scale-105">
-              <value.icon size={48} className="text-gold mx-auto mb-4" />
-              <h3 className="text-2xl font-bold text-white mb-3">{value.title[language]}</h3>
-              <p className="text-gray-400">{value.desc[language]}</p>
+            <div key={idx} className="text-center p-8 bg-gradient-to-b from-gray-900 to-black rounded-lg border border-gold/20 hover:border-gold/40 transition-all duration-300 hover:scale-105 hover:shadow-[0_10px_30px_rgba(229,57,53,0.2)]">
+              <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gold/10 border-2 border-gold/40 mb-5">
+                <value.icon size={40} className="text-gold" />
+              </div>
+              <h3 className="text-2xl font-bold text-white mb-3">{value.title[language] || value.title.es}</h3>
+              <p className="text-gray-300 leading-relaxed">{value.desc[language] || value.desc.es}</p>
             </div>
           ))}
         </div>
