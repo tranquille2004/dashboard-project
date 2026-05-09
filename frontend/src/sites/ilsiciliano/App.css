@@ -53,6 +53,12 @@ body {
 .hover\:text-gold:hover { color: var(--gold) !important; }
 .hover\:bg-gold:hover { background-color: var(--gold) !important; }
 
+/* Hover override: when an element with text-gold also has hover:text-black,
+   make sure the hover state wins over our !important text-gold rule */
+.App .text-gold.hover\:text-black:hover,
+.App a.text-gold.hover\:text-black:hover,
+.App button.text-gold.hover\:text-black:hover { color: #000000 !important; }
+
 /* Secondary accent (green) - utility classes for manual accents */
 .text-italian-green { color: var(--italian-green) !important; }
 .bg-italian-green { background-color: var(--italian-green) !important; }
