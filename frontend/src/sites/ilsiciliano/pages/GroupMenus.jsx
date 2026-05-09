@@ -2,247 +2,110 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
-import { Wine, Users, ChefHat, Download, ExternalLink } from 'lucide-react';
+import { Users, Mail, Phone } from 'lucide-react';
 
 const GroupMenus = () => {
   const { language } = useLanguage();
   const basePath = useBasePath();
 
   const pageTitle = {
-    nl: 'Groepmenus',
-    fr: 'Menus de Groupe',
-    en: 'Group Menus',
     es: 'Menús de Grupo',
-    de: 'Gruppenmenüs',
-    it: 'Menu di Gruppo'
+    en: 'Group Menus',
+    it: 'Menu di Gruppo',
+    fr: 'Menus de Groupe',
+    nl: 'Groepmenus',
+    de: 'Gruppenmenüs'
   };
 
-  const subtitle = {
-    nl: 'Perfecte keuze voor groepen vanaf 10 personen',
-    fr: 'Choix parfait pour les groupes à partir de 10 personnes',
-    en: 'Perfect choice for groups from 10 people',
-    es: 'Elección perfecta para grupos desde 10 personas',
-    de: 'Perfekte Wahl für Gruppen ab 10 Personen',
-    it: 'Scelta perfetta per gruppi da 10 persone'
+  const comingSoon = {
+    es: 'Próximamente',
+    en: 'Coming soon',
+    it: 'Prossimamente',
+    fr: 'Bientôt disponible',
+    nl: 'Binnenkort beschikbaar',
+    de: 'Bald verfügbar'
   };
 
-  const reserveButton = {
-    nl: 'Reservar para grupos',
-    fr: 'Réserver pour groupes',
-    en: 'Reserve for groups',
-    es: 'Reservar para grupos',
-    de: 'Für Gruppen reservieren',
-    it: 'Prenota per gruppi'
+  const description = {
+    es: 'Estamos preparando nuestras propuestas de menús para grupos. Para celebraciones, eventos corporativos, cumpleaños y reuniones especiales, contáctenos directamente — diseñaremos un menú a medida para su grupo.',
+    en: 'We are preparing our group menu offerings. For celebrations, corporate events, birthdays and special gatherings, contact us directly — we will design a tailor-made menu for your group.',
+    it: 'Stiamo preparando le nostre proposte di menu per gruppi. Per celebrazioni, eventi aziendali, compleanni e riunioni speciali, contattateci direttamente — progetteremo un menu su misura per il vostro gruppo.',
+    fr: 'Nous préparons nos propositions de menus pour groupes. Pour célébrations, événements d\'entreprise, anniversaires et réunions spéciales, contactez-nous directement — nous concevrons un menu sur mesure pour votre groupe.',
+    nl: 'We bereiden onze groepsmenu-aanbiedingen voor. Voor vieringen, bedrijfsevenementen, verjaardagen en speciale bijeenkomsten kunt u rechtstreeks contact met ons opnemen — we stellen een menu op maat samen voor uw groep.',
+    de: 'Wir bereiten unsere Gruppen-Menüvorschläge vor. Für Feiern, Firmenveranstaltungen, Geburtstage und besondere Anlässe kontaktieren Sie uns direkt — wir gestalten ein maßgeschneidertes Menü für Ihre Gruppe.'
   };
 
-  const menus = [
-    {
-      name: 'Menu 1',
-      price: '€45',
-      icon: ChefHat,
-      color: 'from-amber-600/20 to-amber-900/10',
-      items: [
-        {
-          title: 'Aperitivo (spumante)',
-          dishes: [
-            'Rundercarpaccio met rucola en parmezaanse kaas\nCarpaccio de bœuf, roquette et parmesan\nBeefcarpaccio with arugula salad and parmesan cheese',
-            'Gemarineerde zalm / Saumon mariné / Marinated salmon',
-            'Parmigiana\nGratin van aubergine met gerookte mozzarella\nGratin d\'aubergines à la mozzarella fumée\nGratinated eggplant with smoked mozzarella',
-            'Tagliere \'Il Siciliano\'\nItaliaanse charcuterie, kaas\nCharcuterie italienne, fromage\nItalian charcuterie, cheese'
-          ]
-        },
-        {
-          title: '',
-          dishes: [
-            'Ravioli al Tartufo\nRavioli met truffel / ravioli à la truffe / ravioli with truffle',
-            'Gebraden zalm met grof zout, purée, spumante saus, seizoensgroenten\nSaumon rôti au gros sel, purée, sauce spumante, légumes de saison\nSmoked salmon with coarse salt, puree, spumante sauce, seasonal vegetables',
-            'Involtino di vitello\nKalfsrollade gevuld met hesp en kaas, portsaus, rozijnen, pijnboompitten en pasta\nRoulade de veau farcie au jambon cuit et fromage, sauce porto, raisin sec, pignons de pin et pâtes\nVeal rolls filled with ham and cheese, port sauce, raisins, pine nuts, served with pasta'
-          ]
-        },
-        {
-          title: '',
-          dishes: ['Verrassingsdessert / dessert surprise']
-        }
-      ]
-    },
-    {
-      name: 'Menu 2',
-      price: '€55',
-      icon: Wine,
-      color: 'from-red-600/20 to-red-900/10',
-      wine: '½ fles huiswijn per persoon / ½ bouteille de vin maison par personne / ½ bottle per person of housewine',
-      items: [
-        {
-          title: 'Aperitivo (spumante)',
-          dishes: [
-            'Triologie van zeecarpaccio: zwaardvis, tonijn, zalm\nTriologie de carpaccio de mer : espadon, thon, saumon\nTriologie of sea carpaccio: swordfish, tuna, salmon',
-            'Parmaham met burratina\nJambon de Parme et burratina\nParma ham and burratina cheese',
-            'Sapori \'Il Siciliano\'\nRundercarpaccio, vitello tonnato, Parmaham\nCarpaccio de boeuf, vitello tonnato, jambon de Parme\nBeefcarpaccio, vitello tonnato, Parma ham',
-            'Scampi met truffel en groene asperges\nScampi à la truffe et asperges vertes\nScampi with truffles and green asparagus'
-          ]
-        },
-        {
-          title: '',
-          dishes: [
-            'Kalfsribstuk, crème met bospaddenstoelen, aardappelen\nCôte de veau, crème aux champignons de bois, pommes de terre\nVeal chop, wild mushroom cream sauce, potatoes',
-            'Zwaardvis op mediterraanse wijze (kappertjes, olijven, kerstomaatjes), groenten en aardappelen\nEspadon façon méditerranée (câpres, olives, tomates cerises), légumes et pommes de terre\nMediterranean-style swordfish (capers, olives, cherry tomatoes), vegetables and potatoes',
-            'Trio van verse pasta \'Il Siciliano\': ravioli met truffel, tortelloni met ricotta, tagliatelle met paddenstoelen en Parmaham\nTrio de pâtes fraiches \'Il Siciliano\' : ravioli à la truffe, tortelloni à la ricotta, tagliatelle aux champignons et jambon de parme\nTrio of fresh pasta: ravioli with truffle, tortelloni with ricotta, tagliatelle with mushrooms and Parma ham'
-          ]
-        },
-        {
-          title: '',
-          dishes: ['Verrassingsdessert / dessert surprise']
-        }
-      ]
-    },
-    {
-      name: 'Menu 3',
-      price: '€65',
-      icon: Users,
-      color: 'from-green-600/20 to-green-900/10',
-      wine: '½ fles huiswijn per persoon / ½ bouteille de vin maison par personne / ½ bottle per person of housewine',
-      items: [
-        {
-          title: 'Aperitivo (spumante)',
-          dishes: [
-            'Vitello tonnato\nKalfslapje, crème van tonijn, ansjovis, mayonnaise en kappertjes\nBraisé de veau, sauce au thon, anchois, mayonnaise et câpres\nBraised veal, tuna sauce, anchovies, mayonnaise and capers',
-            'Gerookte zalm / Saumon fumé / Smoked salmon',
-            'Ravioli met kreeft\nRavioli de homard\nLobster ravioli',
-            'Salade van ganzenlever, sperziebonen, venkel, zoetzure vinaigrette\nSalade de foie gras, haricots verts, fenouille, vinaigrette aigre-douce\nFoie gras salad with green beans, fennel and sweet and sour dressing'
-          ]
-        },
-        {
-          title: '',
-          dishes: [
-            'Runderfilet Rossini: ganzenlever met rodewijnsaus, aardappelen, seizoensgroenten\nFilet de bœuf Rossini : foie gras, sauce au vin rouge, pommes de terre, légumes de saison\nFilet of beef Rossini: foie gras, red wine sauce, potatoe, seasonal vegetables',
-            'Ravioli met ganzenlever, porto saus, kalfszwezerik\nRavioli au foie gras, sauce porto, ris de veau\nRavioli with foie gras, port sauce, sweetbreads',
-            'Gegilde vissoorten met salade\nGrillade de poissons et salade\nGrilled fishes and salad'
-          ]
-        },
-        {
-          title: '',
-          dishes: ['Verrassingsdessert / dessert surprise']
-        }
-      ]
-    }
-  ];
+  const contactLabel = {
+    es: 'Contáctenos para grupos',
+    en: 'Contact us for groups',
+    it: 'Contattateci per gruppi',
+    fr: 'Contactez-nous pour les groupes',
+    nl: 'Neem contact op voor groepen',
+    de: 'Kontaktieren Sie uns für Gruppen'
+  };
+
+  const reserveLabel = {
+    es: 'Reservar mesa',
+    en: 'Reserve a table',
+    it: 'Prenota un tavolo',
+    fr: 'Réserver une table',
+    nl: 'Reserveer een tafel',
+    de: 'Tisch reservieren'
+  };
+
+  const t = (obj) => obj[language] || obj.es;
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-16 animate-fade-in">
+        <div className="text-center mb-12 animate-fade-in">
+          <Users size={56} className="text-gold mx-auto mb-6" />
           <h1 className="text-5xl md:text-6xl font-bold text-gold mb-4">
-            {pageTitle[language]}
+            {t(pageTitle)}
           </h1>
-          <p className="text-xl text-gray-300 mb-6">{subtitle[language]}</p>
-          <div className="w-24 h-1 bg-gold mx-auto mb-8"></div>
-          
-          {/* Reserve link boven menus */}
-          <Link
-            to={`${basePath}/reserve`}
-            className="inline-block bg-gold text-black px-8 py-3 rounded-lg font-bold text-lg hover:bg-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 mb-4"
-          >
-            {reserveButton[language]}
-          </Link>
-          
-          {/* PDF Download - Duidelijke knop */}
-          <div className="mt-6">
-            <a
-              href="/images/ilsiciliano/group-menus-ilsiciliano.pdf"
-              download="group-menus-ilsiciliano.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
-              data-testid="groepmenus-download-button"
-            >
-              <Download className="mr-2" size={20} />
-              {language === 'nl' && 'Download Groepmenus PDF'}
-              {language === 'fr' && 'Télécharger Menus de Groupe PDF'}
-              {language === 'en' && 'Download Group Menus PDF'}
-              {language === 'es' && 'Descargar Menús de Grupo PDF'}
-              {language === 'de' && 'Gruppenmenüs PDF herunterladen'}
-              {language === 'it' && 'Scarica Menu di Gruppo PDF'}
-              <ExternalLink className="ml-2" size={20} />
-            </a>
-          </div>
-        </div>
-
-        {/* Menus Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-12">
-          {menus.map((menu, idx) => (
-            <div
-              key={idx}
-              className={`bg-gradient-to-br ${menu.color} border-2 border-gold/30 rounded-xl overflow-hidden transform hover:scale-105 transition-all duration-300 shadow-2xl animate-fade-in`}
-              style={{ animationDelay: `${idx * 0.2}s` }}
-            >
-              {/* Menu Header */}
-              <div className="bg-black/60 backdrop-blur-sm p-6 border-b border-gold/20 text-center">
-                <h2 className="text-3xl font-bold text-gold mb-2">{menu.name}</h2>
-                <p className="text-4xl font-bold text-white">{menu.price}</p>
-              </div>
-
-              {/* Menu Content */}
-              <div className="p-6 space-y-6">
-                {menu.items.map((course, courseIdx) => (
-                  <div key={courseIdx}>
-                    {course.title && (
-                      <h3 className="text-lg text-gold mb-4 text-center">
-                        {course.title}
-                      </h3>
-                    )}
-                    <div className="space-y-4">
-                      {course.dishes.map((dish, dishIdx) => (
-                        <div key={dishIdx} className="relative text-center">
-                          <p className="text-sm text-gray-300 leading-relaxed whitespace-pre-line">
-                            {dish}
-                          </p>
-                          {dishIdx < course.dishes.length - 1 && course.dishes.length > 1 && (
-                            <div className="text-center text-amber-500/60 text-xs my-2 tracking-widest">OF / OU / OR</div>
-                          )}
-                        </div>
-                      ))}
-                    </div>
-                    {courseIdx < menu.items.length - 1 && (
-                      <div className="flex items-center justify-center gap-3 my-5">
-                        <div className="w-8 h-px bg-amber-500/40" />
-                        <div className="w-2 h-2 rotate-45 bg-amber-500/60" />
-                        <div className="w-8 h-px bg-amber-500/40" />
-                      </div>
-                    )}
-                  </div>
-                ))}
-                
-                {/* Wine info at bottom for Menu 2 & 3 */}
-                {menu.wine && (
-                  <div className="mt-6 pt-6 border-t border-gold/20">
-                    <p className="text-xs text-gray-300 italic text-center flex items-center justify-center gap-2">
-                      <Wine size={16} className="text-gold flex-shrink-0" />
-                      <span className="whitespace-pre-line">{menu.wine}</span>
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Reserve Button */}
-        <div className="text-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
-          <Link
-            to={`${basePath}/reserve`}
-            className="inline-block bg-gold text-black px-12 py-4 rounded-lg font-bold text-xl hover:bg-gold/90 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
-          >
-            {reserveButton[language]}
-          </Link>
-          <p className="mt-4 text-gray-400 text-sm">
-            {language === 'nl' && 'Menu mogelijk vanaf minimaal 10 personen'}
-            {language === 'fr' && 'Menu disponible à partir de 10 personnes minimum'}
-            {language === 'en' && 'Menu available from minimum 10 people'}
-            {language === 'es' && 'Menú disponible desde mínimo 10 personas'}
-            {language === 'de' && 'Menü erhältlich ab mindestens 10 Personen'}
-            {language === 'it' && 'Menu disponibile da minimo 10 persone'}
+          <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
+          <p className="text-2xl text-italian-green font-semibold uppercase tracking-wider">
+            {t(comingSoon)}
           </p>
+        </div>
+
+        {/* Description card */}
+        <div className="bg-gradient-to-br from-gray-900 to-black p-8 md:p-12 rounded-lg border border-gold/20 shadow-2xl animate-fade-in">
+          <p className="text-gray-200 text-lg leading-relaxed text-center">
+            {t(description)}
+          </p>
+
+          <div className="mt-10 pt-8 border-t border-gold/10">
+            <h2 className="text-xl font-bold text-gold text-center mb-6">
+              {t(contactLabel)}
+            </h2>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <a
+                href="tel:+593984110781"
+                className="inline-flex items-center gap-3 text-gray-200 hover:text-gold transition-colors"
+              >
+                <Phone size={20} className="text-gold" />
+                <span className="text-lg">+593 98 411 0781</span>
+              </a>
+              <a
+                href="mailto:info@ilsiciliano.ec"
+                className="inline-flex items-center gap-3 text-gray-200 hover:text-gold transition-colors"
+              >
+                <Mail size={20} className="text-gold" />
+                <span className="text-lg">info@ilsiciliano.ec</span>
+              </a>
+            </div>
+          </div>
+
+          <div className="mt-8 flex justify-center">
+            <Link
+              to={`${basePath}/reserve`}
+              className="inline-flex items-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+            >
+              {t(reserveLabel)}
+            </Link>
+          </div>
         </div>
       </div>
     </div>
