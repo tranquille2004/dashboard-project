@@ -1,6 +1,8 @@
 /* Il Siciliano Custom Styles - Italian Tricolor Theme (green, white, red, black) */
+/* IMPORTANT: All variables scoped to .ilsiciliano-root to prevent leaking
+   to other sites that share the same React bundle. */
 
-:root {
+.ilsiciliano-root {
   /* Primary accent: Italian red (replaces former "gold") - brighter */
   --gold: #E53935;
   --gold-light: #EF5350;
@@ -19,8 +21,9 @@ html {
   scroll-behavior: smooth;
 }
 
-body {
-  background-color: var(--black);
+/* Body styles scoped to Il Siciliano only */
+body:has(.ilsiciliano-root) {
+  background-color: #000000;
   color: white;
 }
 
@@ -46,23 +49,23 @@ body {
   .ilsiciliano-edge-strip { width: 8px; }
 }
 
-/* Primary accent (red) */
-.text-gold { color: var(--gold) !important; }
-.bg-gold { background-color: var(--gold) !important; }
-.border-gold { border-color: var(--gold) !important; }
-.hover\:text-gold:hover { color: var(--gold) !important; }
-.hover\:bg-gold:hover { background-color: var(--gold) !important; }
+/* Primary accent (red) — scoped to .ilsiciliano-root so it does NOT affect other sites */
+.ilsiciliano-root .text-gold { color: var(--gold) !important; }
+.ilsiciliano-root .bg-gold { background-color: var(--gold) !important; }
+.ilsiciliano-root .border-gold { border-color: var(--gold) !important; }
+.ilsiciliano-root .hover\:text-gold:hover { color: var(--gold) !important; }
+.ilsiciliano-root .hover\:bg-gold:hover { background-color: var(--gold) !important; }
 
 /* Hover override: when an element with text-gold also has hover:text-black,
    make sure the hover state wins over our !important text-gold rule */
-.App .text-gold.hover\:text-black:hover,
-.App a.text-gold.hover\:text-black:hover,
-.App button.text-gold.hover\:text-black:hover { color: #000000 !important; }
+.ilsiciliano-root .text-gold.hover\:text-black:hover,
+.ilsiciliano-root a.text-gold.hover\:text-black:hover,
+.ilsiciliano-root button.text-gold.hover\:text-black:hover { color: #000000 !important; }
 
-/* Secondary accent (green) - utility classes for manual accents */
-.text-italian-green { color: var(--italian-green) !important; }
-.bg-italian-green { background-color: var(--italian-green) !important; }
-.border-italian-green { border-color: var(--italian-green) !important; }
+/* Secondary accent (green) - utility classes for manual accents (scoped) */
+.ilsiciliano-root .text-italian-green { color: var(--italian-green) !important; }
+.ilsiciliano-root .bg-italian-green { background-color: var(--italian-green) !important; }
+.ilsiciliano-root .border-italian-green { border-color: var(--italian-green) !important; }
 
 /* Italian tricolor strip - usable as decorative element */
 .italian-tricolor {
@@ -202,31 +205,31 @@ a:focus {
 
 
 /* --- Il Siciliano scoped overrides: pure black matches the logo --- */
-.App.bg-black,
-.App .bg-black {
+.ilsiciliano-root.bg-black,
+.ilsiciliano-root .bg-black {
   background-color: #000000 !important;
 }
 
 /* Replace harsh gradient-to-b from black -> gray-900 -> black with warmer variant */
-.App .bg-gradient-to-b.from-black.via-gray-900.to-black,
-.App .bg-gradient-to-b.from-black.to-gray-900,
-.App .bg-gradient-to-b.from-gray-900.to-black {
+.ilsiciliano-root .bg-gradient-to-b.from-black.via-gray-900.to-black,
+.ilsiciliano-root .bg-gradient-to-b.from-black.to-gray-900,
+.ilsiciliano-root .bg-gradient-to-b.from-gray-900.to-black {
   background: linear-gradient(to bottom, #000000 0%, #0a0a0a 50%, #000000 100%) !important;
 }
 
 /* Navigation bar remains dark */
-.App .bg-black\/95 { background-color: rgba(0, 0, 0, 0.95) !important; }
-.App .bg-black\/98 { background-color: rgba(0, 0, 0, 0.98) !important; }
-.App .bg-black\/90 { background-color: rgba(0, 0, 0, 0.90) !important; }
+.ilsiciliano-root .bg-black\/95 { background-color: rgba(0, 0, 0, 0.95) !important; }
+.ilsiciliano-root .bg-black\/98 { background-color: rgba(0, 0, 0, 0.98) !important; }
+.ilsiciliano-root .bg-black\/90 { background-color: rgba(0, 0, 0, 0.90) !important; }
 
 /* Subtle green glow on primary (red) buttons to hint at Italian palette */
-.App a.bg-gold,
-.App button.bg-gold {
+.ilsiciliano-root a.bg-gold,
+.ilsiciliano-root button.bg-gold {
   box-shadow: 0 6px 18px rgba(229, 57, 53, 0.25), 0 0 0 2px rgba(67, 160, 71, 0.0);
   transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
 }
-.App a.bg-gold:hover,
-.App button.bg-gold:hover {
+.ilsiciliano-root a.bg-gold:hover,
+.ilsiciliano-root button.bg-gold:hover {
   box-shadow: 0 10px 28px rgba(229, 57, 53, 0.45), 0 0 0 3px rgba(67, 160, 71, 0.35);
 }
 

@@ -109,7 +109,7 @@ function IlSicilianoApp() {
   return (
     <LanguageProvider>
       <BasePathProvider basePath={basePath}>
-        <div className="App bg-black min-h-screen relative">
+        <div className="App ilsiciliano-root bg-black min-h-screen relative">
           {/* Bright Italian tricolor edge strips (left + right) */}
           <div className="ilsiciliano-edge-strip left" aria-hidden="true">
             <span className="stripe-green" />
