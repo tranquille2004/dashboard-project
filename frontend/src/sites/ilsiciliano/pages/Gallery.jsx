@@ -8,8 +8,8 @@ const Gallery = () => {
   const t = translations.gallery;
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // 26 photos from Il Siciliano (food + interior + chef)
-  const images = Array.from({ length: 26 }, (_, i) => {
+  // 38 photos from Il Siciliano (food + interior + chef)
+  const images = Array.from({ length: 38 }, (_, i) => {
     const num = (i + 1).toString().padStart(2, '0');
     return `/images/ilsiciliano/gallery/gallery-${num}.jpg`;
   });
