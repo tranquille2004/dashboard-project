@@ -1,72 +1,32 @@
-import React, { useEffect, useRef } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
 import { translations } from '../data/translations';
-import { ShoppingBag, Clock, Phone, Info, ArrowRight } from 'lucide-react';
-import { IMG } from '@/utils/imageHelper';
+import { ShoppingBag, Clock, Phone, Mail, MessageCircle } from 'lucide-react';
 
 const Takeaway = () => {
   const { language } = useLanguage();
   const basePath = useBasePath();
-  const navigate = useNavigate();
   const t = translations;
-  const iframeRef = useRef(null);
 
-  // Listen for JotForm submission via postMessage
-  useEffect(() => {
-    const handleMessage = (event) => {
-      // JotForm sends messages from these origins
-      if (event.origin.includes('jotform.com')) {
-        try {
-          const data = typeof event.data === 'string' ? JSON.parse(event.data) : event.data;
-          
-          // Various ways JotForm signals completion
-          if (data) {
-            if (data.action === 'submission-completed' || 
-                data.action === 'formSubmitted' ||
-                data.submissionID ||
-                (data.type === 'form-submit-success')) {
-              navigate(`${basePath}/confirmation`);
-              return;
-            }
-          }
-        } catch (e) {
-          // If it's a string containing submission info
-          if (typeof event.data === 'string') {
-            const dataStr = event.data.toLowerCase();
-            if (dataStr.includes('submit') || dataStr.includes('thank') || dataStr.includes('success')) {
-              navigate(`${basePath}/confirmation`);
-            }
-          }
-        }
-      }
-    };
+  const comingSoonText = {
+    es: 'Pedidos online próximamente',
+    en: 'Online ordering coming soon',
+    it: 'Ordini online prossimamente',
+    fr: 'Commandes en ligne bientôt disponibles',
+    nl: 'Online bestellen binnenkort beschikbaar',
+    de: 'Online-Bestellungen demnächst verfügbar'
+  };
 
-    window.addEventListener('message', handleMessage);
-    
-    // Also load JotForm's embed handler for better detection
-    const script = document.createElement('script');
-    script.src = 'https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js';
-    script.async = true;
-    document.body.appendChild(script);
-    
-    script.onload = () => {
-      if (window.jotformEmbedHandler) {
-        window.jotformEmbedHandler(
-          'iframe[id="JotFormIFrame-201116780473653"]',
-          'https://form.jotform.com/'
-        );
-      }
-    };
-
-    return () => {
-      window.removeEventListener('message', handleMessage);
-      if (script.parentNode) {
-        document.body.removeChild(script);
-      }
-    };
-  }, [navigate, basePath]);
+  const callToOrderText = {
+    es: 'Mientras tanto, llámenos o escríbanos por WhatsApp para hacer su pedido para llevar.',
+    en: 'In the meantime, call us or message us via WhatsApp to place your takeaway order.',
+    it: 'Nel frattempo, chiamateci o scriveteci su WhatsApp per il vostro ordine da asporto.',
+    fr: 'En attendant, appelez-nous ou écrivez-nous sur WhatsApp pour passer votre commande à emporter.',
+    nl: 'Bel ons of stuur een WhatsApp om uw afhaalbestelling door te geven.',
+    de: 'Rufen Sie uns an oder schreiben Sie uns per WhatsApp, um Ihre Bestellung zum Mitnehmen aufzugeben.'
+  };
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
@@ -81,22 +41,6 @@ const Takeaway = () => {
           <div className="w-24 h-1 bg-gold mx-auto mt-6"></div>
         </div>
 
-        {/* Important Notice */}
-        <div className="bg-gold/10 border-l-4 border-gold p-6 rounded-lg mb-8 max-w-3xl mx-auto">
-          <div className="flex items-start space-x-4">
-            <Info className="text-gold flex-shrink-0 mt-1" size={24} />
-            <div>
-              <p className="text-white font-semibold mb-2">
-                {t.takeaway.note[language]}{' '}
-                <Link to={`${basePath}/reserve`} className="text-gold hover:text-gold/80 underline inline-flex items-center">
-                  {t.takeaway.clickHere[language]}
-                  <ArrowRight size={16} className="ml-1" />
-                </Link>
-              </p>
-            </div>
-          </div>
-        </div>
-
         {/* Info Grid */}
         <div className="grid md:grid-cols-3 gap-6 mb-12">
           <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gold/20 text-center hover:border-gold/40 transition-all">
@@ -108,7 +52,9 @@ const Takeaway = () => {
           </div>
           <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gold/20 text-center hover:border-gold/40 transition-all">
             <Phone size={40} className="text-gold mx-auto mb-3" />
-            <h3 className="text-white font-bold mb-2">Telefoon</h3>
+            <h3 className="text-white font-bold mb-2">{{
+              es: 'Teléfono', en: 'Phone', it: 'Telefono', fr: 'Téléphone', nl: 'Telefoon', de: 'Telefon'
+            }[language]}</h3>
             <a href="tel:+593984110781" className="text-gold hover:text-gold/80 transition-colors text-lg">
               {t.contact.phone}
             </a>
@@ -116,12 +62,7 @@ const Takeaway = () => {
           <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gold/20 text-center hover:border-gold/40 transition-all">
             <ShoppingBag size={40} className="text-gold mx-auto mb-3" />
             <h3 className="text-white font-bold mb-2">{{
-              nl: 'Bekijk kaart',
-              fr: 'Voir la carte',
-              en: 'View menu',
-              es: 'Ver menú',
-              de: 'Speisekarte ansehen',
-              it: 'Visualizza menu'
+              es: 'Ver menú', en: 'View menu', it: 'Visualizza menu', fr: 'Voir la carte', nl: 'Bekijk kaart', de: 'Speisekarte'
             }[language]}</h3>
             <Link to={`${basePath}/menu`} className="text-gold hover:text-gold/80 transition-colors">
               {t.menu.title[language]}
@@ -136,41 +77,46 @@ const Takeaway = () => {
           </p>
         </div>
 
-        {/* Holiday Notice */}
-        <div className="bg-gradient-to-r from-red-900/20 to-gold/10 border border-gold/30 p-6 rounded-lg mb-8 text-center">
-          <p className="text-white font-semibold">{t.home.closedNotice[language]}</p>
-        </div>
+        {/* Coming Soon Card with direct contact */}
+        <div className="max-w-3xl mx-auto bg-gradient-to-br from-gray-900 to-black p-8 md:p-12 rounded-lg border-2 border-gold/30 shadow-2xl text-center animate-fade-in">
+          <p className="text-italian-green font-semibold uppercase tracking-widest text-sm mb-3">
+            {{ es: 'Próximamente', en: 'Coming soon', it: 'Prossimamente', fr: 'Bientôt', nl: 'Binnenkort', de: 'Bald' }[language]}
+          </p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gold mb-4">
+            {comingSoonText[language]}
+          </h2>
+          <p className="text-gray-200 text-lg mb-8 leading-relaxed">
+            {callToOrderText[language]}
+          </p>
 
-        {/* Jotform Embed */}
-        <div className="bg-gradient-to-br from-gray-900 to-black p-6 md:p-12 rounded-lg border border-gold/20 shadow-2xl">
-          <iframe
-            ref={iframeRef}
-            id="JotFormIFrame-201116780473653"
-            title="Afhalen Formulier"
-            src="https://form.jotform.com/201116780473653"
-            className="w-full"
-            style={{ minHeight: '1200px', border: 'none' }}
-            scrolling="yes"
-          />
-        </div>
+          <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+            <a
+              href="tel:+593984110781"
+              className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 shadow-lg"
+            >
+              <Phone size={20} />
+              <span>+593 98 411 0781</span>
+            </a>
+            <a
+              href="https://wa.me/593984110781"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-italian-green text-white font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg"
+            >
+              <MessageCircle size={20} />
+              <span>WhatsApp</span>
+            </a>
+          </div>
 
-        {/* Food Images */}
-        <div className="grid md:grid-cols-3 gap-6 mt-12">
-          <img
-            src={IMG("/images/ilsiciliano/gallery/475539315-9097135276989113-4629240725372122729-n.jpg")}
-            alt="Italian Food"
-            className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-          />
-          <img
-            src={IMG("/images/ilsiciliano/gallery/478330133-1140135614790013-1825406155141421292-n.jpg")}
-            alt="Food 2"
-            className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-          />
-          <img
-            src={IMG("/images/ilsiciliano/gallery/481243795-9244475188921787-9185171556075761483-n.jpg")}
-            alt="Food 3"
-            className="w-full h-64 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-          />
+          <div className="mt-6 pt-6 border-t border-gold/10">
+            <a
+              href="mailto:info@ilsiciliano.ec"
+              className="inline-flex items-center gap-2 text-gray-300 hover:text-gold transition-colors"
+            >
+              <Mail size={18} />
+              <span>info@ilsiciliano.ec</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>

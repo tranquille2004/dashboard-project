@@ -1,11 +1,33 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
-import { Calendar, Clock, Users, Info } from 'lucide-react';
+import { Calendar, Clock, Users, Phone, Mail, MessageCircle } from 'lucide-react';
 
 const Reserve = () => {
   const { language } = useLanguage();
   const t = translations;
+
+  const comingSoonText = {
+    es: 'Reservas online próximamente',
+    en: 'Online reservations coming soon',
+    it: 'Prenotazioni online prossimamente',
+    fr: 'Réservations en ligne bientôt disponibles',
+    nl: 'Online reserveren binnenkort beschikbaar',
+    de: 'Online-Reservierungen demnächst verfügbar'
+  };
+
+  const callToReserveText = {
+    es: 'Mientras tanto, llámenos o escríbanos por WhatsApp para reservar su mesa.',
+    en: 'In the meantime, call us or message us via WhatsApp to book your table.',
+    it: 'Nel frattempo, chiamateci o scriveteci su WhatsApp per prenotare il vostro tavolo.',
+    fr: 'En attendant, appelez-nous ou écrivez-nous sur WhatsApp pour réserver votre table.',
+    nl: 'Bel ons of stuur een WhatsApp om uw tafel te reserveren.',
+    de: 'Rufen Sie uns an oder schreiben Sie uns per WhatsApp, um Ihren Tisch zu reservieren.'
+  };
+
+  const whatsappLabel = {
+    es: 'WhatsApp', en: 'WhatsApp', it: 'WhatsApp', fr: 'WhatsApp', nl: 'WhatsApp', de: 'WhatsApp'
+  };
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
@@ -29,75 +51,61 @@ const Reserve = () => {
           <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gold/20 text-center hover:border-gold/40 transition-all">
             <Calendar size={40} className="text-gold mx-auto mb-3" />
             <h3 className="text-white font-bold mb-2">{{
-              nl: 'Gesloten',
-              fr: 'Fermé',
-              en: 'Closed',
-              es: 'Cerrado',
-              de: 'Geschlossen',
-              it: 'Chiuso'
+              es: 'Cerrado', en: 'Closed', it: 'Chiuso', fr: 'Fermé', nl: 'Gesloten', de: 'Geschlossen'
             }[language]}</h3>
             <p className="text-gray-300 text-sm">{t.hours.closed[language]}</p>
           </div>
           <div className="bg-gradient-to-br from-gray-900 to-black p-6 rounded-lg border border-gold/20 text-center hover:border-gold/40 transition-all">
             <Users size={40} className="text-gold mx-auto mb-3" />
             <h3 className="text-white font-bold mb-2">{{
-              nl: 'Groepen',
-              fr: 'Groupes',
-              en: 'Groups',
-              es: 'Grupos',
-              de: 'Gruppen',
-              it: 'Gruppi'
+              es: 'Grupos', en: 'Groups', it: 'Gruppi', fr: 'Groupes', nl: 'Groepen', de: 'Gruppen'
             }[language]}</h3>
             <p className="text-gray-300 text-sm">{{
-              nl: '10+ personen',
-              fr: '10+ personnes',
-              en: '10+ people',
-              es: '10+ personas',
-              de: '10+ Personen',
-              it: '10+ persone'
+              es: '10+ personas', en: '10+ people', it: '10+ persone', fr: '10+ personnes', nl: '10+ personen', de: '10+ Personen'
             }[language]}</p>
           </div>
         </div>
 
-        {/* Notice */}
-        <div className="bg-gold/10 border-l-4 border-gold p-6 rounded-lg mb-8">
-          <div className="flex items-start space-x-4">
-            <Info className="text-gold flex-shrink-0 mt-1" size={24} />
-            <div className="space-y-2">
-              <p className="text-white font-semibold">{t.reserve.description[language]}</p>
-              <p className="text-gray-300 text-sm">{t.reserve.groupNote[language]}</p>
-            </div>
+        {/* Coming Soon Card with direct contact */}
+        <div className="max-w-3xl mx-auto bg-gradient-to-br from-gray-900 to-black p-8 md:p-12 rounded-lg border-2 border-gold/30 shadow-2xl text-center animate-fade-in">
+          <p className="text-italian-green font-semibold uppercase tracking-widest text-sm mb-3">
+            {{ es: 'Próximamente', en: 'Coming soon', it: 'Prossimamente', fr: 'Bientôt', nl: 'Binnenkort', de: 'Bald' }[language]}
+          </p>
+          <h2 className="text-2xl md:text-3xl font-bold text-gold mb-4">
+            {comingSoonText[language]}
+          </h2>
+          <p className="text-gray-200 text-lg mb-8 leading-relaxed">
+            {callToReserveText[language]}
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-4 max-w-xl mx-auto">
+            <a
+              href="tel:+593984110781"
+              className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 shadow-lg"
+            >
+              <Phone size={20} />
+              <span>+593 98 411 0781</span>
+            </a>
+            <a
+              href="https://wa.me/593984110781"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center gap-3 px-6 py-4 bg-italian-green text-white font-bold rounded-lg hover:opacity-90 transition-all duration-300 shadow-lg"
+            >
+              <MessageCircle size={20} />
+              <span>{whatsappLabel[language]}</span>
+            </a>
           </div>
-        </div>
 
-        {/* Holiday Notice */}
-        <div className="bg-gradient-to-r from-red-900/20 to-gold/10 border border-gold/30 p-6 rounded-lg mb-8 text-center">
-          <p className="text-white font-semibold">{t.home.closedNotice[language]}</p>
-        </div>
-
-        {/* Jotform Embed */}
-        <div className="bg-gradient-to-br from-gray-900 to-black p-6 md:p-12 rounded-lg border border-gold/20 shadow-2xl">
-          <iframe
-            title="Reserveren Formulier"
-            src="https://form.jotform.com/81425803784360"
-            className="w-full"
-            style={{ minHeight: '1200px', border: 'none' }}
-            scrolling="yes"
-          />
-        </div>
-
-        {/* Image Banner */}
-        <div className="grid md:grid-cols-2 gap-6 mt-12">
-          <img
-            src="/images/ilsiciliano/gallery/img-20160704-110159_orig.jpg"
-            alt="Restaurant Interior"
-            className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20"
-          />
-          <img
-            src="/images/ilsiciliano/gallery/3_1_orig.jpg"
-            alt="Dining"
-            className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20"
-          />
+          <div className="mt-6 pt-6 border-t border-gold/10">
+            <a
+              href="mailto:info@ilsiciliano.ec"
+              className="inline-flex items-center gap-2 text-gray-300 hover:text-gold transition-colors"
+            >
+              <Mail size={18} />
+              <span>info@ilsiciliano.ec</span>
+            </a>
+          </div>
         </div>
       </div>
     </div>
