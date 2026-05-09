@@ -59,24 +59,27 @@ const Home = () => {
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-28 md:py-32">
-        {/* Real photo backdrop: Trinacria neon — Sicilian branding */}
-        <div
-          className="absolute inset-0 z-0"
-          style={{ transform: `translateY(${scrollY * 0.4}px)` }}
-        >
-          <img
-            src="/images/ilsiciliano/home/hero-background.jpg"
-            alt="Il Siciliano — Trinacria"
+        {/* Video backdrop: compilation of restaurant action */}
+        <div className="absolute inset-0 z-0">
+          <video
+            src="/images/ilsiciliano/home/video/hero-compilation.mp4"
+            poster="/images/ilsiciliano/home/video/hero-poster.jpg"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
             className="w-full h-full object-cover"
+            aria-hidden="true"
           />
-          {/* Warm Italian-tinted overlay for readability - light */}
+          {/* Warm Italian-tinted overlay for readability */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                'radial-gradient(70% 55% at 18% 22%, rgba(0,146,70,0.22) 0%, transparent 60%),' +
-                'radial-gradient(60% 50% at 82% 20%, rgba(206,43,55,0.22) 0%, transparent 60%),' +
-                'linear-gradient(180deg, rgba(0,0,0,0.25) 0%, rgba(0,0,0,0.10) 35%, rgba(0,0,0,0.55) 100%)'
+                'radial-gradient(70% 55% at 18% 22%, rgba(0,146,70,0.20) 0%, transparent 60%),' +
+                'radial-gradient(60% 50% at 82% 20%, rgba(206,43,55,0.20) 0%, transparent 60%),' +
+                'linear-gradient(180deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.25) 35%, rgba(0,0,0,0.65) 100%)'
             }}
           />
         </div>
