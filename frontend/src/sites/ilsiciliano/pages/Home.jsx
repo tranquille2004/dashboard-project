@@ -58,7 +58,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden pt-28 md:pt-32">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
         {/* Real photo backdrop: Trinacria neon — Sicilian branding */}
         <div
           className="absolute inset-0 z-0"
@@ -82,12 +82,12 @@ const Home = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center px-4 animate-fade-in">
+        <div className="relative z-10 text-center px-4 animate-fade-in pt-24 md:pt-28">
           <div className="mb-8 flex justify-center">
             <img
               src="/images/ilsiciliano/logo/ilsiciliano-logo.png"
               alt="Il Siciliano"
-              className="h-48 md:h-64 lg:h-72 w-auto drop-shadow-[0_10px_40px_rgba(0,0,0,0.7)]"
+              className="h-40 md:h-56 lg:h-64 w-auto drop-shadow-[0_10px_40px_rgba(0,0,0,0.7)]"
             />
           </div>
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-wide">
@@ -114,67 +114,69 @@ const Home = () => {
             </Link>
           </div>
         </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 border-2 border-gold rounded-full flex justify-center">
-            <div className="w-1 h-3 bg-gold rounded-full mt-2 animate-pulse"></div>
-          </div>
-        </div>
       </section>
 
-      {/* Welcome Section */}
-      <section className="py-24 bg-black">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div className="space-y-6 animate-slide-in-left">
-              <div className="flex items-center gap-3">
-                <span className="inline-block w-12 h-1 bg-italian-green rounded-full"></span>
-                <span className="text-italian-green font-semibold tracking-wider uppercase text-sm">Il Siciliano</span>
-              </div>
-              <h2 className="text-4xl md:text-5xl font-bold text-gold">
-                {{
-                  nl: 'Experiencia Siciliana Auténtica',
-                  fr: 'Expérience Italienne Authentique',
-                  en: 'Authentic Italian Experience',
-                  es: 'Experiencia Italiana Auténtica',
-                  de: 'Authentisches Italienisches Erlebnis',
-                  it: 'Esperienza Italiana Autentica'
-                }[language]}
-              </h2>
-              <p className="text-gray-300 text-lg leading-relaxed">
-                {{
-                  nl: 'In het hart van Santo Domingo biedt Il Siciliano u een unieke culinaire ervaring. Met onze prachtige pizza oven en open keuken ziet u bij binnenkomst direct het universum van ons gastronomisch geheel.',
-                  fr: 'Au cœur de Santo Domingo, Il Siciliano vous offre une expérience culinaire unique. Avec notre magnifique four à pizza et notre cuisine ouverte, vous voyez directement en entrant l\'univers de notre ensemble gastronomique.',
-                  en: 'In the heart of Santo Domingo, Il Siciliano offers you a unique culinary experience. With our beautiful pizza oven and open kitchen, you immediately see the universe of our gastronomic whole upon entering.',
-                  es: 'En el corazón de Santo Domingo, Il Siciliano le ofrece una experiencia culinaria única. Con nuestro hermoso horno de pizza y cocina abierta, ve inmediatamente el universo de nuestro conjunto gastronómico al entrar.',
-                  de: 'Im Herzen von Santo Domingo bietet Ihnen Il Siciliano ein einzigartiges kulinarisches Erlebnis. Mit unserem schönen Pizzaofen und der offenen Küche sehen Sie beim Betreten sofort das Universum unseres gastronomischen Ganzen.',
-                  it: 'Nel cuore di Santo Domingo, Il Siciliano vi offre un\'esperienza culinaria unica. Con il nostro bellissimo forno per pizza e la cucina a vista, entrando vedete immediatamente l\'universo del nostro insieme gastronomico.'
-                }[language]}
-              </p>
-              <Link
-                to={`${basePath}/about`}
-                className="inline-flex items-center text-gold hover:text-gold/80 transition-colors font-semibold"
-              >
-                {{
-                  nl: 'Lees ons verhaal',
-                  fr: 'Lire notre histoire',
-                  en: 'Read our story',
-                  es: 'Lee nuestra historia',
-                  de: 'Lesen Sie unsere Geschichte',
-                  it: 'Leggi la nostra storia'
-                }[language]}
-                <ChevronRight className="ml-2" />
-              </Link>
+      {/* Welcome Section - background Emanuele with filter */}
+      <section className="relative py-32 md:py-40 overflow-hidden">
+        {/* Background image: Emanuele in action */}
+        <div className="absolute inset-0 z-0">
+          <img
+            src="/images/ilsiciliano/about/emanuele-pasta.jpg"
+            alt="Emanuele al trabajo"
+            className="w-full h-full object-cover"
+          />
+          {/* Cinematic warm filter for readability and Italian mood */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.40) 100%),' +
+                'radial-gradient(60% 50% at 75% 30%, rgba(206,43,55,0.18) 0%, transparent 70%),' +
+                'radial-gradient(60% 50% at 90% 80%, rgba(0,146,70,0.14) 0%, transparent 70%)'
+            }}
+          />
+        </div>
+
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-2xl space-y-6 animate-slide-in-left">
+            <div className="flex items-center gap-3">
+              <span className="inline-block w-12 h-1 bg-italian-green rounded-full"></span>
+              <span className="text-italian-green font-semibold tracking-wider uppercase text-sm">Il Siciliano</span>
             </div>
-            <div className="animate-slide-in-right">
-              <img
-                src="/images/ilsiciliano/home/interior.jpg"
-                alt="Restaurant Interior"
-                className="rounded-lg shadow-2xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-                loading="lazy"
-              />
-            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gold drop-shadow-[0_4px_12px_rgba(0,0,0,0.8)]">
+              {{
+                nl: 'Experiencia Siciliana Auténtica',
+                fr: 'Expérience Italienne Authentique',
+                en: 'Authentic Italian Experience',
+                es: 'Experiencia Italiana Auténtica',
+                de: 'Authentisches Italienisches Erlebnis',
+                it: 'Esperienza Italiana Autentica'
+              }[language]}
+            </h2>
+            <p className="text-gray-100 text-lg leading-relaxed drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+              {{
+                nl: 'In het hart van Santo Domingo biedt Il Siciliano u een unieke culinaire ervaring. Met onze prachtige pizza oven en open keuken ziet u bij binnenkomst direct het universum van ons gastronomisch geheel.',
+                fr: 'Au cœur de Santo Domingo, Il Siciliano vous offre une expérience culinaire unique. Avec notre magnifique four à pizza et notre cuisine ouverte, vous voyez directement en entrant l\'univers de notre ensemble gastronomique.',
+                en: 'In the heart of Santo Domingo, Il Siciliano offers you a unique culinary experience. With our beautiful pizza oven and open kitchen, you immediately see the universe of our gastronomic whole upon entering.',
+                es: 'En el corazón de Santo Domingo, Il Siciliano le ofrece una experiencia culinaria única. Con nuestro hermoso horno de pizza y cocina abierta, ve inmediatamente el universo de nuestro conjunto gastronómico al entrar.',
+                de: 'Im Herzen von Santo Domingo bietet Ihnen Il Siciliano ein einzigartiges kulinarisches Erlebnis. Mit unserem schönen Pizzaofen und der offenen Küche sehen Sie beim Betreten sofort das Universum unseres gastronomischen Ganzen.',
+                it: 'Nel cuore di Santo Domingo, Il Siciliano vi offre un\'esperienza culinaria unica. Con il nostro bellissimo forno per pizza e la cucina a vista, entrando vedete immediatamente l\'universo del nostro insieme gastronomico.'
+              }[language]}
+            </p>
+            <Link
+              to={`${basePath}/about`}
+              className="inline-flex items-center text-gold hover:text-gold/80 transition-colors font-semibold drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]"
+            >
+              {{
+                nl: 'Lees ons verhaal',
+                fr: 'Lire notre histoire',
+                en: 'Read our story',
+                es: 'Lee nuestra historia',
+                de: 'Lesen Sie unsere Geschichte',
+                it: 'Leggi la nostra storia'
+              }[language]}
+              <ChevronRight className="ml-2" />
+            </Link>
           </div>
         </div>
       </section>
