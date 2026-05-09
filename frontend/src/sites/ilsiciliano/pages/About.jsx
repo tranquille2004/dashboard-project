@@ -8,7 +8,7 @@ const About = () => {
   const t = translations.about;
 
   return (
-    <div className="min-h-screen bg-black pt-24 pb-16">
+    <div className="min-h-screen bg-black pt-24 pb-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
@@ -104,7 +104,7 @@ const About = () => {
         </div>
 
         {/* Sicilia panorama with caption */}
-        <div className="mt-16 relative rounded-xl overflow-hidden shadow-2xl border border-gold/30 animate-fade-in group">
+        <div className="mt-12 mb-4 relative rounded-xl overflow-hidden shadow-2xl border border-gold/30 animate-fade-in group">
           <img
             src="/images/ilsiciliano/about/sicilia.jpg"
             alt="Sicilia — el origen de Il Siciliano"
@@ -145,22 +145,6 @@ const About = () => {
               }[language] || 'Del mar azul de Castellammare a las mesas de Santo Domingo — traemos los sabores, los colores y el alma de la isla más hermosa del Mediterráneo.'}
             </p>
           </div>
-        </div>
-
-        {/* Additional Images */}
-        <div className="grid md:grid-cols-2 gap-8 mt-16">
-          <img
-            src="/images/ilsiciliano/about/emanuele-pasta.jpg"
-            alt="Emanuele — la pasta es pasión"
-            className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
-          <img
-            src="/images/ilsiciliano/about/emanuele-cocina.jpg"
-            alt="En la cocina siciliana"
-            className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
-            loading="lazy"
-          />
         </div>
       </div>
     </div>
