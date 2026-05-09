@@ -23,10 +23,10 @@ export const translations = {
       'Bienvenue chez Il Siciliano'
     ),
     subtitle: _(
-      'Trattoria & Pizzería — el verdadero sabor de Sicilia en Santo Domingo',
-      'Trattoria & Pizzeria — the real taste of Sicily in Santo Domingo',
-      'Trattoria & Pizzeria — il vero sapore della Sicilia a Santo Domingo',
-      'Trattoria & Pizzeria — le vrai goût de la Sicile à Santo Domingo'
+      'Trattoria & Pizzería — el verdadero sabor de Sicilia en Santo Domingo, Ecuador',
+      'Trattoria & Pizzeria — the real taste of Sicily in Santo Domingo, Ecuador',
+      'Trattoria & Pizzeria — il vero sapore della Sicilia a Santo Domingo, Ecuador',
+      'Trattoria & Pizzeria — le vrai goût de la Sicile à Santo Domingo, Équateur'
     ),
     closedNotice: _('', '', '', ''),
     cta: {
