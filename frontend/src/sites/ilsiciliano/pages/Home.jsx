@@ -58,7 +58,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden pt-28 md:pt-32">
         {/* Real photo backdrop: Trinacria neon — Sicilian branding */}
         <div
           className="absolute inset-0 z-0"
@@ -107,7 +107,7 @@ const Home = () => {
             </Link>
             <Link
               to={`${basePath}/takeaway`}
-              className="group inline-flex items-center justify-center px-8 py-4 bg-transparent border-2 border-gold text-gold font-bold rounded-lg hover:bg-gold hover:text-black transition-all duration-300 transform hover:scale-105"
+              className="group inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
             >
               {t.home.cta.takeaway[language]}
               <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
