@@ -207,36 +207,21 @@ const Info = () => {
           </div>
         </div>
 
-        {/* Holiday Notice */}
-        <div className="bg-gradient-to-r from-red-900/20 to-gold/10 border border-gold/30 p-8 rounded-lg text-center mb-12">
-          <h3 className="text-2xl font-bold text-white mb-4">
-            {{
-              nl: 'Sluitingsdagen',
-              fr: 'Jours de fermeture',
-              en: 'Closing Days',
-              es: 'Días de cierre',
-              de: 'Schließtage',
-              it: 'Giorni di Chiusura'
-            }[language]}
-          </h3>
-          <p className="text-white text-lg">{t.home.closedNotice[language]}</p>
-        </div>
-
         {/* Images */}
         <div className="grid md:grid-cols-3 gap-6">
           <img
-            src="/images/ilsiciliano/gallery/img-20160704-110159.jpg"
-            alt="Interior 1"
+            src="/images/ilsiciliano/gallery/gallery-11.jpg"
+            alt="La Trinacria - símbolo siciliano"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="/images/ilsiciliano/gallery/3_1.jpg"
-            alt="Italian Restaurant"
+            src="/images/ilsiciliano/gallery/gallery-12.jpg"
+            alt="Nuestra bodega"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
-            src="/images/ilsiciliano/gallery/dscn0463.jpg"
-            alt="Interior 3"
+            src="/images/ilsiciliano/gallery/gallery-13.jpg"
+            alt="Ambiente del restaurante"
             className="w-full h-72 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
         </div>
