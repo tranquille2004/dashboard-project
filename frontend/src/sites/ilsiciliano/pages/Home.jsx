@@ -84,23 +84,23 @@ const Home = () => {
           />
         </div>
 
-        {/* Hero Content */}
-        <div className="relative z-10 text-center px-4 animate-fade-in">
-          <div className="mb-8 flex justify-center">
+        {/* Hero Content - left-aligned so the center of the video stays visible */}
+        <div className="relative z-10 px-4 sm:px-8 lg:px-16 animate-fade-in w-full max-w-7xl mx-auto text-center md:text-left">
+          <div className="mb-8 flex justify-center md:justify-start">
             <img
               src="/images/ilsiciliano/logo/ilsiciliano-logo.png"
               alt="Il Siciliano"
               className="h-40 md:h-56 lg:h-64 w-auto drop-shadow-[0_10px_40px_rgba(0,0,0,0.7)]"
             />
           </div>
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-wide">
+          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-wide drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]">
             {t.home.welcome[language]}
           </h1>
-          <p className="text-xl md:text-2xl text-gold/90 mb-12 font-light">
+          <p className="text-xl md:text-2xl text-gold/90 mb-12 font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.85)]">
             {t.home.subtitle[language]}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
             <Link
               to={`${basePath}/reserve`}
               className="group inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
