@@ -103,6 +103,50 @@ const About = () => {
           ))}
         </div>
 
+        {/* Sicilia panorama with caption */}
+        <div className="mt-16 relative rounded-xl overflow-hidden shadow-2xl border border-gold/30 animate-fade-in group">
+          <img
+            src="/images/ilsiciliano/about/sicilia.jpg"
+            alt="Sicilia — el origen de Il Siciliano"
+            className="w-full h-[420px] md:h-[520px] object-cover transition-transform duration-700 group-hover:scale-105"
+          />
+          {/* Subtle gradient overlay from bottom for caption readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
+          {/* Italian tricolor stripe accent at top */}
+          <div className="absolute top-0 left-0 right-0 h-1.5 flex">
+            <span className="flex-1 bg-[#009246]" />
+            <span className="flex-1 bg-white" />
+            <span className="flex-1 bg-[#CE2B37]" />
+          </div>
+          {/* Caption */}
+          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
+            <p className="text-italian-green font-semibold uppercase tracking-widest text-xs md:text-sm mb-2">
+              {{
+                es: 'Nuestras raíces',
+                en: 'Our roots',
+                it: 'Le nostre radici',
+                fr: 'Nos racines'
+              }[language] || 'Nuestras raíces'}
+            </p>
+            <h3 className="text-3xl md:text-5xl font-bold text-white mb-3 drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]">
+              {{
+                es: 'Sicilia, en cada plato',
+                en: 'Sicily, in every dish',
+                it: 'La Sicilia, in ogni piatto',
+                fr: 'La Sicile, dans chaque plat'
+              }[language] || 'Sicilia, en cada plato'}
+            </h3>
+            <p className="text-gray-100 text-base md:text-lg max-w-2xl drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
+              {{
+                es: 'Del mar azul de Castellammare a las mesas de Santo Domingo — traemos los sabores, los colores y el alma de la isla más hermosa del Mediterráneo.',
+                en: 'From the blue sea of Castellammare to the tables of Santo Domingo — we bring you the flavors, colors and soul of the most beautiful island in the Mediterranean.',
+                it: 'Dal mare blu di Castellammare ai tavoli di Santo Domingo — vi portiamo i sapori, i colori e l\'anima dell\'isola più bella del Mediterraneo.',
+                fr: 'De la mer bleue de Castellammare aux tables de Santo Domingo — nous vous apportons les saveurs, les couleurs et l\'âme de la plus belle île de la Méditerranée.'
+              }[language] || 'Del mar azul de Castellammare a las mesas de Santo Domingo — traemos los sabores, los colores y el alma de la isla más hermosa del Mediterráneo.'}
+            </p>
+          </div>
+        </div>
+
         {/* Additional Images */}
         <div className="grid md:grid-cols-2 gap-8 mt-16">
           <img
