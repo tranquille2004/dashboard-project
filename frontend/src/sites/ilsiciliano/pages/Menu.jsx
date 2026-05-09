@@ -68,8 +68,8 @@ const Menu = () => {
         {/* Feature Images - Smaller below PDF */}
         <div className="grid md:grid-cols-3 gap-6">
           <img
-            src="/images/ilsiciliano/menu/aperol.webp"
-            alt="Aperol Spritz"
+            src="/images/ilsiciliano/gallery/gallery-03.jpg"
+            alt="Antipasto siciliano"
             className="w-full h-48 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
@@ -79,7 +79,7 @@ const Menu = () => {
           />
           <img
             src="/images/ilsiciliano/menu/dish1.jpg"
-            alt="Restaurant"
+            alt="Pasta signature"
             className="w-full h-48 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
         </div>
