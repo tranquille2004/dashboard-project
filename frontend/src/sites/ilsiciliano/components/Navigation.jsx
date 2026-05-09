@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
 import { translations } from '../data/translations';
-import { Menu, X, Globe } from 'lucide-react';
+import { Menu, X, Globe, Facebook, Instagram } from 'lucide-react';
 
 const Navigation = () => {
   const { language, changeLanguage } = useLanguage();
@@ -66,6 +66,37 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
+
+            {/* Social icons (desktop) */}
+            <div className="flex items-center space-x-1 ml-3 pl-3 border-l border-gold/20">
+              <a
+                href="https://www.facebook.com/sicilianotrattoriapizzeria/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="p-2 rounded-md text-white hover:text-gold hover:bg-white/5 transition-all"
+              >
+                <Facebook size={18} />
+              </a>
+              <a
+                href="https://www.instagram.com/siciliano_trattoria_pizzeria/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="p-2 rounded-md text-white hover:text-gold hover:bg-white/5 transition-all"
+              >
+                <Instagram size={18} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@siciliano_trattoria"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="p-2 rounded-md text-white hover:text-gold hover:bg-white/5 transition-all"
+              >
+                <svg className="w-[18px] h-[18px]" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+              </a>
+            </div>
             
             {/* Language Dropdown */}
             <div className="relative ml-4">
@@ -141,6 +172,36 @@ const Navigation = () => {
                 {link.label}
               </Link>
             ))}
+            {/* Social icons (mobile) */}
+            <div className="flex items-center justify-center gap-3 pt-3 border-t border-gold/20">
+              <a
+                href="https://www.facebook.com/sicilianotrattoriapizzeria/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="p-3 rounded-full text-gold hover:bg-gold/10 transition-all"
+              >
+                <Facebook size={22} />
+              </a>
+              <a
+                href="https://www.instagram.com/siciliano_trattoria_pizzeria/"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="p-3 rounded-full text-gold hover:bg-gold/10 transition-all"
+              >
+                <Instagram size={22} />
+              </a>
+              <a
+                href="https://www.tiktok.com/@siciliano_trattoria"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="p-3 rounded-full text-gold hover:bg-gold/10 transition-all"
+              >
+                <svg className="w-[22px] h-[22px]" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1.84-.1z"/></svg>
+              </a>
+            </div>
           </div>
         </div>
       )}

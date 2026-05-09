@@ -58,7 +58,7 @@ const Home = () => {
   return (
     <div className="min-h-screen">
       {/* Hero Section with Parallax */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-28 md:py-32">
         {/* Real photo backdrop: Trinacria neon — Sicilian branding */}
         <div
           className="absolute inset-0 z-0"
@@ -82,7 +82,7 @@ const Home = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-10 text-center px-4 animate-fade-in pt-24 md:pt-28">
+        <div className="relative z-10 text-center px-4 animate-fade-in">
           <div className="mb-8 flex justify-center">
             <img
               src="/images/ilsiciliano/logo/ilsiciliano-logo.png"
@@ -118,19 +118,19 @@ const Home = () => {
 
       {/* Welcome Section - background Emanuele with filter */}
       <section className="relative py-32 md:py-40 overflow-hidden">
-        {/* Background image: Emanuele in action */}
+        {/* Background image: Emanuele in the kitchen */}
         <div className="absolute inset-0 z-0">
           <img
-            src="/images/ilsiciliano/about/emanuele-pasta.jpg"
-            alt="Emanuele al trabajo"
-            className="w-full h-full object-cover"
+            src="/images/ilsiciliano/about/emanuele-cocina.jpg"
+            alt="Emanuele en la cocina"
+            className="w-full h-full object-cover object-center"
           />
           {/* Cinematic warm filter for readability and Italian mood */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.65) 40%, rgba(0,0,0,0.40) 100%),' +
+                'linear-gradient(90deg, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.55) 45%, rgba(0,0,0,0.30) 100%),' +
                 'radial-gradient(60% 50% at 75% 30%, rgba(206,43,55,0.18) 0%, transparent 70%),' +
                 'radial-gradient(60% 50% at 90% 80%, rgba(0,146,70,0.14) 0%, transparent 70%)'
             }}
