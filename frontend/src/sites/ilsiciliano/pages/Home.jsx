@@ -57,8 +57,17 @@ const Home = () => {
 
   return (
     <div className="min-h-screen">
+      {/* Mobile-only logo bar above the video */}
+      <div className="md:hidden bg-black flex justify-center items-center pt-24 pb-6">
+        <img
+          src="/images/ilsiciliano/logo/ilsiciliano-logo.png"
+          alt="Il Siciliano"
+          className="h-32 w-auto"
+        />
+      </div>
+
       {/* Hero Section with Parallax */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-28 md:py-32">
+      <section className="relative min-h-[70vh] md:min-h-screen flex items-center justify-center overflow-hidden py-12 md:py-32">
         {/* Video backdrop: compilation of restaurant action */}
         <div className="absolute inset-0 z-0">
           <video
@@ -86,7 +95,8 @@ const Home = () => {
 
         {/* Hero Content - left-aligned so the center of the video stays visible */}
         <div className="relative z-10 px-4 sm:px-8 lg:px-16 animate-fade-in w-full max-w-7xl mx-auto text-center md:text-left">
-          <div className="mb-8 flex justify-center md:justify-start">
+          {/* Logo only visible on desktop (mobile shows logo bar above the video) */}
+          <div className="mb-8 hidden md:flex justify-center md:justify-start">
             <img
               src="/images/ilsiciliano/logo/ilsiciliano-logo.png"
               alt="Il Siciliano"
