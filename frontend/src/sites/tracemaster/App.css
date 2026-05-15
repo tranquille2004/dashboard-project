@@ -124,15 +124,15 @@ a:focus-visible {
 }
 
 /* Image Loading */
-img {
+.tracemaster-root img {
   transition: opacity 0.3s ease;
 }
 
-img[loading] {
+.tracemaster-root img[loading] {
   opacity: 0;
 }
 
-img:not([loading]) {
+.tracemaster-root img:not([loading]) {
   opacity: 1;
 }
 
