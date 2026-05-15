@@ -46,7 +46,7 @@ export const translations = {
     )
   },
   contact: {
-    address: 'Av. Quito y Tulcán, Santo Domingo, Ecuador',
+    address: 'Av. Quito y Av. Río Lelia, Santo Domingo, Ecuador',
     phone: '+593 98 411 0781',
     email: 'info@ilsiciliano.ec',
     emailNote: _(
