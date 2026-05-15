@@ -19,6 +19,9 @@ import HotelDelPacificoApp from '@/sites/hoteldelpacifico/HotelDelPacificoApp';
 import RccbApp from '@/sites/rccb/RccbApp';
 import IlSicilianoApp from '@/sites/ilsiciliano/IlSicilianoApp';
 import IlSicilianoAdminDashboard from '@/sites/ilsiciliano/admin/IlSicilianoAdminDashboard';
+import SanFranciscoApp from '@/sites/sanfrancisco/SanFranciscoApp';
+import SanFranciscoAdminDashboard from '@/sites/sanfrancisco/admin/SanFranciscoAdminDashboard';
+import SanFranciscoInConstruction from '@/sites/sanfrancisco/InConstruction';
 import './App.css';
 
 // Domain to site mapping - BELANGRIJKSTE CODE
@@ -50,7 +53,10 @@ const DOMAIN_MAPPING = {
   'www.rccbgroup.be': 'rccb',
   'ilsiciliano.fworksbuilders.com': 'ilsiciliano',
   'ilsiciliano.ec': 'ilsiciliano',
-  'www.ilsiciliano.ec': 'ilsiciliano'
+  'www.ilsiciliano.ec': 'ilsiciliano',
+  'sanfrancisco.fworksbuilders.com': 'sanfrancisco',
+  'sanfrancisco-haciendaturistica.com': 'sanfrancisco-construction',
+  'www.sanfrancisco-haciendaturistica.com': 'sanfrancisco-construction'
 };
 
 // Detecteer custom domain DIRECT bij laden
@@ -103,6 +109,14 @@ function AdminRouter() {
       return (
         <Routes>
           <Route path="/site/ilsiciliano/*" element={<IlSicilianoApp />} />
+        </Routes>
+      );
+    }
+    // Special handling for /site/sanfrancisco
+    if (location.pathname.startsWith('/site/sanfrancisco')) {
+      return (
+        <Routes>
+          <Route path="/site/sanfrancisco/*" element={<SanFranciscoApp />} />
         </Routes>
       );
     }
@@ -244,6 +258,38 @@ function CustomDomainRouter({ slug }) {
     return (
       <Routes>
         <Route path="/*" element={<RccbApp />} />
+      </Routes>
+    );
+  }
+
+  // San Francisco IN CONSTRUCTION - real domain only shows construction page
+  if (slug === 'sanfrancisco-construction') {
+    return <SanFranciscoInConstruction />;
+  }
+
+  // San Francisco Hacienda - full site (preview subdomain)
+  if (slug === 'sanfrancisco') {
+    if (location.pathname === '/admin' || location.pathname === '/admin/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/admin" element={<SiteAdminLogin preSelectedSite={slug} />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    if (location.pathname === '/mi-sitio' || location.pathname === '/mi-sitio/') {
+      return (
+        <SiteAdminProvider>
+          <Routes>
+            <Route path="/mi-sitio" element={<SanFranciscoAdminDashboard />} />
+          </Routes>
+        </SiteAdminProvider>
+      );
+    }
+    return (
+      <Routes>
+        <Route path="/*" element={<SanFranciscoApp />} />
       </Routes>
     );
   }

@@ -1,0 +1,88 @@
+/* San Francisco Hacienda Turística — Black & Gold Theme (matches logo) */
+/* IMPORTANT: All variables scoped to .sanfrancisco-root to prevent leaking */
+
+.sanfrancisco-root {
+  --gold: #C9A35C;
+  --gold-light: #E0BE7B;
+  --gold-dark: #A88040;
+  --hacienda-green: #3A5F3C;
+  --hacienda-green-light: #5A8A5C;
+  --cream: #F5E6CA;
+  --black: #0d0d0d;
+  --gray-900: #1a1a1a;
+}
+
+/* Smooth Scrolling */
+html { scroll-behavior: smooth; }
+
+body:has(.sanfrancisco-root) {
+  background-color: #0d0d0d;
+  color: #F5E6CA;
+}
+
+/* Primary accent (gold) — scoped */
+.sanfrancisco-root .text-gold { color: var(--gold) !important; }
+.sanfrancisco-root .bg-gold { background-color: var(--gold) !important; }
+.sanfrancisco-root .border-gold { border-color: var(--gold) !important; }
+.sanfrancisco-root .hover\:text-gold:hover { color: var(--gold) !important; }
+.sanfrancisco-root .hover\:bg-gold:hover { background-color: var(--gold) !important; }
+
+.sanfrancisco-root .text-gold.hover\:text-black:hover,
+.sanfrancisco-root a.text-gold.hover\:text-black:hover,
+.sanfrancisco-root button.text-gold.hover\:text-black:hover { color: #0d0d0d !important; }
+
+/* Secondary (subtle green) */
+.sanfrancisco-root .text-hacienda-green { color: var(--hacienda-green-light) !important; }
+.sanfrancisco-root .bg-hacienda-green { background-color: var(--hacienda-green) !important; }
+
+/* Backgrounds — pure black hacienda */
+.sanfrancisco-root.bg-black,
+.sanfrancisco-root .bg-black { background-color: #0d0d0d !important; }
+
+.sanfrancisco-root .bg-gradient-to-b.from-black.via-gray-900.to-black,
+.sanfrancisco-root .bg-gradient-to-b.from-black.to-gray-900,
+.sanfrancisco-root .bg-gradient-to-b.from-gray-900.to-black {
+  background: linear-gradient(to bottom, #0d0d0d 0%, #1a1a1a 50%, #0d0d0d 100%) !important;
+}
+
+.sanfrancisco-root .bg-black\/95 { background-color: rgba(13,13,13,0.95) !important; }
+.sanfrancisco-root .bg-black\/98 { background-color: rgba(13,13,13,0.98) !important; }
+.sanfrancisco-root .bg-black\/90 { background-color: rgba(13,13,13,0.90) !important; }
+
+/* Gold button glow */
+.sanfrancisco-root a.bg-gold,
+.sanfrancisco-root button.bg-gold {
+  box-shadow: 0 6px 18px rgba(201, 163, 92, 0.25);
+  transition: box-shadow 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+.sanfrancisco-root a.bg-gold:hover,
+.sanfrancisco-root button.bg-gold:hover {
+  box-shadow: 0 10px 28px rgba(201, 163, 92, 0.45);
+}
+
+/* Animations */
+.animate-fade-in { animation: fade-in 0.8s ease-out; }
+.animate-slide-in-left { animation: slide-in-left 0.8s ease-out; }
+.animate-slide-in-right { animation: slide-in-right 0.8s ease-out; }
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(40px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Hover lift */
+.sanfrancisco-root .hover-lift {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.sanfrancisco-root .hover-lift:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+}

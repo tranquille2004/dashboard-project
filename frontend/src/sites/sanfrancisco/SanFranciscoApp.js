@@ -1,0 +1,120 @@
+import React, { useState, useEffect } from "react";
+import "./App.css";
+import { Routes, Route, useLocation } from "react-router-dom";
+import axios from "axios";
+import { LanguageProvider } from "./contexts/LanguageContext";
+import { BasePathProvider } from "./contexts/BasePathContext";
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
+import ScrollToTop from "./components/ScrollToTop";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Hospedaje from "./pages/Hospedaje";
+import Caballos from "./pages/Caballos";
+import Animales from "./pages/Animales";
+import Actividades from "./pages/Actividades";
+import Eventos from "./pages/Eventos";
+import Restaurante from "./pages/Restaurante";
+import Contacto from "./pages/Contacto";
+import Gallery from "./pages/Gallery";
+import AnnouncementBanner from "@/components/AnnouncementBanner";
+import SEO from '@/components/SEO';
+import URLSync from '@/components/URLSync';
+
+const API = process.env.REACT_APP_BACKEND_URL + "/api";
+
+const trackPageVisit = async (path) => {
+  try {
+    await fetch(`${API}/public/track-visit`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ site_slug: 'sanfrancisco', path })
+    });
+  } catch (error) {
+    // Silent fail
+  }
+};
+
+const usePageTracking = () => {
+  const location = useLocation();
+  useEffect(() => {
+    trackPageVisit(location.pathname);
+  }, [location.pathname]);
+};
+
+const SEO_CONFIG = {
+  siteName: "Hacienda Turística San Francisco",
+  defaultImage: '/images/sanfrancisco/logo/sanfrancisco-logo.png',
+  baseUrl: 'https://sanfrancisco-haciendaturistica.com',
+  title: "Hacienda Turística San Francisco | Cabalgatas, Naturaleza, Cabañas — Santo Domingo, Ecuador",
+  description: "Hacienda Turística San Francisco — Vive la experiencia campestre en familia. Cabalgatas, aventura, cabañas, restaurante, eventos. Vía a Quinindé Km 22, Santo Domingo, Ecuador.",
+  keywords: "hacienda turística Santo Domingo, paseos a caballo Ecuador, cabañas Santo Domingo, eventos campestres, paseo en carroza, hacienda San Francisco"
+};
+
+function SanFranciscoAppInner({ siteConfig }) {
+  usePageTracking();
+  return (
+    <>
+      <ScrollToTop />
+      <URLSync />
+      <Navigation />
+      <AnnouncementBanner
+        message={siteConfig?.special_announcement}
+        type={siteConfig?.special_announcement_type || 'info'}
+        active={siteConfig?.special_announcement_active}
+      />
+      <Routes>
+        <Route index element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="hospedaje" element={<Hospedaje />} />
+        <Route path="caballos" element={<Caballos />} />
+        <Route path="animales" element={<Animales />} />
+        <Route path="actividades" element={<Actividades />} />
+        <Route path="eventos" element={<Eventos />} />
+        <Route path="restaurante" element={<Restaurante />} />
+        <Route path="contacto" element={<Contacto />} />
+        <Route path="gallery" element={<Gallery />} />
+        <Route path="*" element={<Home />} />
+      </Routes>
+      <Footer />
+    </>
+  );
+}
+
+function SanFranciscoApp() {
+  const [siteConfig, setSiteConfig] = useState(null);
+
+  const KNOWN_CUSTOM_DOMAINS = [
+    'sanfrancisco.fworksbuilders.com',
+    'sanfrancisco-haciendaturistica.com',
+    'www.sanfrancisco-haciendaturistica.com'
+  ];
+  const hostname = window.location.hostname.toLowerCase();
+  const isCustomDomain = KNOWN_CUSTOM_DOMAINS.includes(hostname);
+  const basePath = isCustomDomain ? '' : '/site/sanfrancisco';
+
+  useEffect(() => {
+    axios.get(`${API}/public/site/sanfrancisco`)
+      .then(res => setSiteConfig(res.data?.config))
+      .catch(() => {});
+  }, []);
+
+  return (
+    <LanguageProvider>
+      <BasePathProvider basePath={basePath}>
+        <div className="App sanfrancisco-root bg-black min-h-screen relative">
+          <SEO
+            title={SEO_CONFIG.title}
+            description={SEO_CONFIG.description}
+            keywords={SEO_CONFIG.keywords}
+            url={SEO_CONFIG.baseUrl}
+            siteName={SEO_CONFIG.siteName}
+          />
+          <SanFranciscoAppInner siteConfig={siteConfig} />
+        </div>
+      </BasePathProvider>
+    </LanguageProvider>
+  );
+}
+
+export default SanFranciscoApp;

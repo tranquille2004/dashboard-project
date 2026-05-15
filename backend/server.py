@@ -688,6 +688,11 @@ SITE_EMAIL_CONFIG = {
         'to': 'info@ilsiciliano.ec',
         'subject_prefix': 'Il Siciliano — Nueva consulta',
         'from_name': 'Il Siciliano Website'
+    },
+    'sanfrancisco': {
+        'to': 'info@sanfrancisco-haciendaturistica.com',
+        'subject_prefix': 'San Francisco Hacienda — Nueva consulta',
+        'from_name': 'Hacienda San Francisco Website'
     }
 }
 
@@ -1551,6 +1556,9 @@ DOMAIN_SLUG_MAP = {
     'ilsiciliano.fworksbuilders.com': 'ilsiciliano',
     'ilsiciliano.ec': 'ilsiciliano',
     'www.ilsiciliano.ec': 'ilsiciliano',
+    'sanfrancisco.fworksbuilders.com': 'sanfrancisco',
+    'sanfrancisco-haciendaturistica.com': 'sanfrancisco',
+    'www.sanfrancisco-haciendaturistica.com': 'sanfrancisco',
 }
 
 # SEO data per site
@@ -1631,6 +1639,13 @@ SITE_SEO_DATA = {
         'description': 'Il Siciliano — auténtica cocina siciliana en Santo Domingo de los Tsáchilas. Pasta fresca, pizza de horno de leña, especialidades de Sicilia. Reserva tu mesa.',
         'keywords': 'restaurante italiano Santo Domingo, pizzería Ecuador, cocina siciliana, Il Siciliano, trattoria, pizza horno de leña, restaurante Tsáchilas',
         'pages': ['/', '/menu', '/reserve', '/takeaway', '/gallery', '/info', '/about']
+    },
+    'sanfrancisco': {
+        'domain': 'sanfrancisco-haciendaturistica.com',
+        'name': 'Hacienda Turística San Francisco — Santo Domingo, Ecuador',
+        'description': 'Hacienda Turística San Francisco — cabalgatas, aventura, cabañas, restaurante y eventos a 22 km de Santo Domingo. Vive la experiencia campestre en familia.',
+        'keywords': 'hacienda turística Santo Domingo, paseos a caballo Ecuador, cabañas Santo Domingo, eventos campestres, mini granja, hacienda San Francisco',
+        'pages': ['/', '/about', '/hospedaje', '/caballos', '/animales', '/actividades', '/eventos', '/restaurante', '/gallery', '/contacto']
     }
 }
 
@@ -3075,6 +3090,26 @@ async def seed_sites_on_startup():
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
             "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_ilsiciliano",
+            "name": "Il Siciliano — Trattoria Pizzería",
+            "slug": "ilsiciliano",
+            "domains": ["ilsiciliano.fworksbuilders.com", "ilsiciliano.ec", "www.ilsiciliano.ec"],
+            "site_type": "restaurant",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "site_id": "site_sanfrancisco",
+            "name": "Hacienda Turística San Francisco",
+            "slug": "sanfrancisco",
+            "domains": ["sanfrancisco.fworksbuilders.com", "sanfrancisco-haciendaturistica.com", "www.sanfrancisco-haciendaturistica.com"],
+            "site_type": "tourism",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
         }
     ]
     
@@ -3143,6 +3178,29 @@ async def seed_sites_on_startup():
             }}
         )
         logger.info("Added galleries to existing hotel config")
+
+    # Auto-seed San Francisco admin
+    sf_admin = await db.site_admins.find_one({"site_id": "site_sanfrancisco"})
+    sf_password_hash = __import__('hashlib').sha256("sanfrancisco123".encode()).hexdigest()
+    if not sf_admin:
+        admin_dict = {
+            "admin_id": f"admin_{uuid.uuid4().hex[:12]}",
+            "site_id": "site_sanfrancisco",
+            "email": "admin@sanfrancisco-haciendaturistica.com",
+            "name": "Hacienda San Francisco Admin",
+            "password_hash": sf_password_hash,
+            "is_active": True,
+            "permissions": {"opening_hours": True, "menu_items": True, "gallery": True, "prices": True, "contact_info": True},
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.site_admins.insert_one(admin_dict)
+        logger.info("Auto-seeded San Francisco admin: admin@sanfrancisco-haciendaturistica.com")
+    else:
+        await db.site_admins.update_one(
+            {"site_id": "site_sanfrancisco"},
+            {"$set": {"email": "admin@sanfrancisco-haciendaturistica.com", "password_hash": sf_password_hash}}
+        )
 
 @app.on_event("shutdown")
 async def shutdown_db_client():
