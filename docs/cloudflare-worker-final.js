@@ -2,6 +2,12 @@
 // FINAL VERSION - Met URL synchronisatie en API proxy
 const PREVIEW_URL = 'https://fworks-consolidate-1.emergent.host';
 
+// Domeinen die alleen een "In Constructie" pagina tonen (klant nog niet akkoord)
+const IN_CONSTRUCTION = new Set([
+  'sanfrancisco-haciendaturistica.com',
+  'www.sanfrancisco-haciendaturistica.com'
+]);
+
 const SITE_MAPPING = {
   'labottegaherent.com': '/site/bottega',
   'www.labottegaherent.com': '/site/bottega',
@@ -52,11 +58,154 @@ const SITE_TITLES = {
   '/site/sanfrancisco': 'Club San Francisco — Hacienda Turística'
 };
 
+function renderInConstruction() {
+  const html = `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Club San Francisco — Próximamente</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      min-height: 100vh;
+      background: #0a0a0a;
+      color: #f5efe0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .bg {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at top, #1a3a2a 0%, #0a0a0a 60%);
+      z-index: 0;
+    }
+    .bg::after {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.06) 0%, transparent 40%);
+    }
+    .container {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.5rem 1.25rem;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 999px;
+      color: #d4af37;
+      font-size: 0.75rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 7vw, 5.5rem);
+      font-weight: 500;
+      line-height: 1.05;
+      color: #f5efe0;
+      margin-bottom: 1rem;
+      letter-spacing: -0.02em;
+    }
+    h1 .accent {
+      display: block;
+      color: #d4af37;
+      font-style: italic;
+      font-weight: 400;
+    }
+    .divider {
+      width: 60px;
+      height: 1px;
+      background: #d4af37;
+      margin: 2rem auto;
+    }
+    .tagline {
+      font-size: 1.1rem;
+      color: rgba(245, 239, 224, 0.7);
+      max-width: 600px;
+      line-height: 1.7;
+      font-weight: 300;
+      margin-bottom: 3rem;
+    }
+    .meta {
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: rgba(245, 239, 224, 0.5);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .meta span { display: flex; align-items: center; gap: 0.5rem; }
+    .meta .dot { width: 4px; height: 4px; background: #d4af37; border-radius: 50%; }
+    footer {
+      position: absolute;
+      bottom: 1.5rem;
+      left: 0; right: 0;
+      text-align: center;
+      font-size: 0.75rem;
+      color: rgba(245, 239, 224, 0.35);
+      letter-spacing: 0.1em;
+    }
+    footer a { color: #d4af37; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+  <div class="container">
+    <span class="badge">Próximamente · Coming Soon</span>
+    <h1>
+      Club San Francisco
+      <span class="accent">Hacienda Turística</span>
+    </h1>
+    <div class="divider"></div>
+    <p class="tagline">
+      Estamos preparando una experiencia única en el corazón de la naturaleza ecuatoriana.
+      Nuestro sitio web estará disponible muy pronto.
+    </p>
+    <div class="meta">
+      <span><span class="dot"></span> Hospedaje</span>
+      <span><span class="dot"></span> Caballos</span>
+      <span><span class="dot"></span> Actividades</span>
+      <span><span class="dot"></span> Restaurante</span>
+    </div>
+  </div>
+  <footer>
+    © ${new Date().getFullYear()} Club San Francisco · Diseñado por <a href="https://fworksbuilders.com">fworksbuilders</a>
+  </footer>
+</body>
+</html>`;
+  return new Response(html, {
+    headers: {
+      'Content-Type': 'text/html;charset=UTF-8',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'X-Robots-Tag': 'noindex, nofollow'
+    }
+  });
+}
+
 export default {
   async fetch(request) {
     const url = new URL(request.url);
     const hostname = url.hostname;
     const pathname = url.pathname;
+    
+    // BLOK: "In Constructie" pagina voor domeinen waar klant nog niet akkoord is
+    if (IN_CONSTRUCTION.has(hostname)) {
+      return renderInConstruction();
+    }
     
     const sitePath = SITE_MAPPING[hostname];
     
