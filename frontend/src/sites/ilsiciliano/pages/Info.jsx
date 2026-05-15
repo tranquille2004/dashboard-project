@@ -119,22 +119,6 @@ const Info = () => {
               </div>
             </div>
           </div>
-
-          {/* Map */}
-          <div className="animate-slide-in-right">
-            <div className="bg-gradient-to-br from-gray-900 to-black p-4 rounded-lg border border-gold/20 h-full">
-              <iframe
-                title="Il Siciliano en Google Maps"
-                src="https://www.google.com/maps?q=Il+Siciliano+Santo+Domingo+Ecuador&output=embed"
-                width="100%"
-                height="100%"
-                style={{ border: 0, minHeight: '500px', borderRadius: '8px' }}
-                allowFullScreen=""
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-              />
-            </div>
-          </div>
         </div>
 
         {/* How to find us - Google Maps embed */}
