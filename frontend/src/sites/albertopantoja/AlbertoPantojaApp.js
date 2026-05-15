@@ -25,13 +25,13 @@ const translations = {
       subtitle: 'CONCEJAL RURAL DE SANTO DOMINGO',
       title: 'Alberto Pantoja',
       tagline: '',
-      description: 'Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y concejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
+      description: 'Ex-Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y concejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
       cta: 'Conoce Mi Trabajo'
     },
     about: {
       label: 'SOBRE ALBERTO',
       title: 'Compromiso con el pueblo',
-      description: 'Alberto Pantoja es concejal Rural del cantón Santo Domingo y Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
+      description: 'Alberto Pantoja es concejal Rural del cantón Santo Domingo y Ex-Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
       mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias urbanas de la ciudad y las 7 parroquias rurales del cantón, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
       stats: {
         sessions: 'Sesiones del Concejo',
@@ -88,13 +88,13 @@ const translations = {
       subtitle: 'CONSEILLER RURAL DE SANTO DOMINGO',
       title: 'Alberto Pantoja',
       tagline: '',
-      description: 'Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
+      description: 'Ex-Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
       cta: 'Découvrez Mon Travail'
     },
     about: {
       label: 'À PROPOS D\'ALBERTO',
       title: 'Engagement envers le peuple',
-      description: 'Alberto Pantoja est Conseiller Rural du canton de Santo Domingo et Directeur Provincial de la Revolución Ciudadana (RC5) à Santo Domingo de los Tsáchilas. Avec une profonde vocation de service public, Alberto représente les intérêts des communautés rurales et urbaines de la province.',
+      description: 'Alberto Pantoja est Conseiller Rural du canton de Santo Domingo et Ex-Directeur Provincial de la Revolución Ciudadana (RC5) à Santo Domingo de los Tsáchilas. Avec une profonde vocation de service public, Alberto représente les intérêts des communautés rurales et urbaines de la province.',
       mission: 'Son engagement couvre le développement intégral des 7 paroisses urbaines de la ville et des 7 paroisses rurales du canton, en luttant pour de meilleures infrastructures, des services de santé, l\'éducation et des opportunités économiques pour tous les citoyens.',
       stats: {
         sessions: 'Sessions du Conseil',
@@ -151,13 +151,13 @@ const translations = {
       subtitle: 'RURAL COUNCILMAN OF SANTO DOMINGO',
       title: 'Alberto Pantoja',
       tagline: '',
-      description: 'Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
+      description: 'Ex-Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
       cta: 'See My Work'
     },
     about: {
       label: 'ABOUT ALBERTO',
       title: 'Commitment to the people',
-      description: 'Alberto Pantoja is Rural Councilman of Santo Domingo canton and Provincial Director of Revolución Ciudadana (RC5) in Santo Domingo de los Tsáchilas. With a deep vocation for public service, Alberto represents the interests of rural and urban communities in the province.',
+      description: 'Alberto Pantoja is Rural Councilman of Santo Domingo canton and Ex-Provincial Director of Revolución Ciudadana (RC5) in Santo Domingo de los Tsáchilas. With a deep vocation for public service, Alberto represents the interests of rural and urban communities in the province.',
       mission: 'His commitment covers the integral development of the 7 urban parishes of the city and the 7 rural parishes of the canton, fighting for better infrastructure, health services, education, and economic opportunities for all citizens.',
       stats: {
         sessions: 'Council Sessions',
