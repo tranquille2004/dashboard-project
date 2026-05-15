@@ -37,7 +37,7 @@ const Footer = () => {
               <div className="flex items-start space-x-3">
                 <Mail size={20} className="text-gold mt-1 flex-shrink-0" />
                 <div>
-                  <a href="mailto:info@ilsiciliano.ec" className="hover:text-gold transition-colors">
+                  <a href="mailto:litalianoec@gmail.com" className="hover:text-gold transition-colors">
                     {t.contact.email}
                   </a>
                   <p className="text-xs text-gray-400 mt-1">

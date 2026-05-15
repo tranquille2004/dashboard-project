@@ -89,11 +89,11 @@ const GroupMenus = () => {
                 <span className="text-lg">+593 98 411 0781</span>
               </a>
               <a
-                href="mailto:info@ilsiciliano.ec"
+                href="mailto:litalianoec@gmail.com"
                 className="inline-flex items-center gap-3 text-gray-200 hover:text-gold transition-colors"
               >
                 <Mail size={20} className="text-gold" />
-                <span className="text-lg">info@ilsiciliano.ec</span>
+                <span className="text-lg">litalianoec@gmail.com</span>
               </a>
             </div>
           </div>

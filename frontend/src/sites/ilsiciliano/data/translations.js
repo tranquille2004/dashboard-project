@@ -48,7 +48,7 @@ export const translations = {
   contact: {
     address: 'Av. Quito y Av. Río Lelia, Santo Domingo, Ecuador',
     phone: '+593 98 411 0781',
-    email: 'info@ilsiciliano.ec',
+    email: 'litalianoec@gmail.com',
     emailNote: _(
       '(email solo para información, reservas a través de este sitio web)',
       '(email for information only, reservations via this website)',

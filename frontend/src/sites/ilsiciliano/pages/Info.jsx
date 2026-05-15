@@ -77,7 +77,7 @@ const Info = () => {
                   <Mail size={24} className="text-gold mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="text-white font-semibold mb-1">Email</h3>
-                    <a href="mailto:info@ilsiciliano.ec" className="text-gray-300 hover:text-gold transition-colors">
+                    <a href="mailto:litalianoec@gmail.com" className="text-gray-300 hover:text-gold transition-colors">
                       {t.contact.email}
                     </a>
                     <p className="text-xs text-gray-400 mt-2">{t.contact.emailNote[language]}</p>

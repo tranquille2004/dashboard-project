@@ -110,11 +110,11 @@ const Takeaway = () => {
 
           <div className="mt-6 pt-6 border-t border-gold/10">
             <a
-              href="mailto:info@ilsiciliano.ec"
+              href="mailto:litalianoec@gmail.com"
               className="inline-flex items-center gap-2 text-gray-300 hover:text-gold transition-colors"
             >
               <Mail size={18} />
-              <span>info@ilsiciliano.ec</span>
+              <span>litalianoec@gmail.com</span>
             </a>
           </div>
         </div>
