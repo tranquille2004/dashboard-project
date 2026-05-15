@@ -119,6 +119,43 @@ const Info = () => {
               </div>
             </div>
           </div>
+
+          {/* Restaurant Photo */}
+          <div className="animate-slide-in-right">
+            <div className="relative h-full min-h-[500px] rounded-lg overflow-hidden border border-gold/20 group">
+              <img
+                src="/images/ilsiciliano/about/restaurant-interior.jpg"
+                alt="Il Siciliano — Restaurante"
+                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <p className="text-gold text-xs tracking-[0.3em] uppercase mb-2">
+                  {{
+                    nl: 'Welkom',
+                    fr: 'Bienvenue',
+                    en: 'Welcome',
+                    es: 'Bienvenidos',
+                    de: 'Willkommen',
+                    it: 'Benvenuti'
+                  }[language]}
+                </p>
+                <h3 className="text-white text-3xl font-bold leading-tight">
+                  Il Siciliano
+                </h3>
+                <p className="text-gray-200 text-sm mt-2 max-w-md">
+                  {{
+                    nl: 'Authentieke smaken van Zuid-Italië in het hart van Santo Domingo.',
+                    fr: "Saveurs authentiques du sud de l'Italie au cœur de Santo Domingo.",
+                    en: 'Authentic flavors of Southern Italy in the heart of Santo Domingo.',
+                    es: 'Sabores auténticos del sur de Italia en el corazón de Santo Domingo.',
+                    de: 'Authentische Aromen Süditaliens im Herzen von Santo Domingo.',
+                    it: "Sapori autentici del sud Italia nel cuore di Santo Domingo."
+                  }[language]}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* How to find us - Google Maps embed */}
