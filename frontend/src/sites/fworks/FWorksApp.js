@@ -762,6 +762,22 @@ const portfolioItems = [
     url: 'https://www.hoteldelpacifico.net',
     image: '/images/hoteldelpacifico/backgrounds/hotel-entrance.jpg',
     features: ['Meertalig', 'Galerij', 'Dashboard']
+  },
+  {
+    name: 'Il Siciliano',
+    type: { nl: 'Trattoria & Pizzería', fr: 'Trattoria & Pizzería', en: 'Trattoria & Pizzería', es: 'Trattoria y Pizzería', it: 'Trattoria e Pizzería' },
+    location: 'Santo Domingo, Ecuador',
+    url: 'https://ilsiciliano.fworksbuilders.com',
+    image: '/images/ilsiciliano/home/hero-background.jpg',
+    features: ['Meertalig', 'Menu', 'Galerij']
+  },
+  {
+    name: 'Club San Francisco',
+    type: { nl: 'Hacienda Turística', fr: 'Hacienda Touristique', en: 'Tourist Hacienda', es: 'Hacienda Turística', it: 'Hacienda Turistica' },
+    location: 'Santo Domingo, Ecuador',
+    url: 'https://sanfrancisco.fworksbuilders.com',
+    image: '/images/sanfrancisco/gallery/gallery-01.jpg',
+    features: ['Meertalig', 'WhatsApp', 'Galerij']
   }
 ];
 
