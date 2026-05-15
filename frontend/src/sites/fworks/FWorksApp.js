@@ -775,8 +775,8 @@ const portfolioItems = [
     name: 'Club San Francisco',
     type: { nl: 'Hacienda Turística', fr: 'Hacienda Touristique', en: 'Tourist Hacienda', es: 'Hacienda Turística', it: 'Hacienda Turistica' },
     location: 'Santo Domingo, Ecuador',
-    url: 'https://sanfrancisco.fworksbuilders.com',
-    image: '/images/sanfrancisco/gallery/gallery-01.jpg',
+    url: 'https://sanfrancisco-haciendaturistica.com',
+    image: '/images/sanfrancisco/logo/sanfrancisco-logo.png',
     features: ['Meertalig', 'WhatsApp', 'Galerij']
   }
 ];
