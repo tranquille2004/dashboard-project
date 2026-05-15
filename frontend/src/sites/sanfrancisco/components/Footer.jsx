@@ -73,12 +73,12 @@ const Footer = () => {
 
         <div className="pt-8 border-t border-gold/10 text-center text-sm text-cream/70">
           <p>&copy; {new Date().getFullYear()} Hacienda Turística San Francisco. {labels.rights[language]}</p>
-          <p className="mt-2">
-            {labels.webBy[language]}{' '}
-            <a href="https://www.fworksbuilders.com" target="_blank" rel="noopener noreferrer" className="text-gold hover:text-gold/80 transition-colors font-semibold">
-              fworksbuilders
+          <div className="mt-4 flex items-center justify-center gap-3 flex-wrap">
+            <span className="text-cream/60" style={{color:'rgba(245,230,202,0.6)'}}>{labels.webBy[language]}</span>
+            <a href="https://www.fworksbuilders.com" target="_blank" rel="noopener noreferrer" className="inline-flex items-center hover:opacity-80 transition-opacity">
+              <img src="/images/fworksbuilders-logo.png" alt="fworksbuilders" className="h-8 w-auto" />
             </a>
-          </p>
+          </div>
         </div>
       </div>
     </footer>

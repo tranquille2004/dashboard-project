@@ -37,16 +37,23 @@ const Restaurante = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black pt-24 pb-16">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 animate-fade-in">
-          <h1 className="text-5xl md:text-6xl font-bold text-gold mb-4">🍽️ {labels.title[language]}</h1>
-          <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
-          <p className="text-xl text-cream/80" style={{color:'rgba(245,230,202,0.8)'}}>{labels.subtitle[language]}</p>
+    <div className="min-h-screen bg-black">
+      {/* Hero with background image */}
+      <section className="relative h-[55vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 z-0">
+          <img src="/images/sanfrancisco/gallery/gallery-35.jpg" alt="Restaurante" className="w-full h-full object-cover" />
+          <div className="absolute inset-0" style={{
+            background:'linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.30) 40%, rgba(0,0,0,0.85) 100%)'
+          }} />
         </div>
+        <div className="relative z-10 text-center px-4 animate-fade-in">
+          <h1 className="text-5xl md:text-7xl font-bold text-gold mb-4 drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]">🍽️ {labels.title[language]}</h1>
+          <div className="w-24 h-1 bg-gold mx-auto mb-6"></div>
+          <p className="text-xl md:text-2xl text-cream max-w-3xl mx-auto drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]" style={{color:'#F5E6CA'}}>{labels.subtitle[language]}</p>
+        </div>
+      </section>
 
-        <img src="/images/sanfrancisco/gallery/gallery-35.jpg" alt="Restaurante" className="w-full h-96 object-cover rounded-lg shadow-2xl border border-gold/20 mb-12" />
-
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid md:grid-cols-2 gap-8 mb-12">
           <div className="bg-gradient-to-br from-gray-900 to-black p-8 rounded-lg border border-gold/20">
             <Coffee size={40} className="text-gold mb-4" />

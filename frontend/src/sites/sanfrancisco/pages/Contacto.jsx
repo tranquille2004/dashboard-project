@@ -74,16 +74,24 @@ const Contacto = () => {
             <p className="text-cream text-lg mb-3" style={{color:'#F5E6CA'}}>{t.contact.address}</p>
             <p className="text-cream/70 leading-relaxed" style={{color:'rgba(245,230,202,0.7)'}}>{labels.route[language]}</p>
           </div>
-          <div className="rounded-lg overflow-hidden border border-gold/20 shadow-2xl bg-black min-h-[300px]">
+          <div className="rounded-lg overflow-hidden border border-gold/20 shadow-2xl bg-black min-h-[300px] flex flex-col">
             <iframe
-              title="Hacienda Turística San Francisco en Google Maps"
-              src="https://www.google.com/maps?q=Hacienda+Turistica+San+Francisco+Via+Quininde+km+22+Santo+Domingo+Ecuador&output=embed"
-              className="w-full h-full"
+              title="Club San Francisco en Google Maps"
+              src="https://www.google.com/maps?q=Club+San+Francisco+Hacienda+Tur%C3%ADstica+Santo+Domingo&output=embed"
+              className="w-full flex-1"
               style={{ minHeight: '300px', border: 0 }}
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
+            <a
+              href="https://share.google/yhoXo68S5dEMJWKr8"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-center py-3 bg-black/80 border-t border-gold/20 text-gold hover:bg-gold hover:text-black transition-all text-sm font-semibold"
+            >
+              {{ es:'Abrir en Google Maps ↗', en:'Open in Google Maps ↗', fr:'Ouvrir dans Google Maps ↗', it:'Apri in Google Maps ↗', de:'In Google Maps öffnen ↗' }[language]}
+            </a>
           </div>
         </div>
       </div>
