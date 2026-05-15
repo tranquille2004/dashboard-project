@@ -30,7 +30,10 @@ const SITE_MAPPING = {
   'www.rccbgroup.be': '/site/rccb',
   'ilsiciliano.fworksbuilders.com': '/site/ilsiciliano',
   'ilsiciliano.ec': '/site/ilsiciliano',
-  'www.ilsiciliano.ec': '/site/ilsiciliano'
+  'www.ilsiciliano.ec': '/site/ilsiciliano',
+  'sanfrancisco.fworksbuilders.com': '/site/sanfrancisco',
+  'sanfrancisco-haciendaturistica.com': '/site/sanfrancisco',
+  'www.sanfrancisco-haciendaturistica.com': '/site/sanfrancisco'
 };
 
 const SITE_TITLES = {
@@ -45,7 +48,8 @@ const SITE_TITLES = {
   '/site/albertopantoja': 'Alberto Pantoja - Consejal de Santo Domingo',
   '/site/hoteldelpacifico': 'Hotel del Pacífico - Santo Domingo, Ecuador',
   '/site/rccb': 'RCCB - Retail Cleaning Care Belgium',
-  '/site/ilsiciliano': 'Il Siciliano — Trattoria Pizzería — Santo Domingo, Ecuador'
+  '/site/ilsiciliano': 'Il Siciliano — Trattoria Pizzería — Santo Domingo, Ecuador',
+  '/site/sanfrancisco': 'Club San Francisco — Hacienda Turística'
 };
 
 export default {
