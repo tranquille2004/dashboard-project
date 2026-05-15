@@ -76,32 +76,32 @@ function renderInConstruction() {
       font-family: 'Inter', sans-serif;
       overflow-x: hidden;
     }
-    .bg {
+    .video-bg {
       position: fixed; inset: 0;
-      background: radial-gradient(ellipse at top, #1a3a2a 0%, #0a0a0a 60%);
+      width: 100%; height: 100%;
+      object-fit: cover;
       z-index: 0;
     }
-    .bg::after {
-      content: '';
-      position: absolute; inset: 0;
-      background-image:
-        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(212, 175, 55, 0.06) 0%, transparent 40%);
+    .overlay {
+      position: fixed; inset: 0;
+      background:
+        linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.75) 100%),
+        radial-gradient(circle at 20% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 40%);
+      z-index: 1;
     }
     .container {
-      position: relative; z-index: 1;
+      position: relative; z-index: 2;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      padding: 2rem; text-align: center;
     }
     .badge {
       display: inline-block;
       padding: 0.5rem 1.25rem;
-      border: 1px solid rgba(212, 175, 55, 0.4);
+      border: 1px solid rgba(212, 175, 55, 0.5);
+      background: rgba(10,10,10,0.35);
+      backdrop-filter: blur(8px);
       border-radius: 999px;
       color: #d4af37;
       font-size: 0.75rem;
@@ -117,53 +117,41 @@ function renderInConstruction() {
       color: #f5efe0;
       margin-bottom: 1rem;
       letter-spacing: -0.02em;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.6);
     }
-    h1 .accent {
-      display: block;
-      color: #d4af37;
-      font-style: italic;
-      font-weight: 400;
-    }
-    .divider {
-      width: 60px;
-      height: 1px;
-      background: #d4af37;
-      margin: 2rem auto;
-    }
+    h1 .accent { display: block; color: #d4af37; font-style: italic; font-weight: 400; }
+    .divider { width: 60px; height: 1px; background: #d4af37; margin: 2rem auto; }
     .tagline {
       font-size: 1.1rem;
-      color: rgba(245, 239, 224, 0.7);
-      max-width: 600px;
-      line-height: 1.7;
+      color: rgba(245, 239, 224, 0.9);
+      max-width: 600px; line-height: 1.7;
       font-weight: 300;
       margin-bottom: 3rem;
+      text-shadow: 0 2px 20px rgba(0,0,0,0.7);
     }
     .meta {
-      display: flex;
-      gap: 2rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      font-size: 0.85rem;
-      color: rgba(245, 239, 224, 0.5);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
+      display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;
+      font-size: 0.85rem; color: rgba(245, 239, 224, 0.85);
+      letter-spacing: 0.15em; text-transform: uppercase;
     }
     .meta span { display: flex; align-items: center; gap: 0.5rem; }
     .meta .dot { width: 4px; height: 4px; background: #d4af37; border-radius: 50%; }
     footer {
-      position: absolute;
-      bottom: 1.5rem;
-      left: 0; right: 0;
-      text-align: center;
-      font-size: 0.75rem;
-      color: rgba(245, 239, 224, 0.35);
-      letter-spacing: 0.1em;
+      position: absolute; bottom: 1.5rem; left: 0; right: 0;
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      font-size: 0.7rem; color: rgba(245, 239, 224, 0.6);
+      letter-spacing: 0.12em; text-transform: uppercase;
     }
-    footer a { color: #d4af37; text-decoration: none; }
+    footer .by { font-size: 0.65rem; opacity: 0.7; }
+    footer img { height: 28px; width: auto; opacity: 0.85; filter: brightness(1.1); transition: opacity 0.3s ease; }
+    footer a:hover img { opacity: 1; }
   </style>
 </head>
 <body>
-  <div class="bg"></div>
+  <video class="video-bg" autoplay muted loop playsinline>
+    <source src="/images/sanfrancisco/video/hero-compilation.mp4" type="video/mp4">
+  </video>
+  <div class="overlay"></div>
   <div class="container">
     <span class="badge">Próximamente · Coming Soon</span>
     <h1>
@@ -183,7 +171,10 @@ function renderInConstruction() {
     </div>
   </div>
   <footer>
-    © ${new Date().getFullYear()} Club San Francisco · Diseñado por <a href="https://fworksbuilders.com">fworksbuilders</a>
+    <span class="by">© ${new Date().getFullYear()} · Diseñado por</span>
+    <a href="https://fworksbuilders.com" target="_blank" rel="noopener">
+      <img src="/images/fworks-logo.png" alt="fworksbuilders">
+    </a>
   </footer>
 </body>
 </html>`;
