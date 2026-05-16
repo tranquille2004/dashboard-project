@@ -3,10 +3,10 @@
    to other sites that share the same React bundle. */
 
 .ilsiciliano-root {
-  /* Primary accent: Italian red (replaces former "gold") - brighter */
-  --gold: #E53935;
-  --gold-light: #EF5350;
-  --gold-dark: #B71C1C;
+  /* Primary accent: Italian red (replaces former "gold") - softer, less harsh */
+  --gold: #B22222;
+  --gold-light: #C0392B;
+  --gold-dark: #7F0F0F;
   /* Secondary accent: Italian green - brighter, more vivid */
   --italian-green: #43A047;
   --italian-green-light: #66BB6A;
