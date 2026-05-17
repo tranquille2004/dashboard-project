@@ -10,6 +10,7 @@ export const translations = {
     about: _('Nosotros', 'About', 'Chi Siamo', 'À propos'),
     menu: _('Menú', 'Menu', 'Menu', 'Carte'),
     groupMenus: _('Menús de Grupo', 'Group Menus', 'Menu di Gruppo', 'Menus de Groupe'),
+    bambino: _('Bambino Box', 'Bambino Box', 'Bambino Box', 'Bambino Box'),
     takeaway: _('Para Llevar', 'Takeaway', 'Da Asporto', 'À emporter'),
     reserve: _('Reservar', 'Reserve', 'Prenota', 'Réserver'),
     gallery: _('Galería', 'Gallery', 'Galleria', 'Galerie'),
