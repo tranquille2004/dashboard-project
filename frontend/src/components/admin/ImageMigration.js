@@ -140,15 +140,99 @@ const ImageMigration = () => {
     }
   };
 
+  const syncAll = async () => {
+    setMigrating(true);
+    setImporting(true);
+    setError(null);
+    setResult(null);
+
+    const summary = {
+      message: 'Synchronisatie compleet',
+      source: 'sync-all',
+      uploaded: 0,        // newly uploaded from local
+      skipped_upload: 0,  // already in storage (local migration)
+      failed_upload: 0,
+      imported: 0,        // records imported from preview
+      skipped_import: 0,
+      step: '',
+    };
+
+    try {
+      // ============================================================
+      // STEP 1: Upload local files from THIS environment to storage
+      // ============================================================
+      summary.step = 'Stap 1/2: Lokale bestanden naar Object Storage uploaden...';
+      setResult({ ...summary, progress: true });
+
+      const localRes = await fetch(`${API}/admin/migrate/start`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+      });
+      if (!localRes.ok) {
+        const txt = await localRes.text();
+        throw new Error(`Lokale migratie HTTP ${localRes.status}: ${txt.substring(0, 100)}`);
+      }
+      const localData = await localRes.json();
+      summary.uploaded = localData.success || 0;
+      summary.skipped_upload = localData.skipped || 0;
+      summary.failed_upload = localData.failed || 0;
+
+      // ============================================================
+      // STEP 2: Import any missing records from preview
+      // ============================================================
+      summary.step = 'Stap 2/2: Records van preview ophalen...';
+      setResult({ ...summary, progress: true });
+
+      const exportRes = await fetch(PREVIEW_RECORDS_URL);
+      if (!exportRes.ok) {
+        throw new Error(`Preview onbereikbaar (HTTP ${exportRes.status})`);
+      }
+      const exportData = await exportRes.json();
+      const records = exportData.records || [];
+
+      if (records.length === 0) {
+        throw new Error('Geen records gevonden in preview');
+      }
+
+      const BATCH_SIZE = 200;
+      const batches = Math.ceil(records.length / BATCH_SIZE);
+      for (let i = 0; i < batches; i++) {
+        const batch = records.slice(i * BATCH_SIZE, (i + 1) * BATCH_SIZE);
+        const importRes = await fetch(`${API}/admin/migrate/import-records`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ records: batch })
+        });
+        if (!importRes.ok) {
+          throw new Error(`Batch ${i + 1}/${batches} faalde (HTTP ${importRes.status})`);
+        }
+        const importData = await importRes.json();
+        summary.imported += importData.imported || 0;
+        summary.skipped_import += importData.skipped || 0;
+        summary.step = `Stap 2/2: Batch ${i + 1}/${batches} voltooid...`;
+        setResult({ ...summary, progress: true });
+      }
+
+      summary.step = '';
+      setResult(summary);
+      fetchStatus();
+    } catch (e) {
+      setError('Synchronisatie fout: ' + e.message);
+    } finally {
+      setMigrating(false);
+      setImporting(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold mb-2 flex items-center gap-3">
           <Image className="w-8 h-8" />
-          Afbeeldingen Migratie
+          Afbeeldingen Synchronisatie
         </h1>
         <p className="text-gray-400 mb-8">
-          Migreer alle lokale afbeeldingen naar Emergent Object Storage
+          Eén klik om alle nieuwe afbeeldingen + records bij te werken in productie
         </p>
 
         {/* Status Card */}
@@ -158,11 +242,11 @@ const ImageMigration = () => {
             <button
               onClick={fetchStatus}
               className="text-gray-400 hover:text-white transition-colors"
+              data-testid="refresh-status-btn"
             >
               <RefreshCw className="w-5 h-5" />
             </button>
           </div>
-          
           {status ? (
             <div className="grid grid-cols-3 gap-4">
               <div className="bg-gray-700 rounded-lg p-4 text-center">
@@ -171,7 +255,7 @@ const ImageMigration = () => {
               </div>
               <div className="bg-gray-700 rounded-lg p-4 text-center">
                 <div className="text-3xl font-bold text-green-400">{status.migrated_count || 0}</div>
-                <div className="text-sm text-gray-400">Gemigreerd</div>
+                <div className="text-sm text-gray-400">In Object Storage</div>
               </div>
               <div className="bg-gray-700 rounded-lg p-4 text-center">
                 <div className={`text-3xl font-bold ${status.storage_initialized ? 'text-green-400' : 'text-red-400'}`}>
@@ -185,69 +269,42 @@ const ImageMigration = () => {
           )}
         </div>
 
-        {/* Migration Button */}
-        <div className="bg-gray-800 rounded-xl p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4">Optie 1: Lokale Migratie</h2>
-          <p className="text-gray-400 mb-4">
-            Upload afbeeldingen die lokaal op deze server staan naar Object Storage.
-            (Werkt alleen als er lokale afbeeldingen zijn)
-          </p>
-          
-          <button
-            onClick={startMigration}
-            disabled={migrating || importing}
-            className={`w-full py-4 rounded-lg font-semibold text-lg flex items-center justify-center gap-3 transition-colors ${
-              migrating || importing
-                ? 'bg-gray-600 cursor-not-allowed'
-                : 'bg-blue-600 hover:bg-blue-700'
-            }`}
-          >
-            {migrating ? (
-              <>
-                <Loader2 className="w-6 h-6 animate-spin" />
-                Migratie bezig... Dit kan enkele minuten duren
-              </>
-            ) : (
-              <>
-                <Upload className="w-6 h-6" />
-                Start Lokale Migratie
-              </>
-            )}
-          </button>
-        </div>
-
-        {/* Import from Preview Button */}
-        <div className="bg-gradient-to-r from-purple-900/50 to-blue-900/50 border border-purple-500 rounded-xl p-6 mb-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <Database className="w-6 h-6 text-purple-400" />
-            Optie 2: Importeer van Preview (AANBEVOLEN)
+        {/* ONE BIG SYNC BUTTON */}
+        <div className="bg-gradient-to-br from-purple-900/60 to-blue-900/60 border-2 border-purple-500 rounded-2xl p-8 mb-6">
+          <h2 className="text-2xl font-bold mb-3 flex items-center gap-3">
+            <Database className="w-7 h-7 text-purple-400" />
+            Synchroniseer Alles
           </h2>
-          <p className="text-gray-300 mb-4">
-            De afbeeldingen zijn al geüpload naar Object Storage vanuit de preview omgeving.
-            Klik hieronder om de database records te importeren zodat productie weet waar de afbeeldingen staan.
+          <p className="text-gray-300 mb-6 leading-relaxed">
+            Eén klik die alles regelt:<br />
+            <span className="text-purple-200">1.</span> Upload nieuwe afbeeldingen vanaf deze server naar Object Storage<br />
+            <span className="text-purple-200">2.</span> Synchroniseer database records van preview (zodat alle foto's beschikbaar zijn)
           </p>
-          
           <button
-            onClick={importFromPreview}
+            onClick={syncAll}
             disabled={migrating || importing}
-            className={`w-full py-4 rounded-lg font-semibold text-lg flex items-center justify-center gap-3 transition-colors ${
+            data-testid="sync-all-btn"
+            className={`w-full py-5 rounded-xl font-bold text-xl flex items-center justify-center gap-3 transition-all shadow-lg ${
               migrating || importing
                 ? 'bg-gray-600 cursor-not-allowed'
-                : 'bg-purple-600 hover:bg-purple-700'
+                : 'bg-purple-600 hover:bg-purple-700 hover:shadow-purple-500/30 hover:scale-[1.01]'
             }`}
           >
-            {importing ? (
+            {(migrating || importing) ? (
               <>
-                <Loader2 className="w-6 h-6 animate-spin" />
-                Records importeren...
+                <Loader2 className="w-7 h-7 animate-spin" />
+                Synchronisatie bezig...
               </>
             ) : (
               <>
-                <Download className="w-6 h-6" />
-                Importeer Records van Preview
+                <Upload className="w-7 h-7" />
+                Synchroniseer Alles
               </>
             )}
           </button>
+          {(migrating || importing) && result?.step && (
+            <p className="text-center text-purple-200 mt-4 text-sm">{result.step}</p>
+          )}
         </div>
 
         {/* Error */}
@@ -262,73 +319,47 @@ const ImageMigration = () => {
         )}
 
         {/* Results */}
-        {result && (
+        {result && !result.progress && (
           <div className="bg-gray-800 rounded-xl p-6">
             <div className="flex items-center gap-3 mb-4">
               <CheckCircle className="w-6 h-6 text-green-400" />
-              <h2 className="text-xl font-semibold">
-                {result.source === 'preview import' ? 'Import Resultaat' : 'Migratie Resultaat'}
-              </h2>
+              <h2 className="text-xl font-semibold">Synchronisatie Resultaat</h2>
             </div>
-            
-            {result.source === 'preview import' ? (
-              <div className="grid grid-cols-2 gap-4 mb-4">
-                <div className="bg-green-900/30 border border-green-500 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-green-400">{result.imported || 0}</div>
-                  <div className="text-sm text-gray-400">Geïmporteerd</div>
-                </div>
-                <div className="bg-yellow-900/30 border border-yellow-500 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-yellow-400">{result.skipped || 0}</div>
-                  <div className="text-sm text-gray-400">Al aanwezig</div>
-                </div>
-              </div>
-            ) : (
-              <div className="grid grid-cols-3 gap-4 mb-4">
-                <div className="bg-green-900/30 border border-green-500 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-green-400">{result.success || 0}</div>
-                  <div className="text-sm text-gray-400">Gelukt</div>
-                </div>
-                <div className="bg-yellow-900/30 border border-yellow-500 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-yellow-400">{result.skipped || 0}</div>
-                  <div className="text-sm text-gray-400">Overgeslagen</div>
-                </div>
-                <div className="bg-red-900/30 border border-red-500 rounded-lg p-4 text-center">
-                  <div className="text-2xl font-bold text-red-400">{result.failed || 0}</div>
-                  <div className="text-sm text-gray-400">Mislukt</div>
-                </div>
-              </div>
-            )}
 
-            {result.errors && result.errors.length > 0 && (
-              <div className="mt-4">
-                <h3 className="font-semibold mb-2 text-red-400">Fouten:</h3>
-                <div className="bg-gray-900 rounded-lg p-4 max-h-40 overflow-y-auto">
-                  {result.errors.map((err, i) => (
-                    <div key={i} className="text-sm text-red-300 mb-1">{err}</div>
-                  ))}
-                </div>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+              <div className="bg-green-900/30 border border-green-500 rounded-lg p-4 text-center">
+                <div className="text-2xl font-bold text-green-400">{result.uploaded || 0}</div>
+                <div className="text-xs text-gray-400">Nieuw geüpload</div>
               </div>
-            )}
-            
-            {result.source === 'preview import' && result.imported > 0 && (
-              <div className="mt-4 p-4 bg-green-900/20 border border-green-500 rounded-lg">
-                <p className="text-green-300">
-                  ✅ Succes! De afbeeldingen worden nu geserveerd vanuit Object Storage.
-                  Ververs uw website om de foto's te zien.
-                </p>
+              <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-4 text-center">
+                <div className="text-2xl font-bold text-blue-400">{result.imported || 0}</div>
+                <div className="text-xs text-gray-400">Records geïmporteerd</div>
               </div>
-            )}
+              <div className="bg-yellow-900/30 border border-yellow-500 rounded-lg p-4 text-center">
+                <div className="text-2xl font-bold text-yellow-400">{(result.skipped_upload || 0) + (result.skipped_import || 0)}</div>
+                <div className="text-xs text-gray-400">Al aanwezig</div>
+              </div>
+              <div className="bg-red-900/30 border border-red-500 rounded-lg p-4 text-center">
+                <div className="text-2xl font-bold text-red-400">{result.failed_upload || 0}</div>
+                <div className="text-xs text-gray-400">Mislukt</div>
+              </div>
+            </div>
+
+            <div className="mt-4 p-4 bg-green-900/20 border border-green-500 rounded-lg">
+              <p className="text-green-300">
+                ✅ Alle afbeeldingen zijn nu beschikbaar in productie. Ververs uw website om ze te zien.
+              </p>
+            </div>
           </div>
         )}
 
         {/* Instructions */}
         <div className="mt-8 bg-gray-800 rounded-xl p-6">
-          <h2 className="text-xl font-semibold mb-4">Instructies</h2>
+          <h2 className="text-xl font-semibold mb-4">Wanneer gebruik je deze knop?</h2>
           <ol className="list-decimal list-inside space-y-2 text-gray-300">
-            <li><strong>Voor PRODUCTIE:</strong> Klik op "Importeer 874 Records van Preview" (paarse knop)</li>
-            <li>Dit haalt de database records op van de preview omgeving</li>
-            <li>De afbeeldingen staan al in Object Storage - alleen de records moeten worden gesynchroniseerd</li>
-            <li>Na succes worden alle afbeeldingen automatisch geladen op uw websites</li>
+            <li>Na elke <strong>Deploy</strong> waarbij nieuwe afbeeldingen of video's zijn toegevoegd</li>
+            <li>Als foto's op uw site een zwart kader of 404 fout tonen</li>
+            <li>Eén klik regelt alles: upload + records sync</li>
           </ol>
         </div>
       </div>
