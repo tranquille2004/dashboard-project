@@ -13,6 +13,7 @@ import SiteRenderer from '@/components/sites/SiteRenderer';
 import SiteAdminLogin from '@/components/site-admin/SiteAdminLogin';
 import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
 import FWorksApp from '@/sites/fworks/FWorksApp';
+import OnlineWerken from '@/sites/fworks/OnlineWerken';
 import SmeraldaApp from '@/sites/smeralda/SmeraldaApp';
 import AlbertoPantojaApp from '@/sites/albertopantoja/AlbertoPantojaApp';
 import HotelDelPacificoApp from '@/sites/hoteldelpacifico/HotelDelPacificoApp';
@@ -74,6 +75,10 @@ function AdminRouter() {
   if (location.pathname.startsWith('/site/')) {
     // Special handling for /site/fworks
     if (location.pathname.startsWith('/site/fworks')) {
+      // Hidden landing page: /site/fworks/onlinewerken or /onlinewerken (custom domain)
+      if (location.pathname === '/site/fworks/onlinewerken' || location.pathname.startsWith('/site/fworks/onlinewerken/')) {
+        return <OnlineWerken />;
+      }
       return <FWorksApp />;
     }
     // Special handling for /site/smeralda - needs Routes for confirmation page
