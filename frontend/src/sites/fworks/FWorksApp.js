@@ -767,7 +767,7 @@ const portfolioItems = [
     name: 'Il Siciliano',
     type: { nl: 'Trattoria & Pizzería', fr: 'Trattoria & Pizzería', en: 'Trattoria & Pizzería', es: 'Trattoria y Pizzería', it: 'Trattoria e Pizzería' },
     location: 'Santo Domingo, Ecuador',
-    url: 'https://ilsiciliano.fworksbuilders.com',
+    url: 'https://ilsiciliano-santodomingo.com',
     image: '/images/ilsiciliano/home/hero-background.jpg',
     features: ['Meertalig', 'Menu', 'Galerij']
   },

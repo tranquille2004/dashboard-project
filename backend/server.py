@@ -3248,6 +3248,34 @@ async def seed_sites_on_startup():
             {"$set": {"email": "admin@sanfrancisco-haciendaturistica.com", "password_hash": sf_password_hash}}
         )
 
+    # Auto-seed Il Siciliano admin - always ensure correct credentials
+    sic_admin = await db.site_admins.find_one({"site_id": "site_ilsiciliano"})
+    sic_password_hash = __import__('hashlib').sha256("siciliano123".encode()).hexdigest()
+    if not sic_admin:
+        admin_dict = {
+            "admin_id": f"admin_{uuid.uuid4().hex[:12]}",
+            "site_id": "site_ilsiciliano",
+            "email": "admin@ilsiciliano-santodomingo.com",
+            "name": "Il Siciliano Admin",
+            "password_hash": sic_password_hash,
+            "is_active": True,
+            "permissions": {"menu": True, "gallery": True, "config": True, "events": True, "announcements": True},
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        }
+        await db.site_admins.insert_one(admin_dict)
+        logger.info("Auto-seeded Il Siciliano admin: admin@ilsiciliano-santodomingo.com")
+    else:
+        await db.site_admins.update_one(
+            {"site_id": "site_ilsiciliano"},
+            {"$set": {
+                "email": "admin@ilsiciliano-santodomingo.com",
+                "password_hash": sic_password_hash,
+                "is_active": True
+            }}
+        )
+        logger.info("Updated Il Siciliano admin credentials")
+
 @app.on_event("shutdown")
 async def shutdown_db_client():
     client.close()
