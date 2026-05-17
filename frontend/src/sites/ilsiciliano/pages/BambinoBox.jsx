@@ -126,7 +126,7 @@ const BambinoBox = () => {
       {/* HERO */}
       <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left: logo + intro */}
+          {/* Left: logo + intro + VIDEO */}
           <div className="text-center lg:text-left">
             <span className="inline-block px-4 py-1.5 rounded-full bg-gold/10 border border-gold/40 text-gold text-xs tracking-[0.3em] uppercase mb-6">
               {t.badge[language]}
@@ -139,6 +139,24 @@ const BambinoBox = () => {
             />
             <h1 className="sr-only">Bambino Box - Il Siciliano</h1>
             <p className="text-xl text-gold font-semibold mb-4">{t.tagline[language]}</p>
+
+            {/* VIDEO - portrait, auto-play, muted, contained so nothing is cropped */}
+            <div className="relative rounded-2xl overflow-hidden border-2 border-gold/30 shadow-[0_20px_50px_rgba(178,34,34,0.25)] bg-black max-w-[420px] mx-auto lg:mx-0 mb-6">
+              <video
+                ref={videoRef}
+                src="/images/ilsiciliano/bambino/video/bambino-video.mp4"
+                poster="/images/ilsiciliano/bambino/bambino-poster.jpg"
+                className="w-full h-auto block"
+                playsInline
+                autoPlay
+                muted
+                loop
+                controls
+                preload="metadata"
+                data-testid="bambino-video"
+              />
+            </div>
+
             <p className="text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0">{t.intro[language]}</p>
           </div>
 
@@ -181,39 +199,6 @@ const BambinoBox = () => {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* VIDEO */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="text-center mb-8">
-          <h2 className="text-2xl md:text-3xl font-bold text-gold mb-2 flex items-center justify-center gap-3">
-            <Sparkles size={26} /> {t.videoTitle[language]}
-          </h2>
-        </div>
-        <div className="relative rounded-2xl overflow-hidden border-2 border-gold/30 shadow-[0_25px_60px_rgba(178,34,34,0.25)] group">
-          <video
-            ref={videoRef}
-            src="/images/ilsiciliano/bambino/video/bambino-video.mp4"
-            poster="/images/ilsiciliano/bambino/bambino-poster.jpg"
-            className="w-full aspect-video object-cover bg-black"
-            playsInline
-            controls
-            preload="metadata"
-            data-testid="bambino-video"
-          />
-          {!playing && (
-            <button
-              onClick={togglePlay}
-              className="absolute inset-0 flex items-center justify-center bg-black/30 hover:bg-black/40 transition-colors"
-              aria-label="Play video"
-              data-testid="bambino-video-play"
-            >
-              <span className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gold flex items-center justify-center shadow-2xl group-hover:scale-105 transition-transform">
-                <Play size={36} className="text-black ml-1" fill="currentColor" />
-              </span>
-            </button>
-          )}
         </div>
       </section>
 
