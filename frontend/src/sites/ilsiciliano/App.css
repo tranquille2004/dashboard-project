@@ -46,7 +46,10 @@ body:has(.ilsiciliano-root) {
 .ilsiciliano-edge-strip .stripe-red   { background: #CE2B37; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.08); } /* Italian flag red */
 
 @media (max-width: 640px) {
-  .ilsiciliano-edge-strip { width: 8px; }
+  .ilsiciliano-edge-strip {
+    width: 4px;
+    opacity: 0.5;
+  }
 }
 
 /* Primary accent (red) — scoped to .ilsiciliano-root so it does NOT affect other sites */
