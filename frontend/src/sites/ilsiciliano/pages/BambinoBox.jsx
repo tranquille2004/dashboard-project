@@ -143,39 +143,57 @@ const BambinoBox = () => {
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
       {/* HERO */}
-      <section className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center">
-          {/* Left: logo + intro + VIDEO */}
-          <div className="text-center lg:text-left">
-            <span className="inline-block px-4 py-1.5 rounded-full bg-gold/10 border border-gold/40 text-gold text-xs tracking-[0.3em] uppercase mb-6">
-              {t.badge[language]}
-            </span>
-            <img
-              src="/images/ilsiciliano/bambino/bambino-logo.png"
-              alt="Bambino Box"
-              className="w-full max-w-md mx-auto lg:mx-0 mb-6 drop-shadow-2xl"
-              data-testid="bambino-hero-logo"
-            />
-            <h1 className="sr-only">Bambino Box - Il Siciliano</h1>
-            <p className="text-xl text-gold font-semibold mb-4">{t.tagline[language]}</p>
+      <section className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-16">
+        {/* Top: badge + logo + tagline (centered) */}
+        <div className="text-center mb-10">
+          <span className="inline-block px-4 py-1.5 rounded-full bg-gold/10 border border-gold/40 text-gold text-xs tracking-[0.3em] uppercase mb-6">
+            {t.badge[language]}
+          </span>
+          <img
+            src="/images/ilsiciliano/bambino/bambino-logo.png"
+            alt="Bambino Box"
+            className="w-full max-w-md mx-auto mb-6 drop-shadow-2xl"
+            data-testid="bambino-hero-logo"
+          />
+          <h1 className="sr-only">Bambino Box - Il Siciliano</h1>
+          <p className="text-xl md:text-2xl text-gold font-semibold">{t.tagline[language]}</p>
+        </div>
 
-            {/* INTRO VIDEO (new) - autoplay with sound attempt, landscape, full visible */}
-            <div className="relative rounded-2xl overflow-hidden border-2 border-gold/40 shadow-[0_20px_50px_rgba(178,34,34,0.3)] bg-black mb-6">
-              <video
-                ref={introRef}
-                src="/images/ilsiciliano/bambino/video/intro-emanuele.mp4"
-                className="w-full h-auto block"
-                playsInline
-                autoPlay
-                loop
-                controls
-                preload="auto"
-                data-testid="bambino-intro-video"
+        {/* INTRO VIDEO - full width, prominent, autoplay */}
+        <div className="relative rounded-2xl overflow-hidden border-2 border-gold/40 shadow-[0_20px_50px_rgba(178,34,34,0.3)] bg-black mb-12">
+          <video
+            ref={introRef}
+            src="/images/ilsiciliano/bambino/video/intro-emanuele.mp4"
+            poster="/images/ilsiciliano/bambino/intro-poster.jpg"
+            className="w-full h-auto block"
+            playsInline
+            autoPlay
+            loop
+            controls
+            preload="auto"
+            data-testid="bambino-intro-video"
+          />
+        </div>
+
+        {/* Chef + Intro text - balanced 2-col below */}
+        <div className="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-center">
+          {/* Chef illustration */}
+          <div className="relative flex justify-center lg:justify-start">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-radial from-gold/20 via-transparent to-transparent blur-3xl" />
+              <img
+                src="/images/ilsiciliano/bambino/chef-bambino-1.png"
+                alt="Chef Il Siciliano"
+                className="relative w-full max-w-xs lg:max-w-sm drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
+                data-testid="bambino-chef-img"
               />
             </div>
+          </div>
 
-            {/* MAIN VIDEO (existing) - NO autoplay, user clicks to play */}
-            <div className="relative rounded-2xl overflow-hidden border-2 border-gold/30 shadow-[0_20px_50px_rgba(178,34,34,0.25)] bg-black max-w-[420px] mx-auto lg:mx-0 mb-6">
+          {/* Intro text + main bambino video preview */}
+          <div className="space-y-6">
+            <p className="text-gray-300 leading-relaxed text-base md:text-lg">{t.intro[language]}</p>
+            <div className="relative rounded-2xl overflow-hidden border-2 border-gold/30 shadow-[0_15px_40px_rgba(178,34,34,0.2)] bg-black max-w-sm">
               <video
                 ref={videoRef}
                 src="/images/ilsiciliano/bambino/video/bambino-video.mp4"
@@ -185,21 +203,6 @@ const BambinoBox = () => {
                 controls
                 preload="metadata"
                 data-testid="bambino-video"
-              />
-            </div>
-
-            <p className="text-gray-300 leading-relaxed max-w-xl mx-auto lg:mx-0">{t.intro[language]}</p>
-          </div>
-
-          {/* Right: chef illustration */}
-          <div className="relative flex justify-center lg:justify-end">
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-radial from-gold/20 via-transparent to-transparent blur-3xl" />
-              <img
-                src="/images/ilsiciliano/bambino/chef-bambino-1.png"
-                alt="Chef Il Siciliano"
-                className="relative w-full max-w-md drop-shadow-[0_20px_50px_rgba(0,0,0,0.6)]"
-                data-testid="bambino-chef-img"
               />
             </div>
           </div>
