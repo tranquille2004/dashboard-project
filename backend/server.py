@@ -2012,39 +2012,85 @@ async def export_migration_records():
 
 
 @api_router.get("/images/{path:path}")
-async def serve_image(path: str):
-    """Serve images from object storage or local fallback"""
+async def serve_image(path: str, request: Request):
+    """Serve images/videos from object storage or local fallback.
+    Supports HTTP Range requests so video scrubbing works."""
     try:
+        # Resolve bytes + content_type from storage or local fallback
+        data = None
+        content_type = None
+
         # First check if migrated to object storage via DB record
         record = await db.migrated_images.find_one({"original_path": f"/images/{path}"})
-        
         if record and record.get("storage_path"):
             try:
                 data, content_type = get_object(record["storage_path"])
-                return Response(content=data, media_type=record.get("content_type", content_type))
+                content_type = record.get("content_type") or content_type
             except Exception as e:
                 logging.warning(f"Failed to get from storage via record, trying direct: {e}")
-        
-        # Try Object Storage directly (for when DB records don't exist on this server)
-        try:
-            storage_path = f"{APP_NAME}/images/{path}"
-            data, content_type = get_object(storage_path)
-            return Response(content=data, media_type=content_type)
-        except:
-            pass
-        
+
+        # Try Object Storage directly
+        if data is None:
+            try:
+                storage_path = f"{APP_NAME}/images/{path}"
+                data, content_type = get_object(storage_path)
+            except Exception:
+                pass
+
         # Fallback to local file
-        images_folder = get_images_folder()
-        if images_folder:
-            local_path = images_folder / path
-            if local_path.exists():
-                ext = local_path.suffix.lower().replace('.', '')
-                content_type = MIME_TYPES.get(ext, 'application/octet-stream')
-                with open(local_path, 'rb') as f:
-                    return Response(content=f.read(), media_type=content_type)
-        
-        raise HTTPException(status_code=404, detail="Image not found")
-        
+        if data is None:
+            images_folder = get_images_folder()
+            if images_folder:
+                local_path = images_folder / path
+                if local_path.exists():
+                    ext = local_path.suffix.lower().replace('.', '')
+                    content_type = MIME_TYPES.get(ext, 'application/octet-stream')
+                    with open(local_path, 'rb') as f:
+                        data = f.read()
+
+        if data is None:
+            raise HTTPException(status_code=404, detail="Image not found")
+
+        total = len(data)
+        range_header = request.headers.get("range") or request.headers.get("Range")
+
+        if range_header and range_header.startswith("bytes="):
+            # Parse "bytes=start-end"
+            try:
+                spec = range_header.replace("bytes=", "").strip()
+                start_s, end_s = (spec.split("-") + [""])[:2]
+                start = int(start_s) if start_s else 0
+                end = int(end_s) if end_s else total - 1
+                if start < 0: start = 0
+                if end >= total: end = total - 1
+                if start > end:
+                    return Response(status_code=416, headers={"Content-Range": f"bytes */{total}"})
+                chunk = data[start:end + 1]
+                return Response(
+                    content=chunk,
+                    status_code=206,
+                    media_type=content_type or 'application/octet-stream',
+                    headers={
+                        "Content-Range": f"bytes {start}-{end}/{total}",
+                        "Accept-Ranges": "bytes",
+                        "Content-Length": str(len(chunk)),
+                        "Cache-Control": "public, max-age=31536000",
+                    },
+                )
+            except (ValueError, IndexError):
+                pass  # Malformed range header → return full file
+
+        # Full response
+        return Response(
+            content=data,
+            media_type=content_type or 'application/octet-stream',
+            headers={
+                "Accept-Ranges": "bytes",
+                "Content-Length": str(total),
+                "Cache-Control": "public, max-age=31536000",
+            },
+        )
+
     except HTTPException:
         raise
     except Exception as e:
