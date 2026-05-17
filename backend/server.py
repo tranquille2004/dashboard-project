@@ -1628,9 +1628,9 @@ SITE_SEO_DATA = {
     },
     'rccb': {
         'domain': 'www.rccbgroup.be',
-        'name': 'RCCB - Retail Cleaning Care Belgium',
-        'description': 'Retail Cleaning Care Belgium (RCCB) — professioneel schoonmaakbedrijf in België. Kantoren, retail, syndic, glasbewassing, desinfectie en meer. Betrouwbaar en efficiënt.',
-        'keywords': 'schoonmaakbedrijf België, nettoyage Belgique, cleaning company Belgium, RCCB, Retail Cleaning Care Belgium, kantoorschoonmaak, nettoyage bureaux, Zaventem, glasbewassing, desinfectie',
+        'name': 'RCCB - Retail Cleaning Care Belgium | Société de nettoyage en Belgique',
+        'description': "RCCB — Retail Cleaning Care Belgium : société de nettoyage professionnel en Belgique. Bureaux, commerces, syndics, lavage de vitres, désinfection et entretien quotidien. Fiable, rapide et efficace.",
+        'keywords': "société de nettoyage Belgique, entreprise de nettoyage Bruxelles, nettoyage professionnel Belgique, nettoyage bureaux, nettoyage commerces, nettoyage syndic, lavage de vitres Belgique, désinfection professionnelle, entretien immeubles, RCCB, Retail Cleaning Care Belgium, nettoyage Zaventem, nettoyage Brabant flamand",
         'pages': ['/', '/services', '/gallery', '/contact']
     },
     'ilsiciliano': {
