@@ -164,7 +164,7 @@ const BambinoBox = () => {
           <video
             ref={introRef}
             src="/images/ilsiciliano/bambino/video/intro-emanuele.mp4"
-            poster="/images/ilsiciliano/bambino/intro-poster.jpg?v=2"
+            poster="/images/ilsiciliano/bambino/intro-thumb.jpg"
             className="w-full h-auto block"
             playsInline
             autoPlay
@@ -196,12 +196,12 @@ const BambinoBox = () => {
             <div className="relative rounded-2xl overflow-hidden border-2 border-gold/30 shadow-[0_15px_40px_rgba(178,34,34,0.2)] bg-black max-w-sm">
               <video
                 ref={videoRef}
-                src="/images/ilsiciliano/bambino/video/bambino-video.mp4"
-                poster="/images/ilsiciliano/bambino/bambino-poster.jpg?v=2"
+                src="/images/ilsiciliano/bambino/video/bambino-video.mp4#t=0.5"
+                poster="/images/ilsiciliano/bambino/bambino-thumb.jpg"
                 className="w-full h-auto block"
                 playsInline
                 controls
-                preload="metadata"
+                preload="auto"
                 data-testid="bambino-video"
               />
             </div>
