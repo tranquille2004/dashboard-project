@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, Clock, Laptop, Wallet, CheckCircle2, ArrowRight, MapPin, Languages, Sparkles, Heart, ChevronDown } from 'lucide-react';
+import { MessageCircle, Clock, Laptop, Wallet, CheckCircle2, ArrowRight, MapPin, Languages, Sparkles, Heart, ChevronDown, Calculator } from 'lucide-react';
 
 /**
  * Chat Home Base — Online Werken pagina
@@ -11,9 +11,36 @@ import { MessageCircle, Clock, Laptop, Wallet, CheckCircle2, ArrowRight, MapPin,
  */
 
 const WHATSAPP_NUMBER = '32494516064'; // verborgen in CTA; nooit getoond
+const RATE_PER_MESSAGE = 0.09; // €0,09 per bericht
+
+const formatEUR = (n) => {
+  return new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(Math.round(n));
+};
+
+const ResultCard = ({ label, value, accent, big, small, testid }) => {
+  const valueSize = big ? 'text-5xl md:text-6xl' : small ? 'text-2xl' : 'text-3xl md:text-4xl';
+  const padding = big ? 'p-6 md:p-7' : 'p-5';
+  return (
+    <div className={`chb-card rounded-2xl ${padding} flex items-center justify-between gap-4 ${big ? 'border-white/20' : ''}`} data-testid={testid}>
+      <div className="flex items-center gap-3">
+        <span className={`w-2.5 h-2.5 rounded-full ${accent}`}></span>
+        <span className="text-sm md:text-base font-medium text-gray-300">{label}</span>
+      </div>
+      <span className={`${valueSize} font-bold text-white tracking-tight`}>{value}</span>
+    </div>
+  );
+};
 
 const OnlineWerken = () => {
   const [showFaq, setShowFaq] = useState(null);
+  const [msgPerDay, setMsgPerDay] = useState(150); // start: 150 berichten/dag
+  const [daysPerWeek, setDaysPerWeek] = useState(5);
+
+  const logoSrc = '/images/fworks/chathomebase/chathomebase-logo.jpg?v=2';
+  const dailyIncome = msgPerDay * RATE_PER_MESSAGE;
+  const weeklyIncome = dailyIncome * daysPerWeek;
+  const monthlyIncome = weeklyIncome * 4.33;
+  const yearlyIncome = weeklyIncome * 52;
 
   useEffect(() => {
     document.title = 'Chat Home Base — Werk vanuit huis als Chat Moderator';
@@ -27,7 +54,7 @@ const OnlineWerken = () => {
     { icon: Clock, title: 'Jij bepaalt je uren', desc: "Werk wanneer het in jouw agenda past — 's avonds, in het weekend of overdag. Geen vaste roosters." },
     { icon: MapPin, title: 'Werk waar je wilt', desc: 'Vanuit je woonkamer, vanaf een terras of zelfs onderweg. Zolang je internet hebt, ben je goed.' },
     { icon: Laptop, title: 'Heel weinig nodig', desc: 'Een laptop of computer, een stabiele wifi-verbinding en goede schrijfvaardigheid in het Nederlands.' },
-    { icon: Wallet, title: 'Per bericht betaald', desc: 'Een eerlijk vast tarief per verstuurd bericht. Helder, transparant en zonder verborgen voorwaarden.' },
+    { icon: Wallet, title: '€ 0,09 per bericht', desc: 'Een vast tarief van negen cent per verstuurd bericht. Helder, transparant en zonder verborgen voorwaarden.' },
   ];
 
   const expectFromYou = [
@@ -62,16 +89,20 @@ const OnlineWerken = () => {
   return (
     <div className="chb-root min-h-screen text-gray-100">
       <style>{`
-        .chb-root { background: #0a0e2e; font-family: 'Inter', system-ui, sans-serif; }
+        .chb-root { background: linear-gradient(180deg, #1a2454 0%, #0f1942 100%); font-family: 'Inter', system-ui, sans-serif; }
         .chb-gradient-text { background: linear-gradient(135deg, #ff45a8 0%, #4dbcff 50%, #ffd344 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-        .chb-glow { box-shadow: 0 20px 60px rgba(77, 188, 255, 0.25), 0 0 0 1px rgba(255,255,255,0.08); }
-        .chb-card { background: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 100%); border: 1px solid rgba(255,255,255,0.08); backdrop-filter: blur(10px); }
+        .chb-glow { box-shadow: 0 20px 60px rgba(77, 188, 255, 0.3), 0 0 0 1px rgba(255,255,255,0.12); }
+        .chb-card { background: linear-gradient(180deg, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0.04) 100%); border: 1px solid rgba(255,255,255,0.14); backdrop-filter: blur(10px); }
         .chb-bg-decor { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
-        .chb-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.4; }
+        .chb-blob { position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.55; }
         .chb-blob-pink { background: #ff45a8; width: 400px; height: 400px; top: -100px; right: -100px; }
         .chb-blob-blue { background: #4dbcff; width: 500px; height: 500px; top: 30%; left: -150px; }
-        .chb-blob-yellow { background: #ffd344; width: 350px; height: 350px; bottom: 10%; right: -50px; opacity: 0.25; }
+        .chb-blob-yellow { background: #ffd344; width: 350px; height: 350px; bottom: 10%; right: -50px; opacity: 0.35; }
         .chb-dot-pink { background: #ff45a8; } .chb-dot-blue { background: #4dbcff; } .chb-dot-yellow { background: #ffd344; }
+        .chb-slider { -webkit-appearance: none; appearance: none; height: 8px; background: rgba(255,255,255,0.15); border-radius: 999px; outline: none; }
+        .chb-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 24px; height: 24px; border-radius: 50%; background: #ffffff; border: 3px solid #ff45a8; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.5); transition: transform 0.15s ease; }
+        .chb-slider::-webkit-slider-thumb:hover { transform: scale(1.15); }
+        .chb-slider::-moz-range-thumb { width: 24px; height: 24px; border-radius: 50%; background: #ffffff; border: 3px solid #ff45a8; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
       `}</style>
 
       {/* Background decor */}
@@ -85,7 +116,7 @@ const OnlineWerken = () => {
         {/* Top bar */}
         <header className="max-w-6xl mx-auto px-5 md:px-8 pt-6 md:pt-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src="/images/fworks/chathomebase/chathomebase-logo.jpg" alt="Chat Home Base" className="w-12 h-12 rounded-xl object-cover shadow-lg" />
+            <img src={logoSrc} alt="Chat Home Base" className="w-12 h-12 rounded-xl object-cover shadow-lg" />
             <span className="text-lg md:text-xl font-bold text-white tracking-tight">Chat Home Base</span>
           </div>
           <a href="#solliciteer" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all text-sm font-medium border border-white/15">
@@ -127,7 +158,7 @@ const OnlineWerken = () => {
             {/* Logo card */}
             <div className="relative">
               <div className="chb-card rounded-3xl p-10 chb-glow text-center">
-                <img src="/images/fworks/chathomebase/chathomebase-logo.jpg" alt="Chat Home Base logo" className="w-full max-w-xs mx-auto rounded-2xl shadow-2xl" />
+                <img src={logoSrc} alt="Chat Home Base logo" className="w-full max-w-xs mx-auto rounded-2xl shadow-2xl" />
                 <p className="mt-6 text-sm text-gray-300 leading-relaxed">
                   Wij brengen tekst tot leven. Onze moderators creëren gesprekken die mensen aan onze platformen binden — dag na dag.
                 </p>
@@ -176,6 +207,92 @@ const OnlineWerken = () => {
                 </div>
               );
             })}
+          </div>
+        </section>
+
+        {/* INKOMSTEN CALCULATOR */}
+        <section className="max-w-5xl mx-auto px-5 md:px-8 pb-20" data-testid="calculator-section">
+          <div className="text-center mb-8">
+            <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs font-medium tracking-wide mb-4">
+              <Calculator size={12} /> Bereken jouw inkomen
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-3">
+              Wat verdien jij als <span className="chb-gradient-text">chat moderator</span>?
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Per bericht verdien je <strong className="text-white">€ 0,09</strong>. Schuif onderstaande sliders om te berekenen wat dat in jouw situatie kan opleveren.
+            </p>
+          </div>
+
+          <div className="chb-card rounded-3xl p-6 md:p-10 chb-glow">
+            <div className="grid lg:grid-cols-[1fr_1.1fr] gap-8 lg:gap-12 items-center">
+              {/* SLIDERS */}
+              <div className="space-y-7">
+                {/* Berichten per dag */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="text-sm font-medium text-gray-300">Berichten per dag</label>
+                    <span className="text-2xl font-bold text-white" data-testid="msg-per-day-value">{msgPerDay}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="20"
+                    max="600"
+                    step="10"
+                    value={msgPerDay}
+                    onChange={(e) => setMsgPerDay(Number(e.target.value))}
+                    data-testid="msg-per-day-slider"
+                    className="chb-slider w-full"
+                    style={{ accentColor: '#ff45a8' }}
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 mt-1.5">
+                    <span>20</span><span>200</span><span>400</span><span>600</span>
+                  </div>
+                </div>
+
+                {/* Dagen per week */}
+                <div>
+                  <div className="flex items-center justify-between mb-3">
+                    <label className="text-sm font-medium text-gray-300">Dagen per week</label>
+                    <span className="text-2xl font-bold text-white" data-testid="days-per-week-value">{daysPerWeek}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="1"
+                    max="7"
+                    step="1"
+                    value={daysPerWeek}
+                    onChange={(e) => setDaysPerWeek(Number(e.target.value))}
+                    data-testid="days-per-week-slider"
+                    className="chb-slider w-full"
+                    style={{ accentColor: '#4dbcff' }}
+                  />
+                  <div className="flex justify-between text-xs text-gray-500 mt-1.5">
+                    <span>1</span><span>3</span><span>5</span><span>7</span>
+                  </div>
+                </div>
+
+                <div className="text-xs text-gray-400 leading-relaxed pt-2 border-t border-white/10">
+                  <Sparkles size={12} className="inline mr-1 text-[#ffd344]" />
+                  Berekening op basis van € 0,09 per verstuurd bericht. Voor een realistisch beeld nemen we 4,33 weken per maand.
+                </div>
+              </div>
+
+              {/* RESULTATEN */}
+              <div className="space-y-3">
+                <ResultCard label="Per dag" value={formatEUR(dailyIncome)} accent="chb-dot-pink" testid="result-daily" />
+                <ResultCard label="Per week" value={formatEUR(weeklyIncome)} accent="chb-dot-blue" testid="result-weekly" />
+                <ResultCard label="Per maand" value={formatEUR(monthlyIncome)} accent="chb-dot-yellow" big testid="result-monthly" />
+                <ResultCard label="Per jaar" value={formatEUR(yearlyIncome)} accent="chb-dot-pink" small testid="result-yearly" />
+              </div>
+            </div>
+
+            <div className="mt-8 pt-8 border-t border-white/10 text-center">
+              <p className="text-gray-300 mb-4">Klinkt dit goed? Solliciteer vandaag nog en wij nemen binnen 48 uur contact op.</p>
+              <a href="#solliciteer" data-testid="calc-cta-btn" className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0a0e2e] font-bold hover:scale-[1.02] transition-all shadow-lg">
+                Direct solliciteren <ArrowRight size={18} />
+              </a>
+            </div>
           </div>
         </section>
 
@@ -270,7 +387,7 @@ const OnlineWerken = () => {
         <footer className="border-t border-white/10 mt-10">
           <div className="max-w-6xl mx-auto px-5 md:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
             <div className="flex items-center gap-3">
-              <img src="/images/fworks/chathomebase/chathomebase-logo.jpg" alt="" className="w-8 h-8 rounded-lg" />
+              <img src={logoSrc} alt="" className="w-8 h-8 rounded-lg" />
               <span className="text-white font-semibold">Chat Home Base</span>
             </div>
             <p>© {new Date().getFullYear()} Chat Home Base · Werk vanuit huis</p>
