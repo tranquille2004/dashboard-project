@@ -88,7 +88,26 @@ const BambinoBox = () => {
   const { language } = useLanguage();
   const basePath = useBasePath();
   const videoRef = useRef(null);
+  const introRef = useRef(null);
   const [playing, setPlaying] = useState(false);
+
+  // Try to auto-play intro with sound; fall back to muted if browser blocks it
+  useEffect(() => {
+    const v = introRef.current;
+    if (!v) return;
+    v.muted = false;
+    v.volume = 1;
+    const tryPlay = async () => {
+      try {
+        await v.play();
+      } catch (err) {
+        // Browser blocked unmuted autoplay → start muted instead
+        v.muted = true;
+        try { await v.play(); } catch (e) {}
+      }
+    };
+    tryPlay();
+  }, []);
 
   const togglePlay = () => {
     if (!videoRef.current) return;
@@ -140,7 +159,22 @@ const BambinoBox = () => {
             <h1 className="sr-only">Bambino Box - Il Siciliano</h1>
             <p className="text-xl text-gold font-semibold mb-4">{t.tagline[language]}</p>
 
-            {/* VIDEO - portrait, auto-play, muted, contained so nothing is cropped */}
+            {/* INTRO VIDEO (new) - autoplay with sound attempt, landscape, full visible */}
+            <div className="relative rounded-2xl overflow-hidden border-2 border-gold/40 shadow-[0_20px_50px_rgba(178,34,34,0.3)] bg-black mb-6">
+              <video
+                ref={introRef}
+                src="/images/ilsiciliano/bambino/video/intro-emanuele.mp4"
+                className="w-full h-auto block"
+                playsInline
+                autoPlay
+                loop
+                controls
+                preload="auto"
+                data-testid="bambino-intro-video"
+              />
+            </div>
+
+            {/* MAIN VIDEO (existing) - NO autoplay, user clicks to play */}
             <div className="relative rounded-2xl overflow-hidden border-2 border-gold/30 shadow-[0_20px_50px_rgba(178,34,34,0.25)] bg-black max-w-[420px] mx-auto lg:mx-0 mb-6">
               <video
                 ref={videoRef}
@@ -148,9 +182,6 @@ const BambinoBox = () => {
                 poster="/images/ilsiciliano/bambino/bambino-poster.jpg"
                 className="w-full h-auto block"
                 playsInline
-                autoPlay
-                muted
-                loop
                 controls
                 preload="metadata"
                 data-testid="bambino-video"
