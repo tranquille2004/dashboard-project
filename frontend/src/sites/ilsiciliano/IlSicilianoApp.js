@@ -18,6 +18,7 @@ import Confirmation from "./pages/Confirmation";
 import Confirmation2 from "./pages/Confirmation2";
 import GroupMenus from "./pages/GroupMenus";
 import BambinoBox from "./pages/BambinoBox";
+import BambinoBoxSubscribe from "./pages/BambinoBoxSubscribe";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
@@ -81,6 +82,7 @@ function IlSicilianoAppInner({ siteConfig }) {
         <Route path="group-menus" element={<GroupMenus />} />
         <Route path="bambino-box" element={<BambinoBox />} />
         <Route path="bambino" element={<BambinoBox />} />
+        <Route path="bambino-box-subscribe" element={<BambinoBoxSubscribe />} />
         <Route path="confirmation" element={<Confirmation />} />
         <Route path="confirmation.html" element={<Confirmation />} />
         <Route path="confirmation2" element={<Confirmation2 />} />

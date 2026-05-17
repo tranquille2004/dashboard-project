@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
 import { Link } from 'react-router-dom';
-import { Pizza, IceCream, GlassWater, Palette, ChefHat, Gift, Cake, Sparkles, Phone, MessageCircle, Play, Pause } from 'lucide-react';
+import { Pizza, IceCream, GlassWater, Palette, ChefHat, Gift, Cake, Sparkles, Phone, MessageCircle, Play, Pause, QrCode } from 'lucide-react';
 
 const _ = (es, en, it, fr) => ({ es, en, it, fr, nl: es, de: en });
 
@@ -14,6 +14,19 @@ const t = {
     'Divertimento, sapore ed esperienza per i bambini',
     'Plaisir, saveur et expérience pour les enfants'
   ),
+  qrTitle: _(
+    'Inscríbete al Bambino Box',
+    'Sign up for Bambino Box',
+    'Iscriviti al Bambino Box',
+    'Inscris-toi à la Bambino Box'
+  ),
+  qrDesc: _(
+    'Escanea el código QR con la cámara de tu celular o haz clic en él para inscribirte al próximo evento Bambino Box.',
+    'Scan the QR code with your phone camera or click on it to sign up for the next Bambino Box event.',
+    "Scansiona il codice QR con la fotocamera del tuo telefono o clicca su di esso per iscriverti al prossimo evento Bambino Box.",
+    'Scanne le QR code avec la caméra de ton téléphone ou clique dessus pour t\'inscrire au prochain événement Bambino Box.'
+  ),
+  qrHint: _('Toca o escanea para inscribirte', 'Tap or scan to sign up', 'Tocca o scansiona per iscriverti', 'Touche ou scanne pour t\'inscrire'),
   intro: _(
     'En Il Siciliano también pensamos en los peques. Por eso creamos el Bambino Box: una experiencia completa que combina comida deliciosa, sorpresas y actividades para que los niños vivan una aventura italiana inolvidable.',
     "At Il Siciliano we think about the little ones too. That's why we created the Bambino Box: a complete experience combining delicious food, surprises and activities so kids enjoy an unforgettable Italian adventure.",
@@ -233,6 +246,42 @@ const BambinoBox = () => {
               </div>
             );
           })}
+        </div>
+      </section>
+
+      {/* QR CODE - SUBSCRIBE TO BAMBINO BOX EVENT */}
+      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
+        <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-3xl p-6 md:p-12 border border-gold/30 relative overflow-hidden">
+          <div className="absolute -top-16 -right-16 w-72 h-72 bg-gold/10 rounded-full blur-3xl" />
+          <div className="relative grid md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center">
+            {/* Left: text */}
+            <div className="text-center md:text-left">
+              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/40 text-gold text-xs tracking-[0.3em] uppercase mb-4">
+                <QrCode size={14} /> {t.badge[language]}
+              </span>
+              <h2 className="text-3xl md:text-4xl font-bold text-gold mb-3">{t.qrTitle[language]}</h2>
+              <p className="text-gray-300 leading-relaxed text-base md:text-lg">{t.qrDesc[language]}</p>
+            </div>
+
+            {/* Right: clickable QR card */}
+            <Link
+              to={`${basePath}/bambino-box-subscribe`}
+              className="group block mx-auto"
+              aria-label={t.qrTitle[language]}
+              data-testid="bambino-qr-link"
+            >
+              <div className="bg-white p-4 md:p-5 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.25)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_25px_60px_rgba(212,175,55,0.4)]">
+                <img
+                  src="/images/ilsiciliano/bambino/qr-bambino-subscribe.png"
+                  alt="QR Code Bambino Box"
+                  className="w-44 h-44 md:w-56 md:h-56 block"
+                />
+              </div>
+              <p className="text-center text-gold text-xs uppercase tracking-[0.25em] mt-3 group-hover:text-white transition-colors">
+                {t.qrHint[language]}
+              </p>
+            </Link>
+          </div>
         </div>
       </section>
 
