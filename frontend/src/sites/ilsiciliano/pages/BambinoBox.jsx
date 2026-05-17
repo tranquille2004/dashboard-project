@@ -164,7 +164,7 @@ const BambinoBox = () => {
           <video
             ref={introRef}
             src="/images/ilsiciliano/bambino/video/intro-emanuele.mp4"
-            poster="/images/ilsiciliano/bambino/intro-poster.jpg"
+            poster="/images/ilsiciliano/bambino/intro-poster.jpg?v=2"
             className="w-full h-auto block"
             playsInline
             autoPlay
@@ -197,7 +197,7 @@ const BambinoBox = () => {
               <video
                 ref={videoRef}
                 src="/images/ilsiciliano/bambino/video/bambino-video.mp4"
-                poster="/images/ilsiciliano/bambino/bambino-poster.jpg"
+                poster="/images/ilsiciliano/bambino/bambino-poster.jpg?v=2"
                 className="w-full h-auto block"
                 playsInline
                 controls
