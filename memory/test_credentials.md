@@ -9,7 +9,7 @@
 - Password: `hotel123`
 
 ## Il Siciliano Admin (Trattoria Pizzería)
-- Email: `admin@ilsiciliano.ec`
+- Email: `admin@ilsiciliano-santodomingo.com`
 - Password: `siciliano123`
 - URL: `/site/ilsiciliano/mi-sitio`
 
