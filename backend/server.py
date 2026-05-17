@@ -685,7 +685,7 @@ SITE_EMAIL_CONFIG = {
         'from_name': 'RCCB Website'
     },
     'ilsiciliano': {
-        'to': 'info@ilsiciliano.ec',
+        'to': 'litalianoec@gmail.com',
         'subject_prefix': 'Il Siciliano — Nueva consulta',
         'from_name': 'Il Siciliano Website'
     },
@@ -1554,8 +1554,8 @@ DOMAIN_SLUG_MAP = {
     'rccbgroup.be': 'rccb',
     'www.rccbgroup.be': 'rccb',
     'ilsiciliano.fworksbuilders.com': 'ilsiciliano',
-    'ilsiciliano.ec': 'ilsiciliano',
-    'www.ilsiciliano.ec': 'ilsiciliano',
+    'ilsiciliano-santodomingo.com': 'ilsiciliano',
+    'www.ilsiciliano-santodomingo.com': 'ilsiciliano',
     'sanfrancisco.fworksbuilders.com': 'sanfrancisco',
     'sanfrancisco-haciendaturistica.com': 'sanfrancisco',
     'www.sanfrancisco-haciendaturistica.com': 'sanfrancisco',
@@ -3141,7 +3141,7 @@ async def seed_sites_on_startup():
             "site_id": "site_ilsiciliano",
             "name": "Il Siciliano — Trattoria Pizzería",
             "slug": "ilsiciliano",
-            "domains": ["ilsiciliano.fworksbuilders.com", "ilsiciliano.ec", "www.ilsiciliano.ec"],
+            "domains": ["ilsiciliano.fworksbuilders.com", "ilsiciliano-santodomingo.com", "www.ilsiciliano-santodomingo.com"],
             "site_type": "restaurant",
             "is_active": True,
             "created_at": datetime.now(timezone.utc).isoformat(),
