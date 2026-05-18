@@ -69,11 +69,10 @@ const OnlineWerken = () => {
   ];
 
   const expectFromUs = [
-    'Een van de hoogste vergoedingen in de sector',
     '24/7 inloggen — geen vaste shifts of strakke roosters',
     'Een snel en gebruiksvriendelijk werkplatform',
     'Elke week een duidelijke en gedetailleerde factuur',
-    'Wekelijkse uitbetaling vanaf €25 verdiend',
+    'Uitbetalingen vanaf 700 verstuurde berichten, op eigen tempo',
     'Steeds meer berichten dankzij onze groei',
     'Open en eerlijke communicatie',
     'Persoonlijke feedback met praktische tips'
