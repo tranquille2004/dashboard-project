@@ -71,14 +71,13 @@ const OnlineWerken = () => {
     'Je kunt flexibel uren inplannen',
     'Je beschikt over een werkende laptop of PC',
     'Je hebt een stabiele internetverbinding',
-    'Je hebt een e-mailadres en een Zoom-account voor onze gesprekken',
+    'Je hebt een e-mailadres en een Teams-account voor onze gesprekken',
     'Je staat open voor opbouwende feedback'
   ];
 
   const expectFromUs = [
     '24/7 inloggen — geen vaste shifts of strakke roosters',
     'Een snel en gebruiksvriendelijk werkplatform',
-    'Elke week een duidelijke en gedetailleerde factuur',
     'Uitbetalingen vanaf 700 verstuurde berichten, op eigen tempo',
     'Steeds meer berichten dankzij onze groei',
     'Open en eerlijke communicatie',
