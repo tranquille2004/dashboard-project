@@ -7,6 +7,7 @@ import {
   Monitor, Palette, Lock, Megaphone, ExternalLink, Rocket
 } from 'lucide-react';
 import SEO from '@/components/SEO';
+import { trackVisit } from '@/utils/trackVisit';
 import './FWorks.css';
 
 // Error Boundary Component
@@ -1452,6 +1453,9 @@ function FWorksApp() {
 
   // Tawk.to live chat - load via script (more reliable than React component)
   useEffect(() => {
+    // Track page visit (was missing — fixed May 18 2026)
+    trackVisit('fworks', window.location.pathname);
+
     var Tawk_API = window.Tawk_API || {};
     var Tawk_LoadStart = new Date();
     var s1 = document.createElement("script");

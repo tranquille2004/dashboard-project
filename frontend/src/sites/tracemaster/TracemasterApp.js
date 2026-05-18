@@ -5,6 +5,7 @@ import { Menu, X, MapPin, Battery, Shield, Wifi, Clock, Phone, Mail, ChevronDown
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
 import { IMG } from '@/utils/imageHelper';
+import { trackVisit } from '@/utils/trackVisit';
 
 const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
 
@@ -1237,6 +1238,12 @@ const Confirmacion = () => {
 };
 
 function TracemasterApp() {
+  // Track page visits (was missing — fixed May 18 2026)
+  const location = useLocation();
+  useEffect(() => {
+    trackVisit('tracemaster', location.pathname);
+  }, [location.pathname]);
+
   return (
     <div className="App bg-gray-900 min-h-screen">
       

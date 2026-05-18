@@ -137,6 +137,29 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - To disable Under Construction: Set `UNDER_CONSTRUCTION_MODE = false` in HotelDelPacificoApp.js
 
 ## Changelog — May 2026
+### CRITICAL FIX: 4 sites hadden geen tracking-code (P0 — DONE — May 18)
+**Probleem gemeld door gebruiker**: fworksbuilders en albertopantoja toonden 0 bezoekers ondanks dat gebruiker zelf herhaaldelijk bezocht.
+
+**Forensische audit (`grep -r "trackVisit"`)**:
+- **fworks**: GEEN tracking-call in code ❌
+- **albertopantoja**: GEEN tracking-call ❌
+- **theobeans**: GEEN tracking-call ❌
+- **tracemaster**: GEEN tracking-call ❌
+
+De andere 9 sites hadden wel correcte tracking. Deze 4 sites schreven NOOIT pageviews naar de database — niet door bot-filter, gewoon ontbrekende code.
+
+**Fix**:
+- `fworks/FWorksApp.js`: `trackVisit('fworks', window.location.pathname)` toegevoegd in mount-`useEffect`.
+- `albertopantoja/AlbertoPantojaApp.js`: idem.
+- `tracemaster/TracemasterApp.js`: `usePageTracking`-pattern met `useLocation` (multi-route SPA).
+- `theobeans/TheobeansApp.js`: idem.
+
+### Live status indicator op website cards (DONE — May 18)
+- **Groen pulserend bolletje** (animate-ping) = site online (geen actieve `health` alert).
+- **Rood pulserend bolletje** = site offline / unreachable (heeft actieve `health` alert).
+- Hover toont tooltip met laatste foutmelding bij offline.
+- Gebruikt de bestaande `alerts` state — geen extra API call.
+
 ### Billing v2: USD/EUR keuze + dagelijkse koers + lock op factuurdatum (P0 — DONE — May 18)
 
 **Datamodel**:

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, Facebook, Youtube, Instagram, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy } from 'lucide-react';
+import { trackVisit } from '@/utils/trackVisit';
 
 // Helper for production image paths
 const IMG = (path) => {
@@ -599,6 +600,9 @@ const AlbertoPantojaApp = () => {
 
   // Scroll spy
   useEffect(() => {
+    // Track page visit (was missing — fixed May 18 2026)
+    trackVisit('albertopantoja', window.location.pathname);
+
     const handleScroll = () => {
       const sections = ['home', 'bio', 'work', 'gallery', 'media', 'contact'];
       for (const section of sections) {

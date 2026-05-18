@@ -570,7 +570,13 @@ const AdminDashboard = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {sites.map(site => (
+            {sites.map(site => {
+              // Check if this site has an active health alert (= site is DOWN)
+              const slug = site.slug;
+              const sid = site.site_id;
+              const healthAlert = alerts.find(a => a.is_active && a.alert_type === 'health' && (a.site_id === slug || a.site_id === sid));
+              const isOnline = !healthAlert;
+              return (
               <div key={site.site_id} className="bg-white rounded-xl border border-stone-200 overflow-hidden hover:shadow-lg transition-shadow">
                 {/* Site Header */}
                 <div className="p-4 border-b border-stone-100">
@@ -586,8 +592,21 @@ const AdminDashboard = () => {
                         </p>
                       </div>
                     </div>
-                    <div className="flex items-center gap-1">
-                      <div className="w-2 h-2 bg-teal-500 rounded-full" title="Online"></div>
+                    <div className="flex items-center gap-1.5">
+                      <div className="relative flex items-center" data-testid={`site-status-${site.slug}`}
+                           title={isOnline ? 'Online — site werkt correct' : `Offline — ${healthAlert?.message || 'site bereikbaar issue'}`}>
+                        {isOnline ? (
+                          <>
+                            <span className="absolute inline-flex h-3 w-3 rounded-full bg-emerald-400 opacity-75 animate-ping"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
+                          </>
+                        ) : (
+                          <>
+                            <span className="absolute inline-flex h-3 w-3 rounded-full bg-red-400 opacity-75 animate-ping"></span>
+                            <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
+                          </>
+                        )}
+                      </div>
                       <a href={site.domains?.length > 0 ? `https://${site.domains[0]}` : `/site/${site.slug}`} 
                          target="_blank" rel="noopener noreferrer"
                          className="p-1.5 text-stone-400 hover:text-teal-600 transition-colors">
@@ -646,7 +665,8 @@ const AdminDashboard = () => {
                   </Link>
                 </div>
               </div>
-            ))}
+              );
+            })}
           </div>
         )}
       </main>

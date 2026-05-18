@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import './index.css';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import ScrollToTop from './components/ScrollToTop';
@@ -9,6 +9,7 @@ import { Toaster } from './components/ui/toaster';
 import { LanguageProvider } from './context/LanguageContext';
 import { BasePathProvider } from './context/BasePathContext';
 import URLSync from '@/components/URLSync';
+import { trackVisit } from '@/utils/trackVisit';
 
 // Pages - EXACT zoals origineel
 import Home from './pages/Home';
@@ -32,6 +33,12 @@ const basePath = isCustomDomain ? '' : '/site/theobeans';
 
 // Dit is de ENIGE wijziging: geen BrowserRouter (die zit al in hoofdapp)
 function TheobeansApp() {
+  // Track page visits (was missing — fixed May 18 2026)
+  const location = useLocation();
+  useEffect(() => {
+    trackVisit('theobeans', location.pathname);
+  }, [location.pathname]);
+
   return (
     <LanguageProvider>
       <BasePathProvider basePath={basePath}>
