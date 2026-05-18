@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { MessageCircle, Clock, Laptop, Wallet, CheckCircle2, ArrowRight, MapPin, Languages, Sparkles, Heart, ChevronDown, Calculator } from 'lucide-react';
+import { MessageCircle, Mail, Clock, Laptop, Wallet, CheckCircle2, ArrowRight, MapPin, Languages, Sparkles, Heart, ChevronDown, Calculator } from 'lucide-react';
 import { trackVisit } from '@/utils/trackVisit';
 
 /**
- * Chat Home Base — Online Werken pagina
+ * fworksbuilders — Online Werken pagina
  * Verborgen pagina onder fworksbuilders.com/onlinewerken
  * Eigen visuele identiteit binnen de fworks site.
  *
  * WhatsApp nummer is verborgen achter de knop (+32494516064).
- * JotForm placeholder klaar om embed-code in te plakken.
+ * Inschrijvings-e-mail: benlcoach@netaporter.pl
  */
 
 const WHATSAPP_NUMBER = '32494516064'; // verborgen in CTA; nooit getoond
+const APPLY_EMAIL = 'benlcoach@netaporter.pl';
 const RATE_PER_MESSAGE = 0.09; // €0,09 per bericht
 
 const formatEUR = (n) => {
@@ -37,21 +38,24 @@ const OnlineWerken = () => {
   const [msgPerDay, setMsgPerDay] = useState(150); // start: 150 berichten/dag
   const [daysPerWeek, setDaysPerWeek] = useState(5);
 
-  const logoSrc = '/images/fworks/chathomebase/chathomebase-logo.jpg?v=2';
+  const logoSrc = '/images/fworks-logo.png?v=2';
   const dailyIncome = msgPerDay * RATE_PER_MESSAGE;
   const weeklyIncome = dailyIncome * daysPerWeek;
   const monthlyIncome = weeklyIncome * 4.33;
   const yearlyIncome = weeklyIncome * 52;
 
   useEffect(() => {
-    document.title = 'Chat Home Base — Werk vanuit huis als Chat Moderator';
+    document.title = 'fworksbuilders — Werk vanuit huis als Chat Moderator';
     window.scrollTo(0, 0);
     // Track visit as fworks site (so it appears under fworks/onlinewerken in dashboard)
     trackVisit('fworks', window.location.pathname);
   }, []);
 
-  const whatsappText = encodeURIComponent('Hallo, ik ben geïnteresseerd in de chat moderator job via Chat Home Base.');
+  const whatsappText = encodeURIComponent('Hallo, ik ben geïnteresseerd in de chat moderator job.');
   const whatsappHref = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappText}`;
+  const emailSubject = encodeURIComponent('Inschrijving chat moderator');
+  const emailBody = encodeURIComponent('Hallo,\n\nIk ben geïnteresseerd in de chat moderator job.\n\nNaam:\nLeeftijd:\nWoonplaats:\nKorte motivatie:\n\nMet vriendelijke groet,');
+  const emailHref = `mailto:${APPLY_EMAIL}?subject=${emailSubject}&body=${emailBody}`;
 
   const benefits = [
     { icon: Clock, title: 'Jij bepaalt je uren', desc: "Werk wanneer het in jouw agenda past — 's avonds, in het weekend of overdag. Geen vaste roosters." },
@@ -118,8 +122,7 @@ const OnlineWerken = () => {
         {/* Top bar */}
         <header className="max-w-6xl mx-auto px-5 md:px-8 pt-6 md:pt-8 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <img src={logoSrc} alt="Chat Home Base" className="w-12 h-12 rounded-xl object-cover shadow-lg" />
-            <span className="text-lg md:text-xl font-bold text-white tracking-tight">Chat Home Base</span>
+            <img src={logoSrc} alt="fworksbuilders" className="h-12 w-auto object-contain" />
           </div>
           <a href="#solliciteer" className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all text-sm font-medium border border-white/15">
             Direct solliciteren <ArrowRight size={14} />
@@ -142,7 +145,7 @@ const OnlineWerken = () => {
                 <span className="text-white">jouw woorden.</span>
               </h1>
               <p className="text-lg md:text-xl text-gray-300 leading-relaxed max-w-xl mb-8">
-                Word chat moderator bij <strong className="text-white">Chat Home Base</strong> en bouw vanuit huis een stabiel weekinkomen op. Eerlijk betaald, geen vaste uren, en alles wat je nodig hebt is een laptop en een vlotte pen.
+                Word chat moderator en bouw vanuit huis een stabiel weekinkomen op. Eerlijk betaald, geen vaste uren, en alles wat je nodig hebt is een laptop en een vlotte pen.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a href="#solliciteer" data-testid="hero-apply-btn" className="inline-flex items-center gap-2 px-7 py-4 rounded-full bg-white text-[#0a0e2e] font-bold text-base hover:scale-[1.02] hover:shadow-2xl transition-all">
@@ -160,7 +163,7 @@ const OnlineWerken = () => {
             {/* Logo card */}
             <div className="relative">
               <div className="chb-card rounded-3xl p-10 chb-glow text-center">
-                <img src={logoSrc} alt="Chat Home Base logo" className="w-full max-w-xs mx-auto rounded-2xl shadow-2xl" />
+                <img src={logoSrc} alt="fworksbuilders logo" className="w-full max-w-xs mx-auto" />
                 <p className="mt-6 text-sm text-gray-300 leading-relaxed">
                   Wij brengen tekst tot leven. Onze moderators creëren gesprekken die mensen aan onze platformen binden — dag na dag.
                 </p>
@@ -366,21 +369,39 @@ const OnlineWerken = () => {
               <p className="text-gray-300">Vul je gegevens in en wij nemen binnen 48 uur contact met je op.</p>
             </div>
 
-            {/* JotForm container - vervang door embed code */}
-            <div id="jotform-container" className="min-h-[380px] flex flex-col items-center justify-center text-center bg-white/5 rounded-2xl p-8 border border-dashed border-white/20">
-              {/* TODO: Plak hier het JotForm iframe of script */}
-              <MessageCircle size={36} className="text-[#4dbcff] mb-4" />
-              <p className="text-white font-semibold text-lg mb-2">Sollicitatieformulier komt binnenkort online</p>
-              <p className="text-gray-300 text-sm max-w-sm mb-6">Wil je nu al solliciteren? Stuur ons een berichtje via WhatsApp — we reageren snel.</p>
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-testid="cta-whatsapp-bottom"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#25D366] hover:bg-[#1FB856] text-white font-bold transition-all shadow-lg hover:scale-[1.02]"
-              >
-                <MessageCircle size={18} /> WhatsApp ons direct
-              </a>
+            {/* Inschrijven via email of WhatsApp */}
+            <div className="bg-white/5 rounded-2xl p-8 border border-white/10 space-y-5">
+              <div className="text-center">
+                <Mail size={36} className="text-[#4dbcff] mb-4 mx-auto" />
+                <p className="text-white font-semibold text-lg mb-2">Schrijf je in via e-mail</p>
+                <p className="text-gray-300 text-sm max-w-md mx-auto mb-5">
+                  Stuur een mailtje met je naam, leeftijd, woonplaats en een korte motivatie. We reageren binnen 48 uur.
+                </p>
+                <a
+                  href={emailHref}
+                  data-testid="cta-email-bottom"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-white text-[#0a0e2e] font-bold transition-all shadow-lg hover:scale-[1.02]"
+                >
+                  <Mail size={18} /> {APPLY_EMAIL}
+                </a>
+              </div>
+              <div className="flex items-center gap-3 text-xs uppercase tracking-wider text-gray-500">
+                <span className="flex-1 h-px bg-white/10"></span>
+                <span>of</span>
+                <span className="flex-1 h-px bg-white/10"></span>
+              </div>
+              <div className="text-center">
+                <p className="text-gray-300 text-sm mb-4">Liever direct contact? Stuur ons een berichtje.</p>
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-testid="cta-whatsapp-bottom"
+                  className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#25D366] hover:bg-[#1FB856] text-white font-bold transition-all shadow-lg hover:scale-[1.02]"
+                >
+                  <MessageCircle size={18} /> WhatsApp ons direct
+                </a>
+              </div>
             </div>
           </div>
         </section>
@@ -389,11 +410,10 @@ const OnlineWerken = () => {
         <footer className="border-t border-white/10 mt-10">
           <div className="max-w-6xl mx-auto px-5 md:px-8 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-gray-400">
             <div className="flex items-center gap-3">
-              <img src={logoSrc} alt="" className="w-8 h-8 rounded-lg" />
-              <span className="text-white font-semibold">Chat Home Base</span>
+              <img src={logoSrc} alt="" className="h-8 w-auto" />
             </div>
-            <p>© {new Date().getFullYear()} Chat Home Base · Werk vanuit huis</p>
-            <a href="https://fworksbuilders.com" className="text-gray-500 hover:text-white transition-colors">Powered by fworksbuilders</a>
+            <p>© {new Date().getFullYear()} fworksbuilders · Werk vanuit huis</p>
+            <a href="https://fworksbuilders.com" className="text-gray-500 hover:text-white transition-colors">fworksbuilders.com</a>
           </div>
         </footer>
       </div>
