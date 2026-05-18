@@ -2971,6 +2971,64 @@ async def sync_all_galleries(user: User = Depends(get_current_user)):
     
     return {"success": True, "results": results}
 
+# ============================================================
+# BILLING / INVOICES (Super Admin)
+# ============================================================
+
+class InvoiceCreate(BaseModel):
+    site_slug: str
+    invoice_date: str  # ISO date YYYY-MM-DD
+    amount: float
+    year: int
+    note: Optional[str] = None
+    paid: Optional[bool] = False
+
+class InvoiceUpdate(BaseModel):
+    invoice_date: Optional[str] = None
+    amount: Optional[float] = None
+    year: Optional[int] = None
+    note: Optional[str] = None
+    paid: Optional[bool] = None
+
+@admin_router.get("/billing/invoices")
+async def list_invoices(user=Depends(get_current_user)):
+    """List all invoices, newest first"""
+    cursor = db.invoices.find({}, {"_id": 0}).sort("invoice_date", -1)
+    invoices = await cursor.to_list(length=2000)
+    return {"invoices": invoices}
+
+@admin_router.post("/billing/invoices")
+async def create_invoice(invoice: InvoiceCreate, user=Depends(get_current_user)):
+    """Create a new invoice"""
+    inv = invoice.dict()
+    inv["invoice_id"] = f"inv_{uuid.uuid4().hex[:12]}"
+    inv["created_at"] = datetime.now(timezone.utc).isoformat()
+    inv["updated_at"] = datetime.now(timezone.utc).isoformat()
+    await db.invoices.insert_one(inv)
+    inv.pop("_id", None)
+    return inv
+
+@admin_router.put("/billing/invoices/{invoice_id}")
+async def update_invoice(invoice_id: str, patch: InvoiceUpdate, user=Depends(get_current_user)):
+    """Update an existing invoice"""
+    updates = {k: v for k, v in patch.dict().items() if v is not None}
+    if not updates:
+        raise HTTPException(status_code=400, detail="No fields to update")
+    updates["updated_at"] = datetime.now(timezone.utc).isoformat()
+    result = await db.invoices.update_one({"invoice_id": invoice_id}, {"$set": updates})
+    if result.matched_count == 0:
+        raise HTTPException(status_code=404, detail="Invoice not found")
+    inv = await db.invoices.find_one({"invoice_id": invoice_id}, {"_id": 0})
+    return inv
+
+@admin_router.delete("/billing/invoices/{invoice_id}")
+async def delete_invoice(invoice_id: str, user=Depends(get_current_user)):
+    """Delete an invoice"""
+    result = await db.invoices.delete_one({"invoice_id": invoice_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Invoice not found")
+    return {"success": True}
+
 # Include routers
 app.include_router(api_router)
 app.include_router(auth_router)

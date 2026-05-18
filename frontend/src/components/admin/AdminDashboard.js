@@ -427,6 +427,23 @@ const AdminDashboard = () => {
           </div>
         </div>
 
+        {/* Admin Tools Quick Links */}
+        <div className="bg-white rounded-xl border border-stone-200 mb-6 px-4 py-3 flex flex-wrap items-center gap-3">
+          <span className="text-sm font-medium text-stone-600 mr-2">Tools:</span>
+          <Link to="/admin/billing" data-testid="admin-tool-billing"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 text-sm font-medium transition-colors">
+            <BarChart2 className="w-4 h-4" /> Facturatie
+          </Link>
+          <Link to="/admin/migrate" data-testid="admin-tool-migrate"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-purple-50 hover:bg-purple-100 text-purple-700 text-sm font-medium transition-colors">
+            <Activity className="w-4 h-4" /> Afbeeldingen Sync
+          </Link>
+          <Link to="/admin/alerts" data-testid="admin-tool-alerts"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 text-sm font-medium transition-colors">
+            <TrendingUp className="w-4 h-4" /> Alle Alerts
+          </Link>
+        </div>
+
         {/* Alerts Section - Always visible */}
         <div className="bg-white rounded-xl border border-stone-200 mb-6 overflow-hidden">
           <div className="px-4 py-3 bg-stone-50 border-b border-stone-200 flex items-center justify-between">

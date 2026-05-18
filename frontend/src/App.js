@@ -9,6 +9,7 @@ import AdminDashboard from '@/components/admin/AdminDashboard';
 import SiteEditor from '@/components/admin/SiteEditor';
 import AlertsPage from '@/components/admin/AlertsPage';
 import ImageMigration from '@/components/admin/ImageMigration';
+import Billing from '@/components/admin/Billing';
 import SiteRenderer from '@/components/sites/SiteRenderer';
 import SiteAdminLogin from '@/components/site-admin/SiteAdminLogin';
 import SiteAdminDashboard from '@/components/site-admin/SiteAdminDashboard';
@@ -138,6 +139,7 @@ function AdminRouter() {
       <Route path="/admin" element={<AdminDashboard />} />
       <Route path="/admin/alerts" element={<AlertsPage />} />
       <Route path="/admin/migrate" element={<ImageMigration />} />
+      <Route path="/admin/billing" element={<Billing />} />
       <Route path="/admin/sites/:siteId" element={<SiteEditor />} />
       <Route path="/restaurant-login" element={<SiteAdminLogin />} />
       <Route path="/mijn-site" element={<SiteAdminDashboard />} />
@@ -162,6 +164,7 @@ function CustomDomainRouter({ slug }) {
               <Route path="/admin" element={<AdminDashboard />} />
               <Route path="/admin/alerts" element={<AlertsPage />} />
               <Route path="/admin/migrate" element={<ImageMigration />} />
+              <Route path="/admin/billing" element={<Billing />} />
               <Route path="/admin/sites/:siteId" element={<SiteEditor />} />
             </Routes>
           </SiteProvider>
