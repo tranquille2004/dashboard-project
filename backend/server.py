@@ -593,11 +593,10 @@ async def lifespan(app: FastAPI):
         logging.warning(f"Could not create unique index on site_visits: {e}")
     scheduler.add_job(background_health_check, 'interval', minutes=5, id='health_check')
     scheduler.add_job(check_visitor_activity, 'interval', minutes=30, id='visitor_check')
-    scheduler.add_job(check_reservation_activity, 'interval', minutes=15, id='reservation_check')
     # Daily billing alert at 09:00 UTC for invoices due in exactly 7 days
     scheduler.add_job(check_upcoming_invoices, 'cron', hour=9, minute=0, id='billing_check')
     scheduler.start()
-    logging.info("Background scheduler started - Health: 5min, Visitors: 30min, Reservations: 15min, Billing: daily 09:00 UTC")
+    logging.info("Background scheduler started - Health: 5min, Visitors: 30min, Billing: daily 09:00 UTC")
     
     # Seed sites in background - don't block server startup
     asyncio.create_task(seed_sites_on_startup())
