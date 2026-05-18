@@ -137,6 +137,27 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - To disable Under Construction: Set `UNDER_CONSTRUCTION_MODE = false` in HotelDelPacificoApp.js
 
 ## Changelog — May 2026
+### Bezoekersstatistieken — bot-filter + correcte unieke teller (P0 — DONE — May 18)
+**Probleem gemeld door gebruiker**: Il Siciliano toonde 75 bezoekers/maand terwijl de URL alleen bij eigenaar + assistent + super-admin bekend is.
+
+**Analyse**:
+- 41 van 61 hits in laatste 30 dagen kwamen van **HeadlessChrome** uit Google Cloud datacenters (USA): mijn eigen testing/screenshot agent + SEO crawlers.
+- Bestaande dedup-logica gebruikte `IP + datum + pagina` als uniek-sleutel → 1 echte bezoeker die 5 pagina's bekeek telde als 5 "unieke" bezoekers.
+
+**Fixes in `backend/server.py`**:
+- Nieuwe helper `_is_bot_ua()` met patronenlijst (headlesschrome, googlebot, crawler, spider, curl, python-requests, etc.) + lege UA = bot.
+- `POST /api/analytics/track` en `POST /api/public/track-visit` weigeren bots stilletjes (geen DB-write).
+- Nieuwe helper `_count_unique_visitors(site_slug, since, date_eq)` telt distinct `(visitor_ip, date)` paren via aggregation pipeline → 1 per IP per dag.
+- `GET /admin/sites/{site_id}/stats` en `GET /admin/all-stats` gebruiken nu deze helper i.p.v. `count_documents`.
+- Nieuwe `POST /admin/analytics/cleanup-bots`: retroactief alle bot-records verwijderen uit `site_visits` (134 records verwijderd bij eerste run, 41 voor Il Siciliano).
+
+**Frontend (`AdminDashboard.js`)**:
+- Nieuwe "Bots opruimen" knop in Tools-balk (rose, Bug-icoon) voor handmatige cleanup.
+
+**Resultaat na fix**:
+- Il Siciliano deze maand: **2 echte unieke bezoekers** (was 75).
+- Andere sites totaal verminderd: Bottega 74→36, Ascoli 65→29, Mercato 183→80, Cantina 32→12.
+
 ### Billing alerts + USD→EUR currency conversion (P0 — DONE)
 - Added `get_usd_to_eur_rate()` helper using free **frankfurter.dev** (with fallback chain to frankfurter.app + open.er-api.com). 6h in-memory cache.
 - `POST /api/admin/billing/invoices` now accepts `amount_usd` (not `amount`). Backend converts to EUR at current rate and stores `amount`, `amount_usd`, `exchange_rate`.

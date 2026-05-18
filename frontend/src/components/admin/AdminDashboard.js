@@ -6,7 +6,7 @@ import {
   Plus, Settings, Image, Menu, Users, Globe, LogOut, 
   ChevronRight, Trash2, Edit, Eye, Clock, Phone, Mail,
   BarChart2, X, MapPin, TrendingUp, Activity, ExternalLink,
-  Calendar, UserCheck, Check, AlertTriangle
+  Calendar, UserCheck, Check, AlertTriangle, Bug
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -442,6 +442,18 @@ const AdminDashboard = () => {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 text-sm font-medium transition-colors">
             <TrendingUp className="w-4 h-4" /> Alle Alerts
           </Link>
+          <button data-testid="admin-tool-cleanup-bots"
+            onClick={async () => {
+              if (!window.confirm('Alle bot-/crawler-bezoeken uit de statistieken verwijderen?')) return;
+              try {
+                const res = await axios.post(`${API}/admin/analytics/cleanup-bots`, {}, { withCredentials: true });
+                alert(`${res.data.removed} bot-bezoeken verwijderd.\nTotaal voor: ${res.data.before_total} → na: ${res.data.after_total}\n\nPer site:\n${Object.entries(res.data.per_site_removed || {}).map(([k,v]) => `  ${k}: ${v}`).join('\n')}`);
+                window.location.reload();
+              } catch (e) { alert('Fout: ' + (e.response?.data?.detail || e.message)); }
+            }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-sm font-medium transition-colors">
+            <Bug className="w-4 h-4" /> Bots opruimen
+          </button>
         </div>
 
         {/* Alerts Section - Always visible */}

@@ -215,6 +215,28 @@ async def get_usd_to_eur_rate() -> float:
     return fallback
 
 
+# ============== BOT / CRAWLER DETECTION ==============
+
+_BOT_PATTERNS = (
+    "bot", "crawler", "spider", "crawl", "headlesschrome", "headless",
+    "playwright", "puppeteer", "selenium", "phantomjs", "lighthouse",
+    "facebookexternalhit", "slackbot", "twitterbot", "linkedinbot",
+    "embedly", "preview", "fetch", "wget", "curl/", "python-requests",
+    "axios/", "go-http-client", "okhttp", "httpx",
+    "googlebot", "bingbot", "yandex", "duckduckbot", "baiduspider",
+    "ahrefsbot", "semrushbot", "mj12bot", "dotbot", "petalbot",
+    "applebot", "uptimerobot", "pingdom", "gtmetrix", "monitorbot",
+)
+
+def _is_bot_ua(user_agent: str) -> bool:
+    """Return True if the user-agent string looks like a bot, crawler, or headless browser.
+    Empty UA is also treated as a bot (real browsers always send one)."""
+    if not user_agent or not user_agent.strip():
+        return True
+    ua = user_agent.lower()
+    return any(p in ua for p in _BOT_PATTERNS)
+
+
 # ============== BACKGROUND MONITORING TASKS ==============
 
 async def background_health_check():
@@ -2217,18 +2239,42 @@ async def serve_image(path: str, request: Request):
         raise HTTPException(status_code=500, detail=str(e))
 
 # ============== ANALYTICS ==============
+async def _count_unique_visitors(site_slug: str, since: Optional[datetime] = None,
+                                 date_eq: Optional[str] = None) -> int:
+    """Count distinct (visitor_ip, date) pairs for a site, optionally filtered by time/date.
+    This is the proper definition of 'unique visitors' — one per IP per day.
+    Bot/headless traffic is excluded (records flagged is_bot=True OR matching UA patterns)."""
+    match: Dict[str, Any] = {"site_slug": site_slug, "is_bot": {"$ne": True}}
+    if since is not None:
+        match["timestamp"] = {"$gte": since.isoformat()}
+    if date_eq is not None:
+        match["date"] = date_eq
+    pipeline = [
+        {"$match": match},
+        {"$group": {"_id": {"ip": "$visitor_ip", "date": "$date"}}},
+        {"$count": "uniq"},
+    ]
+    result = await db.site_visits.aggregate(pipeline).to_list(1)
+    return result[0]["uniq"] if result else 0
+
+
 @api_router.post("/analytics/track")
 async def track_visit_analytics(request: Request):
-    """Track a unique page visit - one per IP per day. Writes to BOTH analytics tables for consistency."""
+    """Track a unique page visit - one per IP per day. Writes to BOTH analytics tables for consistency.
+    Bots, headless browsers and crawlers are silently rejected."""
     try:
         body = await request.json()
         site_id = body.get("site_id", "")
         page = body.get("page", "/")
-        
+
+        user_agent = request.headers.get("user-agent", "")
+        if _is_bot_ua(user_agent):
+            return {"ok": True, "filtered": "bot"}
+
         ip = request.headers.get("x-forwarded-for", request.headers.get("x-real-ip", "unknown"))
         if "," in ip:
             ip = ip.split(",")[0].strip()
-        
+
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         
         # Map site_id to site_slug for the legacy site_visits table
@@ -2494,14 +2540,18 @@ async def clear_site_announcement(slug: str, secret: str = "fworks2024"):
 
 @public_router.post("/track-visit")
 async def track_visit(request: Request):
-    """Track a website visit with page path"""
+    """Track a website visit with page path. Bots/headless are silently rejected."""
     body = await request.json()
     site_slug = body.get("site_slug")
     page_path = body.get("path", "/")  # Now receiving path from frontend
-    
+
     if not site_slug:
         raise HTTPException(status_code=400, detail="site_slug required")
-    
+
+    user_agent = request.headers.get("user-agent", "")
+    if _is_bot_ua(user_agent):
+        return {"status": "filtered_bot"}
+
     # Get visitor IP
     forwarded = request.headers.get("x-forwarded-for")
     visitor_ip = forwarded.split(",")[0].strip() if forwarded else request.client.host
@@ -2592,6 +2642,37 @@ async def backfill_analytics(user: User = Depends(get_current_user)):
     return {"migrated": migrated, "skipped_already_present": skipped}
 
 
+@admin_router.post("/analytics/cleanup-bots")
+async def cleanup_bot_visits(user: User = Depends(get_current_user)):
+    """One-time / on-demand cleanup: scan site_visits and remove records whose user_agent
+    matches a known bot/crawler/headless pattern, OR has an empty UA.
+    Returns counts before/after per site."""
+    # Count before
+    before_total = await db.site_visits.count_documents({})
+
+    cursor = db.site_visits.find({}, {"_id": 1, "user_agent": 1, "site_slug": 1})
+    to_delete = []
+    per_site_removed: Dict[str, int] = {}
+    async for doc in cursor:
+        if _is_bot_ua(doc.get("user_agent", "")):
+            to_delete.append(doc["_id"])
+            slug = doc.get("site_slug", "?")
+            per_site_removed[slug] = per_site_removed.get(slug, 0) + 1
+
+    if to_delete:
+        await db.site_visits.delete_many({"_id": {"$in": to_delete}})
+
+    # Also clean parallel db.analytics table at write time only (no UA stored there to retro-filter)
+    after_total = await db.site_visits.count_documents({})
+
+    return {
+        "removed": len(to_delete),
+        "before_total": before_total,
+        "after_total": after_total,
+        "per_site_removed": per_site_removed,
+    }
+
+
 @admin_router.get("/sites/{site_id}/stats")
 async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
     """Get detailed visitor statistics for a site"""
@@ -2606,20 +2687,11 @@ async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
     week_start = today_start - timedelta(days=7)
     month_start = today_start - timedelta(days=30)
     
-    # Count unique visitors
-    total_visits = await db.site_visits.count_documents({"site_slug": site_slug})
-    today_visits = await db.site_visits.count_documents({
-        "site_slug": site_slug,
-        "date": now.strftime("%Y-%m-%d")
-    })
-    week_visits = await db.site_visits.count_documents({
-        "site_slug": site_slug,
-        "timestamp": {"$gte": week_start.isoformat()}
-    })
-    month_visits = await db.site_visits.count_documents({
-        "site_slug": site_slug,
-        "timestamp": {"$gte": month_start.isoformat()}
-    })
+    # Count unique visitors (distinct IP per date, excluding bots)
+    total_visits = await _count_unique_visitors(site_slug)
+    today_visits = await _count_unique_visitors(site_slug, date_eq=now.strftime("%Y-%m-%d"))
+    week_visits = await _count_unique_visitors(site_slug, since=week_start)
+    month_visits = await _count_unique_visitors(site_slug, since=month_start)
     
     # Get country breakdown
     country_pipeline = [
@@ -2676,19 +2748,10 @@ async def get_all_stats(user: User = Depends(get_current_user)):
     for site in sites:
         site_slug = site.get("slug", site.get("site_id"))
         
-        total_visits = await db.site_visits.count_documents({"site_slug": site_slug})
-        today_visits = await db.site_visits.count_documents({
-            "site_slug": site_slug,
-            "timestamp": {"$gte": today_start.isoformat()}
-        })
-        week_visits = await db.site_visits.count_documents({
-            "site_slug": site_slug,
-            "timestamp": {"$gte": week_start.isoformat()}
-        })
-        month_visits = await db.site_visits.count_documents({
-            "site_slug": site_slug,
-            "timestamp": {"$gte": month_start.isoformat()}
-        })
+        total_visits = await _count_unique_visitors(site_slug)
+        today_visits = await _count_unique_visitors(site_slug, date_eq=now.strftime("%Y-%m-%d"))
+        week_visits = await _count_unique_visitors(site_slug, since=week_start)
+        month_visits = await _count_unique_visitors(site_slug, since=month_start)
         
         stats.append({
             "site_id": site.get("site_id"),
