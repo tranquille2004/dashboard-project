@@ -2258,8 +2258,10 @@ async def serve_image(path: str, request: Request):
 
 # ============== ANALYTICS ==============
 async def _count_unique_visitors(site_slug: str, since: Optional[datetime] = None,
-                                 date_eq: Optional[str] = None) -> int:
-    """Count distinct (visitor_ip, date) pairs for a site, optionally filtered by time/date.
+                                 date_eq: Optional[str] = None,
+                                 path_eq: Optional[str] = None,
+                                 path_prefix: Optional[str] = None) -> int:
+    """Count distinct (visitor_ip, date) pairs for a site, optionally filtered by time/date/path.
     This is the proper definition of 'unique visitors' — one per IP per day.
     Bot/headless traffic is excluded (records flagged is_bot=True OR matching UA patterns)."""
     match: Dict[str, Any] = {"site_slug": site_slug, "is_bot": {"$ne": True}}
@@ -2267,6 +2269,10 @@ async def _count_unique_visitors(site_slug: str, since: Optional[datetime] = Non
         match["timestamp"] = {"$gte": since.isoformat()}
     if date_eq is not None:
         match["date"] = date_eq
+    if path_eq is not None:
+        match["path"] = path_eq
+    elif path_prefix is not None:
+        match["path"] = {"$regex": f"^{path_prefix}"}
     pipeline = [
         {"$match": match},
         {"$group": {"_id": {"ip": "$visitor_ip", "date": "$date"}}},
@@ -2798,6 +2804,45 @@ async def get_all_stats(user: User = Depends(get_current_user)):
         })
     
     return stats
+
+
+@admin_router.get("/path-stats/{site_slug}")
+async def get_path_stats(site_slug: str, user: User = Depends(get_current_user)):
+    """Return unique visitor counts broken down by URL path for a single site.
+    Useful to see e.g. fworks homepage vs /onlinewerken separately.
+    Returns top 20 paths sorted by month visits desc."""
+    now = datetime.now(timezone.utc)
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    week_start = today_start - timedelta(days=7)
+    month_start = today_start - timedelta(days=30)
+
+    # Discover all distinct paths visited on this site (excluding bots)
+    paths = await db.site_visits.distinct(
+        "path",
+        {"site_slug": site_slug, "is_bot": {"$ne": True}}
+    )
+
+    results = []
+    for p in paths:
+        if not p:
+            continue
+        total = await _count_unique_visitors(site_slug, path_eq=p)
+        if total == 0:
+            continue
+        today = await _count_unique_visitors(site_slug, date_eq=now.strftime("%Y-%m-%d"), path_eq=p)
+        week = await _count_unique_visitors(site_slug, since=week_start, path_eq=p)
+        month = await _count_unique_visitors(site_slug, since=month_start, path_eq=p)
+        results.append({
+            "path": p,
+            "today": today,
+            "week": week,
+            "month": month,
+            "total": total,
+        })
+
+    results.sort(key=lambda r: (-r["month"], -r["total"]))
+    return {"site_slug": site_slug, "paths": results[:20]}
+
 
 @admin_router.get("/live-visitor")
 async def get_latest_visitor(user: User = Depends(get_current_user)):

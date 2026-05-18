@@ -137,6 +137,19 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - To disable Under Construction: Set `UNDER_CONSTRUCTION_MODE = false` in HotelDelPacificoApp.js
 
 ## Changelog — May 2026
+### Per-pagina statistieken (sub-page breakdown) — DONE — May 18
+**Use case**: gebruiker wilde fworks homepage apart zien van `/onlinewerken` (recruitment-pagina).
+
+**Backend** (`server.py`):
+- `_count_unique_visitors()` uitgebreid met `path_eq` en `path_prefix` parameters.
+- Nieuwe endpoint `GET /api/admin/path-stats/{site_slug}` — retourneert top 20 paden gesorteerd op month visits, met today/week/month/total per pagina.
+
+**Frontend** (`AdminDashboard.js`):
+- Nieuwe "Bekijk per pagina ▾" toggle op elke site card.
+- Lazy-load on expand (geen extra requests bij dashboard-load).
+- Tabel toont: Pagina-label (🏠 Homepage voor root) | 7d | 30d | Tot.
+- Werkt voor alle 13 sites — niet alleen fworks.
+
 ### CRITICAL FIX: 4 sites hadden geen tracking-code (P0 — DONE — May 18)
 **Probleem gemeld door gebruiker**: fworksbuilders en albertopantoja toonden 0 bezoekers ondanks dat gebruiker zelf herhaaldelijk bezocht.
 

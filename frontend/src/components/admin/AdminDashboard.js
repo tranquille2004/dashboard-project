@@ -6,7 +6,7 @@ import {
   Plus, Settings, Image, Menu, Users, Globe, LogOut, 
   ChevronRight, Trash2, Edit, Eye, Clock, Phone, Mail,
   BarChart2, X, MapPin, TrendingUp, Activity, ExternalLink,
-  Calendar, UserCheck, Check, AlertTriangle, Bug
+  Calendar, UserCheck, Check, AlertTriangle, Bug, ChevronDown, ChevronUp
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -135,6 +135,26 @@ const AdminDashboard = () => {
   const [checkingHealth, setCheckingHealth] = useState(false);
   const [liveVisitor, setLiveVisitor] = useState(null);
   const [lastHealthCheck, setLastHealthCheck] = useState(null);
+  const [pathStats, setPathStats] = useState({}); // keyed by site_slug
+  const [pathLoading, setPathLoading] = useState({}); // keyed by site_slug
+  const [pathExpanded, setPathExpanded] = useState({}); // keyed by site_slug
+
+  const togglePathStats = async (slug) => {
+    const isOpen = !!pathExpanded[slug];
+    setPathExpanded(prev => ({ ...prev, [slug]: !isOpen }));
+    if (!isOpen && !pathStats[slug]) {
+      setPathLoading(prev => ({ ...prev, [slug]: true }));
+      try {
+        const res = await axios.get(`${API}/admin/path-stats/${slug}`, { withCredentials: true });
+        setPathStats(prev => ({ ...prev, [slug]: res.data.paths || [] }));
+      } catch (e) {
+        console.error('Path stats error:', e);
+        setPathStats(prev => ({ ...prev, [slug]: [] }));
+      } finally {
+        setPathLoading(prev => ({ ...prev, [slug]: false }));
+      }
+    }
+  };
 
   const t = (key) => translations[lang]?.[key] || key;
 
@@ -618,6 +638,7 @@ const AdminDashboard = () => {
                 
                 {/* Stats */}
                 {siteStats[site.site_id] && (
+                  <>
                   <div className="grid grid-cols-4 divide-x divide-stone-100 bg-stone-50">
                     <div className="p-3 text-center">
                       <p className="text-lg font-bold text-teal-600">{siteStats[site.site_id].today}</p>
@@ -636,6 +657,50 @@ const AdminDashboard = () => {
                       <p className="text-[10px] text-stone-500 uppercase tracking-wide">{t('total')}</p>
                     </div>
                   </div>
+                  {/* Per-page breakdown toggle */}
+                  <button onClick={() => togglePathStats(site.slug)}
+                    data-testid={`toggle-paths-${site.slug}`}
+                    className="w-full px-4 py-2 text-xs text-stone-500 hover:text-violet-600 hover:bg-violet-50 transition-colors flex items-center justify-center gap-1 border-t border-stone-100">
+                    {pathExpanded[site.slug]
+                      ? <>Verberg per pagina <ChevronUp className="w-3 h-3" /></>
+                      : <>Bekijk per pagina <ChevronDown className="w-3 h-3" /></>}
+                  </button>
+                  {pathExpanded[site.slug] && (
+                    <div className="bg-stone-50/50 border-t border-stone-100 px-3 py-2 text-xs" data-testid={`path-stats-${site.slug}`}>
+                      {pathLoading[site.slug] ? (
+                        <p className="text-center text-stone-400 py-2">Laden...</p>
+                      ) : (pathStats[site.slug] || []).length === 0 ? (
+                        <p className="text-center text-stone-400 py-2">Nog geen pagina-data — tracking begint pas na deploy.</p>
+                      ) : (
+                        <table className="w-full">
+                          <thead>
+                            <tr className="text-[10px] uppercase text-stone-400 border-b border-stone-200">
+                              <th className="text-left py-1.5 font-medium">Pagina</th>
+                              <th className="text-right py-1.5 font-medium">7d</th>
+                              <th className="text-right py-1.5 font-medium">30d</th>
+                              <th className="text-right py-1.5 font-medium">Tot.</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {(pathStats[site.slug] || []).map((row, idx) => {
+                              const label = row.path === '/' || row.path.match(/^\/site\/[^/]+\/?$/)
+                                ? '🏠 Homepage'
+                                : row.path.replace(/^\/site\/[^/]+/, '');
+                              return (
+                                <tr key={idx} className="border-b border-stone-100 last:border-0">
+                                  <td className="py-1.5 text-stone-700 truncate max-w-[160px]" title={row.path}>{label}</td>
+                                  <td className="py-1.5 text-right text-sky-600 font-semibold">{row.week}</td>
+                                  <td className="py-1.5 text-right text-violet-600 font-semibold">{row.month}</td>
+                                  <td className="py-1.5 text-right text-stone-600">{row.total}</td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      )}
+                    </div>
+                  )}
+                  </>
                 )}
                 
                 {/* Actions */}
