@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MessageCircle, Clock, Laptop, Wallet, CheckCircle2, ArrowRight, MapPin, Languages, Sparkles, Heart, ChevronDown, Calculator } from 'lucide-react';
+import { trackVisit } from '@/utils/trackVisit';
 
 /**
  * Chat Home Base — Online Werken pagina
@@ -45,6 +46,8 @@ const OnlineWerken = () => {
   useEffect(() => {
     document.title = 'Chat Home Base — Werk vanuit huis als Chat Moderator';
     window.scrollTo(0, 0);
+    // Track visit as fworks site (so it appears under fworks/onlinewerken in dashboard)
+    trackVisit('fworks', window.location.pathname);
   }, []);
 
   const whatsappText = encodeURIComponent('Hallo, ik ben geïnteresseerd in de chat moderator job via Chat Home Base.');

@@ -137,6 +137,16 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - To disable Under Construction: Set `UNDER_CONSTRUCTION_MODE = false` in HotelDelPacificoApp.js
 
 ## Changelog — May 2026
+### Traffic-alert thresholds aangepast: 24h→12h (algemeen), 6h→4h (restaurants) — May 18
+- `check_visitor_activity()` drempels gewijzigd in `server.py`.
+- 12 oude actieve traffic alerts gemarkeerd als opgelost (`resolved_reason: thresholds_changed_to_12h_4h`).
+- Cron blijft elke 30 minuten draaien.
+
+### Tracking-fix voor `/onlinewerken` (P0 — DONE — May 18)
+- `OnlineWerken.jsx` wordt **direct in App.js** gerendered (niet binnen FWorksApp), dus de tracking-fix in FWorksApp bereikte deze pagina nooit.
+- `trackVisit('fworks', location.pathname)` toegevoegd in `OnlineWerken.jsx` mount-`useEffect`.
+- Pagina verschijnt nu als `/site/fworks/onlinewerken` (preview) of `/onlinewerken` (custom domain) onder de fworks "Bekijk per pagina" breakdown.
+
 ### Per-pagina statistieken (sub-page breakdown) — DONE — May 18
 **Use case**: gebruiker wilde fworks homepage apart zien van `/onlinewerken` (recruitment-pagina).
 

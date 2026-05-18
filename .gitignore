@@ -420,3 +420,4 @@ credentials.json
 *.key
 .credentials
 frontend/node_modules/.cache/default-development/221.pack
+frontend/node_modules/.cache/default-development/232.pack

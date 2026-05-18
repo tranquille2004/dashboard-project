@@ -331,11 +331,11 @@ async def background_health_check():
 
 async def check_visitor_activity():
     """Check site traffic:
-    - Restaurants: alert if no visitors for 6+ hours
-    - Other sites: alert if no visitors for 24+ hours
+    - Restaurants: alert if no visitors for 4+ hours
+    - Other sites: alert if no visitors for 12+ hours
     """
     logging.info("Checking visitor activity...")
-    # Restaurant slugs get the stricter 6h threshold
+    # Restaurant slugs get the stricter 4h threshold
     RESTAURANT_SLUGS = {'bottega', 'cantina', 'ascoli', 'mercato', 'ilsiciliano'}
     try:
         sites = await db.sites.find({}).to_list(1000)
@@ -346,7 +346,7 @@ async def check_visitor_activity():
             site_name = site.get("name", slug)
             domains = site.get("domains", [])
 
-            hours = 6 if slug in RESTAURANT_SLUGS else 24
+            hours = 4 if slug in RESTAURANT_SLUGS else 12
             cutoff = now - timedelta(hours=hours)
 
             recent_visits = await db.site_visits.count_documents({
