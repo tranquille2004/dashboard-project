@@ -540,13 +540,20 @@ async def check_upcoming_invoices():
             site = site_map.get(slug, {})
             site_name = site.get("name", slug or "Onbekend")
             domain = (site.get("domains") or [slug])[0]
-            amount_eur = inv.get("amount", 0)
-            amount_usd = inv.get("amount_usd")
-            rate = inv.get("exchange_rate")
 
-            amount_line = f"€{amount_eur:.2f}"
-            if amount_usd:
-                amount_line += f" (${amount_usd:.2f} @ {rate:.4f})" if rate else f" (${amount_usd:.2f})"
+            # Enrich at current rate for nice display
+            rate_now = await get_usd_to_eur_rate()
+            enriched = await _enrich_invoice(dict(inv), rate_now)
+            amount_usd = enriched.get("amount_usd", 0)
+            amount_eur = enriched.get("amount_eur", 0)
+            src_ccy = enriched.get("source_currency", "USD")
+            effective_rate = enriched.get("effective_rate", rate_now)
+
+            if src_ccy == "USD":
+                amount_line = f"<strong>${amount_usd:,.2f} USD</strong> ≈ €{amount_eur:,.2f} EUR (koers {effective_rate:.4f})"
+            else:
+                amount_line = f"<strong>€{amount_eur:,.2f} EUR</strong> ≈ ${amount_usd:,.2f} USD (koers {effective_rate:.4f})"
+
             note = inv.get("note") or ""
             note_html = f"<br/><em>Notitie: {note}</em>" if note else ""
 
@@ -3187,17 +3194,84 @@ async def sync_all_galleries(user: User = Depends(get_current_user)):
 class InvoiceCreate(BaseModel):
     site_slug: str
     invoice_date: str  # ISO date YYYY-MM-DD
-    amount_usd: float  # User enters amount in USD; EUR is auto-converted
+    source_amount: float  # The original amount the user typed
+    source_currency: str  # "USD" or "EUR" — never changes
     year: int
     note: Optional[str] = None
     paid: Optional[bool] = False
 
 class InvoiceUpdate(BaseModel):
     invoice_date: Optional[str] = None
-    amount_usd: Optional[float] = None
+    source_amount: Optional[float] = None
+    source_currency: Optional[str] = None  # "USD" or "EUR"
     year: Optional[int] = None
     note: Optional[str] = None
     paid: Optional[bool] = None
+
+
+async def _enrich_invoice(inv: dict, rate: float) -> dict:
+    """Compute USD & EUR amounts for an invoice using:
+       - the locked rate if today >= invoice_date (frozen on the invoice date)
+       - the live rate otherwise
+    Also persists the locked rate the first time we cross the invoice_date.
+    Backwards-compatible with legacy records (amount_usd / amount fields).
+    Returns the invoice dict augmented with: amount_usd, amount_eur, effective_rate, is_locked."""
+    # Backwards-compat migration: legacy records had amount_usd + amount (EUR)
+    if "source_amount" not in inv:
+        if inv.get("amount_usd") is not None:
+            inv["source_amount"] = float(inv["amount_usd"])
+            inv["source_currency"] = "USD"
+        elif inv.get("amount") is not None:
+            # Legacy EUR-only — fallback
+            inv["source_amount"] = float(inv["amount"])
+            inv["source_currency"] = "EUR"
+        else:
+            inv["source_amount"] = 0.0
+            inv["source_currency"] = "USD"
+
+    src_amount = float(inv.get("source_amount") or 0)
+    src_ccy = (inv.get("source_currency") or "USD").upper()
+
+    # Determine the effective rate (USD→EUR)
+    today_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    invoice_date = inv.get("invoice_date", today_str)
+    is_due_or_past = today_str >= invoice_date
+
+    if is_due_or_past:
+        locked_rate = inv.get("locked_rate")
+        if locked_rate is None:
+            # First time we reach the invoice date — freeze today's rate
+            locked_rate = rate
+            await db.invoices.update_one(
+                {"invoice_id": inv.get("invoice_id")},
+                {"$set": {
+                    "locked_rate": locked_rate,
+                    "locked_at": datetime.now(timezone.utc).isoformat(),
+                }}
+            )
+            inv["locked_rate"] = locked_rate
+            inv["locked_at"] = datetime.now(timezone.utc).isoformat()
+        effective_rate = float(locked_rate)
+        is_locked = True
+    else:
+        effective_rate = float(rate)
+        is_locked = False
+
+    # Compute both currencies
+    if src_ccy == "USD":
+        amount_usd = round(src_amount, 2)
+        amount_eur = round(src_amount * effective_rate, 2)
+    else:  # EUR
+        amount_eur = round(src_amount, 2)
+        amount_usd = round(src_amount / effective_rate, 2) if effective_rate else 0.0
+
+    inv["amount_usd"] = amount_usd
+    inv["amount_eur"] = amount_eur
+    inv["amount"] = amount_eur  # keep legacy field for aggregations
+    inv["effective_rate"] = effective_rate
+    inv["is_locked"] = is_locked
+    return inv
+
 
 @admin_router.get("/billing/exchange-rate")
 async def get_exchange_rate(user=Depends(get_current_user)):
@@ -3207,42 +3281,50 @@ async def get_exchange_rate(user=Depends(get_current_user)):
 
 @admin_router.get("/billing/invoices")
 async def list_invoices(user=Depends(get_current_user)):
-    """List all invoices, newest first"""
+    """List all invoices, newest first, with live USD+EUR amounts computed at current rate
+    (or locked rate if past invoice_date)."""
     cursor = db.invoices.find({}, {"_id": 0}).sort("invoice_date", -1)
     invoices = await cursor.to_list(length=2000)
-    return {"invoices": invoices}
+    rate = await get_usd_to_eur_rate()
+    enriched = [await _enrich_invoice(inv, rate) for inv in invoices]
+    return {"invoices": enriched, "current_rate": rate}
 
 @admin_router.post("/billing/invoices")
 async def create_invoice(invoice: InvoiceCreate, user=Depends(get_current_user)):
-    """Create a new invoice. Amount entered in USD, converted & stored in EUR."""
-    rate = await get_usd_to_eur_rate()
-    amount_eur = round(invoice.amount_usd * rate, 2)
+    """Create a new invoice. The user enters either USD or EUR; the other currency is computed
+    live until the invoice_date is reached, then locked at that day's rate."""
+    if invoice.source_currency.upper() not in ("USD", "EUR"):
+        raise HTTPException(status_code=400, detail="source_currency must be USD or EUR")
+
     inv = invoice.dict()
-    inv["amount"] = amount_eur  # EUR for legacy/aggregations
-    inv["exchange_rate"] = rate
+    inv["source_currency"] = inv["source_currency"].upper()
     inv["invoice_id"] = f"inv_{uuid.uuid4().hex[:12]}"
     inv["created_at"] = datetime.now(timezone.utc).isoformat()
     inv["updated_at"] = datetime.now(timezone.utc).isoformat()
     await db.invoices.insert_one(inv)
     inv.pop("_id", None)
-    return inv
+
+    rate = await get_usd_to_eur_rate()
+    return await _enrich_invoice(inv, rate)
 
 @admin_router.put("/billing/invoices/{invoice_id}")
 async def update_invoice(invoice_id: str, patch: InvoiceUpdate, user=Depends(get_current_user)):
-    """Update an existing invoice. If amount_usd is updated, EUR is re-converted at current rate."""
+    """Update an existing invoice. If source_amount or source_currency changes and the
+    invoice was already locked, we keep the original locked_rate (rate doesn't reset)."""
     updates = {k: v for k, v in patch.dict().items() if v is not None}
     if not updates:
         raise HTTPException(status_code=400, detail="No fields to update")
-    if "amount_usd" in updates:
-        rate = await get_usd_to_eur_rate()
-        updates["amount"] = round(updates["amount_usd"] * rate, 2)
-        updates["exchange_rate"] = rate
+    if "source_currency" in updates:
+        updates["source_currency"] = updates["source_currency"].upper()
+        if updates["source_currency"] not in ("USD", "EUR"):
+            raise HTTPException(status_code=400, detail="source_currency must be USD or EUR")
     updates["updated_at"] = datetime.now(timezone.utc).isoformat()
     result = await db.invoices.update_one({"invoice_id": invoice_id}, {"$set": updates})
     if result.matched_count == 0:
         raise HTTPException(status_code=404, detail="Invoice not found")
     inv = await db.invoices.find_one({"invoice_id": invoice_id}, {"_id": 0})
-    return inv
+    rate = await get_usd_to_eur_rate()
+    return await _enrich_invoice(inv, rate)
 
 @admin_router.post("/billing/alerts/run")
 async def run_billing_alerts(user=Depends(get_current_user)):

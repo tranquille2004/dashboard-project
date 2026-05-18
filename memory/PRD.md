@@ -137,7 +137,27 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 - To disable Under Construction: Set `UNDER_CONSTRUCTION_MODE = false` in HotelDelPacificoApp.js
 
 ## Changelog — May 2026
-### Bezoekersstatistieken — bot-filter + correcte unieke teller (P0 — DONE — May 18)
+### Billing v2: USD/EUR keuze + dagelijkse koers + lock op factuurdatum (P0 — DONE — May 18)
+
+**Datamodel**:
+- `source_amount` (float) + `source_currency` ("USD"|"EUR") — origineel bedrag, **verandert nooit**.
+- `locked_rate` (optional float) + `locked_at` — alleen ingevuld zodra `today >= invoice_date`. Hierna is de koers bevroren.
+
+**Backend logica (`_enrich_invoice`)**:
+- `today < invoice_date`: omrekening met **live dagkoers** (`get_usd_to_eur_rate`, 6u cache).
+- `today >= invoice_date`: gebruikt `locked_rate`. Bij eerste read na factuurdatum wordt `locked_rate` = huidige koers gezet en gepersisteerd (write-on-read).
+- Response bevat: `source_amount`, `source_currency`, `amount_usd`, `amount_eur`, `effective_rate`, `is_locked`.
+- Backwards-compat: oude records met `amount_usd`/`amount` worden in `_enrich_invoice` automatisch geïnterpreteerd als `source_currency=USD`.
+
+**Frontend (`Billing.js`)**:
+- USD/EUR toggle in nieuwe-factuur modal — gebruiker kiest expliciet welke munteenheid hij invoert.
+- Live preview toont de andere munteenheid: `≈ €X.XXX,XX EUR (live koers — wordt dagelijks bijgewerkt tot de factuurdatum)` of omgekeerd.
+- InvoiceRow toont nu: origineel bedrag (bold, met "orig." label) + omrekening (≈) + koers + lock-icoon (🔒) als vergrendeld of refresh-icoon (🔄) als nog live.
+- Totaal-cards en per-site tabel tonen zowel EUR als USD totalen.
+
+**Email facturatie-alert** gebruikt nu ook `_enrich_invoice` met source-currency-gevoelige formatting.
+
+### Bezoekersstatistieken — bot-filter + correcte unieke teller + race-condition fix (P0 — DONE — May 18)
 **Probleem gemeld door gebruiker**: Il Siciliano toonde 75 bezoekers/maand terwijl de URL alleen bij eigenaar + assistent + super-admin bekend is.
 
 **Analyse**:

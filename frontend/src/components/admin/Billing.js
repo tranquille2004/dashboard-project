@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
-import { ArrowLeft, Plus, Edit3, Trash2, Check, X, Calendar, Euro, FileText, CheckCircle2, DollarSign, RefreshCw } from 'lucide-react';
+import { ArrowLeft, Plus, Edit3, Trash2, Check, X, Calendar, Euro, FileText, CheckCircle2, DollarSign, RefreshCw, Lock } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -27,6 +27,7 @@ const fmtEUR = (n) =>
   new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 }).format(n || 0);
 const fmtUSD = (n) =>
   new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(n || 0);
+const fmtCcy = (n, ccy) => (ccy === 'EUR' ? fmtEUR : fmtUSD)(n);
 const todayISO = () => new Date().toISOString().slice(0, 10);
 const currentYear = () => new Date().getFullYear();
 
@@ -43,7 +44,8 @@ const Billing = () => {
   const [form, setForm] = useState({
     site_slug: DOMAINS[0].slug,
     invoice_date: todayISO(),
-    amount_usd: '',
+    source_amount: '',
+    source_currency: 'USD',
     year: currentYear(),
     note: '',
     paid: false,
@@ -59,6 +61,7 @@ const Billing = () => {
     try {
       const res = await axios.get(`${API}/admin/billing/invoices`, { withCredentials: true });
       setInvoices(res.data.invoices || []);
+      if (res.data.current_rate) setUsdToEur(res.data.current_rate);
     } catch (e) {
       console.error('Load invoices error:', e);
     } finally { setLoading(false); }
@@ -76,13 +79,17 @@ const Billing = () => {
 
   const resetForm = () => setForm({
     site_slug: DOMAINS[0].slug, invoice_date: todayISO(),
-    amount_usd: '', year: currentYear(), note: '', paid: false,
+    source_amount: '', source_currency: 'USD', year: currentYear(), note: '', paid: false,
   });
 
   const createInvoice = async () => {
-    if (!form.amount_usd || parseFloat(form.amount_usd) <= 0) { alert('Vul een geldig USD-bedrag in'); return; }
+    if (!form.source_amount || parseFloat(form.source_amount) <= 0) { alert('Vul een geldig bedrag in'); return; }
     try {
-      const payload = { ...form, amount_usd: parseFloat(form.amount_usd), year: parseInt(form.year) };
+      const payload = {
+        ...form,
+        source_amount: parseFloat(form.source_amount),
+        year: parseInt(form.year),
+      };
       await axios.post(`${API}/admin/billing/invoices`, payload, { withCredentials: true });
       setShowAdd(false); resetForm(); fetchInvoices();
     } catch (e) { alert('Fout: ' + (e.response?.data?.detail || e.message)); }
@@ -111,20 +118,27 @@ const Billing = () => {
   }, [invoices]);
 
   const yearInvoices = invoices.filter(i => i.year === selectedYear);
-  const yearTotal = yearInvoices.reduce((s, i) => s + (i.amount || 0), 0);
-  const yearPaid = yearInvoices.filter(i => i.paid).reduce((s, i) => s + (i.amount || 0), 0);
-  const yearOutstanding = yearTotal - yearPaid;
+  // Totals in EUR (computed by backend at current/locked rate)
+  const yearTotalEUR = yearInvoices.reduce((s, i) => s + (i.amount_eur || 0), 0);
+  const yearPaidEUR = yearInvoices.filter(i => i.paid).reduce((s, i) => s + (i.amount_eur || 0), 0);
+  const yearOutstandingEUR = yearTotalEUR - yearPaidEUR;
+  // Same totals in USD
+  const yearTotalUSD = yearInvoices.reduce((s, i) => s + (i.amount_usd || 0), 0);
+  const yearPaidUSD = yearInvoices.filter(i => i.paid).reduce((s, i) => s + (i.amount_usd || 0), 0);
+  const yearOutstandingUSD = yearTotalUSD - yearPaidUSD;
 
   const perSite = useMemo(() => {
     const map = {};
-    DOMAINS.forEach(d => { map[d.slug] = { ...d, count: 0, total: 0, paid: 0 }; });
+    DOMAINS.forEach(d => { map[d.slug] = { ...d, count: 0, totalEUR: 0, paidEUR: 0, totalUSD: 0, paidUSD: 0 }; });
     yearInvoices.forEach(i => {
-      if (!map[i.site_slug]) map[i.site_slug] = { slug: i.site_slug, name: i.site_slug, domain: '', count: 0, total: 0, paid: 0 };
-      map[i.site_slug].count += 1;
-      map[i.site_slug].total += i.amount || 0;
-      if (i.paid) map[i.site_slug].paid += i.amount || 0;
+      if (!map[i.site_slug]) map[i.site_slug] = { slug: i.site_slug, name: i.site_slug, domain: '', count: 0, totalEUR: 0, paidEUR: 0, totalUSD: 0, paidUSD: 0 };
+      const m = map[i.site_slug];
+      m.count += 1;
+      m.totalEUR += i.amount_eur || 0;
+      m.totalUSD += i.amount_usd || 0;
+      if (i.paid) { m.paidEUR += i.amount_eur || 0; m.paidUSD += i.amount_usd || 0; }
     });
-    return Object.values(map).sort((a, b) => b.total - a.total);
+    return Object.values(map).sort((a, b) => b.totalEUR - a.totalEUR);
   }, [yearInvoices]);
 
   const domainBySlug = (slug) => DOMAINS.find(d => d.slug === slug) || { name: slug, domain: '' };
@@ -190,16 +204,19 @@ const Billing = () => {
         <div className="grid sm:grid-cols-3 gap-4">
           <div className="bg-gradient-to-br from-blue-900/40 to-blue-950/40 border border-blue-500/30 rounded-2xl p-6">
             <div className="text-xs text-blue-300 uppercase tracking-wider mb-2">Totaal {selectedYear}</div>
-            <div className="text-3xl font-bold" data-testid="year-total">{fmtEUR(yearTotal)}</div>
-            <div className="text-xs text-gray-400 mt-1">{yearInvoices.length} factuur{yearInvoices.length !== 1 ? 'en' : ''}</div>
+            <div className="text-3xl font-bold" data-testid="year-total">{fmtEUR(yearTotalEUR)}</div>
+            <div className="text-sm text-gray-400 mt-1">{fmtUSD(yearTotalUSD)}</div>
+            <div className="text-xs text-gray-500 mt-2">{yearInvoices.length} factuur{yearInvoices.length !== 1 ? 'en' : ''}</div>
           </div>
           <div className="bg-gradient-to-br from-green-900/40 to-green-950/40 border border-green-500/30 rounded-2xl p-6">
             <div className="text-xs text-green-300 uppercase tracking-wider mb-2">Betaald</div>
-            <div className="text-3xl font-bold text-green-400" data-testid="year-paid">{fmtEUR(yearPaid)}</div>
+            <div className="text-3xl font-bold text-green-400" data-testid="year-paid">{fmtEUR(yearPaidEUR)}</div>
+            <div className="text-sm text-green-300/70 mt-1">{fmtUSD(yearPaidUSD)}</div>
           </div>
           <div className="bg-gradient-to-br from-amber-900/40 to-amber-950/40 border border-amber-500/30 rounded-2xl p-6">
             <div className="text-xs text-amber-300 uppercase tracking-wider mb-2">Openstaand</div>
-            <div className="text-3xl font-bold text-amber-400" data-testid="year-outstanding">{fmtEUR(yearOutstanding)}</div>
+            <div className="text-3xl font-bold text-amber-400" data-testid="year-outstanding">{fmtEUR(yearOutstandingEUR)}</div>
+            <div className="text-sm text-amber-300/70 mt-1">{fmtUSD(yearOutstandingUSD)}</div>
           </div>
         </div>
 
@@ -223,8 +240,22 @@ const Billing = () => {
                     <td className="py-3 px-2 font-medium">{s.name}</td>
                     <td className="py-3 px-2 hidden md:table-cell text-gray-400 text-xs">{s.domain}</td>
                     <td className="py-3 px-2 text-right">{s.count}</td>
-                    <td className="py-3 px-2 text-right text-green-400">{s.paid ? fmtEUR(s.paid) : '—'}</td>
-                    <td className="py-3 px-2 text-right font-bold">{s.total ? fmtEUR(s.total) : '—'}</td>
+                    <td className="py-3 px-2 text-right text-green-400">
+                      {s.paidEUR ? (
+                        <>
+                          <div>{fmtEUR(s.paidEUR)}</div>
+                          <div className="text-[10px] text-green-300/60">{fmtUSD(s.paidUSD)}</div>
+                        </>
+                      ) : '—'}
+                    </td>
+                    <td className="py-3 px-2 text-right font-bold">
+                      {s.totalEUR ? (
+                        <>
+                          <div>{fmtEUR(s.totalEUR)}</div>
+                          <div className="text-[10px] text-gray-400 font-normal">{fmtUSD(s.totalUSD)}</div>
+                        </>
+                      ) : '—'}
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -279,8 +310,26 @@ const Billing = () => {
                 </div>
               </div>
               <div>
+                <label className="block text-sm text-gray-300 mb-2">Munteenheid</label>
+                <div className="flex gap-2 mb-3" data-testid="form-currency-toggle">
+                  {['USD', 'EUR'].map(ccy => (
+                    <button key={ccy} type="button"
+                      data-testid={`form-currency-${ccy}`}
+                      onClick={() => setForm({ ...form, source_currency: ccy })}
+                      className={`flex-1 py-2.5 rounded-lg font-semibold transition-colors border ${
+                        form.source_currency === ccy
+                          ? 'bg-blue-600 border-blue-500 text-white'
+                          : 'bg-gray-700 border-white/10 text-gray-300 hover:bg-gray-600'
+                      }`}>
+                      {ccy === 'USD' ? '$ USD' : '€ EUR'}
+                    </button>
+                  ))}
+                </div>
                 <label className="block text-sm text-gray-300 mb-1.5 flex items-center justify-between">
-                  <span className="flex items-center gap-1.5"><DollarSign size={14} /> Bedrag (USD)</span>
+                  <span className="flex items-center gap-1.5">
+                    {form.source_currency === 'USD' ? <DollarSign size={14} /> : <Euro size={14} />}
+                    Bedrag ({form.source_currency})
+                  </span>
                   <span className="text-xs text-gray-400 inline-flex items-center gap-1">
                     Koers: {usdToEur ? `1 USD = €${usdToEur.toFixed(4)}` : '...'}
                     <button type="button" onClick={fetchRate} disabled={rateLoading}
@@ -290,13 +339,19 @@ const Billing = () => {
                   </span>
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
-                  <input type="number" step="0.01" placeholder="0.00" value={form.amount_usd} onChange={e => setForm({ ...form, amount_usd: e.target.value })}
-                    data-testid="form-amount-usd" className="w-full bg-gray-700 rounded-lg pl-7 pr-3 py-2.5 text-white border border-white/10 focus:border-blue-500 outline-none" />
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                    {form.source_currency === 'USD' ? '$' : '€'}
+                  </span>
+                  <input type="number" step="0.01" placeholder="0.00" value={form.source_amount}
+                    onChange={e => setForm({ ...form, source_amount: e.target.value })}
+                    data-testid="form-amount" className="w-full bg-gray-700 rounded-lg pl-7 pr-3 py-2.5 text-white border border-white/10 focus:border-blue-500 outline-none" />
                 </div>
-                {form.amount_usd && usdToEur ? (
-                  <div className="text-xs text-blue-300 mt-1.5" data-testid="form-eur-preview">
-                    ≈ {fmtEUR(parseFloat(form.amount_usd) * usdToEur)} EUR (omrekening bij opslaan)
+                {form.source_amount && usdToEur ? (
+                  <div className="text-xs text-blue-300 mt-1.5" data-testid="form-converted-preview">
+                    {form.source_currency === 'USD'
+                      ? `≈ ${fmtEUR(parseFloat(form.source_amount) * usdToEur)} EUR`
+                      : `≈ ${fmtUSD(parseFloat(form.source_amount) / usdToEur)} USD`}
+                    <span className="text-gray-500 ml-1">(live koers — wordt dagelijks bijgewerkt tot de factuurdatum)</span>
                   </div>
                 ) : null}
               </div>
@@ -323,25 +378,45 @@ const Billing = () => {
 };
 
 const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, onTogglePaid }) => {
+  const sourceCcy = (inv.source_currency || 'USD').toUpperCase();
+  const sourceAmount = inv.source_amount ?? (sourceCcy === 'USD' ? inv.amount_usd : inv.amount_eur) ?? 0;
+
   const [draft, setDraft] = useState({
-    invoice_date: inv.invoice_date, amount_usd: inv.amount_usd ?? '', note: inv.note || '', site_slug: inv.site_slug,
+    invoice_date: inv.invoice_date,
+    source_amount: sourceAmount,
+    source_currency: sourceCcy,
+    note: inv.note || '',
+    site_slug: inv.site_slug,
   });
-  useEffect(() => { setDraft({ invoice_date: inv.invoice_date, amount_usd: inv.amount_usd ?? '', note: inv.note || '', site_slug: inv.site_slug }); }, [inv, editing]);
+  useEffect(() => {
+    setDraft({
+      invoice_date: inv.invoice_date,
+      source_amount: sourceAmount,
+      source_currency: sourceCcy,
+      note: inv.note || '',
+      site_slug: inv.site_slug,
+    });
+  }, [inv, editing]);
 
   if (editing) {
     return (
       <div className="bg-blue-900/20 rounded-xl p-4 border border-blue-500/30">
-        <div className="grid md:grid-cols-[1.2fr_1fr_0.8fr_auto] gap-3 items-start">
+        <div className="grid md:grid-cols-[1.2fr_1fr_auto_0.8fr_auto] gap-3 items-start">
           <select value={draft.site_slug} onChange={e => setDraft({ ...draft, site_slug: e.target.value })}
             className="bg-gray-800 rounded-lg px-3 py-2 text-sm border border-white/10 focus:border-blue-500 outline-none">
             {DOMAINS.map(d => <option key={d.slug} value={d.slug}>{d.name}</option>)}
           </select>
           <input type="date" value={draft.invoice_date} onChange={e => setDraft({ ...draft, invoice_date: e.target.value })}
             className="bg-gray-800 rounded-lg px-3 py-2 text-sm border border-white/10 focus:border-blue-500 outline-none" />
+          <select value={draft.source_currency} onChange={e => setDraft({ ...draft, source_currency: e.target.value })}
+            className="bg-gray-800 rounded-lg px-2 py-2 text-sm border border-white/10 focus:border-blue-500 outline-none">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+          </select>
           <div className="relative">
-            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
-            <input type="number" step="0.01" placeholder="USD" value={draft.amount_usd}
-              onChange={e => setDraft({ ...draft, amount_usd: e.target.value })}
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">{draft.source_currency === 'USD' ? '$' : '€'}</span>
+            <input type="number" step="0.01" placeholder={draft.source_currency} value={draft.source_amount}
+              onChange={e => setDraft({ ...draft, source_amount: e.target.value })}
               className="w-full bg-gray-800 rounded-lg pl-6 pr-3 py-2 text-sm border border-white/10 focus:border-blue-500 outline-none" />
           </div>
           <div className="flex gap-2">
@@ -349,7 +424,8 @@ const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, 
               site_slug: draft.site_slug,
               invoice_date: draft.invoice_date,
               note: draft.note,
-              amount_usd: draft.amount_usd !== '' ? parseFloat(draft.amount_usd) : undefined,
+              source_amount: draft.source_amount !== '' ? parseFloat(draft.source_amount) : undefined,
+              source_currency: draft.source_currency,
               year: new Date(draft.invoice_date).getFullYear(),
             })} className="p-2 rounded-lg bg-green-600 hover:bg-green-700"><Check size={16} /></button>
             <button onClick={onCancel} className="p-2 rounded-lg bg-gray-700 hover:bg-gray-600"><X size={16} /></button>
@@ -360,6 +436,13 @@ const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, 
       </div>
     );
   }
+
+  // Display: source amount in bold, converted amount with current/locked rate
+  const isLocked = inv.is_locked;
+  const rate = inv.effective_rate;
+  const primaryAmount = sourceCcy === 'USD' ? inv.amount_usd : inv.amount_eur;
+  const convertedAmount = sourceCcy === 'USD' ? inv.amount_eur : inv.amount_usd;
+  const convertedCcy = sourceCcy === 'USD' ? 'EUR' : 'USD';
 
   return (
     <div className="bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/5 transition-colors">
@@ -373,14 +456,17 @@ const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, 
           <Calendar size={14} /> {new Date(inv.invoice_date).toLocaleDateString('nl-BE')}
         </div>
         <div className="text-right">
-          <div className="text-xl font-bold text-white">
-            {new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR' }).format(inv.amount || 0)}
+          <div className="text-xl font-bold text-white flex items-center justify-end gap-1.5">
+            {fmtCcy(primaryAmount, sourceCcy)}
+            <span className="text-[10px] uppercase bg-white/10 px-1.5 py-0.5 rounded text-gray-300 font-normal">orig.</span>
           </div>
-          {inv.amount_usd ? (
-            <div className="text-xs text-gray-400">
-              ${(inv.amount_usd).toFixed(2)} USD{inv.exchange_rate ? ` @ ${inv.exchange_rate.toFixed(4)}` : ''}
-            </div>
-          ) : null}
+          <div className="text-xs text-gray-400 flex items-center justify-end gap-1.5 mt-0.5">
+            ≈ {fmtCcy(convertedAmount, convertedCcy)}
+            {rate ? <span className="text-gray-500">@ {rate.toFixed(4)}</span> : null}
+            {isLocked
+              ? <span className="inline-flex items-center gap-0.5 text-amber-300/80" title="Koers vastgezet op factuurdatum"><Lock size={10} /></span>
+              : <span className="inline-flex items-center gap-0.5 text-blue-300/70" title="Koers wordt dagelijks bijgewerkt"><RefreshCw size={10} /></span>}
+          </div>
         </div>
         <button onClick={onTogglePaid} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${inv.paid ? 'bg-green-600/30 text-green-300 border border-green-500/40' : 'bg-amber-600/20 text-amber-300 border border-amber-500/30 hover:bg-amber-600/30'}`}>
           {inv.paid ? <><CheckCircle2 size={14} /> Betaald</> : 'Openstaand'}
