@@ -573,6 +573,17 @@ async def check_upcoming_invoices():
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     logging.info("Starting background monitoring scheduler...")
+    # Create unique index on site_visits to prevent duplicate page-tracks
+    try:
+        await db.site_visits.create_index(
+            [("site_slug", 1), ("visitor_id", 1)],
+            unique=True,
+            name="uniq_site_visitor",
+            background=True,
+        )
+        logging.info("Ensured unique index on site_visits (site_slug, visitor_id)")
+    except Exception as e:
+        logging.warning(f"Could not create unique index on site_visits: {e}")
     scheduler.add_job(background_health_check, 'interval', minutes=5, id='health_check')
     scheduler.add_job(check_visitor_activity, 'interval', minutes=30, id='visitor_check')
     scheduler.add_job(check_reservation_activity, 'interval', minutes=15, id='reservation_check')
@@ -2540,10 +2551,11 @@ async def clear_site_announcement(slug: str, secret: str = "fworks2024"):
 
 @public_router.post("/track-visit")
 async def track_visit(request: Request):
-    """Track a website visit with page path. Bots/headless are silently rejected."""
+    """Track a website visit with page path. Bots/headless are silently rejected.
+    Uses atomic upsert + unique index to prevent race-condition duplicates."""
     body = await request.json()
     site_slug = body.get("site_slug")
-    page_path = body.get("path", "/")  # Now receiving path from frontend
+    page_path = body.get("path", "/")
 
     if not site_slug:
         raise HTTPException(status_code=400, detail="site_slug required")
@@ -2555,49 +2567,64 @@ async def track_visit(request: Request):
     # Get visitor IP
     forwarded = request.headers.get("x-forwarded-for")
     visitor_ip = forwarded.split(",")[0].strip() if forwarded else request.client.host
-    
-    # Create unique visitor ID for this page visit (IP + date + path)
+
+    # Normalize path so "/site/x/" and "/site/x" don't double-count
+    normalized_path = page_path.rstrip("/") or "/"
+
     today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    visitor_id = f"{visitor_ip}_{today}_{page_path}"
-    
-    # Check if this exact page was already visited today by this visitor
-    existing = await db.site_visits.find_one({
-        "site_slug": site_slug,
-        "visitor_id": visitor_id
-    })
-    
-    if existing:
-        # Already tracked this page today
-        return {"status": "already_tracked"}
-    
-    # Try to get country from IP (using free API)
+    visitor_id = f"{visitor_ip}_{today}_{normalized_path}"
+
+    # Try to get country from IP (using free API) — only needed on first insert
     country = "Unknown"
     country_code = "XX"
     try:
-        async with httpx.AsyncClient(timeout=2.0) as client_http:
-            geo_response = await client_http.get(f"http://ip-api.com/json/{visitor_ip}?fields=country,countryCode")
-            if geo_response.status_code == 200:
-                geo_data = geo_response.json()
-                country = geo_data.get("country", "Unknown")
-                country_code = geo_data.get("countryCode", "XX")
-    except:
+        cached = await db.ip_countries.find_one({"ip": visitor_ip}, {"_id": 0})
+        if cached:
+            country = cached.get("country", "Unknown")
+            country_code = cached.get("code", "XX")
+        else:
+            async with httpx.AsyncClient(timeout=2.0) as client_http:
+                geo_response = await client_http.get(f"http://ip-api.com/json/{visitor_ip}?fields=country,countryCode")
+                if geo_response.status_code == 200:
+                    geo_data = geo_response.json()
+                    country = geo_data.get("country", "Unknown")
+                    country_code = geo_data.get("countryCode", "XX")
+                    await db.ip_countries.update_one(
+                        {"ip": visitor_ip},
+                        {"$set": {"ip": visitor_ip, "country": country, "code": country_code}},
+                        upsert=True,
+                    )
+    except Exception:
         pass  # Silent fail, use Unknown
-    
-    visit = {
+
+    visit_doc = {
         "site_slug": site_slug,
         "visitor_id": visitor_id,
         "visitor_ip": visitor_ip,
-        "path": page_path,  # NOW STORING THE PATH
+        "path": normalized_path,
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "date": today,
         "country": country,
         "country_code": country_code,
-        "user_agent": request.headers.get("user-agent", ""),
-        "referer": request.headers.get("referer", "")
+        "user_agent": user_agent,
+        "referer": request.headers.get("referer", ""),
     }
-    
-    await db.site_visits.insert_one(visit)
-    return {"status": "tracked", "path": page_path}
+
+    # Atomic upsert: only insert if (site_slug, visitor_id) doesn't exist yet.
+    # $setOnInsert ensures concurrent requests for the same (IP, date, path) only result in ONE record.
+    try:
+        result = await db.site_visits.update_one(
+            {"site_slug": site_slug, "visitor_id": visitor_id},
+            {"$setOnInsert": visit_doc},
+            upsert=True,
+        )
+        if result.upserted_id is None:
+            return {"status": "already_tracked"}
+    except Exception as e:
+        logging.error(f"track_visit upsert failed: {e}")
+        return {"status": "error"}
+
+    return {"status": "tracked", "path": normalized_path}
 
 @admin_router.post("/backfill-analytics")
 async def backfill_analytics(user: User = Depends(get_current_user)):
