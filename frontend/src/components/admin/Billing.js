@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '@/contexts/AuthContext';
-import { ArrowLeft, Plus, Edit3, Trash2, Check, X, Calendar, Euro, FileText, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, Plus, Edit3, Trash2, Check, X, Calendar, Euro, FileText, CheckCircle2, DollarSign, RefreshCw } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
@@ -25,6 +25,8 @@ const DOMAINS = [
 
 const fmtEUR = (n) =>
   new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2 }).format(n || 0);
+const fmtUSD = (n) =>
+  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 2 }).format(n || 0);
 const todayISO = () => new Date().toISOString().slice(0, 10);
 const currentYear = () => new Date().getFullYear();
 
@@ -36,10 +38,12 @@ const Billing = () => {
   const [selectedYear, setSelectedYear] = useState(currentYear());
   const [editingId, setEditingId] = useState(null);
   const [showAdd, setShowAdd] = useState(false);
+  const [usdToEur, setUsdToEur] = useState(null); // live rate
+  const [rateLoading, setRateLoading] = useState(false);
   const [form, setForm] = useState({
     site_slug: DOMAINS[0].slug,
     invoice_date: todayISO(),
-    amount: '',
+    amount_usd: '',
     year: currentYear(),
     note: '',
     paid: false,
@@ -48,6 +52,7 @@ const Billing = () => {
   useEffect(() => {
     if (!user) { navigate('/admin'); return; }
     fetchInvoices();
+    fetchRate();
   }, [user]);
 
   const fetchInvoices = async () => {
@@ -59,15 +64,25 @@ const Billing = () => {
     } finally { setLoading(false); }
   };
 
+  const fetchRate = async () => {
+    setRateLoading(true);
+    try {
+      const res = await axios.get(`${API}/admin/billing/exchange-rate`, { withCredentials: true });
+      setUsdToEur(res.data.usd_to_eur);
+    } catch (e) {
+      console.error('Rate fetch error:', e);
+    } finally { setRateLoading(false); }
+  };
+
   const resetForm = () => setForm({
     site_slug: DOMAINS[0].slug, invoice_date: todayISO(),
-    amount: '', year: currentYear(), note: '', paid: false,
+    amount_usd: '', year: currentYear(), note: '', paid: false,
   });
 
   const createInvoice = async () => {
-    if (!form.amount || parseFloat(form.amount) <= 0) { alert('Vul een geldig bedrag in'); return; }
+    if (!form.amount_usd || parseFloat(form.amount_usd) <= 0) { alert('Vul een geldig USD-bedrag in'); return; }
     try {
-      const payload = { ...form, amount: parseFloat(form.amount), year: parseInt(form.year) };
+      const payload = { ...form, amount_usd: parseFloat(form.amount_usd), year: parseInt(form.year) };
       await axios.post(`${API}/admin/billing/invoices`, payload, { withCredentials: true });
       setShowAdd(false); resetForm(); fetchInvoices();
     } catch (e) { alert('Fout: ' + (e.response?.data?.detail || e.message)); }
@@ -137,6 +152,30 @@ const Billing = () => {
       </header>
 
       <div className="max-w-7xl mx-auto p-5 md:p-8 space-y-8">
+        {/* FX rate banner + test billing alert */}
+        <div className="flex flex-wrap items-center justify-between gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-3">
+          <div className="flex items-center gap-2 text-sm">
+            <DollarSign size={16} className="text-emerald-400" />
+            <span className="text-gray-300">Wisselkoers USD → EUR:</span>
+            <span className="font-bold text-emerald-300" data-testid="fx-rate">
+              {usdToEur ? `1 USD = €${usdToEur.toFixed(4)}` : '...'}
+            </span>
+            <button onClick={fetchRate} disabled={rateLoading} className="ml-2 p-1.5 rounded-lg hover:bg-white/10 disabled:opacity-50" title="Verversen">
+              <RefreshCw size={14} className={rateLoading ? 'animate-spin' : ''} />
+            </button>
+          </div>
+          <button data-testid="test-billing-alert-btn"
+            onClick={async () => {
+              try {
+                await axios.post(`${API}/admin/billing/alerts/run`, {}, { withCredentials: true });
+                alert('Facturatie-alert check uitgevoerd. Indien er onbetaalde facturen zijn over exact 7 dagen, is een e-mail verstuurd.');
+              } catch (e) { alert('Fout: ' + (e.response?.data?.detail || e.message)); }
+            }}
+            className="text-xs px-3 py-1.5 rounded-lg bg-blue-600/20 hover:bg-blue-600/40 border border-blue-500/30 text-blue-200">
+            Test facturatie-alert (1 week)
+          </button>
+        </div>
+
         {/* Year selector + Totals */}
         <div className="flex flex-wrap gap-3 items-center">
           <span className="text-sm text-gray-400">Jaar:</span>
@@ -240,9 +279,26 @@ const Billing = () => {
                 </div>
               </div>
               <div>
-                <label className="block text-sm text-gray-300 mb-1.5">Bedrag (€)</label>
-                <input type="number" step="0.01" placeholder="0,00" value={form.amount} onChange={e => setForm({ ...form, amount: e.target.value })}
-                  data-testid="form-amount" className="w-full bg-gray-700 rounded-lg px-3 py-2.5 text-white border border-white/10 focus:border-blue-500 outline-none" />
+                <label className="block text-sm text-gray-300 mb-1.5 flex items-center justify-between">
+                  <span className="flex items-center gap-1.5"><DollarSign size={14} /> Bedrag (USD)</span>
+                  <span className="text-xs text-gray-400 inline-flex items-center gap-1">
+                    Koers: {usdToEur ? `1 USD = €${usdToEur.toFixed(4)}` : '...'}
+                    <button type="button" onClick={fetchRate} disabled={rateLoading}
+                      className="ml-1 p-1 rounded hover:bg-white/10 disabled:opacity-50" title="Koers verversen">
+                      <RefreshCw size={12} className={rateLoading ? 'animate-spin' : ''} />
+                    </button>
+                  </span>
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">$</span>
+                  <input type="number" step="0.01" placeholder="0.00" value={form.amount_usd} onChange={e => setForm({ ...form, amount_usd: e.target.value })}
+                    data-testid="form-amount-usd" className="w-full bg-gray-700 rounded-lg pl-7 pr-3 py-2.5 text-white border border-white/10 focus:border-blue-500 outline-none" />
+                </div>
+                {form.amount_usd && usdToEur ? (
+                  <div className="text-xs text-blue-300 mt-1.5" data-testid="form-eur-preview">
+                    ≈ {fmtEUR(parseFloat(form.amount_usd) * usdToEur)} EUR (omrekening bij opslaan)
+                  </div>
+                ) : null}
               </div>
               <div>
                 <label className="block text-sm text-gray-300 mb-1.5">Notitie (optioneel)</label>
@@ -268,9 +324,9 @@ const Billing = () => {
 
 const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, onTogglePaid }) => {
   const [draft, setDraft] = useState({
-    invoice_date: inv.invoice_date, amount: inv.amount, note: inv.note || '', site_slug: inv.site_slug,
+    invoice_date: inv.invoice_date, amount_usd: inv.amount_usd ?? '', note: inv.note || '', site_slug: inv.site_slug,
   });
-  useEffect(() => { setDraft({ invoice_date: inv.invoice_date, amount: inv.amount, note: inv.note || '', site_slug: inv.site_slug }); }, [inv, editing]);
+  useEffect(() => { setDraft({ invoice_date: inv.invoice_date, amount_usd: inv.amount_usd ?? '', note: inv.note || '', site_slug: inv.site_slug }); }, [inv, editing]);
 
   if (editing) {
     return (
@@ -282,10 +338,20 @@ const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, 
           </select>
           <input type="date" value={draft.invoice_date} onChange={e => setDraft({ ...draft, invoice_date: e.target.value })}
             className="bg-gray-800 rounded-lg px-3 py-2 text-sm border border-white/10 focus:border-blue-500 outline-none" />
-          <input type="number" step="0.01" value={draft.amount} onChange={e => setDraft({ ...draft, amount: parseFloat(e.target.value) })}
-            className="bg-gray-800 rounded-lg px-3 py-2 text-sm border border-white/10 focus:border-blue-500 outline-none" />
+          <div className="relative">
+            <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
+            <input type="number" step="0.01" placeholder="USD" value={draft.amount_usd}
+              onChange={e => setDraft({ ...draft, amount_usd: e.target.value })}
+              className="w-full bg-gray-800 rounded-lg pl-6 pr-3 py-2 text-sm border border-white/10 focus:border-blue-500 outline-none" />
+          </div>
           <div className="flex gap-2">
-            <button onClick={() => onSave({ ...draft, year: new Date(draft.invoice_date).getFullYear() })} className="p-2 rounded-lg bg-green-600 hover:bg-green-700"><Check size={16} /></button>
+            <button onClick={() => onSave({
+              site_slug: draft.site_slug,
+              invoice_date: draft.invoice_date,
+              note: draft.note,
+              amount_usd: draft.amount_usd !== '' ? parseFloat(draft.amount_usd) : undefined,
+              year: new Date(draft.invoice_date).getFullYear(),
+            })} className="p-2 rounded-lg bg-green-600 hover:bg-green-700"><Check size={16} /></button>
             <button onClick={onCancel} className="p-2 rounded-lg bg-gray-700 hover:bg-gray-600"><X size={16} /></button>
           </div>
         </div>
@@ -306,8 +372,15 @@ const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, 
         <div className="flex items-center gap-2 text-sm text-gray-300">
           <Calendar size={14} /> {new Date(inv.invoice_date).toLocaleDateString('nl-BE')}
         </div>
-        <div className="text-xl font-bold text-white flex items-center gap-1">
-          {new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR' }).format(inv.amount || 0)}
+        <div className="text-right">
+          <div className="text-xl font-bold text-white">
+            {new Intl.NumberFormat('nl-BE', { style: 'currency', currency: 'EUR' }).format(inv.amount || 0)}
+          </div>
+          {inv.amount_usd ? (
+            <div className="text-xs text-gray-400">
+              ${(inv.amount_usd).toFixed(2)} USD{inv.exchange_rate ? ` @ ${inv.exchange_rate.toFixed(4)}` : ''}
+            </div>
+          ) : null}
         </div>
         <button onClick={onTogglePaid} className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5 ${inv.paid ? 'bg-green-600/30 text-green-300 border border-green-500/40' : 'bg-amber-600/20 text-amber-300 border border-amber-500/30 hover:bg-amber-600/30'}`}>
           {inv.paid ? <><CheckCircle2 size={14} /> Betaald</> : 'Openstaand'}

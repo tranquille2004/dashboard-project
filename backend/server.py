@@ -107,6 +107,14 @@ async def send_alert_email(site_name: str, alert_type: str, message: str, domain
             subject = f"⚠️ ALERT - {site_name} - Geen Reservaties"
             alert_color = "#9b59b6"  # purple
             alert_icon = "🟣"
+        elif alert_type == "traffic":
+            subject = f"📉 ALERT - {site_name} - Geen Bezoekers"
+            alert_color = "#f39c12"  # orange
+            alert_icon = "🟠"
+        elif alert_type == "billing":
+            subject = f"💶 FACTURATIE - {site_name} - Factuur over 1 week"
+            alert_color = "#2563eb"  # blue
+            alert_icon = "💶"
         else:
             subject = f"⚠️ ALERT - {site_name}"
             alert_color = "#f39c12"  # orange
@@ -163,6 +171,49 @@ async def send_alert_email(site_name: str, alert_type: str, message: str, domain
     except Exception as e:
         logging.error(f"Failed to send alert email: {str(e)}")
         return False
+
+# ============== CURRENCY EXCHANGE HELPER ==============
+
+# In-memory cache: { "USD-EUR": (rate, fetched_at) }
+_exchange_cache: Dict[str, Any] = {}
+
+async def get_usd_to_eur_rate() -> float:
+    """Fetch the latest USD→EUR exchange rate from frankfurter.app (free, no key).
+    Cached for 6 hours. Returns a fallback of 0.92 if all sources fail."""
+    cache_key = "USD-EUR"
+    cached = _exchange_cache.get(cache_key)
+    if cached:
+        rate, fetched_at = cached
+        if (datetime.now(timezone.utc) - fetched_at).total_seconds() < 6 * 3600:
+            return rate
+
+    sources = [
+        "https://api.frankfurter.dev/v1/latest?base=USD&symbols=EUR",
+        "https://api.frankfurter.app/latest?from=USD&to=EUR",
+        "https://open.er-api.com/v6/latest/USD",
+    ]
+    async with httpx.AsyncClient(timeout=10.0, follow_redirects=True) as client:
+        for url in sources:
+            try:
+                r = await client.get(url)
+                if r.status_code != 200:
+                    continue
+                data = r.json()
+                rate = (data.get("rates") or {}).get("EUR")
+                if rate and isinstance(rate, (int, float)) and rate > 0:
+                    _exchange_cache[cache_key] = (float(rate), datetime.now(timezone.utc))
+                    logging.info(f"Fetched USD→EUR rate: {rate} from {url}")
+                    return float(rate)
+            except Exception as e:
+                logging.warning(f"Currency fetch failed at {url}: {e}")
+                continue
+
+    # Fallback rate (cache it briefly so we don't spam APIs)
+    fallback = 0.92
+    _exchange_cache[cache_key] = (fallback, datetime.now(timezone.utc))
+    logging.warning(f"Using fallback USD→EUR rate: {fallback}")
+    return fallback
+
 
 # ============== BACKGROUND MONITORING TASKS ==============
 
@@ -257,44 +308,46 @@ async def background_health_check():
         logging.error(f"Background health check failed: {e}")
 
 async def check_visitor_activity():
-    """Check if any site has had no visitors for 2+ hours"""
+    """Check site traffic:
+    - Restaurants: alert if no visitors for 6+ hours
+    - Other sites: alert if no visitors for 24+ hours
+    """
     logging.info("Checking visitor activity...")
+    # Restaurant slugs get the stricter 6h threshold
+    RESTAURANT_SLUGS = {'bottega', 'cantina', 'ascoli', 'mercato', 'ilsiciliano'}
     try:
         sites = await db.sites.find({}).to_list(1000)
-        two_hours_ago = datetime.now(timezone.utc) - timedelta(hours=2)
-        
+        now = datetime.now(timezone.utc)
+
         for site in sites:
             slug = site.get("slug", "")
             site_name = site.get("name", slug)
             domains = site.get("domains", [])
-            
-            # Count visitors in last 2 hours
+
+            hours = 6 if slug in RESTAURANT_SLUGS else 24
+            cutoff = now - timedelta(hours=hours)
+
             recent_visits = await db.site_visits.count_documents({
                 "site_slug": slug,
-                "timestamp": {"$gte": two_hours_ago.isoformat()}
+                "timestamp": {"$gte": cutoff.isoformat()}
             })
-            
+
             if recent_visits == 0:
-                # Check if alert already exists
                 existing_alert = await db.site_alerts.find_one({
                     "site_id": slug,
                     "alert_type": "traffic",
                     "is_active": True
                 })
-                
                 if not existing_alert:
-                    # Get last visit time
                     last_visit = await db.site_visits.find_one(
                         {"site_slug": slug},
                         sort=[("timestamp", -1)]
                     )
-                    
                     if last_visit:
                         last_time = last_visit.get("timestamp", "onbekend")
-                        message = f"Geen bezoekers sinds {last_time}"
+                        message = f"Geen bezoekers in laatste {hours}u (sinds {last_time})"
                     else:
-                        message = "Nog nooit bezoekers geregistreerd"
-                    
+                        message = f"Nog nooit bezoekers geregistreerd (drempel: {hours}u)"
                     alert = SiteAlert(
                         site_id=slug,
                         site_name=site_name,
@@ -304,9 +357,10 @@ async def check_visitor_activity():
                         alert_type="traffic"
                     )
                     await db.site_alerts.insert_one(alert.model_dump())
-                    logging.warning(f"TRAFFIC ALERT: {site_name} has no visitors for 2+ hours")
+                    logging.warning(f"TRAFFIC ALERT: {site_name} has no visitors for {hours}+ hours")
+                    # Send email alert
+                    await send_alert_email(site_name, "traffic", message, domains[0] if domains else slug)
             else:
-                # Has visitors - resolve any active traffic alerts
                 active_alert = await db.site_alerts.find_one({
                     "site_id": slug,
                     "alert_type": "traffic",
@@ -316,17 +370,17 @@ async def check_visitor_activity():
                     started = active_alert["started_at"]
                     if isinstance(started, str):
                         started = datetime.fromisoformat(started.replace("Z", "+00:00"))
-                    duration = int((datetime.now(timezone.utc) - started).total_seconds() / 60)
+                    duration = int((now - started).total_seconds() / 60)
                     await db.site_alerts.update_one(
                         {"alert_id": active_alert["alert_id"]},
                         {"$set": {
                             "is_active": False,
-                            "resolved_at": datetime.now(timezone.utc).isoformat(),
+                            "resolved_at": now.isoformat(),
                             "duration_minutes": duration
                         }}
                     )
                     logging.info(f"TRAFFIC RESOLVED: {site_name} has visitors again after {duration} minutes")
-                    
+
     except Exception as e:
         logging.error(f"Visitor activity check failed: {e}")
 
@@ -430,6 +484,69 @@ async def check_reservation_activity():
     except Exception as e:
         logging.error(f"Reservation activity check failed: {e}")
 
+
+async def check_upcoming_invoices():
+    """Daily check: send a billing alert email for unpaid invoices exactly 7 days away.
+    A small dedup record is stored in `billing_alerts` to prevent duplicate emails."""
+    logging.info("Checking upcoming invoices (1-week billing alert)...")
+    try:
+        today = datetime.now(timezone.utc).date()
+        target_date = (today + timedelta(days=7)).isoformat()
+
+        cursor = db.invoices.find({
+            "invoice_date": target_date,
+            "paid": {"$ne": True},
+        }, {"_id": 0})
+        invoices = await cursor.to_list(length=500)
+
+        if not invoices:
+            logging.info("No invoices due in 7 days.")
+            return
+
+        # Build slug→site name map
+        sites = await db.sites.find({}, {"_id": 0, "slug": 1, "name": 1, "domains": 1}).to_list(500)
+        site_map = {s.get("slug"): s for s in sites}
+
+        for inv in invoices:
+            inv_id = inv.get("invoice_id")
+            # Dedup: only send once per invoice
+            already = await db.billing_alerts.find_one({"invoice_id": inv_id, "kind": "due_in_7_days"})
+            if already:
+                continue
+
+            slug = inv.get("site_slug", "")
+            site = site_map.get(slug, {})
+            site_name = site.get("name", slug or "Onbekend")
+            domain = (site.get("domains") or [slug])[0]
+            amount_eur = inv.get("amount", 0)
+            amount_usd = inv.get("amount_usd")
+            rate = inv.get("exchange_rate")
+
+            amount_line = f"€{amount_eur:.2f}"
+            if amount_usd:
+                amount_line += f" (${amount_usd:.2f} @ {rate:.4f})" if rate else f" (${amount_usd:.2f})"
+            note = inv.get("note") or ""
+            note_html = f"<br/><em>Notitie: {note}</em>" if note else ""
+
+            message = (
+                f"<strong>Bedrag:</strong> {amount_line}<br/>"
+                f"<strong>Factuurdatum:</strong> {inv.get('invoice_date')}<br/>"
+                f"<strong>Jaar:</strong> {inv.get('year')}"
+                f"{note_html}"
+            )
+            await send_alert_email(site_name, "billing", message, domain)
+
+            await db.billing_alerts.insert_one({
+                "invoice_id": inv_id,
+                "kind": "due_in_7_days",
+                "sent_at": datetime.now(timezone.utc).isoformat(),
+                "site_slug": slug,
+            })
+            logging.info(f"BILLING ALERT sent for invoice {inv_id} ({site_name}) due {inv.get('invoice_date')}")
+
+    except Exception as e:
+        logging.error(f"Upcoming invoices check failed: {e}")
+
 # Lifespan context manager for startup/shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -437,8 +554,10 @@ async def lifespan(app: FastAPI):
     scheduler.add_job(background_health_check, 'interval', minutes=5, id='health_check')
     scheduler.add_job(check_visitor_activity, 'interval', minutes=30, id='visitor_check')
     scheduler.add_job(check_reservation_activity, 'interval', minutes=15, id='reservation_check')
+    # Daily billing alert at 09:00 UTC for invoices due in exactly 7 days
+    scheduler.add_job(check_upcoming_invoices, 'cron', hour=9, minute=0, id='billing_check')
     scheduler.start()
-    logging.info("Background scheduler started - Health: 5min, Visitors: 30min, Reservations: 15min")
+    logging.info("Background scheduler started - Health: 5min, Visitors: 30min, Reservations: 15min, Billing: daily 09:00 UTC")
     
     # Seed sites in background - don't block server startup
     asyncio.create_task(seed_sites_on_startup())
@@ -2978,17 +3097,23 @@ async def sync_all_galleries(user: User = Depends(get_current_user)):
 class InvoiceCreate(BaseModel):
     site_slug: str
     invoice_date: str  # ISO date YYYY-MM-DD
-    amount: float
+    amount_usd: float  # User enters amount in USD; EUR is auto-converted
     year: int
     note: Optional[str] = None
     paid: Optional[bool] = False
 
 class InvoiceUpdate(BaseModel):
     invoice_date: Optional[str] = None
-    amount: Optional[float] = None
+    amount_usd: Optional[float] = None
     year: Optional[int] = None
     note: Optional[str] = None
     paid: Optional[bool] = None
+
+@admin_router.get("/billing/exchange-rate")
+async def get_exchange_rate(user=Depends(get_current_user)):
+    """Return current USD→EUR rate (cached 6h)."""
+    rate = await get_usd_to_eur_rate()
+    return {"usd_to_eur": rate, "fetched_at": datetime.now(timezone.utc).isoformat()}
 
 @admin_router.get("/billing/invoices")
 async def list_invoices(user=Depends(get_current_user)):
@@ -2999,8 +3124,12 @@ async def list_invoices(user=Depends(get_current_user)):
 
 @admin_router.post("/billing/invoices")
 async def create_invoice(invoice: InvoiceCreate, user=Depends(get_current_user)):
-    """Create a new invoice"""
+    """Create a new invoice. Amount entered in USD, converted & stored in EUR."""
+    rate = await get_usd_to_eur_rate()
+    amount_eur = round(invoice.amount_usd * rate, 2)
     inv = invoice.dict()
+    inv["amount"] = amount_eur  # EUR for legacy/aggregations
+    inv["exchange_rate"] = rate
     inv["invoice_id"] = f"inv_{uuid.uuid4().hex[:12]}"
     inv["created_at"] = datetime.now(timezone.utc).isoformat()
     inv["updated_at"] = datetime.now(timezone.utc).isoformat()
@@ -3010,10 +3139,14 @@ async def create_invoice(invoice: InvoiceCreate, user=Depends(get_current_user))
 
 @admin_router.put("/billing/invoices/{invoice_id}")
 async def update_invoice(invoice_id: str, patch: InvoiceUpdate, user=Depends(get_current_user)):
-    """Update an existing invoice"""
+    """Update an existing invoice. If amount_usd is updated, EUR is re-converted at current rate."""
     updates = {k: v for k, v in patch.dict().items() if v is not None}
     if not updates:
         raise HTTPException(status_code=400, detail="No fields to update")
+    if "amount_usd" in updates:
+        rate = await get_usd_to_eur_rate()
+        updates["amount"] = round(updates["amount_usd"] * rate, 2)
+        updates["exchange_rate"] = rate
     updates["updated_at"] = datetime.now(timezone.utc).isoformat()
     result = await db.invoices.update_one({"invoice_id": invoice_id}, {"$set": updates})
     if result.matched_count == 0:
@@ -3021,12 +3154,20 @@ async def update_invoice(invoice_id: str, patch: InvoiceUpdate, user=Depends(get
     inv = await db.invoices.find_one({"invoice_id": invoice_id}, {"_id": 0})
     return inv
 
+@admin_router.post("/billing/alerts/run")
+async def run_billing_alerts(user=Depends(get_current_user)):
+    """Manually trigger the 1-week-before billing alert check (also runs daily at 09:00 UTC)."""
+    await check_upcoming_invoices()
+    return {"success": True, "message": "Billing alert check triggered."}
+
 @admin_router.delete("/billing/invoices/{invoice_id}")
 async def delete_invoice(invoice_id: str, user=Depends(get_current_user)):
     """Delete an invoice"""
     result = await db.invoices.delete_one({"invoice_id": invoice_id})
     if result.deleted_count == 0:
         raise HTTPException(status_code=404, detail="Invoice not found")
+    # Clean any related billing alert dedup records so re-creating gets a fresh alert
+    await db.billing_alerts.delete_many({"invoice_id": invoice_id})
     return {"success": True}
 
 # Include routers

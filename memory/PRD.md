@@ -135,3 +135,26 @@ Build a multi-tenant platform managing multiple restaurant and business websites
 ## Notes
 - User language: Dutch (respond in Dutch)
 - To disable Under Construction: Set `UNDER_CONSTRUCTION_MODE = false` in HotelDelPacificoApp.js
+
+## Changelog — May 2026
+### Billing alerts + USD→EUR currency conversion (P0 — DONE)
+- Added `get_usd_to_eur_rate()` helper using free **frankfurter.dev** (with fallback chain to frankfurter.app + open.er-api.com). 6h in-memory cache.
+- `POST /api/admin/billing/invoices` now accepts `amount_usd` (not `amount`). Backend converts to EUR at current rate and stores `amount`, `amount_usd`, `exchange_rate`.
+- `PUT /api/admin/billing/invoices/{id}` re-converts when `amount_usd` is updated.
+- New endpoint `GET /api/admin/billing/exchange-rate` for live FX in the UI.
+- New endpoint `POST /api/admin/billing/alerts/run` to manually trigger the 1-week-out billing alert (also runs daily via APScheduler cron at 09:00 UTC).
+- New cron `check_upcoming_invoices()` sends a dedicated **billing-type** email (blue 💶 styling) for unpaid invoices whose `invoice_date` is exactly 7 days away. Uses `billing_alerts` collection for dedup.
+- `send_alert_email()` extended to render `billing` alert subject/colour cleanly (separate from health/traffic/reservation).
+- Traffic alerts (24h general / 6h restaurants) now ALSO send the email (previously silent in DB only).
+- Frontend `Billing.js`: USD input with $ prefix + live EUR preview, FX rate banner at top, "Test facturatie-alert" button.
+- Tested via curl: live rate 0.85999, $500 USD → €430 EUR, alert sent (Resend ID confirmed), dedup verified, PUT re-converts correctly.
+
+## Backlog / Pending (May 2026)
+### P1
+- [ ] Run `testing_agent_v3_fork` full regression on admin dashboard (Billing + Image Migration tools)
+
+### P2
+- [ ] User to provide JotForm embed codes for `/bambino-box-subscribe` (Il Siciliano) and `/onlinewerken` (Fworks)
+- [ ] Refactor `server.py` (≈3400 lines) into `routes/` modules (Billing, Admin, Auth, Migration)
+- [ ] React.lazy() route splitting in `App.js`
+
