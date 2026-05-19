@@ -70,11 +70,6 @@ const Reserve = () => {
           </div>
         </div>
 
-        {/* Holiday Notice */}
-        <div className="bg-gradient-to-r from-red-900/20 to-gold/10 border border-gold/30 p-6 rounded-lg mb-8 text-center">
-          <p className="text-white font-semibold">{t.home.closedNotice[language]}</p>
-        </div>
-
         {/* Jotform Embed */}
         <div className="bg-gradient-to-br from-gray-900 to-black p-6 md:p-12 rounded-lg border border-gold/20 shadow-2xl">
           <iframe
