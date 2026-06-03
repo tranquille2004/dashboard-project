@@ -1517,13 +1517,13 @@ const SmeraldaHomePage = () => {
 // RESERVE PAGE — Direct booking with apartment-specific links
 // ============================================================
 const APARTMENT_BOOKING = [
-  { id: 'apt-1', label: 1, url: 'https://www.vacation-bookings.com/d/13019778?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { id: 'apt-2', label: 2, url: 'https://www.vacation-bookings.com/d/13139751?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { id: 'apt-3', label: 3, url: 'https://www.vacation-bookings.com/d/13083100?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { id: 'apt-4', label: 4, url: 'https://www.vacation-bookings.com/d/13140325?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { id: 'apt-5', label: 5, url: 'https://www.vacation-bookings.com/d/13140346?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'executive' },
-  { id: 'apt-6', label: 6, url: 'https://www.vacation-bookings.com/d/20586572?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { id: 'mobilhome', label: null, url: 'https://www.vacation-bookings.com/d/20586571?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'mobilhome' },
+  { id: 'apt-1', label: 1, url: 'https://www.vacation-bookings.com/d/13019778?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard', subtype: 'standard1' },
+  { id: 'apt-2', label: 2, url: 'https://www.vacation-bookings.com/d/13139751?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard', subtype: 'standard1' },
+  { id: 'apt-3', label: 3, url: 'https://www.vacation-bookings.com/d/13083100?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard', subtype: 'standard2' },
+  { id: 'apt-4', label: 4, url: 'https://www.vacation-bookings.com/d/13140325?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard', subtype: 'standard2' },
+  { id: 'apt-5', label: 5, url: 'https://www.vacation-bookings.com/d/13140346?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'executive', subtype: 'executive1' },
+  { id: 'apt-6', label: 6, url: 'https://www.vacation-bookings.com/d/20586572?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard', subtype: 'standard2' },
+  { id: 'mobilhome', label: null, url: 'https://www.vacation-bookings.com/d/20586571?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'mobilhome', subtype: 'mobilhome1' },
 ];
 
 const RESERVE_T = {
@@ -1544,9 +1544,10 @@ const RESERVE_T = {
     bookNow: 'BOOK WITH DIRECT CONFIRMATION',
     soon: 'Direct booking coming soon — contact us above',
     backHome: 'Back to home',
-    typeStandard: 'Standard apartment',
-    typeExecutive: 'Executive — private pool',
-    typeMobilhome: 'Mobile home — private pool',
+    typeStandard1: 'Standard One Bedroom Apartment',
+    typeStandard2: 'Standard Two Bedroom Apartment',
+    typeExecutive1: 'Executive One Bedroom Apartment — private pool',
+    typeMobilhome1: 'One Bedroom Mobilhome — private pool',
   },
   nl: {
     pageTitle: 'Reserveer uw verblijf',
@@ -1565,9 +1566,10 @@ const RESERVE_T = {
     bookNow: 'RESERVEER MET DIRECTE BEVESTIGING',
     soon: 'Directe boeking binnenkort beschikbaar — contacteer ons hierboven',
     backHome: 'Terug naar home',
-    typeStandard: 'Standaard appartement',
-    typeExecutive: 'Executive — privé zwembad',
-    typeMobilhome: 'Stacaravan — privé zwembad',
+    typeStandard1: 'Standaard appartement met één slaapkamer',
+    typeStandard2: 'Standaard appartement met twee slaapkamers',
+    typeExecutive1: 'Executive appartement met één slaapkamer — privé zwembad',
+    typeMobilhome1: 'Stacaravan met één slaapkamer — privé zwembad',
   },
   fr: {
     pageTitle: 'Réservez votre séjour',
@@ -1582,13 +1584,14 @@ const RESERVE_T = {
     instantTitle: 'Réservez instantanément avec confirmation directe',
     instantDesc: "Vous préférez réserver immédiatement sans attendre? Utilisez les boutons ci-dessous pour une confirmation instantanée via notre système de réservation partenaire.",
     aptLabel: 'Appartement',
-    mobilhomeLabel: 'Mobil-home',
+    mobilhomeLabel: 'Maison Mobile',
     bookNow: 'RÉSERVER AVEC CONFIRMATION DIRECTE',
     soon: 'Réservation directe bientôt disponible — contactez-nous ci-dessus',
     backHome: "Retour à l'accueil",
-    typeStandard: 'Appartement Standard',
-    typeExecutive: 'Executive — piscine privée',
-    typeMobilhome: 'Mobil-home — piscine privée',
+    typeStandard1: 'Appartement Standard une chambre',
+    typeStandard2: 'Appartement Standard deux chambres',
+    typeExecutive1: 'Appartement Executive une chambre — piscine privée',
+    typeMobilhome1: 'Maison Mobile une chambre — piscine privée',
   },
   it: {
     pageTitle: 'Prenota il tuo soggiorno',
@@ -1607,9 +1610,10 @@ const RESERVE_T = {
     bookNow: 'PRENOTA CON CONFERMA DIRETTA',
     soon: 'Prenotazione diretta in arrivo — contattaci sopra',
     backHome: 'Torna alla home',
-    typeStandard: 'Appartamento Standard',
-    typeExecutive: 'Executive — piscina privata',
-    typeMobilhome: 'Casa mobile — piscina privata',
+    typeStandard1: 'Appartamento Standard con una camera',
+    typeStandard2: 'Appartamento Standard con due camere',
+    typeExecutive1: 'Appartamento Executive con una camera — piscina privata',
+    typeMobilhome1: 'Casa Mobile con una camera — piscina privata',
   },
   es: {
     pageTitle: 'Reserve su estancia',
@@ -1628,9 +1632,10 @@ const RESERVE_T = {
     bookNow: 'RESERVAR CON CONFIRMACIÓN DIRECTA',
     soon: 'Reserva directa próximamente — contáctenos arriba',
     backHome: 'Volver al inicio',
-    typeStandard: 'Apartamento Estándar',
-    typeExecutive: 'Executive — piscina privada',
-    typeMobilhome: 'Casa móvil — piscina privada',
+    typeStandard1: 'Apartamento Estándar de un dormitorio',
+    typeStandard2: 'Apartamento Estándar de dos dormitorios',
+    typeExecutive1: 'Apartamento Executive de un dormitorio — piscina privada',
+    typeMobilhome1: 'Casa Móvil de un dormitorio — piscina privada',
   },
   de: {
     pageTitle: 'Buchen Sie Ihren Aufenthalt',
@@ -1649,9 +1654,10 @@ const RESERVE_T = {
     bookNow: 'MIT DIREKTER BESTÄTIGUNG BUCHEN',
     soon: 'Direktbuchung bald verfügbar — kontaktieren Sie uns oben',
     backHome: 'Zurück zur Startseite',
-    typeStandard: 'Standard-Apartment',
-    typeExecutive: 'Executive — Privatpool',
-    typeMobilhome: 'Mobilheim — Privatpool',
+    typeStandard1: 'Standard-Apartment mit einem Schlafzimmer',
+    typeStandard2: 'Standard-Apartment mit zwei Schlafzimmern',
+    typeExecutive1: 'Executive-Apartment mit einem Schlafzimmer — Privatpool',
+    typeMobilhome1: 'Mobilheim mit einem Schlafzimmer — Privatpool',
   },
 };
 
@@ -1761,7 +1767,8 @@ const ReservePage = () => {
         <div className="space-y-4">
           {APARTMENT_BOOKING.map(apt => {
             const isMobilhome = apt.type === 'mobilhome';
-            const typeLabel = apt.type === 'executive' ? r.typeExecutive : isMobilhome ? r.typeMobilhome : r.typeStandard;
+            const subtypeKey = `type${apt.subtype.charAt(0).toUpperCase()}${apt.subtype.slice(1)}`;
+            const typeLabel = r[subtypeKey] || '';
             return (
               <div key={apt.id} data-testid={`reserve-${apt.id}`}
                 className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col sm:flex-row">
