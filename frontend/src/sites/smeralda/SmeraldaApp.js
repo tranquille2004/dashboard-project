@@ -38,19 +38,7 @@ const IMAGES = {
   heroMain: IMG('/images/smeralda/hero-pool-main.jpg'), // Single hero image - pool with palm trees
   standard: generateImages('std', 40), // Use first 40 of 71
   executive: generateImages('exec', 15),
-  mobilhome: [
-    IMG('/images/smeralda/mobilhome/bathroom.jpeg'),
-    IMG('/images/smeralda/mobilhome/kitchen.jpeg'),
-    IMG('/images/smeralda/mobilhome/living.jpeg'),
-    IMG('/images/smeralda/mobilhome/overview.jpeg'),
-    IMG('/images/smeralda/mobilhome/view.jpeg'),
-    IMG('/images/smeralda/mobilhome-1.jpg'),
-    IMG('/images/smeralda/mobilhome-6.jpg'),
-    IMG('/images/smeralda/mobilhome-11.jpg'),
-    IMG('/images/smeralda/mobilhome-12.jpg'),
-    IMG('/images/smeralda/mobilhome-13.jpg'),
-    IMG('/images/smeralda/mobilhome-14.jpg'),
-  ],
+  mobilhome: Array.from({ length: 17 }, (_, i) => IMG(`/images/smeralda/mobilhome/mh-${i + 1}.jpg`)),
   exterior: generateImages('ext', 30), // Use first 30 of 48
 };
 
