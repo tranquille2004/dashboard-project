@@ -5,7 +5,8 @@ import { Upload, CheckCircle, AlertCircle, Loader2, Image, RefreshCw, Download, 
 const API = window.location.origin + '/api';
 
 // Hardcoded records from preview - all 874 images that are in Object Storage
-const PREVIEW_RECORDS_URL = 'https://image-restore-21.preview.emergentagent.com/api/admin/migrate/export-records';
+const PREVIEW_BASE_URL = 'https://image-restore-21.preview.emergentagent.com';
+const PREVIEW_RECORDS_URL = `${PREVIEW_BASE_URL}/api/admin/migrate/export-records`;
 
 const ImageMigration = () => {
   const [status, setStatus] = useState(null);
@@ -154,6 +155,8 @@ const ImageMigration = () => {
       failed_upload: 0,
       imported: 0,        // records imported from preview
       skipped_import: 0,
+      files_copied: 0,    // binary files actually fetched from preview & uploaded
+      files_failed: 0,
       step: '',
     };
 
@@ -194,14 +197,16 @@ const ImageMigration = () => {
         throw new Error('Geen records gevonden in preview');
       }
 
-      const BATCH_SIZE = 200;
+      const BATCH_SIZE = 50;
       const batches = Math.ceil(records.length / BATCH_SIZE);
+      summary.files_copied = 0;
+      summary.files_failed = 0;
       for (let i = 0; i < batches; i++) {
         const batch = records.slice(i * BATCH_SIZE, (i + 1) * BATCH_SIZE);
         const importRes = await fetch(`${API}/admin/migrate/import-records`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ records: batch })
+          body: JSON.stringify({ records: batch, source_base_url: PREVIEW_BASE_URL })
         });
         if (!importRes.ok) {
           throw new Error(`Batch ${i + 1}/${batches} faalde (HTTP ${importRes.status})`);
@@ -209,7 +214,9 @@ const ImageMigration = () => {
         const importData = await importRes.json();
         summary.imported += importData.imported || 0;
         summary.skipped_import += importData.skipped || 0;
-        summary.step = `Stap 2/2: Batch ${i + 1}/${batches} voltooid...`;
+        summary.files_copied += importData.files_copied || 0;
+        summary.files_failed += importData.files_failed || 0;
+        summary.step = `Stap 2/2: Batch ${i + 1}/${batches} — ${summary.files_copied} bestanden gekopieerd, ${summary.imported} records...`;
         setResult({ ...summary, progress: true });
       }
 
@@ -326,21 +333,25 @@ const ImageMigration = () => {
               <h2 className="text-xl font-semibold">Synchronisatie Resultaat</h2>
             </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-              <div className="bg-green-900/30 border border-green-500 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-green-400">{result.uploaded || 0}</div>
-                <div className="text-xs text-gray-400">Nieuw geüpload</div>
+            <div className="grid grid-cols-2 md:grid-cols-5 gap-3 mb-4">
+              <div className="bg-green-900/30 border border-green-500 rounded-lg p-3 text-center">
+                <div className="text-xl font-bold text-green-400">{result.uploaded || 0}</div>
+                <div className="text-xs text-gray-400">Lokaal geüpload</div>
               </div>
-              <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-blue-400">{result.imported || 0}</div>
+              <div className="bg-teal-900/30 border border-teal-500 rounded-lg p-3 text-center">
+                <div className="text-xl font-bold text-teal-400">{result.files_copied || 0}</div>
+                <div className="text-xs text-gray-400">Bestanden van preview</div>
+              </div>
+              <div className="bg-blue-900/30 border border-blue-500 rounded-lg p-3 text-center">
+                <div className="text-xl font-bold text-blue-400">{result.imported || 0}</div>
                 <div className="text-xs text-gray-400">Records geïmporteerd</div>
               </div>
-              <div className="bg-yellow-900/30 border border-yellow-500 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-yellow-400">{(result.skipped_upload || 0) + (result.skipped_import || 0)}</div>
+              <div className="bg-yellow-900/30 border border-yellow-500 rounded-lg p-3 text-center">
+                <div className="text-xl font-bold text-yellow-400">{(result.skipped_upload || 0) + (result.skipped_import || 0)}</div>
                 <div className="text-xs text-gray-400">Al aanwezig</div>
               </div>
-              <div className="bg-red-900/30 border border-red-500 rounded-lg p-4 text-center">
-                <div className="text-2xl font-bold text-red-400">{result.failed_upload || 0}</div>
+              <div className="bg-red-900/30 border border-red-500 rounded-lg p-3 text-center">
+                <div className="text-xl font-bold text-red-400">{(result.failed_upload || 0) + (result.files_failed || 0)}</div>
                 <div className="text-xs text-gray-400">Mislukt</div>
               </div>
             </div>

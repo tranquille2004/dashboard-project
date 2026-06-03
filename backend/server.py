@@ -2108,46 +2108,80 @@ async def import_migration_records(request: Request):
     """
     Import migrated_images records from JSON data.
     This allows syncing records from preview to production.
+    Also accepts an optional `source_base_url` so production can download
+    the actual binary content from preview and upload it to its OWN
+    object storage — DB records alone are not enough when preview and
+    production use different storage buckets.
     """
     try:
         body = await request.json()
         records = body.get("records", [])
-        
+        source_base_url = body.get("source_base_url")  # e.g. "https://image-restore-21.preview.emergentagent.com"
+
         if not records:
             raise HTTPException(status_code=400, detail="No records provided")
-        
+
         imported = 0
         skipped = 0
-        
+        files_copied = 0
+        files_skipped = 0
+        files_failed = 0
+
         for record in records:
             original_path = record.get("original_path")
-            if not original_path:
+            storage_path = record.get("storage_path")
+            content_type = record.get("content_type", "application/octet-stream")
+            if not original_path or not storage_path:
                 continue
-            
-            # Check if already exists
+
+            # Step 1: ensure the binary exists in OUR object storage
+            if source_base_url:
+                try:
+                    # Try our own storage first
+                    try:
+                        get_object(storage_path)
+                        files_skipped += 1
+                    except Exception:
+                        # Not in our storage — fetch from preview's public URL & upload
+                        url = f"{source_base_url.rstrip('/')}{original_path}"
+                        r = requests.get(url, timeout=60)
+                        if r.status_code == 200 and len(r.content) > 1024:
+                            put_object(storage_path, r.content, content_type)
+                            files_copied += 1
+                        else:
+                            files_failed += 1
+                            logging.warning(f"Could not fetch {url}: HTTP {r.status_code}, {len(r.content)}B")
+                            continue
+                except Exception as ex:
+                    files_failed += 1
+                    logging.warning(f"File copy failed for {original_path}: {ex}")
+
+            # Step 2: ensure DB record exists
             existing = await db.migrated_images.find_one({"original_path": original_path})
             if existing:
                 skipped += 1
                 continue
-            
-            # Insert the record
+
             await db.migrated_images.insert_one({
                 "original_path": original_path,
-                "storage_path": record.get("storage_path"),
-                "content_type": record.get("content_type"),
+                "storage_path": storage_path,
+                "content_type": content_type,
                 "size": record.get("size"),
                 "migrated_at": record.get("migrated_at", datetime.now(timezone.utc).isoformat()),
                 "imported": True
             })
             imported += 1
-        
+
         return {
             "message": "Import complete",
             "imported": imported,
             "skipped": skipped,
+            "files_copied": files_copied,
+            "files_skipped": files_skipped,
+            "files_failed": files_failed,
             "total_provided": len(records)
         }
-        
+
     except HTTPException:
         raise
     except Exception as e:
