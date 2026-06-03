@@ -36,10 +36,10 @@ const generateImages = (prefix, count) =>
 const IMAGES = {
   logo: IMG('/images/smeralda/logo-full.png'),
   heroMain: IMG('/images/smeralda/hero-pool-main.jpg'), // Single hero image - pool with palm trees
-  standard: generateImages('std', 40), // Use first 40 of 71
+  standard: generateImages('std', 71),
   executive: generateImages('exec', 15),
   mobilhome: Array.from({ length: 17 }, (_, i) => IMG(`/images/smeralda/mobilhome/mh-${i + 1}.jpg`)),
-  exterior: generateImages('ext', 30), // Use first 30 of 48
+  exterior: generateImages('ext', 48),
 };
 
 // Translations - 6 languages
@@ -1277,13 +1277,20 @@ const SmeraldaHomePage = () => {
           {/* Gallery Grid */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
             {getGalleryImages().slice(0, 16).map((img, i) => (
-              <div key={i} className={`rounded-xl overflow-hidden cursor-pointer group ${
+              <div key={i} className={`rounded-xl overflow-hidden cursor-pointer group bg-gray-100 ${
                 i === 0 ? 'col-span-2 row-span-2' : ''
               }`} onClick={() => openLightbox(getGalleryImages(), i)}>
-                <img src={img} alt="" 
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" 
+                <img src={img} alt=""
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   style={{ minHeight: i === 0 ? '400px' : '180px' }}
-                  onError={(e) => { e.target.parentElement.style.display = 'none'; }}
+                  onError={(e) => {
+                    // Don't hide the whole tile — just swap to a placeholder so layout stays intact
+                    if (e.target.dataset.fallback !== '1') {
+                      e.target.dataset.fallback = '1';
+                      e.target.src = IMAGES.heroMain;
+                    }
+                  }}
                 />
               </div>
             ))}
