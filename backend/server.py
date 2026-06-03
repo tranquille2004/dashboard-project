@@ -2290,22 +2290,52 @@ async def serve_image(path: str, request: Request):
         raise HTTPException(status_code=500, detail=str(e))
 
 # ============== ANALYTICS ==============
-async def _count_unique_visitors(site_slug: str, since: Optional[datetime] = None,
-                                 date_eq: Optional[str] = None,
-                                 path_eq: Optional[str] = None,
-                                 path_prefix: Optional[str] = None) -> int:
-    """Count distinct (visitor_ip, date) pairs for a site, optionally filtered by time/date/path.
-    This is the proper definition of 'unique visitors' — one per IP per day.
-    Bot/headless traffic is excluded (records flagged is_bot=True OR matching UA patterns)."""
+async def _get_ignored_ips() -> List[str]:
+    """Return list of IPs that must be excluded from ALL visitor stats.
+    These are typically the site-owner's own IPs (incl. VPN IPs)."""
+    try:
+        docs = await db.ignored_ips.find({}, {"_id": 0, "ip": 1}).to_list(500)
+        return [d["ip"] for d in docs if d.get("ip")]
+    except Exception:
+        return []
+
+
+async def _build_match_filter(site_slug: str, since: Optional[datetime] = None,
+                              until: Optional[datetime] = None,
+                              date_eq: Optional[str] = None,
+                              path_eq: Optional[str] = None,
+                              path_prefix: Optional[str] = None) -> Dict[str, Any]:
+    """Build the $match filter used by every aggregation. Excludes bots and ignored IPs."""
     match: Dict[str, Any] = {"site_slug": site_slug, "is_bot": {"$ne": True}}
+    ignored = await _get_ignored_ips()
+    if ignored:
+        match["visitor_ip"] = {"$nin": ignored}
+    ts: Dict[str, Any] = {}
     if since is not None:
-        match["timestamp"] = {"$gte": since.isoformat()}
+        ts["$gte"] = since.isoformat()
+    if until is not None:
+        ts["$lt"] = until.isoformat()
+    if ts:
+        match["timestamp"] = ts
     if date_eq is not None:
         match["date"] = date_eq
     if path_eq is not None:
         match["path"] = path_eq
     elif path_prefix is not None:
         match["path"] = {"$regex": f"^{path_prefix}"}
+    return match
+
+
+async def _count_unique_visitors(site_slug: str, since: Optional[datetime] = None,
+                                 until: Optional[datetime] = None,
+                                 date_eq: Optional[str] = None,
+                                 path_eq: Optional[str] = None,
+                                 path_prefix: Optional[str] = None) -> int:
+    """Count distinct (visitor_ip, date) pairs for a site.
+    This is the proper definition of 'unique visitors' — one per IP per day.
+    Bots and ignored IPs are excluded."""
+    match = await _build_match_filter(site_slug, since=since, until=until,
+                                      date_eq=date_eq, path_eq=path_eq, path_prefix=path_prefix)
     pipeline = [
         {"$match": match},
         {"$group": {"_id": {"ip": "$visitor_ip", "date": "$date"}}},
@@ -2748,50 +2778,68 @@ async def cleanup_bot_visits(user: User = Depends(get_current_user)):
 
 @admin_router.get("/sites/{site_id}/stats")
 async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
-    """Get detailed visitor statistics for a site"""
+    """Get detailed visitor statistics for a site.
+    All counts are UNIQUE visitors (1 IP + 1 date = 1 visit).
+    Bots and ignored IPs (e.g. site-owner) are excluded."""
     site = await db.sites.find_one({"site_id": site_id}, {"_id": 0})
     if not site:
         raise HTTPException(status_code=404, detail="Site not found")
-    
+
     site_slug = site.get("slug", site_id)
     now = datetime.now(timezone.utc)
-    
+
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
     week_start = today_start - timedelta(days=7)
-    month_start = today_start - timedelta(days=30)
-    
-    # Count unique visitors (distinct IP per date, excluding bots)
-    total_visits = await _count_unique_visitors(site_slug)
+    # Calendar month: 1st of current month at 00:00 UTC (NOT rolling 30 days)
+    month_start = today_start.replace(day=1)
+
     today_visits = await _count_unique_visitors(site_slug, date_eq=now.strftime("%Y-%m-%d"))
     week_visits = await _count_unique_visitors(site_slug, since=week_start)
     month_visits = await _count_unique_visitors(site_slug, since=month_start)
-    
-    # Get country breakdown
+    total_visits = await _count_unique_visitors(site_slug)
+
+    # Country breakdown — UNIQUE visitors per country (distinct IP+date pairs)
+    # All-time, then top 10
+    base_match = await _build_match_filter(site_slug)
     country_pipeline = [
-        {"$match": {"site_slug": site_slug}},
-        {"$group": {"_id": "$country", "count": {"$sum": 1}}},
+        {"$match": base_match},
+        {"$group": {"_id": {"country": "$country", "ip": "$visitor_ip", "date": "$date"}}},
+        {"$group": {"_id": "$_id.country", "count": {"$sum": 1}}},
         {"$sort": {"count": -1}},
-        {"$limit": 10}
+        {"$limit": 10},
     ]
     countries = await db.site_visits.aggregate(country_pipeline).to_list(10)
     country_stats = [{"country": c["_id"] or "Unknown", "visitors": c["count"]} for c in countries]
-    
-    # Get daily visits for last 7 days
+
+    # Daily UNIQUE visitors — last 7 days (distinct IP per day)
+    daily_match = await _build_match_filter(site_slug, since=week_start)
     daily_pipeline = [
-        {"$match": {"site_slug": site_slug, "timestamp": {"$gte": week_start.isoformat()}}},
-        {"$group": {"_id": "$date", "count": {"$sum": 1}}},
+        {"$match": daily_match},
+        {"$group": {"_id": {"date": "$date", "ip": "$visitor_ip"}}},
+        {"$group": {"_id": "$_id.date", "count": {"$sum": 1}}},
         {"$sort": {"_id": -1}},
-        {"$limit": 7}
+        {"$limit": 7},
     ]
     daily = await db.site_visits.aggregate(daily_pipeline).to_list(7)
     daily_stats = [{"date": d["_id"], "visitors": d["count"]} for d in daily]
-    
-    # Get recent visitors (last 10)
-    recent = await db.site_visits.find(
-        {"site_slug": site_slug},
-        {"_id": 0, "visitor_ip": 0, "visitor_id": 0}
-    ).sort("timestamp", -1).limit(10).to_list(10)
-    
+
+    # Recent visitors (last 10 distinct IPs, most recent)
+    recent_match = await _build_match_filter(site_slug)
+    recent_pipeline = [
+        {"$match": recent_match},
+        {"$sort": {"timestamp": -1}},
+        {"$group": {
+            "_id": "$visitor_ip",
+            "country": {"$first": "$country"},
+            "timestamp": {"$first": "$timestamp"},
+            "path": {"$first": "$path"},
+        }},
+        {"$sort": {"timestamp": -1}},
+        {"$limit": 10},
+        {"$project": {"_id": 0, "country": 1, "timestamp": 1, "path": 1}},
+    ]
+    recent = await db.site_visits.aggregate(recent_pipeline).to_list(10)
+
     return {
         "site_id": site_id,
         "site_name": site.get("name"),
@@ -2800,11 +2848,18 @@ async def get_site_stats(site_id: str, user: User = Depends(get_current_user)):
             "today": today_visits,
             "week": week_visits,
             "month": month_visits,
-            "total": total_visits
+            "total": total_visits,
+        },
+        "ranges": {
+            "today": now.strftime("%Y-%m-%d"),
+            "week_from": week_start.strftime("%Y-%m-%d"),
+            "week_to": now.strftime("%Y-%m-%d"),
+            "month_from": month_start.strftime("%Y-%m-%d"),
+            "month_to": now.strftime("%Y-%m-%d"),
         },
         "countries": country_stats,
         "daily": daily_stats,
-        "recent_visitors": recent
+        "recent_visitors": recent,
     }
 
 @admin_router.get("/all-stats")
@@ -2815,7 +2870,7 @@ async def get_all_stats(user: User = Depends(get_current_user)):
     now = datetime.now(timezone.utc)
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
     week_start = today_start - timedelta(days=7)
-    month_start = today_start - timedelta(days=30)
+    month_start = today_start.replace(day=1)  # Calendar month start
     
     stats = []
     for site in sites:
@@ -2847,13 +2902,14 @@ async def get_path_stats(site_slug: str, user: User = Depends(get_current_user))
     now = datetime.now(timezone.utc)
     today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
     week_start = today_start - timedelta(days=7)
-    month_start = today_start - timedelta(days=30)
+    month_start = today_start.replace(day=1)  # Calendar month start
 
-    # Discover all distinct paths visited on this site (excluding bots)
-    paths = await db.site_visits.distinct(
-        "path",
-        {"site_slug": site_slug, "is_bot": {"$ne": True}}
-    )
+    # Discover all distinct paths visited on this site (excluding bots + ignored IPs)
+    ignored = await _get_ignored_ips()
+    path_filter: Dict[str, Any] = {"site_slug": site_slug, "is_bot": {"$ne": True}}
+    if ignored:
+        path_filter["visitor_ip"] = {"$nin": ignored}
+    paths = await db.site_visits.distinct("path", path_filter)
 
     results = []
     for p in paths:
@@ -2875,6 +2931,115 @@ async def get_path_stats(site_slug: str, user: User = Depends(get_current_user))
 
     results.sort(key=lambda r: (-r["month"], -r["total"]))
     return {"site_slug": site_slug, "paths": results[:20]}
+
+
+@admin_router.get("/monthly-stats/{site_id}")
+async def get_monthly_stats(site_id: str, months: int = 13, user: User = Depends(get_current_user)):
+    """Historical month-by-month unique visitors for a site.
+    Returns last `months` calendar months (default 13 = current month + 12 previous).
+    Each entry includes unique visitor count + top 5 countries for that month.
+    Bots and ignored IPs are excluded."""
+    site = await db.sites.find_one({"site_id": site_id}, {"_id": 0})
+    if not site:
+        raise HTTPException(status_code=404, detail="Site not found")
+    site_slug = site.get("slug", site_id)
+
+    now = datetime.now(timezone.utc)
+    # Build list of (year, month, start_dt, end_dt) tuples from oldest to newest
+    months = max(1, min(months, 36))
+    buckets: List[Dict[str, Any]] = []
+    # Start at first day of current month, then step back
+    cursor_year = now.year
+    cursor_month = now.month
+    for _ in range(months):
+        start = datetime(cursor_year, cursor_month, 1, tzinfo=timezone.utc)
+        # End = first day of next month
+        if cursor_month == 12:
+            end = datetime(cursor_year + 1, 1, 1, tzinfo=timezone.utc)
+        else:
+            end = datetime(cursor_year, cursor_month + 1, 1, tzinfo=timezone.utc)
+        buckets.append({"year": cursor_year, "month": cursor_month, "start": start, "end": end})
+        # Step back one month
+        if cursor_month == 1:
+            cursor_year -= 1
+            cursor_month = 12
+        else:
+            cursor_month -= 1
+
+    buckets.reverse()  # oldest first
+    results: List[Dict[str, Any]] = []
+    for b in buckets:
+        unique = await _count_unique_visitors(site_slug, since=b["start"], until=b["end"])
+        # Top 5 countries for this month — unique IP+date pairs
+        c_match = await _build_match_filter(site_slug, since=b["start"], until=b["end"])
+        c_pipeline = [
+            {"$match": c_match},
+            {"$group": {"_id": {"country": "$country", "ip": "$visitor_ip", "date": "$date"}}},
+            {"$group": {"_id": "$_id.country", "count": {"$sum": 1}}},
+            {"$sort": {"count": -1}},
+            {"$limit": 5},
+        ]
+        c_rows = await db.site_visits.aggregate(c_pipeline).to_list(5)
+        top_countries = [{"country": c["_id"] or "Unknown", "visitors": c["count"]} for c in c_rows]
+
+        results.append({
+            "year": b["year"],
+            "month": b["month"],
+            "label": b["start"].strftime("%Y-%m"),
+            "from": b["start"].strftime("%Y-%m-%d"),
+            "to": (b["end"] - timedelta(days=1)).strftime("%Y-%m-%d"),
+            "unique_visitors": unique,
+            "top_countries": top_countries,
+            "is_current": (b["year"] == now.year and b["month"] == now.month),
+        })
+
+    return {
+        "site_id": site_id,
+        "site_name": site.get("name"),
+        "site_slug": site_slug,
+        "months": results,
+    }
+
+
+# ============== IGNORED IPs ==============
+
+@admin_router.get("/ignored-ips")
+async def list_ignored_ips(user: User = Depends(get_current_user)):
+    """List all IPs excluded from visitor statistics (e.g. site-owner's own IPs)."""
+    docs = await db.ignored_ips.find({}, {"_id": 0}).sort("created_at", -1).to_list(500)
+    return docs
+
+
+@admin_router.post("/ignored-ips")
+async def add_ignored_ip(payload: Dict[str, Any], user: User = Depends(get_current_user)):
+    """Add an IP (or IPv6) to the ignore-list. Subsequent stats will exclude this IP."""
+    ip = (payload.get("ip") or "").strip()
+    label = (payload.get("label") or "").strip()
+    if not ip:
+        raise HTTPException(status_code=400, detail="ip required")
+    doc = {
+        "ip": ip,
+        "label": label,
+        "created_at": datetime.now(timezone.utc).isoformat(),
+        "created_by": user.email if hasattr(user, "email") else "admin",
+    }
+    await db.ignored_ips.update_one({"ip": ip}, {"$set": doc}, upsert=True)
+    return {"ok": True, "ip": ip}
+
+
+@admin_router.delete("/ignored-ips/{ip}")
+async def delete_ignored_ip(ip: str, user: User = Depends(get_current_user)):
+    """Remove an IP from the ignore-list. Future stats will count this IP again."""
+    result = await db.ignored_ips.delete_one({"ip": ip})
+    return {"ok": True, "deleted": result.deleted_count}
+
+
+@admin_router.get("/my-ip")
+async def get_my_ip(request: Request, user: User = Depends(get_current_user)):
+    """Return the public IP of the currently logged-in admin, so they can add it to ignore-list."""
+    forwarded = request.headers.get("x-forwarded-for")
+    ip = forwarded.split(",")[0].strip() if forwarded else (request.client.host if request.client else "unknown")
+    return {"ip": ip}
 
 
 @admin_router.get("/live-visitor")
@@ -3724,6 +3889,25 @@ async def seed_sites_on_startup():
             }}
         )
         logger.info("Updated Il Siciliano admin credentials")
+
+    # Auto-seed site-owner's known IPs in ignored_ips so production stats exclude them
+    # (idempotent — only upserts, never deletes user-added IPs)
+    owner_ips = [
+        {"ip": "157.245.70.19", "label": "Eigenaar IPv4 (VPN NL)"},
+        {"ip": "2a03:b0c0:2:f0::263f:6001", "label": "Eigenaar IPv6 (VPN NL)"},
+    ]
+    for entry in owner_ips:
+        await db.ignored_ips.update_one(
+            {"ip": entry["ip"]},
+            {"$setOnInsert": {
+                "ip": entry["ip"],
+                "label": entry["label"],
+                "created_at": datetime.now(timezone.utc).isoformat(),
+                "created_by": "auto-seed",
+            }},
+            upsert=True,
+        )
+    logger.info(f"Ensured {len(owner_ips)} owner IPs in ignored_ips")
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

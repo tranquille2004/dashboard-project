@@ -36,8 +36,8 @@ const translations = {
     visitors: 'Visiteurs',
     today: "Aujourd'hui",
     week: 'Semaine',
-    month: 'Mois',
-    total: 'Total',
+    month: 'Mois (calendrier)',
+    total: 'Depuis le début',
     statistics: 'Statistiques',
     uniqueVisitors: 'Visiteurs uniques',
     byCountry: 'Par pays',
@@ -46,7 +46,23 @@ const translations = {
     noData: 'Pas de données',
     welcome: 'Bienvenue Franck de Schiffart!',
     sitesOnline: 'sites en ligne',
-    visitorsToday: 'visiteurs aujourd\'hui'
+    visitorsToday: 'visiteurs aujourd\'hui',
+    monthlyHistory: 'Historique par mois',
+    yearMonth: 'Année / Mois',
+    visitorsCol: 'Visiteurs uniques',
+    topCountries: 'Top pays',
+    period: 'Période',
+    currentMonth: 'en cours',
+    ignoredIps: 'IPs ignorées',
+    ignoredIpsDesc: 'Ces IPs sont exclues de TOUTES les statistiques (vos propres visites, VPN, etc.)',
+    addIp: 'Ajouter une IP',
+    addMyIp: 'Ajouter mon IP actuelle',
+    ipPlaceholder: 'ex: 157.245.70.19',
+    labelPlaceholder: 'Étiquette (optionnel)',
+    add: 'Ajouter',
+    remove: 'Retirer',
+    deduped: 'Visiteurs uniques (1 IP / jour)',
+    explainTotal: '"Depuis le début" est le total cumulé. Aujourd\'hui, Semaine et Mois sont des sous-ensembles, PAS additionnés.'
   },
   nl: {
     title: 'fworksbuilders',
@@ -70,8 +86,8 @@ const translations = {
     visitors: 'Bezoekers',
     today: 'Vandaag',
     week: 'Week',
-    month: 'Maand',
-    total: 'Totaal',
+    month: 'Maand (kalender)',
+    total: 'Sinds start',
     statistics: 'Statistieken',
     uniqueVisitors: 'Unieke bezoekers',
     byCountry: 'Per land',
@@ -80,7 +96,23 @@ const translations = {
     noData: 'Geen gegevens',
     welcome: 'Welkom Franck de Schiffart!',
     sitesOnline: 'sites online',
-    visitorsToday: 'bezoekers vandaag'
+    visitorsToday: 'bezoekers vandaag',
+    monthlyHistory: 'Historie per maand',
+    yearMonth: 'Jaar / Maand',
+    visitorsCol: 'Unieke bezoekers',
+    topCountries: 'Top landen',
+    period: 'Periode',
+    currentMonth: 'lopend',
+    ignoredIps: 'Genegeerde IPs',
+    ignoredIpsDesc: 'Deze IPs worden uitgesloten van ALLE statistieken (jouw eigen bezoeken, VPN, etc.)',
+    addIp: 'IP toevoegen',
+    addMyIp: 'Mijn huidige IP toevoegen',
+    ipPlaceholder: 'bv. 157.245.70.19',
+    labelPlaceholder: 'Label (optioneel)',
+    add: 'Toevoegen',
+    remove: 'Verwijderen',
+    deduped: 'Unieke bezoekers (1 IP / dag)',
+    explainTotal: '"Sinds start" is het cumulatieve totaal. Vandaag, Week en Maand zijn subsets — ze worden NIET opgeteld.'
   },
   en: {
     title: 'fworksbuilders',
@@ -104,8 +136,8 @@ const translations = {
     visitors: 'Visitors',
     today: 'Today',
     week: 'Week',
-    month: 'Month',
-    total: 'Total',
+    month: 'Month (calendar)',
+    total: 'Since start',
     statistics: 'Statistics',
     uniqueVisitors: 'Unique visitors',
     byCountry: 'By country',
@@ -114,7 +146,23 @@ const translations = {
     noData: 'No data',
     welcome: 'Welcome Franck de Schiffart!',
     sitesOnline: 'sites online',
-    visitorsToday: 'visitors today'
+    visitorsToday: 'visitors today',
+    monthlyHistory: 'Monthly history',
+    yearMonth: 'Year / Month',
+    visitorsCol: 'Unique visitors',
+    topCountries: 'Top countries',
+    period: 'Period',
+    currentMonth: 'current',
+    ignoredIps: 'Ignored IPs',
+    ignoredIpsDesc: 'These IPs are excluded from ALL statistics (your own visits, VPN, etc.)',
+    addIp: 'Add IP',
+    addMyIp: 'Add my current IP',
+    ipPlaceholder: 'e.g. 157.245.70.19',
+    labelPlaceholder: 'Label (optional)',
+    add: 'Add',
+    remove: 'Remove',
+    deduped: 'Unique visitors (1 IP / day)',
+    explainTotal: '"Since start" is the cumulative total. Today, Week and Month are subsets — NOT summed.'
   }
 };
 
@@ -138,6 +186,56 @@ const AdminDashboard = () => {
   const [pathStats, setPathStats] = useState({}); // keyed by site_slug
   const [pathLoading, setPathLoading] = useState({}); // keyed by site_slug
   const [pathExpanded, setPathExpanded] = useState({}); // keyed by site_slug
+  const [monthlyHistory, setMonthlyHistory] = useState(null);
+  const [ignoredIps, setIgnoredIps] = useState([]);
+  const [showIgnoredIpsModal, setShowIgnoredIpsModal] = useState(false);
+  const [newIpInput, setNewIpInput] = useState('');
+  const [newIpLabel, setNewIpLabel] = useState('');
+
+  const loadIgnoredIps = async () => {
+    try {
+      const res = await axios.get(`${API}/admin/ignored-ips`, { withCredentials: true });
+      setIgnoredIps(res.data || []);
+    } catch (e) {
+      console.error('Load ignored IPs error:', e);
+    }
+  };
+
+  const addIgnoredIp = async (ip, label) => {
+    if (!ip?.trim()) return;
+    try {
+      await axios.post(`${API}/admin/ignored-ips`, { ip: ip.trim(), label: label?.trim() || '' }, { withCredentials: true });
+      setNewIpInput('');
+      setNewIpLabel('');
+      await loadIgnoredIps();
+    } catch (e) {
+      alert('Error: ' + (e.response?.data?.detail || e.message));
+    }
+  };
+
+  const removeIgnoredIp = async (ip) => {
+    if (!window.confirm(`Remove ${ip}?`)) return;
+    try {
+      await axios.delete(`${API}/admin/ignored-ips/${encodeURIComponent(ip)}`, { withCredentials: true });
+      await loadIgnoredIps();
+    } catch (e) {
+      alert('Error: ' + (e.response?.data?.detail || e.message));
+    }
+  };
+
+  const addMyIp = async () => {
+    try {
+      const res = await axios.get(`${API}/admin/my-ip`, { withCredentials: true });
+      const myIp = res.data?.ip;
+      if (myIp && myIp !== 'unknown') {
+        await addIgnoredIp(myIp, 'Mijn huidige IP');
+      } else {
+        alert('Could not detect your IP');
+      }
+    } catch (e) {
+      alert('Error: ' + e.message);
+    }
+  };
 
   const togglePathStats = async (slug) => {
     const isOpen = !!pathExpanded[slug];
@@ -161,9 +259,14 @@ const AdminDashboard = () => {
   const openStatsModal = async (siteId) => {
     setLoadingStats(true);
     setShowStatsModal(true);
+    setMonthlyHistory(null);
     try {
-      const response = await axios.get(`${API}/admin/sites/${siteId}/stats`, { withCredentials: true });
-      setSelectedSiteStats(response.data);
+      const [statsRes, monthlyRes] = await Promise.all([
+        axios.get(`${API}/admin/sites/${siteId}/stats`, { withCredentials: true }),
+        axios.get(`${API}/admin/monthly-stats/${siteId}?months=13`, { withCredentials: true }).catch(() => ({ data: null })),
+      ]);
+      setSelectedSiteStats(statsRes.data);
+      setMonthlyHistory(monthlyRes.data);
     } catch (error) {
       console.error('Error loading detailed stats:', error);
     } finally {
@@ -473,6 +576,11 @@ const AdminDashboard = () => {
             }}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-sm font-medium transition-colors">
             <Bug className="w-4 h-4" /> Bots opruimen
+          </button>
+          <button data-testid="admin-tool-ignored-ips"
+            onClick={() => { setShowIgnoredIpsModal(true); loadIgnoredIps(); }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium transition-colors">
+            <Eye className="w-4 h-4" /> {t('ignoredIps')}
           </button>
         </div>
 
@@ -803,37 +911,79 @@ const AdminDashboard = () => {
               <div className="p-8 sm:p-12 text-center text-gray-500">Loading...</div>
             ) : selectedSiteStats ? (
               <div className="p-4 sm:p-6 space-y-4 sm:space-y-6">
-                {/* Overview Stats - 2x2 grid on mobile */}
+                {/* Overview Stats - 2x2 grid on mobile with date ranges */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4">
-                  <div className="bg-green-50 rounded-lg p-3 sm:p-4 text-center">
+                  <div className="bg-green-50 rounded-lg p-3 sm:p-4 text-center" data-testid="stats-today">
                     <p className="text-xl sm:text-2xl font-bold text-green-600">{selectedSiteStats.stats?.today || 0}</p>
-                    <p className="text-xs sm:text-sm text-green-700">{t('today')}</p>
+                    <p className="text-xs sm:text-sm text-green-700 font-semibold">{t('today')}</p>
+                    <p className="text-[10px] text-green-600/70 mt-0.5">{selectedSiteStats.ranges?.today}</p>
                   </div>
-                  <div className="bg-blue-50 rounded-lg p-3 sm:p-4 text-center">
+                  <div className="bg-blue-50 rounded-lg p-3 sm:p-4 text-center" data-testid="stats-week">
                     <p className="text-xl sm:text-2xl font-bold text-blue-600">{selectedSiteStats.stats?.week || 0}</p>
-                    <p className="text-xs sm:text-sm text-blue-700">{t('week')}</p>
+                    <p className="text-xs sm:text-sm text-blue-700 font-semibold">{t('week')}</p>
+                    <p className="text-[10px] text-blue-600/70 mt-0.5">{selectedSiteStats.ranges?.week_from?.slice(5)} → {selectedSiteStats.ranges?.week_to?.slice(5)}</p>
                   </div>
-                  <div className="bg-purple-50 rounded-lg p-3 sm:p-4 text-center">
+                  <div className="bg-purple-50 rounded-lg p-3 sm:p-4 text-center" data-testid="stats-month">
                     <p className="text-xl sm:text-2xl font-bold text-purple-600">{selectedSiteStats.stats?.month || 0}</p>
-                    <p className="text-xs sm:text-sm text-purple-700">{t('month')}</p>
+                    <p className="text-xs sm:text-sm text-purple-700 font-semibold">{t('month')}</p>
+                    <p className="text-[10px] text-purple-600/70 mt-0.5">{selectedSiteStats.ranges?.month_from?.slice(5)} → {selectedSiteStats.ranges?.month_to?.slice(5)}</p>
                   </div>
-                  <div className="bg-gray-100 rounded-lg p-3 sm:p-4 text-center">
+                  <div className="bg-gray-100 rounded-lg p-3 sm:p-4 text-center" data-testid="stats-total">
                     <p className="text-xl sm:text-2xl font-bold text-gray-700">{selectedSiteStats.stats?.total || 0}</p>
-                    <p className="text-xs sm:text-sm text-gray-600">{t('total')}</p>
+                    <p className="text-xs sm:text-sm text-gray-600 font-semibold">{t('total')}</p>
+                    <p className="text-[10px] text-gray-500 mt-0.5">all-time</p>
                   </div>
                 </div>
+                <p className="text-[11px] text-gray-500 italic">ℹ️ {t('explainTotal')} — {t('deduped')}.</p>
+
+                {/* Monthly History */}
+                {monthlyHistory?.months?.length > 0 && (
+                  <div data-testid="monthly-history">
+                    <h3 className="text-sm font-semibold text-gray-700 mb-2 sm:mb-3 flex items-center space-x-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{t('monthlyHistory')}</span>
+                    </h3>
+                    <div className="bg-white border border-gray-200 rounded-lg overflow-x-auto">
+                      <table className="w-full text-xs sm:text-sm">
+                        <thead className="bg-gray-50 text-gray-600">
+                          <tr>
+                            <th className="px-3 py-2 text-left font-semibold">{t('yearMonth')}</th>
+                            <th className="px-3 py-2 text-left font-semibold">{t('period')}</th>
+                            <th className="px-3 py-2 text-right font-semibold">{t('visitorsCol')}</th>
+                            <th className="px-3 py-2 text-left font-semibold hidden sm:table-cell">{t('topCountries')}</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-gray-100">
+                          {monthlyHistory.months.slice().reverse().map((m) => (
+                            <tr key={m.label} className={m.is_current ? 'bg-amber-50/50' : ''}>
+                              <td className="px-3 py-2 font-medium text-gray-900">
+                                {m.label}
+                                {m.is_current && <span className="ml-2 text-[10px] uppercase tracking-wider text-amber-700 bg-amber-100 px-1.5 py-0.5 rounded">{t('currentMonth')}</span>}
+                              </td>
+                              <td className="px-3 py-2 text-gray-500 text-[11px]">{m.from} → {m.to}</td>
+                              <td className="px-3 py-2 text-right font-bold text-purple-700">{m.unique_visitors}</td>
+                              <td className="px-3 py-2 text-gray-600 text-[11px] hidden sm:table-cell">
+                                {m.top_countries?.slice(0, 3).map(c => `${c.country} (${c.visitors})`).join(' • ') || '—'}
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
 
                 {/* Countries */}
                 <div>
                   <h3 className="text-sm font-semibold text-gray-700 mb-2 sm:mb-3 flex items-center space-x-2">
                     <MapPin className="w-4 h-4" />
-                    <span>{t('byCountry')}</span>
+                    <span>{t('byCountry')} — {t('deduped')}</span>
                   </h3>
                   {selectedSiteStats.countries?.length > 0 ? (
                     <div className="bg-gray-50 rounded-lg p-3 sm:p-4">
                       <div className="space-y-2">
                         {selectedSiteStats.countries.map((c, i) => (
-                          <div key={i} className="flex items-center justify-between">
+                          <div key={i} className="flex items-center justify-between" data-testid={`country-row-${i}`}>
                             <span className="text-xs sm:text-sm text-gray-700">{c.country}</span>
                             <span className="text-xs sm:text-sm font-medium text-gray-900">{c.visitors}</span>
                           </div>
@@ -892,6 +1042,79 @@ const AdminDashboard = () => {
             ) : (
               <div className="p-8 sm:p-12 text-center text-gray-500">{t('noData')}</div>
             )}
+          </div>
+        </div>
+      )}
+
+      {/* Ignored IPs Modal */}
+      {showIgnoredIpsModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 sm:p-4" data-testid="ignored-ips-modal">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-xl max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+              <h2 className="text-base sm:text-xl font-semibold text-gray-900 flex items-center space-x-2">
+                <Eye className="w-4 sm:w-5 h-4 sm:h-5 text-slate-600" />
+                <span>{t('ignoredIps')}</span>
+              </h2>
+              <button onClick={() => setShowIgnoredIpsModal(false)} className="p-1.5 hover:bg-gray-100 rounded flex-shrink-0">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <div className="p-4 sm:p-6 space-y-4">
+              <p className="text-sm text-gray-600">{t('ignoredIpsDesc')}</p>
+
+              {/* Add form */}
+              <div className="bg-slate-50 rounded-lg p-3 space-y-2">
+                <input
+                  type="text"
+                  value={newIpInput}
+                  onChange={(e) => setNewIpInput(e.target.value)}
+                  placeholder={t('ipPlaceholder')}
+                  data-testid="ignored-ip-input"
+                  className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+                <input
+                  type="text"
+                  value={newIpLabel}
+                  onChange={(e) => setNewIpLabel(e.target.value)}
+                  placeholder={t('labelPlaceholder')}
+                  data-testid="ignored-ip-label-input"
+                  className="w-full px-3 py-2 border border-slate-300 rounded text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                />
+                <div className="flex flex-wrap gap-2">
+                  <button onClick={() => addIgnoredIp(newIpInput, newIpLabel)}
+                    data-testid="ignored-ip-add-btn"
+                    className="px-3 py-1.5 rounded bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium">
+                    {t('add')}
+                  </button>
+                  <button onClick={addMyIp}
+                    data-testid="ignored-ip-add-mine-btn"
+                    className="px-3 py-1.5 rounded bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium">
+                    {t('addMyIp')}
+                  </button>
+                </div>
+              </div>
+
+              {/* List */}
+              <div className="bg-white border border-slate-200 rounded-lg divide-y divide-slate-100">
+                {ignoredIps.length === 0 ? (
+                  <p className="p-4 text-sm text-gray-500 text-center">{t('noData')}</p>
+                ) : (
+                  ignoredIps.map((entry) => (
+                    <div key={entry.ip} className="px-3 py-2 flex items-center justify-between gap-2" data-testid={`ignored-ip-row-${entry.ip}`}>
+                      <div className="min-w-0">
+                        <p className="text-sm font-mono text-gray-900 truncate">{entry.ip}</p>
+                        {entry.label && <p className="text-[11px] text-gray-500 truncate">{entry.label}</p>}
+                      </div>
+                      <button onClick={() => removeIgnoredIp(entry.ip)}
+                        data-testid={`ignored-ip-remove-${entry.ip}`}
+                        className="px-2 py-1 rounded bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-medium flex-shrink-0">
+                        {t('remove')}
+                      </button>
+                    </div>
+                  ))
+                )}
+              </div>
+            </div>
           </div>
         </div>
       )}
