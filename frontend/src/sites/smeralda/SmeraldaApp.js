@@ -1517,13 +1517,13 @@ const SmeraldaHomePage = () => {
 // RESERVE PAGE — Direct booking with apartment-specific links
 // ============================================================
 const APARTMENT_BOOKING = [
-  { num: 1, url: 'https://www.vacation-bookings.com/d/13019778?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { num: 2, url: 'https://www.vacation-bookings.com/d/13139751?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { num: 3, url: 'https://www.vacation-bookings.com/d/13083100?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { num: 4, url: 'https://www.vacation-bookings.com/d/13140325?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { num: 5, url: null, type: 'standard' },
-  { num: 6, url: 'https://www.vacation-bookings.com/d/13140346?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'executive' },
-  { num: 7, url: 'https://www.vacation-bookings.com/d/20586571?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'mobilhome' },
+  { id: 'apt-1', label: 1, url: 'https://www.vacation-bookings.com/d/13019778?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
+  { id: 'apt-2', label: 2, url: 'https://www.vacation-bookings.com/d/13139751?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
+  { id: 'apt-3', label: 3, url: 'https://www.vacation-bookings.com/d/13083100?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
+  { id: 'apt-4', label: 4, url: 'https://www.vacation-bookings.com/d/13140325?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
+  { id: 'apt-5', label: 5, url: 'https://www.vacation-bookings.com/d/13140346?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'executive' },
+  { id: 'apt-6', label: 6, url: 'https://www.vacation-bookings.com/d/20586572?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
+  { id: 'mobilhome', label: null, url: 'https://www.vacation-bookings.com/d/20586571?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'mobilhome' },
 ];
 
 const RESERVE_T = {
@@ -1540,6 +1540,7 @@ const RESERVE_T = {
     instantTitle: 'Book instantly with direct confirmation',
     instantDesc: 'Prefer to book right away without waiting? Use the buttons below for instant confirmation through our partner booking system.',
     aptLabel: 'Apartment',
+    mobilhomeLabel: 'Mobile home',
     bookNow: 'BOOK WITH DIRECT CONFIRMATION',
     soon: 'Direct booking coming soon — contact us above',
     backHome: 'Back to home',
@@ -1560,6 +1561,7 @@ const RESERVE_T = {
     instantTitle: 'Boek direct met onmiddellijke bevestiging',
     instantDesc: 'Wilt u liever meteen boeken zonder te wachten? Gebruik de knoppen hieronder voor onmiddellijke bevestiging via ons partner-boekingsysteem.',
     aptLabel: 'Appartement',
+    mobilhomeLabel: 'Stacaravan',
     bookNow: 'RESERVEER MET DIRECTE BEVESTIGING',
     soon: 'Directe boeking binnenkort beschikbaar — contacteer ons hierboven',
     backHome: 'Terug naar home',
@@ -1580,6 +1582,7 @@ const RESERVE_T = {
     instantTitle: 'Réservez instantanément avec confirmation directe',
     instantDesc: "Vous préférez réserver immédiatement sans attendre? Utilisez les boutons ci-dessous pour une confirmation instantanée via notre système de réservation partenaire.",
     aptLabel: 'Appartement',
+    mobilhomeLabel: 'Mobil-home',
     bookNow: 'RÉSERVER AVEC CONFIRMATION DIRECTE',
     soon: 'Réservation directe bientôt disponible — contactez-nous ci-dessus',
     backHome: "Retour à l'accueil",
@@ -1600,6 +1603,7 @@ const RESERVE_T = {
     instantTitle: 'Prenota subito con conferma diretta',
     instantDesc: "Preferisci prenotare subito senza aspettare? Usa i pulsanti qui sotto per una conferma immediata tramite il nostro sistema di prenotazione partner.",
     aptLabel: 'Appartamento',
+    mobilhomeLabel: 'Casa mobile',
     bookNow: 'PRENOTA CON CONFERMA DIRETTA',
     soon: 'Prenotazione diretta in arrivo — contattaci sopra',
     backHome: 'Torna alla home',
@@ -1620,6 +1624,7 @@ const RESERVE_T = {
     instantTitle: 'Reserve al instante con confirmación directa',
     instantDesc: '¿Prefiere reservar ahora mismo sin esperar? Utilice los botones a continuación para confirmación instantánea a través de nuestro sistema de reservas asociado.',
     aptLabel: 'Apartamento',
+    mobilhomeLabel: 'Casa móvil',
     bookNow: 'RESERVAR CON CONFIRMACIÓN DIRECTA',
     soon: 'Reserva directa próximamente — contáctenos arriba',
     backHome: 'Volver al inicio',
@@ -1640,6 +1645,7 @@ const RESERVE_T = {
     instantTitle: 'Sofort buchen mit direkter Bestätigung',
     instantDesc: 'Möchten Sie lieber sofort buchen, ohne zu warten? Nutzen Sie die Schaltflächen unten für eine sofortige Bestätigung über unser Partner-Buchungssystem.',
     aptLabel: 'Apartment',
+    mobilhomeLabel: 'Mobilheim',
     bookNow: 'MIT DIREKTER BESTÄTIGUNG BUCHEN',
     soon: 'Direktbuchung bald verfügbar — kontaktieren Sie uns oben',
     backHome: 'Zurück zur Startseite',
@@ -1657,7 +1663,7 @@ const ReservePage = () => {
   const apartmentImage = (apt) => {
     if (apt.type === 'executive') return IMAGES.executive[0];
     if (apt.type === 'mobilhome') return IMAGES.mobilhome[0];
-    return IMAGES.standard[(apt.num - 1) % IMAGES.standard.length];
+    return IMAGES.standard[((apt.label || 1) - 1) % IMAGES.standard.length];
   };
 
   // Track visit
@@ -1754,23 +1760,33 @@ const ReservePage = () => {
 
         <div className="space-y-4">
           {APARTMENT_BOOKING.map(apt => {
-            const typeLabel = apt.type === 'executive' ? r.typeExecutive : apt.type === 'mobilhome' ? r.typeMobilhome : r.typeStandard;
+            const isMobilhome = apt.type === 'mobilhome';
+            const typeLabel = apt.type === 'executive' ? r.typeExecutive : isMobilhome ? r.typeMobilhome : r.typeStandard;
             return (
-              <div key={apt.num} data-testid={`reserve-apt-${apt.num}`}
+              <div key={apt.id} data-testid={`reserve-${apt.id}`}
                 className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col sm:flex-row">
                 <div className="sm:w-56 h-40 sm:h-auto flex-shrink-0">
-                  <img src={apartmentImage(apt)} alt={`${r.aptLabel} ${apt.num}`} className="w-full h-full object-cover" loading="lazy" />
+                  <img src={apartmentImage(apt)} alt={isMobilhome ? r.mobilhomeLabel : `${r.aptLabel} ${apt.label}`} className="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div className="flex-1 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4">
                   <div className="flex-1">
-                    <div className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">{r.aptLabel}</div>
-                    <h3 className="text-2xl font-bold text-slate-900 mb-1">N° {apt.num}</h3>
+                    {isMobilhome ? (
+                      <>
+                        <div className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">&nbsp;</div>
+                        <h3 className="text-2xl font-bold text-slate-900 mb-1">{r.mobilhomeLabel}</h3>
+                      </>
+                    ) : (
+                      <>
+                        <div className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">{r.aptLabel}</div>
+                        <h3 className="text-2xl font-bold text-slate-900 mb-1">N° {apt.label}</h3>
+                      </>
+                    )}
                     <p className="text-sm text-slate-600">{typeLabel}</p>
                   </div>
                   <div className="sm:w-72 flex-shrink-0">
                     {apt.url ? (
                       <a href={apt.url} target="_blank" rel="noopener noreferrer"
-                        data-testid={`reserve-book-${apt.num}`}
+                        data-testid={`reserve-book-${apt.id}`}
                         className="block w-full text-center bg-teal-700 hover:bg-teal-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all hover:scale-[1.02] shadow-md">
                         {r.bookNow}
                       </a>
