@@ -1682,6 +1682,7 @@ const ReservePage = () => {
   const [lang, setLang] = useState(() => {
     try { return localStorage.getItem('smeralda_lang') || 'en'; } catch { return 'en'; }
   });
+  const [menuOpen, setMenuOpen] = useState(false);
   const r = RESERVE_T[lang] || RESERVE_T.en;
   const t = translations[lang] || translations.en;
   const apartmentImage = (apt) => {
@@ -1736,17 +1737,76 @@ const ReservePage = () => {
                 {item.label}
               </Link>
             ))}
+            <a href="#book" data-testid="reserve-nav-book-now"
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="ml-2 px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors shadow-sm">
+              {t.hero.cta}
+            </a>
           </nav>
           <div className="flex items-center gap-1 flex-shrink-0">
-            {languages.map(l => (
-              <button key={l.code} onClick={() => setLanguage(l.code)}
-                data-testid={`reserve-lang-${l.code}`}
-                className={`px-2 sm:px-2.5 py-1 text-xs font-semibold rounded transition-colors ${lang === l.code ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'}`}>
-                {l.label}
-              </button>
-            ))}
+            <div className="hidden sm:flex items-center gap-1">
+              {languages.map(l => (
+                <button key={l.code} onClick={() => setLanguage(l.code)}
+                  data-testid={`reserve-lang-${l.code}`}
+                  className={`px-2 sm:px-2.5 py-1 text-xs font-semibold rounded transition-colors ${lang === l.code ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'}`}>
+                  {l.label}
+                </button>
+              ))}
+            </div>
+            <button onClick={() => setMenuOpen(!menuOpen)}
+              data-testid="reserve-mobile-menu-toggle"
+              className="md:hidden p-2 text-slate-700 hover:text-blue-600">
+              {menuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
           </div>
         </div>
+
+        {/* Mobile Menu Drawer */}
+        {menuOpen && (
+          <div className="md:hidden bg-white border-t border-slate-200" data-testid="reserve-mobile-menu">
+            <div className="px-4 py-4 space-y-1">
+              {[
+                { id: 'home', label: t.nav.home },
+                { id: 'apartments', label: t.nav.apartments },
+                { id: 'prices', label: t.nav.prices },
+                { id: 'gallery', label: t.nav.gallery },
+                { id: 'services', label: t.nav.services },
+                { id: 'contact', label: t.nav.contact },
+                { id: 'location', label: t.nav.location },
+              ].map(item => (
+                <Link key={item.id} to={`${homePath}#${item.id}`}
+                  onClick={() => setMenuOpen(false)}
+                  data-testid={`reserve-mobile-nav-${item.id}`}
+                  className="block w-full text-left py-2.5 text-gray-700 hover:text-blue-600 font-medium border-b border-slate-100 last:border-b-0">
+                  {item.label}
+                </Link>
+              ))}
+              <a href="#book"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setMenuOpen(false);
+                  setTimeout(() => document.getElementById('book')?.scrollIntoView({ behavior: 'smooth' }), 50);
+                }}
+                data-testid="reserve-mobile-nav-book-now"
+                className="block w-full text-center py-2.5 mt-3 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-sm">
+                {t.hero.cta}
+              </a>
+              <div className="flex flex-wrap gap-1.5 pt-3 border-t border-slate-100">
+                {languages.map(l => (
+                  <button key={l.code}
+                    onClick={() => { setLanguage(l.code); setMenuOpen(false); }}
+                    data-testid={`reserve-mobile-lang-${l.code}`}
+                    className={`px-2.5 py-1.5 text-xs font-semibold rounded transition-colors ${lang === l.code ? 'bg-slate-900 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}>
+                    {l.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Hero */}
@@ -1756,7 +1816,7 @@ const ReservePage = () => {
       </section>
 
       {/* OPTION 1 — Preferred: form + WhatsApp */}
-      <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-8">
+      <section id="book" className="max-w-4xl mx-auto px-4 sm:px-6 pb-8 scroll-mt-20">
         <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-3xl p-6 sm:p-10 shadow-lg">
           <div className="flex items-center justify-center mb-4">
             <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-200 text-amber-900 text-xs font-bold uppercase tracking-wider">

@@ -6,7 +6,7 @@ import {
   Plus, Settings, Image, Menu, Users, Globe, LogOut, 
   ChevronRight, Trash2, Edit, Eye, Clock, Phone, Mail,
   BarChart2, X, MapPin, TrendingUp, Activity, ExternalLink,
-  Calendar, UserCheck, Check, AlertTriangle, Bug, ChevronDown, ChevronUp
+  Calendar, UserCheck, Check, AlertTriangle, Bug, ChevronDown, ChevronUp, Download
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -53,6 +53,7 @@ const translations = {
     topCountries: 'Top pays',
     period: 'Période',
     currentMonth: 'en cours',
+    exportPdf: 'Exporter PDF',
     ignoredIps: 'IPs ignorées',
     ignoredIpsDesc: 'Ces IPs sont exclues de TOUTES les statistiques (vos propres visites, VPN, etc.)',
     addIp: 'Ajouter une IP',
@@ -103,6 +104,7 @@ const translations = {
     topCountries: 'Top landen',
     period: 'Periode',
     currentMonth: 'lopend',
+    exportPdf: 'PDF exporteren',
     ignoredIps: 'Genegeerde IPs',
     ignoredIpsDesc: 'Deze IPs worden uitgesloten van ALLE statistieken (jouw eigen bezoeken, VPN, etc.)',
     addIp: 'IP toevoegen',
@@ -153,6 +155,7 @@ const translations = {
     topCountries: 'Top countries',
     period: 'Period',
     currentMonth: 'current',
+    exportPdf: 'Export PDF',
     ignoredIps: 'Ignored IPs',
     ignoredIpsDesc: 'These IPs are excluded from ALL statistics (your own visits, VPN, etc.)',
     addIp: 'Add IP',
@@ -939,10 +942,21 @@ const AdminDashboard = () => {
                 {/* Monthly History */}
                 {monthlyHistory?.months?.length > 0 && (
                   <div data-testid="monthly-history">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-2 sm:mb-3 flex items-center space-x-2">
-                      <Calendar className="w-4 h-4" />
-                      <span>{t('monthlyHistory')}</span>
-                    </h3>
+                    <div className="flex items-center justify-between mb-2 sm:mb-3">
+                      <h3 className="text-sm font-semibold text-gray-700 flex items-center space-x-2">
+                        <Calendar className="w-4 h-4" />
+                        <span>{t('monthlyHistory')}</span>
+                      </h3>
+                      <a
+                        href={`${API}/admin/monthly-stats/${selectedSiteStats.site_id}/pdf?months=13`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        data-testid="export-pdf-btn"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-medium transition-colors shadow-sm"
+                      >
+                        <Download className="w-3.5 h-3.5" /> {t('exportPdf')}
+                      </a>
+                    </div>
                     <div className="bg-white border border-gray-200 rounded-lg overflow-x-auto">
                       <table className="w-full text-xs sm:text-sm">
                         <thead className="bg-gray-50 text-gray-600">

@@ -25,16 +25,9 @@ Dutch (Nederlands) — always respond in Dutch.
 ## Completed (Latest)
 - ✅ 2026-02: Smeralda Reserve page covers for Apt 3, 5, 6 configured + migrated to preview storage.
 - ✅ 2026-02: Bug fix — Reserve page menu links used absolute `/` (routed to fworks on preview); now `basePath`-aware via `useLocation`.
-- ✅ 2026-02: **Statistics overhaul (trust restoration):**
-  - Country breakdown now dedupes by (IP, date) — fixes Ecuador=35 raw-pageviews bug
-  - Daily 7-day chart dedupes by (IP, date)
-  - `month` redefined as calendar month (1st → today), not rolling 30 days
-  - `Total` renamed `Sinds start` / `Since start` with tooltip explaining it's cumulative, not summed
-  - New `ignored_ips` collection: site-owner IPs (157.245.70.19, 2a03:b0c0:2:f0::263f:6001) excluded from ALL stats; auto-seeded on startup
-  - New endpoint `GET /admin/monthly-stats/{site_id}` — last 13 calendar months unique visitors + top 5 countries per month with date ranges
-  - New endpoints `GET/POST/DELETE /admin/ignored-ips` + `GET /admin/my-ip` for managing ignore-list from UI
-  - Admin Dashboard modal extended with "Per maand" historical table + date-range labels under each stat card
-  - New "Genegeerde IPs" button on admin toolbar with add/remove + "Mijn huidige IP toevoegen"
+- ✅ 2026-02: **Statistics overhaul (trust restoration)** — country/daily dedup, calendar month, ignored_ips collection (owner IPs auto-seeded), monthly-history endpoint + UI table with date ranges, "Genegeerde IPs" management modal.
+- ✅ 2026-02: **PDF export** — new endpoint `GET /admin/monthly-stats/{site_id}/pdf` using reportlab. Downloads "<slug>_visitor_report_<YYYYMMDD>.pdf" with site name + monthly table (month, period, unique visitors, top 5 countries) + cumulative total. Red "PDF exporteren" button in Monthly History section.
+- ✅ 2026-02: **Smeralda Reserve page mobile menu** — added hamburger menu (visible <md), drawer with full nav items, blue "Book Now" CTA button (anchor `#book` scrolls to reservation form). Desktop nav also gets the blue "Book Now" CTA button.
 
 ## Backlog
 - P2: Refactor `server.py` monolith into `/app/backend/routes/`, `/app/backend/models/`.
