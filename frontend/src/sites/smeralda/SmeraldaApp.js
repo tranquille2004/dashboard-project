@@ -1673,6 +1673,7 @@ const ReservePage = () => {
     try { return localStorage.getItem('smeralda_lang') || 'en'; } catch { return 'en'; }
   });
   const r = RESERVE_T[lang] || RESERVE_T.en;
+  const t = translations[lang] || translations.en;
   const apartmentImage = (apt) => {
     if (apt.type === 'executive') return IMAGES.executive[0];
     if (apt.type === 'mobilhome') return IMAGES.mobilhome[0];
@@ -1705,15 +1706,31 @@ const ReservePage = () => {
 
       {/* Top bar */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-30 backdrop-blur-sm bg-white/90">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
-          <a href="/" className="flex items-center gap-3">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
             <img src={IMAGES.logo} alt="Villa Smeralda" className="h-9 sm:h-11 w-auto" />
-          </a>
-          <div className="flex items-center gap-1">
+          </Link>
+          <nav className="hidden md:flex items-center gap-4 lg:gap-5">
+            {[
+              { id: 'home', label: t.nav.home },
+              { id: 'apartments', label: t.nav.apartments },
+              { id: 'prices', label: t.nav.prices },
+              { id: 'gallery', label: t.nav.gallery },
+              { id: 'services', label: t.nav.services },
+              { id: 'contact', label: t.nav.contact },
+              { id: 'location', label: t.nav.location },
+            ].map(item => (
+              <Link key={item.id} to={`/#${item.id}`} data-testid={`reserve-nav-${item.id}`}
+                className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <div className="flex items-center gap-1 flex-shrink-0">
             {languages.map(l => (
               <button key={l.code} onClick={() => setLanguage(l.code)}
                 data-testid={`reserve-lang-${l.code}`}
-                className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors ${lang === l.code ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'}`}>
+                className={`px-2 sm:px-2.5 py-1 text-xs font-semibold rounded transition-colors ${lang === l.code ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'}`}>
                 {l.label}
               </button>
             ))}
@@ -1739,7 +1756,7 @@ const ReservePage = () => {
           <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 text-center">{r.preferredTitle}</h2>
           <p className="text-slate-700 text-center max-w-2xl mx-auto mb-8 leading-relaxed">{r.preferredDesc}</p>
           <div className="grid sm:grid-cols-2 gap-3 max-w-xl mx-auto">
-            <a href="/#contact" data-testid="reserve-cta-form"
+            <a href="https://form.jotform.com/81427604547358" target="_blank" rel="noopener noreferrer" data-testid="reserve-cta-form"
               className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-4 rounded-2xl font-semibold transition-all hover:scale-[1.02] shadow-md">
               <Mail className="w-5 h-5" /> {r.fillForm}
             </a>
