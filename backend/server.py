@@ -2144,7 +2144,7 @@ async def import_migration_records(request: Request):
                     except Exception:
                         # Not in our storage — fetch from preview's public URL & upload
                         url = f"{source_base_url.rstrip('/')}{original_path}"
-                        r = requests.get(url, timeout=60)
+                        r = requests.get(url, timeout=15)
                         if r.status_code == 200 and len(r.content) > 1024:
                             put_object(storage_path, r.content, content_type)
                             files_copied += 1

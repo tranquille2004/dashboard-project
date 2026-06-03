@@ -197,27 +197,38 @@ const ImageMigration = () => {
         throw new Error('Geen records gevonden in preview');
       }
 
-      const BATCH_SIZE = 50;
+      const BATCH_SIZE = 10;
       const batches = Math.ceil(records.length / BATCH_SIZE);
       summary.files_copied = 0;
       summary.files_failed = 0;
+      const failedBatches = [];
       for (let i = 0; i < batches; i++) {
         const batch = records.slice(i * BATCH_SIZE, (i + 1) * BATCH_SIZE);
-        const importRes = await fetch(`${API}/admin/migrate/import-records`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ records: batch, source_base_url: PREVIEW_BASE_URL })
-        });
-        if (!importRes.ok) {
-          throw new Error(`Batch ${i + 1}/${batches} faalde (HTTP ${importRes.status})`);
+        try {
+          const importRes = await fetch(`${API}/admin/migrate/import-records`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ records: batch, source_base_url: PREVIEW_BASE_URL })
+          });
+          if (!importRes.ok) {
+            failedBatches.push(i + 1);
+            summary.files_failed += batch.length;
+          } else {
+            const importData = await importRes.json();
+            summary.imported += importData.imported || 0;
+            summary.skipped_import += importData.skipped || 0;
+            summary.files_copied += importData.files_copied || 0;
+            summary.files_failed += importData.files_failed || 0;
+          }
+        } catch (batchErr) {
+          failedBatches.push(i + 1);
+          summary.files_failed += batch.length;
         }
-        const importData = await importRes.json();
-        summary.imported += importData.imported || 0;
-        summary.skipped_import += importData.skipped || 0;
-        summary.files_copied += importData.files_copied || 0;
-        summary.files_failed += importData.files_failed || 0;
-        summary.step = `Stap 2/2: Batch ${i + 1}/${batches} — ${summary.files_copied} bestanden gekopieerd, ${summary.imported} records...`;
+        summary.step = `Stap 2/2: Batch ${i + 1}/${batches} — ${summary.files_copied} bestanden, ${summary.imported} records${failedBatches.length ? ` (${failedBatches.length} batches mislukt)` : ''}...`;
         setResult({ ...summary, progress: true });
+      }
+      if (failedBatches.length) {
+        summary.failedBatches = failedBatches;
       }
 
       summary.step = '';
