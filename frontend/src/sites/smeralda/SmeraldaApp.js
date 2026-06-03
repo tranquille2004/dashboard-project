@@ -1555,6 +1555,7 @@ const RESERVE_T = {
     typeStandard2: 'Standard Two Bedroom Apartment',
     typeExecutive1: 'Executive One Bedroom Apartment — private pool',
     typeMobilhome1: 'One Bedroom Mobilhome — private pool',
+    privatePool: 'Private pool',
   },
   nl: {
     pageTitle: 'Reserveer uw verblijf',
@@ -1577,6 +1578,7 @@ const RESERVE_T = {
     typeStandard2: 'Standaard appartement met twee slaapkamers',
     typeExecutive1: 'Executive appartement met één slaapkamer — privé zwembad',
     typeMobilhome1: 'Stacaravan met één slaapkamer — privé zwembad',
+    privatePool: 'Privé zwembad',
   },
   fr: {
     pageTitle: 'Réservez votre séjour',
@@ -1599,6 +1601,7 @@ const RESERVE_T = {
     typeStandard2: 'Appartement Standard deux chambres',
     typeExecutive1: 'Appartement Executive une chambre — piscine privée',
     typeMobilhome1: 'Maison Mobile une chambre — piscine privée',
+    privatePool: 'Piscine privée',
   },
   it: {
     pageTitle: 'Prenota il tuo soggiorno',
@@ -1621,6 +1624,7 @@ const RESERVE_T = {
     typeStandard2: 'Appartamento Standard con due camere',
     typeExecutive1: 'Appartamento Executive con una camera — piscina privata',
     typeMobilhome1: 'Casa Mobile con una camera — piscina privata',
+    privatePool: 'Piscina privata',
   },
   es: {
     pageTitle: 'Reserve su estancia',
@@ -1643,6 +1647,7 @@ const RESERVE_T = {
     typeStandard2: 'Apartamento Estándar de dos dormitorios',
     typeExecutive1: 'Apartamento Executive de un dormitorio — piscina privada',
     typeMobilhome1: 'Casa Móvil de un dormitorio — piscina privada',
+    privatePool: 'Piscina privada',
   },
   de: {
     pageTitle: 'Buchen Sie Ihren Aufenthalt',
@@ -1665,6 +1670,7 @@ const RESERVE_T = {
     typeStandard2: 'Standard-Apartment mit zwei Schlafzimmern',
     typeExecutive1: 'Executive-Apartment mit einem Schlafzimmer — Privatpool',
     typeMobilhome1: 'Mobilheim mit einem Schlafzimmer — Privatpool',
+    privatePool: 'Privatpool',
   },
 };
 
@@ -1791,28 +1797,39 @@ const ReservePage = () => {
         <div className="space-y-4">
           {APARTMENT_BOOKING.map(apt => {
             const isMobilhome = apt.type === 'mobilhome';
+            const hasPool = apt.type === 'executive' || apt.type === 'mobilhome';
             const subtypeKey = `type${apt.subtype.charAt(0).toUpperCase()}${apt.subtype.slice(1)}`;
             const typeLabel = r[subtypeKey] || '';
             return (
               <div key={apt.id} data-testid={`reserve-${apt.id}`}
                 className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col sm:flex-row">
-                <div className="sm:w-56 h-40 sm:h-auto flex-shrink-0">
+                <div className="sm:w-56 h-44 sm:h-auto flex-shrink-0">
                   <img src={apartmentImage(apt)} alt={isMobilhome ? r.mobilhomeLabel : `${r.aptLabel} ${apt.label}`} className="w-full h-full object-cover" loading="lazy" />
                 </div>
                 <div className="flex-1 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4">
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     {isMobilhome ? (
-                      <>
-                        <div className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">&nbsp;</div>
-                        <h3 className="text-2xl font-bold text-slate-900 mb-1">{r.mobilhomeLabel}</h3>
-                      </>
+                      <h3 className="text-xl sm:text-2xl font-bold text-slate-900 leading-tight mb-2">{r.mobilhomeLabel}</h3>
                     ) : (
-                      <>
-                        <div className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">{r.aptLabel}</div>
-                        <h3 className="text-2xl font-bold text-slate-900 mb-1">N° {apt.label}</h3>
-                      </>
+                      <div className="flex items-baseline gap-2 mb-2">
+                        <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">{r.aptLabel}</span>
+                        <span className="text-sm font-bold text-slate-700">N° {apt.label}</span>
+                      </div>
                     )}
-                    <p className="text-sm text-slate-600">{typeLabel}</p>
+                    <p className={`${isMobilhome ? 'text-base' : 'text-lg sm:text-xl'} font-semibold text-slate-900 leading-snug`}>
+                      {typeLabel.replace(/ — .*/, '')}
+                    </p>
+                    {hasPool && (
+                      <div className="inline-flex items-center gap-1.5 mt-2.5 px-2.5 py-1 rounded-full bg-gradient-to-r from-cyan-100 to-blue-100 border border-cyan-300/60 text-cyan-900 text-xs font-bold uppercase tracking-wider">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                          <path d="M2 20a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1"/>
+                          <path d="M2 16a2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1 2.4 2.4 0 0 1 2-1 2.4 2.4 0 0 1 2 1 2.4 2.4 0 0 0 2 1 2.4 2.4 0 0 0 2-1"/>
+                          <path d="M9 12V2c1 0 2 .5 2 2v8"/>
+                          <path d="M15 6c0-1 1-2 2-2"/>
+                        </svg>
+                        {r.privatePool}
+                      </div>
+                    )}
                   </div>
                   <div className="sm:w-72 flex-shrink-0">
                     {apt.url ? (
