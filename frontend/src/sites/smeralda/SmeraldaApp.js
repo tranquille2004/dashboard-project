@@ -1675,6 +1675,10 @@ const RESERVE_T = {
 };
 
 const ReservePage = () => {
+  const location = useLocation();
+  // Base path is "/site/smeralda" on preview/multi-tenant, "" on production smeraldavacanze.it
+  const basePath = location.pathname.startsWith('/site/smeralda') ? '/site/smeralda' : '';
+  const homePath = basePath || '/';
   const [lang, setLang] = useState(() => {
     try { return localStorage.getItem('smeralda_lang') || 'en'; } catch { return 'en'; }
   });
@@ -1714,7 +1718,7 @@ const ReservePage = () => {
       {/* Top bar */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-30 backdrop-blur-sm bg-white/90">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
-          <Link to="/" className="flex items-center gap-3 flex-shrink-0">
+          <Link to={homePath} className="flex items-center gap-3 flex-shrink-0">
             <img src={IMAGES.logo} alt="Villa Smeralda" className="h-9 sm:h-11 w-auto" />
           </Link>
           <nav className="hidden md:flex items-center gap-4 lg:gap-5">
@@ -1727,7 +1731,7 @@ const ReservePage = () => {
               { id: 'contact', label: t.nav.contact },
               { id: 'location', label: t.nav.location },
             ].map(item => (
-              <Link key={item.id} to={`/#${item.id}`} data-testid={`reserve-nav-${item.id}`}
+              <Link key={item.id} to={`${homePath}#${item.id}`} data-testid={`reserve-nav-${item.id}`}
                 className="text-sm font-medium text-gray-600 hover:text-blue-600 transition-colors">
                 {item.label}
               </Link>
@@ -1852,7 +1856,7 @@ const ReservePage = () => {
         </div>
 
         <div className="text-center mt-12">
-          <a href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-medium transition-colors">
+          <a href={homePath} className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-medium transition-colors">
             ← {r.backHome}
           </a>
         </div>
