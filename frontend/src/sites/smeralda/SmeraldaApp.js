@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Link } from 'react-router-dom';
 import { Menu, X, Phone, Mail, MapPin, ChevronLeft, ChevronRight, Star, Wifi, Car, UtensilsCrossed, Waves, Sun, Home, Bed, Users, Bath, TreePine, Mountain, CheckCircle } from 'lucide-react';
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
@@ -936,6 +936,10 @@ const SmeraldaHomePage = () => {
                   {t.nav[item]}
                 </button>
               ))}
+              <Link to="reserve" data-testid="nav-reserve-btn"
+                className="ml-2 px-4 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold transition-colors shadow-sm">
+                {t.hero.cta}
+              </Link>
             </div>
 
             {/* Language Selector */}
@@ -965,6 +969,11 @@ const SmeraldaHomePage = () => {
                   {t.nav[item]}
                 </button>
               ))}
+              <Link to="reserve" onClick={() => setMenuOpen(false)}
+                data-testid="nav-reserve-btn-mobile"
+                className="block w-full text-center py-2.5 mt-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+                {t.hero.cta}
+              </Link>
               <div className="flex flex-wrap gap-2 pt-3 border-t">
                 {['en', 'nl', 'fr', 'it', 'es', 'de'].map((l) => (
                   <button key={l} onClick={() => { setLang(l); setMenuOpen(false); }}
@@ -989,10 +998,10 @@ const SmeraldaHomePage = () => {
           <p className="text-sm sm:text-base tracking-[0.3em] uppercase mb-4 text-white/90">{t.hero.location}</p>
           <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold mb-4">{t.hero.title}</h1>
           <p className="text-xl sm:text-2xl lg:text-3xl font-light mb-8 text-white/90">{t.hero.subtitle}</p>
-          <button onClick={() => scrollTo('contact')}
+          <Link to="reserve" data-testid="hero-reserve-btn"
             className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-all hover:scale-105 shadow-xl">
             {t.hero.cta}
-          </button>
+          </Link>
         </div>
       </section>
 
@@ -1504,11 +1513,295 @@ const SmeraldaHomePage = () => {
   );
 };
 
+// ============================================================
+// RESERVE PAGE — Direct booking with apartment-specific links
+// ============================================================
+const APARTMENT_BOOKING = [
+  { num: 1, url: 'https://www.vacation-bookings.com/d/13019778?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
+  { num: 2, url: null, type: 'standard' },
+  { num: 3, url: null, type: 'standard' },
+  { num: 4, url: 'https://www.vacation-bookings.com/d/13140325?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
+  { num: 5, url: null, type: 'standard' },
+  { num: 6, url: 'https://www.vacation-bookings.com/d/20586572?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'executive' },
+  { num: 7, url: null, type: 'mobilhome' },
+];
+
+const RESERVE_T = {
+  en: {
+    pageTitle: 'Book your stay',
+    pageSubtitle: 'Two easy ways to reserve your apartment at Villa Smeralda',
+    preferredBadge: 'Preferred — Personal service',
+    preferredTitle: 'Reserve directly with us',
+    preferredDesc: "Send us your request via our form or WhatsApp and we'll personally confirm your booking. Best rates guaranteed — no platform fees.",
+    fillForm: 'Fill in the request form',
+    whatsappCta: 'Send us a WhatsApp',
+    orDivider: 'OR — Instant booking',
+    instantBadge: 'Available 24/7',
+    instantTitle: 'Book instantly with direct confirmation',
+    instantDesc: 'Prefer to book right away without waiting? Use the buttons below for instant confirmation through our partner booking system.',
+    aptLabel: 'Apartment',
+    bookNow: 'BOOK WITH DIRECT CONFIRMATION',
+    soon: 'Direct booking coming soon — contact us above',
+    backHome: 'Back to home',
+    typeStandard: 'Standard apartment',
+    typeExecutive: 'Executive — private pool',
+    typeMobilhome: 'Mobile home — private pool',
+  },
+  nl: {
+    pageTitle: 'Reserveer uw verblijf',
+    pageSubtitle: 'Twee eenvoudige manieren om uw appartement in Villa Smeralda te reserveren',
+    preferredBadge: 'Aanbevolen — Persoonlijke service',
+    preferredTitle: 'Reserveer rechtstreeks bij ons',
+    preferredDesc: "Stuur uw aanvraag via ons formulier of WhatsApp en wij bevestigen uw boeking persoonlijk. Beste prijs gegarandeerd — geen platformkosten.",
+    fillForm: 'Vul het aanvraagformulier in',
+    whatsappCta: 'Stuur ons een WhatsApp',
+    orDivider: 'OF — Direct boeken',
+    instantBadge: 'Beschikbaar 24/7',
+    instantTitle: 'Boek direct met onmiddellijke bevestiging',
+    instantDesc: 'Wilt u liever meteen boeken zonder te wachten? Gebruik de knoppen hieronder voor onmiddellijke bevestiging via ons partner-boekingsysteem.',
+    aptLabel: 'Appartement',
+    bookNow: 'RESERVEER MET DIRECTE BEVESTIGING',
+    soon: 'Directe boeking binnenkort beschikbaar — contacteer ons hierboven',
+    backHome: 'Terug naar home',
+    typeStandard: 'Standaard appartement',
+    typeExecutive: 'Executive — privé zwembad',
+    typeMobilhome: 'Stacaravan — privé zwembad',
+  },
+  fr: {
+    pageTitle: 'Réservez votre séjour',
+    pageSubtitle: 'Deux moyens simples de réserver votre appartement à Villa Smeralda',
+    preferredBadge: 'Préféré — Service personnel',
+    preferredTitle: 'Réservez directement chez nous',
+    preferredDesc: "Envoyez-nous votre demande via le formulaire ou WhatsApp et nous confirmerons personnellement votre réservation. Meilleur tarif garanti — sans frais de plateforme.",
+    fillForm: 'Remplir le formulaire de demande',
+    whatsappCta: 'Envoyez-nous un WhatsApp',
+    orDivider: 'OU — Réservation instantanée',
+    instantBadge: 'Disponible 24h/24',
+    instantTitle: 'Réservez instantanément avec confirmation directe',
+    instantDesc: "Vous préférez réserver immédiatement sans attendre? Utilisez les boutons ci-dessous pour une confirmation instantanée via notre système de réservation partenaire.",
+    aptLabel: 'Appartement',
+    bookNow: 'RÉSERVER AVEC CONFIRMATION DIRECTE',
+    soon: 'Réservation directe bientôt disponible — contactez-nous ci-dessus',
+    backHome: "Retour à l'accueil",
+    typeStandard: 'Appartement Standard',
+    typeExecutive: 'Executive — piscine privée',
+    typeMobilhome: 'Mobil-home — piscine privée',
+  },
+  it: {
+    pageTitle: 'Prenota il tuo soggiorno',
+    pageSubtitle: 'Due semplici modi per prenotare il tuo appartamento a Villa Smeralda',
+    preferredBadge: 'Consigliato — Servizio personale',
+    preferredTitle: 'Prenota direttamente con noi',
+    preferredDesc: 'Inviaci la tua richiesta tramite il modulo o WhatsApp e confermeremo personalmente la tua prenotazione. Miglior tariffa garantita — nessun costo aggiuntivo.',
+    fillForm: 'Compila il modulo di richiesta',
+    whatsappCta: 'Inviaci un WhatsApp',
+    orDivider: 'OPPURE — Prenotazione istantanea',
+    instantBadge: 'Disponibile 24/7',
+    instantTitle: 'Prenota subito con conferma diretta',
+    instantDesc: "Preferisci prenotare subito senza aspettare? Usa i pulsanti qui sotto per una conferma immediata tramite il nostro sistema di prenotazione partner.",
+    aptLabel: 'Appartamento',
+    bookNow: 'PRENOTA CON CONFERMA DIRETTA',
+    soon: 'Prenotazione diretta in arrivo — contattaci sopra',
+    backHome: 'Torna alla home',
+    typeStandard: 'Appartamento Standard',
+    typeExecutive: 'Executive — piscina privata',
+    typeMobilhome: 'Casa mobile — piscina privata',
+  },
+  es: {
+    pageTitle: 'Reserve su estancia',
+    pageSubtitle: 'Dos maneras fáciles de reservar su apartamento en Villa Smeralda',
+    preferredBadge: 'Recomendado — Servicio personal',
+    preferredTitle: 'Reserve directamente con nosotros',
+    preferredDesc: 'Envíenos su solicitud a través de nuestro formulario o WhatsApp y confirmaremos personalmente su reserva. Mejor precio garantizado — sin comisiones.',
+    fillForm: 'Rellenar el formulario de solicitud',
+    whatsappCta: 'Envíenos un WhatsApp',
+    orDivider: 'O — Reserva instantánea',
+    instantBadge: 'Disponible 24/7',
+    instantTitle: 'Reserve al instante con confirmación directa',
+    instantDesc: '¿Prefiere reservar ahora mismo sin esperar? Utilice los botones a continuación para confirmación instantánea a través de nuestro sistema de reservas asociado.',
+    aptLabel: 'Apartamento',
+    bookNow: 'RESERVAR CON CONFIRMACIÓN DIRECTA',
+    soon: 'Reserva directa próximamente — contáctenos arriba',
+    backHome: 'Volver al inicio',
+    typeStandard: 'Apartamento Estándar',
+    typeExecutive: 'Executive — piscina privada',
+    typeMobilhome: 'Casa móvil — piscina privada',
+  },
+  de: {
+    pageTitle: 'Buchen Sie Ihren Aufenthalt',
+    pageSubtitle: 'Zwei einfache Wege, Ihr Apartment in der Villa Smeralda zu reservieren',
+    preferredBadge: 'Empfohlen — Persönlicher Service',
+    preferredTitle: 'Buchen Sie direkt bei uns',
+    preferredDesc: 'Senden Sie uns Ihre Anfrage über das Formular oder WhatsApp und wir bestätigen Ihre Buchung persönlich. Bestpreisgarantie — keine Plattformgebühren.',
+    fillForm: 'Anfrageformular ausfüllen',
+    whatsappCta: 'WhatsApp an uns senden',
+    orDivider: 'ODER — Sofortbuchung',
+    instantBadge: 'Rund um die Uhr verfügbar',
+    instantTitle: 'Sofort buchen mit direkter Bestätigung',
+    instantDesc: 'Möchten Sie lieber sofort buchen, ohne zu warten? Nutzen Sie die Schaltflächen unten für eine sofortige Bestätigung über unser Partner-Buchungssystem.',
+    aptLabel: 'Apartment',
+    bookNow: 'MIT DIREKTER BESTÄTIGUNG BUCHEN',
+    soon: 'Direktbuchung bald verfügbar — kontaktieren Sie uns oben',
+    backHome: 'Zurück zur Startseite',
+    typeStandard: 'Standard-Apartment',
+    typeExecutive: 'Executive — Privatpool',
+    typeMobilhome: 'Mobilheim — Privatpool',
+  },
+};
+
+const ReservePage = () => {
+  const [lang, setLang] = useState(() => {
+    try { return localStorage.getItem('smeralda_lang') || 'en'; } catch { return 'en'; }
+  });
+  const r = RESERVE_T[lang] || RESERVE_T.en;
+  const apartmentImage = (apt) => {
+    if (apt.type === 'executive') return IMAGES.executive[0];
+    if (apt.type === 'mobilhome') return IMAGES.mobilhome[0];
+    return IMAGES.standard[(apt.num - 1) % IMAGES.standard.length];
+  };
+
+  // Track visit
+  useEffect(() => {
+    const API = process.env.REACT_APP_BACKEND_URL;
+    fetch(`${API}/api/public/track-visit`, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ site_slug: 'smeralda', path: '/reserve' })
+    }).catch(() => {});
+    window.scrollTo(0, 0);
+  }, []);
+
+  const setLanguage = (code) => {
+    setLang(code);
+    try { localStorage.setItem('smeralda_lang', code); } catch {}
+  };
+
+  const languages = [
+    { code: 'en', label: 'EN' }, { code: 'nl', label: 'NL' }, { code: 'fr', label: 'FR' },
+    { code: 'it', label: 'IT' }, { code: 'es', label: 'ES' }, { code: 'de', label: 'DE' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      <SEO title={`${RESERVE_T.en.pageTitle} | Villa Smeralda`} description="Book your stay at Villa Smeralda Sardinia — directly with us or with instant confirmation." url="https://smeraldavacanze.it/reserve" siteName={SEO_CONFIG.siteName} />
+
+      {/* Top bar */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-30 backdrop-blur-sm bg-white/90">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
+          <a href="/" className="flex items-center gap-3">
+            <img src={IMAGES.logo} alt="Villa Smeralda" className="h-9 sm:h-11 w-auto" />
+          </a>
+          <div className="flex items-center gap-1">
+            {languages.map(l => (
+              <button key={l.code} onClick={() => setLanguage(l.code)}
+                data-testid={`reserve-lang-${l.code}`}
+                className={`px-2.5 py-1 text-xs font-semibold rounded transition-colors ${lang === l.code ? 'bg-slate-900 text-white' : 'text-slate-500 hover:text-slate-900'}`}>
+                {l.label}
+              </button>
+            ))}
+          </div>
+        </div>
+      </header>
+
+      {/* Hero */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
+        <h1 className="text-3xl sm:text-5xl font-bold text-slate-900 mb-3 tracking-tight">{r.pageTitle}</h1>
+        <p className="text-base sm:text-lg text-slate-600">{r.pageSubtitle}</p>
+      </section>
+
+      {/* OPTION 1 — Preferred: form + WhatsApp */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-8">
+        <div className="bg-gradient-to-br from-amber-50 to-orange-50 border-2 border-amber-300 rounded-3xl p-6 sm:p-10 shadow-lg">
+          <div className="flex items-center justify-center mb-4">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-200 text-amber-900 text-xs font-bold uppercase tracking-wider">
+              <Star className="w-3.5 h-3.5 fill-amber-700 text-amber-700" />
+              {r.preferredBadge}
+            </span>
+          </div>
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3 text-center">{r.preferredTitle}</h2>
+          <p className="text-slate-700 text-center max-w-2xl mx-auto mb-8 leading-relaxed">{r.preferredDesc}</p>
+          <div className="grid sm:grid-cols-2 gap-3 max-w-xl mx-auto">
+            <a href="/#contact" data-testid="reserve-cta-form"
+              className="inline-flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white px-6 py-4 rounded-2xl font-semibold transition-all hover:scale-[1.02] shadow-md">
+              <Mail className="w-5 h-5" /> {r.fillForm}
+            </a>
+            <a href="https://wa.me/32494516064?text=Hello%2C%20I%20would%20like%20to%20make%20a%20reservation%20at%20Villa%20Smeralda."
+              target="_blank" rel="noopener noreferrer" data-testid="reserve-cta-whatsapp"
+              className="inline-flex items-center justify-center gap-2 bg-green-500 hover:bg-green-600 text-white px-6 py-4 rounded-2xl font-semibold transition-all hover:scale-[1.02] shadow-md">
+              <Phone className="w-5 h-5" /> {r.whatsappCta}
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Divider */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-8">
+        <div className="flex items-center gap-4">
+          <div className="flex-1 h-px bg-slate-200"></div>
+          <span className="text-xs sm:text-sm font-bold uppercase tracking-widest text-slate-400">{r.orDivider}</span>
+          <div className="flex-1 h-px bg-slate-200"></div>
+        </div>
+      </div>
+
+      {/* OPTION 2 — Instant booking per apartment */}
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 pb-16">
+        <div className="text-center mb-8">
+          <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-100 text-teal-800 text-xs font-bold uppercase tracking-wider mb-3">
+            <CheckCircle className="w-3.5 h-3.5" /> {r.instantBadge}
+          </span>
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-3">{r.instantTitle}</h2>
+          <p className="text-slate-600 max-w-2xl mx-auto leading-relaxed">{r.instantDesc}</p>
+        </div>
+
+        <div className="space-y-4">
+          {APARTMENT_BOOKING.map(apt => {
+            const typeLabel = apt.type === 'executive' ? r.typeExecutive : apt.type === 'mobilhome' ? r.typeMobilhome : r.typeStandard;
+            return (
+              <div key={apt.num} data-testid={`reserve-apt-${apt.num}`}
+                className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-shadow flex flex-col sm:flex-row">
+                <div className="sm:w-56 h-40 sm:h-auto flex-shrink-0">
+                  <img src={apartmentImage(apt)} alt={`${r.aptLabel} ${apt.num}`} className="w-full h-full object-cover" loading="lazy" />
+                </div>
+                <div className="flex-1 p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-4">
+                  <div className="flex-1">
+                    <div className="text-xs uppercase tracking-wider text-slate-400 font-semibold mb-1">{r.aptLabel}</div>
+                    <h3 className="text-2xl font-bold text-slate-900 mb-1">N° {apt.num}</h3>
+                    <p className="text-sm text-slate-600">{typeLabel}</p>
+                  </div>
+                  <div className="sm:w-72 flex-shrink-0">
+                    {apt.url ? (
+                      <a href={apt.url} target="_blank" rel="noopener noreferrer"
+                        data-testid={`reserve-book-${apt.num}`}
+                        className="block w-full text-center bg-teal-700 hover:bg-teal-800 text-white px-5 py-3.5 rounded-xl text-sm font-bold tracking-wide transition-all hover:scale-[1.02] shadow-md">
+                        {r.bookNow}
+                      </a>
+                    ) : (
+                      <div className="text-xs text-slate-500 italic text-center p-3 bg-slate-50 rounded-xl border border-dashed border-slate-300">
+                        {r.soon}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="text-center mt-12">
+          <a href="/" className="inline-flex items-center gap-2 text-slate-500 hover:text-slate-900 text-sm font-medium transition-colors">
+            ← {r.backHome}
+          </a>
+        </div>
+      </section>
+    </div>
+  );
+};
+
 // Main App Component with Routes
 const SmeraldaApp = () => {
   return (
     <Routes>
       <Route index element={<SmeraldaHomePage />} />
+      <Route path="reserve" element={<ReservePage />} />
       <Route path="confirmation" element={<ConfirmationPage />} />
       <Route path="*" element={<SmeraldaHomePage />} />
     </Routes>
