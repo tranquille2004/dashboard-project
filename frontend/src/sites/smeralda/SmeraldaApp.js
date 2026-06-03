@@ -1518,12 +1518,12 @@ const SmeraldaHomePage = () => {
 // ============================================================
 const APARTMENT_BOOKING = [
   { num: 1, url: 'https://www.vacation-bookings.com/d/13019778?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
-  { num: 2, url: null, type: 'standard' },
-  { num: 3, url: null, type: 'standard' },
+  { num: 2, url: 'https://www.vacation-bookings.com/d/13139751?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
+  { num: 3, url: 'https://www.vacation-bookings.com/d/13083100?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
   { num: 4, url: 'https://www.vacation-bookings.com/d/13140325?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'standard' },
   { num: 5, url: null, type: 'standard' },
-  { num: 6, url: 'https://www.vacation-bookings.com/d/20586572?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'executive' },
-  { num: 7, url: null, type: 'mobilhome' },
+  { num: 6, url: 'https://www.vacation-bookings.com/d/13140346?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'executive' },
+  { num: 7, url: 'https://www.vacation-bookings.com/d/20586571?currency=EUR&locale=fr-FR&salesChannelId=HOLIDU_HOST_WEBSITE&colorPrimary=%23024251&colorPrimaryDark=%23003644&colorCTA=%2300809D&colorCTAActive=%2300728f&colorCTAText=%23FFFFFF&title=villasmeraldatelti&ccons=MTc4MDQ1NTgxMjUxMjoxMTE%3D&ctx=21ef5ddb-1925-485b-b60a-0121473c8e81', type: 'mobilhome' },
 ];
 
 const RESERVE_T = {
