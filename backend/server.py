@@ -2358,9 +2358,18 @@ async def track_visit_analytics(request: Request):
         if _is_bot_ua(user_agent):
             return {"ok": True, "filtered": "bot"}
 
-        ip = request.headers.get("x-forwarded-for", request.headers.get("x-real-ip", "unknown"))
-        if "," in ip:
-            ip = ip.split(",")[0].strip()
+        # Get real visitor IP — Cloudflare proxy overrides X-Forwarded-For, so prefer cf-connecting-ip
+        cf_ip = request.headers.get("cf-connecting-ip")
+        real_ip = request.headers.get("x-real-ip")
+        forwarded = request.headers.get("x-forwarded-for", "")
+        if cf_ip and cf_ip.strip():
+            ip = cf_ip.strip()
+        elif real_ip and real_ip.strip():
+            ip = real_ip.strip()
+        elif forwarded:
+            ip = forwarded.split(",")[0].strip()
+        else:
+            ip = "unknown"
 
         today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
         
@@ -2640,9 +2649,19 @@ async def track_visit(request: Request):
     if _is_bot_ua(user_agent):
         return {"status": "filtered_bot"}
 
-    # Get visitor IP
+    # Get visitor IP — Cloudflare and other proxies set the real client IP in different headers.
+    # Priority: cf-connecting-ip (Cloudflare) > x-real-ip > x-forwarded-for (first IP in chain) > request.client.host
+    cf_ip = request.headers.get("cf-connecting-ip")
+    real_ip = request.headers.get("x-real-ip")
     forwarded = request.headers.get("x-forwarded-for")
-    visitor_ip = forwarded.split(",")[0].strip() if forwarded else request.client.host
+    if cf_ip and cf_ip.strip():
+        visitor_ip = cf_ip.strip()
+    elif real_ip and real_ip.strip():
+        visitor_ip = real_ip.strip()
+    elif forwarded:
+        visitor_ip = forwarded.split(",")[0].strip()
+    else:
+        visitor_ip = request.client.host if request.client else "unknown"
 
     # Normalize path so "/site/x/" and "/site/x" don't double-count
     normalized_path = page_path.rstrip("/") or "/"
@@ -2701,6 +2720,63 @@ async def track_visit(request: Request):
         return {"status": "error"}
 
     return {"status": "tracked", "path": normalized_path}
+
+
+@admin_router.get("/track-debug/{site_slug}")
+async def get_track_debug(site_slug: str, limit: int = 30, user: User = Depends(get_current_user)):
+    """Diagnostic: returns the last N raw visit records for a site, including IP, country, UA, referer.
+    Use this to see exactly what was logged when a specific visitor came in.
+    NO bot/IP filtering applied — shows raw data."""
+    visits = await db.site_visits.find(
+        {"site_slug": site_slug},
+        {"_id": 0}
+    ).sort("timestamp", -1).limit(limit).to_list(limit)
+    return {
+        "site_slug": site_slug,
+        "count": len(visits),
+        "visits": visits,
+    }
+
+
+@admin_router.get("/track-debug-headers")
+async def track_debug_headers(request: Request, user: User = Depends(get_current_user)):
+    """Diagnostic: echoes all request headers + the IP that our track-visit logic would extract.
+    Open this URL in the same browser/device as the visitor to verify what would be tracked."""
+    cf_ip = request.headers.get("cf-connecting-ip", "")
+    real_ip = request.headers.get("x-real-ip", "")
+    forwarded = request.headers.get("x-forwarded-for", "")
+    if cf_ip.strip():
+        chosen_ip = cf_ip.strip()
+        source = "cf-connecting-ip"
+    elif real_ip.strip():
+        chosen_ip = real_ip.strip()
+        source = "x-real-ip"
+    elif forwarded:
+        chosen_ip = forwarded.split(",")[0].strip()
+        source = "x-forwarded-for"
+    else:
+        chosen_ip = request.client.host if request.client else "unknown"
+        source = "request.client.host"
+
+    # Try geo-lookup
+    country = "Unknown"
+    country_code = "XX"
+    try:
+        async with httpx.AsyncClient(timeout=3.0) as c:
+            r = await c.get(f"http://ip-api.com/json/{chosen_ip}?fields=country,countryCode,query")
+            if r.status_code == 200:
+                d = r.json()
+                country = d.get("country", "Unknown")
+                country_code = d.get("countryCode", "XX")
+    except Exception:
+        pass
+
+    return {
+        "chosen_ip": chosen_ip,
+        "ip_source_header": source,
+        "geo": {"country": country, "country_code": country_code},
+        "headers": dict(request.headers),
+    }
 
 @admin_router.post("/backfill-analytics")
 async def backfill_analytics(user: User = Depends(get_current_user)):
@@ -3135,8 +3211,17 @@ async def delete_ignored_ip(ip: str, user: User = Depends(get_current_user)):
 @admin_router.get("/my-ip")
 async def get_my_ip(request: Request, user: User = Depends(get_current_user)):
     """Return the public IP of the currently logged-in admin, so they can add it to ignore-list."""
+    cf_ip = request.headers.get("cf-connecting-ip")
+    real_ip = request.headers.get("x-real-ip")
     forwarded = request.headers.get("x-forwarded-for")
-    ip = forwarded.split(",")[0].strip() if forwarded else (request.client.host if request.client else "unknown")
+    if cf_ip and cf_ip.strip():
+        ip = cf_ip.strip()
+    elif real_ip and real_ip.strip():
+        ip = real_ip.strip()
+    elif forwarded:
+        ip = forwarded.split(",")[0].strip()
+    else:
+        ip = request.client.host if request.client else "unknown"
     return {"ip": ip}
 
 

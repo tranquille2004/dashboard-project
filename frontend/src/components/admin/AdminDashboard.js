@@ -580,6 +580,21 @@ const AdminDashboard = () => {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-sm font-medium transition-colors">
             <Bug className="w-4 h-4" /> Bots opruimen
           </button>
+          <button data-testid="admin-tool-track-debug"
+            onClick={async () => {
+              const slug = window.prompt('Welke site slug? (bv. smeralda, fworks, ilsiciliano)');
+              if (!slug) return;
+              try {
+                const res = await axios.get(`${API}/admin/track-debug/${slug}?limit=30`, { withCredentials: true });
+                const v = res.data.visits || [];
+                if (v.length === 0) { alert(`Geen recente bezoeken voor "${slug}"`); return; }
+                const lines = v.map(x => `${x.timestamp?.slice(0,19)}  ${x.country || 'Unknown'}  ${x.visitor_ip}  ${x.path}`).join('\n');
+                alert(`Laatste ${v.length} bezoeken voor "${slug}" (rauw, GEEN filters):\n\n` + lines);
+              } catch (e) { alert('Fout: ' + (e.response?.data?.detail || e.message)); }
+            }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-sm font-medium transition-colors">
+            <Activity className="w-4 h-4" /> Track Debug
+          </button>
           <button data-testid="admin-tool-ignored-ips"
             onClick={() => { setShowIgnoredIpsModal(true); loadIgnoredIps(); }}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium transition-colors">
