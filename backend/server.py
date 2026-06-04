@@ -576,6 +576,57 @@ async def check_upcoming_invoices():
     except Exception as e:
         logging.error(f"Upcoming invoices check failed: {e}")
 
+async def daily_backfill_geo():
+    """Scheduled job: refresh geo for all visitor IPs once a day (03:00 UTC).
+    Flags Cloudflare-relay IPs and re-resolves countries via ip-api.com."""
+    logging.info("Daily geo backfill started...")
+    try:
+        ips = await db.site_visits.distinct("visitor_ip")
+        ips = [i for i in ips if i and i != "unknown"]
+        updated = 0
+        cf_flagged = 0
+        for idx, ip in enumerate(ips):
+            if _is_cloudflare_relay_ip(ip):
+                r = await db.site_visits.update_many(
+                    {"visitor_ip": ip, "country": {"$ne": "Proxy (Cloudflare)"}},
+                    {"$set": {"country": "Proxy (Cloudflare)", "country_code": "PX"}},
+                )
+                cf_flagged += r.modified_count
+                await db.ip_countries.update_one(
+                    {"ip": ip},
+                    {"$set": {"ip": ip, "country": "Proxy (Cloudflare)", "code": "PX"}},
+                    upsert=True,
+                )
+                continue
+            if idx > 0 and idx % 40 == 0:
+                await asyncio.sleep(60)
+            try:
+                async with httpx.AsyncClient(timeout=3.0) as c:
+                    resp = await c.get(f"http://ip-api.com/json/{ip}?fields=country,countryCode,status")
+                    if resp.status_code != 200:
+                        continue
+                    d = resp.json()
+                    if d.get("status") != "success":
+                        continue
+                    country = d.get("country", "Unknown")
+                    code = d.get("countryCode", "XX")
+            except Exception:
+                continue
+            r = await db.site_visits.update_many(
+                {"visitor_ip": ip, "country": {"$ne": country}},
+                {"$set": {"country": country, "country_code": code}},
+            )
+            updated += r.modified_count
+            await db.ip_countries.update_one(
+                {"ip": ip},
+                {"$set": {"ip": ip, "country": country, "code": code}},
+                upsert=True,
+            )
+        logging.info(f"Daily geo backfill done: {len(ips)} IPs checked, {updated} records updated, {cf_flagged} flagged as Cloudflare proxy")
+    except Exception as e:
+        logging.error(f"Daily geo backfill failed: {e}")
+
+
 # Lifespan context manager for startup/shutdown
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -595,8 +646,10 @@ async def lifespan(app: FastAPI):
     scheduler.add_job(check_visitor_activity, 'interval', minutes=30, id='visitor_check')
     # Daily billing alert at 09:00 UTC for invoices due in exactly 7 days
     scheduler.add_job(check_upcoming_invoices, 'cron', hour=9, minute=0, id='billing_check')
+    # Daily geo backfill at 03:00 UTC — re-resolves countries and flags Cloudflare proxy IPs
+    scheduler.add_job(daily_backfill_geo, 'cron', hour=3, minute=0, id='geo_backfill')
     scheduler.start()
-    logging.info("Background scheduler started - Health: 5min, Visitors: 30min, Billing: daily 09:00 UTC")
+    logging.info("Background scheduler started - Health: 5min, Visitors: 30min, Billing: 09:00 UTC, Geo backfill: 03:00 UTC")
     
     # Seed sites in background - don't block server startup
     asyncio.create_task(seed_sites_on_startup())
