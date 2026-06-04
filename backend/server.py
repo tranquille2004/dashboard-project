@@ -2740,8 +2740,7 @@ async def get_track_debug(site_slug: str, limit: int = 30, user: User = Depends(
 
 @admin_router.get("/track-debug-headers")
 async def track_debug_headers(request: Request, user: User = Depends(get_current_user)):
-    """Diagnostic: echoes all request headers + the IP that our track-visit logic would extract.
-    Open this URL in the same browser/device as the visitor to verify what would be tracked."""
+    """Diagnostic: echoes all request headers + the IP that our track-visit logic would extract."""
     cf_ip = request.headers.get("cf-connecting-ip", "")
     real_ip = request.headers.get("x-real-ip", "")
     forwarded = request.headers.get("x-forwarded-for", "")
@@ -2758,7 +2757,6 @@ async def track_debug_headers(request: Request, user: User = Depends(get_current
         chosen_ip = request.client.host if request.client else "unknown"
         source = "request.client.host"
 
-    # Try geo-lookup
     country = "Unknown"
     country_code = "XX"
     try:
@@ -2776,6 +2774,125 @@ async def track_debug_headers(request: Request, user: User = Depends(get_current
         "ip_source_header": source,
         "geo": {"country": country, "country_code": country_code},
         "headers": dict(request.headers),
+    }
+
+
+# Known Cloudflare IPv4 ranges (https://www.cloudflare.com/ips/) — used to detect proxy IPs in historic data
+_CLOUDFLARE_IPV4_PREFIXES = (
+    "173.245.48.", "103.21.244.", "103.22.200.", "103.31.4.",
+    "141.101.64.", "141.101.65.", "108.162.192.", "108.162.193.",
+    "190.93.240.", "188.114.96.", "188.114.97.", "197.234.240.",
+    "198.41.128.", "162.158.", "104.16.", "104.17.", "104.18.", "104.19.",
+    "104.20.", "104.21.", "104.22.", "104.23.", "104.24.", "104.25.",
+    "104.26.", "104.27.", "104.28.", "172.64.", "172.65.", "172.66.",
+    "172.67.", "172.68.", "172.69.", "172.70.", "172.71.",
+    "131.0.72.", "131.0.73.", "131.0.74.", "131.0.75.",
+)
+
+
+def _is_cloudflare_relay_ip(ip: str) -> bool:
+    """Return True if the IP appears to be a Cloudflare edge/relay IP (not real client)."""
+    if not ip:
+        return False
+    return any(ip.startswith(p) for p in _CLOUDFLARE_IPV4_PREFIXES)
+
+
+@admin_router.post("/backfill-geo")
+async def backfill_geo(payload: Optional[Dict[str, Any]] = None, user: User = Depends(get_current_user)):
+    """One-time backfill: re-runs geo-lookup for all distinct visitor IPs in site_visits.
+    Updates 'country' / 'country_code' where new lookup gives a different result.
+    Also flags records pointing at known Cloudflare relay IPs as country='Proxy' so they
+    don't pollute country charts.
+    Rate-limited to ~40 requests/min to respect ip-api.com free tier.
+
+    Body (optional): { 'site_slug': 'smeralda' } to scope to one site, otherwise all sites.
+    """
+    site_slug = (payload or {}).get("site_slug")
+    only_unknown = (payload or {}).get("only_unknown", False)
+
+    # Collect distinct IPs
+    match: Dict[str, Any] = {}
+    if site_slug:
+        match["site_slug"] = site_slug
+    if only_unknown:
+        match["country"] = {"$in": ["Unknown", "", None]}
+
+    ips = await db.site_visits.distinct("visitor_ip", match)
+    ips = [i for i in ips if i and i != "unknown"]
+    logging.info(f"backfill_geo: re-checking {len(ips)} distinct IPs for site_slug={site_slug or 'ALL'}")
+
+    updated_records = 0
+    flagged_cloudflare = 0
+    new_geo_resolved = 0
+    by_country_delta: Dict[str, int] = {}
+    sample_changes: List[Dict[str, Any]] = []
+
+    for idx, ip in enumerate(ips):
+        # Detect Cloudflare relay IPs first (no API call needed)
+        if _is_cloudflare_relay_ip(ip):
+            r = await db.site_visits.update_many(
+                {"visitor_ip": ip, **({"site_slug": site_slug} if site_slug else {})},
+                {"$set": {"country": "Proxy (Cloudflare)", "country_code": "PX"}},
+            )
+            flagged_cloudflare += r.modified_count
+            await db.ip_countries.update_one(
+                {"ip": ip},
+                {"$set": {"ip": ip, "country": "Proxy (Cloudflare)", "code": "PX"}},
+                upsert=True,
+            )
+            continue
+
+        # Otherwise call geo API (rate-limit: sleep every 40 calls)
+        if idx > 0 and idx % 40 == 0:
+            await asyncio.sleep(60)
+
+        try:
+            async with httpx.AsyncClient(timeout=3.0) as c:
+                resp = await c.get(f"http://ip-api.com/json/{ip}?fields=country,countryCode,status")
+                if resp.status_code != 200:
+                    continue
+                d = resp.json()
+                if d.get("status") != "success":
+                    continue
+                country = d.get("country", "Unknown")
+                code = d.get("countryCode", "XX")
+        except Exception:
+            continue
+
+        # Find current record(s) to see what we're changing
+        existing_doc = await db.site_visits.find_one(
+            {"visitor_ip": ip, **({"site_slug": site_slug} if site_slug else {})},
+            {"_id": 0, "country": 1}
+        )
+        old_country = (existing_doc or {}).get("country", "Unknown")
+
+        if country and country != old_country:
+            r = await db.site_visits.update_many(
+                {"visitor_ip": ip, **({"site_slug": site_slug} if site_slug else {})},
+                {"$set": {"country": country, "country_code": code}},
+            )
+            updated_records += r.modified_count
+            if old_country in ("Unknown", "", None):
+                new_geo_resolved += r.modified_count
+            by_country_delta[country] = by_country_delta.get(country, 0) + r.modified_count
+            if len(sample_changes) < 20:
+                sample_changes.append({"ip": ip, "old": old_country, "new": country, "rows": r.modified_count})
+
+        # Cache the result
+        await db.ip_countries.update_one(
+            {"ip": ip},
+            {"$set": {"ip": ip, "country": country, "code": code}},
+            upsert=True,
+        )
+
+    return {
+        "scope": site_slug or "ALL",
+        "distinct_ips_checked": len(ips),
+        "records_updated_geo": updated_records,
+        "records_flagged_cloudflare_proxy": flagged_cloudflare,
+        "records_resolved_from_unknown": new_geo_resolved,
+        "by_new_country": by_country_delta,
+        "sample_changes": sample_changes,
     }
 
 @admin_router.post("/backfill-analytics")

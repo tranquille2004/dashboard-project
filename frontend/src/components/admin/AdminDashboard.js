@@ -595,6 +595,40 @@ const AdminDashboard = () => {
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-sm font-medium transition-colors">
             <Activity className="w-4 h-4" /> Track Debug
           </button>
+          <button data-testid="admin-tool-backfill-geo"
+            onClick={async () => {
+              const slug = window.prompt(
+                'Historische geo-data herstellen.\n\n' +
+                '• Records met Cloudflare-relay IP → gemarkeerd als "Proxy (Cloudflare)"\n' +
+                '• Records met onbekend land → opnieuw geo-locate via ip-api.com\n\n' +
+                'Welke site-slug? (laat LEEG voor ALLE sites, kan enkele minuten duren)',
+                ''
+              );
+              if (slug === null) return;
+              if (!window.confirm(`Backfill starten voor ${slug || 'ALLE sites'}? Dit kan even duren.`)) return;
+              try {
+                const res = await axios.post(`${API}/admin/backfill-geo`,
+                  slug ? { site_slug: slug.trim() } : {},
+                  { withCredentials: true, timeout: 300000 }
+                );
+                const d = res.data;
+                const sample = (d.sample_changes || []).slice(0, 10).map(s => `  ${s.ip} : ${s.old} → ${s.new} (${s.rows} rows)`).join('\n');
+                alert(
+                  `Backfill klaar voor ${d.scope}:\n\n` +
+                  `• ${d.distinct_ips_checked} unieke IPs gecontroleerd\n` +
+                  `• ${d.records_updated_geo} records geüpdate met nieuw land\n` +
+                  `• ${d.records_flagged_cloudflare_proxy} records gemarkeerd als Cloudflare proxy\n` +
+                  `• ${d.records_resolved_from_unknown} records (Unknown → echt land)\n\n` +
+                  (sample ? `Voorbeeld wijzigingen:\n${sample}` : '')
+                );
+                window.location.reload();
+              } catch (e) {
+                alert('Fout: ' + (e.response?.data?.detail || e.message));
+              }
+            }}
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-sm font-medium transition-colors">
+            <MapPin className="w-4 h-4" /> Backfill Geo
+          </button>
           <button data-testid="admin-tool-ignored-ips"
             onClick={() => { setShowIgnoredIpsModal(true); loadIgnoredIps(); }}
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-medium transition-colors">
