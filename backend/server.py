@@ -1766,6 +1766,8 @@ DOMAIN_SLUG_MAP = {
     'rccb.fworksbuilders.com': 'rccb',
     'rccbgroup.be': 'rccb',
     'www.rccbgroup.be': 'rccb',
+    'rccbgroup.com': 'rccb',
+    'www.rccbgroup.com': 'rccb',
     'ilsiciliano.fworksbuilders.com': 'ilsiciliano',
     'ilsiciliano-santodomingo.com': 'ilsiciliano',
     'www.ilsiciliano-santodomingo.com': 'ilsiciliano',
@@ -1840,7 +1842,7 @@ SITE_SEO_DATA = {
         'pages': ['/', '/habitaciones', '/precios', '/fotos', '/restaurante', '/atractivos', '/contacto']
     },
     'rccb': {
-        'domain': 'www.rccbgroup.be',
+        'domain': 'rccbgroup.com',
         'name': 'RCCB - Retail Cleaning Care Belgium | Société de nettoyage en Belgique',
         'description': "RCCB — Retail Cleaning Care Belgium : société de nettoyage professionnel en Belgique. Bureaux, commerces, syndics, lavage de vitres, désinfection et entretien quotidien. Fiable, rapide et efficace.",
         'keywords': "société de nettoyage Belgique, entreprise de nettoyage Bruxelles, nettoyage professionnel Belgique, nettoyage bureaux, nettoyage commerces, nettoyage syndic, lavage de vitres Belgique, désinfection professionnelle, entretien immeubles, RCCB, Retail Cleaning Care Belgium, nettoyage Zaventem, nettoyage Brabant flamand",
