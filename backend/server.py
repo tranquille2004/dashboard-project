@@ -1867,7 +1867,9 @@ SITE_SEO_DATA = {
 @api_router.get("/robots.txt")
 async def get_robots_txt(request: Request):
     """Dynamic robots.txt based on request host"""
-    host = request.headers.get('host', '').lower().replace(':443', '').replace(':80', '')
+    host = (request.headers.get('x-forwarded-host')
+            or request.query_params.get('host')
+            or request.headers.get('host', '')).lower().replace(':443', '').replace(':80', '')
     slug = DOMAIN_SLUG_MAP.get(host, 'fworks')
     seo_data = SITE_SEO_DATA.get(slug, SITE_SEO_DATA['fworks'])
     domain = seo_data['domain']
@@ -1882,7 +1884,9 @@ Sitemap: https://{domain}/sitemap.xml
 @api_router.get("/sitemap.xml")
 async def get_sitemap_xml(request: Request):
     """Dynamic sitemap.xml based on request host"""
-    host = request.headers.get('host', '').lower().replace(':443', '').replace(':80', '')
+    host = (request.headers.get('x-forwarded-host')
+            or request.query_params.get('host')
+            or request.headers.get('host', '')).lower().replace(':443', '').replace(':80', '')
     slug = DOMAIN_SLUG_MAP.get(host, 'fworks')
     seo_data = SITE_SEO_DATA.get(slug, SITE_SEO_DATA['fworks'])
     domain = seo_data['domain']
