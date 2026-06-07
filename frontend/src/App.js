@@ -53,6 +53,8 @@ const DOMAIN_MAPPING = {
   'rccb.fworksbuilders.com': 'rccb',
   'rccbgroup.be': 'rccb',
   'www.rccbgroup.be': 'rccb',
+  'rccbgroup.com': 'rccb',
+  'www.rccbgroup.com': 'rccb',
   'ilsiciliano.fworksbuilders.com': 'ilsiciliano',
   'ilsiciliano.ec': 'ilsiciliano',
   'www.ilsiciliano.ec': 'ilsiciliano',
