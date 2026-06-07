@@ -32,6 +32,7 @@ Dutch (Nederlands) — always respond in Dutch.
 - ✅ 2026-02: **Track Debug tools** — new admin endpoints `GET /admin/track-debug/{site_slug}` (raw last 30 visits) + `GET /admin/track-debug-headers` (echo request headers + chosen IP + geo lookup). Frontend "Track Debug" button in admin toolbar prompts for site slug and shows raw visit log.
 - ✅ 2026-02: **Historical geo backfill** — new endpoint `POST /admin/backfill-geo` + manual "Backfill Geo" button. Detects Cloudflare relay IPs (24 known IPv4 prefixes) and flags them as `Proxy (Cloudflare)`. Re-resolves all other IPs via ip-api.com.
 - ✅ 2026-02: **Automatic daily geo backfill** — APScheduler cron job `daily_backfill_geo` runs every day at 03:00 UTC. Iterates all distinct visitor_ip values in site_visits, flags Cloudflare proxies, re-runs ip-api.com lookups (rate-limited 40/min). Logs summary on completion.
+- ✅ 2026-02: **Alberto Pantoja campaign song** — sticky audio player bottom-right. Autoplays muted (browser policy), pulsing red mute button hints to enable sound. Visitor can play/pause, mute/unmute, or close (preference stored in localStorage as `ap_song_pref`). Audio file `/audio/albertopantoja/alberto-pantoja-song.mp3` (4.4 MB). 4-language labels.
 
 ## Backlog
 - P2: Refactor `server.py` monolith into `/app/backend/routes/`, `/app/backend/models/`.

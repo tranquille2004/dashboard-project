@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Menu, X, Facebook, Youtube, Instagram, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { Menu, X, Facebook, Youtube, Instagram, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy, Volume2, VolumeX, Play, Pause } from 'lucide-react';
 import { trackVisit } from '@/utils/trackVisit';
 
 // Helper for production image paths
@@ -590,6 +590,129 @@ const SOCIAL_LINKS = {
   instagram: 'https://www.instagram.com/alberto_pantoja_/'
 };
 
+// Sticky audio player — autoplay (muted) + visible controls so visitors can mute/pause
+const SONG_URL = '/audio/albertopantoja/alberto-pantoja-song.mp3';
+const SONG_LABELS = {
+  es: { title: 'Canción de campaña', play: 'Reproducir', pause: 'Pausar', mute: 'Silenciar', unmute: 'Activar audio', close: 'Cerrar' },
+  en: { title: 'Campaign song', play: 'Play', pause: 'Pause', mute: 'Mute', unmute: 'Enable audio', close: 'Close' },
+  nl: { title: 'Campagnelied', play: 'Afspelen', pause: 'Pauze', mute: 'Dempen', unmute: 'Geluid aan', close: 'Sluiten' },
+  fr: { title: 'Chanson de campagne', play: 'Lire', pause: 'Pause', mute: 'Couper', unmute: 'Activer le son', close: 'Fermer' },
+};
+
+const SongPlayer = ({ language = 'es' }) => {
+  const labels = SONG_LABELS[language] || SONG_LABELS.es;
+  const audioRef = useRef(null);
+  // User preference (persisted): null = not yet decided, 'on' = sound on, 'off' = closed by user
+  const [pref, setPref] = useState(() => {
+    try { return localStorage.getItem('ap_song_pref'); } catch (e) { return null; }
+  });
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
+  const [showHint, setShowHint] = useState(false);
+
+  // Autoplay (muted) on mount
+  useEffect(() => {
+    if (pref === 'closed') return; // user explicitly closed before
+    const audio = audioRef.current;
+    if (!audio) return;
+    audio.muted = true;
+    audio.loop = true;
+    audio.volume = 0.6;
+    const p = audio.play();
+    if (p && typeof p.then === 'function') {
+      p.then(() => {
+        setIsPlaying(true);
+        setIsMuted(true);
+        setShowHint(true); // show "Click to enable sound" hint
+      }).catch(() => {
+        // Autoplay blocked even when muted (very rare) — keep paused, show controls
+        setIsPlaying(false);
+      });
+    }
+  }, []);
+
+  const togglePlay = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    if (audio.paused) { audio.play(); setIsPlaying(true); }
+    else { audio.pause(); setIsPlaying(false); }
+  };
+
+  const toggleMute = () => {
+    const audio = audioRef.current;
+    if (!audio) return;
+    const newMuted = !audio.muted;
+    audio.muted = newMuted;
+    setIsMuted(newMuted);
+    setShowHint(false);
+    if (!newMuted) {
+      try { localStorage.setItem('ap_song_pref', 'on'); } catch (e) { /* noop */ }
+      setPref('on');
+      if (audio.paused) { audio.play(); setIsPlaying(true); }
+    }
+  };
+
+  const close = () => {
+    const audio = audioRef.current;
+    if (audio) { audio.pause(); audio.muted = true; }
+    try { localStorage.setItem('ap_song_pref', 'closed'); } catch (e) { /* noop */ }
+    setPref('closed');
+  };
+
+  if (pref === 'closed') return null;
+
+  return (
+    <>
+      <audio ref={audioRef} src={SONG_URL} preload="auto" data-testid="ap-song-audio" />
+      <div
+        className="fixed z-40 bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 bg-white/95 backdrop-blur-md border-2 border-blue-600 rounded-full shadow-2xl px-3 py-2 transition-all hover:scale-[1.02]"
+        data-testid="ap-song-player"
+      >
+        {/* Pulsing music indicator */}
+        <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-blue-800">
+          {isPlaying && !isMuted && (
+            <span className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-50"></span>
+          )}
+          <span className="relative text-white text-lg">♪</span>
+        </div>
+        <span className="hidden sm:inline text-xs font-semibold text-slate-800 max-w-[110px] truncate">
+          {labels.title}
+        </span>
+        <button
+          onClick={togglePlay}
+          data-testid="ap-song-play-pause"
+          aria-label={isPlaying ? labels.pause : labels.play}
+          className="p-1.5 rounded-full hover:bg-blue-50 text-blue-700 transition-colors"
+        >
+          {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+        </button>
+        <button
+          onClick={toggleMute}
+          data-testid="ap-song-mute"
+          aria-label={isMuted ? labels.unmute : labels.mute}
+          className={`p-1.5 rounded-full transition-colors ${isMuted ? 'bg-red-600 hover:bg-red-700 text-white animate-pulse' : 'hover:bg-blue-50 text-blue-700'}`}
+        >
+          {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+        </button>
+        <button
+          onClick={close}
+          data-testid="ap-song-close"
+          aria-label={labels.close}
+          className="p-1 rounded-full hover:bg-slate-100 text-slate-500 transition-colors"
+        >
+          <X className="w-3.5 h-3.5" />
+        </button>
+        {showHint && isMuted && (
+          <span className="absolute -top-9 right-0 text-[11px] bg-blue-900 text-white px-2.5 py-1 rounded-lg whitespace-nowrap shadow-lg">
+            ▼ {labels.unmute}
+          </span>
+        )}
+      </div>
+    </>
+  );
+};
+
+
 const AlbertoPantojaApp = () => {
   const [language, setLanguage] = useState('es');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -635,7 +758,10 @@ const AlbertoPantojaApp = () => {
     <div className="min-h-screen bg-white" style={{ fontFamily: "'Manrope', sans-serif" }}>
       {/* Google Fonts */}
       <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-      
+
+      {/* Sticky audio player — autoplay muted, visitor controls */}
+      <SongPlayer language={language} />
+
       {/* Header - Blue theme */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-xl bg-white/90 border-b border-blue-100 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
