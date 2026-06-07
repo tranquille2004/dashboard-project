@@ -600,43 +600,76 @@ const SONG_URL = (() => {
   return isProduction ? '/api' + SONG_FILENAME : SONG_FILENAME;
 })();
 const SONG_LABELS = {
-  es: { title: 'Canción de campaña', play: 'Reproducir', pause: 'Pausar', mute: 'Silenciar', unmute: 'Activar audio', close: 'Cerrar' },
-  en: { title: 'Campaign song', play: 'Play', pause: 'Pause', mute: 'Mute', unmute: 'Enable audio', close: 'Close' },
-  nl: { title: 'Campagnelied', play: 'Afspelen', pause: 'Pauze', mute: 'Dempen', unmute: 'Geluid aan', close: 'Sluiten' },
-  fr: { title: 'Chanson de campagne', play: 'Lire', pause: 'Pause', mute: 'Couper', unmute: 'Activer le son', close: 'Fermer' },
+  es: { title: 'Canción de campaña', play: 'Reproducir', pause: 'Pausar', mute: 'Silenciar', unmute: 'Activar audio', close: 'Cerrar', volume: 'Volumen' },
+  en: { title: 'Campaign song', play: 'Play', pause: 'Pause', mute: 'Mute', unmute: 'Enable audio', close: 'Close', volume: 'Volume' },
+  nl: { title: 'Campagnelied', play: 'Afspelen', pause: 'Pauze', mute: 'Dempen', unmute: 'Geluid aan', close: 'Sluiten', volume: 'Volume' },
+  fr: { title: 'Chanson de campagne', play: 'Lire', pause: 'Pause', mute: 'Couper', unmute: 'Activer le son', close: 'Fermer', volume: 'Volume' },
 };
 
 const SongPlayer = ({ language = 'es' }) => {
   const labels = SONG_LABELS[language] || SONG_LABELS.es;
   const audioRef = useRef(null);
-  // User preference (persisted): null = not yet decided, 'on' = sound on, 'off' = closed by user
   const [pref, setPref] = useState(() => {
     try { return localStorage.getItem('ap_song_pref'); } catch (e) { return null; }
   });
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(true);
-  const [showHint, setShowHint] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [volume, setVolume] = useState(() => {
+    try {
+      const v = parseFloat(localStorage.getItem('ap_song_volume'));
+      return Number.isFinite(v) && v >= 0 && v <= 1 ? v : 0.25;
+    } catch (e) { return 0.25; }
+  });
+  const [showVolume, setShowVolume] = useState(false);
 
-  // Autoplay (muted) on mount
+  // Autoplay attempt — try unmuted first; if blocked, fall back to muted + unmute on first user interaction
   useEffect(() => {
-    if (pref === 'closed') return; // user explicitly closed before
+    if (pref === 'closed') return;
     const audio = audioRef.current;
     if (!audio) return;
-    audio.muted = true;
     audio.loop = true;
-    audio.volume = 0.6;
-    const p = audio.play();
-    if (p && typeof p.then === 'function') {
-      p.then(() => {
-        setIsPlaying(true);
-        setIsMuted(true);
-        setShowHint(true); // show "Click to enable sound" hint
-      }).catch(() => {
-        // Autoplay blocked even when muted (very rare) — keep paused, show controls
-        setIsPlaying(false);
-      });
+    audio.volume = volume;
+    audio.muted = false;
+
+    const tryUnmuted = audio.play();
+    if (tryUnmuted && typeof tryUnmuted.then === 'function') {
+      tryUnmuted
+        .then(() => {
+          setIsPlaying(true);
+          setIsMuted(false);
+        })
+        .catch(() => {
+          // Browser blocked unmuted autoplay — start muted, then unmute on first user interaction
+          audio.muted = true;
+          setIsMuted(true);
+          audio.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+
+          const unmuteOnInteraction = () => {
+            if (!audio) return;
+            audio.muted = false;
+            setIsMuted(false);
+            if (audio.paused) { audio.play().then(() => setIsPlaying(true)).catch(() => {}); }
+            cleanup();
+          };
+          const cleanup = () => {
+            document.removeEventListener('click', unmuteOnInteraction);
+            document.removeEventListener('touchstart', unmuteOnInteraction);
+            document.removeEventListener('keydown', unmuteOnInteraction);
+            document.removeEventListener('scroll', unmuteOnInteraction);
+          };
+          document.addEventListener('click', unmuteOnInteraction, { once: true });
+          document.addEventListener('touchstart', unmuteOnInteraction, { once: true });
+          document.addEventListener('keydown', unmuteOnInteraction, { once: true });
+          document.addEventListener('scroll', unmuteOnInteraction, { once: true });
+        });
     }
   }, []);
+
+  // Keep audio volume in sync with state
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.volume = volume;
+    try { localStorage.setItem('ap_song_volume', String(volume)); } catch (e) { /* noop */ }
+  }, [volume]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -651,12 +684,7 @@ const SongPlayer = ({ language = 'es' }) => {
     const newMuted = !audio.muted;
     audio.muted = newMuted;
     setIsMuted(newMuted);
-    setShowHint(false);
-    if (!newMuted) {
-      try { localStorage.setItem('ap_song_pref', 'on'); } catch (e) { /* noop */ }
-      setPref('on');
-      if (audio.paused) { audio.play(); setIsPlaying(true); }
-    }
+    if (!newMuted && audio.paused) { audio.play(); setIsPlaying(true); }
   };
 
   const close = () => {
@@ -675,7 +703,6 @@ const SongPlayer = ({ language = 'es' }) => {
         className="fixed z-40 bottom-4 right-4 sm:bottom-6 sm:right-6 flex items-center gap-2 bg-white/95 backdrop-blur-md border-2 border-blue-600 rounded-full shadow-2xl px-3 py-2 transition-all hover:scale-[1.02]"
         data-testid="ap-song-player"
       >
-        {/* Pulsing music indicator */}
         <div className="relative flex items-center justify-center w-8 h-8 rounded-full bg-gradient-to-br from-blue-600 to-blue-800">
           {isPlaying && !isMuted && (
             <span className="absolute inset-0 rounded-full bg-blue-500 animate-ping opacity-50"></span>
@@ -701,6 +728,33 @@ const SongPlayer = ({ language = 'es' }) => {
         >
           {isMuted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
         </button>
+        {/* Volume slider — toggles open on click */}
+        <div className="relative">
+          <button
+            onClick={() => setShowVolume(v => !v)}
+            data-testid="ap-song-volume-toggle"
+            aria-label={labels.volume}
+            className="p-1.5 rounded-full hover:bg-blue-50 text-blue-700 transition-colors text-[10px] font-bold"
+          >
+            {Math.round(volume * 100)}%
+          </button>
+          {showVolume && (
+            <div className="absolute bottom-full right-0 mb-2 bg-white border-2 border-blue-600 rounded-xl shadow-lg p-2 flex items-center gap-2 w-44">
+              <VolumeX className="w-3.5 h-3.5 text-slate-500 flex-shrink-0" />
+              <input
+                type="range"
+                min="0"
+                max="1"
+                step="0.05"
+                value={volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                data-testid="ap-song-volume-slider"
+                className="flex-1 accent-blue-600"
+              />
+              <Volume2 className="w-3.5 h-3.5 text-blue-600 flex-shrink-0" />
+            </div>
+          )}
+        </div>
         <button
           onClick={close}
           data-testid="ap-song-close"
@@ -709,11 +763,6 @@ const SongPlayer = ({ language = 'es' }) => {
         >
           <X className="w-3.5 h-3.5" />
         </button>
-        {showHint && isMuted && (
-          <span className="absolute -top-9 right-0 text-[11px] bg-blue-900 text-white px-2.5 py-1 rounded-lg whitespace-nowrap shadow-lg">
-            ▼ {labels.unmute}
-          </span>
-        )}
       </div>
     </>
   );
