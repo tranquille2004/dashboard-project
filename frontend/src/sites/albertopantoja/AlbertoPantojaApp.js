@@ -591,7 +591,14 @@ const SOCIAL_LINKS = {
 };
 
 // Sticky audio player — autoplay (muted) + visible controls so visitors can mute/pause
-const SONG_URL = '/audio/albertopantoja/alberto-pantoja-song.mp3';
+const SONG_FILENAME = '/audio/albertopantoja/alberto-pantoja-song.mp3';
+// On production (Emergent host), audio is served from object storage via /api prefix
+const SONG_URL = (() => {
+  if (typeof window === 'undefined') return SONG_FILENAME;
+  const isProduction = window.location.hostname.includes('.emergent.host') ||
+                       window.location.hostname.includes('albertopantoja.');
+  return isProduction ? '/api' + SONG_FILENAME : SONG_FILENAME;
+})();
 const SONG_LABELS = {
   es: { title: 'Canción de campaña', play: 'Reproducir', pause: 'Pausar', mute: 'Silenciar', unmute: 'Activar audio', close: 'Cerrar' },
   en: { title: 'Campaign song', play: 'Play', pause: 'Pause', mute: 'Mute', unmute: 'Enable audio', close: 'Close' },

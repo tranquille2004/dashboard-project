@@ -33,6 +33,7 @@ Dutch (Nederlands) — always respond in Dutch.
 - ✅ 2026-02: **Historical geo backfill** — new endpoint `POST /admin/backfill-geo` + manual "Backfill Geo" button. Detects Cloudflare relay IPs (24 known IPv4 prefixes) and flags them as `Proxy (Cloudflare)`. Re-resolves all other IPs via ip-api.com.
 - ✅ 2026-02: **Automatic daily geo backfill** — APScheduler cron job `daily_backfill_geo` runs every day at 03:00 UTC. Iterates all distinct visitor_ip values in site_visits, flags Cloudflare proxies, re-runs ip-api.com lookups (rate-limited 40/min). Logs summary on completion.
 - ✅ 2026-02: **Alberto Pantoja campaign song** — sticky audio player bottom-right. Autoplays muted (browser policy), pulsing red mute button hints to enable sound. Visitor can play/pause, mute/unmute, or close (preference stored in localStorage as `ap_song_pref`). Audio file `/audio/albertopantoja/alberto-pantoja-song.mp3` (4.4 MB). 4-language labels.
+- ✅ 2026-02: **Audio asset migration support** — extended Image Migration system to also scan `/app/frontend/public/audio/` for `mp3, mpeg, wav, ogg, m4a, aac` files. Added `serve_audio` endpoint `GET /api/audio/{path:path}` with HTTP Range support (audio scrubbing). Audio files now flow through the same preview→production storage pipeline as images.
 
 ## Backlog
 - P2: Refactor `server.py` monolith into `/app/backend/routes/`, `/app/backend/models/`.

@@ -75,7 +75,9 @@ def get_object(path: str) -> tuple:
 MIME_TYPES = {
     "jpg": "image/jpeg", "jpeg": "image/jpeg", "png": "image/png",
     "gif": "image/gif", "webp": "image/webp", "pdf": "application/pdf",
-    "mp4": "video/mp4", "webm": "video/webm", "mov": "video/quicktime"
+    "mp4": "video/mp4", "webm": "video/webm", "mov": "video/quicktime",
+    "mp3": "audio/mpeg", "mpeg": "audio/mpeg", "wav": "audio/wav",
+    "ogg": "audio/ogg", "m4a": "audio/mp4", "aac": "audio/aac"
 }
 
 # MongoDB connection
@@ -1953,6 +1955,20 @@ def get_images_folder():
             return p
     return None
 
+
+def get_audio_folder():
+    """Find the audio folder for media files (campaign songs, etc.)"""
+    possible_paths = [
+        ROOT_DIR.parent / "frontend" / "public" / "audio",
+        ROOT_DIR.parent / "frontend" / "build" / "audio",
+        Path("/app/frontend/public/audio"),
+        Path("/app/frontend/build/audio"),
+    ]
+    for p in possible_paths:
+        if p.exists():
+            return p
+    return None
+
 @api_router.get("/admin/migrate/status")
 async def get_migration_status():
     """Get the current status of image migration"""
@@ -2008,52 +2024,55 @@ async def start_image_migration(request: Request):
         image_files = []
         for ext in ['jpg', 'jpeg', 'png', 'gif', 'webp']:
             image_files.extend(frontend_public.rglob(f"*.{ext}"))
-        
-        logging.info(f"Starting migration of {len(image_files)} images from {frontend_public}")
-        
-        for img_path in image_files:
+
+        # Also scan the audio folder (campaign songs, etc.)
+        audio_folder = get_audio_folder()
+        audio_files = []
+        if audio_folder and audio_folder.exists():
+            for ext in ['mp3', 'mpeg', 'wav', 'ogg', 'm4a', 'aac']:
+                audio_files.extend(audio_folder.rglob(f"*.{ext}"))
+            logging.info(f"Including {len(audio_files)} audio files from {audio_folder}")
+
+        logging.info(f"Starting migration of {len(image_files)} images + {len(audio_files)} audio files from {frontend_public}")
+
+        # Helper to migrate one file with a given URL prefix
+        async def _migrate_file(file_path, base_folder, url_prefix):
             try:
-                # Get relative path from images folder
-                rel_path = img_path.relative_to(frontend_public)
-                storage_path = f"{APP_NAME}/images/{rel_path}"
-                
-                # Check if already migrated
-                existing = await db.migrated_images.find_one({"original_path": f"/images/{rel_path}"})
+                rel_path = file_path.relative_to(base_folder)
+                original_path = f"{url_prefix}/{rel_path}"
+                storage_path = f"{APP_NAME}{url_prefix}/{rel_path}"
+
+                existing = await db.migrated_images.find_one({"original_path": original_path})
                 if existing:
                     results["skipped"] += 1
-                    continue
-                
-                # Read file
-                with open(img_path, 'rb') as f:
+                    return
+
+                with open(file_path, 'rb') as f:
                     data = f.read()
-                
-                # Determine content type
-                ext = img_path.suffix.lower().replace('.', '')
+                ext = file_path.suffix.lower().replace('.', '')
                 content_type = MIME_TYPES.get(ext, 'application/octet-stream')
-                
-                # Upload to storage
                 upload_result = put_object(storage_path, data, content_type)
-                
-                # Save to database
+
                 await db.migrated_images.insert_one({
-                    "original_path": f"/images/{rel_path}",
+                    "original_path": original_path,
                     "storage_path": upload_result["path"],
                     "content_type": content_type,
                     "size": upload_result.get("size", len(data)),
                     "migrated_at": datetime.now(timezone.utc).isoformat()
                 })
-                
                 results["success"] += 1
                 results["migrated_files"].append(str(rel_path))
-                
-                # Log progress every 50 files
                 if results["success"] % 50 == 0:
                     logging.info(f"Migration progress: {results['success']} files uploaded")
-                    
             except Exception as e:
                 results["failed"] += 1
-                results["errors"].append(f"{rel_path}: {str(e)}")
-                logging.error(f"Failed to migrate {rel_path}: {e}")
+                results["errors"].append(f"{file_path.name}: {str(e)}")
+                logging.error(f"Failed to migrate {file_path}: {e}")
+
+        for img_path in image_files:
+            await _migrate_file(img_path, frontend_public, "/images")
+        for aud_path in audio_files:
+            await _migrate_file(aud_path, audio_folder, "/audio")
         
         logging.info(f"Migration complete: {results['success']} success, {results['failed']} failed, {results['skipped']} skipped")
         
@@ -2341,6 +2360,84 @@ async def serve_image(path: str, request: Request):
     except Exception as e:
         logging.error(f"Error serving image {path}: {e}")
         raise HTTPException(status_code=500, detail=str(e))
+
+# ============== AUDIO SERVING ==============
+
+@api_router.get("/audio/{path:path}")
+async def serve_audio(path: str, request: Request):
+    """Serve audio files from object storage or local fallback (with Range support for seeking)."""
+    try:
+        data = None
+        content_type = None
+
+        record = await db.migrated_images.find_one({"original_path": f"/audio/{path}"})
+        if record and record.get("storage_path"):
+            try:
+                data, content_type = get_object(record["storage_path"])
+                content_type = record.get("content_type") or content_type
+            except Exception as e:
+                logging.warning(f"Failed to get audio from storage record: {e}")
+
+        if data is None:
+            try:
+                storage_path = f"{APP_NAME}/audio/{path}"
+                data, content_type = get_object(storage_path)
+            except Exception:
+                pass
+
+        if data is None:
+            audio_folder = get_audio_folder()
+            if audio_folder:
+                local_path = audio_folder / path
+                if local_path.exists():
+                    ext = local_path.suffix.lower().replace('.', '')
+                    content_type = MIME_TYPES.get(ext, 'application/octet-stream')
+                    with open(local_path, 'rb') as f:
+                        data = f.read()
+
+        if data is None:
+            raise HTTPException(status_code=404, detail="Audio not found")
+
+        total = len(data)
+        range_header = request.headers.get("range") or request.headers.get("Range")
+        if range_header and range_header.startswith("bytes="):
+            try:
+                spec = range_header.replace("bytes=", "").strip()
+                start_s, end_s = (spec.split("-") + [""])[:2]
+                start = int(start_s) if start_s else 0
+                end = int(end_s) if end_s else total - 1
+                if start < 0: start = 0
+                if end >= total: end = total - 1
+                if start > end:
+                    return Response(status_code=416, headers={"Content-Range": f"bytes */{total}"})
+                chunk = data[start:end + 1]
+                return Response(
+                    content=chunk, status_code=206,
+                    media_type=content_type or 'audio/mpeg',
+                    headers={
+                        "Content-Range": f"bytes {start}-{end}/{total}",
+                        "Accept-Ranges": "bytes",
+                        "Content-Length": str(len(chunk)),
+                        "Cache-Control": "public, max-age=31536000",
+                    },
+                )
+            except (ValueError, IndexError):
+                pass
+
+        return Response(
+            content=data, media_type=content_type or 'audio/mpeg',
+            headers={
+                "Accept-Ranges": "bytes",
+                "Content-Length": str(total),
+                "Cache-Control": "public, max-age=31536000",
+            },
+        )
+    except HTTPException:
+        raise
+    except Exception as e:
+        logging.error(f"Error serving audio {path}: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
 
 # ============== ANALYTICS ==============
 async def _get_ignored_ips() -> List[str]:
