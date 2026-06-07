@@ -13,7 +13,7 @@ import SEO from '@/components/SEO';
 import { IMG } from '@/utils/imageHelper';
 import VideoHero from './VideoHero';
 import {
-  translations, WHATSAPP_NUMBER, WHATSAPP_LINK, EMAIL, PHONE, ADDRESS, VAT, PHOTOS, PARTNERS
+  translations, WHATSAPP_NUMBER, WHATSAPP_LINK, EMAIL, PHONE, ADDRESS, PHOTOS, PARTNERS
 } from './translations';
 
 const BASE = '/site/rccb';
@@ -56,7 +56,7 @@ const useLanguage = () => {
   });
   const changeLang = (l) => {
     setLang(l);
-    try { localStorage.setItem('rccb_lang', l); } catch (e) {}
+    try { localStorage.setItem('rccb_lang', l); } catch (e) { /* noop */ }
   };
   return [lang, changeLang, translations[lang]];
 };
@@ -308,7 +308,6 @@ const Footer = ({ t }) => {
               <Mail className="w-4 h-4 text-emerald-400" />
               <a href={`mailto:${EMAIL}`} className="hover:text-emerald-300 transition-colors">{EMAIL}</a>
             </li>
-            <li className="text-emerald-400/70 text-xs pt-2">{VAT}</li>
           </ul>
         </div>
       </div>
@@ -982,7 +981,6 @@ const ContactPage = ({ t }) => {
                   <Mail className="w-5 h-5 text-emerald-200" />
                   <a href={`mailto:${EMAIL}`} className="text-sm hover:text-emerald-200 transition-colors">{EMAIL}</a>
                 </div>
-                <div className="text-xs text-emerald-200/70 pt-2 border-t border-emerald-500/40">{VAT}</div>
               </div>
             </div>
 
