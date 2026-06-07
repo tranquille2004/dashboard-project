@@ -3492,6 +3492,52 @@ async def get_my_ip(request: Request, user: User = Depends(get_current_user)):
     return {"ip": ip}
 
 
+# ============== HIDDEN VIDEOS (site-owner can hide broken embeds) ==============
+
+@public_router.get("/hidden-videos/{site_slug}")
+async def get_hidden_videos(site_slug: str):
+    """Public — returns list of video URLs that should be filtered out of the site's video grid."""
+    docs = await db.hidden_videos.find({"site_slug": site_slug}, {"_id": 0, "url": 1}).to_list(500)
+    return {"site_slug": site_slug, "urls": [d["url"] for d in docs if d.get("url")]}
+
+
+@admin_router.post("/hide-video")
+async def hide_video(payload: Dict[str, Any], user: User = Depends(get_current_user)):
+    """Mark a video URL as hidden for a given site. Used to remove dead Facebook embeds."""
+    site_slug = (payload.get("site_slug") or "").strip()
+    url = (payload.get("url") or "").strip()
+    if not site_slug or not url:
+        raise HTTPException(status_code=400, detail="site_slug and url required")
+    await db.hidden_videos.update_one(
+        {"site_slug": site_slug, "url": url},
+        {"$set": {
+            "site_slug": site_slug, "url": url,
+            "hidden_at": datetime.now(timezone.utc).isoformat(),
+            "hidden_by": getattr(user, "email", "admin"),
+        }},
+        upsert=True,
+    )
+    return {"ok": True, "site_slug": site_slug, "url": url}
+
+
+@admin_router.delete("/hide-video")
+async def unhide_video(payload: Dict[str, Any], user: User = Depends(get_current_user)):
+    """Restore a previously hidden video URL."""
+    site_slug = (payload.get("site_slug") or "").strip()
+    url = (payload.get("url") or "").strip()
+    if not site_slug or not url:
+        raise HTTPException(status_code=400, detail="site_slug and url required")
+    result = await db.hidden_videos.delete_one({"site_slug": site_slug, "url": url})
+    return {"ok": True, "deleted": result.deleted_count}
+
+
+@admin_router.get("/hidden-videos/{site_slug}")
+async def list_hidden_videos(site_slug: str, user: User = Depends(get_current_user)):
+    """List all hidden video URLs for a site (admin only)."""
+    docs = await db.hidden_videos.find({"site_slug": site_slug}, {"_id": 0}).sort("hidden_at", -1).to_list(500)
+    return {"site_slug": site_slug, "videos": docs}
+
+
 @admin_router.get("/live-visitor")
 async def get_latest_visitor(user: User = Depends(get_current_user)):
     """Get the most recent visitor across all sites (for live animation)"""

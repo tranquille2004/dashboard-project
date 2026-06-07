@@ -1,6 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Menu, X, Facebook, Youtube, Instagram, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy, Volume2, VolumeX, Play, Pause } from 'lucide-react';
+import axios from 'axios';
+import { Menu, X, Facebook, Youtube, Instagram, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy, Volume2, VolumeX, Play, Pause, Trash2 } from 'lucide-react';
 import { trackVisit } from '@/utils/trackVisit';
+
+const API_BASE = (process.env.REACT_APP_BACKEND_URL || '') + '/api';
+
+// Helper to build a canonical key for any video (URL for FB, special key for YouTube)
+const videoKey = (v) => v.type === 'youtube' ? `yt:${v.id}` : v.url;
 
 // Helper for production image paths
 const IMG = (path) => {
@@ -775,7 +781,34 @@ const AlbertoPantojaApp = () => {
   const [activeSection, setActiveSection] = useState('home');
   const [visiblePhotos, setVisiblePhotos] = useState(24);
   const [visibleVideos, setVisibleVideos] = useState(12);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [hiddenKeys, setHiddenKeys] = useState(new Set());
   const t = translations[language];
+
+  // Fetch hidden videos list (public) + check if current user is admin (for hide buttons)
+  useEffect(() => {
+    axios.get(`${API_BASE}/public/hidden-videos/albertopantoja`)
+      .then(r => setHiddenKeys(new Set(r.data?.urls || [])))
+      .catch(() => {});
+    axios.get(`${API_BASE}/auth/me`, { withCredentials: true })
+      .then(r => { if (r.data) setIsAdmin(true); })
+      .catch(() => setIsAdmin(false));
+  }, []);
+
+  const hideVideo = async (video) => {
+    const key = videoKey(video);
+    const niceName = video.title || key;
+    if (!window.confirm(`Video verbergen: "${niceName}"?\n\nDit verbergt de video voor alle bezoekers.`)) return;
+    try {
+      await axios.post(`${API_BASE}/admin/hide-video`,
+        { site_slug: 'albertopantoja', url: key },
+        { withCredentials: true }
+      );
+      setHiddenKeys(prev => new Set(prev).add(key));
+    } catch (e) {
+      alert('Fout: ' + (e.response?.data?.detail || e.message));
+    }
+  };
 
   // Scroll spy
   useEffect(() => {
@@ -1234,12 +1267,23 @@ const AlbertoPantojaApp = () => {
 
           {/* Video Grid */}
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {WORKING_VIDEOS.slice(0, visibleVideos).map((video, index) => (
+            {WORKING_VIDEOS.filter(v => !hiddenKeys.has(videoKey(v))).slice(0, visibleVideos).map((video, index) => (
               <div
                 key={index}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg"
+                className="relative bg-white rounded-2xl overflow-hidden shadow-lg group"
                 data-testid={`video-card-${index}`}
               >
+                {/* Admin-only "Hide" button — appears top-right when logged in */}
+                {isAdmin && (
+                  <button
+                    onClick={() => hideVideo(video)}
+                    data-testid={`video-hide-btn-${index}`}
+                    title="Verberg deze video (alleen jij ziet deze knop)"
+                    className="absolute top-2 right-2 z-10 p-2 rounded-full bg-rose-600 hover:bg-rose-700 text-white shadow-lg opacity-0 group-hover:opacity-100 transition-opacity"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                )}
                 <div className="aspect-video">
                   {video.type === 'youtube' ? (
                     <iframe
@@ -1293,17 +1337,22 @@ const AlbertoPantojaApp = () => {
 
           {/* Load More Button & Counter */}
           <div className="text-center mt-12 space-y-4">
-            {visibleVideos < WORKING_VIDEOS.length && (
-              <button
-                onClick={() => setVisibleVideos(prev => Math.min(prev + 6, WORKING_VIDEOS.length))}
-                data-testid="load-more-videos-btn"
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors mr-4"
-              >
-                {language === 'es' ? `Cargar más videos (${WORKING_VIDEOS.length - visibleVideos} restantes)` : 
-                 language === 'fr' ? `Charger plus de vidéos (${WORKING_VIDEOS.length - visibleVideos} restantes)` :
-                 `Load more videos (${WORKING_VIDEOS.length - visibleVideos} remaining)`}
-              </button>
-            )}
+            {(() => {
+              const visibleList = WORKING_VIDEOS.filter(v => !hiddenKeys.has(videoKey(v)));
+              const remaining = visibleList.length - visibleVideos;
+              if (remaining <= 0) return null;
+              return (
+                <button
+                  onClick={() => setVisibleVideos(prev => Math.min(prev + 6, visibleList.length))}
+                  data-testid="load-more-videos-btn"
+                  className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors mr-4"
+                >
+                  {language === 'es' ? `Cargar más videos (${remaining} restantes)` :
+                   language === 'fr' ? `Charger plus de vidéos (${remaining} restantes)` :
+                   `Load more videos (${remaining} remaining)`}
+                </button>
+              );
+            })()}
             <a
               href={SOCIAL_LINKS.facebook}
               target="_blank"
