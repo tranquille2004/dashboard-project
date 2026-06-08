@@ -2026,9 +2026,9 @@ async def start_image_migration(request: Request):
             "images_folder": str(frontend_public)
         }
         
-        # Find all images
+        # Find all images + PDFs (documents stored alongside images, e.g. restaurant menus)
         image_files = []
-        for ext in ['jpg', 'jpeg', 'png', 'gif', 'webp']:
+        for ext in ['jpg', 'jpeg', 'png', 'gif', 'webp', 'pdf']:
             image_files.extend(frontend_public.rglob(f"*.{ext}"))
 
         # Also scan the audio folder (campaign songs, etc.)

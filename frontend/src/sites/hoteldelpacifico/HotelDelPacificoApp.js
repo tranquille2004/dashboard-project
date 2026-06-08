@@ -3,7 +3,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Menu, X, Phone, Mail, MapPin, Clock, Wifi, Tv, Wind, Car, Coffee, Users, Building, ChevronDown, Facebook, Instagram, Globe, Star, Utensils, Camera, Home as HomeIcon, DollarSign, Mountain, MessageCircle, Sparkles, Shield, Heart, Navigation as NavigationIcon, ShoppingBag } from 'lucide-react';
+import { Menu, X, Phone, Mail, MapPin, Clock, Wifi, Tv, Wind, Car, Coffee, Users, Building, ChevronDown, Facebook, Instagram, Globe, Star, Utensils, Camera, Home as HomeIcon, DollarSign, Mountain, MessageCircle, Sparkles, Shield, Heart, Navigation as NavigationIcon, ShoppingBag, FileText, Download } from 'lucide-react';
 import SEO from '@/components/SEO';
 import URLSync from '@/components/URLSync';
 import { IMG } from '@/utils/imageHelper';
@@ -1285,7 +1285,7 @@ const PatisserieGallery = ({ t, galleryImages }) => {
   );
 };
 
-const RestaurantPage = ({ t, restaurantGallery }) => (
+const RestaurantPage = ({ t, language, restaurantGallery }) => (
   <div className="bg-amber-50/30 pt-20">
     <section className="relative py-6 text-white text-center overflow-hidden">
       {/* Background Image with Green Filter */}
@@ -1351,6 +1351,82 @@ const RestaurantPage = ({ t, restaurantGallery }) => (
             <h3 className="text-2xl font-serif text-emerald-800 mb-4">{t.restaurant.banquet}</h3>
             <p className="text-gray-600 leading-relaxed">{t.restaurant.banquetDesc}</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    {/* Menu PDF section */}
+    <section className="py-24 bg-gradient-to-b from-amber-50/40 to-white">
+      <div className="max-w-5xl mx-auto px-6">
+        <div className="text-center mb-10">
+          <p className="text-amber-600 text-xs tracking-[0.3em] uppercase mb-4">
+            {language === 'en' ? 'Our Menu'
+              : language === 'fr' ? 'Notre Carte'
+              : language === 'it' ? 'Il Nostro Menu'
+              : language === 'de' ? 'Unsere Speisekarte'
+              : 'Nuestra Carta'}
+          </p>
+          <h2 className="text-3xl md:text-4xl font-serif text-emerald-800 mb-4">
+            {language === 'en' ? 'Restaurant Menu'
+              : language === 'fr' ? 'Menu du Restaurant'
+              : language === 'it' ? 'Menu del Ristorante'
+              : language === 'de' ? 'Restaurantmenü'
+              : 'Menú del Restaurante'}
+          </h2>
+          <div className="w-16 h-1 bg-amber-600 mx-auto mb-6"></div>
+          <p className="text-gray-600 leading-relaxed max-w-2xl mx-auto mb-6">
+            {language === 'en' ? 'Browse our full menu with all dishes, drinks and specialties of Restaurante La Orquídea. View directly online or download to print.'
+              : language === 'fr' ? 'Parcourez notre carte complète avec tous les plats, boissons et spécialités du Restaurante La Orquídea. Consultez-la en ligne ou téléchargez-la pour l\'imprimer.'
+              : language === 'it' ? 'Sfoglia il nostro menu completo con tutti i piatti, le bevande e le specialità del Restaurante La Orquídea. Visualizza online o scarica per stampare.'
+              : language === 'de' ? 'Stöbern Sie durch unsere komplette Speisekarte mit allen Gerichten, Getränken und Spezialitäten des Restaurante La Orquídea. Online ansehen oder herunterladen.'
+              : 'Explore nuestra carta completa con todos los platos, bebidas y especialidades del Restaurante La Orquídea. Véala en línea o descárguela para imprimir.'}
+          </p>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <a
+              href={IMG('/images/hoteldelpacifico/documents/menu.pdf')}
+              target="_blank"
+              rel="noopener noreferrer"
+              data-testid="menu-view-fullscreen-btn"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold transition-colors shadow-md"
+            >
+              <FileText className="w-4 h-4" />
+              {language === 'en' ? 'View fullscreen'
+                : language === 'fr' ? 'Plein écran'
+                : language === 'it' ? 'Schermo intero'
+                : language === 'de' ? 'Vollbild'
+                : 'Ver pantalla completa'}
+            </a>
+            <a
+              href={IMG('/images/hoteldelpacifico/documents/menu.pdf')}
+              download="Menu-Hotel-del-Pacifico.pdf"
+              data-testid="menu-download-btn"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold transition-colors shadow-md"
+            >
+              <Download className="w-4 h-4" />
+              {language === 'en' ? 'Download PDF'
+                : language === 'fr' ? 'Télécharger PDF'
+                : language === 'it' ? 'Scarica PDF'
+                : language === 'de' ? 'PDF herunterladen'
+                : 'Descargar PDF'}
+            </a>
+          </div>
+        </div>
+
+        {/* Embedded PDF viewer */}
+        <div className="bg-white rounded-2xl shadow-2xl overflow-hidden border border-amber-200" style={{ height: '85vh', minHeight: '600px' }}>
+          <object
+            data={`${IMG('/images/hoteldelpacifico/documents/menu.pdf')}#view=FitH&toolbar=1&navpanes=0`}
+            type="application/pdf"
+            className="w-full h-full"
+            data-testid="menu-pdf-viewer"
+          >
+            <iframe
+              src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + IMG('/images/hoteldelpacifico/documents/menu.pdf'))}&embedded=true`}
+              className="w-full h-full"
+              title="Restaurant Menu"
+              loading="lazy"
+            />
+          </object>
         </div>
       </div>
     </section>
@@ -2022,7 +2098,7 @@ const HotelDelPacificoApp = () => {
         <Route path="habitaciones" element={<RoomsPage t={t} roomPrices={roomPrices} />} />
         <Route path="precios" element={<PricesPage t={t} roomPrices={roomPrices} />} />
         <Route path="fotos" element={<PhotosPage t={t} hotelGallery={hotelGallery} />} />
-        <Route path="restaurante" element={<RestaurantPage t={t} restaurantGallery={restaurantGallery} />} />
+        <Route path="restaurante" element={<RestaurantPage t={t} language={language} restaurantGallery={restaurantGallery} />} />
         <Route path="atractivos" element={<AttractionsPage t={t} />} />
         <Route path="contacto" element={<ContactPage t={t} />} />
         <Route path="eventos" element={<EventsPage t={t} siteEvents={siteEvents} />} />
