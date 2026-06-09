@@ -1286,63 +1286,80 @@ const PatisserieGallery = ({ t, galleryImages }) => {
 };
 
 const MenuQRPage = ({ language }) => {
+  const location = useLocation();
+  // Build correct homepage link for both preview (/site/hoteldelpacifico) and production (/)
+  const hotelHome = location.pathname.startsWith('/site/hoteldelpacifico') ? '/site/hoteldelpacifico' : '/';
   const labels = {
-    es: { menu: 'Menú del Restaurante', subtitle: 'Restaurante La Orquídea', back: 'Volver al sitio del hotel', download: 'Descargar PDF' },
-    en: { menu: 'Restaurant Menu', subtitle: 'Restaurante La Orquídea', back: 'Back to hotel website', download: 'Download PDF' },
-    fr: { menu: 'Menu du Restaurant', subtitle: 'Restaurante La Orquídea', back: 'Retour au site de l\'hôtel', download: 'Télécharger PDF' },
-    it: { menu: 'Menu del Ristorante', subtitle: 'Restaurante La Orquídea', back: 'Torna al sito dell\'hotel', download: 'Scarica PDF' },
-    de: { menu: 'Restaurantmenü', subtitle: 'Restaurante La Orquídea', back: 'Zurück zur Hotel-Website', download: 'PDF herunterladen' },
+    es: { menu: 'Menú', subtitle: 'Restaurante La Orquídea', back: 'Volver al hotel', download: 'Descargar' },
+    en: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Back to hotel', download: 'Download' },
+    fr: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Retour à l\'hôtel', download: 'Télécharger' },
+    it: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Torna all\'hotel', download: 'Scarica' },
+    de: { menu: 'Menü', subtitle: 'Restaurante La Orquídea', back: 'Zurück zum Hotel', download: 'Herunterladen' },
   };
   const l = labels[language] || labels.es;
   return (
-    <div className="min-h-screen bg-gradient-to-b from-emerald-900 via-emerald-800 to-emerald-950 flex flex-col" data-testid="menu-qr-page">
-      {/* Header with logo */}
-      <header className="px-4 sm:px-6 py-5 sm:py-7 flex flex-col items-center text-center bg-emerald-900/40 backdrop-blur-sm border-b border-emerald-700/40">
-        <img
-          src={IMG('/images/hoteldelpacifico/hotel-logo.png')}
-          alt="Hotel del Pacífico"
-          className="h-16 sm:h-20 w-auto mb-3"
-          data-testid="menu-qr-logo"
-        />
-        <p className="text-amber-300 text-[10px] sm:text-xs tracking-[0.3em] uppercase mb-1">{l.subtitle}</p>
-        <h1 className="text-xl sm:text-3xl font-serif text-white">{l.menu}</h1>
+    <div className="fixed inset-0 bg-emerald-950 flex flex-col" data-testid="menu-qr-page">
+      {/* Top bar: logo + back + download (compact, always visible) */}
+      <header className="flex items-center justify-between gap-2 px-3 py-2.5 bg-emerald-900 border-b border-emerald-700/40 flex-shrink-0">
+        <div className="flex items-center gap-2 min-w-0">
+          <img
+            src={IMG('/images/hoteldelpacifico/hotel-logo.png')}
+            alt="Hotel del Pacífico"
+            className="h-9 w-9 sm:h-10 sm:w-10 flex-shrink-0 object-contain"
+            data-testid="menu-qr-logo"
+          />
+          <div className="min-w-0">
+            <p className="text-amber-300 text-[9px] sm:text-[10px] tracking-[0.2em] uppercase leading-tight truncate">{l.subtitle}</p>
+            <h1 className="text-sm sm:text-base font-serif text-white leading-tight truncate">{l.menu}</h1>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5 flex-shrink-0">
+          <a
+            href={IMG('/images/hoteldelpacifico/documents/menu.pdf')}
+            download="Menu-Hotel-del-Pacifico.pdf"
+            data-testid="menu-qr-download-btn"
+            title={l.download}
+            className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition-colors shadow-sm"
+          >
+            <Download className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">{l.download}</span>
+          </a>
+          <Link
+            to={hotelHome}
+            onClick={(e) => {
+              // When inside Cloudflare Worker iframe, also tell parent to navigate to root
+              try {
+                if (window !== window.top) {
+                  window.parent.postMessage({ type: 'navigation', path: '/' }, '*');
+                }
+              } catch (err) { /* noop */ }
+            }}
+            data-testid="menu-qr-back-btn"
+            title={l.back}
+            className="inline-flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-full bg-white/15 hover:bg-white/25 text-white text-xs font-medium transition-colors border border-white/30"
+          >
+            <HomeIcon className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">{l.back}</span>
+          </Link>
+        </div>
       </header>
 
-      {/* PDF viewer takes full remaining height */}
+      {/* PDF takes ALL remaining viewport height */}
       <main className="flex-1 bg-white overflow-hidden">
         <object
           data={`${IMG('/images/hoteldelpacifico/documents/menu.pdf')}#view=FitH&toolbar=1&navpanes=0`}
           type="application/pdf"
-          className="w-full h-full"
+          className="block w-full h-full"
           data-testid="menu-qr-pdf"
         >
           <iframe
             src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + IMG('/images/hoteldelpacifico/documents/menu.pdf'))}&embedded=true`}
-            className="w-full h-full"
+            className="block w-full h-full border-0"
             title="Restaurant Menu"
             loading="lazy"
           />
         </object>
       </main>
-
-      {/* Bottom: 2 action buttons */}
-      <footer className="px-4 py-3 sm:py-4 bg-emerald-900 flex flex-col sm:flex-row gap-2 sm:gap-3 items-center justify-center border-t border-emerald-700/40 flex-shrink-0">
-        <a
-          href={IMG('/images/hoteldelpacifico/documents/menu.pdf')}
-          download="Menu-Hotel-del-Pacifico.pdf"
-          data-testid="menu-qr-download-btn"
-          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2.5 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold transition-colors shadow-md"
-        >
-          <Download className="w-4 h-4" /> {l.download}
-        </a>
-        <Link
-          to="/"
-          data-testid="menu-qr-back-btn"
-          className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2.5 rounded-full bg-white/10 hover:bg-white/20 text-white text-sm font-medium transition-colors border border-white/30"
-        >
-          <HomeIcon className="w-4 h-4" /> {l.back}
-        </Link>
-      </footer>
     </div>
   );
 };

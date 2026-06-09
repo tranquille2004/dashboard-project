@@ -744,22 +744,61 @@ const StatsTab = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-xl font-semibold border-b pb-4">Visitantes Únicos</h2>
+      <div className="flex items-center justify-between border-b pb-4">
+        <h2 className="text-xl font-semibold">Visitantes Únicos</h2>
+        {stats.ranges && (
+          <p className="text-xs text-gray-500">Mes en curso: {stats.ranges.month_from} → {stats.ranges.month_to}</p>
+        )}
+      </div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-4 gap-4">
         {[
           { label: 'Hoy', value: stats.today, color: 'bg-blue-50 text-blue-700' },
-          { label: 'Esta Semana', value: stats.week, color: 'bg-emerald-50 text-emerald-700' },
-          { label: 'Este Mes', value: stats.month, color: 'bg-amber-50 text-amber-700' },
-          { label: 'Total', value: stats.total, color: 'bg-purple-50 text-purple-700' }
+          { label: 'Últimos 7 días', value: stats.week, color: 'bg-emerald-50 text-emerald-700' },
+          { label: 'Este mes (calendario)', value: stats.month, color: 'bg-amber-50 text-amber-700' },
+          { label: 'Desde el inicio', value: stats.total, color: 'bg-purple-50 text-purple-700' }
         ].map((card, i) => (
-          <div key={i} className={`${card.color} rounded-lg p-5 text-center`}>
+          <div key={i} className={`${card.color} rounded-lg p-5 text-center`} data-testid={`client-stats-card-${i}`}>
             <p className="text-3xl font-bold">{card.value}</p>
             <p className="text-sm mt-1 opacity-75">{card.label}</p>
           </div>
         ))}
       </div>
+      <p className="text-xs text-gray-500 italic">
+        Un visitante único = una dirección IP por día. Los bots y las IPs internas están excluidos.
+        Hoy/Semana/Mes son subconjuntos de &quot;Desde el inicio&quot;, NO se suman.
+      </p>
+
+      {/* QR Menu — only shown for Hotel del Pacífico */}
+      {stats.qr_menu && (
+        <div className="bg-gradient-to-br from-amber-50 to-emerald-50 border border-amber-200 rounded-lg p-6" data-testid="qr-menu-stats">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-semibold text-gray-800 flex items-center gap-2">
+              📱 Menú QR del Restaurante
+            </h3>
+            <span className="text-[10px] uppercase tracking-wider text-amber-700 bg-amber-100 px-2 py-1 rounded">
+              /restaurante/menu
+            </span>
+          </div>
+          <div className="grid grid-cols-4 gap-3">
+            {[
+              { label: 'Hoy', value: stats.qr_menu.today, color: 'bg-white/80 text-blue-700' },
+              { label: '7 días', value: stats.qr_menu.week, color: 'bg-white/80 text-emerald-700' },
+              { label: 'Mes', value: stats.qr_menu.month, color: 'bg-white/80 text-amber-700' },
+              { label: 'Total', value: stats.qr_menu.total, color: 'bg-white/80 text-purple-700' }
+            ].map((card, i) => (
+              <div key={i} className={`${card.color} rounded-lg p-4 text-center shadow-sm`} data-testid={`qr-stats-card-${i}`}>
+                <p className="text-2xl font-bold">{card.value}</p>
+                <p className="text-xs mt-1 opacity-75">{card.label}</p>
+              </div>
+            ))}
+          </div>
+          <p className="text-xs text-gray-600 mt-3 italic">
+            Cuántas personas escanearon el QR del menú y abrieron la página. Una persona = una vez por día.
+          </p>
+        </div>
+      )}
 
       {/* Daily Chart */}
       {stats.daily && stats.daily.length > 0 && (
@@ -811,11 +850,11 @@ const StatsTab = () => {
             <div className="space-y-2">
               {stats.pages.map((p, i) => {
                 const clean = p.page.replace('/site/hoteldelpacifico', '').replace(/^\/+/, '/') || '/';
-                const pageNames = { '/': 'Inicio', '/habitaciones': 'Habitaciones', '/precios': 'Tarifas', '/fotos': 'Galería', '/restaurante': 'Restaurante', '/descubrir': 'Descubrir', '/contacto': 'Contacto', '/eventos': 'Eventos' };
+                const pageNames = { '/': 'Inicio', '/habitaciones': 'Habitaciones', '/precios': 'Tarifas', '/fotos': 'Galería', '/restaurante': 'Restaurante', '/restaurante/menu': '📱 Menú QR', '/descubrir': 'Descubrir', '/contacto': 'Contacto', '/eventos': 'Eventos' };
                 const name = pageNames[clean] || clean;
                 return (
-                  <div key={i} className="flex items-center justify-between">
-                    <span className="text-sm text-gray-700">hoteldelpacifico.net{clean === '/' ? '' : clean}</span>
+                  <div key={i} className="flex items-center justify-between" data-testid={`page-row-${i}`}>
+                    <span className="text-sm text-gray-700">{name}</span>
                     <span className="text-sm font-medium text-gray-600">{p.visits}</span>
                   </div>
                 );

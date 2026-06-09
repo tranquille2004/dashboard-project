@@ -2592,57 +2592,93 @@ async def track_visit_analytics(request: Request):
 
 @site_admin_router.get("/analytics")
 async def get_analytics(admin: dict = Depends(get_current_site_admin)):
-    """Get analytics for the admin's site"""
+    """Get analytics for the admin's site.
+    Uses site_visits collection (same as super-admin) with proper deduplication:
+    - 1 visitor = 1 unique IP per day
+    - Bots and ignored IPs excluded
+    - Calendar month (1st → today), not rolling 30 days
+    """
     site_id = admin["site_id"]
+    site = await db.sites.find_one({"site_id": site_id}, {"_id": 0, "slug": 1, "site_id": 1})
+    if not site:
+        raise HTTPException(status_code=404, detail="Site not found")
+    site_slug = site.get("slug") or site_id
+
     now = datetime.now(timezone.utc)
-    today = now.strftime("%Y-%m-%d")
-    week_ago = (now - timedelta(days=7)).strftime("%Y-%m-%d")
-    month_ago = (now - timedelta(days=30)).strftime("%Y-%m-%d")
-    
-    # Today
-    today_count = await db.analytics.count_documents({"site_id": site_id, "date": today})
-    
-    # This week
-    week_count = await db.analytics.count_documents({"site_id": site_id, "date": {"$gte": week_ago}})
-    
-    # This month
-    month_count = await db.analytics.count_documents({"site_id": site_id, "date": {"$gte": month_ago}})
-    
-    # Total
-    total_count = await db.analytics.count_documents({"site_id": site_id})
-    
-    # Per day (last 30 days)
-    pipeline_days = [
-        {"$match": {"site_id": site_id, "date": {"$gte": month_ago}}},
-        {"$group": {"_id": "$date", "count": {"$sum": 1}}},
+    today_start = now.replace(hour=0, minute=0, second=0, microsecond=0)
+    week_start = today_start - timedelta(days=7)
+    month_start = today_start.replace(day=1)  # Calendar month
+    days30_start = today_start - timedelta(days=30)  # For daily chart only
+
+    today_count = await _count_unique_visitors(site_slug, date_eq=now.strftime("%Y-%m-%d"))
+    week_count = await _count_unique_visitors(site_slug, since=week_start)
+    month_count = await _count_unique_visitors(site_slug, since=month_start)
+    total_count = await _count_unique_visitors(site_slug)
+
+    # Per day (last 30 days) — unique IPs per day
+    daily_match = await _build_match_filter(site_slug, since=days30_start)
+    daily_pipeline = [
+        {"$match": daily_match},
+        {"$group": {"_id": {"date": "$date", "ip": "$visitor_ip"}}},
+        {"$group": {"_id": "$_id.date", "count": {"$sum": 1}}},
         {"$sort": {"_id": 1}}
     ]
     daily = []
-    async for doc in db.analytics.aggregate(pipeline_days):
+    async for doc in db.site_visits.aggregate(daily_pipeline):
         daily.append({"date": doc["_id"], "visits": doc["count"]})
-    
-    # Per country (all time)
-    pipeline_countries = [
-        {"$match": {"site_id": site_id}},
-        {"$group": {"_id": "$country", "count": {"$sum": 1}}},
+
+    # Per country (all time) — unique IP+date pairs per country
+    country_match = await _build_match_filter(site_slug)
+    country_pipeline = [
+        {"$match": country_match},
+        {"$group": {"_id": {"country": "$country", "ip": "$visitor_ip", "date": "$date"}}},
+        {"$group": {"_id": "$_id.country", "count": {"$sum": 1}}},
         {"$sort": {"count": -1}},
         {"$limit": 20}
     ]
     countries = []
-    async for doc in db.analytics.aggregate(pipeline_countries):
-        countries.append({"country": doc["_id"], "visits": doc["count"]})
-    
-    # Top pages
-    pipeline_pages = [
-        {"$match": {"site_id": site_id}},
-        {"$group": {"_id": "$page", "count": {"$sum": 1}}},
+    async for doc in db.site_visits.aggregate(country_pipeline):
+        countries.append({"country": doc["_id"] or "Unknown", "visits": doc["count"]})
+
+    # Top pages — unique IP+date pairs per page (excludes admin/internal)
+    page_match = await _build_match_filter(site_slug)
+    page_pipeline = [
+        {"$match": page_match},
+        {"$group": {"_id": {"page": "$path", "ip": "$visitor_ip", "date": "$date"}}},
+        {"$group": {"_id": "$_id.page", "count": {"$sum": 1}}},
         {"$sort": {"count": -1}},
-        {"$limit": 10}
+        {"$limit": 15}
     ]
     pages = []
-    async for doc in db.analytics.aggregate(pipeline_pages):
-        pages.append({"page": doc["_id"], "visits": doc["count"]})
-    
+    async for doc in db.site_visits.aggregate(page_pipeline):
+        pages.append({"page": doc["_id"] or "/", "visits": doc["count"]})
+
+    # QR menu page stats (Hotel del Pacífico) — separate breakdown
+    qr_menu = None
+    if site_slug == "hoteldelpacifico":
+        qr_today = await _count_unique_visitors(site_slug, date_eq=now.strftime("%Y-%m-%d"), path_eq="/restaurante/menu")
+        qr_week = await _count_unique_visitors(site_slug, since=week_start, path_eq="/restaurante/menu")
+        qr_month = await _count_unique_visitors(site_slug, since=month_start, path_eq="/restaurante/menu")
+        qr_total = await _count_unique_visitors(site_slug, path_eq="/restaurante/menu")
+        # Daily for QR
+        qr_match = await _build_match_filter(site_slug, since=days30_start, path_eq="/restaurante/menu")
+        qr_daily_pipeline = [
+            {"$match": qr_match},
+            {"$group": {"_id": {"date": "$date", "ip": "$visitor_ip"}}},
+            {"$group": {"_id": "$_id.date", "count": {"$sum": 1}}},
+            {"$sort": {"_id": 1}}
+        ]
+        qr_daily = []
+        async for doc in db.site_visits.aggregate(qr_daily_pipeline):
+            qr_daily.append({"date": doc["_id"], "visits": doc["count"]})
+        qr_menu = {
+            "today": qr_today,
+            "week": qr_week,
+            "month": qr_month,
+            "total": qr_total,
+            "daily": qr_daily,
+        }
+
     return {
         "today": today_count,
         "week": week_count,
@@ -2650,7 +2686,13 @@ async def get_analytics(admin: dict = Depends(get_current_site_admin)):
         "total": total_count,
         "daily": daily,
         "countries": countries,
-        "pages": pages
+        "pages": pages,
+        "qr_menu": qr_menu,
+        "ranges": {
+            "today": now.strftime("%Y-%m-%d"),
+            "month_from": month_start.strftime("%Y-%m-%d"),
+            "month_to": now.strftime("%Y-%m-%d"),
+        }
     }
 
 # ============== ONE-TIME SEED ENDPOINT ==============
