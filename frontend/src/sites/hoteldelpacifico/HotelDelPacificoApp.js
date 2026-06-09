@@ -1285,7 +1285,10 @@ const PatisserieGallery = ({ t, galleryImages }) => {
   );
 };
 
-const RestaurantPage = ({ t, language, restaurantGallery }) => (
+const RestaurantPage = ({ t, language, restaurantGallery }) => {
+  const [menuFullscreen, setMenuFullscreen] = React.useState(false);
+  return (
+  <>
   <div className="bg-amber-50/30 pt-20">
     <section className="relative py-6 text-white text-center overflow-hidden">
       {/* Background Image with Green Filter */}
@@ -1382,10 +1385,8 @@ const RestaurantPage = ({ t, language, restaurantGallery }) => (
               : 'Explore nuestra carta completa con todos los platos, bebidas y especialidades del Restaurante La Orquídea. Véala en línea o descárguela para imprimir.'}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-3">
-            <a
-              href={IMG('/images/hoteldelpacifico/documents/menu.pdf')}
-              target="_blank"
-              rel="noopener noreferrer"
+            <button
+              onClick={() => setMenuFullscreen(true)}
               data-testid="menu-view-fullscreen-btn"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-700 hover:bg-emerald-800 text-white text-sm font-semibold transition-colors shadow-md"
             >
@@ -1395,7 +1396,7 @@ const RestaurantPage = ({ t, language, restaurantGallery }) => (
                 : language === 'it' ? 'Schermo intero'
                 : language === 'de' ? 'Vollbild'
                 : 'Ver pantalla completa'}
-            </a>
+            </button>
             <a
               href={IMG('/images/hoteldelpacifico/documents/menu.pdf')}
               download="Menu-Hotel-del-Pacifico.pdf"
@@ -1447,7 +1448,60 @@ const RestaurantPage = ({ t, language, restaurantGallery }) => (
       </div>
     </section>
   </div>
-);
+
+  {/* Fullscreen menu PDF modal */}
+  {menuFullscreen && (
+    <div
+      className="fixed inset-0 z-[100] bg-black/90 flex flex-col"
+      data-testid="menu-fullscreen-modal"
+      onClick={(e) => { if (e.target === e.currentTarget) setMenuFullscreen(false); }}
+    >
+      <div className="flex items-center justify-between px-4 sm:px-6 py-3 bg-emerald-900 text-white flex-shrink-0">
+        <h3 className="text-sm sm:text-base font-semibold">
+          {language === 'en' ? 'Restaurant Menu'
+            : language === 'fr' ? 'Menu du Restaurant'
+            : language === 'it' ? 'Menu del Ristorante'
+            : language === 'de' ? 'Restaurantmenü'
+            : 'Menú del Restaurante'}
+        </h3>
+        <div className="flex items-center gap-2">
+          <a
+            href={IMG('/images/hoteldelpacifico/documents/menu.pdf')}
+            download="Menu-Hotel-del-Pacifico.pdf"
+            data-testid="menu-fullscreen-download-btn"
+            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold"
+          >
+            <Download className="w-3.5 h-3.5" />
+            {language === 'en' ? 'Download' : language === 'fr' ? 'Télécharger' : language === 'it' ? 'Scarica' : language === 'de' ? 'Herunterladen' : 'Descargar'}
+          </a>
+          <button
+            onClick={() => setMenuFullscreen(false)}
+            data-testid="menu-fullscreen-close-btn"
+            aria-label="Close"
+            className="p-1.5 rounded hover:bg-emerald-800 transition-colors"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+      </div>
+      <div className="flex-1 bg-white overflow-hidden">
+        <object
+          data={`${IMG('/images/hoteldelpacifico/documents/menu.pdf')}#view=FitH&toolbar=1&navpanes=0`}
+          type="application/pdf"
+          className="w-full h-full"
+        >
+          <iframe
+            src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + IMG('/images/hoteldelpacifico/documents/menu.pdf'))}&embedded=true`}
+            className="w-full h-full"
+            title="Restaurant Menu Fullscreen"
+          />
+        </object>
+      </div>
+    </div>
+  )}
+  </>
+  );
+};
 
 // ============================================
 // ATTRACTIONS PAGE - LUXURY VERSION

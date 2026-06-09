@@ -41,6 +41,7 @@ Dutch (Nederlands) — always respond in Dutch.
 - ✅ 2026-02: **RCCB VAT number removed** — `BE 0793.291.833` removed from footer + contact section in `RccbApp.js`.
 - ✅ 2026-02: **Image migration supports PDFs** — added `pdf` to scan extensions. Migrates PDFs via same `/api/images/{path}` route so they auto-serve from object storage on production.
 - ✅ 2026-02: **Hotel del Pacífico restaurant menu** — Menu PDF added at `/images/hoteldelpacifico/documents/menu.pdf` (43 MB → compressed to 2.3 MB via ghostscript). New section on Restaurant page (/restaurante): embedded PDF viewer (object/iframe fallback) + "View fullscreen" + "Download PDF" buttons. 5-language labels (ES/EN/FR/IT/DE).
+- ✅ 2026-02: **PDF view privacy fix** — Replaced `<a target="_blank">` (which opened new tab exposing internal `fworks-consolidate-1.emergent.host/api/images/...` URL) with in-page fullscreen modal. URL stays on `hoteldelpacifico.net/restaurante` at all times. Modal includes embedded PDF viewer + Download button. Added `EXTERNAL_URL` helper to imageHelper.js (uses document.referrer for parent origin) for future iframe-aware external links.
 
 ## Backlog
 - P2: Refactor `server.py` monolith into `/app/backend/routes/`, `/app/backend/models/`.
