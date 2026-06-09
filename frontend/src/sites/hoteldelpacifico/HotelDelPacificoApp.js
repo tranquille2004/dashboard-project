@@ -1287,19 +1287,42 @@ const PatisserieGallery = ({ t, galleryImages }) => {
 
 const MenuQRPage = ({ language }) => {
   const location = useLocation();
-  // Build correct homepage link for both preview (/site/hoteldelpacifico) and production (/)
   const hotelHome = location.pathname.startsWith('/site/hoteldelpacifico') ? '/site/hoteldelpacifico' : '/';
+
+  // iOS Safari has a known limitation: PDFs inside <iframe>/<object> show only first page, no scroll.
+  // Workaround: on iOS we render a direct download link + auto-open via the native iOS PDF viewer.
+  const isIOS = React.useMemo(() => {
+    if (typeof navigator === 'undefined') return false;
+    const ua = navigator.userAgent;
+    // Detect iPhone, iPad (also new iPads that report as Mac with touch)
+    return /iPad|iPhone|iPod/.test(ua) || (ua.includes('Mac') && navigator.maxTouchPoints > 1);
+  }, []);
+
+  const pdfUrl = IMG('/images/hoteldelpacifico/documents/menu.pdf');
+
+  // On iOS, open the PDF natively on mount — that's the only way to get full scroll/zoom
+  React.useEffect(() => {
+    if (isIOS) {
+      // Small delay so the user can see the page chrome first
+      const t = setTimeout(() => {
+        try { window.location.href = pdfUrl; } catch (e) { /* noop */ }
+      }, 600);
+      return () => clearTimeout(t);
+    }
+  }, [isIOS, pdfUrl]);
+
   const labels = {
-    es: { menu: 'Menú', subtitle: 'Restaurante La Orquídea', back: 'Volver al hotel', download: 'Descargar' },
-    en: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Back to hotel', download: 'Download' },
-    fr: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Retour à l\'hôtel', download: 'Télécharger' },
-    it: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Torna all\'hotel', download: 'Scarica' },
-    de: { menu: 'Menü', subtitle: 'Restaurante La Orquídea', back: 'Zurück zum Hotel', download: 'Herunterladen' },
+    es: { menu: 'Menú', subtitle: 'Restaurante La Orquídea', back: 'Volver al hotel', download: 'Descargar', iosLoading: 'Abriendo el menú...', iosOpen: 'Abrir el menú' },
+    en: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Back to hotel', download: 'Download', iosLoading: 'Opening menu...', iosOpen: 'Open menu' },
+    fr: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Retour à l\'hôtel', download: 'Télécharger', iosLoading: 'Ouverture du menu...', iosOpen: 'Ouvrir le menu' },
+    it: { menu: 'Menu', subtitle: 'Restaurante La Orquídea', back: 'Torna all\'hotel', download: 'Scarica', iosLoading: 'Apertura del menu...', iosOpen: 'Apri il menu' },
+    de: { menu: 'Menü', subtitle: 'Restaurante La Orquídea', back: 'Zurück zum Hotel', download: 'Herunterladen', iosLoading: 'Menü wird geöffnet...', iosOpen: 'Menü öffnen' },
   };
   const l = labels[language] || labels.es;
+
   return (
     <div className="fixed inset-0 bg-emerald-950 flex flex-col" data-testid="menu-qr-page">
-      {/* Top bar: logo + back + download (compact, always visible) */}
+      {/* Compact top bar */}
       <header className="flex items-center justify-between gap-2 px-3 py-2.5 bg-emerald-900 border-b border-emerald-700/40 flex-shrink-0">
         <div className="flex items-center gap-2 min-w-0">
           <img
@@ -1315,7 +1338,7 @@ const MenuQRPage = ({ language }) => {
         </div>
         <div className="flex items-center gap-1.5 flex-shrink-0">
           <a
-            href={IMG('/images/hoteldelpacifico/documents/menu.pdf')}
+            href={pdfUrl}
             download="Menu-Hotel-del-Pacifico.pdf"
             data-testid="menu-qr-download-btn"
             title={l.download}
@@ -1326,8 +1349,7 @@ const MenuQRPage = ({ language }) => {
           </a>
           <Link
             to={hotelHome}
-            onClick={(e) => {
-              // When inside Cloudflare Worker iframe, also tell parent to navigate to root
+            onClick={() => {
               try {
                 if (window !== window.top) {
                   window.parent.postMessage({ type: 'navigation', path: '/' }, '*');
@@ -1344,22 +1366,38 @@ const MenuQRPage = ({ language }) => {
         </div>
       </header>
 
-      {/* PDF takes ALL remaining viewport height */}
-      <main className="flex-1 bg-white overflow-hidden">
-        <object
-          data={`${IMG('/images/hoteldelpacifico/documents/menu.pdf')}#view=FitH&toolbar=1&navpanes=0`}
-          type="application/pdf"
-          className="block w-full h-full"
-          data-testid="menu-qr-pdf"
-        >
-          <iframe
-            src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + IMG('/images/hoteldelpacifico/documents/menu.pdf'))}&embedded=true`}
-            className="block w-full h-full border-0"
-            title="Restaurant Menu"
-            loading="lazy"
-          />
-        </object>
-      </main>
+      {/* PDF area — iOS: redirect to native viewer; others: embedded viewer */}
+      {isIOS ? (
+        <main className="flex-1 bg-emerald-950 flex items-center justify-center p-6 text-center">
+          <div className="text-white">
+            <div className="w-12 h-12 mx-auto mb-4 border-4 border-amber-400 border-t-transparent rounded-full animate-spin" />
+            <p className="text-sm text-emerald-100 mb-6">{l.iosLoading}</p>
+            <a
+              href={pdfUrl}
+              data-testid="menu-qr-ios-open"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-amber-600 hover:bg-amber-700 text-white text-sm font-semibold shadow-md"
+            >
+              <FileText className="w-4 h-4" /> {l.iosOpen}
+            </a>
+          </div>
+        </main>
+      ) : (
+        <main className="flex-1 bg-white overflow-hidden">
+          <object
+            data={`${pdfUrl}#toolbar=0&navpanes=0&scrollbar=1&view=FitH`}
+            type="application/pdf"
+            className="block w-full h-full"
+            data-testid="menu-qr-pdf"
+          >
+            <iframe
+              src={`https://docs.google.com/viewer?url=${encodeURIComponent(window.location.origin + pdfUrl)}&embedded=true`}
+              className="block w-full h-full border-0"
+              title="Restaurant Menu"
+              loading="lazy"
+            />
+          </object>
+        </main>
+      )}
     </div>
   );
 };
