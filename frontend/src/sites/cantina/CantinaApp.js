@@ -649,7 +649,7 @@ function ReserverenPage({ t }) {
               <strong>Lunch:</strong> 12h00 - 14h00
             </div>
             <div className="reserve-hours-item">
-              <strong>Diner:</strong> 18h00 - 22h00
+              <strong>Diner:</strong> 18h00 - 21h30
             </div>
           </div>
           <p className="reserve-hours-note">7 dagen per week open</p>
@@ -861,7 +861,7 @@ function InfoPage({ t }) {
 
             <div className="hours-section">
               <h4>Diner</h4>
-              <p className="hours-time">18h00 - 22h00</p>
+              <p className="hours-time">18h00 - 21h30</p>
             </div>
 
             <div className="hours-divider"></div>
@@ -905,7 +905,7 @@ function Footer({ t, language }) {
         <div className="footer-section">
           <h4>{t.footer.hours}</h4>
           <p>12h00 - 14h00</p>
-          <p>18h00 - 22h00</p>
+          <p>18h00 - 21h30</p>
           <p>{t.footer.hoursNote}</p>
         </div>
         <div className="footer-section">
@@ -993,7 +993,7 @@ function CantinaApp() {
         wedSun: 'Woensdag - Zondag',
         closed: 'Gesloten',
         openLunch: 'Lunch: 12:00 - 14:30',
-        openDinner: 'Diner: 18:30 - 22:00',
+        openDinner: 'Diner: 18:30 - 21:30',
         closedDays: 'Gesloten op dinsdagavond en woensdagavond'
       },
       groupMenus: {
@@ -1107,7 +1107,7 @@ function CantinaApp() {
         wedSun: 'Mercredi - Dimanche',
         closed: 'Fermé',
         openLunch: 'Déjeuner: 12:00 - 14:30',
-        openDinner: 'Dîner: 18:30 - 22:00',
+        openDinner: 'Dîner: 18:30 - 21:30',
         closedDays: 'Fermé le mardi soir et le mercredi soir'
       },
       groupMenus: {
@@ -1221,7 +1221,7 @@ function CantinaApp() {
         wedSun: 'Wednesday - Sunday',
         closed: 'Closed',
         openLunch: 'Lunch: 12:00 - 14:30',
-        openDinner: 'Dinner: 18:30 - 22:00',
+        openDinner: 'Dinner: 18:30 - 21:30',
         closedDays: 'Closed on Tuesday evening and Wednesday evening'
       },
       groupMenus: {
@@ -1335,7 +1335,7 @@ function CantinaApp() {
         wedSun: 'Mercoledì - Domenica',
         closed: 'Chiuso',
         openLunch: 'Pranzo: 12:00 - 14:30',
-        openDinner: 'Cena: 18:30 - 22:00',
+        openDinner: 'Cena: 18:30 - 21:30',
         closedDays: 'Chiuso il martedì sera e il mercoledì sera'
       },
       groupMenus: {
@@ -1449,7 +1449,7 @@ function CantinaApp() {
         wedSun: 'Mittwoch - Sonntag',
         closed: 'Geschlossen',
         openLunch: 'Mittagessen: 12:00 - 14:30',
-        openDinner: 'Abendessen: 18:30 - 22:00',
+        openDinner: 'Abendessen: 18:30 - 21:30',
         closedDays: 'Geschlossen am Dienstagabend und Mittwochabend'
       },
       groupMenus: {

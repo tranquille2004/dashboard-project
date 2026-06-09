@@ -441,19 +441,19 @@ function HomePage() {
               <div className="space-y-3" data-testid="opening-hours">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700 font-medium">{t('monTue')}</span>
-                  <span className="text-gray-600">18:00 - 22:00</span>
+                  <span className="text-gray-600">18:00 - 21:30</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700 font-medium">{t('wedFri')}</span>
-                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 22:00</span>
+                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 21:30</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700 font-medium">{t('sat')}</span>
-                  <span className="text-gray-600">18:00 - 22:00</span>
+                  <span className="text-gray-600">18:00 - 21:30</span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-700 font-medium">{t('sun')}</span>
-                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 22:00</span>
+                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 21:30</span>
                 </div>
               </div>
               <div className="mt-6 pt-6 border-t border-gray-200">
@@ -1368,19 +1368,19 @@ function OpeningstijdenPage() {
               <div className="space-y-4" data-testid="opening-hours">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
                   <span className="text-gray-700 font-medium">{t('monTue')}</span>
-                  <span className="text-gray-600">18:00 - 22:00</span>
+                  <span className="text-gray-600">18:00 - 21:30</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
                   <span className="text-gray-700 font-medium">{t('wedFri')}</span>
-                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 22:00</span>
+                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 21:30</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
                   <span className="text-gray-700 font-medium">{t('sat')}</span>
-                  <span className="text-gray-600">18:00 - 22:00</span>
+                  <span className="text-gray-600">18:00 - 21:30</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
                   <span className="text-gray-700 font-medium">{t('sun')}</span>
-                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 22:00</span>
+                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 21:30</span>
                 </div>
               </div>
               <div className="mt-6 pt-6 border-t border-gray-200">

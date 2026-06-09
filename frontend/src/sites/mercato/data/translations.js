@@ -42,7 +42,7 @@ export const translations = {
   hours: {
     title: { nl: 'Openingstijden', fr: "Heures d'ouverture", en: 'Opening Hours', es: 'Horario', de: 'Öffnungszeiten', it: 'Orari di Apertura' },
     lunch: '12h00 - 14h00',
-    dinner: '18h00 - 22h00',
+    dinner: '18h00 - 21h30',
     closed: { 
       nl: 'Gesloten op zaterdagmiddag en zondag de hele dag', 
       fr: 'Fermé le samedi-midi et dimanche toute la journée',
