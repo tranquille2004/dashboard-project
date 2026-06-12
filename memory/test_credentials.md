@@ -11,7 +11,7 @@
 ## Il Siciliano Admin (Trattoria Pizzería)
 - Email: `admin@ilsiciliano-santodomingo.com`
 - Password: `siciliano123`
-- URL: `/site/ilsiciliano/mi-sitio`
+- URL: `/admin` (productie: `https://ilsicilianosantodomingo.com/admin`)
 
 ## San Francisco Hacienda Turística Admin
 - Email: `admin@sanfrancisco-haciendaturistica.com`
