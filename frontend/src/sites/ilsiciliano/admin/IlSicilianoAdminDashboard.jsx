@@ -338,7 +338,7 @@ const IlSicilianoAdminDashboard = () => {
                   type="email"
                   value={config?.email || ''}
                   onChange={(e) => setConfig({ ...config, email: e.target.value })}
-                  placeholder="contacto@ilsiciliano-santodomingo.com"
+                  placeholder="litalianoec@gmail.com"
                   className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none"
                   data-testid="contact-email-input"
                 />
