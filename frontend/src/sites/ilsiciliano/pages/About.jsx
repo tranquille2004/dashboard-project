@@ -4,6 +4,7 @@ import { translations } from '../data/translations';
 import { ChefHat, Users, Heart, X } from 'lucide-react';
 
 const TEAM_PHOTOS = [
+  '/images/ilsiciliano/about/emanuele.jpg',
   'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/sweesn6f_1ok.jpeg',
   'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/842243yx_3ok.jpeg',
   'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/889ajp7u_5ok.jpeg',
@@ -46,17 +47,9 @@ const About = () => {
           <div className="w-24 h-1 bg-gold mx-auto"></div>
         </div>
 
-        {/* Main Content */}
-        <div className="grid md:grid-cols-2 gap-12 mb-16">
-          <div className="space-y-6">
-            <img
-              src="/images/ilsiciliano/about/emanuele.jpg"
-              alt="Emanuele — Chef & propietario"
-              className="w-full max-h-[560px] object-contain rounded-lg shadow-2xl border border-gold/20 bg-black"
-            />
-          </div>
-          
-          <div className="space-y-6 text-gray-300 leading-relaxed">
+        {/* Main Content - intro text centered */}
+        <div className="max-w-3xl mx-auto mb-16">
+          <div className="space-y-6 text-gray-300 leading-relaxed text-center">
             {t.content[language].split('\n\n').slice(0, 3).map((paragraph, idx) => (
               <p key={idx} className="text-lg">{paragraph}</p>
             ))}
@@ -69,7 +62,7 @@ const About = () => {
             {TEAM_TITLE[language] || TEAM_TITLE.es}
           </h2>
           <div className="w-16 h-0.5 bg-gold mx-auto mb-8"></div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 max-w-6xl mx-auto">
             {TEAM_PHOTOS.map((src, idx) => (
               <button
                 key={idx}
@@ -81,7 +74,7 @@ const About = () => {
               >
                 <img
                   src={src}
-                  alt={`Equipo Il Siciliano ${idx + 1}`}
+                  alt={idx === 0 ? 'Emanuele — Chef & propietario' : `Equipo Il Siciliano ${idx}`}
                   loading="lazy"
                   className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-110"
                 />
