@@ -380,25 +380,55 @@ const IlSicilianoAdminDashboard = () => {
                     }
                   });
                 };
+                const closed = !hours.lunch_open && !hours.lunch_close && !hours.dinner_open && !hours.dinner_close;
                 return (
-                  <div key={key} className="grid grid-cols-[100px_1fr_1fr] gap-3 items-center">
-                    <span className="font-medium text-gray-700">{label}</span>
-                    <input
-                      type="text"
-                      value={hours.lunch || ''}
-                      onChange={(e) => update('lunch', e.target.value)}
-                      placeholder="Almuerzo: 12:00 - 15:00"
-                      className="px-3 py-2 rounded-md border border-gray-300 focus:border-red-500 outline-none text-sm"
-                      data-testid={`hours-${key}-lunch`}
-                    />
-                    <input
-                      type="text"
-                      value={hours.dinner || ''}
-                      onChange={(e) => update('dinner', e.target.value)}
-                      placeholder="Cena: 18:00 - 22:00"
-                      className="px-3 py-2 rounded-md border border-gray-300 focus:border-red-500 outline-none text-sm"
-                      data-testid={`hours-${key}-dinner`}
-                    />
+                  <div key={key} className="border border-gray-200 rounded-lg p-4 bg-gray-50/40">
+                    <div className="font-semibold text-gray-800 mb-3">{label}</div>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">Almuerzo</div>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="time"
+                            value={hours.lunch_open || ''}
+                            onChange={(e) => update('lunch_open', e.target.value)}
+                            className="px-3 py-2 rounded-md border border-gray-300 focus:border-red-500 outline-none text-sm w-full"
+                            data-testid={`hours-${key}-lunch-open`}
+                          />
+                          <span className="text-gray-400">—</span>
+                          <input
+                            type="time"
+                            value={hours.lunch_close || ''}
+                            onChange={(e) => update('lunch_close', e.target.value)}
+                            className="px-3 py-2 rounded-md border border-gray-300 focus:border-red-500 outline-none text-sm w-full"
+                            data-testid={`hours-${key}-lunch-close`}
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">Cena</div>
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="time"
+                            value={hours.dinner_open || ''}
+                            onChange={(e) => update('dinner_open', e.target.value)}
+                            className="px-3 py-2 rounded-md border border-gray-300 focus:border-red-500 outline-none text-sm w-full"
+                            data-testid={`hours-${key}-dinner-open`}
+                          />
+                          <span className="text-gray-400">—</span>
+                          <input
+                            type="time"
+                            value={hours.dinner_close || ''}
+                            onChange={(e) => update('dinner_close', e.target.value)}
+                            className="px-3 py-2 rounded-md border border-gray-300 focus:border-red-500 outline-none text-sm w-full"
+                            data-testid={`hours-${key}-dinner-close`}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    {closed && (
+                      <p className="text-xs text-gray-400 italic mt-2">Deje vacío si el restaurante está cerrado este día.</p>
+                    )}
                   </div>
                 );
               })}

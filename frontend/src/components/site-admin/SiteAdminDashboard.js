@@ -141,6 +141,34 @@ const SiteAdminDashboard = () => {
 
   const isHotel = site?.site_type === 'hotel';
 
+  // Site-specific theme (logo + colors) so the dashboard never shows the wrong branding
+  const SITE_THEMES = {
+    hoteldelpacifico: {
+      logo: '/images/hoteldelpacifico/hotel-logo.png',
+      headerBg: 'from-emerald-800 to-emerald-900',
+      accent: 'emerald',
+      bg: 'from-slate-50 to-emerald-50/30',
+    },
+    ilsiciliano: {
+      logo: '/images/ilsiciliano/logo/ilsiciliano-logo.png',
+      headerBg: 'from-black to-gray-900',
+      accent: 'red',
+      bg: 'from-slate-50 to-amber-50/30',
+    },
+    sanfrancisco: {
+      logo: null,
+      headerBg: 'from-stone-800 to-stone-900',
+      accent: 'amber',
+      bg: 'from-slate-50 to-amber-50/30',
+    },
+  };
+  const theme = SITE_THEMES[site?.slug] || {
+    logo: null,
+    headerBg: 'from-slate-800 to-slate-900',
+    accent: 'slate',
+    bg: 'from-slate-50 to-slate-100',
+  };
+
   const tabs = [
     { id: 'overview', label: 'Anuncio Especial', icon: Settings, always: true },
     { id: 'stats', label: isHotel ? 'Estadísticas' : null, icon: BarChart3, permission: 'prices', hotelOnly: true },
@@ -158,7 +186,7 @@ const SiteAdminDashboard = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-emerald-50/30">
+    <div className={`min-h-screen bg-gradient-to-br ${theme.bg}`}>
       {/* Message Toast */}
       {message && (
         <div className={`fixed top-4 right-4 z-50 px-6 py-3 rounded-xl shadow-lg flex items-center space-x-2 backdrop-blur ${
@@ -170,14 +198,20 @@ const SiteAdminDashboard = () => {
       )}
 
       {/* Header */}
-      <header className="bg-gradient-to-r from-emerald-800 to-emerald-900 shadow-lg">
+      <header className={`bg-gradient-to-r ${theme.headerBg} shadow-lg`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img src={site?.logo_url || "/images/hoteldelpacifico/hotel-logo.png"} alt={site?.name || 'Site'} className="h-10" />
+              {(site?.logo_url || theme.logo) ? (
+                <img src={site?.logo_url || theme.logo} alt={site?.name || 'Site'} className="h-10 w-auto" />
+              ) : (
+                <div className="w-10 h-10 rounded-full bg-white/10 border border-white/30 flex items-center justify-center text-white font-bold">
+                  {(site?.name || 'S').charAt(0)}
+                </div>
+              )}
               <div>
-                <h1 className="text-xl font-serif text-white">{site?.name || 'Hotel del Pacífico'}</h1>
-                <p className="text-emerald-300 text-xs tracking-wider">Panel de Administración</p>
+                <h1 className="text-xl font-serif text-white">{site?.name || 'Administración'}</h1>
+                <p className="text-white/70 text-xs tracking-wider">Panel de Administración</p>
               </div>
             </div>
             <button

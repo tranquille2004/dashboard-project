@@ -17,9 +17,10 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
     setLoading(true);
 
     try {
-      await login(email, password);
-      // Route to the right dashboard path per site
-      const dashboardPath = preSelectedSite === 'ilsiciliano' ? '/mi-sitio' : '/mijn-site';
+      const result = await login(email, password);
+      // Route to the right dashboard based on the actually-logged-in site
+      const loggedSlug = result?.site?.slug || preSelectedSite;
+      const dashboardPath = loggedSlug === 'ilsiciliano' ? '/mi-sitio' : '/mijn-site';
       navigate(dashboardPath);
     } catch (err) {
       setError(err.response?.data?.detail || 'Error al iniciar sesión. Verifique sus datos.');

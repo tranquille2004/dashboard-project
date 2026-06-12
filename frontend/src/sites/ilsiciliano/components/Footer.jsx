@@ -21,11 +21,15 @@ const Footer = () => {
   const dayLabels = { es: ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'], en: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], it: ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'], fr: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'], nl: ['Ma','Di','Wo','Do','Vr','Za','Zo'], de: ['Mo','Di','Mi','Do','Fr','Sa','So'] };
   const dayKeys = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
   const labels = dayLabels[language] || dayLabels.es;
+  const formatHours = (h) => {
+    const lunch = (h?.lunch_open && h?.lunch_close) ? `${h.lunch_open}–${h.lunch_close}` : h?.lunch || '';
+    const dinner = (h?.dinner_open && h?.dinner_close) ? `${h.dinner_open}–${h.dinner_close}` : h?.dinner || '';
+    return [lunch, dinner].filter(Boolean).join(' · ');
+  };
   const hoursRows = (cfg?.opening_hours && Object.keys(cfg.opening_hours).length)
     ? dayKeys.map((k, i) => {
-        const h = cfg.opening_hours?.[k] || {};
-        const parts = [h.lunch, h.dinner].filter(Boolean);
-        return parts.length ? { day: labels[i], text: parts.join(' · ') } : null;
+        const text = formatHours(cfg.opening_hours?.[k]);
+        return text ? { day: labels[i], text } : null;
       }).filter(Boolean)
     : null;
 
