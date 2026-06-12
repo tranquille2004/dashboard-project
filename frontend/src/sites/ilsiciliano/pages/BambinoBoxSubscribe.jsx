@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useBasePath } from '../contexts/BasePathContext';
 import { Link } from 'react-router-dom';
-import { ChevronLeft, MessageCircle, Phone, Pizza } from 'lucide-react';
+import { ChevronLeft, MessageCircle, Phone } from 'lucide-react';
 
 const _ = (es, en, it, fr) => ({ es, en, it, fr, nl: es, de: en });
 
@@ -30,6 +30,29 @@ const t = {
 const BambinoBoxSubscribe = () => {
   const { language } = useLanguage();
   const basePath = useBasePath();
+
+  // Load JotForm auto-resize handler so the iframe expands to fit its content
+  useEffect(() => {
+    const SCRIPT_SRC = 'https://cdn.jotfor.ms/s/umd/latest/for-form-embed-handler.js';
+    const IFRAME_SELECTOR = "iframe[id='JotFormIFrame-261618903639667']";
+    const initHandler = () => {
+      try {
+        if (window.jotformEmbedHandler) {
+          window.jotformEmbedHandler(IFRAME_SELECTOR, 'https://form.jotform.com/');
+        }
+      } catch (e) { /* noop */ }
+    };
+    const existing = document.querySelector(`script[src="${SCRIPT_SRC}"]`);
+    if (existing) {
+      initHandler();
+    } else {
+      const s = document.createElement('script');
+      s.src = SCRIPT_SRC;
+      s.async = true;
+      s.onload = initHandler;
+      document.body.appendChild(s);
+    }
+  }, []);
 
   const whatsappText = encodeURIComponent(
     language === 'es' ? 'Hola, me gustaría inscribirme al Bambino Box'
@@ -59,18 +82,23 @@ const BambinoBoxSubscribe = () => {
           <p className="text-gray-300 leading-relaxed max-w-2xl mx-auto">{t.intro[language]}</p>
         </div>
 
-        {/* JotForm placeholder - to be replaced with actual JotForm embed */}
+        {/* JotForm embed - Bambino Box inscription */}
         <div
-          id="jotform-container"
-          className="bg-gradient-to-br from-gray-900 to-black rounded-2xl border border-gold/20 p-8 md:p-12 mb-10 min-h-[360px] flex flex-col items-center justify-center text-center"
-          data-testid="jotform-placeholder"
+          className="bg-gradient-to-br from-gray-900 to-black rounded-2xl border border-gold/20 p-2 md:p-4 mb-10 overflow-hidden"
+          data-testid="bambino-jotform-container"
         >
-          {/* TODO: vervang dit blok door de JotForm embed-code (iframe of script). */}
-          <div className="w-16 h-16 rounded-full bg-gold/10 border-2 border-gold/40 flex items-center justify-center mb-5">
-            <Pizza size={28} className="text-gold" />
-          </div>
-          <p className="text-gold text-lg font-semibold mb-2">{t.comingSoon[language]}</p>
-          <p className="text-gray-400 text-sm max-w-md">{t.fallbackInfo[language]}</p>
+          <iframe
+            id="JotFormIFrame-261618903639667"
+            title="Inscripción bambino box - Il Siciliano"
+            onLoad={() => { try { window.scrollTo(0, 0); } catch (e) { /* noop */ } }}
+            allow="geolocation; microphone; camera; fullscreen; payment"
+            src="https://form.jotform.com/261618903639667"
+            frameBorder="0"
+            scrolling="no"
+            className="w-full block rounded-lg bg-white"
+            style={{ minWidth: '100%', maxWidth: '100%', height: '600px', border: 'none' }}
+            data-testid="bambino-jotform-iframe"
+          />
         </div>
 
         {/* Fallback contact options */}
