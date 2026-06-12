@@ -1,11 +1,31 @@
 import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSiteConfig } from '../contexts/SiteConfigContext';
 import { translations } from '../data/translations';
 import { MapPin, Phone, Mail, Clock, Facebook } from 'lucide-react';
 
 const Info = () => {
   const { language } = useLanguage();
+  const cfg = useSiteConfig();
   const t = translations;
+
+  const phone = cfg?.phone || t.contact.phone;
+  const phone2 = cfg?.phone2 || '';
+  const address = cfg?.address || t.contact.address;
+  const email = cfg?.email || t.contact.email;
+  const phoneTelLink = (phone || '').replace(/\s+/g, '');
+  const phone2TelLink = (phone2 || '').replace(/\s+/g, '');
+
+  const dayLabels = { es: ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'], en: ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'], it: ['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'], fr: ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'], nl: ['Maandag','Dinsdag','Woensdag','Donderdag','Vrijdag','Zaterdag','Zondag'], de: ['Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Sonntag'] };
+  const dayKeys = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+  const labels = dayLabels[language] || dayLabels.es;
+  const hoursRows = (cfg?.opening_hours && Object.keys(cfg.opening_hours).length)
+    ? dayKeys.map((k, i) => {
+        const h = cfg.opening_hours?.[k] || {};
+        const parts = [h.lunch, h.dinner].filter(Boolean);
+        return { day: labels[i], text: parts.length ? parts.join(' · ') : '—' };
+      })
+    : null;
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-16">
@@ -44,7 +64,7 @@ const Info = () => {
                       de: 'Adresse',
                       it: 'Indirizzo'
                     }[language]}</h3>
-                    <p className="text-gray-300">{t.contact.address}</p>
+                    <p className="text-gray-300">{address}</p>
                     <a
                       href="https://www.google.com/maps/search/?api=1&query=Il+Siciliano+Santo Domingo"
                       target="_blank"
@@ -67,9 +87,14 @@ const Info = () => {
                   <Phone size={24} className="text-gold mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="text-white font-semibold mb-1">Telefoon / Téléphone</h3>
-                    <a href="tel:+593984110781" className="text-gray-300 hover:text-gold transition-colors text-lg">
-                      {t.contact.phone}
+                    <a href={`tel:${phoneTelLink}`} className="text-gray-300 hover:text-gold transition-colors text-lg">
+                      {phone}
                     </a>
+                    {phone2 && (
+                      <a href={`tel:${phone2TelLink}`} className="block text-gray-300 hover:text-gold transition-colors text-lg mt-1">
+                        {phone2}
+                      </a>
+                    )}
                   </div>
                 </div>
 
@@ -77,8 +102,8 @@ const Info = () => {
                   <Mail size={24} className="text-gold mt-1 flex-shrink-0" />
                   <div>
                     <h3 className="text-white font-semibold mb-1">Email</h3>
-                    <a href="mailto:litalianoec@gmail.com" className="text-gray-300 hover:text-gold transition-colors">
-                      {t.contact.email}
+                    <a href={`mailto:${email}`} className="text-gray-300 hover:text-gold transition-colors">
+                      {email}
                     </a>
                     <p className="text-xs text-gray-400 mt-2">{t.contact.emailNote[language]}</p>
                   </div>
@@ -109,13 +134,27 @@ const Info = () => {
               </div>
               
               <div className="space-y-4">
-                <div>
-                  <h3 className="text-white font-semibold mb-2">{t.hours.lunch[language]}</h3>
-                  <p className="text-gold text-2xl font-bold">{t.hours.dinner}</p>
-                </div>
-                <div className="pt-4 border-t border-gold/20">
-                  <p className="text-gray-400">{t.hours.closed[language]}</p>
-                </div>
+                {hoursRows ? (
+                  hoursRows.map(({ day, text }) => (
+                    <div key={day} className="flex items-baseline justify-between gap-4 border-b border-gold/10 pb-2">
+                      <span className="text-white font-semibold">{day}</span>
+                      <span className="text-gray-300">{text}</span>
+                    </div>
+                  ))
+                ) : (
+                  <>
+                    <div>
+                      <h3 className="text-white font-semibold mb-2">{t.hours.lunch[language]}</h3>
+                      <p className="text-gold text-2xl font-bold">{t.hours.dinner}</p>
+                    </div>
+                    <div className="pt-4 border-t border-gold/20">
+                      <p className="text-gray-400">{t.hours.closed[language]}</p>
+                    </div>
+                  </>
+                )}
+                {cfg?.closure_notice && (
+                  <p className="text-sm text-amber-400 italic mt-3">{cfg.closure_notice}</p>
+                )}
               </div>
             </div>
           </div>

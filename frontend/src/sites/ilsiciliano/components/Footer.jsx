@@ -1,12 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
+import { useSiteConfig } from '../contexts/SiteConfigContext';
 import { translations } from '../data/translations';
 import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
 
 const Footer = () => {
   const { language } = useLanguage();
+  const cfg = useSiteConfig();
   const t = translations;
+
+  const phone = cfg?.phone || t.contact.phone;
+  const phone2 = cfg?.phone2 || '';
+  const address = cfg?.address || t.contact.address;
+  const email = cfg?.email || t.contact.email;
+  const phoneTelLink = (phone || '').replace(/\s+/g, '');
+  const phone2TelLink = (phone2 || '').replace(/\s+/g, '');
+
+  // Build hours array from DB config (only days with values)
+  const dayLabels = { es: ['Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Domingo'], en: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'], it: ['Lun','Mar','Mer','Gio','Ven','Sab','Dom'], fr: ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'], nl: ['Ma','Di','Wo','Do','Vr','Za','Zo'], de: ['Mo','Di','Mi','Do','Fr','Sa','So'] };
+  const dayKeys = ['monday','tuesday','wednesday','thursday','friday','saturday','sunday'];
+  const labels = dayLabels[language] || dayLabels.es;
+  const hoursRows = (cfg?.opening_hours && Object.keys(cfg.opening_hours).length)
+    ? dayKeys.map((k, i) => {
+        const h = cfg.opening_hours?.[k] || {};
+        const parts = [h.lunch, h.dinner].filter(Boolean);
+        return parts.length ? { day: labels[i], text: parts.join(' · ') } : null;
+      }).filter(Boolean)
+    : null;
 
   return (
     <footer className="bg-black border-t border-gold/20 text-white">
@@ -26,19 +47,27 @@ const Footer = () => {
             <div className="space-y-3 text-gray-300">
               <div className="flex items-start space-x-3">
                 <MapPin size={20} className="text-gold mt-1 flex-shrink-0" />
-                <span>{t.contact.address}</span>
+                <span>{address}</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Phone size={20} className="text-gold flex-shrink-0" />
-                <a href="tel:+593984110781" className="hover:text-gold transition-colors">
-                  {t.contact.phone}
+                <a href={`tel:${phoneTelLink}`} className="hover:text-gold transition-colors">
+                  {phone}
                 </a>
               </div>
+              {phone2 && (
+                <div className="flex items-center space-x-3">
+                  <Phone size={20} className="text-gold flex-shrink-0" />
+                  <a href={`tel:${phone2TelLink}`} className="hover:text-gold transition-colors">
+                    {phone2}
+                  </a>
+                </div>
+              )}
               <div className="flex items-start space-x-3">
                 <Mail size={20} className="text-gold mt-1 flex-shrink-0" />
                 <div>
-                  <a href="mailto:litalianoec@gmail.com" className="hover:text-gold transition-colors">
-                    {t.contact.email}
+                  <a href={`mailto:${email}`} className="hover:text-gold transition-colors">
+                    {email}
                   </a>
                   <p className="text-xs text-gray-400 mt-1">
                     {t.contact.emailNote[language]}
@@ -52,9 +81,20 @@ const Footer = () => {
           <div>
             <h3 className="text-xl font-bold text-gold mb-4">{t.hours.title[language]}</h3>
             <div className="space-y-2 text-gray-300">
-              <p>{t.hours.lunch[language]}</p>
-              <p>{t.hours.dinner}</p>
-              <p className="text-sm text-gray-400 mt-3">{t.hours.closed[language]}</p>
+              {hoursRows ? (
+                hoursRows.map(({ day, text }) => (
+                  <p key={day}><span className="text-gold font-semibold mr-2">{day}:</span>{text}</p>
+                ))
+              ) : (
+                <>
+                  <p>{t.hours.lunch[language]}</p>
+                  <p>{t.hours.dinner}</p>
+                  <p className="text-sm text-gray-400 mt-3">{t.hours.closed[language]}</p>
+                </>
+              )}
+              {cfg?.closure_notice && (
+                <p className="text-sm text-amber-400 mt-3 italic">{cfg.closure_notice}</p>
+              )}
             </div>
           </div>
 

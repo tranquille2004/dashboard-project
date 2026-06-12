@@ -4,6 +4,7 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import axios from "axios";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { BasePathProvider } from "./contexts/BasePathContext";
+import { SiteConfigProvider } from "./contexts/SiteConfigContext";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 import ScrollToTop from "./components/ScrollToTop";
@@ -118,6 +119,7 @@ function IlSicilianoApp() {
   return (
     <LanguageProvider>
       <BasePathProvider basePath={basePath}>
+        <SiteConfigProvider value={siteConfig}>
         <div className="App ilsiciliano-root bg-black min-h-screen relative">
           {/* Bright Italian tricolor edge strips (left + right) */}
           <div className="ilsiciliano-edge-strip left" aria-hidden="true">
@@ -139,6 +141,7 @@ function IlSicilianoApp() {
           />
           <IlSicilianoAppInner siteConfig={siteConfig} />
         </div>
+        </SiteConfigProvider>
       </BasePathProvider>
     </LanguageProvider>
   );

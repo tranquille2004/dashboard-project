@@ -174,7 +174,7 @@ const SiteAdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
-              <img src="/images/hoteldelpacifico/hotel-logo.png" alt="Hotel del Pacífico" className="h-10" />
+              <img src={site?.logo_url || "/images/hoteldelpacifico/hotel-logo.png"} alt={site?.name || 'Site'} className="h-10" />
               <div>
                 <h1 className="text-xl font-serif text-white">{site?.name || 'Hotel del Pacífico'}</h1>
                 <p className="text-emerald-300 text-xs tracking-wider">Panel de Administración</p>
@@ -225,7 +225,7 @@ const SiteAdminDashboard = () => {
                     <div className="bg-gray-50 rounded-lg p-6">
                       <h3 className="font-medium text-gray-700 mb-2">Sitio Web</h3>
                       <p className="text-2xl font-bold text-gray-900">{site?.name}</p>
-                      <p className="text-gray-500">hoteldelpacifico.net</p>
+                      <p className="text-gray-500">{site?.domains?.[0] || site?.domain || ''}</p>
                     </div>
                     <div className="bg-gray-50 rounded-lg p-6">
                       <h3 className="font-medium text-gray-700 mb-2">Elementos del Menú</h3>

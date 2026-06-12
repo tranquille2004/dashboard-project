@@ -5,7 +5,8 @@ import React, { useState, useEffect } from 'react';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import {
   LogOut, Image as ImageIcon, FileText, Bell, Calendar,
-  Upload, Trash2, Save, AlertTriangle, CheckCircle2, X, Plus
+  Upload, Trash2, Save, AlertTriangle, CheckCircle2, X, Plus,
+  Phone, MapPin, Clock
 } from 'lucide-react';
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
@@ -160,6 +161,7 @@ const IlSicilianoAdminDashboard = () => {
 
   const tabs = [
     { id: 'config', label: 'Anuncio especial', icon: Bell },
+    { id: 'contact', label: 'Contacto y Horarios', icon: Phone },
     { id: 'menu', label: 'Carta (PDF)', icon: FileText },
     { id: 'gallery', label: 'Galería', icon: ImageIcon },
     { id: 'events', label: 'Eventos', icon: Calendar }
@@ -284,6 +286,141 @@ const IlSicilianoAdminDashboard = () => {
               disabled={saving}
               className="bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-md font-medium flex items-center gap-2 transition-colors"
               data-testid="save-config-btn"
+            >
+              <Save size={18} />
+              {saving ? 'Guardando...' : 'Guardar cambios'}
+            </button>
+          </div>
+        )}
+
+        {/* CONTACT & OPENING HOURS */}
+        {activeTab === 'contact' && (
+          <div className="bg-white rounded-lg shadow-md p-6 lg:p-8 max-w-3xl">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Contacto y Horarios</h2>
+            <p className="text-gray-600 mb-6 text-sm">
+              Estos datos se muestran automáticamente en el pie de página y en la sección Info del sitio web.
+            </p>
+
+            {/* Contact info */}
+            <div className="space-y-5 mb-8">
+              <div>
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                  <Phone size={16} /> Teléfono / WhatsApp
+                </label>
+                <input
+                  type="text"
+                  value={config?.phone || ''}
+                  onChange={(e) => setConfig({ ...config, phone: e.target.value })}
+                  placeholder="+593 99 999 9999"
+                  className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none"
+                  data-testid="contact-phone-input"
+                />
+              </div>
+              <div>
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                  <Phone size={16} /> Segundo teléfono (opcional)
+                </label>
+                <input
+                  type="text"
+                  value={config?.phone2 || ''}
+                  onChange={(e) => setConfig({ ...config, phone2: e.target.value })}
+                  placeholder="+593 ..."
+                  className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none"
+                  data-testid="contact-phone2-input"
+                />
+              </div>
+              <div>
+                <label className="flex items-center gap-2 text-sm font-medium text-gray-700 mb-2">
+                  <MapPin size={16} /> Dirección
+                </label>
+                <textarea
+                  value={config?.address || ''}
+                  onChange={(e) => setConfig({ ...config, address: e.target.value })}
+                  rows={2}
+                  placeholder="Av. Quito y Tsáchila, Santo Domingo"
+                  className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none"
+                  data-testid="contact-address-input"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                <input
+                  type="email"
+                  value={config?.email || ''}
+                  onChange={(e) => setConfig({ ...config, email: e.target.value })}
+                  placeholder="contacto@ilsiciliano-santodomingo.com"
+                  className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none"
+                  data-testid="contact-email-input"
+                />
+              </div>
+            </div>
+
+            {/* Opening hours */}
+            <h3 className="flex items-center gap-2 text-lg font-bold text-gray-900 mb-4 pt-6 border-t">
+              <Clock size={20} /> Horario de apertura
+            </h3>
+            <p className="text-gray-500 text-xs mb-4">Deje un campo vacío si está cerrado ese día.</p>
+            <div className="space-y-3 mb-6">
+              {[
+                { key: 'monday', label: 'Lunes' },
+                { key: 'tuesday', label: 'Martes' },
+                { key: 'wednesday', label: 'Miércoles' },
+                { key: 'thursday', label: 'Jueves' },
+                { key: 'friday', label: 'Viernes' },
+                { key: 'saturday', label: 'Sábado' },
+                { key: 'sunday', label: 'Domingo' }
+              ].map(({ key, label }) => {
+                const hours = config?.opening_hours?.[key] || {};
+                const update = (field, value) => {
+                  setConfig({
+                    ...config,
+                    opening_hours: {
+                      ...(config?.opening_hours || {}),
+                      [key]: { ...hours, [field]: value }
+                    }
+                  });
+                };
+                return (
+                  <div key={key} className="grid grid-cols-[100px_1fr_1fr] gap-3 items-center">
+                    <span className="font-medium text-gray-700">{label}</span>
+                    <input
+                      type="text"
+                      value={hours.lunch || ''}
+                      onChange={(e) => update('lunch', e.target.value)}
+                      placeholder="Almuerzo: 12:00 - 15:00"
+                      className="px-3 py-2 rounded-md border border-gray-300 focus:border-red-500 outline-none text-sm"
+                      data-testid={`hours-${key}-lunch`}
+                    />
+                    <input
+                      type="text"
+                      value={hours.dinner || ''}
+                      onChange={(e) => update('dinner', e.target.value)}
+                      placeholder="Cena: 18:00 - 22:00"
+                      className="px-3 py-2 rounded-md border border-gray-300 focus:border-red-500 outline-none text-sm"
+                      data-testid={`hours-${key}-dinner`}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Aviso de cierre temporal (opcional)</label>
+              <textarea
+                value={config?.closure_notice || ''}
+                onChange={(e) => setConfig({ ...config, closure_notice: e.target.value })}
+                rows={2}
+                placeholder="Ej.: Cerrado del 24 al 26 de diciembre por las fiestas"
+                className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-red-500 focus:ring-2 focus:ring-red-500/20 outline-none"
+                data-testid="closure-notice-input"
+              />
+            </div>
+
+            <button
+              onClick={saveConfig}
+              disabled={saving}
+              className="mt-6 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-md font-medium flex items-center gap-2 transition-colors"
+              data-testid="save-contact-btn"
             >
               <Save size={18} />
               {saving ? 'Guardando...' : 'Guardar cambios'}

@@ -4417,7 +4417,7 @@ async def seed_sites_on_startup():
             "name": "Il Siciliano Admin",
             "password_hash": sic_password_hash,
             "is_active": True,
-            "permissions": {"menu": True, "gallery": True, "config": True, "events": True, "announcements": True},
+            "permissions": {"menu": True, "gallery": True, "config": True, "events": True, "announcements": True, "contact_info": True, "opening_hours": True},
             "created_at": datetime.now(timezone.utc).isoformat(),
             "updated_at": datetime.now(timezone.utc).isoformat()
         }
@@ -4429,7 +4429,8 @@ async def seed_sites_on_startup():
             {"$set": {
                 "email": "admin@ilsiciliano-santodomingo.com",
                 "password_hash": sic_password_hash,
-                "is_active": True
+                "is_active": True,
+                "permissions": {"menu": True, "gallery": True, "config": True, "events": True, "announcements": True, "contact_info": True, "opening_hours": True}
             }}
         )
         logger.info("Updated Il Siciliano admin credentials")
@@ -4452,6 +4453,32 @@ async def seed_sites_on_startup():
             upsert=True,
         )
     logger.info(f"Ensured {len(owner_ips)} owner IPs in ignored_ips")
+
+    # Auto-seed Il Siciliano static gallery photos so they appear in the client dashboard
+    # (idempotent: upsert by url - never creates duplicates, never overwrites edits)
+    try:
+        ilsiciliano_gallery_urls = [
+            f"/images/ilsiciliano/gallery/gallery-{str(i).zfill(2)}.jpg"
+            for i in range(1, 27)
+        ]
+        for idx, url in enumerate(ilsiciliano_gallery_urls):
+            await db.gallery_images.update_one(
+                {"site_id": "site_ilsiciliano", "url": url},
+                {"$setOnInsert": {
+                    "image_id": f"img_static_ilsiciliano_{idx + 1:02d}",
+                    "site_id": "site_ilsiciliano",
+                    "url": url,
+                    "alt_text": f"Il Siciliano galería {idx + 1}",
+                    "category": "gallery",
+                    "sort_order": idx,
+                    "created_at": datetime.now(timezone.utc).isoformat(),
+                }},
+                upsert=True,
+            )
+        logger.info(f"Ensured {len(ilsiciliano_gallery_urls)} static Il Siciliano gallery photos in DB")
+    except Exception as e:
+        logger.warning(f"Could not seed Il Siciliano static gallery: {e}")
+
 
 @app.on_event("shutdown")
 async def shutdown_db_client():

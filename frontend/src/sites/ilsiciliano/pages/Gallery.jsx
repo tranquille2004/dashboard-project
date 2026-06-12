@@ -1,18 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { X, ChevronLeft, ChevronRight } from 'lucide-react';
+
+const API = process.env.REACT_APP_BACKEND_URL + '/api';
+
+const FALLBACK_IMAGES = Array.from({ length: 26 }, (_, i) => {
+  const num = (i + 1).toString().padStart(2, '0');
+  return `/images/ilsiciliano/gallery/gallery-${num}.jpg`;
+});
 
 const Gallery = () => {
   const { language } = useLanguage();
   const t = translations.gallery;
   const [selectedImage, setSelectedImage] = useState(null);
+  const [images, setImages] = useState(FALLBACK_IMAGES);
 
-  // 26 photos from Il Siciliano (food + interior + chef)
-  const images = Array.from({ length: 26 }, (_, i) => {
-    const num = (i + 1).toString().padStart(2, '0');
-    return `/images/ilsiciliano/gallery/gallery-${num}.jpg`;
-  });
+  useEffect(() => {
+    fetch(`${API}/public/site/ilsiciliano`)
+      .then((r) => r.json())
+      .then((data) => {
+        const dbGallery = data?.gallery || [];
+        if (dbGallery.length > 0) {
+          setImages(dbGallery.map((g) => g.url).filter(Boolean));
+        }
+      })
+      .catch(() => { /* keep fallback */ });
+  }, []);
 
   const openLightbox = (index) => {
     setSelectedImage(index);
