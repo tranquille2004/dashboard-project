@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import { Mail, Lock, AlertCircle } from 'lucide-react';
 
 const SiteAdminLogin = ({ preSelectedSite }) => {
   const { login } = useSiteAdmin();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const effectiveSite = preSelectedSite || searchParams.get('site') || null;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -19,7 +21,7 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
     try {
       const result = await login(email, password);
       // Route to the right dashboard based on the actually-logged-in site
-      const loggedSlug = result?.site?.slug || preSelectedSite;
+      const loggedSlug = result?.site?.slug || effectiveSite;
       const dashboardPath = loggedSlug === 'ilsiciliano' ? '/mi-sitio' : '/mijn-site';
       navigate(dashboardPath);
     } catch (err) {
@@ -39,8 +41,8 @@ const SiteAdminLogin = ({ preSelectedSite }) => {
     'hoteldelpacifico': 'Hotel del Pacífico',
     'ilsiciliano': 'Il Siciliano'
   };
-  const siteName = preSelectedSite ? siteNames[preSelectedSite] || preSelectedSite : null;
-  const isHotel = preSelectedSite === 'hoteldelpacifico';
+  const siteName = effectiveSite ? siteNames[effectiveSite] || effectiveSite : null;
+  const isHotel = effectiveSite === 'hoteldelpacifico';
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center justify-center px-4">

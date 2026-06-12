@@ -143,8 +143,9 @@ function AdminRouter() {
       <Route path="/admin/migrate" element={<ImageMigration />} />
       <Route path="/admin/billing" element={<Billing />} />
       <Route path="/admin/sites/:siteId" element={<SiteEditor />} />
-      <Route path="/restaurant-login" element={<SiteAdminLogin />} />
-      <Route path="/mijn-site" element={<SiteAdminDashboard />} />
+      <Route path="/restaurant-login" element={<SiteAdminProvider><SiteAdminLogin /></SiteAdminProvider>} />
+      <Route path="/mijn-site" element={<SiteAdminProvider><SiteAdminDashboard /></SiteAdminProvider>} />
+      <Route path="/mi-sitio" element={<SiteAdminProvider><IlSicilianoAdminDashboard /></SiteAdminProvider>} />
       <Route path="/site/:slug/*" element={<SiteRenderer />} />
       <Route path="*" element={<LandingPage />} />
     </Routes>
