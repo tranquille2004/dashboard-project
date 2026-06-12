@@ -1,11 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
-import { ChefHat, Users, Heart } from 'lucide-react';
+import { ChefHat, Users, Heart, X } from 'lucide-react';
+
+const TEAM_PHOTOS = [
+  'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/sweesn6f_1ok.jpeg',
+  'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/842243yx_3ok.jpeg',
+  'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/889ajp7u_5ok.jpeg',
+  'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/vwdhzoro_8ok.jpeg',
+  'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/88gw674m_13ok.jpeg',
+];
+
+const TEAM_TITLE = {
+  es: 'Nuestro equipo',
+  en: 'Our team',
+  it: 'Il nostro team',
+  fr: 'Notre équipe'
+};
 
 const About = () => {
   const { language } = useLanguage();
   const t = translations.about;
+  const [zoomedPhoto, setZoomedPhoto] = useState(null);
+
+  useEffect(() => {
+    const onKey = (e) => { if (e.key === 'Escape') setZoomedPhoto(null); };
+    if (zoomedPhoto) {
+      document.body.style.overflow = 'hidden';
+      window.addEventListener('keydown', onKey);
+    }
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [zoomedPhoto]);
 
   return (
     <div className="min-h-screen bg-black pt-24 pb-8">
@@ -31,6 +59,34 @@ const About = () => {
           <div className="space-y-6 text-gray-300 leading-relaxed">
             {t.content[language].split('\n\n').slice(0, 3).map((paragraph, idx) => (
               <p key={idx} className="text-lg">{paragraph}</p>
+            ))}
+          </div>
+        </div>
+
+        {/* Team Section */}
+        <div className="mb-16 animate-fade-in" data-testid="team-section">
+          <h2 className="text-3xl md:text-4xl font-bold text-gold text-center mb-2">
+            {TEAM_TITLE[language] || TEAM_TITLE.es}
+          </h2>
+          <div className="w-16 h-0.5 bg-gold mx-auto mb-8"></div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
+            {TEAM_PHOTOS.map((src, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={() => setZoomedPhoto(src)}
+                className="group relative overflow-hidden rounded-lg border border-gold/20 hover:border-gold/60 bg-black shadow-lg transition-all duration-300 hover:scale-[1.03] focus:outline-none focus:ring-2 focus:ring-gold"
+                data-testid={`team-photo-${idx}`}
+                aria-label={`Team member ${idx + 1}`}
+              >
+                <img
+                  src={src}
+                  alt={`Equipo Il Siciliano ${idx + 1}`}
+                  loading="lazy"
+                  className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+              </button>
             ))}
           </div>
         </div>
@@ -147,6 +203,31 @@ const About = () => {
           </div>
         </div>
       </div>
+
+      {/* Zoom Lightbox */}
+      {zoomedPhoto && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in"
+          onClick={() => setZoomedPhoto(null)}
+          data-testid="team-photo-lightbox"
+        >
+          <button
+            type="button"
+            onClick={(e) => { e.stopPropagation(); setZoomedPhoto(null); }}
+            className="absolute top-6 right-6 w-12 h-12 rounded-full bg-black/60 hover:bg-black border border-gold/40 text-gold flex items-center justify-center transition-all"
+            aria-label="Close"
+            data-testid="team-photo-lightbox-close"
+          >
+            <X size={24} />
+          </button>
+          <img
+            src={zoomedPhoto}
+            alt="Equipo Il Siciliano"
+            onClick={(e) => e.stopPropagation()}
+            className="max-w-[92vw] max-h-[88vh] object-contain rounded-lg shadow-2xl border border-gold/30"
+          />
+        </div>
+      )}
     </div>
   );
 };
