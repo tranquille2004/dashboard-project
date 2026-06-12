@@ -2,6 +2,7 @@
 // Allows the restaurant owner to manage: menu PDF, gallery photos, opening hours, special announcements
 
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import {
   LogOut, Image as ImageIcon, FileText, Bell,
@@ -12,7 +13,12 @@ import {
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
 const IlSicilianoAdminDashboard = () => {
-  const { admin, logout } = useSiteAdmin();
+  const { logout } = useSiteAdmin();
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try { await logout(); } catch (e) { /* noop */ }
+    navigate('/restaurant-login?site=ilsiciliano');
+  };
   const [activeTab, setActiveTab] = useState('config');
   const [config, setConfig] = useState(null);
   const [gallery, setGallery] = useState([]);
@@ -157,7 +163,7 @@ const IlSicilianoAdminDashboard = () => {
           </div>
           <div className="flex items-center gap-3">
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
               data-testid="ilsiciliano-logout-btn"
             >
