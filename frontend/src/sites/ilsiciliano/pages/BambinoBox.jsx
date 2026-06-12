@@ -116,7 +116,7 @@ const BambinoBox = () => {
       } catch (err) {
         // Browser blocked unmuted autoplay → start muted instead
         v.muted = true;
-        try { await v.play(); } catch (e) {}
+        try { await v.play(); } catch (e) { /* noop */ }
       }
     };
     tryPlay();
@@ -188,10 +188,10 @@ const BambinoBox = () => {
           />
         </div>
 
-        {/* Chef + Intro text - balanced 2-col below */}
-        <div className="grid lg:grid-cols-[1fr_1.2fr] gap-8 lg:gap-12 items-center">
+        {/* Chef + QR side-by-side */}
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-center mb-12">
           {/* Chef illustration */}
-          <div className="relative flex justify-center lg:justify-start">
+          <div className="relative flex justify-center lg:justify-end">
             <div className="relative">
               <div className="absolute inset-0 bg-gradient-radial from-gold/20 via-transparent to-transparent blur-3xl" />
               <img
@@ -203,21 +203,51 @@ const BambinoBox = () => {
             </div>
           </div>
 
-          {/* Intro text + main bambino video preview */}
-          <div className="space-y-6">
-            <p className="text-gray-300 leading-relaxed text-base md:text-lg">{t.intro[language]}</p>
-            <div className="relative rounded-2xl overflow-hidden border-2 border-gold/30 shadow-[0_15px_40px_rgba(178,34,34,0.2)] bg-black max-w-sm">
-              <video
-                ref={videoRef}
-                src="/images/ilsiciliano/bambino/video/bambino-video.mp4#t=0.5"
-                poster="/images/ilsiciliano/bambino/bambino-thumb.jpg"
-                className="w-full h-auto block"
-                playsInline
-                controls
-                preload="auto"
-                data-testid="bambino-video"
-              />
-            </div>
+          {/* QR card - clickable, opens subscribe page */}
+          <div className="flex flex-col items-center lg:items-start">
+            <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/40 text-gold text-xs tracking-[0.3em] uppercase mb-4">
+              <QrCode size={14} /> {t.badge[language]}
+            </span>
+            <h2 className="text-2xl md:text-3xl font-bold text-gold mb-3 text-center lg:text-left">
+              {t.qrTitle[language]}
+            </h2>
+            <p className="text-gray-300 leading-relaxed text-sm md:text-base mb-5 text-center lg:text-left max-w-md">
+              {t.qrDesc[language]}
+            </p>
+            <Link
+              to={`${basePath}/bambino-box-subscribe`}
+              className="group block"
+              aria-label={t.qrTitle[language]}
+              data-testid="bambino-qr-link"
+            >
+              <div className="bg-white p-4 md:p-5 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.25)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_25px_60px_rgba(212,175,55,0.4)]">
+                <img
+                  src="/images/ilsiciliano/bambino/qr-bambino-subscribe.png"
+                  alt="QR Code Bambino Box"
+                  className="w-40 h-40 md:w-48 md:h-48 block"
+                />
+              </div>
+              <p className="text-center text-gold text-xs uppercase tracking-[0.25em] mt-3 group-hover:text-white transition-colors">
+                {t.qrHint[language]}
+              </p>
+            </Link>
+          </div>
+        </div>
+
+        {/* Intro text + Bambino preview video below */}
+        <div className="grid lg:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 items-center">
+          <p className="text-gray-300 leading-relaxed text-base md:text-lg">{t.intro[language]}</p>
+          <div className="relative rounded-2xl overflow-hidden border-2 border-gold/30 shadow-[0_15px_40px_rgba(178,34,34,0.2)] bg-black w-full max-w-sm mx-auto">
+            <video
+              ref={videoRef}
+              src="/images/ilsiciliano/bambino/video/bambino-video.mp4#t=0.5"
+              poster="/images/ilsiciliano/bambino/bambino-thumb.jpg"
+              className="w-full h-auto block"
+              playsInline
+              controls
+              preload="auto"
+              data-testid="bambino-video"
+            />
           </div>
         </div>
       </section>
@@ -246,42 +276,6 @@ const BambinoBox = () => {
               </div>
             );
           })}
-        </div>
-      </section>
-
-      {/* QR CODE - SUBSCRIBE TO BAMBINO BOX EVENT */}
-      <section className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 mb-20">
-        <div className="bg-gradient-to-br from-gray-900 via-black to-gray-900 rounded-3xl p-6 md:p-12 border border-gold/30 relative overflow-hidden">
-          <div className="absolute -top-16 -right-16 w-72 h-72 bg-gold/10 rounded-full blur-3xl" />
-          <div className="relative grid md:grid-cols-[1fr_auto] gap-8 md:gap-12 items-center">
-            {/* Left: text */}
-            <div className="text-center md:text-left">
-              <span className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gold/10 border border-gold/40 text-gold text-xs tracking-[0.3em] uppercase mb-4">
-                <QrCode size={14} /> {t.badge[language]}
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-gold mb-3">{t.qrTitle[language]}</h2>
-              <p className="text-gray-300 leading-relaxed text-base md:text-lg">{t.qrDesc[language]}</p>
-            </div>
-
-            {/* Right: clickable QR card */}
-            <Link
-              to={`${basePath}/bambino-box-subscribe`}
-              className="group block mx-auto"
-              aria-label={t.qrTitle[language]}
-              data-testid="bambino-qr-link"
-            >
-              <div className="bg-white p-4 md:p-5 rounded-2xl shadow-[0_20px_50px_rgba(212,175,55,0.25)] transition-all duration-300 group-hover:scale-105 group-hover:shadow-[0_25px_60px_rgba(212,175,55,0.4)]">
-                <img
-                  src="/images/ilsiciliano/bambino/qr-bambino-subscribe.png"
-                  alt="QR Code Bambino Box"
-                  className="w-44 h-44 md:w-56 md:h-56 block"
-                />
-              </div>
-              <p className="text-center text-gold text-xs uppercase tracking-[0.25em] mt-3 group-hover:text-white transition-colors">
-                {t.qrHint[language]}
-              </p>
-            </Link>
-          </div>
         </div>
       </section>
 
