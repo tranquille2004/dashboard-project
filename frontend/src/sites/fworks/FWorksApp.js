@@ -113,7 +113,7 @@ const translations = {
         'Meertalige ondersteuning'
       ],
       cta: 'Start Vandaag',
-      note: 'Eenmalige opzet: €/$50 (voor standaard sites — complexere projecten op aanvraag)',
+      note: 'Eenmalige opzet: €/$100 (voor standaard sites — complexere projecten op aanvraag)',
       speed: 'Standaard website klaar in 48 uur!'
     },
     contact: {
@@ -238,7 +238,7 @@ const translations = {
         'Support multilingue'
       ],
       cta: 'Commencer Aujourd\'hui',
-      note: 'Frais de création: €/$50 (pour les sites standards — projets complexes sur devis)',
+      note: 'Frais de création: €/$100 (pour les sites standards — projets complexes sur devis)',
       speed: 'Site standard prêt en 48 heures!'
     },
     contact: {
@@ -363,7 +363,7 @@ const translations = {
         'Multilingual support'
       ],
       cta: 'Start Today',
-      note: 'One-time setup: €/$50 (for standard sites — complex projects on request)',
+      note: 'One-time setup: €/$100 (for standard sites — complex projects on request)',
       speed: 'Standard website ready in 48 hours!'
     },
     contact: {
@@ -488,7 +488,7 @@ const translations = {
         'Soporte multilingüe'
       ],
       cta: 'Empezar Hoy',
-      note: 'Configuración única: €/$50 (para sitios estándar — proyectos complejos bajo presupuesto)',
+      note: 'Configuración única: €/$100 (para sitios estándar — proyectos complejos bajo presupuesto)',
       speed: '¡Sitio web estándar listo en 48 horas!'
     },
     contact: {
@@ -613,7 +613,7 @@ const translations = {
         'Supporto multilingue'
       ],
       cta: 'Inizia Oggi',
-      note: 'Setup una tantum: €50 (per siti standard — progetti complessi su preventivo)',
+      note: 'Setup una tantum: €100 (per siti standard — progetti complessi su preventivo)',
       speed: 'Sito web standard pronto in 48 ore!'
     },
     contact: {
