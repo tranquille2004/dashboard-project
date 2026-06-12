@@ -156,7 +156,6 @@ const IlSicilianoAdminDashboard = () => {
             </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="text-gray-300 text-sm hidden sm:block">{admin?.email}</span>
             <button
               onClick={logout}
               className="flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
