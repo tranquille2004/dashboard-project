@@ -76,7 +76,7 @@ const About = () => {
                   src={src}
                   alt={idx === 0 ? 'Emanuele — Chef & propietario' : `Equipo Il Siciliano ${idx}`}
                   loading="lazy"
-                  className="w-full aspect-square object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="w-full aspect-square object-cover object-top transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
               </button>
