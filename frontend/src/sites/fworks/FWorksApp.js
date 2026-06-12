@@ -1362,22 +1362,15 @@ const ContactSection = ({ t }) => {
 
 // Footer with legal info
 const Footer = ({ t }) => (
-  <footer className="bg-gray-900 border-t border-gray-800 py-12">
+  <footer className="bg-gray-900 border-t border-gray-800 py-8">
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-        <div className="flex items-center space-x-3 mb-4 md:mb-0">
-          <img src="/images/fworks-logo.png" alt="fworksbuilders" className="h-10 w-auto" />
-          <div><span className="text-xl font-bold text-white">fworksbuilders</span><p className="text-sm text-gray-500">{t.footer.tagline}</p></div>
-        </div>
-        <p className="text-gray-500 text-sm">© {new Date().getFullYear()} fworksbuilders. {t.footer.rights}.</p>
-      </div>
       {/* Legal Information */}
-      <div className="border-t border-gray-800 pt-6 text-center">
+      <div className="text-center">
         <p className="text-xs text-gray-600 flex items-center justify-center space-x-2">
           <img src="/images/fworks-logo.png" alt="fworksbuilders" className="h-4 w-auto opacity-60" />
           <span>fworksbuilders • RUC: 1759884990001 • Via Aventura, Santo Domingo, Ecuador</span>
         </p>
-        <p className="text-xs text-gray-700 mt-2">© {new Date().getFullYear()} fworksbuilders. All rights reserved.</p>
+        <p className="text-xs text-gray-700 mt-2">© {new Date().getFullYear()} fworksbuilders. {t.footer.rights}.</p>
       </div>
     </div>
   </footer>
