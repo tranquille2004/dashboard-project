@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSiteAdmin } from '@/contexts/SiteAdminContext';
 import {
-  LogOut, Image as ImageIcon, FileText, Bell, Calendar,
+  LogOut, Image as ImageIcon, FileText, Bell,
   Upload, Trash2, Save, AlertTriangle, CheckCircle2, X, Plus,
   Phone, MapPin, Clock
 } from 'lucide-react';
@@ -121,33 +121,6 @@ const IlSicilianoAdminDashboard = () => {
     }
   };
 
-  const addEvent = () => {
-    const events = config?.events || [];
-    setConfig({
-      ...config,
-      events: [...events, {
-        id: `ev_${Date.now()}`,
-        title: 'Nuevo evento',
-        date: '',
-        description: '',
-        active: true
-      }]
-    });
-  };
-
-  const updateEvent = (idx, patch) => {
-    const events = [...(config?.events || [])];
-    events[idx] = { ...events[idx], ...patch };
-    setConfig({ ...config, events });
-  };
-
-  const removeEvent = (idx) => {
-    if (!window.confirm('¿Eliminar este evento?')) return;
-    const events = [...(config?.events || [])];
-    events.splice(idx, 1);
-    setConfig({ ...config, events });
-  };
-
   if (loading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center text-white">
@@ -163,8 +136,7 @@ const IlSicilianoAdminDashboard = () => {
     { id: 'config', label: 'Anuncio especial', icon: Bell },
     { id: 'contact', label: 'Contacto y Horarios', icon: Phone },
     { id: 'menu', label: 'Carta (PDF)', icon: FileText },
-    { id: 'gallery', label: 'Galería', icon: ImageIcon },
-    { id: 'events', label: 'Eventos', icon: Calendar }
+    { id: 'gallery', label: 'Galería', icon: ImageIcon }
   ];
 
   return (
@@ -173,9 +145,11 @@ const IlSicilianoAdminDashboard = () => {
       <header className="bg-black border-b-4 border-red-600 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
-            <div className="w-12 h-12 rounded-full border-2 border-red-600 flex items-center justify-center bg-black">
-              <span className="text-red-600 font-bold text-lg">IS</span>
-            </div>
+            <img
+              src="/images/ilsiciliano/logo/ilsiciliano-logo.png"
+              alt="Il Siciliano"
+              className="h-12 w-auto"
+            />
             <div>
               <h1 className="text-white font-bold text-lg">Il Siciliano</h1>
               <p className="text-gray-400 text-xs">Panel de Administración</p>
@@ -560,96 +534,6 @@ const IlSicilianoAdminDashboard = () => {
           </div>
         )}
 
-        {/* EVENTS */}
-        {activeTab === 'events' && (
-          <div>
-            <div className="flex items-center justify-between flex-wrap gap-3 mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900">Eventos especiales</h2>
-                <p className="text-gray-600 text-sm">Cenas temáticas, noches especiales, ofertas...</p>
-              </div>
-              <button
-                onClick={addEvent}
-                className="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-md font-medium flex items-center gap-2 transition-colors"
-                data-testid="add-event-btn"
-              >
-                <Plus size={18} />
-                Nuevo evento
-              </button>
-            </div>
-
-            <div className="space-y-4">
-              {(config?.events || []).map((ev, i) => (
-                <div key={ev.id || i} className="bg-white rounded-lg shadow-md p-6 border-l-4 border-red-600">
-                  <div className="grid md:grid-cols-2 gap-4 mb-4">
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1 uppercase tracking-wider">Título</label>
-                      <input
-                        value={ev.title || ''}
-                        onChange={(e) => updateEvent(i, { title: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-md border border-gray-300 focus:border-red-500 outline-none"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-gray-600 mb-1 uppercase tracking-wider">Fecha</label>
-                      <input
-                        type="date"
-                        value={ev.date || ''}
-                        onChange={(e) => updateEvent(i, { date: e.target.value })}
-                        className="w-full px-4 py-2.5 rounded-md border border-gray-300 focus:border-red-500 outline-none"
-                      />
-                    </div>
-                  </div>
-                  <div className="mb-4">
-                    <label className="block text-xs font-medium text-gray-600 mb-1 uppercase tracking-wider">Descripción</label>
-                    <textarea
-                      value={ev.description || ''}
-                      onChange={(e) => updateEvent(i, { description: e.target.value })}
-                      rows={2}
-                      className="w-full px-4 py-2.5 rounded-md border border-gray-300 focus:border-red-500 outline-none"
-                    />
-                  </div>
-                  <div className="flex items-center justify-between">
-                    <label className="flex items-center gap-2 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={ev.active !== false}
-                        onChange={(e) => updateEvent(i, { active: e.target.checked })}
-                        className="w-4 h-4 accent-red-600"
-                      />
-                      <span className="text-sm text-gray-700">Visible en el sitio</span>
-                    </label>
-                    <button
-                      onClick={() => removeEvent(i)}
-                      className="text-red-600 hover:text-red-800 flex items-center gap-1 text-sm font-medium"
-                    >
-                      <Trash2 size={14} />
-                      Eliminar
-                    </button>
-                  </div>
-                </div>
-              ))}
-              {(!config?.events || config.events.length === 0) && (
-                <div className="bg-white rounded-lg shadow-md p-12 text-center">
-                  <Calendar size={48} className="mx-auto mb-4 text-gray-300" />
-                  <p className="text-gray-600">Aún no hay eventos programados.</p>
-                </div>
-              )}
-            </div>
-
-            {config?.events?.length > 0 && (
-              <button
-                onClick={saveConfig}
-                disabled={saving}
-                className="mt-6 bg-red-600 hover:bg-red-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-md font-medium flex items-center gap-2 transition-colors"
-                data-testid="save-events-btn"
-              >
-                <Save size={18} />
-                {saving ? 'Guardando...' : 'Guardar eventos'}
-              </button>
-            )}
-          </div>
-        )}
       </div>
     </div>
   );
