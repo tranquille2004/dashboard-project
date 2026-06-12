@@ -151,7 +151,7 @@ const translations = {
         {
           number: '01',
           title: 'Kennismaking (gratis)',
-          desc: 'We beginnen met een persoonlijk gesprek of videocall. Samen brengen we uw wensen, doelen en merk in kaart zodat we een plan bouwen dat echt bij u past.'
+          desc: 'We beginnen met een persoonlijk gesprek of videocall. Samen brengen we uw wensen, doelen en merk in kaart zodat we een plan bouwen dat echt bij u past. Vervolg-meetings en klantendienstverlening zijn altijd beschikbaar en altijd inbegrepen.'
         },
         {
           number: '02',
@@ -276,7 +276,7 @@ const translations = {
         {
           number: '01',
           title: 'Rencontre gratuite',
-          desc: 'Tout commence par un échange — en personne ou en visio. Nous prenons le temps de comprendre votre univers, vos objectifs et vos contraintes pour construire un plan qui vous ressemble.'
+          desc: 'Tout commence par un échange — en personne ou en visio. Nous prenons le temps de comprendre votre univers, vos objectifs et vos contraintes pour construire un plan qui vous ressemble. Les réunions de suivi et le service client sont toujours disponibles et toujours inclus.'
         },
         {
           number: '02',
@@ -401,7 +401,7 @@ const translations = {
         {
           number: '01',
           title: 'Free intro call',
-          desc: 'Every project starts with a real conversation — in person or online. We take the time to understand your goals, your brand and your constraints to shape a plan that fits you.'
+          desc: 'Every project starts with a real conversation — in person or online. We take the time to understand your goals, your brand and your constraints to shape a plan that fits you. Follow-up meetings and customer support are always available and always included.'
         },
         {
           number: '02',
@@ -526,7 +526,7 @@ const translations = {
         {
           number: '01',
           title: 'Primera reunión gratuita',
-          desc: 'Todo comienza con una conversación — en persona o por videollamada. Nos tomamos el tiempo de entender tus objetivos, tu marca y tus necesidades para diseñar un plan hecho a tu medida.'
+          desc: 'Todo comienza con una conversación — en persona o por videollamada. Nos tomamos el tiempo de entender tus objetivos, tu marca y tus necesidades para diseñar un plan hecho a tu medida. Las reuniones de seguimiento y la atención al cliente siempre están disponibles y siempre incluidas.'
         },
         {
           number: '02',
@@ -651,7 +651,7 @@ const translations = {
         {
           number: '01',
           title: 'Primo incontro gratuito',
-          desc: 'Tutto inizia con una conversazione — di persona o in videochiamata. Ci prendiamo il tempo di capire i tuoi obiettivi, il tuo brand e le tue esigenze per costruire un piano su misura.'
+          desc: 'Tutto inizia con una conversazione — di persona o in videochiamata. Ci prendiamo il tempo di capire i tuoi obiettivi, il tuo brand e le tue esigenze per costruire un piano su misura. Gli incontri di follow-up e l\'assistenza clienti sono sempre disponibili e sempre inclusi.'
         },
         {
           number: '02',
