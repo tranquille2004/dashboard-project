@@ -16,6 +16,7 @@ import Gallery from "./pages/Gallery";
 import Info from "./pages/Info";
 import Confirmation from "./pages/Confirmation";
 import Confirmation2 from "./pages/Confirmation2";
+import Confirmation3 from "./pages/Confirmation3";
 import GroupMenus from "./pages/GroupMenus";
 import BambinoBox from "./pages/BambinoBox";
 import BambinoBoxSubscribe from "./pages/BambinoBoxSubscribe";
@@ -86,6 +87,9 @@ function IlSicilianoAppInner({ siteConfig }) {
         <Route path="confirmation" element={<Confirmation />} />
         <Route path="confirmation.html" element={<Confirmation />} />
         <Route path="confirmation2" element={<Confirmation2 />} />
+        <Route path="confirmation3" element={<Confirmation3 />} />
+        <Route path="bambino-box-confirmation" element={<Confirmation3 />} />
+        <Route path="bambino-box-grazie" element={<Confirmation3 />} />
         <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
