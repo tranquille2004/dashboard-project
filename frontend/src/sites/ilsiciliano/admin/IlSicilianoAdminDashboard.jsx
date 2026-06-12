@@ -12,6 +12,17 @@ import {
 
 const API = process.env.REACT_APP_BACKEND_URL + '/api';
 
+// On production the admin dashboard runs on the emergent host (no Cloudflare proxy),
+// so static `/images/...` paths return HTML there. Prefix relative paths with the
+// public domain (served via Cloudflare) so images always resolve in the dashboard.
+const PUBLIC_IMG_HOST = 'https://ilsiciliano.fworksbuilders.com';
+const resolveImg = (url) => {
+  if (!url) return '';
+  if (/^https?:\/\//i.test(url)) return url;
+  if (url.startsWith('/images/')) return PUBLIC_IMG_HOST + url;
+  return url;
+};
+
 const IlSicilianoAdminDashboard = () => {
   const { logout } = useSiteAdmin();
   const navigate = useNavigate();
@@ -523,7 +534,7 @@ const IlSicilianoAdminDashboard = () => {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {gallery.map(img => (
                   <div key={img.image_id} className="group relative aspect-square bg-gray-100 rounded-lg overflow-hidden shadow-md">
-                    <img src={img.url} alt={img.caption || ''} className="w-full h-full object-cover" />
+                    <img src={resolveImg(img.url)} alt={img.caption || ''} className="w-full h-full object-cover" />
                     <button
                       onClick={() => deleteGalleryImage(img.image_id)}
                       className="absolute top-2 right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-8 h-8 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
