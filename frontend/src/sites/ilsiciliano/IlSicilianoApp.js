@@ -15,6 +15,7 @@ import Reserve from "./pages/Reserve";
 import Takeaway from "./pages/Takeaway";
 import Gallery from "./pages/Gallery";
 import Info from "./pages/Info";
+import Reviews from "./pages/Reviews";
 import Confirmation from "./pages/Confirmation";
 import Confirmation2 from "./pages/Confirmation2";
 import Confirmation3 from "./pages/Confirmation3";
@@ -80,6 +81,8 @@ function IlSicilianoAppInner({ siteConfig }) {
         <Route path="reserve" element={<Reserve />} />
         <Route path="takeaway" element={<Takeaway />} />
         <Route path="gallery" element={<Gallery />} />
+        <Route path="reviews" element={<Reviews />} />
+        <Route path="resenas" element={<Reviews />} />
         <Route path="info" element={<Info />} />
         <Route path="group-menus" element={<GroupMenus />} />
         <Route path="bambino-box" element={<BambinoBox />} />

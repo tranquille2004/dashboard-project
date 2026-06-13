@@ -14,6 +14,7 @@ export const translations = {
     takeaway: _('Para Llevar', 'Takeaway', 'Da Asporto', 'À emporter'),
     reserve: _('Reservar', 'Reserve', 'Prenota', 'Réserver'),
     gallery: _('Galería', 'Gallery', 'Galleria', 'Galerie'),
+    reviews: _('Reseñas', 'Reviews', 'Recensioni', 'Avis'),
     info: _('Info', 'Info', 'Info', 'Info')
   },
   home: {

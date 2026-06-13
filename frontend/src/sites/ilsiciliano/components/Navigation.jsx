@@ -34,6 +34,7 @@ const Navigation = () => {
     { path: `${basePath}/reserve`, label: t.reserve[language] },
     { path: `${basePath}/takeaway`, label: t.takeaway[language] },
     { path: `${basePath}/gallery`, label: t.gallery[language] },
+    { path: `${basePath}/reviews`, label: t.reviews[language] },
     { path: `${basePath}/info`, label: t.info[language] }
   ];
 
