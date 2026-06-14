@@ -5,9 +5,7 @@ const PREVIEW_URL = 'https://fworks-consolidate-1.emergent.host';
 // Domeinen die alleen een "In Constructie" pagina tonen (klant nog niet akkoord)
 const IN_CONSTRUCTION = {
   'sanfrancisco-haciendaturistica.com': 'sanfrancisco',
-  'www.sanfrancisco-haciendaturistica.com': 'sanfrancisco',
-  'ilsiciliano-santodomingo.com': 'ilsiciliano',
-  'www.ilsiciliano-santodomingo.com': 'ilsiciliano'
+  'www.sanfrancisco-haciendaturistica.com': 'sanfrancisco'
 };
 
 const SITE_MAPPING = {
