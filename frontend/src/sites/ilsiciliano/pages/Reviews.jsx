@@ -2,12 +2,12 @@ import React from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
 import { Star, ExternalLink, MessageSquare } from 'lucide-react';
 
-const PLACE_NAME = 'Il Siciliano — Trattoria Pizzería';
-const GOOGLE_PLACE_URL = 'https://www.google.com/maps/place/Restaurante+Pizzer%C3%ADa+el+Italiano/@-0.247468,-79.1529096,17z/data=!4m6!3m5!1s0x91d5479778d5995d:0x130ec80e54aacf81!8m2!3d-0.247468!4d-79.1529096!16s%2Fg%2F11f6djqgr7';
-// Direct write-a-review link (lands on Google with the write-review pop-up open)
-const WRITE_REVIEW_URL = 'https://search.google.com/local/writereview?placeid=ChIJXZnVeJdH1ZER0c-qVA7IDhM';
+const PLACE_NAME = 'Il SICILIANO TRATTORIA PIZZERIA';
+const GOOGLE_PLACE_URL = 'https://www.google.com/maps/place/Il+SICILIANO+TRATTORIA+PIZZERIA/@-0.2472464,-79.1522041,17z/data=!4m6!3m5!1s0x91d547c143017ced:0xdc6e297b27077c20!8m2!3d-0.2472464!4d-79.1522041!16s%2Fg%2F11y4t97l4w';
+// Direct write-a-review link via the place CID
+const WRITE_REVIEW_URL = 'https://www.google.com/maps?cid=15883005075571227168&hl=es&review=1';
 // Embed iframe of the location (works without an API key)
-const GOOGLE_EMBED_URL = 'https://www.google.com/maps?q=Il+Siciliano+Santo+Domingo+Ecuador&output=embed';
+const GOOGLE_EMBED_URL = 'https://www.google.com/maps?q=Il+SICILIANO+TRATTORIA+PIZZERIA+Santo+Domingo+Ecuador&output=embed';
 
 const REVIEW_PAGE_T = {
   es: {
