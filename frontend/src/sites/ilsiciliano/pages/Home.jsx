@@ -136,8 +136,8 @@ const Home = () => {
           <div className="w-full h-full flex">
             <img src="/images/ilsiciliano/inicio/emanuele-1.jpeg" alt="Emanuele 1" className="flex-1 h-full object-cover" loading="lazy" />
             <img src="/images/ilsiciliano/inicio/emanuele-2.jpeg" alt="Emanuele 2" className="flex-1 h-full object-cover hidden sm:block" loading="lazy" />
-            <img src="/images/ilsiciliano/inicio/emanuele-3.jpeg" alt="Emanuele 3" className="flex-1 h-full object-cover hidden md:block" loading="lazy" />
-            <img src="/images/ilsiciliano/inicio/emanuele-4.jpeg" alt="Emanuele 4" className="flex-1 h-full object-cover hidden lg:block" loading="lazy" />
+            <img src="/images/ilsiciliano/inicio/emanuele-4.jpeg" alt="Emanuele 4" className="flex-1 h-full object-cover hidden md:block" loading="lazy" />
+            <img src="/images/ilsiciliano/inicio/emanuele-3.jpeg" alt="Emanuele 3" className="flex-1 h-full object-cover hidden lg:block" loading="lazy" />
           </div>
           {/* Cinematic warm filter for readability and Italian mood */}
           <div
