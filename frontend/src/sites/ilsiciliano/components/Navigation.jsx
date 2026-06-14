@@ -29,7 +29,6 @@ const Navigation = () => {
     { path: homePath, label: t.home[language] },
     { path: `${basePath}/about`, label: t.about[language] },
     { path: `${basePath}/menu`, label: t.menu[language] },
-    { path: `${basePath}/group-menus`, label: t.groupMenus[language] },
     { path: `${basePath}/bambino-box`, label: t.bambino[language] },
     { path: `${basePath}/reserve`, label: t.reserve[language] },
     { path: `${basePath}/takeaway`, label: t.takeaway[language] },

@@ -16,6 +16,15 @@
   --gray-900: #0a0a0a;
 }
 
+/* Softer red palette on small screens for a less intense mobile look */
+@media (max-width: 768px) {
+  .ilsiciliano-root {
+    --gold: #C45656;
+    --gold-light: #D87878;
+    --gold-dark: #9A3B3B;
+  }
+}
+
 /* Smooth Scrolling */
 html {
   scroll-behavior: smooth;

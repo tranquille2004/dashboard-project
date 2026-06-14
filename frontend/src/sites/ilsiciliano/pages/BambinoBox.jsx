@@ -181,7 +181,7 @@ const BambinoBox = () => {
             className="w-full h-auto block"
             playsInline
             autoPlay
-            loop
+            muted
             controls
             preload="auto"
             data-testid="bambino-intro-video"

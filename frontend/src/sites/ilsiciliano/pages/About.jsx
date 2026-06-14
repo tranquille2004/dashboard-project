@@ -3,9 +3,9 @@ import { useLanguage } from '../contexts/LanguageContext';
 import { translations } from '../data/translations';
 import { ChefHat, Users, Heart, X } from 'lucide-react';
 
+const EMANUELE_PHOTO = '/images/ilsiciliano/about/emanuele.jpg';
 const TEAM_PHOTOS = [
-  '/images/ilsiciliano/about/emanuele.jpg',
-  'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/sweesn6f_1ok.jpeg',
+  'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/p9nw2wv6_4.jpeg',
   'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/842243yx_3ok.jpeg',
   'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/889ajp7u_5ok.jpeg',
   'https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/vwdhzoro_8ok.jpeg',
@@ -62,7 +62,31 @@ const About = () => {
             {TEAM_TITLE[language] || TEAM_TITLE.es}
           </h2>
           <div className="w-16 h-0.5 bg-gold mx-auto mb-8"></div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 max-w-6xl mx-auto">
+
+          {/* Emanuele on top, larger, centered */}
+          <div className="flex justify-center mb-8">
+            <button
+              type="button"
+              onClick={() => setZoomedPhoto(EMANUELE_PHOTO)}
+              className="group relative overflow-hidden rounded-xl border-2 border-gold/30 hover:border-gold/70 bg-black shadow-2xl transition-all duration-300 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-gold"
+              data-testid="team-photo-emanuele"
+              aria-label="Emanuele — Chef & propietario"
+            >
+              <img
+                src={EMANUELE_PHOTO}
+                alt="Emanuele — Chef & propietario"
+                loading="lazy"
+                className="w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 object-cover object-top transition-transform duration-500 group-hover:scale-110"
+              />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 to-transparent p-3">
+                <p className="text-gold text-sm font-bold tracking-wider uppercase text-center">Emanuele</p>
+                <p className="text-gray-300 text-xs text-center">Chef &amp; propietario</p>
+              </div>
+            </button>
+          </div>
+
+          {/* Rest of the team in a uniform grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 max-w-5xl mx-auto">
             {TEAM_PHOTOS.map((src, idx) => (
               <button
                 key={idx}
@@ -74,7 +98,7 @@ const About = () => {
               >
                 <img
                   src={src}
-                  alt={idx === 0 ? 'Emanuele — Chef & propietario' : `Equipo Il Siciliano ${idx}`}
+                  alt={`Equipo Il Siciliano ${idx + 1}`}
                   loading="lazy"
                   className="w-full aspect-square object-cover object-top transition-transform duration-500 group-hover:scale-110"
                 />
@@ -135,10 +159,10 @@ const About = () => {
                 fr: 'Hospitalité Italienne'
               },
               desc: {
-                es: 'Una bienvenida cálida, atención personal y un ambiente familiar — como en una verdadera trattoria de Sicilia.',
-                en: 'A warm welcome, personal attention and a family atmosphere — just like a true Sicilian trattoria.',
-                it: 'Un\'accoglienza calorosa, attenzione personale e un\'atmosfera familiare — come in una vera trattoria siciliana.',
-                fr: 'Un accueil chaleureux, une attention personnelle et une atmosphère familiale — comme dans une vraie trattoria sicilienne.'
+                es: 'Una bienvenida cálida, atención personalizada y un ambiente familiar — como en una verdadera trattoria de Italia.',
+                en: 'A warm welcome, personalized attention and a family atmosphere — just like a true Italian trattoria.',
+                it: 'Un\'accoglienza calorosa, attenzione personalizzata e un\'atmosfera familiare — come in una vera trattoria italiana.',
+                fr: 'Un accueil chaleureux, une attention personnalisée et une atmosphère familiale — comme dans une vraie trattoria italienne.'
               }
             }
           ].map((value, idx) => (
@@ -150,50 +174,6 @@ const About = () => {
               <p className="text-gray-300 leading-relaxed">{value.desc[language] || value.desc.es}</p>
             </div>
           ))}
-        </div>
-
-        {/* Sicilia panorama with caption */}
-        <div className="mt-12 mb-4 relative rounded-xl overflow-hidden shadow-2xl border border-gold/30 animate-fade-in group">
-          <img
-            src="/images/ilsiciliano/about/sicilia.jpg"
-            alt="Sicilia — el origen de Il Siciliano"
-            className="w-full h-[420px] md:h-[520px] object-cover transition-transform duration-700 group-hover:scale-105"
-          />
-          {/* Subtle gradient overlay from bottom for caption readability */}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
-          {/* Italian tricolor stripe accent at top */}
-          <div className="absolute top-0 left-0 right-0 h-1.5 flex">
-            <span className="flex-1 bg-[#009246]" />
-            <span className="flex-1 bg-white" />
-            <span className="flex-1 bg-[#CE2B37]" />
-          </div>
-          {/* Caption */}
-          <div className="absolute bottom-0 left-0 right-0 p-6 md:p-10">
-            <p className="text-italian-green font-semibold uppercase tracking-widest text-xs md:text-sm mb-2">
-              {{
-                es: 'Nuestras raíces',
-                en: 'Our roots',
-                it: 'Le nostre radici',
-                fr: 'Nos racines'
-              }[language] || 'Nuestras raíces'}
-            </p>
-            <h3 className="text-3xl md:text-5xl font-bold text-white mb-3 drop-shadow-[0_4px_12px_rgba(0,0,0,0.85)]">
-              {{
-                es: 'Sicilia, en cada plato',
-                en: 'Sicily, in every dish',
-                it: 'La Sicilia, in ogni piatto',
-                fr: 'La Sicile, dans chaque plat'
-              }[language] || 'Sicilia, en cada plato'}
-            </h3>
-            <p className="text-gray-100 text-base md:text-lg max-w-2xl drop-shadow-[0_2px_6px_rgba(0,0,0,0.9)]">
-              {{
-                es: 'Del mar azul de Castellammare a las mesas de Santo Domingo — traemos los sabores, los colores y el alma de la isla más hermosa del Mediterráneo.',
-                en: 'From the blue sea of Castellammare to the tables of Santo Domingo — we bring you the flavors, colors and soul of the most beautiful island in the Mediterranean.',
-                it: 'Dal mare blu di Castellammare ai tavoli di Santo Domingo — vi portiamo i sapori, i colori e l\'anima dell\'isola più bella del Mediterraneo.',
-                fr: 'De la mer bleue de Castellammare aux tables de Santo Domingo — nous vous apportons les saveurs, les couleurs et l\'âme de la plus belle île de la Méditerranée.'
-              }[language] || 'Del mar azul de Castellammare a las mesas de Santo Domingo — traemos los sabores, los colores y el alma de la isla más hermosa del Mediterráneo.'}
-            </p>
-          </div>
         </div>
       </div>
 

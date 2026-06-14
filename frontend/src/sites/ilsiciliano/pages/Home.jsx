@@ -11,8 +11,8 @@ const SEO_CONFIG = {
   defaultImage: '/images/ilsiciliano/home/hero.jpg',
   baseUrl: 'https://ilsiciliano.fworksbuilders.com',
   title: 'Il Siciliano | Trattoria Pizzería — Santo Domingo, Ecuador',
-  description: 'Il Siciliano — auténtica cocina siciliana en Santo Domingo de los Tsáchilas. Pasta fresca, pizza de horno de leña, especialidades de Sicilia. Reserva tu mesa.',
-  keywords: 'restaurante italiano Santo Domingo, pizzería Ecuador, cocina siciliana, Il Siciliano, trattoria, pizza horno de leña'
+  description: 'Il Siciliano — auténtica cocina italiana en Santo Domingo de los Tsáchilas. Pasta fresca, pizza italiana, especialidades de Italia. Reserva tu mesa.',
+  keywords: 'restaurante italiano Santo Domingo, pizzería Ecuador, cocina italiana, Il Siciliano, trattoria'
 };
 
 const Home = () => {
@@ -110,20 +110,20 @@ const Home = () => {
             {t.home.subtitle[language]}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+          <div className="flex flex-col sm:flex-row gap-5 justify-center md:justify-start">
             <Link
               to={`${basePath}/reserve`}
-              className="group inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="group inline-flex items-center justify-center gap-2 px-9 py-4 bg-gradient-to-b from-yellow-300 via-gold to-yellow-700 text-black font-extrabold uppercase tracking-wide rounded-full border border-yellow-900/40 shadow-[0_8px_0_rgba(120,80,0,0.45),0_14px_24px_rgba(0,0,0,0.5),inset_0_2px_0_rgba(255,255,255,0.4)] hover:shadow-[0_10px_0_rgba(120,80,0,0.45),0_16px_28px_rgba(0,0,0,0.55),inset_0_2px_0_rgba(255,255,255,0.5)] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_2px_0_rgba(120,80,0,0.5),inset_0_3px_8px_rgba(120,80,0,0.6)] transition-all duration-150"
             >
               {t.home.cta.reserve[language]}
-              <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="ml-1 group-hover:translate-x-1 transition-transform" />
             </Link>
             <Link
               to={`${basePath}/takeaway`}
-              className="group inline-flex items-center justify-center px-8 py-4 bg-gold text-black font-bold rounded-lg hover:bg-gold/90 transition-all duration-300 transform hover:scale-105 shadow-lg"
+              className="group inline-flex items-center justify-center gap-2 px-9 py-4 bg-gradient-to-b from-yellow-300 via-gold to-yellow-700 text-black font-extrabold uppercase tracking-wide rounded-full border border-yellow-900/40 shadow-[0_8px_0_rgba(120,80,0,0.45),0_14px_24px_rgba(0,0,0,0.5),inset_0_2px_0_rgba(255,255,255,0.4)] hover:shadow-[0_10px_0_rgba(120,80,0,0.45),0_16px_28px_rgba(0,0,0,0.55),inset_0_2px_0_rgba(255,255,255,0.5)] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_2px_0_rgba(120,80,0,0.5),inset_0_3px_8px_rgba(120,80,0,0.6)] transition-all duration-150"
             >
               {t.home.cta.takeaway[language]}
-              <ChevronRight className="ml-2 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="ml-1 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
@@ -207,7 +207,7 @@ const Home = () => {
               {
                 img: '/images/ilsiciliano/menu/pizza.jpg',
                 title: { nl: 'Verse Bereiding', fr: 'Préparation Fraîche', en: 'Fresh Preparation', es: 'Preparación Fresca', de: 'Frische Zubereitung', it: 'Preparazione Fresca' },
-                desc: { nl: 'Dagelijks vers bereid', fr: 'Préparé frais quotidiennement', en: 'Freshly prepared daily', es: 'Preparado fresco diariamente', de: 'Täglich frisch zubereitet', it: 'Preparato fresco ogni giorno' }
+                desc: { nl: 'productos hecho al mano diariamente', fr: 'productos hecho al mano diariamente', en: 'productos hecho al mano diariamente', es: 'productos hecho al mano diariamente', de: 'productos hecho al mano diariamente', it: 'productos hecho al mano diariamente' }
               },
               {
                 img: '/images/ilsiciliano/home/ambiance.jpg',

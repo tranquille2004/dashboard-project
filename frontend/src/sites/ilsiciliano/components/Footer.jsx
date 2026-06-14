@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useLanguage } from '../contexts/LanguageContext';
 import { useSiteConfig } from '../contexts/SiteConfigContext';
 import { translations } from '../data/translations';
-import { Phone, Mail, MapPin, Facebook, Instagram } from 'lucide-react';
+import { Phone, Mail, MapPin, Facebook, Instagram, MessageCircle } from 'lucide-react';
 
 const Footer = () => {
   const { language } = useLanguage();
@@ -59,14 +59,17 @@ const Footer = () => {
                   {phone}
                 </a>
               </div>
-              {phone2 && (
-                <div className="flex items-center space-x-3">
-                  <Phone size={20} className="text-gold flex-shrink-0" />
-                  <a href={`tel:${phone2TelLink}`} className="hover:text-gold transition-colors">
-                    {phone2}
-                  </a>
-                </div>
-              )}
+              <div className="flex items-center space-x-3">
+                <MessageCircle size={20} className="text-green-400 flex-shrink-0" />
+                <a
+                  href={`https://wa.me/${(phone2 || phone).replace(/\D/g, '')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-green-400 transition-colors"
+                >
+                  WhatsApp: {phone2 || phone}
+                </a>
+              </div>
               <div className="flex items-start space-x-3">
                 <Mail size={20} className="text-gold mt-1 flex-shrink-0" />
                 <div>

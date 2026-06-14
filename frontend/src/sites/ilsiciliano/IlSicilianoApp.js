@@ -19,7 +19,6 @@ import Reviews from "./pages/Reviews";
 import Confirmation from "./pages/Confirmation";
 import Confirmation2 from "./pages/Confirmation2";
 import Confirmation3 from "./pages/Confirmation3";
-import GroupMenus from "./pages/GroupMenus";
 import BambinoBox from "./pages/BambinoBox";
 import BambinoBoxSubscribe from "./pages/BambinoBoxSubscribe";
 import AnnouncementBanner from "@/components/AnnouncementBanner";
@@ -52,8 +51,8 @@ const SEO_CONFIG = {
   defaultImage: '',
   baseUrl: 'https://ilsiciliano.fworksbuilders.com',
   title: "Il Siciliano | Trattoria Pizzería — Santo Domingo, Ecuador",
-  description: "Il Siciliano — auténtica cocina siciliana en Santo Domingo de los Tsáchilas. Pasta fresca, pizza de horno de leña, especialidades de Sicilia. Reserva tu mesa.",
-  keywords: "restaurante italiano Santo Domingo, pizzería Ecuador, cocina siciliana, Il Siciliano, trattoria, pizza horno de leña, restaurante Santo Domingo Tsáchilas"
+  description: "Il Siciliano — auténtica cocina italiana en Santo Domingo de los Tsáchilas. Pasta fresca, pizza italiana, especialidades de Italia. Reserva tu mesa.",
+  keywords: "restaurante italiano Santo Domingo, pizzería Ecuador, cocina italiana, Il Siciliano, trattoria, restaurante Santo Domingo Tsáchilas"
 };
 
 function IlSicilianoAppInner({ siteConfig }) {
@@ -84,7 +83,6 @@ function IlSicilianoAppInner({ siteConfig }) {
         <Route path="reviews" element={<Reviews />} />
         <Route path="resenas" element={<Reviews />} />
         <Route path="info" element={<Info />} />
-        <Route path="group-menus" element={<GroupMenus />} />
         <Route path="bambino-box" element={<BambinoBox />} />
         <Route path="bambino" element={<BambinoBox />} />
         <Route path="bambino-box-subscribe" element={<BambinoBoxSubscribe />} />
