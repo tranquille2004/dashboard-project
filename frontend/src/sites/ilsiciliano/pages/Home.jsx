@@ -110,20 +110,20 @@ const Home = () => {
             {t.home.subtitle[language]}
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 sm:gap-5 justify-center md:justify-start items-stretch sm:items-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 justify-center md:justify-start items-center">
             <Link
               to={`${basePath}/reserve`}
-              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 px-8 py-5 sm:py-4 text-lg sm:text-base bg-gradient-to-b from-yellow-300 via-amber-400 to-amber-700 text-black font-extrabold uppercase tracking-wide rounded-full border-2 border-amber-900/60 shadow-[0_6px_0_rgba(120,80,0,0.55),0_12px_24px_rgba(0,0,0,0.5),inset_0_3px_0_rgba(255,255,255,0.55),inset_0_-3px_8px_rgba(120,80,0,0.35)] hover:shadow-[0_8px_0_rgba(120,80,0,0.55),0_14px_28px_rgba(0,0,0,0.55),inset_0_3px_0_rgba(255,255,255,0.6),inset_0_-3px_8px_rgba(120,80,0,0.35)] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_rgba(120,80,0,0.55),inset_0_4px_10px_rgba(120,80,0,0.6)] transition-all duration-150"
+              className="group inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-gradient-to-b from-yellow-300 via-amber-400 to-amber-700 text-black font-extrabold uppercase tracking-wide rounded-full border-2 border-amber-900/60 shadow-[0_5px_0_rgba(120,80,0,0.55),0_10px_18px_rgba(0,0,0,0.5),inset_0_2px_0_rgba(255,255,255,0.55),inset_0_-2px_6px_rgba(120,80,0,0.35)] hover:shadow-[0_7px_0_rgba(120,80,0,0.55),0_12px_22px_rgba(0,0,0,0.55),inset_0_2px_0_rgba(255,255,255,0.6),inset_0_-2px_6px_rgba(120,80,0,0.35)] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_rgba(120,80,0,0.55),inset_0_4px_10px_rgba(120,80,0,0.6)] transition-all duration-150"
             >
               {t.home.cta.reserve[language]}
-              <ChevronRight className="ml-1 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="ml-1 group-hover:translate-x-1 transition-transform" size={18} />
             </Link>
             <Link
               to={`${basePath}/takeaway`}
-              className="group inline-flex w-full sm:w-auto items-center justify-center gap-2 px-8 py-5 sm:py-4 text-lg sm:text-base bg-gradient-to-b from-yellow-300 via-amber-400 to-amber-700 text-black font-extrabold uppercase tracking-wide rounded-full border-2 border-amber-900/60 shadow-[0_6px_0_rgba(120,80,0,0.55),0_12px_24px_rgba(0,0,0,0.5),inset_0_3px_0_rgba(255,255,255,0.55),inset_0_-3px_8px_rgba(120,80,0,0.35)] hover:shadow-[0_8px_0_rgba(120,80,0,0.55),0_14px_28px_rgba(0,0,0,0.55),inset_0_3px_0_rgba(255,255,255,0.6),inset_0_-3px_8px_rgba(120,80,0,0.35)] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_rgba(120,80,0,0.55),inset_0_4px_10px_rgba(120,80,0,0.6)] transition-all duration-150"
+              className="group inline-flex items-center justify-center gap-2 px-7 sm:px-8 py-3 sm:py-4 text-sm sm:text-base bg-gradient-to-b from-yellow-300 via-amber-400 to-amber-700 text-black font-extrabold uppercase tracking-wide rounded-full border-2 border-amber-900/60 shadow-[0_5px_0_rgba(120,80,0,0.55),0_10px_18px_rgba(0,0,0,0.5),inset_0_2px_0_rgba(255,255,255,0.55),inset_0_-2px_6px_rgba(120,80,0,0.35)] hover:shadow-[0_7px_0_rgba(120,80,0,0.55),0_12px_22px_rgba(0,0,0,0.55),inset_0_2px_0_rgba(255,255,255,0.6),inset_0_-2px_6px_rgba(120,80,0,0.35)] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_1px_0_rgba(120,80,0,0.55),inset_0_4px_10px_rgba(120,80,0,0.6)] transition-all duration-150"
             >
               {t.home.cta.takeaway[language]}
-              <ChevronRight className="ml-1 group-hover:translate-x-1 transition-transform" />
+              <ChevronRight className="ml-1 group-hover:translate-x-1 transition-transform" size={18} />
             </Link>
           </div>
         </div>
