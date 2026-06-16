@@ -75,7 +75,7 @@ const Menu = () => {
           <img
             src="/images/ilsiciliano/menu/pizza.jpg"
             alt="Pizza"
-            className="w-full h-48 object-cover rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
+            className="w-full h-48 object-cover object-[75%_25%] rounded-lg shadow-xl border border-gold/20 hover:scale-105 transition-transform duration-500"
           />
           <img
             src="/images/ilsiciliano/menu/dish1.jpg"

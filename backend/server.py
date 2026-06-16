@@ -4266,6 +4266,16 @@ async def seed_sites_on_startup():
             "updated_at": datetime.now(timezone.utc).isoformat()
         },
         {
+            "site_id": "site_rccb",
+            "name": "RCCB Group — Retail Cleaning Care Belgium",
+            "slug": "rccb",
+            "domains": ["rccbgroup.com", "www.rccbgroup.com", "rccbgroup.be", "www.rccbgroup.be", "rccb.fworksbuilders.com"],
+            "site_type": "business",
+            "is_active": True,
+            "created_at": datetime.now(timezone.utc).isoformat(),
+            "updated_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
             "site_id": "site_smeralda",
             "name": "Résidence Villa Smeralda",
             "slug": "smeralda",
