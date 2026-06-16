@@ -34,6 +34,8 @@ const SITE_MAPPING = {
   'rccb.fworksbuilders.com': '/site/rccb',
   'rccbgroup.be': '/site/rccb',
   'www.rccbgroup.be': '/site/rccb',
+  'rccbgroup.com': '/site/rccb',
+  'www.rccbgroup.com': '/site/rccb',
   'ilsiciliano.fworksbuilders.com': '/site/ilsiciliano',
   'ilsiciliano-santodomingo.com': '/site/ilsiciliano',
   'www.ilsiciliano-santodomingo.com': '/site/ilsiciliano',
@@ -206,6 +208,11 @@ export default {
     const url = new URL(request.url);
     const hostname = url.hostname;
     const pathname = url.pathname;
+
+    // 301 redirect for RCCB Group: legacy .be -> primary .com domain (SEO)
+    if (hostname === 'rccbgroup.be' || hostname === 'www.rccbgroup.be') {
+      return Response.redirect('https://rccbgroup.com' + pathname + url.search, 301);
+    }
 
     // Voor "In Constructie" domeinen: serveer images/video via proxy, HTML = construction page
     if (hostname in IN_CONSTRUCTION) {

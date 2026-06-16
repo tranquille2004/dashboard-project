@@ -773,6 +773,14 @@ const portfolioItems = [
     features: ['Meertalig', 'Menu', 'Galerij']
   },
   {
+    name: 'RCCB Group',
+    type: { nl: 'Schoonmaakdiensten', fr: 'Services de nettoyage', en: 'Cleaning services', es: 'Servicios de limpieza', it: 'Servizi di pulizia' },
+    location: 'België / Belgium',
+    url: 'https://rccbgroup.com',
+    image: '/images/rccb/photos/photo-05.jpg',
+    features: ['Meertalig', 'Galerij', 'Contact']
+  },
+  {
     name: 'Club San Francisco',
     type: { nl: 'Hacienda Turística', fr: 'Hacienda Touristique', en: 'Tourist Hacienda', es: 'Hacienda Turística', it: 'Hacienda Turistica' },
     location: 'Santo Domingo, Ecuador',
