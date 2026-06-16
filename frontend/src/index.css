@@ -133,3 +133,19 @@ code {
 .animate-bounce-in {
   animation: bounce-in 0.4s ease-out;
 }
+
+/* Billing — due-soon invoice green pulse glow */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.35), 0 0 0 1px rgba(16, 185, 129, 0.4);
+    border-color: rgba(52, 211, 153, 0.55);
+  }
+  50% {
+    box-shadow: 0 0 32px rgba(16, 185, 129, 0.85), 0 0 0 2px rgba(52, 211, 153, 0.9);
+    border-color: rgba(110, 231, 183, 1);
+  }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 1.6s ease-in-out infinite;
+}
+

@@ -18,7 +18,7 @@ const DOMAINS = [
   { slug: 'smeralda', domain: 'smeraldavacanze.it', name: 'Villa Smeralda' },
   { slug: 'albertopantoja', domain: 'albertopantoja.com', name: 'Alberto Pantoja' },
   { slug: 'hoteldelpacifico', domain: 'hoteldelpacifico.net', name: 'Hotel del Pacífico' },
-  { slug: 'rccb', domain: 'rccbgroup.be', name: 'RCCB Belgium' },
+  { slug: 'rccb', domain: 'rccbgroup.com', name: 'RCCB Belgium' },
   { slug: 'ilsiciliano', domain: 'ilsiciliano-santodomingo.com', name: 'Il Siciliano' },
   { slug: 'sanfrancisco', domain: 'sanfrancisco-haciendaturistica.com', name: 'Club San Francisco' },
 ];
@@ -30,6 +30,14 @@ const fmtUSD = (n) =>
 const fmtCcy = (n, ccy) => (ccy === 'EUR' ? fmtEUR : fmtUSD)(n);
 const todayISO = () => new Date().toISOString().slice(0, 10);
 const currentYear = () => new Date().getFullYear();
+const daysUntil = (isoDate) => {
+  if (!isoDate) return Infinity;
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const target = new Date(isoDate);
+  target.setHours(0, 0, 0, 0);
+  return Math.round((target.getTime() - today.getTime()) / 86400000);
+};
 
 const Billing = () => {
   const navigate = useNavigate();
@@ -220,6 +228,32 @@ const Billing = () => {
           </div>
         </div>
 
+        {/* Invoices list */}
+        <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
+          <h2 className="text-lg font-bold mb-4">Facturen {selectedYear}</h2>
+          {yearInvoices.length === 0 ? (
+            <p className="text-gray-400 text-center py-10">Nog geen facturen voor {selectedYear}. Klik op "Nieuwe factuur" om te beginnen.</p>
+          ) : (
+            <div className="space-y-3" data-testid="invoices-list">
+              {[...yearInvoices].sort((a, b) => a.invoice_date.localeCompare(b.invoice_date)).map(inv => {
+                const days = daysUntil(inv.invoice_date);
+                const isDueSoon = !inv.paid && days >= 0 && days <= 7;
+                return (
+                  <InvoiceRow key={inv.invoice_id} inv={inv} domain={domainBySlug(inv.site_slug)}
+                    isDueSoon={isDueSoon}
+                    daysLeft={days}
+                    editing={editingId === inv.invoice_id}
+                    onEdit={() => setEditingId(inv.invoice_id)}
+                    onCancel={() => setEditingId(null)}
+                    onSave={(patch) => { updateInvoice(inv.invoice_id, patch); setEditingId(null); }}
+                    onDelete={() => deleteInvoice(inv.invoice_id)}
+                    onTogglePaid={() => updateInvoice(inv.invoice_id, { paid: !inv.paid })} />
+                );
+              })}
+            </div>
+          )}
+        </div>
+
         {/* Per-site totals */}
         <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
           <h2 className="text-lg font-bold mb-4">Per website — {selectedYear}</h2>
@@ -227,20 +261,20 @@ const Billing = () => {
             <table className="w-full text-sm">
               <thead>
                 <tr className="text-xs uppercase text-gray-400 border-b border-white/10">
-                  <th className="text-left py-3 px-2">Website</th>
-                  <th className="text-left py-3 px-2 hidden md:table-cell">Domein</th>
-                  <th className="text-right py-3 px-2"># Facturen</th>
-                  <th className="text-right py-3 px-2">Betaald</th>
-                  <th className="text-right py-3 px-2">Totaal</th>
+                  <th className="text-left py-1.5 px-2">Website</th>
+                  <th className="text-left py-1.5 px-2 hidden md:table-cell">Domein</th>
+                  <th className="text-right py-1.5 px-2"># Facturen</th>
+                  <th className="text-right py-1.5 px-2">Betaald</th>
+                  <th className="text-right py-1.5 px-2">Totaal</th>
                 </tr>
               </thead>
               <tbody>
                 {perSite.map(s => (
-                  <tr key={s.slug} className="border-b border-white/5 hover:bg-white/5">
-                    <td className="py-3 px-2 font-medium">{s.name}</td>
-                    <td className="py-3 px-2 hidden md:table-cell text-gray-400 text-xs">{s.domain}</td>
-                    <td className="py-3 px-2 text-right">{s.count}</td>
-                    <td className="py-3 px-2 text-right text-green-400">
+                  <tr key={s.slug} className="border-b border-white/5 hover:bg-white/5 leading-tight">
+                    <td className="py-1 px-2 font-medium">{s.name}</td>
+                    <td className="py-1 px-2 hidden md:table-cell text-gray-400 text-xs">{s.domain}</td>
+                    <td className="py-1 px-2 text-right">{s.count}</td>
+                    <td className="py-1 px-2 text-right text-green-400">
                       {s.paidEUR ? (
                         <>
                           <div>{fmtEUR(s.paidEUR)}</div>
@@ -248,7 +282,7 @@ const Billing = () => {
                         </>
                       ) : '—'}
                     </td>
-                    <td className="py-3 px-2 text-right font-bold">
+                    <td className="py-1 px-2 text-right font-bold">
                       {s.totalEUR ? (
                         <>
                           <div>{fmtEUR(s.totalEUR)}</div>
@@ -261,26 +295,6 @@ const Billing = () => {
               </tbody>
             </table>
           </div>
-        </div>
-
-        {/* Invoices list */}
-        <div className="bg-white/5 rounded-2xl p-6 border border-white/10">
-          <h2 className="text-lg font-bold mb-4">Facturen {selectedYear}</h2>
-          {yearInvoices.length === 0 ? (
-            <p className="text-gray-400 text-center py-10">Nog geen facturen voor {selectedYear}. Klik op "Nieuwe factuur" om te beginnen.</p>
-          ) : (
-            <div className="space-y-3" data-testid="invoices-list">
-              {yearInvoices.sort((a, b) => b.invoice_date.localeCompare(a.invoice_date)).map(inv => (
-                <InvoiceRow key={inv.invoice_id} inv={inv} domain={domainBySlug(inv.site_slug)}
-                  editing={editingId === inv.invoice_id}
-                  onEdit={() => setEditingId(inv.invoice_id)}
-                  onCancel={() => setEditingId(null)}
-                  onSave={(patch) => { updateInvoice(inv.invoice_id, patch); setEditingId(null); }}
-                  onDelete={() => deleteInvoice(inv.invoice_id)}
-                  onTogglePaid={() => updateInvoice(inv.invoice_id, { paid: !inv.paid })} />
-              ))}
-            </div>
-          )}
         </div>
       </div>
 
@@ -377,7 +391,7 @@ const Billing = () => {
   );
 };
 
-const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, onTogglePaid }) => {
+const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, onTogglePaid, isDueSoon, daysLeft }) => {
   const sourceCcy = (inv.source_currency || 'USD').toUpperCase();
   const sourceAmount = inv.source_amount ?? (sourceCcy === 'USD' ? inv.amount_usd : inv.amount_eur) ?? 0;
 
@@ -445,7 +459,17 @@ const InvoiceRow = ({ inv, domain, editing, onEdit, onCancel, onSave, onDelete, 
   const convertedCcy = sourceCcy === 'USD' ? 'EUR' : 'USD';
 
   return (
-    <div className="bg-white/5 hover:bg-white/10 rounded-xl p-4 border border-white/5 transition-colors">
+    <div className={`rounded-xl p-4 border transition-all relative ${
+      isDueSoon
+        ? 'bg-gradient-to-r from-emerald-900/40 via-green-700/30 to-emerald-900/40 border-emerald-400/70 shadow-[0_0_20px_rgba(16,185,129,0.5)] animate-pulse-glow'
+        : 'bg-white/5 hover:bg-white/10 border-white/5'
+    }`}>
+      {isDueSoon && (
+        <div className="absolute -top-2 -right-2 bg-emerald-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-lg flex items-center gap-1 animate-bounce">
+          <span className="inline-block w-1.5 h-1.5 bg-white rounded-full animate-ping"></span>
+          {daysLeft === 0 ? 'Vandaag!' : daysLeft === 1 ? 'Morgen!' : `Over ${daysLeft} dagen`}
+        </div>
+      )}
       <div className="flex flex-wrap items-center gap-4">
         <div className="flex-1 min-w-[200px]">
           <div className="font-semibold">{domain.name}</div>
