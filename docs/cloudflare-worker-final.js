@@ -127,75 +127,7 @@ function renderSanFranciscoConstruction() {
   return new Response(html, { headers: { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'X-Robots-Tag': 'noindex, nofollow' } });
 }
 
-function renderIlSicilianoConstruction() {
-  const html = `<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="robots" content="noindex, nofollow">
-  <title>Il Siciliano — Próximamente</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html, body { width: 100%; height: 100%; background: #0a0a0a; color: #f5efe0; font-family: 'Inter', sans-serif; overflow: hidden; position: fixed; }
-    .video-bg { position: fixed; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; }
-    .overlay { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.78) 100%); z-index: 1; pointer-events: none; }
-    .tricolor-top { position: fixed; top: 0; left: 0; right: 0; height: 5px; display: flex; z-index: 5; }
-    .tricolor-top span { flex: 1; }
-    .tricolor-top .tg { background: #009246; }
-    .tricolor-top .tw { background: #ffffff; }
-    .tricolor-top .tr { background: #ce2b37; }
-    .container { position: relative; z-index: 2; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 1.5rem 1.5rem 6rem; text-align: center; }
-    .logo { width: clamp(140px, 18vw, 200px); height: auto; margin-bottom: 1.5rem; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.8)); animation: fadeIn 1s ease-out; border-radius: 50%; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(-15px); } to { opacity: 1; transform: translateY(0); } }
-    .badge { display: inline-block; padding: 0.45rem 1.1rem; border: 1px solid rgba(178, 34, 34, 0.7); background: rgba(0,0,0,0.5); backdrop-filter: blur(8px); border-radius: 999px; color: #ff6b6b; font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase; margin-bottom: 1.5rem; font-weight: 500; }
-    h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 600; line-height: 1.05; color: #f5efe0; margin-bottom: 0.5rem; letter-spacing: -0.01em; text-shadow: 0 4px 25px rgba(0,0,0,0.7); }
-    h1 .accent { display: block; color: #d4af37; font-style: italic; font-weight: 400; font-size: 0.7em; margin-top: 0.4rem; }
-    .divider { width: 50px; height: 1px; background: linear-gradient(90deg, transparent, #d4af37, transparent); margin: 1.25rem auto; }
-    .tagline { font-size: clamp(0.95rem, 1.5vw, 1.05rem); color: rgba(245, 239, 224, 0.92); max-width: 500px; line-height: 1.6; font-weight: 300; margin-bottom: 1.75rem; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
-    .cta { display: inline-flex; align-items: center; gap: 0.65rem; padding: 0.85rem 1.7rem; background: linear-gradient(135deg, #B22222, #7F0F0F); color: #ffffff; border-radius: 999px; font-size: 0.95rem; font-weight: 600; text-decoration: none; box-shadow: 0 8px 24px rgba(178, 34, 34, 0.45), 0 3px 10px rgba(0,0,0,0.5); transition: all 0.25s ease; border: 1px solid rgba(255,255,255,0.1); }
-    .cta:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(178, 34, 34, 0.6); }
-    .cta svg { width: 18px; height: 18px; }
-    .cta-sub { font-size: 0.72rem; color: rgba(245, 239, 224, 0.6); letter-spacing: 0.18em; text-transform: uppercase; margin-top: 1rem; }
-    footer { position: fixed; bottom: 1.25rem; left: 0; right: 0; z-index: 10; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; pointer-events: none; }
-    footer .by { font-size: 0.7rem; color: rgba(245,239,224,0.7); letter-spacing: 0.18em; text-transform: uppercase; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-    footer a { pointer-events: auto; display: inline-block; transition: transform 0.3s ease; }
-    footer a:hover { transform: translateY(-2px); }
-    footer img { height: 30px; width: auto; display: block; filter: drop-shadow(0 4px 14px rgba(0,0,0,0.7)) brightness(1.1); transition: filter 0.3s ease; }
-    footer a:hover img { filter: drop-shadow(0 6px 18px rgba(212,175,55,0.5)) brightness(1.3); }
-    @media (max-width: 640px) { .container { padding: 1rem 1rem 5rem; } .logo { width: 120px; margin-bottom: 1.25rem; } .cta { font-size: 0.88rem; padding: 0.8rem 1.4rem; } footer img { height: 26px; } }
-  </style>
-</head>
-<body>
-  <video class="video-bg" autoplay muted loop playsinline preload="auto"><source src="/images/ilsiciliano/bambino/video/intro-emanuele.mp4" type="video/mp4"></video>
-  <div class="overlay"></div>
-  <div class="tricolor-top"><span class="tg"></span><span class="tw"></span><span class="tr"></span></div>
-
-  <div class="container">
-    <img class="logo" src="/images/ilsiciliano/logo/ilsiciliano-logo.png" alt="Il Siciliano">
-    <span class="badge">Próximamente · Coming Soon</span>
-    <h1>Il Siciliano<span class="accent">Trattoria · Pizzería</span></h1>
-    <div class="divider"></div>
-    <p class="tagline">Estamos preparando los auténticos sabores de Sicilia para ti. Nuestro sitio web estará disponible muy pronto.</p>
-    <a class="cta" href="tel:+593984110781">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-      <span>+593 98 411 0781</span>
-    </a>
-    <div class="cta-sub">Llámanos · Call us · Chiamaci</div>
-  </div>
-
-  <footer>
-    <span class="by">© ${new Date().getFullYear()} · Diseñado por</span>
-    <a href="https://fworksbuilders.com" target="_blank" rel="noopener"><img src="/images/fworks-logo.png" alt="fworksbuilders"></a>
-  </footer>
-</body>
-</html>`;
-  return new Response(html, { headers: { 'Content-Type': 'text/html;charset=UTF-8', 'Cache-Control': 'no-cache, no-store, must-revalidate', 'X-Robots-Tag': 'noindex, nofollow' } });
-}
-
 function renderInConstruction(siteKey) {
-  if (siteKey === 'ilsiciliano') return renderIlSicilianoConstruction();
   return renderSanFranciscoConstruction();
 }
 
