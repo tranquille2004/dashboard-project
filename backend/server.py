@@ -4342,7 +4342,7 @@ async def seed_sites_on_startup():
     
     # Auto-seed hotel admin - always ensure correct credentials
     hotel_admin = await db.site_admins.find_one({"site_id": "site_hoteldelpacifico"})
-    hotel_password_hash = __import__('hashlib').sha256("hotel123".encode()).hexdigest()
+    hotel_password_hash = __import__('hashlib').sha256("pacifico123".encode()).hexdigest()
     if not hotel_admin:
         admin_dict = {
             "admin_id": f"admin_{uuid.uuid4().hex[:12]}",
@@ -4444,6 +4444,54 @@ async def seed_sites_on_startup():
             }}
         )
         logger.info("Updated Il Siciliano admin credentials")
+
+    # Auto-seed standard site admins for the remaining 10 sites (idempotent)
+    # Pattern: admin@<primary-domain>  /  password = <key>123
+    _full_perms = {
+        "menu": True, "menu_items": True, "gallery": True, "config": True,
+        "events": True, "announcements": True, "contact_info": True,
+        "opening_hours": True, "prices": True,
+    }
+    _standard_admins = [
+        ("site_cantina",       "cantina",       "admin@lacantinaitaliana.net",         "cantina123",     "La Cantina Italiana Admin"),
+        ("site_bottega",       "bottega",       "admin@labottegaherent.com",           "bottega123",     "La Bottega Herent Admin"),
+        ("site_ascoli",        "ascoli",        "admin@ascolizaventem.com",            "ascoli123",      "L'Ascoli Zaventem Admin"),
+        ("site_mercato",       "mercato",       "admin@ristorantemercato.be",          "mercato123",     "Ristorante Mercato Admin"),
+        ("site_tracemaster",   "tracemaster",   "admin@tracemaster-rastreadores.com",  "tracemaster123", "Tracemaster Admin"),
+        ("site_theobeans",     "theobeans",     "admin@theobeans-export.com",          "theobeans123",   "Theo Beans Export Admin"),
+        ("site_fworks",        "fworks",        "admin@fworksbuilders.com",            "fworks123",      "fworksbuilders Admin"),
+        ("site_smeralda",      "smeralda",      "admin@smeraldavacanze.it",            "smeralda123",    "Villa Smeralda Admin"),
+        ("site_albertopantoja","albertopantoja","admin@albertopantoja.com",            "pantoja123",     "Alberto Pantoja Admin"),
+        ("site_rccb",          "rccb",          "admin@rccbgroup.com",                 "rccb123",        "RCCB Group Admin"),
+    ]
+    for site_id, slug, email, pwd, name in _standard_admins:
+        pwd_hash = __import__('hashlib').sha256(pwd.encode()).hexdigest()
+        existing = await db.site_admins.find_one({"site_id": site_id})
+        if not existing:
+            await db.site_admins.insert_one({
+                "admin_id": f"admin_{uuid.uuid4().hex[:12]}",
+                "site_id": site_id,
+                "email": email,
+                "name": name,
+                "password_hash": pwd_hash,
+                "is_active": True,
+                "permissions": dict(_full_perms),
+                "created_at": datetime.now(timezone.utc).isoformat(),
+                "updated_at": datetime.now(timezone.utc).isoformat(),
+            })
+            logger.info(f"Auto-seeded site admin: {email}")
+        else:
+            await db.site_admins.update_one(
+                {"site_id": site_id},
+                {"$set": {
+                    "email": email,
+                    "password_hash": pwd_hash,
+                    "is_active": True,
+                    "permissions": dict(_full_perms),
+                    "updated_at": datetime.now(timezone.utc).isoformat(),
+                }}
+            )
+            logger.info(f"Updated site admin credentials: {email}")
 
     # Auto-seed site-owner's known IPs in ignored_ips so production stats exclude them
     # (idempotent — only upserts, never deletes user-added IPs)

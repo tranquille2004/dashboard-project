@@ -1,20 +1,29 @@
-# Test Credentials
+# Test Credentials — Site Admins
 
-## Super Admin
-- URL: `/admin` via main preview URL or `fworksbuilders.com/admin`
-- (Use existing super admin credentials)
+## Super Admin (fworksbuilders dashboard)
+- URL: `https://fworksbuilders.com/admin` (Google OAuth)
+- Account: owner's Google account
 
-## Hotel del Pacifico Admin
-- Email: `admin@hoteldelpacifico.net`
-- Password: `hotel123`
+## Site Admins (standard pattern)
+**Login URL**: `https://<domain>/admin` on each tenant site
+**Email pattern**: `admin@<primary-domain>`
+**Password pattern**: `<keyword>123`
 
-## Il Siciliano Admin (Trattoria Pizzería)
-- Email: `admin@ilsiciliano-santodomingo.com`
-- Password: `siciliano123`
-- URL: `/admin` (productie: `https://ilsicilianosantodomingo.com/admin`)
+| Site | Email | Password |
+|---|---|---|
+| Hotel del Pacífico | admin@hoteldelpacifico.net | pacifico123 |
+| Il Siciliano | admin@ilsiciliano-santodomingo.com | siciliano123 |
+| Hacienda San Francisco | admin@sanfrancisco-haciendaturistica.com | sanfrancisco123 |
+| La Cantina Italiana | admin@lacantinaitaliana.net | cantina123 |
+| La Bottega Herent | admin@labottegaherent.com | bottega123 |
+| L'Ascoli Zaventem | admin@ascolizaventem.com | ascoli123 |
+| Ristorante Mercato | admin@ristorantemercato.be | mercato123 |
+| Tracemaster | admin@tracemaster-rastreadores.com | tracemaster123 |
+| Theo Beans Export | admin@theobeans-export.com | theobeans123 |
+| Fworksbuilders | admin@fworksbuilders.com | fworks123 |
+| Villa Smeralda | admin@smeraldavacanze.it | smeralda123 |
+| Alberto Pantoja | admin@albertopantoja.com | pantoja123 |
+| RCCB Group | admin@rccbgroup.com | rccb123 |
 
-## San Francisco Hacienda Turística Admin
-- Email: `admin@sanfrancisco-haciendaturistica.com`
-- Password: `sanfrancisco123`
-- URL preview: `https://image-restore-21.preview.emergentagent.com/site/sanfrancisco/mi-sitio`
-- URL custom: `https://sanfrancisco.fworksbuilders.com/mi-sitio`
+All admins seeded with full permissions (menu, gallery, opening_hours, prices, contact_info, events, announcements, config).
+Auto-seeded idempotently in `seed_sites_on_startup()` — password reset on every backend restart.
