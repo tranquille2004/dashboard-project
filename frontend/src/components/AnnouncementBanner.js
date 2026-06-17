@@ -59,38 +59,20 @@ const AnnouncementBanner = ({
 
   return (
     <div 
-      className="announcement-banner"
+      className="announcement-banner fixed left-0 right-0 z-40 flex items-center justify-center gap-2 sm:gap-4 px-3 py-2 sm:px-8 sm:py-4 shadow-lg"
       style={{
         background: currentStyle.background,
         color: currentStyle.textColor,
-        padding: '16px 30px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: '15px',
-        position: 'fixed',
         top: '80px',
-        left: 0,
-        right: 0,
-        boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-        zIndex: 40,
-        minHeight: '50px'
       }}
       data-testid="announcement-banner"
     >
       <IconComponent 
-        size={28} 
-        style={{ flexShrink: 0 }}
+        className="flex-shrink-0 w-4 h-4 sm:w-7 sm:h-7"
         data-testid="announcement-icon"
       />
       <p 
-        style={{
-          margin: 0,
-          fontSize: '18px',
-          fontWeight: 600,
-          textAlign: 'center',
-          lineHeight: 1.5
-        }}
+        className="m-0 text-xs sm:text-lg font-semibold text-center leading-snug"
         data-testid="announcement-message"
       >
         {message}
@@ -98,27 +80,11 @@ const AnnouncementBanner = ({
       {dismissible && (
         <button
           onClick={handleClose}
-          style={{
-            position: 'absolute',
-            right: '16px',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            background: 'rgba(255,255,255,0.2)',
-            border: 'none',
-            borderRadius: '50%',
-            padding: '6px',
-            cursor: 'pointer',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'background 0.2s'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.3)'}
-          onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.2)'}
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/30 border-0 rounded-full p-1 sm:p-1.5 cursor-pointer flex items-center justify-center transition-colors"
           aria-label="Sluiten"
           data-testid="announcement-close-btn"
         >
-          <X size={16} color={currentStyle.textColor} />
+          <X size={14} color={currentStyle.textColor} />
         </button>
       )}
     </div>

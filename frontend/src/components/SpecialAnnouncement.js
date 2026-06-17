@@ -52,13 +52,13 @@ const SpecialAnnouncement = ({ siteSlug }) => {
 
   return (
     <div 
-      className={`${style.bg} border-l-4 p-4 mb-6 rounded-r-lg shadow-sm`}
+      className={`${style.bg} border-l-4 p-2 sm:p-4 mb-3 sm:mb-6 rounded-r-lg shadow-sm`}
       data-testid="special-announcement"
     >
       <div className="flex items-start">
-        <span className="text-2xl mr-3 flex-shrink-0">{style.icon}</span>
+        <span className="text-base sm:text-2xl mr-2 sm:mr-3 flex-shrink-0">{style.icon}</span>
         <div className={`${style.text} flex-1`}>
-          <p className="font-medium text-base whitespace-pre-line">
+          <p className="font-medium text-xs sm:text-base whitespace-pre-line leading-snug">
             {announcement.message}
           </p>
         </div>
