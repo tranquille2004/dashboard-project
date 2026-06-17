@@ -636,6 +636,8 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
       title: '',
       description: '',
       date: new Date().toISOString().split('T')[0],
+      end_date: '',
+      expiry_date: '',
       date_display: '',
       time: '',
       location: 'Hotel del Pacífico',
@@ -705,19 +707,28 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
                 <textarea value={event.description || ''} onChange={(e) => updateEvent(index, 'description', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" placeholder="Describa el evento..." />
               </div>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Fecha</label>
+                  <label className="block text-xs text-gray-500 mb-1">Fecha inicio</label>
                   <input type="date" value={event.date || ''} onChange={(e) => updateEvent(index, 'date', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" />
                 </div>
                 <div>
-                  <label className="block text-xs text-gray-500 mb-1">Fecha para mostrar</label>
-                  <input type="text" value={event.date_display || ''} onChange={(e) => updateEvent(index, 'date_display', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Domingo 26 de Abril" />
+                  <label className="block text-xs text-gray-500 mb-1">Fecha fin <span className="text-gray-400">(opcional)</span></label>
+                  <input type="date" value={event.end_date || ''} onChange={(e) => updateEvent(index, 'end_date', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" title="Voor evenementen die meerdere dagen duren (bv. WK voetbal)" />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1" title="Na deze datum wordt het event automatisch verborgen">Vencimiento <span className="text-gray-400">(opc.)</span></label>
+                  <input type="date" value={event.expiry_date || ''} onChange={(e) => updateEvent(index, 'expiry_date', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Vervaldatum" />
                 </div>
                 <div>
                   <label className="block text-xs text-gray-500 mb-1">Hora</label>
                   <input type="text" value={event.time || ''} onChange={(e) => updateEvent(index, 'time', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="9:00 a 13:00" />
                 </div>
+              </div>
+
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">Fecha para mostrar <span className="text-gray-400">{'(texto libre — bv. "11 jun - 19 jul 2026")'}</span></label>
+                <input type="text" value={event.date_display || ''} onChange={(e) => updateEvent(index, 'date_display', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white" placeholder="Domingo 26 de Abril of 11 jun - 19 jul 2026" />
               </div>
 
               <div className="grid grid-cols-2 gap-3">

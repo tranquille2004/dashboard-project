@@ -1852,9 +1852,25 @@ const DEFAULT_EVENTS = [
 
 const EventsPage = ({ t, siteEvents }) => {
   const events = siteEvents && siteEvents.length > 0 ? siteEvents : DEFAULT_EVENTS;
-  const now = new Date();
-  const upcoming = events.filter(e => e.is_active && new Date(e.date) >= new Date(now.toDateString()));
-  const past = events.filter(e => !e.is_active || new Date(e.date) < new Date(now.toDateString()));
+
+  // Smart date parsing that tolerates empty/invalid dates
+  const parseDate = (s) => {
+    if (!s) return null;
+    const d = new Date(s);
+    return isNaN(d.getTime()) ? null : d;
+  };
+  const todayMidnight = (() => { const d = new Date(); d.setHours(0,0,0,0); return d; })();
+
+  // Effective end of event (when it stops being "upcoming"):
+  //   expiry_date (vervaldatum)  →  end_date (laatste dag van periode)  →  date (eendaags)
+  const effectiveEnd = (e) => parseDate(e.expiry_date) || parseDate(e.end_date) || parseDate(e.date);
+
+  const upcoming = events.filter(e => {
+    if (!e.is_active) return false;
+    const end = effectiveEnd(e);
+    return !end || end >= todayMidnight; // no date = always upcoming while active
+  });
+  const past = events.filter(e => !upcoming.includes(e));
 
   return (
   <div className="bg-amber-50/30 pt-24">
