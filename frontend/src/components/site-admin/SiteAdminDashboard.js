@@ -642,7 +642,8 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
       time: '',
       location: 'Hotel del Pacífico',
       price: '',
-      info: '',
+      includes: [],
+      note: '',
       image: '',
       is_active: true
     };
@@ -743,8 +744,31 @@ const EventsTab = ({ config, setConfig, saveConfig, saving }) => {
               </div>
 
               <div>
-                <label className="block text-xs text-gray-500 mb-1">Información adicional (incluye, notas, etc.)</label>
-                <textarea value={event.info || ''} onChange={(e) => updateEvent(index, 'info', e.target.value)} className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-20" placeholder="Materiales incluidos, Copa de Vino y Bocaditos, ..." />
+                <label className="block text-xs text-gray-500 mb-1">
+                  Incluye <span className="text-gray-400">(één regel per item — laat leeg als er niks bij inbegrepen is)</span>
+                </label>
+                <textarea
+                  value={Array.isArray(event.includes) ? event.includes.join('\n') : (event.includes || '')}
+                  onChange={(e) => {
+                    const lines = e.target.value.split('\n').map(s => s.trim()).filter(Boolean);
+                    updateEvent(index, 'includes', lines);
+                  }}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white h-24 font-mono"
+                  placeholder={'Materiales completos\nCopa de Vino y Bocaditos\n...'}
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs text-gray-500 mb-1">
+                  Nota destacada <span className="text-gray-400">(opcional — verschijnt in geel kader)</span>
+                </label>
+                <input
+                  type="text"
+                  value={event.note || ''}
+                  onChange={(e) => updateEvent(index, 'note', e.target.value)}
+                  className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-900 bg-white"
+                  placeholder="Solo necesitas enviarnos una foto"
+                />
               </div>
             </div>
 
