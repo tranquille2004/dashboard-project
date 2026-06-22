@@ -4445,26 +4445,43 @@ async def seed_sites_on_startup():
         )
         logger.info("Updated Il Siciliano admin credentials")
 
-    # Auto-seed standard site admins for the remaining 10 sites (idempotent)
+    # Auto-seed standard site admins (idempotent)
     # Pattern: admin@<primary-domain>  /  password = <key>123
+    # IMPORTANT: site_id MUST match the actual site_id in db.sites (some are legacy with "001" suffix)
     _full_perms = {
         "menu": True, "menu_items": True, "gallery": True, "config": True,
         "events": True, "announcements": True, "contact_info": True,
         "opening_hours": True, "prices": True,
     }
-    _standard_admins = [
-        ("site_cantina",       "cantina",       "admin@lacantinaitaliana.net",         "cantina123",     "La Cantina Italiana Admin"),
-        ("site_bottega",       "bottega",       "admin@labottegaherent.com",           "bottega123",     "La Bottega Herent Admin"),
-        ("site_ascoli",        "ascoli",        "admin@ascolizaventem.com",            "ascoli123",      "L'Ascoli Zaventem Admin"),
-        ("site_mercato",       "mercato",       "admin@ristorantemercato.be",          "mercato123",     "Ristorante Mercato Admin"),
-        ("site_tracemaster",   "tracemaster",   "admin@tracemaster-rastreadores.com",  "tracemaster123", "Tracemaster Admin"),
-        ("site_theobeans",     "theobeans",     "admin@theobeans-export.com",          "theobeans123",   "Theo Beans Export Admin"),
-        ("site_fworks",        "fworks",        "admin@fworksbuilders.com",            "fworks123",      "fworksbuilders Admin"),
-        ("site_smeralda",      "smeralda",      "admin@smeraldavacanze.it",            "smeralda123",    "Villa Smeralda Admin"),
-        ("site_albertopantoja","albertopantoja","admin@albertopantoja.com",            "pantoja123",     "Alberto Pantoja Admin"),
-        ("site_rccb",          "rccb",          "admin@rccbgroup.com",                 "rccb123",        "RCCB Group Admin"),
+    # Resolve site_id dynamically from slug to avoid hardcoded mismatches
+    _admin_specs = [
+        ("cantina",       "admin@lacantinaitaliana.net",         "cantina123",     "La Cantina Italiana Admin"),
+        ("bottega",       "admin@labottegaherent.com",           "bottega123",     "La Bottega Herent Admin"),
+        ("ascoli",        "admin@ascolizaventem.com",            "ascoli123",      "L'Ascoli Zaventem Admin"),
+        ("mercato",       "admin@ristorantemercato.be",          "mercato123",     "Ristorante Mercato Admin"),
+        ("tracemaster",   "admin@tracemaster-rastreadores.com",  "tracemaster123", "Tracemaster Admin"),
+        ("theobeans",     "admin@theobeans-export.com",          "theobeans123",   "Theo Beans Export Admin"),
+        ("fworks",        "admin@fworksbuilders.com",            "fworks123",      "fworksbuilders Admin"),
+        ("smeralda",      "admin@smeraldavacanze.it",            "smeralda123",    "Villa Smeralda Admin"),
+        ("albertopantoja","admin@albertopantoja.com",            "pantoja123",     "Alberto Pantoja Admin"),
+        ("rccb",          "admin@rccbgroup.com",                 "rccb123",        "RCCB Group Admin"),
     ]
-    for site_id, slug, email, pwd, name in _standard_admins:
+    # Remove legacy test admins that block correct seeding
+    legacy_emails = ["bottega@test.be","cantina@test.be","ascoli@test.be","mercato@test.be","theobeans@test.be","tracemaster@test.be"]
+    await db.site_admins.delete_many({"email": {"$in": legacy_emails}})
+
+    # Remove orphan admins (site_id pointing to non-existent sites — e.g., from old broken seed)
+    _valid_site_ids = [s["site_id"] async for s in db.sites.find({}, {"site_id": 1, "_id": 0})]
+    _removed_orphans = await db.site_admins.delete_many({"site_id": {"$nin": _valid_site_ids}})
+    if _removed_orphans.deleted_count > 0:
+        logger.info(f"Removed {_removed_orphans.deleted_count} orphan site_admins with invalid site_id")
+
+    for slug, email, pwd, name in _admin_specs:
+        site_doc = await db.sites.find_one({"slug": slug}, {"site_id": 1, "_id": 0})
+        if not site_doc:
+            logger.warning(f"Skipping admin seed for slug '{slug}' — site not found")
+            continue
+        site_id = site_doc["site_id"]
         pwd_hash = __import__('hashlib').sha256(pwd.encode()).hexdigest()
         existing = await db.site_admins.find_one({"site_id": site_id})
         if not existing:
@@ -4479,7 +4496,7 @@ async def seed_sites_on_startup():
                 "created_at": datetime.now(timezone.utc).isoformat(),
                 "updated_at": datetime.now(timezone.utc).isoformat(),
             })
-            logger.info(f"Auto-seeded site admin: {email}")
+            logger.info(f"Auto-seeded site admin: {email} -> {site_id}")
         else:
             await db.site_admins.update_one(
                 {"site_id": site_id},
@@ -4491,7 +4508,7 @@ async def seed_sites_on_startup():
                     "updated_at": datetime.now(timezone.utc).isoformat(),
                 }}
             )
-            logger.info(f"Updated site admin credentials: {email}")
+            logger.info(f"Updated site admin credentials: {email} -> {site_id}")
 
     # Auto-seed site-owner's known IPs in ignored_ips so production stats exclude them
     # (idempotent — only upserts, never deletes user-added IPs)
