@@ -343,39 +343,111 @@ const SiteAdminDashboard = () => {
               {activeTab === 'hours' && permissions.opening_hours && (
                 <div className="space-y-6">
                   <div className="flex items-center justify-between border-b pb-4">
-                    <h2 className="text-xl font-semibold">Horarios</h2>
+                    <div>
+                      <h2 className="text-xl font-semibold">Openingsuren</h2>
+                      <p className="text-sm text-gray-500 mt-1">Laat een veld leeg als het restaurant gesloten is op die periode.</p>
+                    </div>
                     <button
                       onClick={saveConfig}
                       disabled={saving}
                       className="flex items-center space-x-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
                     >
                       <Save className="w-4 h-4" />
-                      <span>{saving ? 'Guardando...' : 'Guardar'}</span>
+                      <span>{saving ? 'Opslaan...' : 'Opslaan'}</span>
                     </button>
                   </div>
-                  
-                  <div>
-                    <p className="text-gray-600 mb-4">
-                      Ingrese sus horarios en formato JSON. Por ejemplo:
-                    </p>
-                    <pre className="bg-gray-100 p-4 rounded-lg text-sm mb-4">
-{`{
-  "Ma - Di": "18:00 - 22:00",
-  "Wo - Vr": "12:00 - 14:00, 18:00 - 22:00",
-  "Za": "18:00 - 22:00",
-  "Zo": "12:00 - 14:00, 18:00 - 22:00"
-}`}
-                    </pre>
-                    <textarea
-                      value={JSON.stringify(config?.opening_hours || {}, null, 2)}
-                      onChange={(e) => {
-                        try {
-                          const hours = JSON.parse(e.target.value);
-                          setConfig({ ...config, opening_hours: hours });
-                        } catch (err) {}
-                      }}
-                      className="w-full border border-gray-300 rounded-lg px-4 py-3 text-gray-900 bg-white h-48 font-mono text-sm"
-                    />
+
+                  <div className="space-y-3">
+                    {[
+                      { key: 'monday',    label: 'Maandag' },
+                      { key: 'tuesday',   label: 'Dinsdag' },
+                      { key: 'wednesday', label: 'Woensdag' },
+                      { key: 'thursday',  label: 'Donderdag' },
+                      { key: 'friday',    label: 'Vrijdag' },
+                      { key: 'saturday',  label: 'Zaterdag' },
+                      { key: 'sunday',    label: 'Zondag' },
+                    ].map(({ key, label }) => {
+                      const raw = config?.opening_hours?.[key];
+                      const hours = (raw && typeof raw === 'object') ? raw : {};
+                      const update = (field, value) => {
+                        setConfig({
+                          ...config,
+                          opening_hours: {
+                            ...(config?.opening_hours || {}),
+                            [key]: { ...hours, [field]: value }
+                          }
+                        });
+                      };
+                      const setClosed = () => {
+                        setConfig({
+                          ...config,
+                          opening_hours: {
+                            ...(config?.opening_hours || {}),
+                            [key]: { lunch_open: '', lunch_close: '', dinner_open: '', dinner_close: '', closed: true }
+                          }
+                        });
+                      };
+                      const isClosed = hours.closed || (!hours.lunch_open && !hours.lunch_close && !hours.dinner_open && !hours.dinner_close);
+                      return (
+                        <div key={key} className="border border-gray-200 rounded-lg p-4 bg-gray-50/40">
+                          <div className="flex items-center justify-between mb-3">
+                            <div className="font-semibold text-gray-800">{label}</div>
+                            <label className="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
+                              <input
+                                type="checkbox"
+                                checked={!!hours.closed}
+                                onChange={(e) => e.target.checked ? setClosed() : update('closed', false)}
+                                className="rounded border-gray-300"
+                              />
+                              Gesloten
+                            </label>
+                          </div>
+                          {!hours.closed && (
+                            <div className="grid sm:grid-cols-2 gap-4">
+                              <div>
+                                <div className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">Lunch</div>
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    type="time"
+                                    value={hours.lunch_open || ''}
+                                    onChange={(e) => update('lunch_open', e.target.value)}
+                                    className="px-3 py-2 rounded-md border border-gray-300 focus:border-blue-500 outline-none text-sm w-full text-gray-900 bg-white"
+                                  />
+                                  <span className="text-gray-400">—</span>
+                                  <input
+                                    type="time"
+                                    value={hours.lunch_close || ''}
+                                    onChange={(e) => update('lunch_close', e.target.value)}
+                                    className="px-3 py-2 rounded-md border border-gray-300 focus:border-blue-500 outline-none text-sm w-full text-gray-900 bg-white"
+                                  />
+                                </div>
+                              </div>
+                              <div>
+                                <div className="text-xs text-gray-500 uppercase tracking-wider mb-1.5">Avond</div>
+                                <div className="flex items-center gap-2">
+                                  <input
+                                    type="time"
+                                    value={hours.dinner_open || ''}
+                                    onChange={(e) => update('dinner_open', e.target.value)}
+                                    className="px-3 py-2 rounded-md border border-gray-300 focus:border-blue-500 outline-none text-sm w-full text-gray-900 bg-white"
+                                  />
+                                  <span className="text-gray-400">—</span>
+                                  <input
+                                    type="time"
+                                    value={hours.dinner_close || ''}
+                                    onChange={(e) => update('dinner_close', e.target.value)}
+                                    className="px-3 py-2 rounded-md border border-gray-300 focus:border-blue-500 outline-none text-sm w-full text-gray-900 bg-white"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                          {isClosed && !hours.closed && (
+                            <p className="text-xs text-gray-400 italic mt-2">{'Laat alle velden leeg of vink "Gesloten" aan.'}</p>
+                          )}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
