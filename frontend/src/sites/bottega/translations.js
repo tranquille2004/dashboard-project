@@ -55,12 +55,13 @@ export const translations = {
     openingHours: "Openingsuren",
     monTue: "Ma - Di",
     wedFri: "Wo - Vr",
+    monSat: "Ma - Za",
     sat: "Za",
     sun: "Zo",
     pizzaNotice: "Pizza's",
     pizzaNoticeText: "Alleen beschikbaar in de avonden",
     closedOn: "Gesloten op",
-    closedDays: "Maandagmiddag, dinsdagmiddag en zaterdagmiddag",
+    closedDays: "Elke middag behalve zondag",
     takeawayInfo: "Afhalen kan gedurende de normale openingstijden",
     
     // Contact
@@ -162,12 +163,13 @@ export const translations = {
     openingHours: "Heures d'ouverture",
     monTue: "Lun - Mar",
     wedFri: "Mer - Ven",
+    monSat: "Lun - Sam",
     sat: "Sam",
     sun: "Dim",
     pizzaNotice: "Pizzas",
     pizzaNoticeText: "Disponibles uniquement le soir",
     closedOn: "Fermé",
-    closedDays: "Lundi midi, mardi midi et samedi midi",
+    closedDays: "Tous les midis sauf le dimanche",
     takeawayInfo: "Plats à emporter disponibles pendant les heures normales",
     
     // Contact
@@ -269,12 +271,13 @@ export const translations = {
     openingHours: "Opening hours",
     monTue: "Mon - Tue",
     wedFri: "Wed - Fri",
+    monSat: "Mon - Sat",
     sat: "Sat",
     sun: "Sun",
     pizzaNotice: "Pizzas",
     pizzaNoticeText: "Available only in the evenings",
     closedOn: "Closed",
-    closedDays: "Monday afternoon, Tuesday afternoon and Saturday afternoon",
+    closedDays: "Every afternoon except Sunday",
     takeawayInfo: "Takeaway available during normal opening hours",
     
     // Contact
@@ -376,12 +379,13 @@ export const translations = {
     openingHours: "Öffnungszeiten",
     monTue: "Mo - Di",
     wedFri: "Mi - Fr",
+    monSat: "Mo - Sa",
     sat: "Sa",
     sun: "So",
     pizzaNotice: "Pizzas",
     pizzaNoticeText: "Nur abends verfügbar",
     closedOn: "Geschlossen",
-    closedDays: "Montagnachmittag, Dienstagnachmittag und Samstagnachmittag",
+    closedDays: "Jeden Nachmittag außer sonntags",
     takeawayInfo: "Mitnehmen während der normalen Öffnungszeiten möglich",
     
     // Contact
@@ -483,12 +487,13 @@ export const translations = {
     openingHours: "Horario",
     monTue: "Lun - Mar",
     wedFri: "Mié - Vie",
+    monSat: "Lun - Sáb",
     sat: "Sáb",
     sun: "Dom",
     pizzaNotice: "Pizzas",
     pizzaNoticeText: "Disponible solo por la noche",
     closedOn: "Cerrado",
-    closedDays: "Lunes por la tarde, martes por la tarde y sábado por la tarde",
+    closedDays: "Todas las tardes excepto el domingo",
     takeawayInfo: "Para llevar disponible durante el horario normal",
     
     // Contact
@@ -595,7 +600,7 @@ export const translations = {
     pizzaNotice: "Pizze",
     pizzaNoticeText: "Disponibili solo la sera",
     closedOn: "Chiuso",
-    closedDays: "Lunedì pomeriggio, martedì pomeriggio e sabato pomeriggio",
+    closedDays: "Ogni pomeriggio tranne la domenica",
     takeawayInfo: "D'asporto disponibile durante gli orari normali",
     
     // Contact

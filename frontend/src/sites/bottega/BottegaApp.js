@@ -440,15 +440,7 @@ function HomePage() {
               <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('openingHours')}</h3>
               <div className="space-y-3" data-testid="opening-hours">
                 <div className="flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">{t('monTue')}</span>
-                  <span className="text-gray-600">18:00 - 21:30</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">{t('wedFri')}</span>
-                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 21:30</span>
-                </div>
-                <div className="flex justify-between items-center">
-                  <span className="text-gray-700 font-medium">{t('sat')}</span>
+                  <span className="text-gray-700 font-medium">{t('monSat')}</span>
                   <span className="text-gray-600">18:00 - 21:30</span>
                 </div>
                 <div className="flex justify-between items-center">
@@ -1367,15 +1359,7 @@ function OpeningstijdenPage() {
               <h3 className="text-2xl font-bold text-gray-900 mb-6">{t('openingHours')}</h3>
               <div className="space-y-4" data-testid="opening-hours">
                 <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-700 font-medium">{t('monTue')}</span>
-                  <span className="text-gray-600">18:00 - 21:30</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-700 font-medium">{t('wedFri')}</span>
-                  <span className="text-gray-600">12:00 - 14:00, 18:00 - 21:30</span>
-                </div>
-                <div className="flex justify-between items-center py-2 border-b border-gray-100">
-                  <span className="text-gray-700 font-medium">{t('sat')}</span>
+                  <span className="text-gray-700 font-medium">{t('monSat')}</span>
                   <span className="text-gray-600">18:00 - 21:30</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
