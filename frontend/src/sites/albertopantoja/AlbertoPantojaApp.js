@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-import { Menu, X, Facebook, Youtube, Instagram, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy, Volume2, VolumeX, Play, Pause, Trash2, Star } from 'lucide-react';
+import { Menu, X, Facebook, Youtube, Instagram, MapPin, Mail, Phone, ChevronRight, Users, Building, Heart, Briefcase, GraduationCap, Home, Trophy, Volume2, VolumeX, Play, Pause, Trash2 } from 'lucide-react';
 import { trackVisit } from '@/utils/trackVisit';
 
 const API_BASE = (process.env.REACT_APP_BACKEND_URL || '') + '/api';
@@ -1031,26 +1031,24 @@ const AlbertoPantojaApp = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
             <div className="text-center lg:text-left">
-              {/* Candidacy Announcement Banner */}
-              <div className="inline-flex flex-col items-start mb-6 group" data-testid="candidacy-banner">
-                <div className="relative">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-yellow-400 via-red-500 to-yellow-400 rounded-lg blur-md opacity-75 animate-pulse-glow-candidacy"></div>
-                  <div className="relative bg-gradient-to-r from-red-700 via-red-600 to-red-700 border-2 border-yellow-400 rounded-lg px-4 sm:px-6 py-3 shadow-2xl">
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <Star className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-300 fill-yellow-300 flex-shrink-0 animate-spin-slow" />
-                      <div className="text-left">
-                        <div className="text-yellow-300 text-[10px] sm:text-xs font-bold tracking-[0.2em] uppercase">
-                          {t.hero.candidacy.label}
-                        </div>
-                        <div className="text-white text-sm sm:text-lg font-extrabold leading-tight">
-                          {t.hero.candidacy.office}
-                        </div>
-                        <div className="text-yellow-200 text-xs sm:text-sm font-semibold mt-0.5">
-                          {t.hero.candidacy.list}
-                        </div>
-                      </div>
-                      <Star className="w-5 h-5 sm:w-6 sm:h-6 text-yellow-300 fill-yellow-300 flex-shrink-0 animate-spin-slow-reverse hidden sm:block" />
-                    </div>
+              {/* Candidacy Announcement — sober, black & red, with official AMIGO logo */}
+              <div className="inline-flex items-stretch mb-6 rounded-sm overflow-hidden shadow-2xl border-l-4 border-red-600" data-testid="candidacy-banner">
+                <div className="bg-white flex items-center justify-center px-2 py-1.5 sm:px-3 sm:py-2 flex-shrink-0">
+                  <img
+                    src="/images/albertopantoja/amigo-logo.jpg"
+                    alt="AMIGO Lista 16"
+                    className="h-10 sm:h-14 w-auto object-contain"
+                  />
+                </div>
+                <div className="bg-black px-4 sm:px-5 py-2 sm:py-3 flex flex-col justify-center border-l border-red-600/50">
+                  <div className="text-red-500 text-[9px] sm:text-[10px] font-bold tracking-[0.25em] uppercase mb-0.5">
+                    {t.hero.candidacy.label}
+                  </div>
+                  <div className="text-white text-sm sm:text-lg font-bold leading-tight uppercase tracking-wide">
+                    {t.hero.candidacy.office}
+                  </div>
+                  <div className="text-gray-300 text-[11px] sm:text-xs font-medium mt-1 tracking-wider">
+                    {t.hero.candidacy.list}
                   </div>
                 </div>
               </div>
