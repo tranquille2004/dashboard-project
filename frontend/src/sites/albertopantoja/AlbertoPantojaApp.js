@@ -1035,7 +1035,7 @@ const AlbertoPantojaApp = () => {
               <div className="inline-flex items-stretch mb-6 rounded-sm overflow-hidden shadow-2xl border-l-4 border-red-600" data-testid="candidacy-banner">
                 <div className="bg-white flex items-center justify-center px-2 py-1.5 sm:px-3 sm:py-2 flex-shrink-0">
                   <img
-                    src="/images/albertopantoja/amigo-logo.jpg"
+                    src="https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/3g1nl9aj_amigo.jpg"
                     alt="AMIGO Lista 16"
                     className="h-10 sm:h-14 w-auto object-contain"
                   />
