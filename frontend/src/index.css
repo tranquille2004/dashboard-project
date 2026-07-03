@@ -149,3 +149,23 @@ code {
   animation: pulse-glow 1.6s ease-in-out infinite;
 }
 
+
+/* Alberto Pantoja — candidacy banner animations */
+@keyframes pulse-glow-candidacy {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.95; }
+}
+.animate-pulse-glow-candidacy {
+  animation: pulse-glow-candidacy 2.2s ease-in-out infinite;
+}
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+.animate-spin-slow {
+  animation: spin-slow 6s linear infinite;
+}
+.animate-spin-slow-reverse {
+  animation: spin-slow 6s linear infinite reverse;
+}
+
