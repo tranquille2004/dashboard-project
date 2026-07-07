@@ -1031,41 +1031,58 @@ const AlbertoPantojaApp = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
             <div className="text-center lg:text-left">
-              {/* Candidacy Announcement — warm, elegant proclamation card */}
-              <div className="inline-flex items-stretch mb-6 rounded-sm overflow-hidden shadow-2xl group hover:shadow-red-500/30 transition-shadow duration-500" data-testid="candidacy-banner"
-                   style={{ boxShadow: '0 20px 60px -15px rgba(220, 38, 38, 0.35), 0 8px 20px -8px rgba(0,0,0,0.5)' }}>
-                {/* Left red accent bar with gold inset */}
-                <div className="w-1.5 bg-gradient-to-b from-red-600 via-red-700 to-red-800 flex-shrink-0" />
-                <div className="w-px bg-yellow-500/80 flex-shrink-0" />
-
-                {/* Logo panel with cream background */}
-                <div className="bg-[#FBF6EC] flex items-center justify-center px-3 sm:px-4 py-2 sm:py-3 flex-shrink-0 border-r border-red-700/30">
-                  <img
-                    src="https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/3g1nl9aj_amigo.jpg"
-                    alt="AMIGO Lista 16"
-                    className="h-12 sm:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-500"
-                  />
+              {/* Candidacy Announcement — dynamic campaign medallion with animated gold ring & shimmer */}
+              <div className="relative inline-flex items-center gap-4 sm:gap-5 mb-8 group animate-float-gentle" data-testid="candidacy-banner">
+                {/* AMIGO Medallion with rotating gold ring */}
+                <div className="relative flex-shrink-0">
+                  {/* Outer rotating gold ring */}
+                  <div className="absolute inset-0 rounded-full animate-spin-medallion"
+                       style={{
+                         background: 'conic-gradient(from 0deg, #D4AF37, #FFD700, #B8860B, #FFD700, #D4AF37, #FFF9E5, #D4AF37)',
+                         padding: '3px',
+                         WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px))',
+                         mask: 'radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px))',
+                       }} />
+                  {/* Middle dark ring */}
+                  <div className="absolute inset-[3px] rounded-full bg-[#1a0000]" />
+                  {/* Inner glow */}
+                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-red-500/40 via-transparent to-yellow-400/30 animate-pulse-slow" />
+                  {/* Logo */}
+                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-white flex items-center justify-center p-1.5 shadow-2xl">
+                    <img
+                      src="https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/3g1nl9aj_amigo.jpg"
+                      alt="AMIGO Lista 16"
+                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
+                    />
+                  </div>
+                  {/* Small pulsing star badge */}
+                  <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center shadow-lg animate-ping-slow">
+                    <span className="text-red-700 text-xs font-bold">★</span>
+                  </div>
                 </div>
 
-                {/* Text panel with warm ivory background & subtle paper texture */}
-                <div className="relative bg-gradient-to-br from-[#FBF6EC] via-[#F5EBD8] to-[#F0E1C1] px-5 sm:px-7 py-3 sm:py-4 flex flex-col justify-center min-w-0">
-                  {/* Subtle red ribbon corner accent */}
-                  <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden opacity-90">
-                    <div className="absolute -top-8 -right-8 w-16 h-16 bg-red-600 rotate-45 origin-bottom-left" />
+                {/* Text with shimmer sweep */}
+                <div className="flex flex-col justify-center min-w-0 relative">
+                  <div className="flex items-center gap-2 mb-0.5">
+                    <span className="inline-block w-2 h-2 bg-yellow-400 rounded-full animate-pulse-slow shadow-[0_0_8px_2px_rgba(250,204,21,0.7)]"></span>
+                    <span className="text-yellow-300 text-[10px] sm:text-[11px] font-bold tracking-[0.25em] uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
+                      {t.hero.candidacy.label}
+                    </span>
                   </div>
 
-                  <div className="text-red-700 text-[9px] sm:text-[10px] font-bold tracking-[0.28em] uppercase mb-1 relative">
-                    ★ {t.hero.candidacy.label} ★
+                  <div className="relative overflow-hidden">
+                    <h2 className="text-2xl sm:text-4xl font-black uppercase leading-none tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_8px_rgba(220,38,38,0.5)]"
+                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
+                      Prefecto
+                    </h2>
+                    {/* Shimmer sweep overlay */}
+                    <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
                   </div>
-                  <div className="text-[#1a1a1a] text-base sm:text-xl font-bold leading-tight tracking-tight" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                    {t.hero.candidacy.office}
-                  </div>
-                  <div className="flex items-center gap-2 mt-1.5">
-                    <div className="h-px w-6 bg-red-700/60" />
-                    <span className="text-red-800 text-[11px] sm:text-xs font-semibold tracking-widest uppercase">
-                      {t.hero.candidacy.list}
+
+                  <div className="mt-1 text-[11px] sm:text-sm">
+                    <span className="text-red-300 font-semibold tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
+                      Santo Domingo · Lista 16
                     </span>
-                    <div className="h-px flex-1 bg-red-700/60" />
                   </div>
                 </div>
               </div>
