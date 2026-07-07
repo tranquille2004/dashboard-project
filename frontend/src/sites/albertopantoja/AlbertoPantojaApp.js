@@ -35,7 +35,7 @@ const translations = {
       description: 'Ex-Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y concejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
       cta: 'Conoce Mi Trabajo',
       candidacy: {
-        label: 'CANDIDATO OFICIAL',
+        label: 'PRE-CANDIDATO OFICIAL',
         office: 'PREFECTURA DE SANTO DOMINGO',
         list: 'Lista 16 · Amigo'
       }
@@ -103,7 +103,7 @@ const translations = {
       description: 'Ex-Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
       cta: 'Découvrez Mon Travail',
       candidacy: {
-        label: 'CANDIDAT OFFICIEL',
+        label: 'PRÉ-CANDIDAT OFFICIEL',
         office: 'PRÉFECTURE DE SANTO DOMINGO',
         list: 'Liste 16 · Amigo'
       }
@@ -171,7 +171,7 @@ const translations = {
       description: 'Ex-Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
       cta: 'See My Work',
       candidacy: {
-        label: 'OFFICIAL CANDIDATE',
+        label: 'OFFICIAL PRE-CANDIDATE',
         office: 'PREFECTURE OF SANTO DOMINGO',
         list: 'List 16 · Amigo'
       }
@@ -1031,24 +1031,41 @@ const AlbertoPantojaApp = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Text Content */}
             <div className="text-center lg:text-left">
-              {/* Candidacy Announcement — sober, black & red, with official AMIGO logo */}
-              <div className="inline-flex items-stretch mb-6 rounded-sm overflow-hidden shadow-2xl border-l-4 border-red-600" data-testid="candidacy-banner">
-                <div className="bg-white flex items-center justify-center px-2 py-1.5 sm:px-3 sm:py-2 flex-shrink-0">
+              {/* Candidacy Announcement — warm, elegant proclamation card */}
+              <div className="inline-flex items-stretch mb-6 rounded-sm overflow-hidden shadow-2xl group hover:shadow-red-500/30 transition-shadow duration-500" data-testid="candidacy-banner"
+                   style={{ boxShadow: '0 20px 60px -15px rgba(220, 38, 38, 0.35), 0 8px 20px -8px rgba(0,0,0,0.5)' }}>
+                {/* Left red accent bar with gold inset */}
+                <div className="w-1.5 bg-gradient-to-b from-red-600 via-red-700 to-red-800 flex-shrink-0" />
+                <div className="w-px bg-yellow-500/80 flex-shrink-0" />
+
+                {/* Logo panel with cream background */}
+                <div className="bg-[#FBF6EC] flex items-center justify-center px-3 sm:px-4 py-2 sm:py-3 flex-shrink-0 border-r border-red-700/30">
                   <img
                     src="https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/3g1nl9aj_amigo.jpg"
                     alt="AMIGO Lista 16"
-                    className="h-10 sm:h-14 w-auto object-contain"
+                    className="h-12 sm:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
-                <div className="bg-black px-4 sm:px-5 py-2 sm:py-3 flex flex-col justify-center border-l border-red-600/50">
-                  <div className="text-red-500 text-[9px] sm:text-[10px] font-bold tracking-[0.25em] uppercase mb-0.5">
-                    {t.hero.candidacy.label}
+
+                {/* Text panel with warm ivory background & subtle paper texture */}
+                <div className="relative bg-gradient-to-br from-[#FBF6EC] via-[#F5EBD8] to-[#F0E1C1] px-5 sm:px-7 py-3 sm:py-4 flex flex-col justify-center min-w-0">
+                  {/* Subtle red ribbon corner accent */}
+                  <div className="absolute top-0 right-0 w-16 h-16 overflow-hidden opacity-90">
+                    <div className="absolute -top-8 -right-8 w-16 h-16 bg-red-600 rotate-45 origin-bottom-left" />
                   </div>
-                  <div className="text-white text-sm sm:text-lg font-bold leading-tight uppercase tracking-wide">
+
+                  <div className="text-red-700 text-[9px] sm:text-[10px] font-bold tracking-[0.28em] uppercase mb-1 relative">
+                    ★ {t.hero.candidacy.label} ★
+                  </div>
+                  <div className="text-[#1a1a1a] text-base sm:text-xl font-bold leading-tight tracking-tight" style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
                     {t.hero.candidacy.office}
                   </div>
-                  <div className="text-gray-300 text-[11px] sm:text-xs font-medium mt-1 tracking-wider">
-                    {t.hero.candidacy.list}
+                  <div className="flex items-center gap-2 mt-1.5">
+                    <div className="h-px w-6 bg-red-700/60" />
+                    <span className="text-red-800 text-[11px] sm:text-xs font-semibold tracking-widest uppercase">
+                      {t.hero.candidacy.list}
+                    </span>
+                    <div className="h-px flex-1 bg-red-700/60" />
                   </div>
                 </div>
               </div>
