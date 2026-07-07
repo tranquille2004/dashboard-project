@@ -46,12 +46,12 @@ const Photos = () => {
   }, [selectedImage, currentIndex]);
 
   return (
-    <div className="min-h-screen pt-16 bg-[#f5f1ed]">
+    <div className="min-h-screen pt-16 bg-[#F5EDE0]">
       {/* Hero Section with Background Image */}
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/gallery/photo1.jpg')})`,
+          backgroundImage: `linear-gradient(rgba(109, 76, 65, 0.70), rgba(109, 76, 65, 0.70)), url(${IMG('/images/gallery/photo1.jpg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}

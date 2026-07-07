@@ -41,7 +41,7 @@ const LanguageSelector = () => {
                   setIsOpen(false);
                 }}
                 className={`w-full px-4 py-2 text-left text-sm hover:bg-gray-100 transition-colors ${
-                  language === lang.code ? 'bg-gray-50 font-medium text-[#b8999e]' : 'text-gray-700'
+                  language === lang.code ? 'bg-gray-50 font-medium text-[#6D4C41]' : 'text-gray-700'
                 }`}
               >
                 {lang.label} - {lang.name}

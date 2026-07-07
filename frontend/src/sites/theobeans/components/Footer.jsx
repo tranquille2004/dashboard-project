@@ -8,7 +8,7 @@ const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="bg-[#b8999e] text-white">
+    <footer className="bg-[#6D4C41] text-white">
       {/* Main Footer Content */}
       <div className="py-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -34,7 +34,7 @@ const Footer = () => {
       </div>
 
       {/* Webmaster Info Section - IN FRENCH */}
-      <div className="bg-[#a8898e] py-6 border-t border-white/10">
+      <div className="bg-[#3E2723] py-6 border-t border-white/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <p className="text-xs text-white/80 mb-3">

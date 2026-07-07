@@ -7,12 +7,12 @@ const Objectif = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen pt-16 bg-[#f5f1ed]">
+    <div className="min-h-screen pt-16 bg-[#F5EDE0]">
       {/* Hero Section with Background Image */}
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/gallery/photo6.jpg')})`,
+          backgroundImage: `linear-gradient(rgba(109, 76, 65, 0.70), rgba(109, 76, 65, 0.70)), url(${IMG('/images/gallery/photo6.jpg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -40,7 +40,7 @@ const Objectif = () => {
 
           <div className="space-y-10">
             {t.objectif.objectives.map((obj) => (
-              <div key={obj.number} className="border-l-4 border-[#b8999e] pl-6 py-2 hover:bg-gray-50 transition-colors">
+              <div key={obj.number} className="border-l-4 border-[#6D4C41] pl-6 py-2 hover:bg-gray-50 transition-colors">
                 <h4 className="text-lg md:text-xl font-light text-gray-900 mb-3">
                   {obj.number}. {obj.title}
                 </h4>
@@ -49,7 +49,7 @@ const Objectif = () => {
             ))}
           </div>
 
-          <div className="mt-16 p-8 bg-[#f5f1ed] rounded-lg shadow-md">
+          <div className="mt-16 p-8 bg-[#F5EDE0] rounded-lg shadow-md">
             <h3 className="text-xl md:text-2xl font-light text-gray-900 mb-4">
               {t.objectif.conclusionTitle}
             </h3>

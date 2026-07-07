@@ -6,12 +6,12 @@ const Qualite = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen pt-16 bg-[#f5f1ed]">
+    <div className="min-h-screen pt-16 bg-[#F5EDE0]">
       {/* Hero Section with Background Image */}
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/gallery/qualite-hero.jpg')})`,
+          backgroundImage: `linear-gradient(rgba(109, 76, 65, 0.70), rgba(109, 76, 65, 0.70)), url(${IMG('/images/gallery/qualite-hero.jpg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -33,7 +33,7 @@ const Qualite = () => {
             {t.qualite.processes.map((process, index) => (
               <div
                 key={index}
-                className="border-l-4 border-[#b8999e] pl-6 md:pl-8 py-4 hover:bg-gray-50 transition-colors rounded-r-lg"
+                className="border-l-4 border-[#6D4C41] pl-6 md:pl-8 py-4 hover:bg-gray-50 transition-colors rounded-r-lg"
               >
                 <h3 className="text-xl md:text-2xl font-light text-gray-900 mb-4">
                   {process.title}

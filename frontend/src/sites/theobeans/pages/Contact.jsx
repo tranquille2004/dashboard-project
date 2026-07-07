@@ -39,16 +39,16 @@ const Contact = () => {
   };
 
   return (
-    <div className="min-h-screen pt-16 bg-[#f5f1ed]">
+    <div className="min-h-screen pt-16 bg-[#F5EDE0]">
       {/* Hero Section with Background Image */}
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4"
         style={{
-          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/contact/contact-hero.jpg')})`,
+          backgroundImage: `linear-gradient(rgba(109, 76, 65, 0.70), rgba(109, 76, 65, 0.70)), url(${IMG('/images/contact/contact-hero.jpg')})`,
           backgroundSize: 'contain',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
-          backgroundColor: '#b8999e'
+          backgroundColor: '#6D4C41'
         }}
       >
         <div className="max-w-7xl mx-auto text-center">
@@ -79,7 +79,7 @@ const Contact = () => {
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8999e] focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6D4C41] focus:border-transparent transition-all"
                         data-testid="contact-firstname-input"
                       />
                     </div>
@@ -92,7 +92,7 @@ const Contact = () => {
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleChange}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8999e] focus:border-transparent transition-all"
+                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6D4C41] focus:border-transparent transition-all"
                         data-testid="contact-lastname-input"
                       />
                     </div>
@@ -108,7 +108,7 @@ const Contact = () => {
                       required
                       value={formData.email}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8999e] focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6D4C41] focus:border-transparent transition-all"
                       data-testid="contact-email-input"
                     />
                   </div>
@@ -123,7 +123,7 @@ const Contact = () => {
                       required
                       value={formData.phone}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8999e] focus:border-transparent transition-all"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6D4C41] focus:border-transparent transition-all"
                       data-testid="contact-phone-input"
                     />
                   </div>
@@ -137,14 +137,14 @@ const Contact = () => {
                       value={formData.message}
                       onChange={handleChange}
                       rows={6}
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#b8999e] focus:border-transparent transition-all resize-none"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#6D4C41] focus:border-transparent transition-all resize-none"
                       data-testid="contact-message-input"
                     />
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-[#b8999e] text-white py-3 rounded-lg hover:bg-[#a8898e] transition-colors font-light tracking-wide shadow-md hover:shadow-lg"
+                    className="w-full bg-[#6D4C41] text-white py-3 rounded-lg hover:bg-[#3E2723] transition-colors font-light tracking-wide shadow-md hover:shadow-lg"
                     data-testid="contact-submit-button"
                   >
                     {t.contact.send}
@@ -172,12 +172,12 @@ const Contact = () => {
               {/* Contact Details */}
               <div className="bg-gray-50 p-8 rounded-lg space-y-6 shadow-md">
                 <div className="flex items-start space-x-4">
-                  <Mail className="text-[#b8999e] flex-shrink-0 mt-1" size={24} />
+                  <Mail className="text-[#6D4C41] flex-shrink-0 mt-1" size={24} />
                   <div>
                     <p className="font-medium text-gray-900 mb-1">Email</p>
                     <a
                       href={`mailto:${siteData.contact.email}`}
-                      className="text-gray-700 hover:text-[#b8999e] transition-colors"
+                      className="text-gray-700 hover:text-[#6D4C41] transition-colors"
                     >
                       {siteData.contact.email}
                     </a>
@@ -185,12 +185,12 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <Phone className="text-[#b8999e] flex-shrink-0 mt-1" size={24} />
+                  <Phone className="text-[#6D4C41] flex-shrink-0 mt-1" size={24} />
                   <div>
                     <p className="font-medium text-gray-900 mb-1">{t.contact.phone}</p>
                     <a
                       href={`tel:${siteData.contact.phone}`}
-                      className="text-gray-700 hover:text-[#b8999e] transition-colors"
+                      className="text-gray-700 hover:text-[#6D4C41] transition-colors"
                     >
                       {siteData.contact.phone}
                     </a>
@@ -198,7 +198,7 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <MapPin className="text-[#b8999e] flex-shrink-0 mt-1" size={24} />
+                  <MapPin className="text-[#6D4C41] flex-shrink-0 mt-1" size={24} />
                   <div>
                     <p className="font-medium text-gray-900 mb-1">{t.contact.address}</p>
                     <p className="text-gray-700">{siteData.contact.address}</p>
@@ -206,14 +206,14 @@ const Contact = () => {
                 </div>
 
                 <div className="flex items-start space-x-4">
-                  <Facebook className="text-[#b8999e] flex-shrink-0 mt-1" size={24} />
+                  <Facebook className="text-[#6D4C41] flex-shrink-0 mt-1" size={24} />
                   <div>
                     <p className="font-medium text-gray-900 mb-1">{t.contact.facebook}</p>
                     <a
                       href={`https://${siteData.contact.facebook}`}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-700 hover:text-[#b8999e] transition-colors"
+                      className="text-gray-700 hover:text-[#6D4C41] transition-colors"
                     >
                       {siteData.contact.facebook}
                     </a>

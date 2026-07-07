@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-[#b8999e]/98 backdrop-blur-sm shadow-lg' : 'bg-[#b8999e]'
+        isScrolled ? 'bg-[#6D4C41]/98 backdrop-blur-sm shadow-lg' : 'bg-[#6D4C41]'
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -76,7 +76,7 @@ const Navbar = () => {
 
       {/* Mobile Navigation */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden bg-[#b8999e] border-t border-white/20">
+        <div className="lg:hidden bg-[#6D4C41] border-t border-white/20">
           <div className="px-4 py-4 space-y-2">
             {siteData.navigation.map((item) => (
               <Link

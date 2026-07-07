@@ -6,12 +6,12 @@ const Varietes = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="min-h-screen pt-16 bg-[#f5f1ed] overflow-x-hidden">
+    <div className="min-h-screen pt-16 bg-[#F5EDE0] overflow-x-hidden">
       {/* Hero Section with Background Image */}
       <section 
         className="relative bg-cover bg-center py-32 md:py-40 px-4 overflow-hidden"
         style={{
-          backgroundImage: `linear-gradient(rgba(184, 153, 158, 0.70), rgba(184, 153, 158, 0.70)), url(${IMG('/images/gallery/photo13.jpg')})`,
+          backgroundImage: `linear-gradient(rgba(109, 76, 65, 0.70), rgba(109, 76, 65, 0.70)), url(${IMG('/images/gallery/photo13.jpg')})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
@@ -31,7 +31,7 @@ const Varietes = () => {
             <h2 className="text-2xl md:text-3xl font-light text-gray-900 mb-6">
               {t.varietes.terroirTitle}
             </h2>
-            <h3 className="text-xl md:text-2xl font-light text-[#b8999e] mb-4">
+            <h3 className="text-xl md:text-2xl font-light text-[#6D4C41] mb-4">
               {t.varietes.terroirSubtitle}
             </h3>
             <p className="text-gray-800 leading-relaxed mb-6" style={{textAlign: 'left'}}>
@@ -43,14 +43,14 @@ const Varietes = () => {
             </h4>
             
             <div className="space-y-6 ml-0 md:ml-4">
-              <div className="bg-[#f5f1ed] p-6 rounded-lg">
+              <div className="bg-[#F5EDE0] p-6 rounded-lg">
                 <h5 className="font-medium text-gray-900 mb-2">{t.varietes.solsTitle}</h5>
                 <p className="text-gray-800 leading-relaxed" style={{textAlign: 'left'}}>
                   {t.varietes.solsContent}
                 </p>
               </div>
 
-              <div className="bg-white border-l-4 border-[#b8999e] pl-6 py-4">
+              <div className="bg-white border-l-4 border-[#6D4C41] pl-6 py-4">
                 <h5 className="font-medium text-gray-900 mb-2">{t.varietes.microclimatsTitle}</h5>
                 <p className="text-gray-800 leading-relaxed mb-2" style={{textAlign: 'left'}}>
                   {t.varietes.microclimatsIntro}
@@ -62,7 +62,7 @@ const Varietes = () => {
                 </ul>
               </div>
 
-              <div className="bg-[#f5f1ed] p-6 rounded-lg">
+              <div className="bg-[#F5EDE0] p-6 rounded-lg">
                 <h5 className="font-medium text-gray-900 mb-2">{t.varietes.ecosystemeTitle}</h5>
                 <p className="text-gray-800 leading-relaxed" style={{textAlign: 'left'}}>
                   {t.varietes.ecosystemeContent}
@@ -72,8 +72,8 @@ const Varietes = () => {
           </div>
 
           {/* Nacional Section */}
-          <div className="bg-[#b8999e]/10 p-6 md:p-8 rounded-lg shadow-md">
-            <h3 className="text-xl md:text-2xl font-light text-[#b8999e] mb-4">
+          <div className="bg-[#6D4C41]/10 p-6 md:p-8 rounded-lg shadow-md">
+            <h3 className="text-xl md:text-2xl font-light text-[#6D4C41] mb-4">
               {t.varietes.nacionalTitle}
             </h3>
             <p className="text-gray-800 leading-relaxed mb-4" style={{textAlign: 'left'}}>
@@ -93,14 +93,14 @@ const Varietes = () => {
 
           {/* Trinitario Section */}
           <div>
-            <h3 className="text-xl md:text-2xl font-light text-[#b8999e] mb-4">
+            <h3 className="text-xl md:text-2xl font-light text-[#6D4C41] mb-4">
               {t.varietes.trinitarioTitle}
             </h3>
             <p className="text-gray-800 leading-relaxed mb-4" style={{textAlign: 'left'}}>
               {t.varietes.trinitarioIntro}
             </p>
             <div className="space-y-4">
-              <div className="border-l-4 border-[#b8999e] pl-6 py-2">
+              <div className="border-l-4 border-[#6D4C41] pl-6 py-2">
                 <h4 className="font-medium text-gray-900 mb-2">{t.varietes.trinitarioAvantagesTitle}</h4>
                 <ul className="list-disc ml-6 space-y-1 text-gray-800" style={{textAlign: 'left'}}>
                   {t.varietes.trinitarioAvantagesList.map((item, index) => (
@@ -112,8 +112,8 @@ const Varietes = () => {
           </div>
 
           {/* Criollo Section */}
-          <div className="bg-[#b8999e]/10 p-6 md:p-8 rounded-lg shadow-md">
-            <h3 className="text-xl md:text-2xl font-light text-[#b8999e] mb-4">
+          <div className="bg-[#6D4C41]/10 p-6 md:p-8 rounded-lg shadow-md">
+            <h3 className="text-xl md:text-2xl font-light text-[#6D4C41] mb-4">
               {t.varietes.criolloTitle}
             </h3>
             <p className="text-gray-800 leading-relaxed mb-4" style={{textAlign: 'left'}}>

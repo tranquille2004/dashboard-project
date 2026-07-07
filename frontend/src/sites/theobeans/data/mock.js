@@ -17,7 +17,26 @@ export const translations = {
     },
     home: {
       founder: "Fondatrice",
-      founderStory: "L'amour pour le cacao et le savoir-faire viennent de mon enfance. J'ai eu la chance de grandir entouree d'une nature tres riche et diverse, a cote des gens qui partageaient leurs savoir-faire et toute leur connaissance du cacao avec passion et amour. C'est avec le meme amour pour le cacao que j'ai transforme ma passion en mon metier, en creant l'entreprise Theo Beans."
+      founderStory: "L'amour pour le cacao et le savoir-faire viennent de mon enfance. J'ai eu la chance de grandir entouree d'une nature tres riche et diverse, a cote des gens qui partageaient leurs savoir-faire et toute leur connaissance du cacao avec passion et amour. C'est avec le meme amour pour le cacao que j'ai transforme ma passion en mon metier, en creant l'entreprise Theo Beans.",
+      tagline: "Cacao d'exception, directement d'Équateur",
+      discover: "Découvrir notre histoire",
+      ourStory: "Notre histoire",
+      ourMissionTitle: "Une passion transmise, un héritage à préserver",
+      valuesTitle: "Ce qui nous distingue",
+      value1Title: "Terroir unique",
+      value1Desc: "Cacao Nacional équatorien, cultivé dans les sols volcaniques des Andes.",
+      value2Title: "Culture durable",
+      value2Desc: "Partenariat direct et équitable avec les petits producteurs locaux.",
+      value3Title: "Qualité premium",
+      value3Desc: "Fèves sélectionnées à la main, fermentées et séchées avec soin.",
+      value4Title: "Traçabilité totale",
+      value4Desc: "De la finca à votre atelier, chaque étape est documentée.",
+      gallerySneakTitle: "Immersion dans la finca",
+      gallerySneakSubtitle: "Découvrez notre plantation en images",
+      viewGallery: "Voir toutes les photos",
+      ctaTitle: "Prêts à collaborer ?",
+      ctaDesc: "Chocolatiers, transformateurs, curieux du cacao d'exception : parlons ensemble.",
+      contactUs: "Nous contacter"
     },
     photos: {
       title: "PHOTOS"
@@ -172,7 +191,26 @@ export const translations = {
     },
     home: {
       founder: "Oprichtster",
-      founderStory: "De liefde voor cacao en de knowhow komen uit mijn kindertijd. Ik had het geluk op te groeien omringd door een zeer rijke en diverse natuur, naast mensen die hun knowhow en al hun kennis van cacao met passie en liefde deelden. Het is met diezelfde liefde voor cacao dat ik mijn passie in mijn beroep heb omgezet, door het bedrijf Theo Beans op te richten."
+      founderStory: "De liefde voor cacao en de knowhow komen uit mijn kindertijd. Ik had het geluk op te groeien omringd door een zeer rijke en diverse natuur, naast mensen die hun knowhow en al hun kennis van cacao met passie en liefde deelden. Het is met diezelfde liefde voor cacao dat ik mijn passie in mijn beroep heb omgezet, door het bedrijf Theo Beans op te richten.",
+      tagline: "Uitzonderlijke cacao, rechtstreeks uit Ecuador",
+      discover: "Ontdek ons verhaal",
+      ourStory: "Ons verhaal",
+      ourMissionTitle: "Een doorgegeven passie, een erfgoed om te bewaren",
+      valuesTitle: "Wat ons onderscheidt",
+      value1Title: "Uniek terroir",
+      value1Desc: "Ecuadoriaanse Cacao Nacional, geteeld in de vulkanische bodems van de Andes.",
+      value2Title: "Duurzame teelt",
+      value2Desc: "Directe en eerlijke samenwerking met lokale kleine producenten.",
+      value3Title: "Premium kwaliteit",
+      value3Desc: "Handmatig geselecteerde bonen, zorgvuldig gefermenteerd en gedroogd.",
+      value4Title: "Volledige traceerbaarheid",
+      value4Desc: "Van finca tot je atelier — elke stap is gedocumenteerd.",
+      gallerySneakTitle: "Onderdompeling in de finca",
+      gallerySneakSubtitle: "Ontdek onze plantage in beeld",
+      viewGallery: "Bekijk alle foto's",
+      ctaTitle: "Klaar om samen te werken?",
+      ctaDesc: "Chocolatiers, verwerkers, cacao-liefhebbers: laten we praten.",
+      contactUs: "Contacteer ons"
     },
     photos: {
       title: "FOTO'S"
@@ -327,7 +365,26 @@ export const translations = {
     },
     home: {
       founder: "Founder",
-      founderStory: "The love for cocoa and the know-how come from my childhood. I was lucky enough to grow up surrounded by a very rich and diverse nature, alongside people who shared their know-how and all their knowledge of cocoa with passion and love. It is with the same love for cocoa that I transformed my passion into my profession, by creating the company Theo Beans."
+      founderStory: "The love for cocoa and the know-how come from my childhood. I was lucky enough to grow up surrounded by a very rich and diverse nature, alongside people who shared their know-how and all their knowledge of cocoa with passion and love. It is with the same love for cocoa that I transformed my passion into my profession, by creating the company Theo Beans.",
+      tagline: "Exceptional cacao, straight from Ecuador",
+      discover: "Discover our story",
+      ourStory: "Our story",
+      ourMissionTitle: "A passion passed down, a heritage to preserve",
+      valuesTitle: "What sets us apart",
+      value1Title: "Unique terroir",
+      value1Desc: "Ecuadorian Cacao Nacional, grown in the volcanic soils of the Andes.",
+      value2Title: "Sustainable farming",
+      value2Desc: "Direct and fair partnership with local small-scale producers.",
+      value3Title: "Premium quality",
+      value3Desc: "Hand-picked beans, carefully fermented and dried.",
+      value4Title: "Full traceability",
+      value4Desc: "From the finca to your workshop — every step documented.",
+      gallerySneakTitle: "Inside the finca",
+      gallerySneakSubtitle: "Discover our plantation in pictures",
+      viewGallery: "View all photos",
+      ctaTitle: "Ready to collaborate?",
+      ctaDesc: "Chocolatiers, processors, cacao enthusiasts: let's talk.",
+      contactUs: "Contact us"
     },
     photos: {
       title: "PHOTOS"
@@ -482,7 +539,26 @@ export const translations = {
     },
     home: {
       founder: "Fundadora",
-      founderStory: "El amor por el cacao y el saber hacer vienen de mi infancia. Tuve la suerte de crecer rodeada de una naturaleza muy rica y diversa, junto a personas que compartian su saber hacer y todo su conocimiento del cacao con pasion y amor. Es con el mismo amor por el cacao que transforme mi pasion en mi profesion, creando la empresa Theo Beans."
+      founderStory: "El amor por el cacao y el saber hacer vienen de mi infancia. Tuve la suerte de crecer rodeada de una naturaleza muy rica y diversa, junto a personas que compartian su saber hacer y todo su conocimiento del cacao con pasion y amor. Es con el mismo amor por el cacao que transforme mi pasion en mi profesion, creando la empresa Theo Beans.",
+      tagline: "Cacao excepcional, directamente desde Ecuador",
+      discover: "Descubre nuestra historia",
+      ourStory: "Nuestra historia",
+      ourMissionTitle: "Una pasión transmitida, un legado que preservar",
+      valuesTitle: "Lo que nos distingue",
+      value1Title: "Terroir único",
+      value1Desc: "Cacao Nacional ecuatoriano, cultivado en los suelos volcánicos de los Andes.",
+      value2Title: "Cultivo sostenible",
+      value2Desc: "Alianza directa y justa con los pequeños productores locales.",
+      value3Title: "Calidad premium",
+      value3Desc: "Granos seleccionados a mano, fermentados y secados con esmero.",
+      value4Title: "Trazabilidad total",
+      value4Desc: "De la finca a tu taller, cada paso está documentado.",
+      gallerySneakTitle: "Inmersión en la finca",
+      gallerySneakSubtitle: "Descubre nuestra plantación en imágenes",
+      viewGallery: "Ver todas las fotos",
+      ctaTitle: "¿Listos para colaborar?",
+      ctaDesc: "Chocolateros, transformadores, amantes del cacao: hablemos.",
+      contactUs: "Contáctanos"
     },
     photos: {
       title: "FOTOS"
@@ -637,7 +713,26 @@ export const translations = {
     },
     home: {
       founder: "Fondatrice",
-      founderStory: "L'amore per il cacao e il know-how vengono dalla mia infanzia. Ho avuto la fortuna di crescere circondata da una natura molto ricca e diversificata, accanto a persone che condividevano il loro know-how e tutta la loro conoscenza del cacao con passione e amore. E con lo stesso amore per il cacao che ho trasformato la mia passione nella mia professione, creando l'azienda Theo Beans."
+      founderStory: "L'amore per il cacao e il know-how vengono dalla mia infanzia. Ho avuto la fortuna di crescere circondata da una natura molto ricca e diversificata, accanto a persone che condividevano il loro know-how e tutta la loro conoscenza del cacao con passione e amore. E con lo stesso amore per il cacao che ho trasformato la mia passione nella mia professione, creando l'azienda Theo Beans.",
+      tagline: "Cacao d'eccezione, direttamente dall'Ecuador",
+      discover: "Scopri la nostra storia",
+      ourStory: "La nostra storia",
+      ourMissionTitle: "Una passione tramandata, un patrimonio da preservare",
+      valuesTitle: "Ciò che ci distingue",
+      value1Title: "Terroir unico",
+      value1Desc: "Cacao Nacional ecuadoriano, coltivato nei suoli vulcanici delle Ande.",
+      value2Title: "Coltivazione sostenibile",
+      value2Desc: "Collaborazione diretta ed equa con i piccoli produttori locali.",
+      value3Title: "Qualità premium",
+      value3Desc: "Fave selezionate a mano, fermentate ed essiccate con cura.",
+      value4Title: "Tracciabilità totale",
+      value4Desc: "Dalla finca al tuo laboratorio, ogni fase è documentata.",
+      gallerySneakTitle: "Immersione nella finca",
+      gallerySneakSubtitle: "Scopri la nostra piantagione in immagini",
+      viewGallery: "Vedi tutte le foto",
+      ctaTitle: "Pronti a collaborare?",
+      ctaDesc: "Cioccolatai, trasformatori, appassionati di cacao: parliamone.",
+      contactUs: "Contattaci"
     },
     photos: {
       title: "FOTO"
@@ -780,7 +875,7 @@ export const translations = {
 // Mock data for Theo Beans Export website - static data
 export const siteData = {
   companyName: "THEO BEANS EXPORT",
-  tagline: "VERONCIA VALENCIA EXPORT",
+  tagline: "VERONICA VALENCIA EXPORT",
   
   navigation: [
     { name: "ACCUEIL", path: "/", key: "accueil" },
