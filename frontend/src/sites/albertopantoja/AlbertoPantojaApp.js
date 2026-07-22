@@ -1033,34 +1033,6 @@ const AlbertoPantojaApp = () => {
             <div className="text-center lg:text-left">
               {/* Candidacy Announcement — dynamic campaign medallion with animated gold ring & shimmer */}
               <div className="relative inline-flex items-center gap-4 sm:gap-5 mb-8 group animate-float-gentle" data-testid="candidacy-banner">
-                {/* AMIGO Medallion with rotating gold ring */}
-                <div className="relative flex-shrink-0">
-                  {/* Outer rotating gold ring */}
-                  <div className="absolute inset-0 rounded-full animate-spin-medallion"
-                       style={{
-                         background: 'conic-gradient(from 0deg, #D4AF37, #FFD700, #B8860B, #FFD700, #D4AF37, #FFF9E5, #D4AF37)',
-                         padding: '3px',
-                         WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px))',
-                         mask: 'radial-gradient(farthest-side, transparent calc(100% - 4px), #000 calc(100% - 4px))',
-                       }} />
-                  {/* Middle dark ring */}
-                  <div className="absolute inset-[3px] rounded-full bg-[#1a0000]" />
-                  {/* Inner glow */}
-                  <div className="absolute inset-1 rounded-full bg-gradient-to-br from-red-500/40 via-transparent to-yellow-400/30 animate-pulse-slow" />
-                  {/* Logo */}
-                  <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden bg-white flex items-center justify-center p-1.5 shadow-2xl">
-                    <img
-                      src="https://customer-assets.emergentagent.com/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/3g1nl9aj_amigo.jpg"
-                      alt="AMIGO Lista 16"
-                      className="w-full h-full object-contain group-hover:scale-110 transition-transform duration-700"
-                    />
-                  </div>
-                  {/* Small pulsing star badge */}
-                  <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-yellow-400 flex items-center justify-center shadow-lg animate-ping-slow">
-                    <span className="text-red-700 text-xs font-bold">★</span>
-                  </div>
-                </div>
-
                 {/* Text with shimmer sweep */}
                 <div className="flex flex-col justify-center min-w-0 relative">
                   <div className="flex items-center gap-2 mb-0.5">
@@ -1081,7 +1053,7 @@ const AlbertoPantojaApp = () => {
 
                   <div className="mt-1 text-[11px] sm:text-sm">
                     <span className="text-red-300 font-semibold tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
-                      Santo Domingo · Lista 16
+                      Santo Domingo
                     </span>
                   </div>
                 </div>

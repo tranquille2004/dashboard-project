@@ -915,7 +915,7 @@ export const siteData = {
 
   contact: {
     heroImage: "/images/contact/contact-hero.jpg",
-    email: "info@theobeans-export.com",
+    email: "theobeanscacao@gmail.com",
     phone: "+32 465 63 56 26",
     address: "Avenue Louise 421, 1050 Ixelles (Bruxelles) Belgique",
     facebook: "www.facebook.com/theobeanstobar",
