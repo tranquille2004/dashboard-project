@@ -1056,9 +1056,15 @@ const AlbertoPantojaApp = () => {
               <div className="relative inline-flex items-center gap-4 sm:gap-5 mb-8 group animate-float-gentle" data-testid="candidacy-banner">
                 <div className="flex flex-col justify-center min-w-0 relative">
                   <div className="relative overflow-hidden">
-                    <h2 className="text-4xl sm:text-6xl md:text-7xl font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)]"
+                    <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl"
                         style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                      Candidato<br />Alcalde
+                      Candidato<br />
+                      <span className="inline-flex items-baseline gap-3 sm:gap-4">
+                        Alcalde
+                        <span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
+                          2027 — 2031
+                        </span>
+                      </span>
                     </h2>
                     {/* Shimmer sweep overlay */}
                     <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
@@ -1067,11 +1073,7 @@ const AlbertoPantojaApp = () => {
                   <div className="mt-3 flex items-center gap-2 text-sm sm:text-base">
                     <span className="inline-block w-2 h-2 bg-yellow-400 rounded-full animate-pulse-slow shadow-[0_0_8px_2px_rgba(250,204,21,0.7)]"></span>
                     <span className="text-red-300 font-semibold tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
-                      Santo Domingo
-                    </span>
-                    <span className="text-yellow-300/60">·</span>
-                    <span className="text-yellow-300 font-bold tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
-                      2027 — 2031
+                      Santo Domingo · Ecuador
                     </span>
                   </div>
                 </div>
