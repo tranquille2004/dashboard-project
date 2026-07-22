@@ -35,7 +35,7 @@ const translations = {
       description: 'Ex-Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y concejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
       cta: 'Conoce Mi Trabajo',
       candidacy: {
-        label: 'PRE-CANDIDATO OFICIAL',
+        label: 'CANDIDATO OFICIAL',
         office: 'PREFECTURA DE SANTO DOMINGO',
         list: 'Lista 16 · Amigo'
       }
@@ -103,7 +103,7 @@ const translations = {
       description: 'Ex-Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
       cta: 'Découvrez Mon Travail',
       candidacy: {
-        label: 'PRÉ-CANDIDAT OFFICIEL',
+        label: 'CANDIDAT OFFICIEL',
         office: 'PRÉFECTURE DE SANTO DOMINGO',
         list: 'Liste 16 · Amigo'
       }
@@ -171,7 +171,7 @@ const translations = {
       description: 'Ex-Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
       cta: 'See My Work',
       candidacy: {
-        label: 'OFFICIAL PRE-CANDIDATE',
+        label: 'OFFICIAL CANDIDATE',
         office: 'PREFECTURE OF SANTO DOMINGO',
         list: 'List 16 · Amigo'
       }
