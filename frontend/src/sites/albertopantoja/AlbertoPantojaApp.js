@@ -45,6 +45,13 @@ const translations = {
       title: 'Compromiso con el pueblo',
       description: 'Alberto Pantoja es concejal Rural del cantón Santo Domingo y Ex-Director Provincial de la Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Con una profunda vocación de servicio público, Alberto representa los intereses de las comunidades rurales y urbanas de la provincia.',
       mission: 'Su compromiso abarca el desarrollo integral de las 7 parroquias urbanas de la ciudad y las 7 parroquias rurales del cantón, luchando por mejor infraestructura, servicios de salud, educación, y oportunidades económicas para todos los ciudadanos.',
+      paragraphs: [
+        'Alberto Pantoja Guzmán nació y creció en Santo Domingo de los Tsáchilas, tierra fértil que marcó su carácter y su vocación de servicio desde muy joven. Hijo de una familia trabajadora, aprendió temprano el valor del esfuerzo, la humildad y la solidaridad con los suyos.',
+        'A finales de los años noventa, como tantos ecuatorianos de su generación, emprendió el camino hacia Europa en busca de nuevas oportunidades. Durante 18 años vivió en Bélgica, donde trabajó, se formó y construyó una vida marcada por la disciplina y la resiliencia. Esos años le permitieron conocer de cerca los sistemas europeos de gestión pública, la organización comunitaria y las políticas de bienestar social.',
+        'Su regreso a Ecuador no fue casualidad, sino una decisión de vida: devolver a su tierra todo lo aprendido fuera. Alberto trajo consigo una visión moderna y ordenada de la gestión pública — transparencia, planificación, servicios accesibles — y la firme voluntad de aplicarla en beneficio de Santo Domingo.',
+        'En 2023 fue electo Concejal Rural del cantón Santo Domingo dentro de la alianza "Somos Todos" (Revolución Ciudadana y Movimiento Construir), y ejerció como Director Provincial de Revolución Ciudadana (RC5) en Santo Domingo de los Tsáchilas. Ha consolidado una carrera política basada en el trabajo territorial, la cercanía con la gente y la defensa firme de las 7 parroquias rurales del cantón.',
+        'Hoy Alberto es Candidato oficial a la Alcaldía de Santo Domingo para el período 2027–2031. Su propuesta se sustenta en tres pilares: desarrollo integral de las parroquias urbanas y rurales, transparencia en la gestión municipal, y oportunidades reales para los jóvenes, las mujeres y los emprendedores de nuestra ciudad.'
+      ],
       stats: {
         sessions: 'Sesiones del Concejo',
         parishes: 'Parroquias (7 urbanas + 7 rurales)',
@@ -113,6 +120,13 @@ const translations = {
       title: 'Engagement envers le peuple',
       description: 'Alberto Pantoja est Conseiller Rural du canton de Santo Domingo et Ex-Directeur Provincial de la Revolución Ciudadana (RC5) à Santo Domingo de los Tsáchilas. Avec une profonde vocation de service public, Alberto représente les intérêts des communautés rurales et urbaines de la province.',
       mission: 'Son engagement couvre le développement intégral des 7 paroisses urbaines de la ville et des 7 paroisses rurales du canton, en luttant pour de meilleures infrastructures, des services de santé, l\'éducation et des opportunités économiques pour tous les citoyens.',
+      paragraphs: [
+        'Alberto Pantoja Guzmán est né et a grandi à Santo Domingo de los Tsáchilas, une terre fertile qui a forgé son caractère et sa vocation de service dès son plus jeune âge. Fils d\'une famille de travailleurs, il a appris très tôt la valeur de l\'effort, de l\'humilité et de la solidarité avec les siens.',
+        'À la fin des années quatre-vingt-dix, comme de nombreux Équatoriens de sa génération, il a pris le chemin de l\'Europe à la recherche de nouvelles opportunités. Pendant 18 ans, il a vécu en Belgique, où il a travaillé, s\'est formé et a construit une vie marquée par la discipline et la résilience. Ces années lui ont permis de connaître de près les systèmes européens de gestion publique, l\'organisation communautaire et les politiques de bien-être social.',
+        'Son retour en Équateur n\'est pas un hasard, mais une décision de vie : rendre à sa terre tout ce qu\'il avait appris à l\'étranger. Alberto a apporté avec lui une vision moderne et ordonnée de la gestion publique — transparence, planification, services accessibles — et la ferme volonté de l\'appliquer au bénéfice de Santo Domingo.',
+        'En 2023, il a été élu Conseiller Rural du canton de Santo Domingo au sein de l\'alliance "Somos Todos" (Revolución Ciudadana et Movimiento Construir), et a exercé les fonctions de Directeur Provincial de Revolución Ciudadana (RC5) à Santo Domingo de los Tsáchilas. Il a consolidé une carrière politique basée sur le travail de terrain, la proximité avec les gens et la défense ferme des 7 paroisses rurales du canton.',
+        'Aujourd\'hui, Alberto est Candidat officiel à la Mairie de Santo Domingo pour la période 2027–2031. Sa proposition repose sur trois piliers : le développement intégral des paroisses urbaines et rurales, la transparence dans la gestion municipale, et de véritables opportunités pour les jeunes, les femmes et les entrepreneurs de notre ville.'
+      ],
       stats: {
         sessions: 'Sessions du Conseil',
         parishes: 'Paroisses (7 urbaines + 7 rurales)',
@@ -181,6 +195,13 @@ const translations = {
       title: 'Commitment to the people',
       description: 'Alberto Pantoja is Rural Councilman of Santo Domingo canton and Ex-Provincial Director of Revolución Ciudadana (RC5) in Santo Domingo de los Tsáchilas. With a deep vocation for public service, Alberto represents the interests of rural and urban communities in the province.',
       mission: 'His commitment covers the integral development of the 7 urban parishes of the city and the 7 rural parishes of the canton, fighting for better infrastructure, health services, education, and economic opportunities for all citizens.',
+      paragraphs: [
+        'Alberto Pantoja Guzmán was born and raised in Santo Domingo de los Tsáchilas, a fertile land that shaped his character and his vocation for service from an early age. The son of a hard-working family, he learned early on the value of effort, humility and solidarity with his community.',
+        'In the late nineties, like so many Ecuadorians of his generation, he set out for Europe in search of new opportunities. For 18 years he lived in Belgium, where he worked, studied and built a life marked by discipline and resilience. Those years allowed him to gain first-hand knowledge of European public-management systems, community organization and social welfare policies.',
+        'His return to Ecuador was no coincidence, but a life decision: to give back to his homeland everything he had learned abroad. Alberto brought with him a modern and orderly vision of public management — transparency, planning, accessible services — and the firm will to apply it to the benefit of Santo Domingo.',
+        'In 2023 he was elected Rural Councilman of Santo Domingo canton within the "Somos Todos" alliance (Revolución Ciudadana and Movimiento Construir), and served as Provincial Director of Revolución Ciudadana (RC5) in Santo Domingo de los Tsáchilas. He has built a political career grounded in field work, closeness to the people and firm defense of the 7 rural parishes of the canton.',
+        'Today Alberto is the official Candidate for Mayor of Santo Domingo for the 2027–2031 term. His platform rests on three pillars: integral development of urban and rural parishes, transparency in municipal management, and real opportunities for young people, women and entrepreneurs of our city.'
+      ],
       stats: {
         sessions: 'Council Sessions',
         parishes: 'Parishes (7 urban + 7 rural)',
@@ -1153,12 +1174,19 @@ const AlbertoPantojaApp = () => {
               <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-6">
                 {t.about.title}
               </h2>
-              <p className="text-gray-600 text-lg mb-6 leading-relaxed">
-                {t.about.description}
-              </p>
-              <p className="text-gray-600 text-lg mb-8 leading-relaxed">
-                {t.about.mission}
-              </p>
+
+              {/* Full biography paragraphs */}
+              <div className="space-y-5 mb-8">
+                {(t.about.paragraphs || [t.about.description, t.about.mission]).map((p, i) => (
+                  <p
+                    key={i}
+                    className={`text-gray-700 leading-relaxed ${i === 0 ? 'text-lg first-letter:text-5xl first-letter:font-serif first-letter:text-red-700 first-letter:float-left first-letter:mr-2 first-letter:leading-none first-letter:mt-1' : 'text-base'}`}
+                    data-testid={`bio-paragraph-${i}`}
+                  >
+                    {p}
+                  </p>
+                ))}
+              </div>
 
               {/* Stats */}
               <div className="grid grid-cols-3 gap-6">
