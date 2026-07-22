@@ -36,7 +36,7 @@ const translations = {
       cta: 'Conoce Mi Trabajo',
       candidacy: {
         label: 'CANDIDATO OFICIAL',
-        office: 'PREFECTURA DE SANTO DOMINGO',
+        office: 'ALCALDÍA DE SANTO DOMINGO',
         list: 'Lista 16 · Amigo'
       }
     },
@@ -104,7 +104,7 @@ const translations = {
       cta: 'Découvrez Mon Travail',
       candidacy: {
         label: 'CANDIDAT OFFICIEL',
-        office: 'PRÉFECTURE DE SANTO DOMINGO',
+        office: 'MAIRIE DE SANTO DOMINGO',
         list: 'Liste 16 · Amigo'
       }
     },
@@ -172,7 +172,7 @@ const translations = {
       cta: 'See My Work',
       candidacy: {
         label: 'OFFICIAL CANDIDATE',
-        office: 'PREFECTURE OF SANTO DOMINGO',
+        office: "MAYOR'S OFFICE OF SANTO DOMINGO",
         list: 'List 16 · Amigo'
       }
     },
@@ -1045,7 +1045,7 @@ const AlbertoPantojaApp = () => {
                   <div className="relative overflow-hidden">
                     <h2 className="text-2xl sm:text-4xl font-black uppercase leading-none tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_8px_rgba(220,38,38,0.5)]"
                         style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                      Prefecto
+                      Alcalde
                     </h2>
                     {/* Shimmer sweep overlay */}
                     <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
