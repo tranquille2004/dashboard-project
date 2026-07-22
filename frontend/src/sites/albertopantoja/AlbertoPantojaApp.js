@@ -1048,6 +1048,10 @@ const AlbertoPantojaApp = () => {
                     <span className="text-red-300 font-semibold tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
                       Santo Domingo
                     </span>
+                    <span className="text-yellow-300/60">·</span>
+                    <span className="text-yellow-300 font-bold tracking-wider drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
+                      2027 — 2031
+                    </span>
                   </div>
                 </div>
               </div>
