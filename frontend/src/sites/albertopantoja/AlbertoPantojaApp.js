@@ -739,7 +739,23 @@ const SongPlayer = ({ language = 'es' }) => {
     setPref('closed');
   };
 
-  if (pref === 'closed') return null;
+  if (pref === 'closed') {
+    // Show a compact re-opener so the music can always be restored
+    return (
+      <button
+        onClick={() => {
+          try { localStorage.removeItem('ap_song_pref'); } catch (e) { /* noop */ }
+          setPref(null);
+        }}
+        data-testid="ap-song-reopen"
+        aria-label={labels.play}
+        title={labels.title}
+        className="fixed z-40 bottom-4 right-4 sm:bottom-6 sm:right-6 w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-blue-800 shadow-2xl border-2 border-white flex items-center justify-center text-white text-xl hover:scale-110 transition-transform"
+      >
+        ♪
+      </button>
+    );
+  }
 
   return (
     <>
