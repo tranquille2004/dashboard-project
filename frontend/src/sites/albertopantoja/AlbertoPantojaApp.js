@@ -333,6 +333,12 @@ const WORKING_VIDEOS = [
     url: 'https://www.tiktok.com/@albertopantojasgb/video/7644189409973161234',
     title: 'TikTok 3'
   },
+  {
+    type: 'tiktok',
+    id: '7639200504844651783',
+    url: 'https://www.tiktok.com/@albertopantojasgb/video/7639200504844651783',
+    title: 'TikTok 4'
+  },
   // === RADIO INTERVIEWS & VIDEOS ===
   {
     type: 'facebook',
