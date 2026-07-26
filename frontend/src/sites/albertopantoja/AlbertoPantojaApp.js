@@ -1229,45 +1229,7 @@ const AlbertoPantojaApp = () => {
         </div>
       </section>
 
-      {/* Work Areas Section */}
-      <section id="work" className="py-20 md:py-32 bg-white" data-testid="work-section">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Header */}
-          <div className="text-center mb-16">
-            <p className="text-red-600 text-xs font-semibold tracking-[0.2em] mb-4">
-              {t.work.label}
-            </p>
-            <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-4">
-              {t.work.title}
-            </h2>
-            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
-              {t.work.subtitle}
-            </p>
-          </div>
-
-          {/* Work Areas Grid - Compact on mobile */}
-          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
-            {t.work.areas.map((area, index) => {
-              const Icon = workIcons[index];
-              return (
-                <div
-                  key={index}
-                  className="bg-gray-50 rounded-xl md:rounded-2xl p-4 md:p-8 hover:shadow-lg transition-shadow border-l-4 border-blue-600"
-                  data-testid={`work-area-${index}`}
-                >
-                  <div className="w-10 h-10 md:w-14 md:h-14 bg-blue-600 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
-                    <Icon className="w-5 h-5 md:w-7 md:h-7 text-white" />
-                  </div>
-                  <h3 className="text-sm md:text-xl font-bold text-blue-900 mb-1 md:mb-3">{area.title}</h3>
-                  <p className="text-xs md:text-base text-gray-600 line-clamp-2 md:line-clamp-none">{area.desc}</p>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Photo Gallery Section */}
+      {/* Photo Gallery Section (moved above Work Areas) */}
       <section id="gallery" className="py-20 md:py-32 bg-white" data-testid="gallery-section">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
@@ -1335,6 +1297,44 @@ const AlbertoPantojaApp = () => {
              language === 'fr' ? `Affichage de ${visiblePhotos} sur ${GALLERY_PHOTO_PATHS.length} photos` :
              `Showing ${visiblePhotos} of ${GALLERY_PHOTO_PATHS.length} photos`}
           </p>
+        </div>
+      </section>
+
+      {/* Work Areas Section (moved below gallery) */}
+      <section id="work" className="py-20 md:py-32 bg-gray-50" data-testid="work-section">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <p className="text-red-600 text-xs font-semibold tracking-[0.2em] mb-4">
+              {t.work.label}
+            </p>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-4">
+              {t.work.title}
+            </h2>
+            <p className="text-gray-600 text-lg max-w-3xl mx-auto">
+              {t.work.subtitle}
+            </p>
+          </div>
+
+          {/* Work Areas Grid - Compact on mobile */}
+          <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-8">
+            {t.work.areas.map((area, index) => {
+              const Icon = workIcons[index];
+              return (
+                <div
+                  key={index}
+                  className="bg-white rounded-xl md:rounded-2xl p-4 md:p-8 hover:shadow-lg transition-shadow border-l-4 border-blue-600"
+                  data-testid={`work-area-${index}`}
+                >
+                  <div className="w-10 h-10 md:w-14 md:h-14 bg-blue-600 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-6">
+                    <Icon className="w-5 h-5 md:w-7 md:h-7 text-white" />
+                  </div>
+                  <h3 className="text-sm md:text-xl font-bold text-blue-900 mb-1 md:mb-3">{area.title}</h3>
+                  <p className="text-xs md:text-base text-gray-600 line-clamp-2 md:line-clamp-none">{area.desc}</p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
