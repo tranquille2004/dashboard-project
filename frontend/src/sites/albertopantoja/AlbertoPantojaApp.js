@@ -300,6 +300,11 @@ const WORKING_VIDEOS = [
     url: 'https://www.facebook.com/reel/1505979751281852',
     title: 'Reel 6'
   },
+  {
+    type: 'facebook_reel',
+    url: 'https://www.facebook.com/reel/1772860910548654',
+    title: 'Reel 7'
+  },
   // === RADIO INTERVIEWS & VIDEOS ===
   {
     type: 'facebook',
