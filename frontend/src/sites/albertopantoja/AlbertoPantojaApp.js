@@ -339,6 +339,24 @@ const WORKING_VIDEOS = [
     url: 'https://www.tiktok.com/@albertopantojasgb/video/7639200504844651783',
     title: 'TikTok 4'
   },
+  {
+    type: 'tiktok',
+    id: '7637685468523433234',
+    url: 'https://www.tiktok.com/@albertopantojasgb/video/7637685468523433234',
+    title: 'TikTok 5'
+  },
+  {
+    type: 'tiktok',
+    id: '7634913569418530066',
+    url: 'https://www.tiktok.com/@albertopantojasgb/video/7634913569418530066',
+    title: 'TikTok 6'
+  },
+  {
+    type: 'tiktok',
+    id: '7632413177971625224',
+    url: 'https://www.tiktok.com/@albertopantojasgb/video/7632413177971625224',
+    title: 'TikTok 7'
+  },
   // === RADIO INTERVIEWS & VIDEOS ===
   {
     type: 'facebook',
