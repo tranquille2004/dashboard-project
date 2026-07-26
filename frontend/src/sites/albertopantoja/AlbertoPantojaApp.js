@@ -271,11 +271,6 @@ const WORKING_VIDEOS = [
   },
   {
     type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/391366400133630/',
-    title: 'Mensaje a los jóvenes'
-  },
-  {
-    type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1202824487276299/',
     title: 'Alberto Pantoja La voz del campo'
   },
@@ -297,79 +292,14 @@ const WORKING_VIDEOS = [
   },
   {
     type: 'facebook_reel',
-    url: 'https://www.facebook.com/reel/3651348605173595',
-    title: 'Reel 2'
-  },
-  {
-    type: 'facebook_reel',
-    url: 'https://www.facebook.com/reel/1309640917405315',
-    title: 'Reel 3'
-  },
-  {
-    type: 'facebook_reel',
-    url: 'https://www.facebook.com/reel/1906760859878505',
-    title: 'Reel 4'
-  },
-  {
-    type: 'facebook_reel',
     url: 'https://www.facebook.com/reel/2432247437192051',
     title: 'Reel 5'
   },
   // === RADIO INTERVIEWS & VIDEOS ===
   {
     type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1650220352347310/',
-    title: 'Video 1'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1228041888972734/',
-    title: 'Video 2'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/548003865047574/',
-    title: 'Video 3'
-  },
-  {
-    type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/981445697312455/',
     title: 'Video 4'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/4033530786918402/',
-    title: 'Video 5'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/924349143138861/',
-    title: 'Video 6'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1138102204635429/',
-    title: 'Video 7'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1080722876785526/',
-    title: 'Video 8'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/8532855593489653/',
-    title: 'Video 9'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1092279462484874/',
-    title: 'Video 10'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1045741537221599/',
-    title: 'Video 11'
   },
   {
     type: 'facebook',
@@ -393,11 +323,6 @@ const WORKING_VIDEOS = [
   },
   {
     type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1527071004364779/',
-    title: 'Video 16'
-  },
-  {
-    type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/845237860319262/',
     title: 'Video 17'
   },
@@ -408,11 +333,6 @@ const WORKING_VIDEOS = [
   },
   {
     type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/226933876409335/',
-    title: 'Video 19'
-  },
-  {
-    type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1290233991708293/',
     title: 'Video 20'
   },
@@ -420,11 +340,6 @@ const WORKING_VIDEOS = [
     type: 'facebook',
     url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/1066930528033779/',
     title: 'Video 21'
-  },
-  {
-    type: 'facebook',
-    url: 'https://www.facebook.com/AlbertoPantojaRC5/videos/971856117110721/',
-    title: 'Video 22'
   },
   {
     type: 'facebook',
