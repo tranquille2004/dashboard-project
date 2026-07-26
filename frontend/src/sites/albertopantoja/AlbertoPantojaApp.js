@@ -834,7 +834,7 @@ const AlbertoPantojaApp = () => {
   const [language, setLanguage] = useState('es');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('home');
-  const [visiblePhotos, setVisiblePhotos] = useState(24);
+  const [visiblePhotos, setVisiblePhotos] = useState(48);
   const [visibleVideos, setVisibleVideos] = useState(12);
   const [isAdmin, setIsAdmin] = useState(false);
   const [hiddenKeys, setHiddenKeys] = useState(new Set());
@@ -1271,7 +1271,7 @@ const AlbertoPantojaApp = () => {
           <div className="text-center mt-12 space-y-4">
             {visiblePhotos < GALLERY_PHOTO_PATHS.length && (
               <button
-                onClick={() => setVisiblePhotos(prev => Math.min(prev + 24, GALLERY_PHOTO_PATHS.length))}
+                onClick={() => setVisiblePhotos(prev => Math.min(prev + 48, GALLERY_PHOTO_PATHS.length))}
                 data-testid="load-more-photos-btn"
                 className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-full text-lg font-semibold transition-colors mr-4"
               >
