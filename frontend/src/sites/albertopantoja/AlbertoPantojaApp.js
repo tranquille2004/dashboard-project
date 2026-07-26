@@ -1077,7 +1077,7 @@ const AlbertoPantojaApp = () => {
                   <div className="relative overflow-hidden">
                     <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl"
                         style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                      Candidato<br />
+                      Pre-Candidato<br />
                       <span className="inline-flex items-baseline gap-3 sm:gap-4">
                         Alcalde
                         <span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
