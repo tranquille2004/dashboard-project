@@ -6,7 +6,7 @@ import { trackVisit } from '@/utils/trackVisit';
 const API_BASE = (process.env.REACT_APP_BACKEND_URL || '') + '/api';
 
 // Helper to build a canonical key for any video (URL for FB, special key for YouTube)
-const videoKey = (v) => v.type === 'youtube' ? `yt:${v.id}` : v.url;
+const videoKey = (v) => v.type === 'youtube' ? `yt:${v.id}` : v.type === 'tiktok' ? `tt:${v.id}` : v.url;
 
 // Helper for production image paths
 const IMG = (path) => {
@@ -314,6 +314,12 @@ const WORKING_VIDEOS = [
     type: 'facebook_reel',
     url: 'https://www.facebook.com/reel/1048704654348240',
     title: 'Reel 9'
+  },
+  {
+    type: 'tiktok',
+    id: '7649446447980530962',
+    url: 'https://www.tiktok.com/@albertopantojasgb/video/7649446447980530962',
+    title: 'TikTok 1'
   },
   // === RADIO INTERVIEWS & VIDEOS ===
   {
@@ -1327,6 +1333,15 @@ const AlbertoPantojaApp = () => {
                       allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
                       allowFullScreen
                     />
+                  ) : video.type === 'tiktok' ? (
+                    <iframe
+                      src={`https://www.tiktok.com/embed/v2/${video.id}`}
+                      title={video.title}
+                      className="w-full h-full"
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    />
                   ) : (
                     <iframe
                       src={`https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(video.url)}&show_text=0&width=560`}
@@ -1346,11 +1361,15 @@ const AlbertoPantojaApp = () => {
                       <svg className="w-5 h-5 text-blue-600" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/>
                       </svg>
+                    ) : video.type === 'tiktok' ? (
+                      <svg className="w-5 h-5 text-black" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5.8 20.1a6.34 6.34 0 0 0 10.86-4.43V8.94a8.16 8.16 0 0 0 4.77 1.52V7.05a4.79 4.79 0 0 1-1.84-.36z"/>
+                      </svg>
                     ) : (
                       <Facebook className="w-5 h-5 text-blue-600" />
                     )}
                     <span className="text-xs text-gray-500 uppercase">
-                      {video.type === 'youtube' ? 'YouTube' : video.type === 'facebook_reel' ? 'Reel' : 'Facebook'}
+                      {video.type === 'youtube' ? 'YouTube' : video.type === 'facebook_reel' ? 'Reel' : video.type === 'tiktok' ? 'TikTok' : 'Facebook'}
                     </span>
                   </div>
                   <h3 className="font-semibold text-blue-900">{video.title}</h3>
