@@ -51,7 +51,7 @@ const translations = {
         'Su regreso a Ecuador no fue casualidad, sino una decisión de vida: devolver a su tierra todo lo aprendido fuera. Alberto trajo consigo una visión moderna y ordenada de la gestión pública — transparencia, planificación, servicios accesibles — y la firme voluntad de aplicarla en beneficio de Santo Domingo.',
         'Antes de asumir el cargo de Concejal, ejerció durante 3 años como Presidente de la comuna San Gabriel del Baba, en la misma provincia de Santo Domingo de los Tsáchilas. Fue en esa etapa donde consolidó su liderazgo territorial y su cercanía con las comunidades rurales.',
         'En 2023 fue electo Concejal Rural del cantón Santo Domingo por Revolución Ciudadana, movimiento del que también ejerció como Director Provincial (RC5) en Santo Domingo de los Tsáchilas. Su carrera política se ha construido sobre el trabajo territorial, la cercanía con la gente y la defensa firme de las 7 parroquias rurales del cantón.',
-        'Hoy Alberto es Candidato oficial a la Alcaldía de Santo Domingo para el período 2027–2031. Su propuesta se sustenta en tres pilares: desarrollo integral de las parroquias urbanas y rurales, transparencia en la gestión municipal, y oportunidades reales para los jóvenes, las mujeres y los emprendedores de nuestra ciudad.'
+        'Hoy Alberto es Pre-Candidato oficial a la Alcaldía de Santo Domingo para el período 2027–2031. Su propuesta se sustenta en tres pilares: desarrollo integral de las parroquias urbanas y rurales, transparencia en la gestión municipal, y oportunidades reales para los jóvenes, las mujeres y los emprendedores de nuestra ciudad.'
       ],
       stats: {
         sessions: 'Sesiones del Concejo',
@@ -127,7 +127,7 @@ const translations = {
         'Son retour en Équateur n\'est pas un hasard, mais une décision de vie : rendre à sa terre tout ce qu\'il avait appris à l\'étranger. Alberto a apporté avec lui une vision moderne et ordonnée de la gestion publique — transparence, planification, services accessibles — et la ferme volonté de l\'appliquer au bénéfice de Santo Domingo.',
         'Avant d\'occuper le poste de Conseiller, il a exercé pendant 3 ans les fonctions de Président de la comuna San Gabriel del Baba, dans la même province de Santo Domingo de los Tsáchilas. C\'est durant cette étape qu\'il a consolidé son leadership territorial et sa proximité avec les communautés rurales.',
         'En 2023, il a été élu Conseiller Rural du canton de Santo Domingo pour Revolución Ciudadana, mouvement dont il a également été Directeur Provincial (RC5) à Santo Domingo de los Tsáchilas. Sa carrière politique s\'est construite sur le travail de terrain, la proximité avec les gens et la défense ferme des 7 paroisses rurales du canton.',
-        'Aujourd\'hui, Alberto est Candidat officiel à la Mairie de Santo Domingo pour la période 2027–2031. Sa proposition repose sur trois piliers : le développement intégral des paroisses urbaines et rurales, la transparence dans la gestion municipale, et de véritables opportunités pour les jeunes, les femmes et les entrepreneurs de notre ville.'
+        'Aujourd\'hui, Alberto est Pré-Candidat officiel à la Mairie de Santo Domingo pour la période 2027–2031. Sa proposition repose sur trois piliers : le développement intégral des paroisses urbaines et rurales, la transparence dans la gestion municipale, et de véritables opportunités pour les jeunes, les femmes et les entrepreneurs de notre ville.'
       ],
       stats: {
         sessions: 'Sessions du Conseil',
@@ -203,7 +203,7 @@ const translations = {
         'His return to Ecuador was no coincidence, but a life decision: to give back to his homeland everything he had learned abroad. Alberto brought with him a modern and orderly vision of public management — transparency, planning, accessible services — and the firm will to apply it to the benefit of Santo Domingo.',
         'Before taking office as Councilman, he served for 3 years as President of the comuna San Gabriel del Baba, in the same province of Santo Domingo de los Tsáchilas. It was during that time that he built his territorial leadership and his closeness to rural communities.',
         'In 2023 he was elected Rural Councilman of Santo Domingo canton for Revolución Ciudadana, a movement of which he also served as Provincial Director (RC5) in Santo Domingo de los Tsáchilas. His political career has been built on field work, closeness to the people and firm defense of the 7 rural parishes of the canton.',
-        'Today Alberto is the official Candidate for Mayor of Santo Domingo for the 2027–2031 term. His platform rests on three pillars: integral development of urban and rural parishes, transparency in municipal management, and real opportunities for young people, women and entrepreneurs of our city.'
+        'Today Alberto is the official Pre-Candidate for Mayor of Santo Domingo for the 2027–2031 term. His platform rests on three pillars: integral development of urban and rural parishes, transparency in municipal management, and real opportunities for young people, women and entrepreneurs of our city.'
       ],
       stats: {
         sessions: 'Council Sessions',
