@@ -35,9 +35,9 @@ const translations = {
       description: 'Ex-Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y concejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
       cta: 'Conoce Mi Trabajo',
       candidacy: {
-        label: 'PRE-CANDIDATO OFICIAL',
+        label: 'CANDIDATO OFICIAL',
         office: 'ALCALDÍA DE SANTO DOMINGO',
-        list: 'Lista 16 · Amigo'
+        list: 'Lista 17 · PSE'
       }
     },
     about: {
@@ -51,7 +51,7 @@ const translations = {
         'Su regreso a Ecuador no fue casualidad, sino una decisión de vida: devolver a su tierra todo lo aprendido fuera. Alberto trajo consigo una visión moderna y ordenada de la gestión pública — transparencia, planificación, servicios accesibles — y la firme voluntad de aplicarla en beneficio de Santo Domingo.',
         'Antes de asumir el cargo de Concejal, ejerció durante 3 años como Presidente de la comuna San Gabriel del Baba, en la misma provincia de Santo Domingo de los Tsáchilas. Fue en esa etapa donde consolidó su liderazgo territorial y su cercanía con las comunidades rurales.',
         'En 2023 fue electo Concejal Rural del cantón Santo Domingo por Revolución Ciudadana, movimiento del que también ejerció como Director Provincial (RC5) en Santo Domingo de los Tsáchilas. Su carrera política se ha construido sobre el trabajo territorial, la cercanía con la gente y la defensa firme de las 7 parroquias rurales del cantón.',
-        'Hoy Alberto es Pre-Candidato oficial a la Alcaldía de Santo Domingo para el período 2027–2031. Su propuesta se sustenta en tres pilares: desarrollo integral de las parroquias urbanas y rurales, transparencia en la gestión municipal, y oportunidades reales para los jóvenes, las mujeres y los emprendedores de nuestra ciudad.'
+        'Hoy Alberto es Candidato oficial a la Alcaldía de Santo Domingo para el período 2027–2031. Su propuesta se sustenta en tres pilares: desarrollo integral de las parroquias urbanas y rurales, transparencia en la gestión municipal, y oportunidades reales para los jóvenes, las mujeres y los emprendedores de nuestra ciudad.'
       ],
       stats: {
         sessions: 'Sesiones del Concejo',
@@ -111,9 +111,9 @@ const translations = {
       description: 'Ex-Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
       cta: 'Découvrez Mon Travail',
       candidacy: {
-        label: 'PRÉ-CANDIDAT OFFICIEL',
+        label: 'CANDIDAT OFFICIEL',
         office: 'MAIRIE DE SANTO DOMINGO',
-        list: 'Liste 16 · Amigo'
+        list: 'Liste 17 · PSE'
       }
     },
     about: {
@@ -127,7 +127,7 @@ const translations = {
         'Son retour en Équateur n\'est pas un hasard, mais une décision de vie : rendre à sa terre tout ce qu\'il avait appris à l\'étranger. Alberto a apporté avec lui une vision moderne et ordonnée de la gestion publique — transparence, planification, services accessibles — et la ferme volonté de l\'appliquer au bénéfice de Santo Domingo.',
         'Avant d\'occuper le poste de Conseiller, il a exercé pendant 3 ans les fonctions de Président de la comuna San Gabriel del Baba, dans la même province de Santo Domingo de los Tsáchilas. C\'est durant cette étape qu\'il a consolidé son leadership territorial et sa proximité avec les communautés rurales.',
         'En 2023, il a été élu Conseiller Rural du canton de Santo Domingo pour Revolución Ciudadana, mouvement dont il a également été Directeur Provincial (RC5) à Santo Domingo de los Tsáchilas. Sa carrière politique s\'est construite sur le travail de terrain, la proximité avec les gens et la défense ferme des 7 paroisses rurales du canton.',
-        'Aujourd\'hui, Alberto est Pré-Candidat officiel à la Mairie de Santo Domingo pour la période 2027–2031. Sa proposition repose sur trois piliers : le développement intégral des paroisses urbaines et rurales, la transparence dans la gestion municipale, et de véritables opportunités pour les jeunes, les femmes et les entrepreneurs de notre ville.'
+        'Aujourd\'hui, Alberto est Candidat officiel à la Mairie de Santo Domingo pour la période 2027–2031. Sa proposition repose sur trois piliers : le développement intégral des paroisses urbaines et rurales, la transparence dans la gestion municipale, et de véritables opportunités pour les jeunes, les femmes et les entrepreneurs de notre ville.'
       ],
       stats: {
         sessions: 'Sessions du Conseil',
@@ -187,9 +187,9 @@ const translations = {
       description: 'Ex-Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
       cta: 'See My Work',
       candidacy: {
-        label: 'OFFICIAL PRE-CANDIDATE',
+        label: 'OFFICIAL CANDIDATE',
         office: "MAYOR'S OFFICE OF SANTO DOMINGO",
-        list: 'List 16 · Amigo'
+        list: 'List 17 · PSE'
       }
     },
     about: {
@@ -203,7 +203,7 @@ const translations = {
         'His return to Ecuador was no coincidence, but a life decision: to give back to his homeland everything he had learned abroad. Alberto brought with him a modern and orderly vision of public management — transparency, planning, accessible services — and the firm will to apply it to the benefit of Santo Domingo.',
         'Before taking office as Councilman, he served for 3 years as President of the comuna San Gabriel del Baba, in the same province of Santo Domingo de los Tsáchilas. It was during that time that he built his territorial leadership and his closeness to rural communities.',
         'In 2023 he was elected Rural Councilman of Santo Domingo canton for Revolución Ciudadana, a movement of which he also served as Provincial Director (RC5) in Santo Domingo de los Tsáchilas. His political career has been built on field work, closeness to the people and firm defense of the 7 rural parishes of the canton.',
-        'Today Alberto is the official Pre-Candidate for Mayor of Santo Domingo for the 2027–2031 term. His platform rests on three pillars: integral development of urban and rural parishes, transparency in municipal management, and real opportunities for young people, women and entrepreneurs of our city.'
+        'Today Alberto is the official Candidate for Mayor of Santo Domingo for the 2027–2031 term. His platform rests on three pillars: integral development of urban and rural parishes, transparency in municipal management, and real opportunities for young people, women and entrepreneurs of our city.'
       ],
       stats: {
         sessions: 'Council Sessions',
@@ -592,7 +592,8 @@ const GALLERY_PHOTO_PATHS = [
 // Images
 const IMAGES = {
   logo: IMG('/images/albertopantoja/logo.jpg'),
-  profileMain: IMG('/images/albertopantoja/Alberto/480491262_655706246801235_7747192686795289121_n.jpg'),
+  profileMain: 'https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/2k2kvm0d_IMG-20260814-WA0076.jpg',
+  pseLista17: 'https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/27s2dkuw_PSE_Lista_17.png',
   profileBio: IMG('/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg'),
   heroBackground: IMG('/images/albertopantoja/hero-background.png'),
   soilHands: IMG('/images/albertopantoja/soil-hands.png'),
@@ -1044,12 +1045,22 @@ const AlbertoPantojaApp = () => {
             {/* Text Content */}
             <div className="text-center lg:text-left">
               {/* Candidacy Announcement — dynamic campaign medallion with animated gold ring & shimmer */}
-              <div className="relative inline-flex items-center gap-4 sm:gap-5 mb-8 group animate-float-gentle" data-testid="candidacy-banner">
+              <div className="relative inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-8 group animate-float-gentle" data-testid="candidacy-banner">
+                {/* PSE Lista 17 party logo */}
+                <div className="relative shrink-0" data-testid="pse-lista17-logo-wrapper">
+                  <div className="absolute -inset-2 bg-yellow-400/30 rounded-2xl blur-xl" />
+                  <img
+                    src={IMAGES.pseLista17}
+                    alt="PSE Lista 17"
+                    className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
+                    data-testid="pse-lista17-logo"
+                  />
+                </div>
                 <div className="flex flex-col justify-center min-w-0 relative">
                   <div className="relative overflow-hidden">
                     <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl"
                         style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                      Pre-Candidato<br />
+                      Candidato<br />
                       <span className="inline-flex items-baseline gap-3 sm:gap-4">
                         Alcalde
                         <span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">

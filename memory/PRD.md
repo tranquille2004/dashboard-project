@@ -18,6 +18,7 @@ cantina, bottega, ascoli, mercato, tracemaster, theobeans, fworks, smeralda,
 albertopantoja, hoteldelpacifico, ilsiciliano, sanfrancisco, **rccb** (added 2026-02)
 
 ## Recent changes
+- 2026-02: Alberto Pantoja — "Pre-Candidato" → "Candidato" in ES/FR/EN (hero medallion + bio paragraphs), Lista 16 · Amigo → Lista 17 · PSE, new PSE_Lista_17.png logo added in hero next to medallion, main profile photo updated to IMG-20260814-WA0076.jpg
 - 2026-02: Added RCCB Group to super-admin sites seed (`site_rccb`)
 - 2026-02: Fixed Menu page middle photo cropping (Emanuele now visible via `object-[75%_25%]`)
 - Bambino Box "Grazie" page + JotForm iframe
