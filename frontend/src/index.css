@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Force light color scheme - prevents Samsung Internet / Facebook in-app browser
+   from applying forced dark mode filter when links are opened from social media. */
+html {
+    color-scheme: light !important;
+    -webkit-color-scheme: light !important;
+    forced-color-adjust: none !important;
+    background-color: #ffffff;
+}
+
 body {
     margin: 0;
     font-family:
