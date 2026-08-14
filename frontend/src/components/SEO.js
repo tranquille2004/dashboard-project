@@ -60,10 +60,10 @@ const SEO = ({
     setMeta('twitter:image:alt', title);
     
     // Additional SEO tags
-    setMeta('theme-color', hotelData?.themeColor || '#4A7C59');
+    setMeta('theme-color', hotelData?.themeColor || '#ffffff');
     setMeta('apple-mobile-web-app-title', siteName);
     setMeta('application-name', siteName);
-    setMeta('msapplication-TileColor', hotelData?.themeColor || '#4A7C59');
+    setMeta('msapplication-TileColor', hotelData?.themeColor || '#ffffff');
     
     // Canonical URL
     let canonical = document.querySelector('link[rel="canonical"]');
