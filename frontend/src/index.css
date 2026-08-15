@@ -3,12 +3,23 @@
 @tailwind utilities;
 
 /* Force light color scheme - prevents Samsung Internet / Facebook in-app browser
-   from applying forced dark mode filter when links are opened from social media. */
+   from applying forced dark mode filter when links are opened from social media.
+   The linear-gradient background-image is a Samsung Internet "Night Mode" bypass:
+   Samsung skips color inversion on elements that have a background-image set. */
 html {
-    color-scheme: light !important;
-    -webkit-color-scheme: light !important;
+    color-scheme: only light !important;
+    -webkit-color-scheme: only light !important;
     forced-color-adjust: none !important;
+    background-color: #ffffff !important;
+    background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)) !important;
+}
+body {
+    color-scheme: only light !important;
     background-color: #ffffff;
+    background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0));
+}
+@media (prefers-color-scheme: dark) {
+    html, body { background-color: #ffffff !important; color-scheme: only light !important; }
 }
 
 body {

@@ -3,11 +3,26 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="color-scheme" content="light" />
+        <meta name="color-scheme" content="only light" />
         <meta name="supported-color-schemes" content="light" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)" />
         <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: dark)" />
         <meta name="theme-color" content="#ffffff" />
+        <!-- Samsung Internet / Facebook in-app browser: opt out of forced dark mode -->
+        <meta name="darkreader-lock" />
+        <style>
+            :root { color-scheme: only light !important; }
+            html, body {
+                color-scheme: only light !important;
+                background-color: #ffffff !important;
+                /* Samsung Night Mode skips elements with background-image */
+                background-image: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,0)) !important;
+                forced-color-adjust: none !important;
+            }
+            @media (prefers-color-scheme: dark) {
+                html, body { background-color: #ffffff !important; color-scheme: only light !important; }
+            }
+        </style>
         <meta name="description" content="fworksbuilders - Professionele websites op maat. Standaard website klaar in 24 uur! Vanaf €199/jaar. Eigen dashboard, meertalig, mobielvriendelijk." />
         <meta name="keywords" content="website maken, webdesign, website laten maken, professionele website, België, webdesigner, goedkoop website" />
         <meta name="author" content="fworksbuilders" />
