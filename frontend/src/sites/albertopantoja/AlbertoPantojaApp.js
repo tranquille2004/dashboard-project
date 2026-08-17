@@ -29,7 +29,7 @@ const translations = {
   es: {
     nav: { home: 'Inicio', bio: 'Biografía', work: 'Trabajo', media: 'Medios', contact: 'Contacto', join: 'Únete' },
     hero: {
-      subtitle: 'CONCEJAL RURAL DE SANTO DOMINGO',
+      subtitle: 'CANDIDATO OFICIAL A LA ALCALDÍA',
       title: 'Alberto Pantoja',
       tagline: '',
       description: 'Ex-Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y concejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
@@ -105,7 +105,7 @@ const translations = {
   fr: {
     nav: { home: 'Accueil', bio: 'Biographie', work: 'Travail', media: 'Médias', contact: 'Contact', join: 'Rejoignez-nous' },
     hero: {
-      subtitle: 'CONSEILLER RURAL DE SANTO DOMINGO',
+      subtitle: 'CANDIDAT OFFICIEL À LA MAIRIE',
       title: 'Alberto Pantoja',
       tagline: '',
       description: 'Ex-Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
@@ -181,7 +181,7 @@ const translations = {
   en: {
     nav: { home: 'Home', bio: 'Biography', work: 'Work', media: 'Media', contact: 'Contact', join: 'Join Us' },
     hero: {
-      subtitle: 'RURAL COUNCILMAN OF SANTO DOMINGO',
+      subtitle: 'OFFICIAL CANDIDATE FOR MAYOR',
       title: 'Alberto Pantoja',
       tagline: '',
       description: 'Ex-Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
@@ -888,7 +888,11 @@ const AlbertoPantojaApp = () => {
               <img src={IMAGES.logo} alt="Alberto Pantoja" className="h-10 md:h-12 w-auto rounded-full border-2 border-blue-600" />
               <div className="hidden sm:block">
                 <div className="text-blue-900 font-bold text-sm md:text-base">Alberto Pantoja</div>
-                <div className="text-red-600 text-xs font-semibold">concejal de Santo Domingo</div>
+                <div className="text-red-600 text-xs font-semibold">
+                  {language === 'fr' ? 'Candidat officiel à la mairie' :
+                   language === 'en' ? 'Official candidate for mayor' :
+                   'Candidato oficial a la alcaldía'}
+                </div>
               </div>
             </div>
 
@@ -1045,7 +1049,7 @@ const AlbertoPantojaApp = () => {
             {/* Text Content */}
             <div className="text-center lg:text-left">
               {/* Candidacy Announcement — dynamic campaign medallion with animated gold ring & shimmer */}
-              <div className="relative inline-flex flex-col sm:flex-row items-center gap-4 sm:gap-6 mb-8 group animate-float-gentle" data-testid="candidacy-banner">
+              <div className="relative inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-8 group animate-float-gentle" data-testid="candidacy-banner">
                 {/* PSE Lista 17 party logo */}
                 <div className="relative shrink-0" data-testid="pse-lista17-logo-wrapper">
                   <div className="absolute -inset-2 bg-yellow-400/30 rounded-2xl blur-xl" />
@@ -1056,18 +1060,10 @@ const AlbertoPantojaApp = () => {
                     data-testid="pse-lista17-logo"
                   />
                 </div>
-                <div className="flex flex-col justify-center min-w-0 relative">
+                <div className="flex flex-col justify-center min-w-0 relative text-center sm:text-left">
                   <div className="relative overflow-hidden">
-                    <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl"
-                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>
-                      Candidato<br />
-                      <span className="inline-flex items-baseline gap-3 sm:gap-4">
-                        Alcalde
-                        <span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">
-                          2027 — 2031
-                        </span>
-                      </span>
-                    </h2>
+                    <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl -ml-1"
+                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Candidato<br /><span className="inline-flex items-baseline gap-3 sm:gap-4">Alcalde<span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">2027 — 2031</span></span></h2>
                     {/* Shimmer sweep overlay */}
                     <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
                   </div>
