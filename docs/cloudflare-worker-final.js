@@ -53,11 +53,15 @@ const SITE_TITLES = {
   '/site/theobeans': 'Theo Beans Export',
   '/site/fworks': 'fworksbuilders - Web Design',
   '/site/smeralda': 'Résidence Villa Smeralda - Sardinia',
-  '/site/albertopantoja': 'Alberto Pantoja - Consejal de Santo Domingo',
+  '/site/albertopantoja': 'Alberto Pantoja - Candidato a la Alcaldía de Santo Domingo',
   '/site/hoteldelpacifico': 'Hotel del Pacífico - Santo Domingo, Ecuador',
   '/site/rccb': 'RCCB - Retail Cleaning Care Belgium',
   '/site/ilsiciliano': 'Il Siciliano — Trattoria Pizzería — Santo Domingo, Ecuador',
   '/site/sanfrancisco': 'Club San Francisco — Hacienda Turística'
+};
+
+const SITE_DESCRIPTIONS = {
+  '/site/albertopantoja': 'Alberto Pantoja, Candidato oficial a la Alcaldía de Santo Domingo 2027-2031. PSE Lista 17. Por el desarrollo integral de las parroquias urbanas y rurales de Santo Domingo de los Tsáchilas.'
 };
 
 // =====================================================
@@ -268,6 +272,7 @@ export default {
     if (url.search) iframeSrc = iframeSrc + url.search;
 
     const siteTitle = SITE_TITLES[sitePath] || 'Laden...';
+    const siteDescription = SITE_DESCRIPTIONS[sitePath] || '';
     const siteSlug = sitePath.replace('/site/', '');
 
     const html = `<!DOCTYPE html>
@@ -279,6 +284,14 @@ export default {
   <meta name="supported-color-schemes" content="light">
   <meta name="theme-color" content="#ffffff">
   <title>${siteTitle}</title>
+  ${siteDescription ? `<meta name="description" content="${siteDescription}">
+  <meta property="og:title" content="${siteTitle}">
+  <meta property="og:description" content="${siteDescription}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="${url.origin}${pathname}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="${siteTitle}">
+  <meta name="twitter:description" content="${siteDescription}">` : ''}
   <style>
     :root { color-scheme: light only; }
     * { margin: 0; padding: 0; box-sizing: border-box; }
