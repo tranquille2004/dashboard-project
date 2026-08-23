@@ -32,7 +32,7 @@ const translations = {
       subtitle: 'TRAYECTORIA Y ACTUALIDAD',
       title: 'Alberto Pantoja',
       tagline: '',
-      description: 'Exconcejal del cantón Santo Domingo y dirigente político de Santo Domingo de los Tsáchilas. Candidato a la Alcaldía de Santo Domingo para las elecciones seccionales de 2026.',
+      description: 'Candidato a la Alcaldía de Santo Domingo para las elecciones seccionales de 2026.',
       cta: 'Conoce Mi Trabajo',
       candidacy: {
         label: 'CANDIDATO OFICIAL',
@@ -108,7 +108,7 @@ const translations = {
       subtitle: 'PARCOURS ET ACTUALITÉ',
       title: 'Alberto Pantoja',
       tagline: '',
-      description: 'Ancien conseiller du canton Santo Domingo et dirigeant politique de Santo Domingo de los Tsáchilas. Candidat à la Mairie de Santo Domingo pour les élections sectionnelles de 2026.',
+      description: 'Candidat à la Mairie de Santo Domingo pour les élections sectionnelles de 2026.',
       cta: 'Découvrez Mon Travail',
       candidacy: {
         label: 'CANDIDAT OFFICIEL',
@@ -1051,15 +1051,15 @@ const AlbertoPantojaApp = () => {
               <div className="relative inline-flex flex-col mb-8 group animate-float-gentle" data-testid="candidacy-banner">
                 <div className="flex flex-col justify-center min-w-0 relative text-center sm:text-left">
                   <div className="relative overflow-hidden">
-                    <h2 className="font-black uppercase leading-[0.95] tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] text-3xl sm:text-5xl md:text-6xl"
-                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{language === 'fr' ? 'Parcours Politique' : language === 'en' ? 'Political Career' : 'Trayectoria Política'}<br /><span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-red-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">Santo Domingo</span></h2>
+                    <h2 className="font-black uppercase leading-[1.1] tracking-tight text-white drop-shadow-[0_2px_12px_rgba(220,38,38,0.55)] text-xl sm:text-2xl md:text-3xl"
+                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{language === 'fr' ? 'Ancien conseiller du canton Santo Domingo et dirigeant politique de Santo Domingo de los Tsáchilas.' : language === 'en' ? 'Former Councilman of Santo Domingo canton and political leader of Santo Domingo de los Tsáchilas.' : 'Exconcejal del cantón Santo Domingo y dirigente político de Santo Domingo de los Tsáchilas.'}</h2>
                     {/* Shimmer sweep overlay */}
                     <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
                   </div>
 
                   <div className="mt-3 flex items-center gap-2 text-sm sm:text-base">
-                    <span className="inline-block w-2 h-2 bg-red-400 rounded-full animate-pulse-slow shadow-[0_0_8px_2px_rgba(248,113,113,0.7)]"></span>
-                    <span className="text-red-200 font-semibold tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
+                    <span className="inline-block w-2 h-2 bg-red-600 rounded-full animate-pulse-slow shadow-[0_0_8px_2px_rgba(220,38,38,0.8)]"></span>
+                    <span className="text-red-300 font-semibold tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
                       Santo Domingo · Ecuador
                     </span>
                   </div>
