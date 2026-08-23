@@ -1052,7 +1052,7 @@ const AlbertoPantojaApp = () => {
                 <div className="flex flex-col justify-center min-w-0 relative text-center sm:text-left">
                   <div className="relative overflow-hidden">
                     <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl"
-                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Candidato<br /><span className="inline-flex items-baseline gap-3 sm:gap-4">Alcalde<span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">2027 — 2031</span></span></h2>
+                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{language === 'fr' ? 'Parcours Politique' : language === 'en' ? 'Political Career' : 'Trayectoria Política'}<br /><span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">Santo Domingo</span></h2>
                     {/* Shimmer sweep overlay */}
                     <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
                   </div>
