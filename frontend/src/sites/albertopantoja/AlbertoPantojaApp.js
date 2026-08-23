@@ -74,10 +74,10 @@ const translations = {
       ]
     },
     position: {
-      label: 'REVOLUCIÓN CIUDADANA',
+      label: 'TRAYECTORIA POLÍTICA',
       title: 'RC5',
-      subtitle: 'Por un Ecuador más justo',
-      description: 'Como parte del movimiento Revolución Ciudadana, trabajamos por un Ecuador con oportunidades para todos, donde cada ciudadano tenga acceso a servicios básicos, educación de calidad, y la posibilidad de construir un futuro mejor para sus familias.',
+      subtitle: 'Compromiso con el desarrollo del cantón',
+      description: 'Durante su trayectoria política, Alberto Pantoja formó parte del movimiento Revolución Ciudadana, ejerciendo como Director Provincial (RC5) en Santo Domingo de los Tsáchilas. Una etapa marcada por el trabajo territorial, la cercanía con la gente y la defensa firme de las parroquias urbanas y rurales del cantón.',
       points: [
         'Justicia social y equidad',
         'Desarrollo sostenible',
@@ -150,10 +150,10 @@ const translations = {
       ]
     },
     position: {
-      label: 'REVOLUCIÓN CIUDADANA',
+      label: 'PARCOURS POLITIQUE',
       title: 'RC5',
-      subtitle: 'Pour un Équateur plus juste',
-      description: 'En tant que membre du mouvement Revolución Ciudadana, nous travaillons pour un Équateur avec des opportunités pour tous, où chaque citoyen a accès aux services de base, à une éducation de qualité et à la possibilité de construire un meilleur avenir pour sa famille.',
+      subtitle: 'Engagement pour le développement du canton',
+      description: 'Au cours de son parcours politique, Alberto Pantoja a fait partie du mouvement Revolución Ciudadana, en tant que Directeur Provincial (RC5) à Santo Domingo de los Tsáchilas. Une étape marquée par le travail de terrain, la proximité avec les gens et la défense ferme des paroisses urbaines et rurales du canton.',
       points: [
         'Justice sociale et équité',
         'Développement durable',
@@ -226,10 +226,10 @@ const translations = {
       ]
     },
     position: {
-      label: 'REVOLUCIÓN CIUDADANA',
+      label: 'POLITICAL CAREER',
       title: 'RC5',
-      subtitle: 'For a fairer Ecuador',
-      description: 'As part of the Revolución Ciudadana movement, we work for an Ecuador with opportunities for all, where every citizen has access to basic services, quality education, and the possibility to build a better future for their families.',
+      subtitle: 'Commitment to the canton\'s development',
+      description: 'During his political career, Alberto Pantoja was part of the Revolución Ciudadana movement, serving as Provincial Director (RC5) in Santo Domingo de los Tsáchilas. A stage marked by field work, closeness to the people and firm defense of the urban and rural parishes of the canton.',
       points: [
         'Social justice and equity',
         'Sustainable development',
@@ -592,7 +592,7 @@ const GALLERY_PHOTO_PATHS = [
 // Images
 const IMAGES = {
   logo: IMG('/images/albertopantoja/logo.jpg'),
-  profileMain: 'https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/2k2kvm0d_IMG-20260814-WA0076.jpg',
+  profileMain: IMG('/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg'),
   profileBio: IMG('/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg'),
   heroBackground: IMG('/images/albertopantoja/hero-background.png'),
   soilHands: IMG('/images/albertopantoja/soil-hands.png'),
@@ -1051,15 +1051,15 @@ const AlbertoPantojaApp = () => {
               <div className="relative inline-flex flex-col mb-8 group animate-float-gentle" data-testid="candidacy-banner">
                 <div className="flex flex-col justify-center min-w-0 relative text-center sm:text-left">
                   <div className="relative overflow-hidden">
-                    <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl"
-                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{language === 'fr' ? 'Parcours Politique' : language === 'en' ? 'Political Career' : 'Trayectoria Política'}<br /><span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">Santo Domingo</span></h2>
+                    <h2 className="font-black uppercase leading-[0.95] tracking-tight text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.6)] text-3xl sm:text-5xl md:text-6xl"
+                        style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>{language === 'fr' ? 'Parcours Politique' : language === 'en' ? 'Political Career' : 'Trayectoria Política'}<br /><span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-red-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">Santo Domingo</span></h2>
                     {/* Shimmer sweep overlay */}
-                    <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
+                    <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/30 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
                   </div>
 
                   <div className="mt-3 flex items-center gap-2 text-sm sm:text-base">
-                    <span className="inline-block w-2 h-2 bg-yellow-400 rounded-full animate-pulse-slow shadow-[0_0_8px_2px_rgba(250,204,21,0.7)]"></span>
-                    <span className="text-red-300 font-semibold tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
+                    <span className="inline-block w-2 h-2 bg-red-400 rounded-full animate-pulse-slow shadow-[0_0_8px_2px_rgba(248,113,113,0.7)]"></span>
+                    <span className="text-red-200 font-semibold tracking-widest uppercase drop-shadow-[0_1px_2px_rgba(0,0,0,0.7)]">
                       Santo Domingo · Ecuador
                     </span>
                   </div>
