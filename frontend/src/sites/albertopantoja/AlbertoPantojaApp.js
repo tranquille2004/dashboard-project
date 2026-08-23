@@ -30,7 +30,7 @@ const translations = {
     nav: { home: 'Inicio', bio: 'Biografía', gallery: 'Trayectoria', work: 'Gestión', media: 'Noticias', contact: 'Contacto', join: 'Únete' },
     hero: {
       subtitle: 'TRAYECTORIA Y ACTUALIDAD',
-      title: 'José Alberto Pantoja Guzmán',
+      title: 'Alberto Pantoja',
       tagline: '',
       description: 'Exconcejal del cantón Santo Domingo y dirigente político de Santo Domingo de los Tsáchilas. Candidato a la Alcaldía de Santo Domingo para las elecciones seccionales de 2026.',
       cta: 'Conoce Mi Trabajo',
@@ -106,7 +106,7 @@ const translations = {
     nav: { home: 'Accueil', bio: 'Biographie', gallery: 'Parcours', work: 'Gestion', media: 'Actualités', contact: 'Contact', join: 'Rejoignez-nous' },
     hero: {
       subtitle: 'PARCOURS ET ACTUALITÉ',
-      title: 'José Alberto Pantoja Guzmán',
+      title: 'Alberto Pantoja',
       tagline: '',
       description: 'Ancien conseiller du canton Santo Domingo et dirigeant politique de Santo Domingo de los Tsáchilas. Candidat à la Mairie de Santo Domingo pour les élections sectionnelles de 2026.',
       cta: 'Découvrez Mon Travail',
@@ -182,7 +182,7 @@ const translations = {
     nav: { home: 'Home', bio: 'Biography', gallery: 'Career', work: 'Management', media: 'News', contact: 'Contact', join: 'Join Us' },
     hero: {
       subtitle: 'CAREER AND CURRENT ACTIVITIES',
-      title: 'José Alberto Pantoja Guzmán',
+      title: 'Alberto Pantoja',
       tagline: '',
       description: 'Former Councilman of Santo Domingo canton and political leader of Santo Domingo de los Tsáchilas. Candidate for Mayor of Santo Domingo for the 2026 sectional elections.',
       cta: 'See My Work',
@@ -592,7 +592,7 @@ const GALLERY_PHOTO_PATHS = [
 // Images
 const IMAGES = {
   logo: IMG('/images/albertopantoja/logo.jpg'),
-  profileMain: IMG('/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg'),
+  profileMain: IMG('/images/albertopantoja/Alberto/478641831_653342143704312_3590459736061452532_n.jpg'),
   profileBio: IMG('/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg'),
   heroBackground: IMG('/images/albertopantoja/hero-background.png'),
   soilHands: IMG('/images/albertopantoja/soil-hands.png'),
