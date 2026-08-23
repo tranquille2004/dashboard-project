@@ -27,12 +27,12 @@ const IMG = (path) => {
 // Translations
 const translations = {
   es: {
-    nav: { home: 'Inicio', bio: 'Biografía', work: 'Trabajo', media: 'Medios', contact: 'Contacto', join: 'Únete' },
+    nav: { home: 'Inicio', bio: 'Biografía', gallery: 'Trayectoria', work: 'Gestión', media: 'Noticias', contact: 'Contacto', join: 'Únete' },
     hero: {
-      subtitle: 'CANDIDATO OFICIAL A LA ALCALDÍA',
-      title: 'Alberto Pantoja',
+      subtitle: 'TRAYECTORIA Y ACTUALIDAD',
+      title: 'José Alberto Pantoja Guzmán',
       tagline: '',
-      description: 'Ex-Director Provincial de la Revolución Ciudadana en Santo Domingo de los Tsáchilas y concejal del cantón Santo Domingo. Trabajando por el desarrollo integral de nuestras comunidades.',
+      description: 'Exconcejal del cantón Santo Domingo y dirigente político de Santo Domingo de los Tsáchilas. Candidato a la Alcaldía de Santo Domingo para las elecciones seccionales de 2026.',
       cta: 'Conoce Mi Trabajo',
       candidacy: {
         label: 'CANDIDATO OFICIAL',
@@ -60,8 +60,8 @@ const translations = {
       }
     },
     work: {
-      label: 'ÁREAS DE TRABAJO',
-      title: 'Trabajando por el desarrollo',
+      label: 'ÁREAS DE GESTIÓN',
+      title: 'Gestión al servicio del cantón',
       subtitle: 'Por las 7 parroquias urbanas de la ciudad y las 7 parroquias rurales del cantón de Santo Domingo',
       areas: [
         { title: 'Desarrollo Rural', desc: 'Mejorando la vida de las comunidades campesinas' },
@@ -86,8 +86,8 @@ const translations = {
       ]
     },
     media: {
-      label: 'MEDIOS',
-      title: 'Videos y Entrevistas',
+      label: 'NOTICIAS',
+      title: 'Noticias y Publicaciones',
       subtitle: 'Mantente informado sobre nuestras actividades y propuestas'
     },
     contact: {
@@ -103,12 +103,12 @@ const translations = {
     }
   },
   fr: {
-    nav: { home: 'Accueil', bio: 'Biographie', work: 'Travail', media: 'Médias', contact: 'Contact', join: 'Rejoignez-nous' },
+    nav: { home: 'Accueil', bio: 'Biographie', gallery: 'Parcours', work: 'Gestion', media: 'Actualités', contact: 'Contact', join: 'Rejoignez-nous' },
     hero: {
-      subtitle: 'CANDIDAT OFFICIEL À LA MAIRIE',
-      title: 'Alberto Pantoja',
+      subtitle: 'PARCOURS ET ACTUALITÉ',
+      title: 'José Alberto Pantoja Guzmán',
       tagline: '',
-      description: 'Ex-Directeur Provincial de la Revolución Ciudadana à Santo Domingo de los Tsáchilas et Conseiller du canton Santo Domingo. Travaillant pour le développement intégral de nos communautés.',
+      description: 'Ancien conseiller du canton Santo Domingo et dirigeant politique de Santo Domingo de los Tsáchilas. Candidat à la Mairie de Santo Domingo pour les élections sectionnelles de 2026.',
       cta: 'Découvrez Mon Travail',
       candidacy: {
         label: 'CANDIDAT OFFICIEL',
@@ -136,8 +136,8 @@ const translations = {
       }
     },
     work: {
-      label: 'DOMAINES DE TRAVAIL',
-      title: 'Travailler pour le développement',
+      label: 'DOMAINES DE GESTION',
+      title: 'Gestion au service du canton',
       subtitle: 'Pour les 7 paroisses urbaines de la ville et les 7 paroisses rurales du canton de Santo Domingo',
       areas: [
         { title: 'Développement Rural', desc: 'Améliorer la vie des communautés paysannes' },
@@ -162,8 +162,8 @@ const translations = {
       ]
     },
     media: {
-      label: 'MÉDIAS',
-      title: 'Vidéos et Interviews',
+      label: 'ACTUALITÉS',
+      title: 'Actualités et Publications',
       subtitle: 'Restez informé sur nos activités et propositions'
     },
     contact: {
@@ -179,12 +179,12 @@ const translations = {
     }
   },
   en: {
-    nav: { home: 'Home', bio: 'Biography', work: 'Work', media: 'Media', contact: 'Contact', join: 'Join Us' },
+    nav: { home: 'Home', bio: 'Biography', gallery: 'Career', work: 'Management', media: 'News', contact: 'Contact', join: 'Join Us' },
     hero: {
-      subtitle: 'OFFICIAL CANDIDATE FOR MAYOR',
-      title: 'Alberto Pantoja',
+      subtitle: 'CAREER AND CURRENT ACTIVITIES',
+      title: 'José Alberto Pantoja Guzmán',
       tagline: '',
-      description: 'Ex-Provincial Director of Revolución Ciudadana in Santo Domingo de los Tsáchilas and Councilman of Santo Domingo canton. Working for the integral development of our communities.',
+      description: 'Former Councilman of Santo Domingo canton and political leader of Santo Domingo de los Tsáchilas. Candidate for Mayor of Santo Domingo for the 2026 sectional elections.',
       cta: 'See My Work',
       candidacy: {
         label: 'OFFICIAL CANDIDATE',
@@ -212,8 +212,8 @@ const translations = {
       }
     },
     work: {
-      label: 'WORK AREAS',
-      title: 'Working for development',
+      label: 'MANAGEMENT AREAS',
+      title: 'Management at the service of the canton',
       subtitle: 'For the 7 urban parishes of the city and the 7 rural parishes of Santo Domingo canton',
       areas: [
         { title: 'Rural Development', desc: 'Improving the lives of rural communities' },
@@ -238,8 +238,8 @@ const translations = {
       ]
     },
     media: {
-      label: 'MEDIA',
-      title: 'Videos and Interviews',
+      label: 'NEWS',
+      title: 'News and Publications',
       subtitle: 'Stay informed about our activities and proposals'
     },
     contact: {
@@ -593,7 +593,6 @@ const GALLERY_PHOTO_PATHS = [
 const IMAGES = {
   logo: IMG('/images/albertopantoja/logo.jpg'),
   profileMain: 'https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/2k2kvm0d_IMG-20260814-WA0076.jpg',
-  pseLista17: 'https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/27s2dkuw_PSE_Lista_17.png',
   profileBio: IMG('/images/albertopantoja/Alberto/472952303_18477340369043721_5011479368151296835_n.jpg'),
   heroBackground: IMG('/images/albertopantoja/hero-background.png'),
   soilHands: IMG('/images/albertopantoja/soil-hands.png'),
@@ -889,16 +888,16 @@ const AlbertoPantojaApp = () => {
               <div className="hidden sm:block">
                 <div className="text-blue-900 font-bold text-sm md:text-base">Alberto Pantoja</div>
                 <div className="text-red-600 text-xs font-semibold">
-                  {language === 'fr' ? 'Candidat officiel à la mairie' :
-                   language === 'en' ? 'Official candidate for mayor' :
-                   'Candidato oficial a la alcaldía'}
+                  {language === 'fr' ? 'Parcours et actualité' :
+                   language === 'en' ? 'Career and current activities' :
+                   'Trayectoria y actualidad'}
                 </div>
               </div>
             </div>
 
             {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center gap-8">
-              {['home', 'bio', 'work', 'gallery', 'media', 'contact'].map((section) => (
+              {['home', 'bio', 'gallery', 'work', 'media', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -909,7 +908,7 @@ const AlbertoPantojaApp = () => {
                       : 'text-blue-900 hover:text-red-600'
                   }`}
                 >
-                  {section === 'gallery' ? (language === 'es' ? 'Fotos' : language === 'fr' ? 'Photos' : 'Photos') : t.nav[section]}
+                  {t.nav[section]}
                 </button>
               ))}
             </nav>
@@ -983,14 +982,14 @@ const AlbertoPantojaApp = () => {
         {mobileMenuOpen && (
           <div className="md:hidden bg-white border-t border-blue-100">
             <div className="px-4 py-4 space-y-3">
-              {['home', 'bio', 'work', 'gallery', 'media', 'contact'].map((section) => (
+              {['home', 'bio', 'gallery', 'work', 'media', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
                   data-testid={`mobile-nav-${section}`}
                   className="block w-full text-left px-3 py-2 text-blue-900 hover:bg-blue-50 rounded"
                 >
-                  {section === 'gallery' ? (language === 'es' ? 'Fotos' : language === 'fr' ? 'Photos' : 'Photos') : t.nav[section]}
+                  {t.nav[section]}
                 </button>
               ))}
               <div className="flex items-center gap-2 px-3 pt-2 border-t border-blue-100">
@@ -1049,20 +1048,10 @@ const AlbertoPantojaApp = () => {
             {/* Text Content */}
             <div className="text-center lg:text-left">
               {/* Candidacy Announcement — dynamic campaign medallion with animated gold ring & shimmer */}
-              <div className="relative inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-3 mb-8 group animate-float-gentle" data-testid="candidacy-banner">
-                {/* PSE Lista 17 party logo */}
-                <div className="relative shrink-0" data-testid="pse-lista17-logo-wrapper">
-                  <div className="absolute -inset-2 bg-yellow-400/30 rounded-2xl blur-xl" />
-                  <img
-                    src={IMAGES.pseLista17}
-                    alt="PSE Lista 17"
-                    className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 object-contain drop-shadow-[0_4px_12px_rgba(0,0,0,0.6)]"
-                    data-testid="pse-lista17-logo"
-                  />
-                </div>
+              <div className="relative inline-flex flex-col mb-8 group animate-float-gentle" data-testid="candidacy-banner">
                 <div className="flex flex-col justify-center min-w-0 relative text-center sm:text-left">
                   <div className="relative overflow-hidden">
-                    <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl -ml-1"
+                    <h2 className="font-black uppercase leading-[0.95] tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-[0_2px_10px_rgba(220,38,38,0.55)] text-3xl sm:text-5xl md:text-6xl"
                         style={{ fontFamily: 'Georgia, "Times New Roman", serif' }}>Candidato<br /><span className="inline-flex items-baseline gap-3 sm:gap-4">Alcalde<span className="text-lg sm:text-2xl md:text-3xl font-bold tracking-wider text-yellow-300 drop-shadow-[0_1px_3px_rgba(0,0,0,0.7)]">2027 — 2031</span></span></h2>
                     {/* Shimmer sweep overlay */}
                     <div className="absolute inset-0 -skew-x-12 bg-gradient-to-r from-transparent via-white/60 to-transparent w-1/3 animate-shimmer-sweep pointer-events-none" />
@@ -1214,10 +1203,10 @@ const AlbertoPantojaApp = () => {
           {/* Header */}
           <div className="text-center mb-16">
             <p className="text-red-600 text-xs font-semibold tracking-[0.2em] mb-4">
-              {language === 'es' ? 'GALERÍA' : language === 'fr' ? 'GALERIE' : 'GALLERY'}
+              {language === 'es' ? 'TRAYECTORIA' : language === 'fr' ? 'PARCOURS' : 'CAREER'}
             </p>
             <h2 className="text-3xl md:text-4xl font-extrabold text-blue-900 tracking-tight mb-4">
-              {language === 'es' ? 'Momentos con la Comunidad' : language === 'fr' ? 'Moments avec la Communauté' : 'Moments with the Community'}
+              {language === 'es' ? 'Trayectoria en el territorio' : language === 'fr' ? 'Parcours sur le terrain' : 'Career in the territory'}
             </h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
               {language === 'es' ? 'Imágenes de nuestro trabajo en las parroquias rurales de Santo Domingo de los Tsáchilas' : 

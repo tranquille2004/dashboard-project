@@ -53,7 +53,7 @@ const SITE_TITLES = {
   '/site/theobeans': 'Theo Beans Export',
   '/site/fworks': 'fworksbuilders - Web Design',
   '/site/smeralda': 'Résidence Villa Smeralda - Sardinia',
-  '/site/albertopantoja': 'Alberto Pantoja - Candidato a la Alcaldía de Santo Domingo',
+  '/site/albertopantoja': 'Alberto Pantoja | Trayectoria y actualidad',
   '/site/hoteldelpacifico': 'Hotel del Pacífico - Santo Domingo, Ecuador',
   '/site/rccb': 'RCCB - Retail Cleaning Care Belgium',
   '/site/ilsiciliano': 'Il Siciliano — Trattoria Pizzería — Santo Domingo, Ecuador',
@@ -61,7 +61,7 @@ const SITE_TITLES = {
 };
 
 const SITE_DESCRIPTIONS = {
-  '/site/albertopantoja': 'Alberto Pantoja, Candidato oficial a la Alcaldía de Santo Domingo 2027-2031. PSE Lista 17. Por el desarrollo integral de las parroquias urbanas y rurales de Santo Domingo de los Tsáchilas.'
+  '/site/albertopantoja': 'José Alberto Pantoja Guzmán. Exconcejal del cantón Santo Domingo y dirigente político de Santo Domingo de los Tsáchilas. Trayectoria, gestión y actualidad.'
 };
 
 // =====================================================
