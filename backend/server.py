@@ -834,12 +834,12 @@ SITE_EMAIL_CONFIG = {
         'from_name': 'FWorks Builders Website'
     },
     'rccb': {
-        'to': 'info@rccbgroup.be',
+        'to': 'info@rccbgroup.com',
         'subject_prefix': 'RCCB — Nouvelle demande / New request',
         'from_name': 'RCCB Website'
     },
     'site_rccb': {
-        'to': 'info@rccbgroup.be',
+        'to': 'info@rccbgroup.com',
         'subject_prefix': 'RCCB — Nouvelle demande / New request',
         'from_name': 'RCCB Website'
     },
