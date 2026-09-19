@@ -910,7 +910,12 @@ export const siteData = {
     "/images/gallery/photo15.jpg",
     "/images/gallery/photo16.jpg",
     "/images/gallery/tracabilite-hero.jpg",
-    "/images/gallery/qualite-hero.jpg"
+    "/images/gallery/qualite-hero.jpg",
+    "https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/6c378fo5_481307583_574936232267794_7074522249175242484_n.jpg",
+    "https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/gamsa24h_481215541_574936742267743_8233040145008398651_n.jpg",
+    "https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/z2r11pgc_481006410_574933898934694_7962598872762105674_n.jpg",
+    "https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/neleck2u_480800089_568758652885552_7005306871246298295_n.jpg",
+    "https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/bhj6fxyw_466079765_494532916974793_4236688815685442536_n.jpg"
   ],
 
   contact: {
