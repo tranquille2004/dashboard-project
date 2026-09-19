@@ -143,7 +143,7 @@ const Home = () => {
                 <img
                   src={IMG('/images/contact/contact-hero.jpg')}
                   alt="Theo Beans Official Logo"
-                  className="h-20 w-auto opacity-90"
+                  className="h-40 md:h-48 w-auto opacity-95"
                 />
               </div>
             </div>
