@@ -41,7 +41,7 @@ const Home = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage: `url(${IMG('/images/gallery/photo6.jpg')})`,
+            backgroundImage: `url('https://customer-assets-jt897jd0.emergentagent.net/job_d9bb699b-4a81-4d6f-b624-bd86a4a2f156/artifacts/bhj6fxyw_466079765_494532916974793_4236688815685442536_n.jpg')`,
           }}
         />
         {/* Warm cacao gradient overlay */}
