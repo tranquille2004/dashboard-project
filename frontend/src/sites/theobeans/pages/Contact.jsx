@@ -13,22 +13,31 @@ const Contact = () => {
     phone: '',
     message: ''
   });
+  const [status, setStatus] = useState('idle'); // idle | submitting | success | error
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
-    // Build mailto link - email sent via client's email
-    const toEmail = 'valenciaveronica@live.be';
-    const subject = encodeURIComponent(`Nouveau message de ${formData.firstName} ${formData.lastName} - Theo Beans Export`);
-    const body = encodeURIComponent(
-      `Prénom: ${formData.firstName || 'Non fourni'}\n` +
-      `Nom: ${formData.lastName || 'Non fourni'}\n` +
-      `Email: ${formData.email}\n` +
-      `Téléphone: ${formData.phone}\n\n` +
-      `Message:\n${formData.message || 'Pas de message'}`
-    );
-    
-    window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`;
+    setStatus('submitting');
+    try {
+      const API = process.env.REACT_APP_BACKEND_URL + '/api';
+      const fullName = `${formData.firstName} ${formData.lastName}`.trim() || formData.email;
+      const res = await fetch(`${API}/public/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          site: 'theobeans',
+          name: fullName,
+          email: formData.email,
+          phone: formData.phone,
+          message: formData.message || ''
+        })
+      });
+      if (!res.ok) throw new Error('failed');
+      setStatus('success');
+      setFormData({ firstName: '', lastName: '', email: '', phone: '', message: '' });
+    } catch (err) {
+      setStatus('error');
+    }
   };
 
   const handleChange = (e) => {
@@ -144,11 +153,23 @@ const Contact = () => {
 
                   <button
                     type="submit"
-                    className="w-full bg-[#6D4C41] text-white py-3 rounded-lg hover:bg-[#3E2723] transition-colors font-light tracking-wide shadow-md hover:shadow-lg"
+                    disabled={status === 'submitting'}
+                    className="w-full bg-[#6D4C41] text-white py-3 rounded-lg hover:bg-[#3E2723] transition-colors font-light tracking-wide shadow-md hover:shadow-lg disabled:opacity-60 disabled:cursor-not-allowed"
                     data-testid="contact-submit-button"
                   >
-                    {t.contact.send}
+                    {status === 'submitting' ? '...' : t.contact.send}
                   </button>
+
+                  {status === 'success' && (
+                    <p className="text-green-700 text-sm text-center bg-green-50 p-3 rounded-lg" data-testid="contact-success-message">
+                      ✓ {t.contact.successMessage || 'Message sent successfully. We will reply soon.'}
+                    </p>
+                  )}
+                  {status === 'error' && (
+                    <p className="text-red-700 text-sm text-center bg-red-50 p-3 rounded-lg" data-testid="contact-error-message">
+                      {t.contact.errorMessage || 'An error occurred. Please try again or contact us by email.'}
+                    </p>
+                  )}
                 </form>
               </div>
             </div>

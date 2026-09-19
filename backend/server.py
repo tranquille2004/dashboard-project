@@ -906,6 +906,11 @@ SITE_EMAIL_CONFIG = {
         'to': 'info@sanfrancisco-haciendaturistica.com',
         'subject_prefix': 'San Francisco Hacienda — Nueva consulta',
         'from_name': 'Hacienda San Francisco Website'
+    },
+    'theobeans': {
+        'to': 'theobeanscacao@gmail.com',
+        'subject_prefix': 'Theo Beans Export — Nouveau message',
+        'from_name': 'Theo Beans Export Website'
     }
 }
 
