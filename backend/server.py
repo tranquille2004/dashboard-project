@@ -910,7 +910,8 @@ SITE_EMAIL_CONFIG = {
     'theobeans': {
         'to': 'theobeanscacao@gmail.com',
         'subject_prefix': 'Theo Beans Export — Nouveau message',
-        'from_name': 'Theo Beans Export Website'
+        'from_name': 'Theo Beans Export',
+        'from_email': 'info@theobeans-export.com'
     }
 }
 
@@ -1020,8 +1021,9 @@ async def send_contact_form(form: ContactFormRequest):
     
     # Send email via Resend
     try:
+        from_email = config.get('from_email', 'onboarding@resend.dev')
         params = {
-            "from": f"{config['from_name']} <onboarding@resend.dev>",
+            "from": f"{config['from_name']} <{from_email}>",
             "to": [config['to']],
             "subject": f"{config['subject_prefix']} - {form.name}",
             "html": html_content,
