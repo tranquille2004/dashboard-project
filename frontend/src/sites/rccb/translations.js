@@ -494,7 +494,7 @@ export const translations = {
 
 export const WHATSAPP_NUMBER = '32472700402';
 export const WHATSAPP_LINK = `https://wa.me/${WHATSAPP_NUMBER}`;
-export const EMAIL = 'info@rccbgroup.be';
+export const EMAIL = 'info@rccbgroup.com';
 export const PHONE = '+32 472 70 04 02';
 export const ADDRESS = 'Excelsiorlaan 36-38, 1930 Zaventem';
 export const VAT = 'BE 0793.291.833';
