@@ -14,6 +14,7 @@ import { trackVisit } from '@/utils/trackVisit';
 // Pages - EXACT zoals origineel
 import Home from './pages/Home';
 import Photos from './pages/Photos';
+import Origen from './pages/Origen';
 import Objectif from './pages/Objectif';
 import Varietes from './pages/Varietes';
 import Qualite from './pages/Qualite';
@@ -49,6 +50,7 @@ function TheobeansApp() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/photos" element={<Photos />} />
+            <Route path="/origen" element={<Origen />} />
             <Route path="/objectif" element={<Objectif />} />
             <Route path="/varietes" element={<Varietes />} />
             <Route path="/qualite" element={<Qualite />} />

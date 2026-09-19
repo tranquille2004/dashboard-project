@@ -4,6 +4,7 @@ export const translations = {
     nav: {
       accueil: "ACCUEIL",
       photos: "PHOTOS",
+      origen: "ORIGINE",
       objectif: "OBJECTIF",
       varietes: "TERROIR ET VARIETES",
       qualite: "CONTROL DE QUALITE",
@@ -40,6 +41,18 @@ export const translations = {
     },
     photos: {
       title: "PHOTOS"
+    },
+    origen: {
+      eyebrow: "Ecuador · Racines du cacao",
+      title: "L'ORIGINE DU CACAO",
+      intro: "L'histoire du cacao commence bien avant son arrivée en Europe. Elle commence en Amazonie équatorienne.",
+      paragraphs: [
+        "À Palanda, Zamora Chinchipe, les recherches archéologiques menées à Santa Ana–La Florida ont mis au jour des preuves d'utilisation du Theobroma cacao remontant à environ 5 300 ans, faisant de cette région l'un des plus anciens lieux connus dans l'histoire du cacao.",
+        "Depuis ces terres amazoniennes, le cacao a entrepris un long voyage entre les peuples et les territoires, s'étendant à travers les Amériques et, des siècles plus tard, atteignant l'Europe et le reste du monde.",
+        "Mais l'Équateur n'est pas seulement le berceau de cette histoire. Il conserve également une extraordinaire diversité de cacaos, depuis l'Amazonie jusqu'à Esmeraldas, Los Ríos, Mindo et d'autres régions, où le climat, le sol et la tradition ont donné vie à des profils uniques.",
+        "Chaque fève de cacao équatorien porte en elle bien plus qu'une saveur : elle porte une histoire de plus de cinq mille ans."
+      ],
+      closing: "Et c'est de cette origine que naît notre passion : faire découvrir le cacao équatorien au monde entier."
     },
     objectif: {
       title: "OBJECTIF",
@@ -178,6 +191,7 @@ export const translations = {
     nav: {
       accueil: "HOME",
       photos: "FOTO'S",
+      origen: "OORSPRONG",
       objectif: "DOELSTELLING",
       varietes: "TERROIR EN VARIETEITEN",
       qualite: "KWALITEITSCONTROLE",
@@ -214,6 +228,18 @@ export const translations = {
     },
     photos: {
       title: "FOTO'S"
+    },
+    origen: {
+      eyebrow: "Ecuador · Bakermat van cacao",
+      title: "DE OORSPRONG VAN CACAO",
+      intro: "Het verhaal van cacao begint lang voordat het Europa bereikte. Het begint in het Ecuadoraanse Amazonegebied.",
+      paragraphs: [
+        "In Palanda, Zamora Chinchipe, hebben archeologische onderzoeken in Santa Ana–La Florida bewijzen gevonden van het gebruik van Theobroma cacao van ongeveer 5.300 jaar geleden, waardoor deze regio een van de oudst bekende plekken in de geschiedenis van cacao is geworden.",
+        "Vanuit deze Amazone-gebieden ondernam cacao een lange reis tussen volkeren en gebieden, verspreidde zich door heel Amerika en bereikte eeuwen later Europa en de rest van de wereld.",
+        "Maar Ecuador bewaart niet alleen de oorsprong van dit verhaal. Het herbergt ook een buitengewone diversiteit aan cacao's, van de Amazone tot Esmeraldas, Los Ríos, Mindo en andere regio's, waar klimaat, bodem en traditie unieke smaakprofielen tot leven hebben gebracht.",
+        "Elke Ecuadoraanse cacaoboon draagt veel meer met zich mee dan smaak: hij draagt een geschiedenis van meer dan vijfduizend jaar."
+      ],
+      closing: "En vanuit die oorsprong ontstaat onze passie om de Ecuadoraanse cacao naar de wereld te brengen."
     },
     objectif: {
       title: "DOELSTELLING",
@@ -352,6 +378,7 @@ export const translations = {
     nav: {
       accueil: "HOME",
       photos: "PHOTOS",
+      origen: "ORIGIN",
       objectif: "OBJECTIVE",
       varietes: "TERROIR AND VARIETIES",
       qualite: "QUALITY CONTROL",
@@ -388,6 +415,18 @@ export const translations = {
     },
     photos: {
       title: "PHOTOS"
+    },
+    origen: {
+      eyebrow: "Ecuador · Roots of cacao",
+      title: "THE ORIGIN OF CACAO",
+      intro: "The story of cacao begins long before it reached Europe. It begins in the Ecuadorian Amazon.",
+      paragraphs: [
+        "In Palanda, Zamora Chinchipe, archaeological research carried out at Santa Ana–La Florida found evidence of Theobroma cacao use dating back approximately 5,300 years, making this region one of the oldest known places in the history of cacao.",
+        "From these Amazonian lands, cacao embarked on a long journey among peoples and territories, spreading throughout the Americas and, centuries later, reaching Europe and the rest of the world.",
+        "But Ecuador does not only hold the origin of this story. It also preserves an extraordinary diversity of cacaos — from the Amazon to Esmeraldas, Los Ríos, Mindo and other regions — where climate, soil and tradition have shaped unique flavour profiles.",
+        "Each Ecuadorian cacao bean carries far more than flavour: it carries a story of more than five thousand years."
+      ],
+      closing: "And it is from that origin that our passion is born — to bring Ecuadorian cacao to the world."
     },
     objectif: {
       title: "OBJECTIVE",
@@ -526,6 +565,7 @@ export const translations = {
     nav: {
       accueil: "INICIO",
       photos: "FOTOS",
+      origen: "ORIGEN",
       objectif: "OBJETIVO",
       varietes: "TERRUÑO Y VARIEDADES",
       qualite: "CONTROL DE CALIDAD",
@@ -562,6 +602,18 @@ export const translations = {
     },
     photos: {
       title: "FOTOS"
+    },
+    origen: {
+      eyebrow: "Ecuador · Raíces del cacao",
+      title: "EL ORIGEN DEL CACAO",
+      intro: "La historia del cacao comienza mucho antes de que llegara a Europa. Comienza en la Amazonía ecuatoriana.",
+      paragraphs: [
+        "En Palanda, Zamora Chinchipe, las investigaciones arqueológicas realizadas en Santa Ana–La Florida encontraron evidencias de uso del Theobroma cacao de hace aproximadamente 5.300 años, convirtiendo a esta región en uno de los lugares más antiguos conocidos en la historia del cacao.",
+        "Desde estas tierras amazónicas, el cacao emprendió un largo viaje entre pueblos y territorios, extendiéndose por América y, siglos después, llegando a Europa y al resto del mundo.",
+        "Pero Ecuador no solo guarda el origen de esta historia. También conserva una extraordinaria diversidad de cacaos, desde la Amazonía hasta Esmeraldas, Los Ríos, Mindo y otras regiones, donde el clima, el suelo y la tradición han dado vida a perfiles únicos.",
+        "Cada grano de cacao ecuatoriano lleva consigo mucho más que sabor: lleva una historia de más de cinco mil años."
+      ],
+      closing: "Y es desde ese origen que nace nuestra pasión por llevar el cacao ecuatoriano al mundo."
     },
     objectif: {
       title: "OBJETIVO",
@@ -700,6 +752,7 @@ export const translations = {
     nav: {
       accueil: "HOME",
       photos: "FOTO",
+      origen: "ORIGINE",
       objectif: "OBIETTIVO",
       varietes: "TERROIR E VARIETA",
       qualite: "CONTROLLO QUALITA",
@@ -736,6 +789,18 @@ export const translations = {
     },
     photos: {
       title: "FOTO"
+    },
+    origen: {
+      eyebrow: "Ecuador · Radici del cacao",
+      title: "L'ORIGINE DEL CACAO",
+      intro: "La storia del cacao inizia molto prima del suo arrivo in Europa. Inizia nell'Amazzonia ecuadoriana.",
+      paragraphs: [
+        "A Palanda, Zamora Chinchipe, le ricerche archeologiche svolte a Santa Ana–La Florida hanno rinvenuto prove dell'uso del Theobroma cacao risalenti a circa 5.300 anni fa, rendendo questa regione uno dei luoghi più antichi conosciuti nella storia del cacao.",
+        "Da queste terre amazzoniche, il cacao ha intrapreso un lungo viaggio tra popoli e territori, diffondendosi in tutta l'America e, secoli dopo, raggiungendo l'Europa e il resto del mondo.",
+        "Ma l'Ecuador non custodisce solo l'origine di questa storia. Conserva anche una straordinaria diversità di cacao, dall'Amazzonia fino a Esmeraldas, Los Ríos, Mindo e altre regioni, dove clima, suolo e tradizione hanno dato vita a profili unici.",
+        "Ogni fava di cacao ecuadoriano porta con sé molto più che sapore: porta una storia di oltre cinquemila anni."
+      ],
+      closing: "Ed è da quell'origine che nasce la nostra passione: portare il cacao ecuadoriano nel mondo."
     },
     objectif: {
       title: "OBIETTIVO",
@@ -875,11 +940,12 @@ export const translations = {
 // Mock data for Theo Beans Export website - static data
 export const siteData = {
   companyName: "THEO BEANS EXPORT",
-  tagline: "VERONICA VALENCIA EXPORT",
+  tagline: "THEO BEANS EXPORT",
   
   navigation: [
     { name: "ACCUEIL", path: "/", key: "accueil" },
     { name: "PHOTOS", path: "/photos", key: "photos" },
+    { name: "ORIGEN", path: "/origen", key: "origen" },
     { name: "OBJECTIF", path: "/objectif", key: "objectif" },
     { name: "VARIETES", path: "/varietes", key: "varietes" },
     { name: "CONTROL DE QUALITE", path: "/qualite", key: "qualite" },
